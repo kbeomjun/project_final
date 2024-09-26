@@ -3,20 +3,20 @@ create database fitness;
 use fitness;
 
 drop table if exists `member`;
-﻿CREATE TABLE `member` (
-	`me_id`			varchar(100) 	primary key,
-	`me_pw`			varchar(100)	not NULL,
-	`me_email`		varchar(255)	NOT NULL unique,
-	`me_name`		varchar(100)	not NULL,
-	`me_phone`		varchar(100)	not NULL,
-	`me_address`	varchar(255)	not NULL,
-	`me_birth`		date			not NULL,
-	`me_gender`		char(2)			not NULL,
-	`me_authority`	varchar(10)		NOT NULL,
-	`me_cookie`		varchar(255)	NULL,
-	`me_limit`		datetime		NULL,
-	`me_noshow`		int				not NULL default 0,
-	`me_cancel`		datetime		NULL
+CREATE TABLE `member` (
+   `me_id`   		varchar(100) 	primary key,
+   `me_pw`   		varchar(100)   	NULL,
+   `me_email`   	varchar(255)   	not NULL unique,
+   `me_name`   		varchar(100)   	NULL,
+   `me_phone`   	varchar(100)   	NULL,
+   `me_address`   	varchar(255)   	NULL,
+   `me_birth`   	date   			not NULL,
+   `me_gender`   	char(2)   		NULL,
+   `me_authority`   varchar(10)   	not NULL default 'USER',
+   `me_cookie`   	varchar(255)   	NULL,
+   `me_limit`   	datetime   		NULL,
+   `me_noshow`   	int   			not null default 0,
+   `me_cancel`   	datetime   		NULL
 );
 
 drop table if exists `branch`;
@@ -44,7 +44,6 @@ CREATE TABLE `employee` (
 drop table if exists `branch_file`;
 CREATE TABLE `branch_file` (
 	`bf_num`		int 			primary key auto_increment,
-	`bf_ori_name`	varchar(255)	NULL,
 	`bf_name`		varchar(255)	NULL,
 	`bf_br_name`	varchar(100)	NOT NULL
 );
@@ -69,7 +68,8 @@ CREATE TABLE `branch_equipment_stock` (
 drop table if exists `sports_program`;
 CREATE TABLE `sports_program` (
 	`sp_name`		varchar(100) 	primary key,
-	`sp_detail`		longtext		NULL
+	`sp_detail`		longtext		NULL,
+    `sp_type`		char(2)			not NULL # '그룹', '단일'
 );
 
 drop table if exists `branch_program`;
@@ -134,6 +134,7 @@ CREATE TABLE `payment` (
 	`pa_start`		datetime		not NULL,
 	`pa_end`		datetime		not NULL,
 	`pa_review`		char(1)			not NULL default 'N',
+    `pa_state`		varchar(10)		not NULL,
 	`pa_me_id`		varchar(100)	NOT NULL,
 	`pa_pt_num`		int				NOT NULL
 );
@@ -142,7 +143,8 @@ drop table if exists `payment_type`;
 CREATE TABLE `payment_type` (
 	`pt_num`		int 			primary key auto_increment,
 	`pt_type`		varchar(100)	not NULL,
-	`pt_duration`	int				not NULL,
+	`pt_date`		int				not NULL,
+    `pt_count`		int				not NULL,
 	`pt_price`		int				not NULL
 );
 
@@ -154,6 +156,18 @@ CREATE TABLE `branch_program_schedule` (
 	`bs_current`	int				not NULL default 0,
 	`bs_bp_num`		int				NOT NULL
 );
+
+drop table if exists `refund`;
+CREATE TABLE `refund` (
+	`re_num`		int 		primary key auto_increment,
+	`re_date`		datetime	not NULL default current_timestamp,
+	`re_percent`	int			not NULL,
+	`re_price`		int			not NULL,
+	`re_reason`		longtext	NULL,
+	`re_pa_num`		int			NOT NULL
+);
+
+
 
 ALTER TABLE `employee` ADD CONSTRAINT `FK_branch_TO_employee_1` FOREIGN KEY (
 	`em_br_name`
@@ -267,13 +281,6 @@ REFERENCES `payment_type` (
 	`pt_num`
 );
 
-ALTER TABLE `membership_payment` ADD CONSTRAINT `FK_membership_TO_membership_payment_1` FOREIGN KEY (
-	`ms_num`
-)
-REFERENCES `membership` (
-	`ms_num`
-);
-
 ALTER TABLE `branch_program_schedule` ADD CONSTRAINT `FK_branch_program_TO_branch_program_schedule_1` FOREIGN KEY (
 	`bs_bp_num`
 )
@@ -281,3 +288,9 @@ REFERENCES `branch_program` (
 	`bp_num`
 );
 
+ALTER TABLE `refund` ADD CONSTRAINT `FK_payment_TO_refund_1` FOREIGN KEY (
+	`re_pa_num`
+)
+REFERENCES `payment` (
+	`pa_num`
+);
