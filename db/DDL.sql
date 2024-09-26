@@ -294,3 +294,147 @@ ALTER TABLE `refund` ADD CONSTRAINT `FK_payment_TO_refund_1` FOREIGN KEY (
 REFERENCES `payment` (
 	`pa_num`
 );
+
+ALTER TABLE `fitness`.`payment` 
+DROP FOREIGN KEY `FK_member_TO_payment_1`;
+ALTER TABLE `fitness`.`payment` 
+CHANGE COLUMN `pa_me_id` `pa_me_id` VARCHAR(100) NULL ;
+ALTER TABLE `fitness`.`payment` 
+ADD CONSTRAINT `FK_member_TO_payment_1`
+  FOREIGN KEY (`pa_me_id`)
+  REFERENCES `fitness`.`member` (`me_id`)
+  ON UPDATE RESTRICT;
+  
+ALTER TABLE `fitness`.`payment` 
+DROP FOREIGN KEY `FK_member_TO_payment_1`;
+ALTER TABLE `fitness`.`payment` 
+ADD CONSTRAINT `FK_member_TO_payment_1`
+  FOREIGN KEY (`pa_me_id`)
+  REFERENCES `fitness`.`member` (`me_id`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`payment` 
+DROP FOREIGN KEY `FK_member_TO_payment_1`;
+ALTER TABLE `fitness`.`payment` 
+ADD CONSTRAINT `FK_member_TO_payment_1`
+  FOREIGN KEY (`pa_me_id`)
+  REFERENCES `fitness`.`member` (`me_id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`review_post` 
+DROP FOREIGN KEY `FK_branch_TO_review_post_1`;
+ALTER TABLE `fitness`.`review_post` 
+ADD CONSTRAINT `FK_branch_TO_review_post_1`
+  FOREIGN KEY (`rp_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON UPDATE CASCADE;
+
+ALTER TABLE `fitness`.`member_inquiry` 
+DROP FOREIGN KEY `FK_branch_TO_member_inquiry_1`;
+ALTER TABLE `fitness`.`member_inquiry` 
+ADD CONSTRAINT `FK_branch_TO_member_inquiry_1`
+  FOREIGN KEY (`mi_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`member_inquiry` 
+DROP FOREIGN KEY `FK_inquiry_type_TO_member_inquiry_1`;
+ALTER TABLE `fitness`.`member_inquiry` 
+ADD CONSTRAINT `FK_inquiry_type_TO_member_inquiry_1`
+  FOREIGN KEY (`mi_it_name`)
+  REFERENCES `fitness`.`inquiry_type` (`it_name`)
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_program` 
+DROP FOREIGN KEY `FK_sports_program_TO_branch_program_1`;
+ALTER TABLE `fitness`.`branch_program` 
+ADD CONSTRAINT `FK_sports_program_TO_branch_program_1`
+  FOREIGN KEY (`bp_sp_name`)
+  REFERENCES `fitness`.`sports_program` (`sp_name`)
+  ON DELETE CASCADE
+  ON UPDATE RESTRICT;
+  
+  ALTER TABLE `fitness`.`branch_program` 
+DROP FOREIGN KEY `FK_employee_TO_branch_program_1`;
+ALTER TABLE `fitness`.`branch_program` 
+ADD CONSTRAINT `FK_employee_TO_branch_program_1`
+  FOREIGN KEY (`bp_em_num`)
+  REFERENCES `fitness`.`employee` (`em_num`)
+  ON DELETE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_program` 
+DROP FOREIGN KEY `FK_branch_TO_branch_program_1`;
+ALTER TABLE `fitness`.`branch_program` 
+ADD CONSTRAINT `FK_branch_TO_branch_program_1`
+  FOREIGN KEY (`bp_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_program_schedule` 
+DROP FOREIGN KEY `FK_branch_program_TO_branch_program_schedule_1`;
+ALTER TABLE `fitness`.`branch_program_schedule` 
+ADD CONSTRAINT `FK_branch_program_TO_branch_program_schedule_1`
+  FOREIGN KEY (`bs_bp_num`)
+  REFERENCES `fitness`.`branch_program` (`bp_num`)
+  ON DELETE CASCADE;
+  
+  ALTER TABLE `fitness`.`program_reservation` 
+DROP FOREIGN KEY `FK_branch_program_schedule_TO_program_reservation_1`;
+ALTER TABLE `fitness`.`program_reservation` 
+CHANGE COLUMN `pr_bs_num` `pr_bs_num` INT NULL ;
+ALTER TABLE `fitness`.`program_reservation` 
+ADD CONSTRAINT `FK_branch_program_schedule_TO_program_reservation_1`
+  FOREIGN KEY (`pr_bs_num`)
+  REFERENCES `fitness`.`branch_program_schedule` (`bs_num`)
+  ON DELETE RESTRICT;
+  
+  ALTER TABLE `fitness`.`program_reservation` 
+DROP FOREIGN KEY `FK_branch_program_schedule_TO_program_reservation_1`;
+ALTER TABLE `fitness`.`program_reservation` 
+ADD CONSTRAINT `FK_branch_program_schedule_TO_program_reservation_1`
+  FOREIGN KEY (`pr_bs_num`)
+  REFERENCES `fitness`.`branch_program_schedule` (`bs_num`)
+  ON DELETE SET NULL;
+  
+  ALTER TABLE `fitness`.`branch_file` 
+DROP FOREIGN KEY `FK_branch_TO_branch_file_1`;
+ALTER TABLE `fitness`.`branch_file` 
+ADD CONSTRAINT `FK_branch_TO_branch_file_1`
+  FOREIGN KEY (`bf_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON DELETE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_file` 
+DROP FOREIGN KEY `FK_branch_TO_branch_file_1`;
+ALTER TABLE `fitness`.`branch_file` 
+ADD CONSTRAINT `FK_branch_TO_branch_file_1`
+  FOREIGN KEY (`bf_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_order` 
+DROP FOREIGN KEY `FK_branch_TO_branch_order_1`;
+ALTER TABLE `fitness`.`branch_order` 
+ADD CONSTRAINT `FK_branch_TO_branch_order_1`
+  FOREIGN KEY (`bo_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_equipment_stock` 
+DROP FOREIGN KEY `FK_branch_TO_branch_equipment_stock_1`;
+ALTER TABLE `fitness`.`branch_equipment_stock` 
+ADD CONSTRAINT `FK_branch_TO_branch_equipment_stock_1`
+  FOREIGN KEY (`be_br_name`)
+  REFERENCES `fitness`.`branch` (`br_name`)
+  ON UPDATE CASCADE;
+  
+  ALTER TABLE `fitness`.`branch_equipment_stock` 
+DROP FOREIGN KEY `FK_sports_equipment_TO_branch_equipment_stock_1`;
+ALTER TABLE `fitness`.`branch_equipment_stock` 
+ADD CONSTRAINT `FK_sports_equipment_TO_branch_equipment_stock_1`
+  FOREIGN KEY (`be_se_name`)
+  REFERENCES `fitness`.`sports_equipment` (`se_name`)
+  ON UPDATE CASCADE;
