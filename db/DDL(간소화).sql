@@ -228,7 +228,7 @@ ALTER TABLE `payment`
 ADD CONSTRAINT `FK_payment_member`
   FOREIGN KEY (`pa_me_id`)
   REFERENCES `member` (`me_id`)
-  ON DELETE SET NULL
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `review_post` 
