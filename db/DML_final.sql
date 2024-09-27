@@ -200,4 +200,3 @@ insert into `review_post` (rp_title, rp_content, rp_br_name, rp_pa_num)
         ('서비스가 그냥 그랬습니다', '다닐만은 해요', '강남점', '2'),
         ('서비스가 별로 안좋았습니다', '비추천합니다', '신논현점', '3');
         
-        
