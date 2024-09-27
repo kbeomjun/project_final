@@ -20,7 +20,7 @@ insert into `payment_type` (pt_type, pt_date, pt_count, pt_price)
         ('30회', 90, 30, 1800000);
 
 #프로그램 예약 추가
-insert into `program_reservation` (po_me_id, pr_bs_num)
+insert into `program_reservation` (pr_me_id, pr_bs_num)
 	values
 		('abc123', 1),
         ('qwe123', 2),
@@ -34,7 +34,7 @@ insert into `refund` (re_percent, re_price, re_reason, re_pa_num)
         ('75', '225000', '중도 해지', 3);
         
 #리뷰 게시글 추가
-insert into `review_post` (rp_title, rp_content, rp_br_name, _rp_pa_num)
+insert into `review_post` (rp_title, rp_content, rp_br_name, rp_pa_num)
 	values
 		('서비스가 좋았습니다', '최고예요', 'abc123', '1'),
         ('서비스가 그냥 그랬습니다', '다닐만은 해요', 'qwe123', '2'),
