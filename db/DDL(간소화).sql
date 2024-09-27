@@ -87,8 +87,10 @@ CREATE TABLE `review_post` (
 	`rp_title`		varchar(255)	not NULL,
 	`rp_content`	longtext		not NULL,
     `rp_date`		datetime		not NULL default current_timestamp,
-	`rp_br_name`	varchar(100)	NOT NULL,
+	`rp_view`		int				not NULL default 0,
+    `rp_br_name`	varchar(100)	NOT NULL,
 	`rp_pa_num`		int				NOT NULL
+    
 );
 
 drop table if exists `member_inquiry`;
