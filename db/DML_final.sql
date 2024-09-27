@@ -133,13 +133,8 @@ insert into `payment_type` (pt_type, pt_date, pt_count, pt_price)
 	values
 		('1개월 이용권', 30, 1, 300000),
 		('3개월 이용권', 90, 1, 900000),
-        ('6개월 이용권', 180, 1, 1200000);
-
-
+        ('6개월 이용권', 180, 1, 1200000),
 #PT 이용권 추가(결제 유형, 기간(30일), 횟수(30일 내 10회 수강), 가격)
-delete from `payment_type`;
-insert into `payment_type` (pt_type, pt_date, pt_count, pt_price)
-	values
 		('10회', 30, 10, 600000),
         ('20회', 60, 20, 1200000),
         ('30회', 90, 30, 1800000);
