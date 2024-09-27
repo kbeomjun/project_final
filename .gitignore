@@ -1,5 +1,9 @@
 # Compiled class file
+/bin/
 *.class
+.classpath
+.project
+.settings/
 
 # Log file
 *.log
@@ -22,3 +26,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Eclipse artifacts, including WTP generated manifests
+bin
+.classpath
+.project
+.settings
+.springBeans
+spring-*/src/main/java/META-INF/MANIFEST.MF
+
+config.properties
