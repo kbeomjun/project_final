@@ -78,6 +78,30 @@ public class AdminController {
 			model.addAttribute("url", "/");
 		}
 		return "/main/message";
+	}
+	
+	@GetMapping("/program/update")
+	public String programUpdate(Model model, BranchProgramVO branchProgram, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		System.out.println(branchProgram);
+		model.addAttribute("branchProgram", branchProgram);
+		model.addAttribute("branchName", user.getMe_name());
 		
+		return "/admin/programUpdate";
+	}
+	
+	@PostMapping("/program/update")
+	public String programUpdatePost(Model model, BranchProgramVO branchProgram, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		branchProgram.setBp_br_name(user.getMe_name());
+		
+		if(adminService.updateBranchProgram(branchProgram)) {
+			model.addAttribute("msg", "수정에 성공했습니다.");
+			model.addAttribute("url", "/");
+		} else {
+			model.addAttribute("msg", "수정에 실패했습니다.");
+			model.addAttribute("url", "/");
+		}
+		return "/main/message";
 	}
 }

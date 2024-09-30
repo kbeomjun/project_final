@@ -53,4 +53,17 @@ public class AdminServiceImp implements AdminService{
 		return adminDao.insertBranchProgram(branchProgram);
 	}
 
+	@Override
+	public boolean updateBranchProgram(BranchProgramVO branchProgram) {
+		if(branchProgram == null) {
+			return false;
+		}
+		
+		if(adminDao.updateBranchProgram(branchProgram)) {
+			return true;
+		}
+		
+		return false;
+	}
+
 }

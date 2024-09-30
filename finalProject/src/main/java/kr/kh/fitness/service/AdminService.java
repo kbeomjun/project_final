@@ -16,4 +16,6 @@ public interface AdminService {
 
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
+	boolean updateBranchProgram(BranchProgramVO branchProgram);
+
 }

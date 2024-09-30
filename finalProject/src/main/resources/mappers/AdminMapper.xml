@@ -45,5 +45,8 @@
 		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
 	</insert>
 	
+	<update id="updateBranchProgram">
+		update branch_program set bp_total = #{bp_total} where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+	</update>
 
 </mapper>
