@@ -8,7 +8,9 @@
 </head>
 <body>
 	<h1 class="mt-3 mb-3">${branchName} 프로그램 수정</h1>
-	<form class="form-inline mb-3" action="<c:url value="/admin/program/update?bp_em_num=${branchProgram.bp_em_num}"/>" method="post">
+	<form class="form-inline mb-3" action="<c:url value="/admin/program/update"/>" method="post">
+		<input type="hidden" name="bp_br_name" value="${branchName}">
+		<input type="hidden" name="bp_em_num" value="${branchProgram.bp_em_num}">
 		<label>프로그램:</label>
 		<input class="form-control" name="bp_sp_name" value="${branchProgram.bp_sp_name}" readonly/>
 		<label>트레이너:</label>

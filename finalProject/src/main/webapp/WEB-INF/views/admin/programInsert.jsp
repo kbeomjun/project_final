@@ -9,6 +9,7 @@
 <body>
 	<h1 class="mt-3 mb-3">${branchName} 프로그램 등록</h1>
 	<form class="form-inline" action="<c:url value="/admin/program/insert"/>" method="post">
+		<input type="hidden" name="bp_br_name" value="${branchName}">
 		<label>프로그램:</label>
 		<select class="form-control" name="bp_sp_name">
 			<c:forEach items="${programList }" var="program">

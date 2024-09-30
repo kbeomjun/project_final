@@ -32,17 +32,16 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/program/list/{br_name}")
-	public String programMagagement(Model model, HttpSession session) {
+	@GetMapping("/program/list")
+	public String programMagagement(Model model, HttpSession session, String br_name) {
 		
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
-			String br_name = user.getMe_name();
+			br_name = user.getMe_name();
 			
 			List<BranchProgramVO> list = adminService.getBranchProgramList(br_name);
-			
 			model.addAttribute("list", list);
-			model.addAttribute("branchName", br_name);
+			model.addAttribute("br_name", br_name);
 			return "/admin/programList";
 			
 		} catch (Exception e) {
@@ -66,16 +65,14 @@ public class AdminController {
 	}
 	
 	@PostMapping("/program/insert")
-	public String programInsertPost(Model model, BranchProgramVO branchProgram, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		branchProgram.setBp_br_name(user.getMe_name());
+	public String programInsertPost(Model model, BranchProgramVO branchProgram) {
 		
 		if(adminService.insertBranchProgram(branchProgram)) {
 			model.addAttribute("msg", "등록에 성공했습니다.");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
 			model.addAttribute("msg", "등록에 실패했습니다.");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		}
 		return "/main/message";
 	}
@@ -83,7 +80,6 @@ public class AdminController {
 	@GetMapping("/program/update")
 	public String programUpdate(Model model, BranchProgramVO branchProgram, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		System.out.println(branchProgram);
 		model.addAttribute("branchProgram", branchProgram);
 		model.addAttribute("branchName", user.getMe_name());
 		
@@ -91,31 +87,28 @@ public class AdminController {
 	}
 	
 	@PostMapping("/program/update")
-	public String programUpdatePost(Model model, BranchProgramVO branchProgram, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		branchProgram.setBp_br_name(user.getMe_name());
+	public String programUpdatePost(Model model, BranchProgramVO branchProgram) {
 		
 		if(adminService.updateBranchProgram(branchProgram)) {
 			model.addAttribute("msg", "수정에 성공했습니다.");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
 			model.addAttribute("msg", "수정에 실패했습니다.");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		}
 		return "/main/message";
 	}
 	
 	@GetMapping("/program/delete")
-	public String programDelete(Model model, BranchProgramVO branchProgram, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		branchProgram.setBp_br_name(user.getMe_name());
+	public String programDelete(Model model, BranchProgramVO branchProgram) {
+		System.out.println(branchProgram);
 		
 		if(adminService.deleteBranchProgram(branchProgram)) {
 			model.addAttribute("msg", "삭제에 성공했습니다.");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
 			model.addAttribute("msg", "삭제에 실패했습니다.");
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		}
 		return "/main/message";
 	}

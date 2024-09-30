@@ -7,7 +7,7 @@
 <title>프로그램 목록</title>
 </head>
 <body>
-	<h1 class="mt-3 mb-3">${branchName} 프로그램 목록</h1>
+	<h1 class="mt-3 mb-3">${br_name} 프로그램 목록</h1>
 	<table class="table">
 		<thead>
 			<tr>
@@ -24,8 +24,19 @@
 					<td>${list.employee.em_name}</td>
 					<td>${list.bp_total}</td>
 					<td>
-						<a href="<c:url value="/admin/program/update?bp_sp_name=${list.bp_sp_name}&bp_em_num=${list.bp_em_num}&bp_total=${list.bp_total}&employee.em_name=${list.employee.em_name}"/>" class="btn btn-outline-warning btn-sm">수정</a>
-						<a href="<c:url value="/admin/program/delete?bp_sp_name=${list.bp_sp_name}&bp_em_num=${list.bp_em_num}"/>" class="btn btn-outline-danger btn-sm">삭제</a>
+						<c:url var="url" value="/admin/program/update">
+							<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
+							<c:param name="bp_em_num" value="${list.bp_em_num}"/>
+							<c:param name="bp_total" value="${list.bp_total}"/>
+							<c:param name="employee.em_name" value="${list.employee.em_name}"/>
+						</c:url>
+						<a href="${url}" class="btn btn-outline-warning btn-sm">수정</a>
+						<c:url var="url" value="/admin/program/delete">
+							<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
+							<c:param name="bp_em_num" value="${list.bp_em_num}"/>
+							<c:param name="bp_br_name" value="${list.bp_br_name}"/>
+						</c:url>						
+						<a href="${url}" class="btn btn-outline-danger btn-sm">삭제</a>
 					</td>
 				</tr>
 			</c:forEach>
