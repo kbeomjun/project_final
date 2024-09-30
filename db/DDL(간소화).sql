@@ -109,7 +109,7 @@ drop table if exists `branch_order`;
 CREATE TABLE `branch_order` (
 	`bo_num`		int 			primary key auto_increment,
 	`bo_amount`		int				not NULL,
-	`bo_state`		varchar(100)	not NULL,
+	`bo_state`		varchar(100)	not NULL default '승인대기',
 	`bo_date`		datetime		not NULL default current_timestamp,
 	`bo_br_name`	varchar(100)	NOT NULL,
 	`bo_se_name`	varchar(100)	not NULL
