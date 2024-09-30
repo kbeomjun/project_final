@@ -1,5 +1,19 @@
 package kr.kh.fitness.service;
 
+import java.util.List;
+
+import kr.kh.fitness.model.vo.BranchProgramVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.SportsProgramVO;
+
 public interface AdminService {
+
+	List<BranchProgramVO> getBranchProgramList(String branchName);
+
+	List<SportsProgramVO> getProgramList();
+
+	List<EmployeeVO> getEmployeeList(String em_br_name);
+
+	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
 }

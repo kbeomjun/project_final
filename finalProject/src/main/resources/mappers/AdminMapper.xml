@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.AdminDAO">
+
+    <resultMap id="BranchProgramMap" type="BranchProgramVO">
+        <id property="bp_num" column="bp_num" />
+        <result property="bp_total" column="bp_total" />
+        <result property="bp_br_name" column="bp_br_name" />
+        <result property="bp_sp_name" column="bp_sp_name" />
+        <result property="bp_em_num" column="bp_em_num" />
+
+        <association property="employee" javaType="kr.kh.fitness.model.vo.EmployeeVO">
+            <id property="em_num" column="em_num" />
+            <result property="em_name" column="em_name" />
+            <result property="em_phone" column="em_phone" />
+            <result property="em_email" column="em_email" />
+            <result property="em_gender" column="em_gender" />
+            <result property="em_join" column="em_join" />
+            <result property="em_address" column="em_address" />
+            <result property="em_fi_name" column="em_fi_name" />
+            <result property="em_br_name" column="em_br_name" />
+        </association>
+    </resultMap>
+
+	<select id="selectBranchProgramList" resultMap="BranchProgramMap">
+		select * from branch_program join employee on em_num = bp_em_num where bp_br_name = #{branchName}
+	</select>
+	
+	<select id="selectProgramList" resultType="SportsProgramVO">
+		select * from sports_program
+	</select>
+	
+	<select id="selectEmployeeList" resultType="EmployeeVO">
+		select * from Employee where em_br_name = #{em_br_name}
+	</select>
+	
+	<select id="selectBranchProgram" resultType="BranchProgramVO">
+		select * from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+	</select>
+	
+	<insert id="insertBranchProgram">
+		insert into branch_program(bp_total, bp_br_name, bp_sp_name, bp_em_num)
+		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
+	</insert>
+	
+
+</mapper>
