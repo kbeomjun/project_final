@@ -22,10 +22,41 @@
             <result property="em_fi_name" column="em_fi_name" />
             <result property="em_br_name" column="em_br_name" />
         </association>
+        
+        <association property="schedule" javaType="kr.kh.fitness.model.vo.BranchProgramScheduleVO">
+    	    <id property="bs_num" column="bs_num" />
+            <result property="bs_start" column="bs_start" />
+            <result property="bs_end" column="bs_end" />
+            <result property="bs_current" column="bs_current" />
+            <result property="bs_bp_num" column="bs_bp_num" />
+        </association>
+        
+        <association property="reservation" javaType="kr.kh.fitness.model.vo.ProgramReservationVO">
+    	    <id property="pr_num" column="pr_num" />
+            <result property="pr_date" column="pr_date" />
+            <result property="pr_me_id" column="pr_me_id" />
+            <result property="pr_bs_num" column="pr_bs_num" />
+        </association>
+        
+        <association property="member" javaType="kr.kh.fitness.model.vo.MemberVO">
+    	    <id property="me_id" column="me_id" />
+            <result property="me_pw" column="me_pw" />
+            <result property="me_email" column="me_email" />
+            <result property="me_name" column="me_name" />
+            <result property="me_phone" column="me_phone" />
+            <result property="me_address" column="me_address" />
+            <result property="me_birth" column="me_birth" />
+            <result property="me_gender" column="me_gender" />
+            <result property="me_authority" column="me_authority" />
+            <result property="me_cookie" column="me_cookie" />
+            <result property="me_limit" column="me_limit" />
+            <result property="me_noshow" column="me_noshow" />
+            <result property="me_cancel" column="me_cancel" />                                   
+        </association>        
     </resultMap>
 
 	<select id="selectBranchProgramList" resultMap="BranchProgramMap">
-		select * from branch_program join employee on em_num = bp_em_num where bp_br_name = #{branchName}
+		select * from branch_program join employee on em_num = bp_em_num where bp_br_name = #{br_name}
 	</select>
 	
 	<select id="selectProgramList" resultType="SportsProgramVO">
@@ -52,4 +83,17 @@
 	<delete id="deleteBranchProgram">
 		delete from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
 	</delete>
+	
+	<select id="selectBranchScheduleList" resultMap="BranchProgramMap">
+		select 
+			* 
+		from 
+			branch_program
+		join
+			employee on bp_em_num = em_num
+		join
+			branch_program_schedule on bp_num = bs_bp_num
+		where
+			bp_br_name = #{br_name}
+	</select>
 </mapper>

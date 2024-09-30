@@ -20,4 +20,6 @@ public interface AdminService {
 
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
 
+	List<BranchProgramVO> getBranchScheduleList(String br_name);
+
 }

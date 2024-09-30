@@ -21,4 +21,7 @@ public class BranchProgramVO {
     private int bp_em_num;        // 담당 직원 번호
     
     private EmployeeVO employee;
+    private BranchProgramScheduleVO schedule;
+    private ProgramReservationVO reservation;
+    private MemberVO member;
 }

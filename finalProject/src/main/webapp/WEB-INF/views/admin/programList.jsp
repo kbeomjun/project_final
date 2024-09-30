@@ -18,7 +18,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list}" var="list">
+			<c:forEach items="${programList}" var="list">
 				<tr>
 					<td>${list.bp_sp_name}</td>
 					<td>${list.employee.em_name}</td>

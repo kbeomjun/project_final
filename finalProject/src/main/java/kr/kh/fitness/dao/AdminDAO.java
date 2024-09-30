@@ -8,7 +8,7 @@ import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface AdminDAO {
 
-	List<BranchProgramVO> selectBranchProgramList(String branchName);
+	List<BranchProgramVO> selectBranchProgramList(String br_name);
 
 	List<SportsProgramVO> selectProgramList();
 
@@ -21,5 +21,7 @@ public interface AdminDAO {
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
+
+	List<BranchProgramVO> selectBranchScheduleList(String br_name);
 
 }

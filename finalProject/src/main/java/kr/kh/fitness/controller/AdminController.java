@@ -39,8 +39,8 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			br_name = user.getMe_name();
 			
-			List<BranchProgramVO> list = adminService.getBranchProgramList(br_name);
-			model.addAttribute("list", list);
+			List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
+			model.addAttribute("programList", programList);
 			model.addAttribute("br_name", br_name);
 			return "/admin/programList";
 			
@@ -111,5 +111,22 @@ public class AdminController {
 			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		}
 		return "/main/message";
+	}
+	
+	@GetMapping("/program/schedule")
+	public String programSchedule(Model model, HttpSession session, String br_name) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			br_name = user.getMe_name();
+			
+			List<BranchProgramVO> scheduleList = adminService.getBranchScheduleList(br_name);
+			model.addAttribute("scheduleList", scheduleList);
+			model.addAttribute("br_name", br_name);
+			return "/admin/scheduleList";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/home";
+		}
 	}
 }

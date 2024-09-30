@@ -17,12 +17,12 @@ public class AdminServiceImp implements AdminService{
 	private AdminDAO adminDao;
 	
 	@Override
-	public List<BranchProgramVO> getBranchProgramList(String branchName) {
+	public List<BranchProgramVO> getBranchProgramList(String br_name) {
 		
-		if(branchName == null) {
+		if(br_name == null) {
 			return null;
 		}
-		return adminDao.selectBranchProgramList(branchName);
+		return adminDao.selectBranchProgramList(br_name);
 	}
 
 	@Override
@@ -77,6 +77,14 @@ public class AdminServiceImp implements AdminService{
 		}
 		
 		return false;
+	}
+
+	@Override
+	public List<BranchProgramVO> getBranchScheduleList(String br_name) {
+		if(br_name == null) {
+			return null;
+		}
+		return adminDao.selectBranchScheduleList(br_name);
 	}
 
 }
