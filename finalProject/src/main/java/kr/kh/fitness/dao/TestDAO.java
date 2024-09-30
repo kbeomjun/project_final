@@ -2,6 +2,6 @@ package kr.kh.fitness.dao;
 
 public interface TestDAO {
 	
-	int getEquipCount();
+	int getEquipCount(); // Test용
 
 }
