@@ -25,7 +25,7 @@
 					<td>${list.bp_total}</td>
 					<td>
 						<a href="<c:url value="/admin/program/update?bp_sp_name=${list.bp_sp_name}&bp_em_num=${list.bp_em_num}&bp_total=${list.bp_total}&employee.em_name=${list.employee.em_name}"/>" class="btn btn-outline-warning btn-sm">수정</a>
-						<a href="<c:url value="#"/>" class="btn btn-outline-danger btn-sm">삭제</a>
+						<a href="<c:url value="/admin/program/delete?bp_sp_name=${list.bp_sp_name}&bp_em_num=${list.bp_em_num}"/>" class="btn btn-outline-danger btn-sm">삭제</a>
 					</td>
 				</tr>
 			</c:forEach>

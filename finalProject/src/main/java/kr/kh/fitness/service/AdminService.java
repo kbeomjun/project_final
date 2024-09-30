@@ -18,4 +18,6 @@ public interface AdminService {
 
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
+	boolean deleteBranchProgram(BranchProgramVO branchProgram);
+
 }

@@ -66,4 +66,17 @@ public class AdminServiceImp implements AdminService{
 		return false;
 	}
 
+	@Override
+	public boolean deleteBranchProgram(BranchProgramVO branchProgram) {
+		if(branchProgram == null) {
+			return false;
+		}
+		
+		if(adminDao.deleteBranchProgram(branchProgram)) {
+			return true;
+		}
+		
+		return false;
+	}
+
 }

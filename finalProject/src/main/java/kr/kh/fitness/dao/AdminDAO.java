@@ -20,4 +20,6 @@ public interface AdminDAO {
 
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
+	boolean deleteBranchProgram(BranchProgramVO branchProgram);
+
 }

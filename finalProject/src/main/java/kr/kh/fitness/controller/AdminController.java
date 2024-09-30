@@ -104,4 +104,19 @@ public class AdminController {
 		}
 		return "/main/message";
 	}
+	
+	@GetMapping("/program/delete")
+	public String programDelete(Model model, BranchProgramVO branchProgram, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		branchProgram.setBp_br_name(user.getMe_name());
+		
+		if(adminService.deleteBranchProgram(branchProgram)) {
+			model.addAttribute("msg", "삭제에 성공했습니다.");
+			model.addAttribute("url", "/");
+		} else {
+			model.addAttribute("msg", "삭제에 실패했습니다.");
+			model.addAttribute("url", "/");
+		}
+		return "/main/message";
+	}
 }
