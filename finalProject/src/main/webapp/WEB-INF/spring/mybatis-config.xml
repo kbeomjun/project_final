@@ -7,5 +7,5 @@
 	<typeAliases>
 		<package name="kr.kh.fitness.model.vo" />
 	</typeAliases>
-
+	
 </configuration>
