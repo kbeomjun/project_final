@@ -96,4 +96,17 @@
 		where
 			bp_br_name = #{br_name}
 	</select>
+	
+	<select id="selectScheduleMemberList" resultType="MemberVO">
+		select 
+			* 
+		from 
+			program_reservation
+		join
+			member on pr_me_id = me_id
+		join
+			branch_program_schedule on pr_bs_num = bs_num
+		where
+			bs_bp_num = #{bp_num} 
+	</select>
 </mapper>

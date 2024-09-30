@@ -21,7 +21,7 @@
 	<a href="<c:url value="/login"/>">로그인</a>
 	
 	<a href="<c:url value="/admin/program/list"/>" class="btn btn-outline-info">프로그램관리</a><br>
-	<a href="<c:url value="/admin/program/schedule"/>" class="btn btn-outline-info">프로그램일정관리</a><br>
+	<a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-info">프로그램일정관리</a><br>
 	<a href="<c:url value="/admin/order/list"/>" class="btn btn-outline-info">운동기구 발주목록</a><br>
 	<a href="<c:url value="/admin/order/insert"/>" class="btn btn-outline-info">운동기구 발주신청</a><br>
 	<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-info">직원관리</a><br>

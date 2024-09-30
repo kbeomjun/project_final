@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface AdminDAO {
@@ -23,5 +24,7 @@ public interface AdminDAO {
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
 
 	List<BranchProgramVO> selectBranchScheduleList(String br_name);
+
+	List<MemberVO> selectScheduleMemberList(int bp_num);
 
 }

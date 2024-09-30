@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface AdminService {
@@ -21,5 +22,7 @@ public interface AdminService {
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
 
 	List<BranchProgramVO> getBranchScheduleList(String br_name);
+
+	List<MemberVO> getScheduleMemberList(int bp_num);
 
 }

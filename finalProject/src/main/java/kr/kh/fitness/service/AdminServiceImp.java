@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.kh.fitness.dao.AdminDAO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
 @Service
@@ -85,6 +86,11 @@ public class AdminServiceImp implements AdminService{
 			return null;
 		}
 		return adminDao.selectBranchScheduleList(br_name);
+	}
+
+	@Override
+	public List<MemberVO> getScheduleMemberList(int bp_num) {
+		return adminDao.selectScheduleMemberList(bp_num);
 	}
 
 }

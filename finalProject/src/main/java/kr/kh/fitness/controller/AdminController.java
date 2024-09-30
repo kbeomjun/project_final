@@ -113,7 +113,7 @@ public class AdminController {
 		return "/main/message";
 	}
 	
-	@GetMapping("/program/schedule")
+	@GetMapping("/schedule/list")
 	public String programSchedule(Model model, HttpSession session, String br_name) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
@@ -128,5 +128,17 @@ public class AdminController {
 			e.printStackTrace();
 			return "/main/home";
 		}
+	}
+	
+	@GetMapping("/schedule/detail")
+	public String scheduleDetail(Model model, BranchProgramVO branchProgram) {
+		
+		
+		List<MemberVO> memberList = adminService.getScheduleMemberList(branchProgram.getBp_num());
+		
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("branchProgram", branchProgram);
+		
+		return "/admin/scheduleDetail";
 	}
 }
