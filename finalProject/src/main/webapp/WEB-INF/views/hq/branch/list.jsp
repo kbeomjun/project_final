@@ -13,7 +13,7 @@
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
 		        	<li class="nav-item">
-		          		<a class="nav-link active" href="#">지점 관리</a>
+		          		<a class="nav-link active" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="#">직원 관리</a>
@@ -67,7 +67,7 @@
 										${br.br_phone}							        	
 						        	</td>
 							        <td>
-							        	${br.br_address}
+							        	${br.br_address}(${br.br_detailAddress})
 						        	</td>
 						        	<td>
 						        		${br.br_admin}
