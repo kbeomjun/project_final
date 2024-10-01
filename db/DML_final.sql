@@ -2,10 +2,10 @@ use fitness;
 
 # 지점(지점명, 연락처, 지점주소)
 delete from fitness.branch;
-insert into fitness.branch(br_name, br_phone, br_address)
-values("역삼점", "021231234", "서울 강남구 테헤란로 156")
-	,("강남점", "022342345", "서울 강남구 테헤란로 156")
-    ,("신논현점", "023453456", "서울 강남구 테헤란로 156");
+insert into fitness.branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress)
+values("역삼점", "021231234", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)")
+	,("강남점", "022342345", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)")
+    ,("신논현점", "023453456", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)");
 
 
 # 회원(아이디, 비밀번호, 이메일, 이름, 전화번호, 주소, 생년월일, 성별, 권한)

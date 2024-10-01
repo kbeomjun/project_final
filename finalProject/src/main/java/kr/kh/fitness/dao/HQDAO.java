@@ -22,4 +22,13 @@ public interface HQDAO {
 	MemberVO selectAdmin(@Param("br")BranchVO branch);
 
 	List<BranchFileVO> selectBranchFileList(@Param("br")BranchVO branch);
+
+	boolean updateBranch(@Param("br")BranchVO branch, @Param("br_ori_name")String br_ori_name);
+
+	BranchFileVO selectBranchFile(@Param("bf_num")int bf_num);
+
+	boolean deleteBranchFile(@Param("bf")BranchFileVO branchFile);
+
+	boolean updatetAdmin(@Param("me")MemberVO admin, @Param("br_ori_name")String br_ori_name);
+
 }

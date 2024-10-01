@@ -4,12 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.HQDAO">
 	<select id="selectBranchList" resultType="BranchVO">
-		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name;
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name order by br_name;
 	</select>
 	
 	<insert id="insertBranch">
-		insert into branch(br_name, br_phone, br_address)
-		values(#{br.br_name}, #{br.br_phone}, #{br.br_address});
+		insert into branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress, br_detail)
+		values(#{br.br_name}, #{br.br_phone}, #{br.br_postcode}, #{br.br_address}, #{br.br_detailAddress}, #{br.br_extraAddress}, #{br.br_detail});
 	</insert>
 	
 	<insert id="insertBranchFile">
@@ -31,6 +31,37 @@
 	</select>
 	
 	<select id="selectBranchFileList" resultType="BranchFileVO">
-		select * from branch_file where bf_br_name = #{br.br_name};
+		select * from branch_file where bf_br_name = #{br.br_name} order by bf_num;
 	</select>
+	
+	<update id="updateBranch">
+		update branch set 
+			br_name = #{br.br_name}, 
+			br_phone = #{br.br_phone},
+			br_postcode = #{br.br_postcode},
+			br_address = #{br.br_address},
+			br_detailAddress = #{br.br_detailAddress},
+			br_extraAddress = #{br.br_extraAddress},
+			br_detail = #{br.br_detail}
+		where br_name = #{br_ori_name};
+	</update>
+	
+	<select id="selectBranchFile" resultType="BranchFileVO">
+		select * from branch_file where bf_num = #{bf_num};
+	</select>
+	
+	<delete id="deleteBranchFile">
+		delete from branch_file where bf_num = #{bf.bf_num};
+	</delete>
+	
+	<update id="updatetAdmin">
+		update member set
+			me_id = #{me.me_id},      
+			me_pw = #{me.me_pw}, 
+			me_email = #{me.me_email}, 
+			me_name = #{me.me_name},
+			me_phone = #{me.me_phone}, 
+			me_address = #{me.me_address}
+		where me_name = #{br_ori_name};
+	</update>
 </mapper>

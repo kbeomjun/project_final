@@ -21,10 +21,13 @@ CREATE TABLE `member` (
 
 drop table if exists `branch`;
 CREATE TABLE `branch` (
-	`br_name`		varchar(100) 	primary key,
-	`br_phone`		varchar(255)	not NULL,
-	`br_address`	varchar(255)	not NULL,
-	`br_detail`		longtext		NULL
+	`br_name`			varchar(100) 	primary key,
+	`br_phone`			varchar(255)	not NULL,
+	`br_postcode`		varchar(255)	not NULL,
+    `br_address`		varchar(255)	not NULL,
+    `br_detailAddress`	varchar(255)	not NULL,
+    `br_extraAddress`	varchar(255)	not NULL,
+	`br_detail`			longtext		NULL
 );
 
 drop table if exists `employee`;

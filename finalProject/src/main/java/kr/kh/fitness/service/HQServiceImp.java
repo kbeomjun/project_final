@@ -30,9 +30,7 @@ public class HQServiceImp implements HQService {
 	public String insertBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin) {
 		String msg = "";
 		try {
-			if(hqDao.insertBranch(branch)) {
-				msg = "";
-			}else {
+			if(!hqDao.insertBranch(branch)) {
 				msg = "지점을 등록하지 못했습니다.";
 			}
 		}catch (Exception e) {
@@ -50,12 +48,9 @@ public class HQServiceImp implements HQService {
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		admin.setMe_address(branch.getBr_address());
-		if(hqDao.insertAdmin(admin)) {
-			msg = ""; 
-		}else {
+		if(!hqDao.insertAdmin(admin)) {
 			msg = "관리자를 등록하지 못했습니다.";
 		}
-		
 		return msg;
 	}
 	private void uploadFile(MultipartFile file, String br_name) {
@@ -84,5 +79,42 @@ public class HQServiceImp implements HQService {
 	@Override
 	public List<BranchFileVO> getBranchFileList(BranchVO branch) {
 		return hqDao.selectBranchFileList(branch);
+	}
+
+	@Override
+	public String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList) {
+		String msg = "";
+		try {
+			if(!hqDao.updateBranch(branch, br_ori_name)) {
+				msg = "지점을 수정하지 못했습니다.";
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			msg = "지점을 수정하지 못했습니다.";
+		}
+		if(!msg.equals("")) {
+			return msg;
+		}
+		
+		if(numList != null) {
+			for(int i = 0; i < numList.length; i++) {
+				int bf_num = Integer.parseInt(numList[i]);
+				BranchFileVO branchFile = hqDao.selectBranchFile(bf_num);
+				if(hqDao.deleteBranchFile(branchFile)) {
+					UploadFileUtils.delteFile(uploadPath, branchFile.getBf_name());
+				}
+			}
+		}
+		for(MultipartFile file : fileList) {
+			uploadFile(file, branch.getBr_name());
+		}
+		
+		admin.setMe_name(branch.getBr_name());
+		admin.setMe_phone(branch.getBr_phone());
+		admin.setMe_address(branch.getBr_address());
+		if(!hqDao.updatetAdmin(admin, br_ori_name)) {
+			msg = "관리자를 등록하지 못했습니다.";
+		}
+		return msg;
 	}
 }

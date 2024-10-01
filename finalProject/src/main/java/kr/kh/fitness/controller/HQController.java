@@ -56,4 +56,18 @@ public class HQController {
 		model.addAttribute("me", admin);
 		return "/hq/branch/detail";
 	}
+	
+	@PostMapping("/branch/update/{br_ori_name}")
+	public String branchUpdate(Model model, @PathVariable("br_ori_name") String br_ori_name, BranchVO branch, 
+								MultipartFile[] fileList, MemberVO admin, String[] numList) {
+		String msg = hqService.updateBranch(branch, fileList, admin, br_ori_name, numList);
+		if(msg.equals("")) {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/hq/branch/detail/" + branch.getBr_name());
+		}else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/hq/branch/detail/" + br_ori_name);
+		}
+		return "/main/message";
+	}
 }

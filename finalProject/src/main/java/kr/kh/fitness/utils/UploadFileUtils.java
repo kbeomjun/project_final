@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.springframework.util.FileCopyUtils;
 
-
 public class UploadFileUtils {
     public static String uploadFile(String uploadPath, String folderName, String fileName, byte[] fileData) throws Exception {
         UUID uid = UUID.randomUUID();
@@ -45,7 +44,7 @@ public class UploadFileUtils {
 		File file = new File(uploadPath + fi_name);
 		//파일이 존재하면 파일을 삭제
 		if(file.exists()) {
-				file.delete();
+			file.delete();
 		}
 	}
 }

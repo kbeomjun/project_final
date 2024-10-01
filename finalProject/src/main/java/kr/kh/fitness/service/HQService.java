@@ -18,4 +18,6 @@ public interface HQService {
 	MemberVO getAdmin(BranchVO branch);
 
 	List<BranchFileVO> getBranchFileList(BranchVO branch);
+
+	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList);
 }

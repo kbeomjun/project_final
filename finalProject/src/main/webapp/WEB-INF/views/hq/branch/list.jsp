@@ -10,21 +10,39 @@
 	<h1>지점관리</h1>
 	<div class="container" style="margin-top:30px">
 	  	<div class="row">
-	    	<div class="col-sm-4">
+	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
 		        	<li class="nav-item">
 		          		<a class="nav-link active" href="#">지점 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">Link</a>
+		          		<a class="nav-link" href="#">직원 관리</a>
 	       	 		</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link disabled" href="#">Disabled</a>
+		          		<a class="nav-link" href="#">운동기구 관리</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="#">재고 관리</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="#">발주 내역</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="#">회원권 관리</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="#">프로그램 관리</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="#">회원 관리</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="#">문의 내역</a>
 		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
-		    <div class="col-sm-8">
+		    <div class="col-sm-10">
 			    <div>
 			    	<a href="<c:url value="/hq/branch/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>

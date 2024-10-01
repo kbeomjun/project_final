@@ -7,13 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-straight/css/uicons-bold-straight.css'>
-    
     <style type="text/css">
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
-    	.file-input, .form-control{border: 1px solid gray; border-radius: 5px;}
+    	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
+    	.file-input{border: 1px solid gray; border-radius: 5px;}
+    	.address-input{margin-bottom: 10px;}
     	.img-container{min-height: 400px;}
     	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 8px;}
     	.btn-delete-img{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
@@ -35,11 +34,19 @@
 		</div>
 		<div class="error error-phone"></div>
 		<div class="form-group">
-			<label for="br_address">주소:</label>
-			<input type="text" class="form-control" id="br_address" name="br_address">
+			<label for="br_address">주소:</label> <br/>
+			<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;">
+			<input class="btn btn-info" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
+			<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;"> <br/>
+			<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
+			<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
 		</div>
 		<div class="error error-address"></div>
 		<div class="form-group">
+			<label for="br_detail">지점설명:</label>
+			<textarea class="form-control" id="br_detail" name="br_detail"></textarea>
+		</div>
+		<div class="form-group" style="margin-top: 10px;">
 			<label for="me_id">관리자 아이디:</label>
 			<input type="text" class="form-control" id="me_id" name="me_id">
 		</div>
@@ -87,6 +94,7 @@
 	<a href="<c:url value="/hq/branch/list"/>" class="btn btn-outline-danger col-12">취소</a>
 	
 	<script>
+		// 사진 파일
 		function displayFileList(fileList){
 			console.log(fileList);
 			var count = fileList.length;
@@ -142,6 +150,16 @@
 		    fileArray.forEach(file => { dataTransfer.items.add(file); });
 		    $('#fileList')[0].files = dataTransfer.files;
 		}
+		const deleteFile2 = (length) => {
+		    const dataTransfer = new DataTransfer();
+		    let files = $('#fileList2')[0].files;
+		    
+		    let fileArray = Array.from(files);
+		    fileArray.splice(0, length);
+		    
+		    fileArray.forEach(file => { dataTransfer.items.add(file); });
+		    $('#fileList2')[0].files = dataTransfer.files;
+		}
 		
 		$(document).on("click", ".btn-delete-img", function(){
 			let fileNum = $(this).data("num");
@@ -167,15 +185,18 @@
 		    fileArray.forEach(file => { dataTransfer.items.add(file); });
 		    $('#fileList')[0].files = dataTransfer.files;
 		    
+		    deleteFile2($('#fileList2')[0].files.length);
 			displayFileList($("#fileList")[0].files);
 		});
     </script>
     
     <script type="text/javascript">
+    	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
 		let regexEmail = /^\w{6,13}@\w{4,8}.[a-z]{2,3}$/;
 		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
+		let imgRequired = `<span>사진은 최소 1장 등록해야합니다.</span>`;
 		
 		$('#br_name').keyup(function(){
 			$('.error-name').children().remove();
@@ -197,10 +218,10 @@
 			}
 		});
 		
-		$('#br_address').keyup(function(){
+		$('#br_detailAddress').keyup(function(){
 			$('.error-address').children().remove();
 			
-			if($('#br_address').val() == ''){
+			if($('#br_address').val() == '' || $('#br_detailAddress').val() == ''){
 				$('.error-address').append(msgRequired);
 			}else{
 				$('.error-address').children().remove();	
@@ -256,7 +277,7 @@
 			
 			var count = $('#fileList')[0].files.length;
 			if(count == 0){
-				$('.error-file').append(msgRequired);
+				$('.error-file').append(imgRequired);
 			}else{
 				$('.error-file').children().remove();
 			}
@@ -268,50 +289,114 @@
 			
 			if($('#br_name').val() == ''){
 				$('.error-name').append(msgRequired);
+				$('#br_name').focus();
 				flag = false;
 			}
 			
 			if($('#br_phone').val() == ''){
 				$('.error-phone').append(msgRequired);
+				$('#br_phone').focus();
 				flag = false;
 			}
 			
-			if($('#br_address').val() == ''){
+			if($('#br_address').val() == '' || $('#br_detailAddress').val() == ''){
 				$('.error-address').append(msgRequired);
+				$('#br_detailAddress').focus();
 				flag = false;
 			}
 			
 			if($('#me_id').val() == ''){
 				$('.error-id').append(msgRequired);
+				$('#me_id').focus();
 				flag = false;
 			}
 			
 			if($('#me_pw').val() == ''){
 				$('.error-pw').append(msgRequired);
+				$('#me_pw').focus();
 				flag = false;
 			}
 			
 			if($('#me_pw').val() != $('#me_pw2').val()){
 				$('.error-pw2').append(msgPw2);
+				$('#me_pw2').focus();
 				flag = false;
 			}
 			
 			if($('#me_email').val() == ''){
 				$('.error-email').append(msgRequired);
+				$('#me_email').focus();
 				flag = false;
 			}else{
 				if(!regexEmail.test($('#me_email').val())){
 					$('.error-email').append(msgEmail);
+					$('#me_email').focus();
 					flag = false;
 				}
 			}
 			
 			if($('#fileList')[0].files.length == 0){
-				$('.error-file').append(msgRequired);
+				$('.error-file').append(imgRequired);
 				flag = false;
 			}
 			
 			return flag;
+		});
+    </script>
+    
+    <script type="text/javascript">
+    	// 주소 api, 썸머노트
+	    function addressPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("br_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("br_extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('br_postcode').value = data.zonecode;
+	                document.getElementById("br_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("br_detailAddress").focus();
+	            }
+	        }).open();
+	    }
+    	
+	    $('#br_detail').summernote({
+			  tabsize: 2,
+			  height: 350
 		});
     </script>
 </body>
