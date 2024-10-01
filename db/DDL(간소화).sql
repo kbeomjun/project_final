@@ -4,19 +4,22 @@ use fitness;
 
 drop table if exists `member`;
 CREATE TABLE `member` (
-   `me_id`   		varchar(100) 	primary key,
-   `me_pw`   		varchar(100)   	NULL,
-   `me_email`   	varchar(255)   	not NULL unique,
-   `me_name`   		varchar(100)   	NULL,
-   `me_phone`   	varchar(100)   	NULL,
-   `me_address`   	varchar(255)   	NULL,
-   `me_birth`   	date   			not NULL,
-   `me_gender`   	char(2)   		NULL,
-   `me_authority`   varchar(10)   	not NULL default 'USER',
-   `me_cookie`   	varchar(255)   	NULL,
-   `me_limit`   	datetime   		NULL,
-   `me_noshow`   	int   			not null default 0,
-   `me_cancel`   	datetime   		NULL
+   `me_id`   			varchar(100) 	primary key,
+   `me_pw`   			varchar(100)   	NULL,
+   `me_email`   		varchar(255)   	not NULL unique,
+   `me_name`   			varchar(100)   	NULL,
+   `me_phone`   		varchar(100)   	NULL,
+   `me_postcode`		varchar(255)	NULL,
+   `me_address`			varchar(255)	NULL,
+   `me_detailAddress`	varchar(255)	NULL,
+   `me_extraAddress`	varchar(255)	NULL,
+   `me_birth`   		date   			not NULL,
+   `me_gender`   		char(2)   		NULL,
+   `me_authority`   	varchar(10)   	not NULL default 'USER',
+   `me_cookie`   		varchar(255)   	NULL,
+   `me_limit`   		datetime   		NULL,
+   `me_noshow`   		int   			not null default 0,
+   `me_cancel`   		datetime   		NULL
 );
 
 drop table if exists `branch`;
@@ -32,16 +35,19 @@ CREATE TABLE `branch` (
 
 drop table if exists `employee`;
 CREATE TABLE `employee` (
-	`em_num`		int 			primary key auto_increment,
-	`em_name`		varchar(100)	not NULL,
-	`em_phone`		varchar(255)	not NULL,
-	`em_email`		varchar(255)	not NULL,
-	`em_gender`		char(2)			not NULL,
-	`em_position`	varchar(100)	not NULL,
-	`em_join`		datetime		not NULL default current_timestamp,
-	`em_address`	varchar(255)	not NULL,
-	`em_fi_name`	varchar(255)	NULL,
-	`em_br_name`	varchar(100)	NOT NULL
+	`em_num`			int 			primary key auto_increment,
+	`em_name`			varchar(100)	not NULL,
+	`em_phone`			varchar(255)	not NULL,
+	`em_email`			varchar(255)	not NULL,
+	`em_gender`			char(2)			not NULL,
+	`em_position`		varchar(100)	not NULL,
+	`em_join`			datetime		not NULL default current_timestamp,
+    `em_postcode`		varchar(255)	not NULL,
+    `em_address`		varchar(255)	not NULL,
+    `em_detailAddress`	varchar(255)	not NULL,
+    `em_extraAddress`	varchar(255)	not NULL,
+	`em_fi_name`		varchar(255)	NULL,
+	`em_br_name`		varchar(100)	NOT NULL
 );
 
 drop table if exists `branch_file`;
