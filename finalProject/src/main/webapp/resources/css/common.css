@@ -327,7 +327,7 @@ dl, ol, ul{
   transition: .3s;
 }
 .gnb_side__sns:hover .gnb_side__sns_defualt, .gnb_side__sns:focus .gnb_side__sns_defualt{
-  opacity: 0.7;
+  opacity: 0.5;
 }
 /* gnb info icon end */
 
@@ -356,7 +356,7 @@ dl, ol, ul{
   z-index: 100;
 }
 .gnb_side_wrap._active{
-  right: 5px;
+  right: -20px;
   opacity: 1;
   visibility: visible;
 }
