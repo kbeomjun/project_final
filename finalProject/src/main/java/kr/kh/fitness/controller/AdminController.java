@@ -68,7 +68,6 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			//return "/main/home";
 			return "/main/main";
 		}
 	}
@@ -154,7 +153,6 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			//return "/main/home";
 			return "/main/main";		
 		}
 	}
@@ -200,7 +198,6 @@ public class AdminController {
 			bs_end = formatter.parse(date + " " + endTime);
 			schedule.setBs_start(bs_start);
 			schedule.setBs_end(bs_end);
-			System.out.println(schedule);
 
 			if(adminService.insertSchedule(schedule, me_id)) {
 				model.addAttribute("msg", "등록에 성공했습니다.");
@@ -215,12 +212,51 @@ public class AdminController {
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
-			//return "/main/home";
 			return "/main/main";
 		}
- 
 	}
 	
+	//지점 프로그램 일정 수정 get
+	@GetMapping("/schedule/update")
+	public String scheduleUpdate(Model model, int bp_num) {
+		
+		BranchProgramScheduleVO schedule = adminService.getSchedule(bp_num);
+		
+		model.addAttribute("schedule", schedule);
+		
+		return "/admin/scheduleUpdate";
+	}
+	
+	//지점 프로그램 일정 수정 post
+	@PostMapping("/schedule/update")
+	public String scheduleUpdatePost(Model model, String br_name, String date, String startTime, String endTime, BranchProgramScheduleVO schedule) {
+		
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm"); // 날짜 형식 지정
+        Date bs_start;
+        Date bs_end;
+        
+		try {
+			bs_start = formatter.parse(date + " " + startTime);
+			bs_end = formatter.parse(date + " " + endTime);
+			schedule.setBs_start(bs_start);
+			schedule.setBs_end(bs_end);
+			System.out.println(schedule);
+			if(adminService.updateSchedule(schedule)) {
+				model.addAttribute("msg", "수정에 성공했습니다.");
+				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
+			} else {
+				model.addAttribute("msg", "수정에 실패했습니다.");
+				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
+			}
+			
+			model.addAttribute("br_name", br_name);
+			return "/main/message";
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "/main/main";
+		}
+	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//지점 발주 신청목록
