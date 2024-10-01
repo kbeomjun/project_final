@@ -7,24 +7,41 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<!-- Bootstrap CSS 추가 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-	<h1>Login</h1>
-	<form action="<c:url value='/login'/>" method="post" id="loginfrom">
-		<div class="form-group">
-			<label for="id">아이디 : </label>
-			<input type="text" class="from-control" id="id" name="me_id" required/>
+<body class="bg-light">
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<!-- Card를 사용하여 로그인 폼을 감쌈 -->
+				<div class="card shadow-lg">
+					<div class="card-header bg-success text-white text-center">
+						<h2>로그인</h2>
+					</div>
+					<div class="card-body">
+						<form action="<c:url value='/login'/>" method="post" id="loginfrom">
+							<div class="mb-3">
+								<label for="id" class="form-label">아이디</label>
+								<input type="text" class="form-control" id="id" name="me_id" required/>
+							</div>
+							<div class="mb-3">
+								<label for="pw" class="form-label">비밀번호</label>
+								<input type="password" class="form-control" id="pw" name="me_pw" required/>
+							</div>
+							<div class="mb-3 form-check">
+								<input type="checkbox" class="form-check-input" id="autologin" name="autologin"/>
+								<label class="form-check-label" for="autologin">자동 로그인</label>
+							</div>
+							<button type="submit" class="btn btn-success w-100">로그인</button>
+						</form>
+					</div>
+					<div class="card-footer text-center">
+						<a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="pw">비밀번호 : </label>
-			<input type="password" class="from-control" id="pw" name="me_pw" required/>
-		</div>
-		<div class="form-check">
-			<label for="form-check-label">자동로그인
-				<input type="checkbox" class="from-check-input" value="true" name="autologin"/>자동 로그인
-			</label>
-			<button type="submit" class="btn btn-outline-success col-12">로그인</button>
-		</div>
-	</form>
+	</div>
 </body>
 </html>
