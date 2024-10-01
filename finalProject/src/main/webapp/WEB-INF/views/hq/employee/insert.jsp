@@ -15,121 +15,76 @@
     	.address-input{margin-bottom: 10px;}
     	.img-container{min-height: 400px;}
     	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 8px;}
-    	.btn-delete-img, .btn-delete-img2{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
-    	.img-box, .img-box2{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
-    	#fileList, #fileList2{display: none;}
+    	.btn-delete-img{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
+    	.img-box{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
+    	#file{display: none;}
     </style>
 </head>
 <body>
-	<h1>지점 상세</h1>
-	<form action="<c:url value="/hq/branch/update/${br.br_name}"/>" method="post" enctype="multipart/form-data" id="form">
+	<h1>직원 등록</h1>
+	<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
 		<div class="form-group">
-			<label for="br_name">지점명:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name" value="${br.br_name}">
-		</div>
-		<div class="error error-name"></div>
-		<div class="form-group">
-			<label for="br_phone">전화번호:</label>
-			<input type="text" class="form-control" id="br_phone" name="br_phone" value="${br.br_phone}">
-		</div>
-		<div class="error error-phone"></div>
-		<div class="form-group">
-			<label for="br_address">주소:</label> <br/>
-			<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" value="${br.br_postcode}">
-			<input class="btn btn-info" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-			<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" value="${br.br_address}"> <br/>
-			<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${br.br_detailAddress}">
-			<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${br.br_extraAddress}">
+			<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
+			    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+			    <div class="card-img-overlay d-flex flex-wrap align-items-center">
+				    <div class="mx-auto">
+				      	<label for="file" class="btn">사진등록</label>
+				    </div>
+			    </div>
+			</label>
+			<input type="file" class="form-control" id="file" name="file" accept="image/*">
 		</div>
 		<div class="error error-address"></div>
 		<div class="form-group">
-			<label for="br_detail">지점설명:</label>
-			<textarea class="form-control" id="br_detail" name="br_detail">${br.br_detail}</textarea>
+			<label for="br_name">이름:</label>
+			<input type="text" class="form-control" id="br_name" name="br_name">
 		</div>
+		<div class="error error-address"></div>
 		<div class="form-group">
-			<label for="me_id">관리자 아이디:</label>
-			<input type="text" class="form-control" id="me_id" name="me_id" value="${me.me_id}">
+			<label for="br_name">전화번호:</label>
+			<input type="text" class="form-control" id="br_name" name="br_name">
 		</div>
-		<div class="error error-id"></div>
+		<div class="error error-address"></div>
 		<div class="form-group">
-			<label for="me_pw">관리자 비밀번호:</label>
-			<input type="password" class="form-control" id="me_pw" name="me_pw" value="${me.me_id}">
+			<label for="br_name">이메일:</label>
+			<input type="text" class="form-control" id="br_name" name="br_name">
 		</div>
-		<div class="error error-pw"></div>
+		<div class="error error-address"></div>
 		<div class="form-group">
-			<label for="me_pw2">비밀번호 확인:</label>
-			<input type="password" class="form-control" id="me_pw2" name="me_pw2">
+			<label for="br_name">성별:</label>
+			<input type="text" class="form-control" id="br_name" name="br_name">
 		</div>
-		<div class="error error-pw2"></div>
+		<div class="error error-address"></div>
 		<div class="form-group">
-			<label for="me_email">관리자 이메일:</label>
-			<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}">
+			<label for="br_name">직책:</label>
+			<input type="text" class="form-control" id="br_name" name="br_name">
 		</div>
-		<div class="error error-email"></div>
+		<div class="error error-address"></div>
 		<div class="form-group">
-			<label>
-				등록된 사진:
-			</label>
-			<div class="file-input">
-				<div class="img-container2 d-flex flex-wrap">
-					<c:forEach items="${bfList}" var="bf">
-						<div class="img-box2">
-				        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%">
-					        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
-									<i class="fi fi-bs-cross"></i>
-								</button>
-							</img>
-						</div>
-					</c:forEach>
-				</div>
-			</div>
+			<label for="br_address">주소:</label> <br/>
+			<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;">
+			<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
+			<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;"> <br/>
+			<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
+			<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
 		</div>
+		<div class="error error-address"></div>
 		<div class="form-group">
-			<label>
-				추가할 사진:
-			</label>
-			<div class="file-input">
-				<div class="img-container d-flex flex-wrap align-items-center">
-					<div class="mx-auto">
-						<label for="fileList" class="btn btn-outline-success btn-insert-img">
-							<i class="fi fi-br-plus align-items-center"></i>
-						</label>
-					</div>
-				</div>
-			</div>
-			<label for="fileList2" class="btn btn-outline-success col-12 mt-3">
-				<span>사진 추가(</span>
-				<span class="img-count">0</span>
-				<span>개)</span>
-			</label>
-			<input type="file" class="form-control" id="fileList" name="fileList" multiple="multiple" accept="image/*">
-			<input type="file" class="form-control" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
+			<label for="br_name">소속:</label>
+			<input type="text" class="form-control" id="br_name" name="br_name">
 		</div>
-		<div class="error error-file"></div>
-		<button class="btn btn-outline-warning col-12">지점 수정</button>
+		<div class="error error-address"></div>
+		<button class="btn btn-outline-info col-12">직원 등록</button>
 	</form>
 	<hr/>
-	<a href="<c:url value="/hq/branch/list"/>" class="btn btn-outline-danger col-12">취소</a>
+	<a href="<c:url value="/hq/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
 	
 	<script>
 		// 사진 파일
-		var del = 0;
-		displayFileList($("#fileList")[0].files);
-		$('.btn-delete-img2').click(function(){
-			del++;
-			var bf_num = $(this).data("num");
-			var str = `
-				<input type="hidden" name="numList" value="\${bf_num}">
-			`;
-			$('.file-input').after(str);
-			$('.img-count').text($("#fileList")[0].files.length + ${bfList.size()} - del);
-			$(this).parent().remove();
-		});
-	
 		function displayFileList(fileList){
 			console.log(fileList);
 			var count = fileList.length;
-			$('.img-count').text(count + ${bfList.size()} - del);
+			$('.img-count').text(count);
 			if(count > 0){
 				for(var i = 0; i < count; i++){
 					$('.img-container').children().remove();
@@ -212,17 +167,17 @@
 		    for(var i = 0; i < fileArray2.length; i++){
 		    	fileArray.push(fileArray2[i]);
 		    }
-		    deleteFile2($('#fileList2')[0].files.length);
 		    
 		    fileArray.forEach(file => { dataTransfer.items.add(file); });
 		    $('#fileList')[0].files = dataTransfer.files;
 		    
+		    deleteFile2($('#fileList2')[0].files.length);
 			displayFileList($("#fileList")[0].files);
 		});
     </script>
     
     <script type="text/javascript">
-	 	// 필수항목 체크
+    	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
 		let regexEmail = /^\w{6,13}@\w{4,8}.[a-z]{2,3}$/;
 		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
@@ -306,7 +261,7 @@
 		$("#fileList").change(function(){
 			$('.error-file').children().remove();
 			
-			var count = $('#fileList')[0].files.length + ${bfList.size()} - del;
+			var count = $('#fileList')[0].files.length;
 			if(count == 0){
 				$('.error-file').append(imgRequired);
 			}else{
@@ -317,7 +272,6 @@
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
-			var count = $('#fileList')[0].files.length + ${bfList.size()} - del;
 			
 			if($('#br_name').val() == ''){
 				$('.error-name').append(msgRequired);
@@ -367,11 +321,11 @@
 				}
 			}
 			
-			if(count == 0){
+			if($('#fileList')[0].files.length == 0){
 				$('.error-file').append(imgRequired);
 				flag = false;
 			}
-
+			
 			return flag;
 		});
     </script>

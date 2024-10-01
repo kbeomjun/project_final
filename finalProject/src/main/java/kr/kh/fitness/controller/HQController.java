@@ -75,4 +75,8 @@ public class HQController {
 		model.addAttribute("emList", emList);
 	    return "/hq/employee/list";
 	}
+	@GetMapping("/employee/insert")
+	public String employeeInsert() {
+	    return "/hq/employee/insert";
+	}
 }
