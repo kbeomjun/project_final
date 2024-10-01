@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.HQDAO">
+	<select id="selectBranchList" resultType="BranchVO">
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name order by br_name;
+	</select>
+	
+	<insert id="insertBranch">
+		insert into branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress, br_detail)
+		values(#{br.br_name}, #{br.br_phone}, #{br.br_postcode}, #{br.br_address}, #{br.br_detailAddress}, #{br.br_extraAddress}, #{br.br_detail});
+	</insert>
+	
+	<insert id="insertBranchFile">
+		insert into branch_file(bf_name, bf_br_name)
+		values(#{bf.bf_name}, #{bf.bf_br_name});
+	</insert>
+	
+	<insert id="insertAdmin">
+		insert into member(me_id, me_pw, me_email, me_name, me_phone, me_address, me_birth, me_authority)
+		values(#{me.me_id}, #{me.me_pw}, #{me.me_email}, #{me.me_name}, #{me.me_phone}, #{me.me_address}, current_timestamp(), "BRADMIN")
+	</insert>
+	
+	<select id="selectBranch" resultType="BranchVO">
+		select * from branch where br_name = #{br.br_name};
+	</select>
+	
+	<select id="selectAdmin" resultType="MemberVO">
+		select * from member join branch on me_name = br_name where me_name = #{br.br_name}; 
+	</select>
+	
+	<select id="selectBranchFileList" resultType="BranchFileVO">
+		select * from branch_file where bf_br_name = #{br.br_name} order by bf_num;
+	</select>
+	
+	<update id="updateBranch">
+		update branch set 
+			br_name = #{br.br_name}, 
+			br_phone = #{br.br_phone},
+			br_postcode = #{br.br_postcode},
+			br_address = #{br.br_address},
+			br_detailAddress = #{br.br_detailAddress},
+			br_extraAddress = #{br.br_extraAddress},
+			br_detail = #{br.br_detail}
+		where br_name = #{br_ori_name};
+	</update>
+	
+	<select id="selectBranchFile" resultType="BranchFileVO">
+		select * from branch_file where bf_num = #{bf_num};
+	</select>
+	
+	<delete id="deleteBranchFile">
+		delete from branch_file where bf_num = #{bf.bf_num};
+	</delete>
+	
+	<update id="updatetAdmin">
+		update member set
+			me_id = #{me.me_id},      
+			me_pw = #{me.me_pw}, 
+			me_email = #{me.me_email}, 
+			me_name = #{me.me_name},
+			me_phone = #{me.me_phone}, 
+			me_address = #{me.me_address}
+		where me_name = #{br_ori_name};
+	</update>
+	
+	<select id="selectEmployeeList" resultType="EmployeeVO">
+		select * from employee order by em_num;
+	</select>
+</mapper>

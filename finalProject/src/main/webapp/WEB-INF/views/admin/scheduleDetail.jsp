@@ -8,7 +8,7 @@
 <title>예약회원 목록</title>
 </head>
 <body>
-	<main class="sub_container" id="skipnav_target">
+	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${branchProgram.bp_br_name} ${branchProgram.bp_sp_name} 예약회원 목록</h1>
 		<table class="table">
 			<thead>
@@ -34,6 +34,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-	</main>
+	<!-- </main> -->
 </body>
 </html>
