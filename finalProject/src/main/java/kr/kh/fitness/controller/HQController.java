@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.service.HQService;
 
@@ -28,7 +29,6 @@ public class HQController {
 		model.addAttribute("brList", brList);
 	    return "/hq/branch/list";
 	}
-	
 	@GetMapping("/branch/insert")
 	public String branchInsert() {
 	    return "/hq/branch/insert";
@@ -45,7 +45,6 @@ public class HQController {
 		}
 	    return "/main/message";
 	}
-	
 	@GetMapping("/branch/detail/{br_name}")
 	public String branchDetail(Model model, @PathVariable("br_name") String br_name, BranchVO branchVo) {
 		BranchVO branch = hqService.getBranch(branchVo);
@@ -56,7 +55,6 @@ public class HQController {
 		model.addAttribute("me", admin);
 		return "/hq/branch/detail";
 	}
-	
 	@PostMapping("/branch/update/{br_ori_name}")
 	public String branchUpdate(Model model, @PathVariable("br_ori_name") String br_ori_name, BranchVO branch, 
 								MultipartFile[] fileList, MemberVO admin, String[] numList) {
@@ -69,5 +67,12 @@ public class HQController {
 			model.addAttribute("url", "/hq/branch/detail/" + br_ori_name);
 		}
 		return "/main/message";
+	}
+	
+	@GetMapping("/employee/list")
+	public String employeeList(Model model) {
+		List<EmployeeVO> emList = hqService.getEmployeeList();
+		model.addAttribute("emList", emList);
+	    return "/hq/employee/list";
 	}
 }

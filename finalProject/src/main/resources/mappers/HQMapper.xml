@@ -64,4 +64,8 @@
 			me_address = #{me.me_address}
 		where me_name = #{br_ori_name};
 	</update>
+	
+	<select id="selectEmployeeList" resultType="EmployeeVO">
+		select * from employee order by em_num;
+	</select>
 </mapper>

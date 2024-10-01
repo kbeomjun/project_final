@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 
 public interface HQDAO {
@@ -30,5 +31,7 @@ public interface HQDAO {
 	boolean deleteBranchFile(@Param("bf")BranchFileVO branchFile);
 
 	boolean updatetAdmin(@Param("me")MemberVO admin, @Param("br_ori_name")String br_ori_name);
+
+	List<EmployeeVO> selectEmployeeList();
 
 }

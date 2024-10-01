@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 
 public interface HQService {
@@ -20,4 +21,6 @@ public interface HQService {
 	List<BranchFileVO> getBranchFileList(BranchVO branch);
 
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList);
+
+	List<EmployeeVO> getEmployeeList();
 }
