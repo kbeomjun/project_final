@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.ProgramDAO">
+	<select id="selectProgramList" resultType="SportsProgramVO">
+		select * from sports_program
+	</select>
+	<select id="selectBranchList" resultType="BranchVO">
+		select * from branch
+	</select>
+<!-- 	searchMonth, br_name, pr_name); -->
+	
+	<select id="selectProgramSchedule" resultType="ProgramScheduleDTO">
+		select 
+		    bps.bs_num,
+		    bps.bs_start,
+		    bps.bs_end,
+		    bps.bs_current,
+		    bp.bp_total,
+		    bp.bp_br_name,
+		    bp.bp_sp_name,
+		    e.em_name,
+		    e.em_gender
+		from 
+		    branch_program_schedule bps
+		join 
+		    branch_program bp on bps.bs_bp_num = bp.bp_num
+		join 
+	  		employee e on bp.bp_em_num = e.em_num
+	  	where
+	  		bps.bs_start like concat(#{searchMonth} ,'%')
+	  		<if test="br_name != ''">
+	  			and bp.bp_br_name = #{br_name}
+	  		</if>
+	  		<if test="pr_name != ''">
+	  			and bp.bp_sp_name = #{pr_name}
+	  		</if>	
+  		order by
+    		bps.bs_start ASC;
+	</select>
+	<select id="selectProgramReservationList" resultType="ProgramReservationVO">
+		select * from program_reservation where pr_me_id = #{user.me_id}
+	</select>
+	<select id="selectBranchProgramSchedule" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule where bs_num = #{bs_num}
+	</select>
+	<select id="selectBranchProgram" resultType="BranchProgramVO">
+		select * from branch_program where bp_num = #{bp_num}
+	</select>
+	<insert id="insertProgramReservationVO">
+		insert into program_reservation(pr_me_id, pr_bs_num) values(#{user.me_id}, #{bs_num});
+	</insert>
+	<update id="updateBranchProgramScheduleCurrent">
+		update branch_program_schedule set bs_current = (bs_current + 1) where bs_num = #{bps.bs_num}
+	</update>
+</mapper>

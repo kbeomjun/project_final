@@ -19,6 +19,8 @@
 	</form>
 	
 	<a href="/contextPath/dowload/image">다운로드 테스트</a>
+	<br>
+	<a href="<c:url value="/program/main"/>">프로그램 메인</a>
 	
 </body>
 </html>
