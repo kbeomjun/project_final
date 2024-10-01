@@ -45,9 +45,7 @@
 						<div class="gnb_side__info_wrap">
 							<div class="gnb_side__info">
 								<div>
-									<a href="#">
-										<img width="134" height="101" src="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/07/logo-side-area.png" class="image wp-image-2173  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" loading="eager">
-									</a>
+									<a href="<c:url value="/" />" class="gnb_side__logo" title="Fitness Logo"><span class="blind">Fitness Logo</span></a>
 								</div>
 								<div class="textbox">
 									<p>Lorem ipsum dolor sit amet, consectetur<br>

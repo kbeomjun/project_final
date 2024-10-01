@@ -345,6 +345,15 @@ dl, ol, ul{
 .gnb_side__sns:hover .gnb_side__sns_defualt, .gnb_side__sns:focus .gnb_side__sns_defualt{
   opacity: 0.5;
 }
+.gnb_side__logo{
+  display: inline-block;
+  width: 130px;
+  height: 92px;
+  background-image: url("../image/main/Logo-light.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 /* gnb info icon end */
 
 
