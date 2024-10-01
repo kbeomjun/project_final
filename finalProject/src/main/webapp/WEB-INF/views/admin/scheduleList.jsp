@@ -8,7 +8,7 @@
 <title>스케줄 목록</title>
 </head>
 <body>
-	<main class="sub_container" id="skipnav_target">
+	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${br_name} 스케줄 목록</h1>
 		<table class="table">
 			<thead>
@@ -50,6 +50,6 @@
 		<div class="text-right mb-3">	
 			<a href="<c:url value="/admin/schedule/insert"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 		</div>
-	</main>
+	<!-- </main> -->
 </body>
 </html>

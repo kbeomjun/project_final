@@ -6,7 +6,9 @@
 <head>
 </head>
 <body>
-	<a class="btn btn-dark br-3" href="<c:url value="/program/info"/>">프로그램 안내</a>
-	<a class="btn btn-outline-dark" href="<c:url value="/program/schedule"/>">프로그램 일정</a>
+	
+		<a class="btn btn-dark br-3" href="<c:url value="/program/info"/>">프로그램 안내</a>
+		<a class="btn btn-outline-dark" href="<c:url value="/program/schedule"/>">프로그램 일정</a>
+	</main>
 </body>
 </html>

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<!-- main container -->
-	<main class="sub_container" id="skipnav_target">
+	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h2 class="mb10">회원권</h2>
 		<table class="table">
 			<thead>
@@ -32,6 +32,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-	</main>
+	<!-- </main> -->
 </body>
 </html>
