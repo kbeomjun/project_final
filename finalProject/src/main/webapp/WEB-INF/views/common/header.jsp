@@ -52,7 +52,7 @@
 					<li class="gnb__item"><a href="<c:url value="/membership/membershipList" />" class="gnb__link">회원권</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">프로그램</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">고객센터</a></li>
-					<li class="gnb__item"><a href="#" class="gnb__link">지점관리</a></li>
+					<li class="gnb__item"><a href="<c:url value="/admin/menu/list"/>" class="gnb__link">지점관리</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">본사관리</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">로그인</a></li>
 				</ul>

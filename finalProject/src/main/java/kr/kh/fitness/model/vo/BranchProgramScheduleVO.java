@@ -20,5 +20,10 @@ public class BranchProgramScheduleVO {
     private Date bs_end;         // 종료일
     private int bs_current;      // 현재 참가자 수
     private int bs_bp_num;       // 지점 프로그램 번호
-	    
+	
+    private int bp_num;
+    private int bp_total;
+    private String bp_br_name;
+    private String bp_sp_name;
+    private String em_name;
 }
