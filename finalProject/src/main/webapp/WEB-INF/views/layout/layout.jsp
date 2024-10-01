@@ -14,6 +14,7 @@
 	<script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/popper.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/bootstrap.bundle.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/jquery.validate.min.js"/>"></script>
 </head>
 <body>
     <tiles:insertAttribute name="header"/>

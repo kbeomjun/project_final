@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1 class="mt-3 mb-3">${br_name} 프로그램 목록</h1>
-	<table class="table">
+	<table class="table text-center">
 		<thead>
 			<tr>
 				<th>프로그램명</th>
@@ -24,13 +24,15 @@
 					<td>${list.employee.em_name}</td>
 					<td>${list.bp_total}</td>
 					<td>
-						<c:url var="url" value="/admin/program/update">
-							<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
-							<c:param name="bp_em_num" value="${list.bp_em_num}"/>
-							<c:param name="bp_total" value="${list.bp_total}"/>
-							<c:param name="employee.em_name" value="${list.employee.em_name}"/>
-						</c:url>
-						<a href="${url}" class="btn btn-outline-warning btn-sm">수정</a>
+						<c:if test="${list.program.sp_type == '그룹'}">
+							<c:url var="url" value="/admin/program/update">
+								<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
+								<c:param name="bp_em_num" value="${list.bp_em_num}"/>
+								<c:param name="bp_total" value="${list.bp_total}"/>
+								<c:param name="employee.em_name" value="${list.employee.em_name}"/>
+							</c:url>
+							<a href="${url}" class="btn btn-outline-warning btn-sm">수정</a>
+						</c:if>
 						<c:url var="url" value="/admin/program/delete">
 							<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
 							<c:param name="bp_em_num" value="${list.bp_em_num}"/>

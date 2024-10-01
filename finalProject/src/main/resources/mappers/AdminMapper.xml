@@ -52,11 +52,26 @@
             <result property="me_limit" column="me_limit" />
             <result property="me_noshow" column="me_noshow" />
             <result property="me_cancel" column="me_cancel" />                                   
+        </association>
+        
+        <association property="program" javaType="kr.kh.fitness.model.vo.SportsProgramVO">
+        	<id property="sp_name" column="sp_name" />
+            <result property="sp_detail" column="sp_detail" />
+            <result property="sp_type" column="sp_type" />
         </association>        
     </resultMap>
 
 	<select id="selectBranchProgramList" resultMap="BranchProgramMap">
-		select * from branch_program join employee on em_num = bp_em_num where bp_br_name = #{br_name}
+		select 
+			* 
+		from 
+			branch_program 
+		join 
+			employee on em_num = bp_em_num 
+		join
+			sports_program on sp_name = bp_sp_name
+		where 
+			bp_br_name = #{br_name}
 	</select>
 	
 	<select id="selectProgramList" resultType="SportsProgramVO">

@@ -24,4 +24,5 @@ public class BranchProgramVO {
     private BranchProgramScheduleVO schedule;
     private ProgramReservationVO reservation;
     private MemberVO member;
+    private SportsProgramVO program;
 }
