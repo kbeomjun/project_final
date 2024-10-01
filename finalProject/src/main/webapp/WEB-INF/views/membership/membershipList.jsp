@@ -27,7 +27,7 @@
 						<td>${ptList.pt_type}</td>
 						<td>${ptList.pt_date}</td>
 						<td>${ptList.pt_count}</td>
-						<td>${ptList.pt_price}</td>
+						<td>${ptList.pt_price}원</td>
 					</tr>
 				</c:forEach>
 			</tbody>
