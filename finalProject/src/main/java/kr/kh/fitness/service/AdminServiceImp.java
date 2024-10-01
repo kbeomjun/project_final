@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.AdminDAO;
+import kr.kh.fitness.model.vo.BranchOrderVO;
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -60,6 +62,12 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		
+		BranchProgramScheduleVO checkSchedule = adminDao.selectSchedule(branchProgram);
+		
+		if(checkSchedule != null) {
+			return false;
+		}
+		
 		if(adminDao.updateBranchProgram(branchProgram)) {
 			return true;
 		}
@@ -91,6 +99,14 @@ public class AdminServiceImp implements AdminService{
 	@Override
 	public List<MemberVO> getScheduleMemberList(int bp_num) {
 		return adminDao.selectScheduleMemberList(bp_num);
+	}
+
+	@Override
+	public List<BranchOrderVO> getBranchOrderList(String br_name) {
+		if(br_name == null) {
+			return null;
+		}
+		return adminDao.selectBranchOrderList(br_name);
 	}
 
 }

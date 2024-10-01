@@ -26,6 +26,7 @@
 					<td>
 						<c:if test="${list.program.sp_type == '그룹'}">
 							<c:url var="url" value="/admin/program/update">
+								<c:param name="bp_num" value="${list.bp_num}"/>
 								<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
 								<c:param name="bp_em_num" value="${list.bp_em_num}"/>
 								<c:param name="bp_total" value="${list.bp_total}"/>
@@ -44,6 +45,8 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="<c:url value="/admin/program/insert"/>" class="btn btn-outline-success btn-sm">프로그램 추가</a>
+	<div class="text-right mb-3">	
+		<a href="<c:url value="/admin/program/insert"/>" class="btn btn-outline-success btn-sm">프로그램 추가</a>
+	</div>
 </body>
 </html>

@@ -13,6 +13,7 @@
 	<h1 class="mt-3 mb-3">${branchName} 프로그램 수정</h1>
 	<form action="<c:url value="/admin/program/update"/>" method="post" id="form">
 		<input type="hidden" name="bp_br_name" value="${branchName}">
+		<input type="hidden" name="bp_num" value="${branchProgram.bp_num}">
 		<input type="hidden" name="bp_em_num" value="${branchProgram.bp_em_num}">
 		<div class="form-group">
 			<label>프로그램:</label>
@@ -26,8 +27,8 @@
 			<label>총 인원수:</label>
 			<input class="form-control" name="bp_total" value="${branchProgram.bp_total}" placeholder="숫자를 입력하세요."/>
 		</div>
-		<div class="text-right">
-			<button type="submit" class="btn btn-outline-success">수정</button>
+		<div class="text-right mb-3">
+			<button type="submit" class="btn btn-outline-warning">수정</button>
 		</div>
 	</form>
 	

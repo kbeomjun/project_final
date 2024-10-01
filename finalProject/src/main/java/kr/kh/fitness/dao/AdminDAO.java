@@ -2,6 +2,8 @@ package kr.kh.fitness.dao;
 
 import java.util.List;
 
+import kr.kh.fitness.model.vo.BranchOrderVO;
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -19,6 +21,8 @@ public interface AdminDAO {
 
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
+	BranchProgramScheduleVO selectSchedule(BranchProgramVO branchProgram);
+	
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
@@ -26,5 +30,7 @@ public interface AdminDAO {
 	List<BranchProgramVO> selectBranchScheduleList(String br_name);
 
 	List<MemberVO> selectScheduleMemberList(int bp_num);
+
+	List<BranchOrderVO> selectBranchOrderList(String br_name);
 
 }

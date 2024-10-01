@@ -91,6 +91,10 @@
 		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
 	</insert>
 	
+	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total}
+	</select>
+	
 	<update id="updateBranchProgram">
 		update branch_program set bp_total = #{bp_total} where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
 	</update>
@@ -124,4 +128,9 @@
 		where
 			bs_bp_num = #{bp_num} 
 	</select>
+	
+	<select id="selectBranchOrderList" resultType="BranchOrderVO">
+		select * from branch_order where bo_br_name = #{br_name}
+	</select>
+	
 </mapper>

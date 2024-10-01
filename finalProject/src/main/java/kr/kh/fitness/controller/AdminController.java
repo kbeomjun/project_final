@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -32,6 +32,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	//지점 프로그램 목록(프로그램명+트레이너명+총인원수)
 	@GetMapping("/program/list")
 	public String programMagagement(Model model, HttpSession session, String br_name) {
 		
@@ -50,6 +51,7 @@ public class AdminController {
 		}
 	}
 	
+	//지점 프로그램 등록 get
 	@GetMapping("/program/insert")
 	public String programInsert(Model model, HttpSession session) {
 		
@@ -64,6 +66,7 @@ public class AdminController {
 		return "/admin/programInsert";
 	}
 	
+	//지점 프로그램 등록 post
 	@PostMapping("/program/insert")
 	public String programInsertPost(Model model, BranchProgramVO branchProgram) {
 		
@@ -77,6 +80,7 @@ public class AdminController {
 		return "/main/message";
 	}
 	
+	//지점 프로그램 수정 get
 	@GetMapping("/program/update")
 	public String programUpdate(Model model, BranchProgramVO branchProgram, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -86,6 +90,7 @@ public class AdminController {
 		return "/admin/programUpdate";
 	}
 	
+	//지점 프로그램 수정 post
 	@PostMapping("/program/update")
 	public String programUpdatePost(Model model, BranchProgramVO branchProgram) {
 		
@@ -99,9 +104,9 @@ public class AdminController {
 		return "/main/message";
 	}
 	
+	//지점 프로그램 삭제
 	@GetMapping("/program/delete")
 	public String programDelete(Model model, BranchProgramVO branchProgram) {
-		System.out.println(branchProgram);
 		
 		if(adminService.deleteBranchProgram(branchProgram)) {
 			model.addAttribute("msg", "삭제에 성공했습니다.");
@@ -113,6 +118,7 @@ public class AdminController {
 		return "/main/message";
 	}
 	
+	//지점 프로그램 일정 목록(프로그램명+트레이너명+[예약인원/총인원]+프로그램날짜+프로그램시간)
 	@GetMapping("/schedule/list")
 	public String programSchedule(Model model, HttpSession session, String br_name) {
 		try {
@@ -130,9 +136,9 @@ public class AdminController {
 		}
 	}
 	
+	//지점 프로그램 일정 상세 -> 예약한 회원 목록(이름+전화번호+생년월일+성별+노쇼경고횟수)
 	@GetMapping("/schedule/detail")
 	public String scheduleDetail(Model model, BranchProgramVO branchProgram) {
-		
 		
 		List<MemberVO> memberList = adminService.getScheduleMemberList(branchProgram.getBp_num());
 		
@@ -140,5 +146,25 @@ public class AdminController {
 		model.addAttribute("branchProgram", branchProgram);
 		
 		return "/admin/scheduleDetail";
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//지점 발주 신청목록
+	@GetMapping("/order/list")
+	public String orderList(Model model, HttpSession session, String br_name) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			br_name = user.getMe_name();
+			
+			List<BranchOrderVO> orderList = adminService.getBranchOrderList(br_name);
+			model.addAttribute("orderList", orderList);
+			model.addAttribute("br_name", br_name);
+			return "/admin/orderList";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/home";
+		}		
 	}
 }
