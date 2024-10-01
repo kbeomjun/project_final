@@ -2,10 +2,10 @@ use fitness;
 
 # 지점(지점명, 연락처, 지점주소)
 delete from fitness.branch;
-insert into fitness.branch(br_name, br_phone, br_address)
-values("역삼점", "021231234", "서울 강남구 테헤란로 156")
-	,("강남점", "022342345", "서울 강남구 테헤란로 156")
-    ,("신논현점", "023453456", "서울 강남구 테헤란로 156");
+insert into fitness.branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress)
+values("역삼점", "021231234", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)")
+	,("강남점", "022342345", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)")
+    ,("신논현점", "023453456", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)");
 
 
 # 회원(아이디, 비밀번호, 이메일, 이름, 전화번호, 주소, 생년월일, 성별, 권한)
@@ -13,7 +13,9 @@ values("역삼점", "021231234", "서울 강남구 테헤란로 156")
 delete from fitness.member;
 insert into fitness.member(me_id, me_pw, me_email, me_name, me_phone, me_address, me_birth, me_gender, me_authority)
 values("hq_admin", "1234", "hq_admin@naver.com", "최고관리자", "01012345678", "주소", "20000101", "남자", "HQADMIN")
-	,("br_admin", "1234", "br_admin@naver.com", "지점관리자", "01012345678", "주소", "20000101", "남자", "BRADMIN")
+	,("br_admin1", "1234", "br_admin1@naver.com", "강남점", "01012345678", "주소", "20000101", "남자", "BRADMIN")
+    ,("br_admin2", "1234", "br_admin2@naver.com", "역삼점", "022342345", "주소", "20000101", "남자", "BRADMIN")
+    ,("br_admin3", "1234", "br_admin3@naver.com", "신논현점", "023453456", "주소", "20000101", "남자", "BRADMIN")
     ,("admin", "1234", "admin@naver.com", "관리자", "01012345678", "주소", "20000101", "남자", "ADMIN")
 	,("user1", "1234", "user1@naver.com", "김유저", "01012345678", "주소", "19991231", "남자", "USER")
     ,("user2", "1234", "user2@naver.com", "박유저", "01012345678", "주소", "20001212", "여자", "USER")
@@ -76,14 +78,14 @@ values(1, "출고중", NOW(), "역삼점", "런닝머신")
 # 직원(직원이름, 전화번호, 이메일, 성별, 직책, 입사일, 주소, 직원파일명, 지점명)
 # 지점 테이블 필요
 delete from fitness.employee;
-insert into fitness.employee(em_name, em_phone, em_email, em_gender, em_position, em_join, em_address, em_fi_name, em_br_name)
-values("김요가", "01011111111", "yoga1@naver.com", "여자", "요가강사", NOW(), "직원 주소", "김요가.jpg", "역삼점")
-	,("박필라테스", "01022222222", "pilates1@naver.com", "여자", "필라테스강사", NOW(), "직원 주소", "박필라테스.jpg", "역삼점")
-    ,("이피티", "01033333333", "pt1@naver.com", "여자", "PT트레이너", NOW(), "직원 주소", "이피티.jpg", "역삼점")
-	,("박요가", "01011111111", "yoga2@naver.com", "여자", "요가강사", NOW(), "직원 주소", "김요가.jpg", "강남점")
-	,("이필라테스", "01022222222", "pilates2@naver.com", "여자", "필라테스강사", NOW(), "직원 주소", "박필라테스.jpg", "강남점")
-    ,("김피티", "01033333333", "pt2@naver.com", "여자", "PT트레이너", NOW(), "직원 주소", "이피티.jpg", "강남점")
-	,("이요가", "01011111111", "yoga3@naver.com", "여자", "요가강사", NOW(), "직원 주소", "김요가.jpg", "신논현점")
+insert into fitness.employee(em_name, em_phone, em_email, em_gender, em_position, em_join, em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+values("김요가", "01011111111", "yoga1@naver.com", "여자", "요가강사", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "김요가.jpg", "역삼점")
+	,("박필라테스", "01022222222", "pilates1@naver.com", "여자", "필라테스강사", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "박필라테스.jpg", "역삼점")
+    ,("이피티", "01033333333", "pt1@naver.com", "여자", "PT트레이너", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "이피티.jpg", "역삼점")
+	,("박요가", "01011111111", "yoga2@naver.com", "여자", "요가강사", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "김요가.jpg", "강남점")
+	,("이필라테스", "01022222222", "pilates2@naver.com", "여자", "필라테스강사", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "박필라테스.jpg", "강남점")
+    ,("김피티", "01033333333", "pt2@naver.com", "여자", "PT트레이너", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "이피티.jpg", "강남점")
+	,("이요가", "01011111111", "yoga3@naver.com", "여자", "요가강사", NOW(), "직원 우편번호", "직원 주소", "직원 상세주소", "직원 추가주소", "김요가.jpg", "신논현점")
 	,("김필라테스", "01022222222", "pilates3@naver.com", "여자", "필라테스강사", NOW(), "직원 주소", "박필라테스.jpg", "신논현점")
     ,("박피티", "01033333333", "pt3@naver.com", "여자", "PT트레이너", NOW(), "직원 주소", "이피티.jpg", "신논현점");
 

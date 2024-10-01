@@ -19,7 +19,10 @@ public class EmployeeVO {
     private String em_gender;         // 직원 성별
     private String em_position;       // 직원 직책
     private Date em_join;             // 직원 입사일
+    private String em_postcode;
     private String em_address;        // 직원 주소
+    private String em_detailAddress;
+    private String em_extraAddress;
     private String em_fi_name;        // 직원 사진 파일 이름
     private String em_br_name;        // 지점 이름
 }
