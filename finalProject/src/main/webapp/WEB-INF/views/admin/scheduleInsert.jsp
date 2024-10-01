@@ -14,68 +14,70 @@
 </style>
 </head>
 <body>
-	<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
-	<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
-		<input type="hidden" name="br_name" value="${branchName}">
-		<input type="hidden" name="me_id" id="hiddenMeId" value="" /> <!-- Hidden input for me_id -->
-		
-		<div class="form-group">
-			<label>프로그램:</label>
-			<select class="form-control" name="bs_bp_num" id="programSelect">
-				<c:forEach items="${programList}" var="list">
-					<option value="${list.bp_num}" data-sp-type="${list.program.sp_type}">
-						${list.bp_sp_name}(${list.employee.em_name}, ${list.bp_total}인)
-					</option>
-				</c:forEach>		
-			</select>
-		</div>
-		
-		<div class="form-group">
-			<label>날짜:</label>
-			<input type="date" id="currentDate" name="date"/>
-		</div>
-		
-		<div class="form-group">
-			<label>시작시간:</label>
-			<input type="time" id="startTime" name="startTime" step="3600"/>
-		</div>
-		
-		<div class="form-group">
-			<label>마감시간:</label>
-			<input type="time" id="endTime" name="endTime" step="3600"/>
-		</div>
-		
-		<!-- 회원 선택 테이블 -->
-		<div class="form-group" id="memberListTable" style="display: none;">
-			<label>회원 선택:</label>
-			<table class="table text-center">
-				<thead>
-					<tr>
-						<th></th>
-						<th>회원 이름</th>
-						<th>번호</th>
-						<th>이메일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${memberList}" var="member">
+	<main class="sub_container" id="skipnav_target">
+		<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
+		<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
+			<input type="hidden" name="br_name" value="${branchName}">
+			<input type="hidden" name="me_id" id="hiddenMeId" value="" /> <!-- Hidden input for me_id -->
+			
+			<div class="form-group">
+				<label>프로그램:</label>
+				<select class="form-control" name="bs_bp_num" id="programSelect">
+					<c:forEach items="${programList}" var="list">
+						<option value="${list.bp_num}" data-sp-type="${list.program.sp_type}">
+							${list.bp_sp_name}(${list.employee.em_name}, ${list.bp_total}인)
+						</option>
+					</c:forEach>		
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label>날짜:</label>
+				<input type="date" id="currentDate" name="date"/>
+			</div>
+			
+			<div class="form-group">
+				<label>시작시간:</label>
+				<input type="time" id="startTime" name="startTime" step="3600"/>
+			</div>
+			
+			<div class="form-group">
+				<label>마감시간:</label>
+				<input type="time" id="endTime" name="endTime" step="3600"/>
+			</div>
+			
+			<!-- 회원 선택 테이블 -->
+			<div class="form-group" id="memberListTable" style="display: none;">
+				<label>회원 선택:</label>
+				<table class="table text-center">
+					<thead>
 						<tr>
-							<td>
-								<input type="radio" name="me_id" value="${member.me_id}"/>
-							</td>
-							<td>${member.me_name} (${member.me_gender})</td>
-							<td>${member.me_phone}</td>
-							<td>${member.me_email}</td>
+							<th></th>
+							<th>회원 이름</th>
+							<th>번호</th>
+							<th>이메일</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>		
-		
-		<div class="text-right mb-3">
-			<button type="submit" class="btn btn-outline-success">등록</button>
-		</div>
-	</form>
+					</thead>
+					<tbody>
+						<c:forEach items="${memberList}" var="member">
+							<tr>
+								<td>
+									<input type="radio" name="me_id" value="${member.me_id}"/>
+								</td>
+								<td>${member.me_name} (${member.me_gender})</td>
+								<td>${member.me_phone}</td>
+								<td>${member.me_email}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>		
+			
+			<div class="text-right mb-3">
+				<button type="submit" class="btn btn-outline-success">등록</button>
+			</div>
+		</form>
+	</main>
 
 	<script>
 		// 현재 날짜 계산

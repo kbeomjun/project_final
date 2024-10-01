@@ -116,7 +116,9 @@ public class AdminServiceImp implements AdminService{
 		if(!adminDao.insertSchedule(schedule)) {
 			return false;
 		}
-		if(me_id != null) {
+		
+		System.out.println(me_id);
+		if(me_id.length() != 0) {
 			adminDao.insertReservationByPTManager(me_id, schedule.getBs_num());
 			adminDao.updateScheduleByPTReservation(schedule.getBs_num());
 		}
