@@ -30,12 +30,17 @@ public class HQServiceImp implements HQService {
 	@Override
 	public String insertBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin) {
 		String msg = "";
-		try {
-			if(!hqDao.insertBranch(branch)) {
-				msg = "지점을 등록하지 못했습니다.";
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
+		if(branch == null) {
+			msg = "지점 정보가 없습니다.";
+		}
+		if(fileList == null) {
+			msg = "사진 정보가 없습니다.";
+		}
+		if(admin == null) {
+			msg = "관리자 정보가 없습니다.";
+		}
+		
+		if(!hqDao.insertBranch(branch)) {
 			msg = "지점을 등록하지 못했습니다.";
 		}
 		if(!msg.equals("")) {
@@ -85,12 +90,17 @@ public class HQServiceImp implements HQService {
 	@Override
 	public String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList) {
 		String msg = "";
-		try {
-			if(!hqDao.updateBranch(branch, br_ori_name)) {
-				msg = "지점을 수정하지 못했습니다.";
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
+		if(branch == null) {
+			msg = "지점 정보가 없습니다.";
+		}
+		if(fileList == null) {
+			msg = "사진 정보가 없습니다.";
+		}
+		if(admin == null) {
+			msg = "관리자 정보가 없습니다.";
+		}
+		
+		if(!hqDao.updateBranch(branch, br_ori_name)) {
 			msg = "지점을 수정하지 못했습니다.";
 		}
 		if(!msg.equals("")) {
