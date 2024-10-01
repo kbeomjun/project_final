@@ -16,7 +16,7 @@
 		          		<a class="nav-link active" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">직원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
 	       	 		</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="#">운동기구 관리</a>
