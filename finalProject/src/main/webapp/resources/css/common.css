@@ -442,7 +442,6 @@ dl, ol, ul{
 /* main_container */
 .main_container, .sub_container{
   min-height: calc(100vh - 524px);
-  padding: 20px 10px;
 }
 .main_banner_wrap{
 
@@ -455,7 +454,8 @@ dl, ol, ul{
   height: 919px;
 }
 .sub_container{
-	margin-top: 110px;
+  margin-top: 110px;
+  padding: 20px 10px;
 }
 /* main_container end */
 
