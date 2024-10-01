@@ -11,12 +11,12 @@
 		<!-- main header -->
 		<header class="main_header">
 			<div class="logo_wrap">
-				<h1><a href="#" class="logo" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
+				<h1><a href="<c:url value="/" />" class="logo logo-dark" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
 			</div>
 			<nav class="gnb_wrap">
 				<ul class="gnb">
 					<li class="gnb__item"><a href="#" class="gnb__link">지점 조회</a></li>
-					<li class="gnb__item"><a href="#" class="gnb__link">회원권</a></li>
+					<li class="gnb__item"><a href="<c:url value="/membership/membershipList" />" class="gnb__link">회원권</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">프로그램</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">고객센터</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">지점관리</a></li>
