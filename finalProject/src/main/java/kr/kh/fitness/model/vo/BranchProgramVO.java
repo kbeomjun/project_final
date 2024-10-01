@@ -19,4 +19,10 @@ public class BranchProgramVO {
     private String bp_br_name;    // 지점 이름
     private String bp_sp_name;    // 프로그램 이름
     private int bp_em_num;        // 담당 직원 번호
+    
+    private EmployeeVO employee;
+    private BranchProgramScheduleVO schedule;
+    private ProgramReservationVO reservation;
+    private MemberVO member;
+    private SportsProgramVO program;
 }

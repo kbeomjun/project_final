@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.AdminDAO">
+
+    <resultMap id="BranchProgramMap" type="BranchProgramVO">
+        <id property="bp_num" column="bp_num" />
+        <result property="bp_total" column="bp_total" />
+        <result property="bp_br_name" column="bp_br_name" />
+        <result property="bp_sp_name" column="bp_sp_name" />
+        <result property="bp_em_num" column="bp_em_num" />
+
+        <collection property="employee" javaType="kr.kh.fitness.model.vo.EmployeeVO">
+            <id property="em_num" column="em_num" />
+            <result property="em_name" column="em_name" />
+            <result property="em_phone" column="em_phone" />
+            <result property="em_email" column="em_email" />
+            <result property="em_gender" column="em_gender" />
+            <result property="em_join" column="em_join" />
+            <result property="em_address" column="em_address" />
+            <result property="em_fi_name" column="em_fi_name" />
+            <result property="em_br_name" column="em_br_name" />
+        </collection>
+        
+        <collection property="schedule" javaType="kr.kh.fitness.model.vo.BranchProgramScheduleVO">
+    	    <id property="bs_num" column="bs_num" />
+            <result property="bs_start" column="bs_start" />
+            <result property="bs_end" column="bs_end" />
+            <result property="bs_current" column="bs_current" />
+            <result property="bs_bp_num" column="bs_bp_num" />
+        </collection>
+        
+        <collection property="reservation" javaType="kr.kh.fitness.model.vo.ProgramReservationVO">
+    	    <id property="pr_num" column="pr_num" />
+            <result property="pr_date" column="pr_date" />
+            <result property="pr_me_id" column="pr_me_id" />
+            <result property="pr_bs_num" column="pr_bs_num" />
+        </collection>
+        
+        <collection property="member" javaType="kr.kh.fitness.model.vo.MemberVO">
+    	    <id property="me_id" column="me_id" />
+            <result property="me_pw" column="me_pw" />
+            <result property="me_email" column="me_email" />
+            <result property="me_name" column="me_name" />
+            <result property="me_phone" column="me_phone" />
+            <result property="me_address" column="me_address" />
+            <result property="me_birth" column="me_birth" />
+            <result property="me_gender" column="me_gender" />
+            <result property="me_authority" column="me_authority" />
+            <result property="me_cookie" column="me_cookie" />
+            <result property="me_limit" column="me_limit" />
+            <result property="me_noshow" column="me_noshow" />
+            <result property="me_cancel" column="me_cancel" />                                   
+        </collection>
+        
+        <collection property="program" javaType="kr.kh.fitness.model.vo.SportsProgramVO">
+        	<id property="sp_name" column="sp_name" />
+            <result property="sp_detail" column="sp_detail" />
+            <result property="sp_type" column="sp_type" />
+        </collection>  
+
+    </resultMap>
+
+	<select id="selectBranchProgramList" resultMap="BranchProgramMap">
+		select 
+			* 
+		from 
+			branch_program 
+		join 
+			employee on em_num = bp_em_num 
+		join
+			sports_program on sp_name = bp_sp_name
+		where 
+			bp_br_name = #{br_name}
+	</select>
+	
+	<select id="selectProgramList" resultType="SportsProgramVO">
+		select * from sports_program
+	</select>
+	
+	<select id="selectEmployeeList" resultType="EmployeeVO">
+		select * from Employee where em_br_name = #{em_br_name}
+	</select>
+	
+	<select id="selectBranchProgram" resultType="BranchProgramVO">
+		select * from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+	</select>
+	
+	<insert id="insertBranchProgram">
+		insert into branch_program(bp_total, bp_br_name, bp_sp_name, bp_em_num)
+		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
+	</insert>
+	
+	<select id="selectScheduleWithCurrent" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total}
+	</select>
+	
+	<update id="updateBranchProgram">
+		update branch_program set bp_total = #{bp_total} where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+	</update>
+
+	<delete id="deleteBranchProgram">
+		delete from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+	</delete>
+	
+	<select id="selectBranchScheduleList" resultType="BranchProgramScheduleVO">
+		select
+			branch_program_schedule.*, bp_num, bp_total, bp_br_name, bp_sp_name, em_name  
+		from 
+			branch_program_schedule
+		join
+			branch_program on bp_num = bs_bp_num
+		join
+			employee on bp_em_num = em_num
+		where
+			bp_br_name = #{br_name}
+	</select>
+	
+	<select id="selectScheduleMemberList" resultType="MemberVO">
+		select 
+			* 
+		from 
+			program_reservation
+		join
+			member on pr_me_id = me_id
+		join
+			branch_program_schedule on pr_bs_num = bs_num
+		where
+			bs_bp_num = #{bp_num} 
+	</select>
+	
+	<select id="selectMemberList" resultType="MemberVO">
+		select * from member where me_authority = 'user'
+	</select>
+	
+	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule where bs_bp_num = #{bs_bp_num} and (#{bs_end} >= bs_start and bs_end >= #{bs_start})
+	</select>
+	
+	<insert id="insertSchedule" useGeneratedKeys="true" keyProperty="bs_num">
+		insert into branch_program_schedule(bs_start, bs_end, bs_bp_num)
+		values(#{bs_start}, #{bs_end}, #{bs_bp_num})
+	</insert>
+	
+	<insert id="insertReservationByPTManager">
+		insert into program_reservation(pr_me_id, pr_bs_num)
+		values(#{me_id}, #{bs_num})
+	</insert>
+	
+	<select id="updateScheduleByPTReservation">
+		update branch_program_schedule set bs_current = bs_current + 1 where bs_num = #{bs_num}
+	</select>
+	
+	<select id="selectBranchOrderList" resultType="BranchOrderVO">
+		select * from branch_order where bo_br_name = #{br_name}
+	</select>
+	
+</mapper>

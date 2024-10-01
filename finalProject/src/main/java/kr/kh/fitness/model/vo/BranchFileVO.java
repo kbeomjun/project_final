@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class BranchFileVO {
-	private int bf_num;         // 파일 번호
+    private int bf_num;         // 파일 번호
     private String bf_name;     // 파일 이름 (형식 : 경로+이름.확장자)
     private String bf_br_name;	// 지점 이름
-    
-    public BranchFileVO(String bf_name, String br_name) {
-    	this.bf_name = bf_name;
-    	this.bf_br_name = br_name;
-    }
 }

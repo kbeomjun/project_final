@@ -16,5 +16,7 @@ public class BranchVO {
     private String br_detailAddress;
     private String br_extraAddress;
     private String br_detail;    // 지점 상세 정보
+
+		
     private String br_admin;
 }
