@@ -2,6 +2,8 @@ package kr.kh.fitness.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
@@ -21,7 +23,7 @@ public interface AdminDAO {
 
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
-	BranchProgramScheduleVO selectSchedule(BranchProgramVO branchProgram);
+	BranchProgramScheduleVO selectScheduleWithCurrent(BranchProgramVO branchProgram);
 	
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
@@ -32,5 +34,13 @@ public interface AdminDAO {
 	List<MemberVO> selectScheduleMemberList(int bp_num);
 
 	List<BranchOrderVO> selectBranchOrderList(String br_name);
+	
+	BranchProgramScheduleVO selectSchedule(BranchProgramScheduleVO schedule);
+
+	boolean insertSchedule(BranchProgramScheduleVO schedule);
+	
+	void insertReservation(@Param("me_id")String me_id, @Param("bs_num")int bs_num);
+	
+	List<EmployeeVO> selectMemberList();
 
 }

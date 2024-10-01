@@ -47,7 +47,7 @@
 		</tbody>
 	</table>
 	<div class="text-right mb-3">	
-		<a href="<c:url value="#"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
+		<a href="<c:url value="/admin/schedule/insert"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 	</div>
 </body>
 </html>

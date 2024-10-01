@@ -3,6 +3,7 @@ package kr.kh.fitness.service;
 import java.util.List;
 
 import kr.kh.fitness.model.vo.BranchOrderVO;
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -27,5 +28,9 @@ public interface AdminService {
 	List<MemberVO> getScheduleMemberList(int bp_num);
 
 	List<BranchOrderVO> getBranchOrderList(String br_name);
+
+	List<EmployeeVO> getMemberList();
+
+	boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id);
 
 }

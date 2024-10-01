@@ -62,7 +62,7 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		
-		BranchProgramScheduleVO checkSchedule = adminDao.selectSchedule(branchProgram);
+		BranchProgramScheduleVO checkSchedule = adminDao.selectScheduleWithCurrent(branchProgram);
 		
 		if(checkSchedule != null) {
 			return false;
@@ -102,11 +102,33 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
+	public List<EmployeeVO> getMemberList() {
+		return adminDao.selectMemberList();
+	}
+
+	@Override
+	public boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id) {
+		
+		BranchProgramScheduleVO checkSchedule = adminDao.selectSchedule(schedule);
+		if(checkSchedule != null) {
+			return false;
+		}
+		if(!adminDao.insertSchedule(schedule)) {
+			return false;
+		}
+		if(me_id != null) {
+			adminDao.insertReservation(me_id, schedule.getBs_num());
+		}
+		
+		return true;
+	}
+
+	@Override
 	public List<BranchOrderVO> getBranchOrderList(String br_name) {
 		if(br_name == null) {
 			return null;
 		}
 		return adminDao.selectBranchOrderList(br_name);
 	}
-
+	
 }

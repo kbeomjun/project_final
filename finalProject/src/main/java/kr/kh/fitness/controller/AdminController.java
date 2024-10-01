@@ -1,5 +1,8 @@
 package kr.kh.fitness.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.kh.fitness.model.vo.BranchOrderVO;
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -146,6 +150,55 @@ public class AdminController {
 		model.addAttribute("branchProgram", branchProgram);
 		
 		return "/admin/scheduleDetail";
+	}
+	
+	//지점 프로그램 일정 추가 get
+	@GetMapping("/schedule/insert")
+	public String scheduleInsert(Model model, HttpSession session) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		List<BranchProgramVO> programList = adminService.getBranchProgramList(user.getMe_name());
+		List<EmployeeVO> memberList = adminService.getMemberList();
+		
+		model.addAttribute("programList", programList);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("branchName", user.getMe_name());
+		
+		return "/admin/scheduleInsert";
+	}
+	
+	//지점 프로그램 일정 추가 post
+	@PostMapping("/schedule/insert")
+	public String scheduleInsertPost(Model model, String br_name, String date, String startTime, String endTime, BranchProgramScheduleVO schedule, String me_id) {
+		
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm"); // 날짜 형식 지정
+        Date bs_start;
+        Date bs_end;
+        
+		try {
+			bs_start = formatter.parse(date + " " + startTime);
+			bs_end = formatter.parse(date + " " + endTime);
+			schedule.setBs_start(bs_start);
+			schedule.setBs_end(bs_end);
+			System.out.println(schedule);
+
+			if(adminService.insertSchedule(schedule, me_id)) {
+				model.addAttribute("msg", "등록에 성공했습니다.");
+				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
+			} else {
+				model.addAttribute("msg", "등록에 실패했습니다.");
+				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
+			}
+			
+			model.addAttribute("br_name", br_name);
+			return "/main/message";
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "/main/home";
+		}
+ 
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////

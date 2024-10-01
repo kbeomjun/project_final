@@ -11,7 +11,7 @@
         <result property="bp_sp_name" column="bp_sp_name" />
         <result property="bp_em_num" column="bp_em_num" />
 
-        <association property="employee" javaType="kr.kh.fitness.model.vo.EmployeeVO">
+        <collection property="employee" javaType="kr.kh.fitness.model.vo.EmployeeVO">
             <id property="em_num" column="em_num" />
             <result property="em_name" column="em_name" />
             <result property="em_phone" column="em_phone" />
@@ -21,24 +21,24 @@
             <result property="em_address" column="em_address" />
             <result property="em_fi_name" column="em_fi_name" />
             <result property="em_br_name" column="em_br_name" />
-        </association>
+        </collection>
         
-        <association property="schedule" javaType="kr.kh.fitness.model.vo.BranchProgramScheduleVO">
+        <collection property="schedule" javaType="kr.kh.fitness.model.vo.BranchProgramScheduleVO">
     	    <id property="bs_num" column="bs_num" />
             <result property="bs_start" column="bs_start" />
             <result property="bs_end" column="bs_end" />
             <result property="bs_current" column="bs_current" />
             <result property="bs_bp_num" column="bs_bp_num" />
-        </association>
+        </collection>
         
-        <association property="reservation" javaType="kr.kh.fitness.model.vo.ProgramReservationVO">
+        <collection property="reservation" javaType="kr.kh.fitness.model.vo.ProgramReservationVO">
     	    <id property="pr_num" column="pr_num" />
             <result property="pr_date" column="pr_date" />
             <result property="pr_me_id" column="pr_me_id" />
             <result property="pr_bs_num" column="pr_bs_num" />
-        </association>
+        </collection>
         
-        <association property="member" javaType="kr.kh.fitness.model.vo.MemberVO">
+        <collection property="member" javaType="kr.kh.fitness.model.vo.MemberVO">
     	    <id property="me_id" column="me_id" />
             <result property="me_pw" column="me_pw" />
             <result property="me_email" column="me_email" />
@@ -52,13 +52,14 @@
             <result property="me_limit" column="me_limit" />
             <result property="me_noshow" column="me_noshow" />
             <result property="me_cancel" column="me_cancel" />                                   
-        </association>
+        </collection>
         
-        <association property="program" javaType="kr.kh.fitness.model.vo.SportsProgramVO">
+        <collection property="program" javaType="kr.kh.fitness.model.vo.SportsProgramVO">
         	<id property="sp_name" column="sp_name" />
             <result property="sp_detail" column="sp_detail" />
             <result property="sp_type" column="sp_type" />
-        </association>        
+        </collection>  
+
     </resultMap>
 
 	<select id="selectBranchProgramList" resultMap="BranchProgramMap">
@@ -91,7 +92,7 @@
 		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
 	</insert>
 	
-	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
+	<select id="selectScheduleWithCurrent" resultType="BranchProgramScheduleVO">
 		select * from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total}
 	</select>
 	
@@ -104,8 +105,8 @@
 	</delete>
 	
 	<select id="selectBranchScheduleList" resultMap="BranchProgramMap">
-		select 
-			* 
+		select
+			*
 		from 
 			branch_program
 		join
@@ -128,6 +129,24 @@
 		where
 			bs_bp_num = #{bp_num} 
 	</select>
+	
+	<select id="selectMemberList" resultType="MemberVO">
+		select * from member where me_authority = 'user'
+	</select>
+	
+	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule where bs_bp_num = #{bs_bp_num} and (#{bs_end} >= bs_start and bs_end >= #{bs_start})
+	</select>
+	
+	<insert id="insertSchedule" useGeneratedKeys="true" keyProperty="bs_num">
+		insert into branch_program_schedule(bs_start, bs_end, bs_bp_num)
+		values(#{bs_start}, #{bs_end}, #{bs_bp_num})
+	</insert>
+	
+	<insert id="insertReservation">
+		insert into program_reservation(pr_me_id, pr_bs_num)
+		values(#{me_id}, #{bs_num})
+	</insert>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
 		select * from branch_order where bo_br_name = #{br_name}
