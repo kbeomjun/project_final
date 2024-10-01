@@ -1,37 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-	<div class="container">
-	  	<a class="navbar-brand" href="#">Navbar</a>
-	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-	    	<span class="navbar-toggler-icon"></span>
-	  	</button>
-	  	 <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-               <c:choose>
-                    <c:when test="${not empty user}">
-                        <li class="nav-item">
-                            <a class="nav-link" href="<c:url value='/logout'/>">로그아웃</a>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<c:url value='/login'/>">로그인</a>
-                        </li>
-                    </c:otherwise>
-                </c:choose>
-		      	<li class="nav-item">
-		        	<a class="nav-link" href="#">Link</a>
-		      	</li>
-		      	<li class="nav-item">
-		        	<a class="nav-link" href="#">Link</a>
-		      	</li>    
-	    	</ul>
-		</div> 
-	</div> 
-</nav>
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -54,7 +21,16 @@
 					<li class="gnb__item"><a href="#" class="gnb__link">고객센터</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">지점관리</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">본사관리</a></li>
-					<li class="gnb__item"><a href="#" class="gnb__link">로그인</a></li>
+					<li class="gnb__item">
+						<c:choose>
+							<c:when test="${not empty user}">
+								<a href="<c:url value='/logout'/>" class="gnb__link">로그아웃</a>
+							</c:when>
+							<c:otherwise>
+								<a href="<c:url value='/login'/>" class="gnb__link">로그인</a>
+							</c:otherwise>
+						</c:choose>
+					</li>
 				</ul>
 				<div class="gnb_side">
 					<a href="#" class="gnb_side__link js-gnb_side__link">
