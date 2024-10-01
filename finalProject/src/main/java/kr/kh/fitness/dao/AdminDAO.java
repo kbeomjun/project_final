@@ -29,7 +29,7 @@ public interface AdminDAO {
 
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
 
-	List<BranchProgramVO> selectBranchScheduleList(String br_name);
+	List<BranchProgramScheduleVO> selectBranchScheduleList(String br_name);
 
 	List<MemberVO> selectScheduleMemberList(int bp_num);
 
@@ -39,7 +39,9 @@ public interface AdminDAO {
 
 	boolean insertSchedule(BranchProgramScheduleVO schedule);
 	
-	void insertReservation(@Param("me_id")String me_id, @Param("bs_num")int bs_num);
+	void insertReservationByPTManager(@Param("me_id")String me_id, @Param("bs_num")int bs_num);
+	
+	void updateScheduleByPTReservation(int bs_num);
 	
 	List<EmployeeVO> selectMemberList();
 

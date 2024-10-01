@@ -129,7 +129,7 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			br_name = user.getMe_name();
 			
-			List<BranchProgramVO> scheduleList = adminService.getBranchScheduleList(br_name);
+			List<BranchProgramScheduleVO> scheduleList = adminService.getBranchScheduleList(br_name);
 			model.addAttribute("scheduleList", scheduleList);
 			model.addAttribute("br_name", br_name);
 			return "/admin/scheduleList";

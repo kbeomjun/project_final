@@ -31,13 +31,13 @@
 						</c:url>
 						<a href="${url}">${list.bp_sp_name}</a>
 					</td>
-					<td>${list.employee.em_name}</td>
-					<td>${list.schedule.bs_current} / ${list.bp_total}</td>
+					<td>${list.em_name}</td>
+					<td>${list.bs_current} / ${list.bp_total}</td>
 					<td>
-						<fmt:formatDate value="${list.schedule.bs_start}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${list.bs_start}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td>
-						<fmt:formatDate value="${list.schedule.bs_start}" pattern="hh"/>-<fmt:formatDate value="${list.schedule.bs_end}" pattern="hh시"/>
+						<fmt:formatDate value="${list.bs_start}" pattern="hh"/>-<fmt:formatDate value="${list.bs_end}" pattern="hh시"/>
 					</td>
 					<td>
 						<a href="<c:url value="#"/>" class="btn btn-outline-warning btn-sm">수정</a>

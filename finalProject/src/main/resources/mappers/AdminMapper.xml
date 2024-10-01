@@ -104,15 +104,15 @@
 		delete from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
 	</delete>
 	
-	<select id="selectBranchScheduleList" resultMap="BranchProgramMap">
+	<select id="selectBranchScheduleList" resultType="BranchProgramScheduleVO">
 		select
-			*
+			branch_program_schedule.*, bp_num, bp_total, bp_br_name, bp_sp_name, em_name  
 		from 
-			branch_program
+			branch_program_schedule
+		join
+			branch_program on bp_num = bs_bp_num
 		join
 			employee on bp_em_num = em_num
-		join
-			branch_program_schedule on bp_num = bs_bp_num
 		where
 			bp_br_name = #{br_name}
 	</select>
@@ -143,10 +143,14 @@
 		values(#{bs_start}, #{bs_end}, #{bs_bp_num})
 	</insert>
 	
-	<insert id="insertReservation">
+	<insert id="insertReservationByPTManager">
 		insert into program_reservation(pr_me_id, pr_bs_num)
 		values(#{me_id}, #{bs_num})
 	</insert>
+	
+	<select id="updateScheduleByPTReservation">
+		update branch_program_schedule set bs_current = bs_current + 1 where bs_num = #{bs_num}
+	</select>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
 		select * from branch_order where bo_br_name = #{br_name}

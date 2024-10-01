@@ -23,7 +23,7 @@ public interface AdminService {
 
 	boolean deleteBranchProgram(BranchProgramVO branchProgram);
 
-	List<BranchProgramVO> getBranchScheduleList(String br_name);
+	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name);
 
 	List<MemberVO> getScheduleMemberList(int bp_num);
 

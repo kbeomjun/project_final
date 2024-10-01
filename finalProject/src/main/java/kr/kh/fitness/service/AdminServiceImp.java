@@ -89,7 +89,7 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchProgramVO> getBranchScheduleList(String br_name) {
+	public List<BranchProgramScheduleVO> getBranchScheduleList(String br_name) {
 		if(br_name == null) {
 			return null;
 		}
@@ -117,7 +117,8 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		if(me_id != null) {
-			adminDao.insertReservation(me_id, schedule.getBs_num());
+			adminDao.insertReservationByPTManager(me_id, schedule.getBs_num());
+			adminDao.updateScheduleByPTReservation(schedule.getBs_num());
 		}
 		
 		return true;
