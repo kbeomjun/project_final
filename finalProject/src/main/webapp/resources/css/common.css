@@ -216,6 +216,22 @@ dl, ol, ul{
 .swiper-button-next:after, .swiper-button-prev:after{
   display: none;
 }
+
+.swiper-slide{
+  position: relative;
+}
+.swiper-slide::before{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 699px;
+  height: 363px;
+	background-image: url("../image/main/main_text.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: translate(-50%, -50%);
+}
 /* swiper */
 
 
