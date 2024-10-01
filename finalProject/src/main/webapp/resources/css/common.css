@@ -266,6 +266,12 @@ dl, ol, ul{
   background-size: cover;
   background-position: center;
 }
+.logo-dark{
+  background-image: url("../image/main/Logo-dark.png");
+}
+.logo-white{
+  background-image: url("../image/main/Logo-light.png");
+}
 .gnb_wrap{
   display: flex;
   align-items: center;
@@ -434,8 +440,9 @@ dl, ol, ul{
 
 
 /* main_container */
-.main_container{
+.main_container, .sub_container{
   min-height: calc(100vh - 524px);
+  padding: 20px 10px;
 }
 .main_banner_wrap{
 
@@ -446,6 +453,9 @@ dl, ol, ul{
 .main_banner__img{
   width: 100%;
   height: 919px;
+}
+.sub_container{
+	margin-top: 110px;
 }
 /* main_container end */
 
