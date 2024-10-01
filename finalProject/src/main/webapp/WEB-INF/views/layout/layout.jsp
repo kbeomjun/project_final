@@ -1,25 +1,65 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
+    <tiles:insertAttribute name="head"/>
+    
 	<title>
 		<c:choose>
 			<c:when test="${title ne null }">${title}</c:when>
 			<c:otherwise>KH Fitness</c:otherwise>
 		</c:choose>
 	</title>
-	<link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
-	<script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/popper.min.js"/>"></script>
-	<script src="<c:url value="/resources/js/bootstrap.bundle.min.js"/>"></script>
+	
 </head>
 <body>
     <tiles:insertAttribute name="header"/>
-    <div class="container">        
+    <div class="main_layout">
         <tiles:insertAttribute name="body" />
     </div>                                                  
     <tiles:insertAttribute name="footer" />
+    
+    <script>
+		$(".js-gnb_side__link").on("click", function(){
+			$(".gnb_side_wrap").addClass("_active");
+		})
+		$(".js-btn_x").on("click", function(){
+			$(".gnb_side_wrap").removeClass("_active");
+		})
+
+		const progressLine = document.querySelector('.autoplay-progress svg')
+		const mainSwiper = new Swiper(".main-swiper", {
+			loop: true,
+			autoplay: {
+				delay: 5000, // 5초
+				disableOnInteraction: false,
+			},
+			// bullet
+			// pagination: {
+			// 	el: ".main-swiper .swiper-pagination",
+			// 	clickable: false,
+			// 	type: "custom",
+			// 	renderCustom: function (swiper, current, total) {
+			// 		return (
+			// 			'<span class="current">' + 0 + (current) + '</span>' + '<span class="total">' + 0 + (total) + '</span>'
+			// 		);
+			// 	}
+			// },
+			//arrow
+			navigation: {
+				nextEl: ".main-swiper .swiper-button-next",
+				prevEl: ".main-swiper .swiper-button-prev",
+			},
+			// svg
+			on: {
+				autoplayTimeLeft(s, time, progress) {
+					progressLine.style.setProperty("--progress", 1 - progress)
+				}
+			}
+		})
+	</script>
 </body>
 </html>
