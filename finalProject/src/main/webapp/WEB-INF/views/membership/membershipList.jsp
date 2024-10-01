@@ -32,6 +32,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<div>
+			<a href="<c:url value="/membership/membershipInsert" />" class="btn btn-primary">결제</a>
+		</div>
 	</main>
 </body>
 </html>
