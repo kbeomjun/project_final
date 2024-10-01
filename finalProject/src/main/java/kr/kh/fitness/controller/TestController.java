@@ -74,5 +74,22 @@ public class TestController {
 	}
 	
 	
+//	@GetMapping("/")
+//	public String home(Locale locale, Model model) {
+//		log.info("/ : 테스트 메인 페이지");
+//		
+//		logger.info("Welcome home! The client locale is {}.", locale);
+//		
+//		//System.out.println("등록된 장비 갯수 : " + testDao.getEquipCount());
+//		
+//		Date date = new Date();
+//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+//		
+//		String formattedDate = dateFormat.format(date);
+//		
+//		model.addAttribute("serverTime", formattedDate );
+//		
+//		return "/main/home";
+//	}
 
 }
