@@ -25,12 +25,16 @@ public interface AdminService {
 
 	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name);
 
-	List<MemberVO> getScheduleMemberList(int bp_num);
+	List<MemberVO> getScheduleMemberList(int bs_num);
+	
+	List<EmployeeVO> getMemberList();
+	
+	boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id);
+	
+	BranchProgramScheduleVO getSchedule(int bp_num);
 
 	List<BranchOrderVO> getBranchOrderList(String br_name);
 
-	List<EmployeeVO> getMemberList();
-
-	boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id);
+	boolean updateSchedule(BranchProgramScheduleVO schedule);
 
 }

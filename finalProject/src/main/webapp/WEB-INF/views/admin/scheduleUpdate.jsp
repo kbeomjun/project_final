@@ -1,79 +1,45 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <html>
 <head>
-<title>스케줄 등록</title>
-<style type="text/css">
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		margin-top: 10px;
-	}
-</style>
+<title>스케줄 수정</title>
 </head>
 <body>
 	<!-- <main class="sub_container" id="skipnav_target"> -->
-		<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
-		<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
-			<input type="hidden" name="br_name" value="${branchName}">
+		<h1 class="mt-3 mb-3">스케줄 수정</h1>
+		<form action="<c:url value="/admin/schedule/update"/>" method="post" id="form">
+			<input type="hidden" name="br_name" value="${schedule.bp_br_name}">
+			<input type="hidden" name="bs_bp_num" value="${schedule.bs_bp_num}">
+			<input type="hidden" name="bs_num" value="${schedule.bs_num}">
 			
 			<div class="form-group">
 				<label>프로그램:</label>
-				<select class="form-control" name="bs_bp_num" id="programSelect">
-					<c:forEach items="${programList}" var="list">
-						<option value="${list.bp_num}" data-sp-type="${list.program.sp_type}">
-							${list.bp_sp_name}(${list.employee.em_name}, ${list.bp_total}인)
-						</option>
-					</c:forEach>		
-				</select>
+				<input class="form-control" value="${schedule.bp_sp_name}(${schedule.em_name}, ${schedule.bp_total}인)" readonly>
 			</div>
-			
 			<div class="form-group">
-				<label>날짜:</label>
+				<label>현재일정:</label>
+				<input class="form-control" value="<fmt:formatDate value="${schedule.bs_start}" pattern="MM월dd일"/> <fmt:formatDate value="${schedule.bs_start}" pattern="hh"/>-<fmt:formatDate value="${schedule.bs_end}" pattern="hh시"/>" readonly/>
+			</div>
+			<div class="form-group">
+				<label>수정날짜:</label>
 				<input type="date" id="currentDate" name="date"/>
 			</div>
 			
 			<div class="form-group">
-				<label>시작시간:</label>
+				<label>수정시작시간:</label>
 				<input type="time" id="startTime" name="startTime" step="3600"/>
 			</div>
 			
 			<div class="form-group">
-				<label>마감시간:</label>
+				<label>수정마감시간:</label>
 				<input type="time" id="endTime" name="endTime" step="3600"/>
 			</div>
 			
-			<!-- 회원 선택 테이블 -->
-			<div class="form-group" id="memberListTable" style="display: none;">
-				<label>회원 선택:</label>
-				<table class="table text-center">
-					<thead>
-						<tr>
-							<th></th>
-							<th>회원 이름</th>
-							<th>번호</th>
-							<th>이메일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${memberList}" var="member">
-							<tr>
-								<td>
-									<input type="radio" name="me_id" value="${member.me_id}"/>
-								</td>
-								<td>${member.me_name} (${member.me_gender})</td>
-								<td>${member.me_phone}</td>
-								<td>${member.me_email}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>		
-			
 			<div class="text-right mb-3">
-				<button type="submit" class="btn btn-outline-success">등록</button>
+				<button type="submit" class="btn btn-outline-warning">수정</button>
 			</div>
 		</form>
 	<!-- </main> -->
@@ -119,20 +85,6 @@
 		endTimeField.addEventListener('input', function() {
 			var time = this.value.split(":");
 			this.value = time[0] + ":00"; // 분을 00으로 고정
-		});		
-		
-		// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
-		document.getElementById('programSelect').addEventListener('change', function() {
-			var selectedOption = this.options[this.selectedIndex];
-			var spType = selectedOption.getAttribute('data-sp-type');
-
-			// 프로그램의 sp_type이 '단일'인 경우 테이블 표시
-			if (spType === '단일') {
-				document.getElementById('memberListTable').style.display = 'block';
-			} else {
-				document.getElementById('memberListTable').style.display = 'none';
-				document.getElementById('hiddenMeId').value = ""; // 테이블이 보이지 않으면 me_id 초기화
-			}
 		});		
 	</script>			
 </body>

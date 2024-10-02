@@ -31,7 +31,7 @@ public interface AdminDAO {
 
 	List<BranchProgramScheduleVO> selectBranchScheduleList(String br_name);
 
-	List<MemberVO> selectScheduleMemberList(int bp_num);
+	List<MemberVO> selectScheduleMemberList(int bs_num);
 
 	List<BranchOrderVO> selectBranchOrderList(String br_name);
 	
@@ -44,5 +44,9 @@ public interface AdminDAO {
 	void updateScheduleByPTReservation(int bs_num);
 	
 	List<EmployeeVO> selectMemberList();
+
+	BranchProgramScheduleVO selectScheduleByNum(int bp_num);
+
+	boolean updateSchedule(BranchProgramScheduleVO schedule);
 
 }

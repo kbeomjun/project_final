@@ -10,7 +10,7 @@
 <body>
 	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${br_name} 스케줄 목록</h1>
-		<table class="table">
+		<table class="table text-center">
 			<thead>
 				<tr>
 					<th>프로그램명</th>
@@ -25,12 +25,7 @@
 				<c:forEach items="${scheduleList}" var="list">
 					<tr>
 						<td>
-							<c:url var="url" value="/admin/schedule/detail">
-								<c:param name="bp_num" value="${list.bp_num}"/>
-								<c:param name="bp_br_name" value="${list.bp_br_name}"/>
-								<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
-							</c:url>
-							<a href="${url}">${list.bp_sp_name}</a>
+							<a href="<c:url value="/admin/schedule/detail?bs_num=${list.bs_num}"/>">${list.bp_sp_name}</a>
 						</td>
 						<td>${list.em_name}</td>
 						<td>${list.bs_current} / ${list.bp_total}</td>
@@ -41,7 +36,7 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="hh"/>-<fmt:formatDate value="${list.bs_end}" pattern="hh시"/>
 						</td>
 						<td>
-							<a href="<c:url value="#"/>" class="btn btn-outline-warning btn-sm">수정</a>
+							<a href="<c:url value="/admin/schedule/update?bp_num=${list.bp_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
 						</td>
 					</tr>
 				</c:forEach>
