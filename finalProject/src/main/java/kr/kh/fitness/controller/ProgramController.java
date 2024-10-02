@@ -169,11 +169,9 @@ public class ProgramController {
 		String prevUrl = request.getHeader("Referer");
 		if (prevUrl != null) {
 			model.addAttribute("url", prevUrl);
-			System.out.println("prevUrl : " + prevUrl);
 		}
 		else {
 			model.addAttribute("url", "/program/schedule");
-			System.out.println("prevUrl : none");
 		}
 		
 		return "/main/message";
