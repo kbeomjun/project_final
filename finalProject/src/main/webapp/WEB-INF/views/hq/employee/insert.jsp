@@ -21,63 +21,64 @@
     </style>
 </head>
 <body>
-	<h1>직원 등록</h1>
-	<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
-		<div class="form-group">
-			<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-			    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
-			    <div class="card-img-overlay d-flex flex-wrap align-items-center">
-				    <div class="mx-auto">
-				      	<label for="file" class="btn">사진등록</label>
+	<div class="container" style="margin-top:30px">
+		<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
+			<div class="form-group">
+				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
+				    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+				    <div class="card-img-overlay d-flex flex-wrap align-items-center">
+					    <div class="mx-auto">
+					      	<label for="file" class="btn">사진등록</label>
+					    </div>
 				    </div>
-			    </div>
-			</label>
-			<input type="file" class="form-control" id="file" name="file" accept="image/*">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_name">이름:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_name">전화번호:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_name">이메일:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_name">성별:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_name">직책:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_address">주소:</label> <br/>
-			<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;">
-			<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-			<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;"> <br/>
-			<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
-			<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_name">소속:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name">
-		</div>
-		<div class="error error-address"></div>
-		<button class="btn btn-outline-info col-12">직원 등록</button>
-	</form>
-	<hr/>
-	<a href="<c:url value="/hq/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
+				</label>
+				<input type="file" class="form-control" id="file" name="file" accept="image/*">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_name">이름:</label>
+				<input type="text" class="form-control" id="br_name" name="br_name">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_name">전화번호:</label>
+				<input type="text" class="form-control" id="br_name" name="br_name">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_name">이메일:</label>
+				<input type="text" class="form-control" id="br_name" name="br_name">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_name">성별:</label>
+				<input type="text" class="form-control" id="br_name" name="br_name">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_name">직책:</label>
+				<input type="text" class="form-control" id="br_name" name="br_name">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_address">주소:</label> <br/>
+				<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;">
+				<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
+				<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;"> <br/>
+				<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
+				<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
+			</div>
+			<div class="error error-address"></div>
+			<div class="form-group">
+				<label for="br_name">소속:</label>
+				<input type="text" class="form-control" id="br_name" name="br_name">
+			</div>
+			<div class="error error-address"></div>
+			<button class="btn btn-outline-info col-12">직원 등록</button>
+		</form>
+		<hr/>
+		<a href="<c:url value="/hq/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
+	</div>
 	
 	<script>
 		// 사진 파일

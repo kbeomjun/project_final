@@ -7,7 +7,6 @@
 <title>본사관리페이지</title>
 </head>
 <body>
-	<h1>지점관리</h1>
 	<div class="container" style="margin-top:30px">
 	  	<div class="row">
 	    	<div class="col-sm-2">
