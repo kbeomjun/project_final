@@ -58,4 +58,7 @@
   		select * from program_reservation 
   		where pr_me_id = #{user.me_id} and pr_bs_num = #{bs_num}
   	</select>
+  	<select id="selectProgramFileList" resultType="String">
+  		select pf_name from program_file where pf_sp_name = #{pr_name}
+  	</select>
 </mapper>

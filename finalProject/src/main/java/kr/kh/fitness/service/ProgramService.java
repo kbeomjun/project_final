@@ -20,4 +20,6 @@ public interface ProgramService {
 
 	boolean checkReservation(MemberVO user, int bs_num);
 
+	List<String> getImageName(String pr_name);
+
 }

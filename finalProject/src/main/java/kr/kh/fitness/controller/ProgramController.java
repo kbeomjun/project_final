@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,6 +35,9 @@ public class ProgramController {
 
 	@Autowired
 	private ProgramService programService;
+	
+	@Resource
+	String uploadPath;
 
 //	@GetMapping("/main")
 //	public String programMain(Model model) throws Exception {
@@ -52,8 +56,9 @@ public class ProgramController {
 		log.info("/program/info");
 
 		List<SportsProgramVO> list = programService.getProgramList();
-
+		
 		model.addAttribute("list", list);
+		model.addAttribute("uploadPath", uploadPath);
 
 		return "/program/info";
 	}
@@ -192,6 +197,18 @@ public class ProgramController {
 		
 		map.put("checkReservation", isDuplicated);
 		return map;
+	}
+	
+	// 프로그램 이름으로 저장된 이미지 리스트를 가져온다.
+	@ResponseBody
+	@GetMapping("/getImageName")
+	public List<String> GetProgramImageName(HttpSession session, @RequestParam("pr_name") String pr_name){
+		log.info("/program/getImageName");
+		
+		List<String> image_list = programService.getImageName(pr_name);
+		System.out.println("pr_name " + pr_name + ", image_list" + image_list);
+		
+		return image_list;
 	}
 	
 }

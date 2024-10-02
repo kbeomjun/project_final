@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProgramFile {
+public class ProgramFileVO {
     private int pf_num;          // 
     private String pf_name;      // 파일 이름 (형식 : 경로+이름.확장자)
     private String pf_sp_name;   // 프로그램 이름

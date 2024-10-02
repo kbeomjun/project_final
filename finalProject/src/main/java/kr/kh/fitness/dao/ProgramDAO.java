@@ -32,4 +32,6 @@ public interface ProgramDAO {
 
 	ProgramReservationVO selectProgramReservation(@Param("user")MemberVO user, @Param("bs_num")int bs_num);
 
+	List<String> selectProgramFileList(@Param("pr_name")String pr_name);
+
 }
