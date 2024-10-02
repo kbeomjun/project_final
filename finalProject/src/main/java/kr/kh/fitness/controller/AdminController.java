@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.TestDAO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
@@ -80,7 +82,7 @@ public class AdminController {
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<SportsProgramVO> programList = adminService.getProgramList();
-		List<EmployeeVO> employeeList = adminService.getEmployeeList(user.getMe_name());
+		List<EmployeeVO> employeeList = adminService.getEmployeeListByBranch(user.getMe_name());
 		
 		model.addAttribute("programList", programList);
 		model.addAttribute("employeeList", employeeList);
@@ -176,7 +178,7 @@ public class AdminController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		List<BranchProgramVO> programList = adminService.getBranchProgramList(user.getMe_name());
-		List<EmployeeVO> memberList = adminService.getMemberList();
+		List<MemberVO> memberList = adminService.getMemberList();
 		
 		model.addAttribute("programList", programList);
 		model.addAttribute("memberList", memberList);
@@ -307,7 +309,7 @@ public class AdminController {
 		return "/main/message";
 	}
 	
-	//지점 발중 신청취소
+	//지점 발주 신청취소
 	@GetMapping("/order/delete")
 	public String orderDelete(Model model, int bo_num) {
 		
@@ -319,6 +321,64 @@ public class AdminController {
 		model.addAttribute("url", "/admin/order/list");
 		return "/main/message";
 	}
+	
+	//직원 목록 조회
+	@GetMapping("/employee/list")
+	public String employeeList(Model model, HttpSession session) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			String br_name = user.getMe_name();
+			List<EmployeeVO> employeeList = adminService.getEmployeeListByBranch(br_name);
+			model.addAttribute("employeeList", employeeList);
+			model.addAttribute("br_name", br_name);
+			return "/admin/employeeList";
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "/main/main";
+		}
+	}
+	
+	//지점 직원 등록 get
+	@GetMapping("/employee/insert/{em_br_name}")
+	public String employeeInsert(Model model, @PathVariable("em_br_name")String em_br_name) {
+		List<SportsProgramVO> programList = adminService.getProgramList();
+		
+		model.addAttribute("em_br_name", em_br_name);
+		model.addAttribute("programList", programList);
+		return "/admin/employeeInsert";
+	}
+	
+	//지점 직원 등록 post
+	@PostMapping("/employee/insert")
+	public String employeeInsertPost(Model model, EmployeeVO employee, MultipartFile file) {
+		String msg = adminService.insertEmployee(employee, file);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/admin/employee/list");
+		}else {
+			model.addAttribute("url", "/admin/employee/insert/"+employee.getEm_br_name());
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	//지점 직원 상세조회
+	@GetMapping("/employee/detail/{em_num}")
+	public String employeeDetail(Model model, @PathVariable("em_num") int em_num) {
+		EmployeeVO employee = adminService.getEmployee(em_num);
+		List<SportsProgramVO> programList = adminService.getProgramList();
+		model.addAttribute("em", employee);
+		model.addAttribute("programList", programList);		
+		return "/admin/employeeDetail";
+	}
+	
+	//지점 직원 상세수정
+	@PostMapping("/employee/update/{em_num}")
+	public String employeeUpdatePost(Model model, @PathVariable("em_num") int em_num, EmployeeVO employee, MultipartFile file, String isDel) {
+		String msg = adminService.updateEmployee(employee, file, isDel);
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/admin/employee/list");
+		return "/main/message";
+	}	
 	
 	//지점 운동기구 재고 조회
 	@GetMapping("/equipment/list")

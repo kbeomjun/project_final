@@ -2,6 +2,8 @@ package kr.kh.fitness.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
@@ -17,7 +19,7 @@ public interface AdminService {
 
 	List<SportsProgramVO> getProgramList();
 
-	List<EmployeeVO> getEmployeeList(String em_br_name);
+	List<EmployeeVO> getEmployeeListByBranch(String em_br_name);
 
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
@@ -29,7 +31,7 @@ public interface AdminService {
 
 	List<MemberVO> getScheduleMemberList(int bs_num);
 	
-	List<EmployeeVO> getMemberList();
+	List<MemberVO> getMemberList();
 	
 	boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id);
 	
@@ -46,5 +48,11 @@ public interface AdminService {
 	boolean deleteOrder(int bo_num);
 
 	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
+
+	String insertEmployee(EmployeeVO employee, MultipartFile file);
+
+	EmployeeVO getEmployee(int em_num);
+
+	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
 
 }

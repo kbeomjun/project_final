@@ -40,6 +40,11 @@
 						</td>
 					</tr>
 				</c:forEach>
+				<c:if test="${scheduleList.size() eq 0}">
+					<tr>
+						<th class="text-center" colspan="6">등록된 스케줄이 없습니다.</th>
+					</tr>
+				</c:if>				
 			</tbody>
 		</table>
 		<div class="text-right mb-3">	

@@ -48,8 +48,8 @@
 		select * from sports_program
 	</select>
 	
-	<select id="selectEmployeeList" resultType="EmployeeVO">
-		select * from Employee where em_br_name = #{em_br_name}
+	<select id="selectEmployeeListByBranch" resultType="EmployeeVO">
+		select * from Employee where em_br_name = #{em_br_name} order by em_num
 	</select>
 	
 	<select id="selectBranchProgram" resultType="BranchProgramVO">
@@ -192,5 +192,42 @@
 				be_birth
 		</if>
 	</select>
+	
+	<select id="selectEmployeeList" resultType="EmployeeVO">
+		select * from employee order by em_num
+	</select>
+	
+	<insert id="insertEmployee">
+		insert into employee
+			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 
+				em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+		values
+			(#{em_num}, #{em_name}, #{em_phone}, #{em_email}, #{em_gender}, #{em_position}, current_timestamp(),
+				#{em_postcode}, #{em_address}, #{em_detailAddress}, #{em_extraAddress}, #{em_fi_name}, #{em_br_name})	
+	</insert>
+	
+	<select id="selectEmployee" resultType="EmployeeVO">
+		select * from employee where em_num = #{em_num};
+	</select>
+	
+	<select id="selectEmployeeFileName" resultType="String">
+		select em_fi_name from employee where em_num = #{em_num}
+	</select>
+	
+	<update id="updateEmployee">
+		update employee set
+			em_name = #{em_name},
+			em_phone = #{em_phone},
+			em_email = #{em_email},
+			em_gender = #{em_gender},
+			em_position = #{em_position},
+			em_postcode = #{em_postcode},
+			em_address = #{em_address},
+			em_detailAddress = #{em_detailAddress},
+			em_extraAddress = #{em_extraAddress},
+			em_fi_name = #{em_fi_name}
+		where em_num = #{em_num};
+	</update>	
+	
 	
 </mapper>

@@ -68,6 +68,11 @@
 								<td>${member.me_email}</td>
 							</tr>
 						</c:forEach>
+						<c:if test="${memberList.size() eq 0}">
+							<tr>
+								<th class="text-center" colspan="4">등록된 회원이 없습니다.</th>
+							</tr>
+						</c:if>						
 					</tbody>
 				</table>
 			</div>		

@@ -36,6 +36,11 @@
 						</c:if>
 					</tr>
 				</c:forEach>
+				<c:if test="${orderList.size() eq 0}">
+					<tr>
+						<th class="text-center" colspan="5">신청목록이 없습니다.</th>
+					</tr>
+				</c:if>
 			</tbody>
 		</table>
 		<div class="text-right mb-3">

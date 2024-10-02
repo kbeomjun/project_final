@@ -19,7 +19,7 @@ public interface AdminDAO {
 
 	List<SportsProgramVO> selectProgramList();
 
-	List<EmployeeVO> selectEmployeeList(String em_br_name);
+	List<EmployeeVO> selectEmployeeListByBranch(String em_br_name);
 
 	BranchProgramVO selectBranchProgram(BranchProgramVO branchProgram);
 
@@ -43,7 +43,7 @@ public interface AdminDAO {
 	
 	void updateScheduleByPTReservation(int bs_num);
 	
-	List<EmployeeVO> selectMemberList();
+	List<MemberVO> selectMemberList();
 
 	BranchProgramScheduleVO selectScheduleByNum(int bp_num);
 
@@ -58,5 +58,15 @@ public interface AdminDAO {
 	boolean deleteOrder(int bo_num);
 
 	List<BranchEquipmentStockVO> selectEquipmentListInBranch(@Param("br_name")String br_name, @Param("view")String view);
+
+	List<EmployeeVO> selectEmployeeList();
+
+	boolean insertEmployee(EmployeeVO employee);
+
+	EmployeeVO selectEmployee(int em_num);
+
+	String selectEmployeeFileName(EmployeeVO employee);
+
+	boolean updateEmployee(EmployeeVO employee);
 
 }
