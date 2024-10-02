@@ -230,5 +230,6 @@ delete from `program_file`;
 insert into `program_file` (pf_name, pf_sp_name)
 	values
 		('D:\git\final_project\project_final\storage\프로그램\5264c1d2-80d9-4eeb-af0e-096aa949fc9c_요가.jpg', '요가'),
-        ('D:\git\final_project\project_final\storage\프로그램\5264c1d2-80d9-4eeb-af0e-096aa949fc9c_필라테스.jpg', '필라테스');
+        ('D:\git\final_project\project_final\storage\프로그램\5264c1d2-80d9-4eeb-af0e-096aa949fc9c_필라테스.jpg', '필라테스'),
+        ('D:\git\final_project\project_final\storage\프로그램\5264c1d2-80d9-4eeb-af0e-096aa949fc9c_PT.jpg', 'PT');
         
