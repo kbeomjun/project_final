@@ -54,4 +54,8 @@
 	<update id="updateBranchProgramScheduleCurrent">
 		update branch_program_schedule set bs_current = (bs_current + 1) where bs_num = #{bps.bs_num}
 	</update>
+  	<select id="selectProgramReservation" resultType="ProgramReservationVO">
+  		select * from program_reservation 
+  		where pr_me_id = #{user.me_id} and pr_bs_num = #{bs_num}
+  	</select>
 </mapper>

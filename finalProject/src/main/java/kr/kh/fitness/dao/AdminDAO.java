@@ -45,4 +45,8 @@ public interface AdminDAO {
 	
 	List<EmployeeVO> selectMemberList();
 
+	BranchProgramScheduleVO selectScheduleByNum(int bp_num);
+
+	boolean updateSchedule(BranchProgramScheduleVO schedule);
+
 }

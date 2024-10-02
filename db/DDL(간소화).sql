@@ -178,6 +178,20 @@ CREATE TABLE `refund` (
 	`re_pa_num`		int			NOT NULL
 );
 
+drop table if exists `program_file`;
+CREATE TABLE `program_file` (
+   `pf_num`			int				primary key auto_increment,
+   `pf_name`   		varchar(255)   	not NULL unique,
+   `pf_sp_name`		varchar(100)   	not NULL
+);
+
+ALTER TABLE `program_file` 
+ADD CONSTRAINT `FK_program_file_sports_program`
+  FOREIGN KEY (`pf_sp_name`)
+  REFERENCES `sports_program` (`sp_name`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
 ALTER TABLE `employee` 
 ADD CONSTRAINT `FK_employee_branch`
   FOREIGN KEY (`em_br_name`)

@@ -23,37 +23,6 @@
             <result property="em_br_name" column="em_br_name" />
         </collection>
         
-        <collection property="schedule" javaType="kr.kh.fitness.model.vo.BranchProgramScheduleVO">
-    	    <id property="bs_num" column="bs_num" />
-            <result property="bs_start" column="bs_start" />
-            <result property="bs_end" column="bs_end" />
-            <result property="bs_current" column="bs_current" />
-            <result property="bs_bp_num" column="bs_bp_num" />
-        </collection>
-        
-        <collection property="reservation" javaType="kr.kh.fitness.model.vo.ProgramReservationVO">
-    	    <id property="pr_num" column="pr_num" />
-            <result property="pr_date" column="pr_date" />
-            <result property="pr_me_id" column="pr_me_id" />
-            <result property="pr_bs_num" column="pr_bs_num" />
-        </collection>
-        
-        <collection property="member" javaType="kr.kh.fitness.model.vo.MemberVO">
-    	    <id property="me_id" column="me_id" />
-            <result property="me_pw" column="me_pw" />
-            <result property="me_email" column="me_email" />
-            <result property="me_name" column="me_name" />
-            <result property="me_phone" column="me_phone" />
-            <result property="me_address" column="me_address" />
-            <result property="me_birth" column="me_birth" />
-            <result property="me_gender" column="me_gender" />
-            <result property="me_authority" column="me_authority" />
-            <result property="me_cookie" column="me_cookie" />
-            <result property="me_limit" column="me_limit" />
-            <result property="me_noshow" column="me_noshow" />
-            <result property="me_cancel" column="me_cancel" />                                   
-        </collection>
-        
         <collection property="program" javaType="kr.kh.fitness.model.vo.SportsProgramVO">
         	<id property="sp_name" column="sp_name" />
             <result property="sp_detail" column="sp_detail" />
@@ -115,6 +84,8 @@
 			employee on bp_em_num = em_num
 		where
 			bp_br_name = #{br_name}
+		order by
+			bs_start
 	</select>
 	
 	<select id="selectScheduleMemberList" resultType="MemberVO">
@@ -155,5 +126,28 @@
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
 		select * from branch_order where bo_br_name = #{br_name}
 	</select>
+	
+	<select id="selectScheduleByNum" resultType="BranchProgramScheduleVO">
+		select 
+			* 
+		from 
+			branch_program_schedule 
+		join
+			branch_program on bp_num = bs_bp_num
+		join
+			employee on bp_em_num = em_num
+		where
+			bs_num = #{bs_num}
+	</select>
+	
+	<update id="updateSchedule">
+		update 
+			branch_program_schedule
+		set
+			bs_start = #{bs_start},
+			bs_end = #{bs_end}
+		where
+			bs_num = #{bs_num}
+	</update>
 	
 </mapper>

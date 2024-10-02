@@ -14,7 +14,6 @@
 </style>
 </head>
 <body>
-	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
 		<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
 			<input type="hidden" name="br_name" value="${branchName}">
@@ -77,7 +76,6 @@
 				<button type="submit" class="btn btn-outline-success">등록</button>
 			</div>
 		</form>
-	<!-- </main> -->
 
 	<script>
 		// 현재 날짜 계산

@@ -8,9 +8,8 @@
 <title>스케줄 목록</title>
 </head>
 <body>
-	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${br_name} 스케줄 목록</h1>
-		<table class="table">
+		<table class="table text-center">
 			<thead>
 				<tr>
 					<th>프로그램명</th>
@@ -41,7 +40,7 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="hh"/>-<fmt:formatDate value="${list.bs_end}" pattern="hh시"/>
 						</td>
 						<td>
-							<a href="<c:url value="#"/>" class="btn btn-outline-warning btn-sm">수정</a>
+							<a href="<c:url value="/admin/schedule/update?bp_num=${list.bp_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -50,6 +49,5 @@
 		<div class="text-right mb-3">	
 			<a href="<c:url value="/admin/schedule/insert"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 		</div>
-	<!-- </main> -->
 </body>
 </html>

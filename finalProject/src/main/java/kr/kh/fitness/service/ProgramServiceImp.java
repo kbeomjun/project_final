@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.ProgramDAO;
+import kr.kh.fitness.model.dto.ProgramReservationMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
@@ -44,8 +45,10 @@ public class ProgramServiceImp implements ProgramService {
 	}
 
 	@Override
-	public boolean addProgramReservation(MemberVO user, Integer bs_num) {
-
+	public ProgramReservationMessage addProgramReservation(MemberVO user, Integer bs_num) {
+		
+		ProgramReservationMessage rm = new ProgramReservationMessage();
+		
 		user = new MemberVO();
 		user.setMe_id("user1");
 
@@ -60,65 +63,89 @@ public class ProgramServiceImp implements ProgramService {
 
 		// bs_num으로 bps를 불러온다.
 		BranchProgramScheduleVO bps = programDao.selectBranchProgramSchedule(bs_num);
-		System.out.println(bps);
+
 		// bps의 bp_num으로 bp를 불러온다.
 		BranchProgramVO bp = programDao.selectBranchProgram(bps.getBs_bp_num());
-		System.out.println(bp);
 
 		// 총 인원과 현재 인원을 비교한다. 현재 인원이 같거나 크다면 예약 불가.
 		if (bps.getBs_current() >= bp.getBp_total()) {
-			return false;
+			rm.setResult(false);
+			rm.setMessage("정원 초과");
+			return rm;
 		}
 
+		// 회원의 예약 리스트
 		List<ProgramReservationVO> pr_list = programDao.selectProgramReservationList(user);
-		System.out.println(pr_list);
-
+		
+		// System.out.println("bps.getBs_start().getTime() :" +bps.getBs_start() +"/"+ bps.getBs_start().getTime());
 		// 기존 예약 리스트에서 동일한 시간에 예약이 있는 지 확인
-		for (ProgramReservationVO pr : pr_list) {
-			BranchProgramScheduleVO pr_bps = programDao.selectBranchProgramSchedule(pr.getPr_bs_num());
-			// 기존에 예약된 프로그램의 끝나는 시간이 현재 예약하려는 프로그램의 시작 시간보다 이전이고
-			// 끝나는 시간이 현재 예약하려는 프로그램의 시작 시간보다 이전이라면 가능
-			if (pr_bps.getBs_start().compareTo(bps.getBs_start()) < 0) {
-				if (pr_bps.getBs_end().compareTo(bps.getBs_start()) < 0) {
-					continue;
-				}
-				// 현제 예약하려는 프로그램의 시작시간과 기존의 프로그램의 끝나는 시간이 같다면
-				// 같은 지점일 경우에만 예약 가능.
-				else if (pr_bps.getBs_end().compareTo(bps.getBs_start()) == 0) {
-					if (pr_bps.getBs_bp_num() == bps.getBs_bp_num())
-						continue;
-				}
-			}
-			// 기존에 예약된 프로그램의 시작 시간의 현재 예약하려는 프로그램의 끝나는 시간 이후라면 가능
-			if (pr_bps.getBs_start().compareTo(bps.getBs_end()) > 0) {
+		for (ProgramReservationVO prev_pr : pr_list) {
+			BranchProgramScheduleVO prev_pr_bps = programDao.selectBranchProgramSchedule(prev_pr.getPr_bs_num());
+			// 기존에 예약된 프로그램의 끝나는 시간이 현재 예약하려는 프로그램의 시작 시간보다 이전이면 가능
+			if (prev_pr_bps.getBs_end().getTime() < bps.getBs_start().getTime()) {
 				continue;
 			}
-			// 기존에 예약된 프로그램의 시작 시간이 현재 예약하려는 프로그램의 끝나는 시간과 같다면 같은 지점만 가능
-			else if (pr_bps.getBs_start().compareTo(bps.getBs_end()) == 0) {
-				if (pr_bps.getBs_bp_num() == bps.getBs_bp_num())
+			
+			// 기존에 예약된 프로그램의 끝나는 시간이 현재 예약하려는 프로그램의 시작 시간이 같다면 같은 지점만 가능
+			if (prev_pr_bps.getBs_end().getTime() == bps.getBs_start().getTime()) {
+				if (prev_pr_bps.getBs_bp_num() == bps.getBs_bp_num())
 					continue;
 			}
-			System.out.println("hell~");
+
+			// 기존에 예약된 프로그램의 시작 시간이 현재 예약하려는 프로그램의 끝나는 시간 이후라면 가능
+			if (prev_pr_bps.getBs_start().getTime() > bps.getBs_end().getTime()) {
+				continue;
+			}
+			
+			// 기존에 예약된 프로그램의 시작 시간이 현재 예약하려는 프로그램의 끝나는 시간과 같다면 같은 지점만 가능
+			if (prev_pr_bps.getBs_start().getTime() == bps.getBs_end().getTime()) {
+				if (prev_pr_bps.getBs_bp_num() == bps.getBs_bp_num())
+					continue;
+			}
+
 			// 모두 해당이 안된다면 시간이 겹치는 것이므로 예약이 불가능
-			return false;
+			rm.setResult(false);
+			rm.setMessage("이미 예약한 프로그램과 시간이 겹침");
+			return rm;
 		}
 
 		try {
 			// 디비에 예약 추가
-			System.out.println("hell2~");
 			boolean res = programDao.insertProgramReservationVO(user, bs_num);
-			System.out.println("hell3~");
 			if (res) {
 				// bps에 current를 1추가한다.
-				System.out.println("hell3.5~");
 				programDao.updateBranchProgramScheduleCurrent(bps);
 			} else {
 				throw new Exception();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			rm.setResult(false);
+			rm.setMessage("예약 등록중 에러 발생");
+			return rm;
+		}
+		
+		rm.setResult(true);
+		rm.setMessage("예약 등록 성공");
+		return rm;
+	}
+
+	@Override
+	public boolean checkReservation(MemberVO user, int bs_num) {
+		
+		user = new MemberVO();
+		user.setMe_id("user1");
+		
+//		if(user == null) {
+//			return false;
+//		}
+		
+		ProgramReservationVO pr = programDao.selectProgramReservation(user, bs_num);
+		
+		if(pr == null) {
 			return false;
 		}
+		
 		return true;
 	}
 

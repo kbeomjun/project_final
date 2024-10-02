@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.kh.fitness.model.vo.PaymentTypeVO;
@@ -19,16 +20,31 @@ public class MembershipController {
 	@Autowired
 	MembershipService membershipService;
 	
+	// 회원권 조회
 	@GetMapping("/membershipList")
 	public String membershipList(Model model) {
 		
 		List<PaymentTypeVO> paymentList = membershipService.getMembershipList();
 		
-		System.out.println("회원권 조회 화면에 들어옴");
-		System.out.println(paymentList);
+//		System.out.println("회원권 조회 화면에 들어옴");
+//		System.out.println(paymentList);
 		
 		model.addAttribute("paymentList", paymentList);
 		
+		return "/membership/membershipList";
+	}
+
+	
+	// 회원권 결제
+	@GetMapping("/membershipInsert")
+	public String membershipInsertGet() {
+		System.out.println("회원권 결제 화면에 들어옴");
+		
+		return "/membership/membershipInsert";
+	}
+	
+	@PostMapping("/membershipInsert")
+	public String membershipInsertPost(Model model) {
 		return "/membership/membershipList";
 	}
 }
