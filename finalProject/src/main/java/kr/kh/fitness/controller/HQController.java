@@ -105,4 +105,9 @@ public class HQController {
 		model.addAttribute("url", "/hq/employee/detail/" + em_num);
 		return "/main/message";
 	}
+	
+	@GetMapping("/equipment/list")
+	public String equipmentList(Model model) {
+	    return "/hq/equipment/list";
+	}
 }

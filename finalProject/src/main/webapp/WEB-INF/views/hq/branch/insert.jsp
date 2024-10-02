@@ -111,7 +111,7 @@
 				        var num = this.num;
 				    	let path = event.target.result;
 				        img = `
-				        	<div class="img-box">
+			        		<div class="img-box">
 					        	<img src="\${path}" style="width:100%; height:100%">
 						        	<button type="button" class="btn btn-outline-danger btn-delete-img" data-num="\${num}">
 										<i class="fi fi-bs-cross"></i>
