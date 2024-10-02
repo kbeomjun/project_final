@@ -7,9 +7,9 @@
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>
   <insert id="insertMember">
-    INSERT INTO member(me_id, me_pw, me_email, me_name, me_phone, me_address, me_birth, me_gender)
-    VALUES (#{m.me_id}, #{m.me_pw}, #{m.me_email}, #{m.me_name}, #{m.me_phone}, #{m.me_address}, #{m.me_birth}, #{m.me_gender})
-  </insert>
+    INSERT INTO member(me_id, me_pw, me_email, me_name, me_phone, me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_gender)
+    VALUES (#{m.me_id}, #{m.me_pw}, #{m.me_email}, #{m.me_name}, #{m.me_phone}, #{m.me_postcode}, #{m.me_address}, #{m.me_detailAddress}, #{m.me_extraAddress}, #{m.me_birth}, #{m.me_gender})
+</insert>
   <select id="searchUser" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>

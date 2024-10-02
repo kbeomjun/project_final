@@ -2,6 +2,8 @@ package kr.kh.fitness.model.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +22,7 @@ public class MemberVO {
     private String me_address;		// 회원 주소
     private String me_detailAddress;
     private String me_extraAddress;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date me_birth;			// 회원 생년월일
     private String me_gender;		// '남자' or '여자'
     private String me_authority;	// 권한 : 'USER' or ADMIN.. 
