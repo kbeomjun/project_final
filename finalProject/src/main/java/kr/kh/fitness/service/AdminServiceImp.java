@@ -97,8 +97,8 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<MemberVO> getScheduleMemberList(int bp_num) {
-		return adminDao.selectScheduleMemberList(bp_num);
+	public List<MemberVO> getScheduleMemberList(int bs_num) {
+		return adminDao.selectScheduleMemberList(bs_num);
 	}
 
 	@Override
@@ -125,6 +125,11 @@ public class AdminServiceImp implements AdminService{
 		
 		return true;
 	}
+	
+	@Override
+	public BranchProgramScheduleVO getSchedule(int bp_num) {
+		return adminDao.selectScheduleByNum(bp_num);
+	}
 
 	@Override
 	public List<BranchOrderVO> getBranchOrderList(String br_name) {
@@ -132,6 +137,15 @@ public class AdminServiceImp implements AdminService{
 			return null;
 		}
 		return adminDao.selectBranchOrderList(br_name);
+	}
+
+	@Override
+	public boolean updateSchedule(BranchProgramScheduleVO schedule) {
+		BranchProgramScheduleVO checkSchedule = adminDao.selectSchedule(schedule);
+		if(checkSchedule != null) {
+			return false;
+		}
+		return adminDao.updateSchedule(schedule);
 	}
 	
 }
