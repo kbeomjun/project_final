@@ -17,9 +17,9 @@
 </head>
 <body>
     <tiles:insertAttribute name="header"/>
-    <div class="main_layout">
-        <tiles:insertAttribute name="body" />
-    </div>                                                  
+        <main class="sub_container" id="skipnav_target"> 
+				<tiles:insertAttribute name="body" />                                                 
+	    </main>
     <tiles:insertAttribute name="footer" />
     
     <script>

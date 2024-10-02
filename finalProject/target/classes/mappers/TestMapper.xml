@@ -6,4 +6,8 @@
   <select id="getEquipCount" resultType="int">
     select count(*) from sports_equipment
   </select>
+  
+  <select id="login" resultType="MemberVO">
+  	select * from member where me_id = #{me_id}
+  </select>
 </mapper>
