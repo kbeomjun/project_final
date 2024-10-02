@@ -9,7 +9,7 @@
 </head>
 <body>
 		<h1 class="mt-3 mb-3">${br_name} 스케줄 목록</h1>
-		<table class="table">
+		<table class="table text-center">
 			<thead>
 				<tr>
 					<th>프로그램명</th>
@@ -40,7 +40,7 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="hh"/>-<fmt:formatDate value="${list.bs_end}" pattern="hh시"/>
 						</td>
 						<td>
-							<a href="<c:url value="#"/>" class="btn btn-outline-warning btn-sm">수정</a>
+							<a href="<c:url value="/admin/schedule/update?bp_num=${list.bp_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
 						</td>
 					</tr>
 				</c:forEach>
