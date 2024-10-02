@@ -9,7 +9,9 @@
 	
 	<insert id="insertBranch">
 		insert into branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress, br_detail)
-		values(#{br.br_name}, #{br.br_phone}, #{br.br_postcode}, #{br.br_address}, #{br.br_detailAddress}, #{br.br_extraAddress}, #{br.br_detail});
+		values
+			(#{br.br_name}, #{br.br_phone}, #{br.br_postcode}, #{br.br_address}, 
+				#{br.br_detailAddress}, #{br.br_extraAddress}, #{br.br_detail});
 	</insert>
 	
 	<insert id="insertBranchFile">
@@ -18,8 +20,11 @@
 	</insert>
 	
 	<insert id="insertAdmin">
-		insert into member(me_id, me_pw, me_email, me_name, me_phone, me_address, me_birth, me_authority)
-		values(#{me.me_id}, #{me.me_pw}, #{me.me_email}, #{me.me_name}, #{me.me_phone}, #{me.me_address}, current_timestamp(), "BRADMIN")
+		insert into member(me_id, me_pw, me_email, me_name, me_phone, me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_authority)
+		values
+			(#{me.me_id}, #{me.me_pw}, #{me.me_email}, #{me.me_name}, #{me.me_phone}, 
+				#{me.me_postcode}, #{me.me_address}, #{me.me_detailAddress}, #{me.me_extraAddress}, 
+				current_timestamp(), "BRADMIN")
 	</insert>
 	
 	<select id="selectBranch" resultType="BranchVO">

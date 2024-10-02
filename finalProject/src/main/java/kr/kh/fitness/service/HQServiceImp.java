@@ -53,7 +53,10 @@ public class HQServiceImp implements HQService {
 		
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
+		admin.setMe_postcode(branch.getBr_postcode());
 		admin.setMe_address(branch.getBr_address());
+		admin.setMe_detailAddress(branch.getBr_detailAddress());
+		admin.setMe_extraAddress(branch.getBr_extraAddress());
 		if(!hqDao.insertAdmin(admin)) {
 			msg = "관리자를 등록하지 못했습니다.";
 		}
