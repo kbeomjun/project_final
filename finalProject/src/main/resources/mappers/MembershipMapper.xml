@@ -6,4 +6,8 @@
 	<select id="selectMembershipList" resultType="PaymentTypeVO">
 		select * from payment_type
 	</select>
+	<insert id="insertPaymentType">
+		insert into payment(pa_price, pa_start, pa_end, pa_state, pa_me_id, pa_pt_num)
+		values(#{pt.pt_price}, now(), #{end}, '결제완료', #{me.me_id}, #{pt.pt_num});
+	</insert>
 </mapper>

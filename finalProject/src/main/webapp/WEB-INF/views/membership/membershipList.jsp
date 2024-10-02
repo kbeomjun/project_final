@@ -12,14 +12,14 @@
 	<!-- main container -->
 	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h2 class="mb10">회원권</h2>
-		<div>
-			<p>※PT이용권은 기간 이내에 사용하지 않으시면 소진 됩니다.</p>
-		</div>
+		<ul class="mb10">
+			<li>※ PT이용권은 기간 이내에 사용하지 않으시면 소진 됩니다.</li>
+			<li>※ 회원권 결제는 로그인 후 이용 가능 합니다.</li>
+		</ul>
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">이용권 종류</th>
-					<th scope="col">유형</th>
 					<th scope="col">기간(일)</th>
 					<th scope="col">횟수</th>
 					<th scope="col">가격</th>
@@ -27,17 +27,29 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${paymentList}" var="ptList">
-					<tr>
-						<td>${ptList.pt_type}</td>
-						<td>${ptList.pt_date}</td>
-						<td>${ptList.pt_count}</td>
-						<td>${ptList.pt_price}원</td>
-					</tr>
-				</c:forEach>
+		            <tr>
+		                <td>${ptList.pt_type}</td>
+		                <td>${ptList.pt_date}</td>
+		                <td>${ptList.pt_count}</td>
+		                <td>${ptList.formattedPrice}원</td> <!-- 포맷된 가격 사용 -->
+		            </tr>
+		        </c:forEach>
 			</tbody>
 		</table>
-		<div>
-			<a href="<c:url value="/membership/membershipInsert" />" class="btn btn-primary">결제</a>
+		<div class="text-right">
+			<a href="<c:url value="/membership/membershipInsert" />" class="btn btn-primary js-btn-insert">회원권 결제</a>
 		</div>
+	
+		<script type="text/javascript">
+			$('.js-btn-insert').click(function(e){
+				if('${user.me_id}' != ''){
+					return;
+				}
+				e.preventDefault();
+				if(confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하겠습니까?')){
+					location.href = "<c:url value="/login"/>"
+				}
+			});
+		</script>
 </body>
 </html>

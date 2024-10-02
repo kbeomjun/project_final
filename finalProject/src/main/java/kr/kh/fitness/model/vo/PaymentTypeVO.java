@@ -1,5 +1,6 @@
 package kr.kh.fitness.model.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor // 매개변수를 받는 생성자 추가
 public class PaymentTypeVO {
 	
  	private int pt_num;          // 결제 유형 번호
@@ -16,5 +18,8 @@ public class PaymentTypeVO {
     private int pt_date;         // 결제 유형 날짜
     private int pt_count;        // 결제 유형 수량
     private int pt_price;        // 결제 유형 가격
+    
+    // 추가된 필드
+    private String formattedPrice; // 포맷된 가격을 저장할 필드
 	    
 }
