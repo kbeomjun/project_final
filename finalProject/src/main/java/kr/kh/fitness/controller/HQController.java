@@ -43,7 +43,7 @@ public class HQController {
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/branch/insert");
 		}
-	    return "/main/msg";
+	    return "/main/message";
 	}
 	@GetMapping("/branch/detail/{br_name}")
 	public String branchDetail(Model model, @PathVariable("br_name") String br_name, BranchVO branchVo) {
@@ -66,7 +66,7 @@ public class HQController {
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/branch/detail/" + br_ori_name);
 		}
-		return "/main/msg";
+		return "/main/message";
 	}
 	
 	@GetMapping("/employee/list")
