@@ -68,7 +68,7 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "/main/home";
+			return "/main/main";
 		}
 	}
 	
@@ -153,7 +153,8 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "/main/home";
+			//return "/main/home";
+			return "/main/main";		
 		}
 	}
 	
@@ -213,7 +214,8 @@ public class AdminController {
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return "/main/home";
+			//return "/main/home";
+			return "/main/main";
 		}
  
 	}
@@ -234,7 +236,8 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "/main/home";
+			//return "/main/home";
+			return "/main/main";
 		}		
 	}
 }

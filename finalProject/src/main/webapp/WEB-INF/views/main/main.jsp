@@ -9,7 +9,7 @@
 </head>
 <body>
 	<!-- main container -->
-	<main class="main_container" id="skipnav_target">
+	<!-- <main class="main_container" id="skipnav_target"> -->
 		<div class="main_banner_wrap">
 			<div class="main_banner">
 				<div class="swiper main-swiper">
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 		</div>
-	</main>
+		<!-- </main> -->
 	<!-- main container -->
 </body>
 </html>

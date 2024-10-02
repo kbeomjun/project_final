@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.kh.fitness.model.dto.CalendarDTO;
-import kr.kh.fitness.model.dto.MessageDTO;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -155,15 +154,14 @@ public class ProgramController {
 		
 		boolean res = programService.addProgramReservation(user, bs_num);
 		
-		MessageDTO message;
 		if(res) {
-			message = new MessageDTO("/program/schedule", "예약이 확정되었습니다.");
+			model.addAttribute("msg", "예약이 확정되었습니다.");
 		}
 		else {
-			message = new MessageDTO("/program/schedule", "예약에 실패하였습니다.");
+			model.addAttribute("msg", "예약에 실패하였습니다.");
 		}
 	
-		model.addAttribute("message", message);
+		model.addAttribute("url", "/program/schedule");
 		
 		return "/main/message";
 	}

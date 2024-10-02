@@ -1,7 +1,5 @@
 package kr.kh.fitness.model.vo;
 
-import java.util.Date;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

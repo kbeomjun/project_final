@@ -8,5 +8,5 @@
 		<package name="kr.kh.fitness.model.vo" />
 		<package name="kr.kh.fitness.model.dto" />
 	</typeAliases>
-
+	
 </configuration>

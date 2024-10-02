@@ -36,4 +36,4 @@ bin
 spring-*/src/main/java/META-INF/MANIFEST.MF
 
 config.properties
-finalProject/target/m2e-wtp/web-resources/META-INF/maven/kr.kh/fitness/pom.properties
+*.properties
