@@ -95,10 +95,8 @@
 			program_reservation
 		join
 			member on pr_me_id = me_id
-		join
-			branch_program_schedule on pr_bs_num = bs_num
 		where
-			bs_bp_num = #{bp_num} 
+			pr_bs_num = #{bs_num} 
 	</select>
 	
 	<select id="selectMemberList" resultType="MemberVO">

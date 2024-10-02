@@ -97,8 +97,8 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<MemberVO> getScheduleMemberList(int bp_num) {
-		return adminDao.selectScheduleMemberList(bp_num);
+	public List<MemberVO> getScheduleMemberList(int bs_num) {
+		return adminDao.selectScheduleMemberList(bs_num);
 	}
 
 	@Override

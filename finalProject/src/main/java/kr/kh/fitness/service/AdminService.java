@@ -25,7 +25,7 @@ public interface AdminService {
 
 	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name);
 
-	List<MemberVO> getScheduleMemberList(int bp_num);
+	List<MemberVO> getScheduleMemberList(int bs_num);
 	
 	List<EmployeeVO> getMemberList();
 	

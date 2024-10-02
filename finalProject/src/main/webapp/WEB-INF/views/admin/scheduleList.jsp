@@ -25,12 +25,7 @@
 				<c:forEach items="${scheduleList}" var="list">
 					<tr>
 						<td>
-							<c:url var="url" value="/admin/schedule/detail">
-								<c:param name="bp_num" value="${list.bp_num}"/>
-								<c:param name="bp_br_name" value="${list.bp_br_name}"/>
-								<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
-							</c:url>
-							<a href="${url}">${list.bp_sp_name}</a>
+							<a href="<c:url value="/admin/schedule/detail?bs_num=${list.bs_num}"/>">${list.bp_sp_name}</a>
 						</td>
 						<td>${list.em_name}</td>
 						<td>${list.bs_current} / ${list.bp_total}</td>

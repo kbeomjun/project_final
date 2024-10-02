@@ -18,7 +18,6 @@
 		<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
 		<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
 			<input type="hidden" name="br_name" value="${branchName}">
-			<input type="hidden" name="me_id" id="hiddenMeId" value="" /> <!-- Hidden input for me_id -->
 			
 			<div class="form-group">
 				<label>프로그램:</label>
@@ -135,19 +134,6 @@
 				document.getElementById('hiddenMeId').value = ""; // 테이블이 보이지 않으면 me_id 초기화
 			}
 		});		
-		
-		// 폼 제출 시 me_id 값 확인 및 설정
-		document.getElementById('form').addEventListener('submit', function(event) {
-			var selectedMember = document.querySelector('input[name="me_id"]:checked');
-			if (!selectedMember && document.getElementById('memberListTable').style.display === 'block') {
-				// If the memberListTable is visible but no member is selected, prevent submission
-				alert("회원을 선택하세요.");
-				event.preventDefault(); // Prevent form submission if no member is selected
-			} else if (selectedMember) {
-				// If a member is selected, set its value to hiddenMeId field
-				document.getElementById('hiddenMeId').value = selectedMember.value;
-			}
-		});
 	</script>			
 </body>
 </html>

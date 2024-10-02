@@ -159,12 +159,11 @@ public class AdminController {
 	
 	//지점 프로그램 일정 상세 -> 예약한 회원 목록(이름+전화번호+생년월일+성별+노쇼경고횟수)
 	@GetMapping("/schedule/detail")
-	public String scheduleDetail(Model model, BranchProgramVO branchProgram) {
+	public String scheduleDetail(Model model, int bs_num) {
 		
-		List<MemberVO> memberList = adminService.getScheduleMemberList(branchProgram.getBp_num());
+		List<MemberVO> memberList = adminService.getScheduleMemberList(bs_num);
 		
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("branchProgram", branchProgram);
 		
 		return "/admin/scheduleDetail";
 	}
@@ -192,6 +191,10 @@ public class AdminController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm"); // 날짜 형식 지정
         Date bs_start;
         Date bs_end;
+        
+        if(me_id == null) {
+        	me_id = "";
+        }
         
 		try {
 			bs_start = formatter.parse(date + " " + startTime);
