@@ -11,12 +11,7 @@
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
     	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	.file-input{border: 1px solid gray; border-radius: 5px;}
     	.address-input{margin-bottom: 10px;}
-    	.img-container{min-height: 400px;}
-    	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 8px;}
-    	.btn-delete-img{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
-    	.img-box{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
     	#file{display: none;}
     </style>
 </head>
