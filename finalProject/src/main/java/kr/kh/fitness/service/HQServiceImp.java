@@ -24,9 +24,7 @@ public class HQServiceImp implements HQService {
 	String uploadPath;
 	
 	@Override
-	public List<BranchVO> getBranchList() {
-		return hqDao.selectBranchList();
-	}
+	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
 
 	@Override
 	public String insertBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin) {
@@ -49,9 +47,7 @@ public class HQServiceImp implements HQService {
 		admin.setMe_address(branch.getBr_address());
 		admin.setMe_detailAddress(branch.getBr_detailAddress());
 		admin.setMe_extraAddress(branch.getBr_extraAddress());
-		if(!hqDao.insertAdmin(admin)) {
-			msg = "관리자를 등록하지 못했습니다.";
-		}
+		if(!hqDao.insertAdmin(admin)) {msg = "관리자를 등록하지 못했습니다.";}
 		return msg;
 	}
 	private void uploadBranchFile(MultipartFile file, String br_name) {
@@ -66,19 +62,13 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public BranchVO getBranch(BranchVO branch) {
-		return hqDao.selectBranch(branch);
-	}
+	public BranchVO getBranch(BranchVO branch) {return hqDao.selectBranch(branch);}
 	
 	@Override
-	public MemberVO getAdmin(BranchVO branch) {
-		return hqDao.selectAdmin(branch);
-	}
+	public MemberVO getAdmin(BranchVO branch) {return hqDao.selectAdmin(branch);}
 
 	@Override
-	public List<BranchFileVO> getBranchFileList(BranchVO branch) {
-		return hqDao.selectBranchFileList(branch);
-	}
+	public List<BranchFileVO> getBranchFileList(BranchVO branch) {return hqDao.selectBranchFileList(branch);}
 
 	@Override
 	public String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList) {
@@ -112,9 +102,7 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<EmployeeVO> getEmployeeList() {
-		return hqDao.selectEmployeeList();
-	}
+	public List<EmployeeVO> getEmployeeList() {return hqDao.selectEmployeeList();}
 
 	@Override
 	public String insertEmployee(EmployeeVO employee, MultipartFile file) {
@@ -128,11 +116,10 @@ public class HQServiceImp implements HQService {
 		int em_num = createEmployeeNum(year);
 		employee.setEm_num(em_num);
 		
-		String em_fi_name = uploadEmployeeFile(file, employee.getEm_num() + "_" + employee.getEm_name());
+		String em_fi_name = uploadEmployeeFile(file, employee.getEm_num() + "");
 		employee.setEm_fi_name(em_fi_name);
 		
 		if(!hqDao.insertEmployee(employee)) {msg = "직원을 등록하지 못했습니다.";}
-		if(!msg.equals("")) {return msg;}
 		return msg;
 	}
 	private int createEmployeeNum(int year) {
@@ -168,5 +155,27 @@ public class HQServiceImp implements HQService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public EmployeeVO getEmployee(EmployeeVO employee) {return hqDao.selectEmployee(employee);}
+
+	@Override
+	public String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel) {
+		String msg = "";
+		if(employee == null) {msg = "직원 정보가 없습니다.";}
+		if(file == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		String em_fi_name = hqDao.selectEmployeeFileName(employee);
+		employee.setEm_fi_name(em_fi_name);
+		if(isDel != null) {
+			UploadFileUtils.delteFile(uploadPath, employee.getEm_fi_name());
+			em_fi_name = uploadEmployeeFile(file, employee.getEm_num() + "");
+			employee.setEm_fi_name(em_fi_name);
+		}
+		
+		if(!hqDao.updateEmployee(employee)) {msg = "직원을 수정하지 못했습니다.";}
+		return msg;
 	}
 }

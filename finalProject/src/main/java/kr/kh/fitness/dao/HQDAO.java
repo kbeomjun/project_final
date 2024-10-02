@@ -36,4 +36,10 @@ public interface HQDAO {
 	List<EmployeeVO> selectEmployeeList();
 
 	boolean insertEmployee(@Param("em") EmployeeVO employee);
+
+	EmployeeVO selectEmployee(@Param("em") EmployeeVO employee);
+
+	String selectEmployeeFileName(@Param("em") EmployeeVO employee);
+
+	boolean updateEmployee(@Param("em") EmployeeVO employee);
 }

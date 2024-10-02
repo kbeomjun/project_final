@@ -84,4 +84,28 @@
 			(#{em.em_num}, #{em.em_name}, #{em.em_phone}, #{em.em_email}, #{em.em_gender}, #{em.em_position}, current_timestamp(),
 				#{em.em_postcode}, #{em.em_address}, #{em.em_detailAddress}, #{em.em_extraAddress}, #{em.em_fi_name}, #{em.em_br_name})
 	</insert>
+	
+	<select id="selectEmployee" resultType="EmployeeVO">
+		select * from employee where em_num = #{em.em_num};
+	</select>
+	
+	<select id="selectEmployeeFileName" resultType="String">
+		select em_fi_name from employee where em_num = #{em.em_num};
+	</select>
+	
+	<update id="updateEmployee">
+		update employee set
+			em_name = #{em.em_name},
+			em_phone = #{em.em_phone},
+			em_email = #{em.em_email},
+			em_gender = #{em.em_gender},
+			em_position = #{em.em_position},
+			em_postcode = #{em.em_postcode},
+			em_address = #{em.em_address},
+			em_detailAddress = #{em.em_detailAddress},
+			em_extraAddress = #{em.em_extraAddress},
+			em_fi_name = #{em.em_fi_name},
+			em_br_name = #{em.em_br_name}
+		where em_num = #{em.em_num};
+	</update>
 </mapper>

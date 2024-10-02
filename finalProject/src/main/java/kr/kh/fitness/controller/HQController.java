@@ -37,12 +37,11 @@ public class HQController {
 	public String branchInsertPost(Model model, BranchVO branch, MultipartFile[] fileList, MemberVO admin) {
 		String msg = hqService.insertBranch(branch, fileList, admin);
 		if(msg.equals("")) {
-			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/branch/list");
 		}else {
-			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/branch/insert");
 		}
+		model.addAttribute("msg", msg);
 	    return "/main/message";
 	}
 	@GetMapping("/branch/detail/{br_name}")
@@ -60,12 +59,11 @@ public class HQController {
 								MultipartFile[] fileList, MemberVO admin, String[] numList) {
 		String msg = hqService.updateBranch(branch, fileList, admin, br_ori_name, numList);
 		if(msg.equals("")) {
-			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/branch/detail/" + branch.getBr_name());
 		}else {
-			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/branch/detail/" + br_ori_name);
 		}
+		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 	
@@ -85,12 +83,26 @@ public class HQController {
 	public String employeeInsertPost(Model model, EmployeeVO employee, MultipartFile file) {
 		String msg = hqService.insertEmployee(employee, file);
 		if(msg.equals("")) {
-			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/employee/list");
 		}else {
-			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/hq/employee/insert");
 		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	@GetMapping("/employee/detail/{em_num}")
+	public String employeeDetail(Model model, @PathVariable("em_num") int em_num, EmployeeVO employeeVo) {
+		EmployeeVO employee = hqService.getEmployee(employeeVo);
+		List<BranchVO> brList = hqService.getBranchList();
+		model.addAttribute("em", employee);
+		model.addAttribute("brList", brList);
+	    return "/hq/employee/detail";
+	}
+	@PostMapping("/employee/update/{em_num}")
+	public String employeeUpdatePost(Model model, @PathVariable("em_num") int em_num, EmployeeVO employee, MultipartFile file, String isDel) {
+		String msg = hqService.updateEmployee(employee, file, isDel);
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/hq/employee/detail/" + em_num);
 		return "/main/message";
 	}
 }

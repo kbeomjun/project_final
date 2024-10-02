@@ -25,4 +25,8 @@ public interface HQService {
 	List<EmployeeVO> getEmployeeList();
 
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
+
+	EmployeeVO getEmployee(EmployeeVO employee);
+
+	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
 }
