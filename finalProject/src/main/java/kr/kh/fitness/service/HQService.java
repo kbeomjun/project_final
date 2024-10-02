@@ -23,4 +23,6 @@ public interface HQService {
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList);
 
 	List<EmployeeVO> getEmployeeList();
+
+	String insertEmployee(EmployeeVO employee, MultipartFile file);
 }

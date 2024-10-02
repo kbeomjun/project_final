@@ -20,7 +20,9 @@
 	</insert>
 	
 	<insert id="insertAdmin">
-		insert into member(me_id, me_pw, me_email, me_name, me_phone, me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_authority)
+		insert into member
+			(me_id, me_pw, me_email, me_name, me_phone, 
+				me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_authority)
 		values
 			(#{me.me_id}, #{me.me_pw}, #{me.me_email}, #{me.me_name}, #{me.me_phone}, 
 				#{me.me_postcode}, #{me.me_address}, #{me.me_detailAddress}, #{me.me_extraAddress}, 
@@ -73,4 +75,13 @@
 	<select id="selectEmployeeList" resultType="EmployeeVO">
 		select * from employee order by em_num;
 	</select>
+	
+	<insert id="insertEmployee">
+		insert into employee
+			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 
+				em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+		values
+			(#{em.em_num}, #{em.em_name}, #{em.em_phone}, #{em.em_email}, #{em.em_gender}, #{em.em_position}, current_timestamp(),
+				#{em.em_postcode}, #{em.em_address}, #{em.em_detailAddress}, #{em.em_extraAddress}, #{em.em_fi_name}, #{em.em_br_name})
+	</insert>
 </mapper>

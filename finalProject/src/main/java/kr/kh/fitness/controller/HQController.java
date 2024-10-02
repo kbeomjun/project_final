@@ -76,7 +76,21 @@ public class HQController {
 	    return "/hq/employee/list";
 	}
 	@GetMapping("/employee/insert")
-	public String employeeInsert() {
+	public String employeeInsert(Model model) {
+		List<BranchVO> brList = hqService.getBranchList();
+		model.addAttribute("brList", brList);
 	    return "/hq/employee/insert";
+	}
+	@PostMapping("/employee/insert")
+	public String employeeInsertPost(Model model, EmployeeVO employee, MultipartFile file) {
+		String msg = hqService.insertEmployee(employee, file);
+		if(msg.equals("")) {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/hq/employee/list");
+		}else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/hq/employee/insert");
+		}
+		return "/main/message";
 	}
 }

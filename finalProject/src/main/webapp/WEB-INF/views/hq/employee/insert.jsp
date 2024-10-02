@@ -34,46 +34,63 @@
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-file"></div>
 			<div class="form-group">
-				<label for="br_name">이름:</label>
-				<input type="text" class="form-control" id="br_name" name="br_name">
+				<label for="em_name">이름:</label>
+				<input type="text" class="form-control" id="em_name" name="em_name">
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-name"></div>
 			<div class="form-group">
-				<label for="br_name">전화번호:</label>
-				<input type="text" class="form-control" id="br_name" name="br_name">
+				<label for="em_phone">전화번호:</label>
+				<input type="text" class="form-control" id="em_phone" name="em_phone">
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-phone"></div>
 			<div class="form-group">
-				<label for="br_name">이메일:</label>
-				<input type="text" class="form-control" id="br_name" name="br_name">
+				<label for="em_email">이메일:</label>
+				<input type="text" class="form-control" id="em_email" name="em_email">
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-email"></div>
 			<div class="form-group">
-				<label for="br_name">성별:</label>
-				<input type="text" class="form-control" id="br_name" name="br_name">
+				<label for="em_gender" style="margin-right: 10px;">성별:</label>
+				<div class="form-check-inline">
+	  				<label class="form-check-label" for="radio1">
+	    				<input type="radio" class="form-check-input" id="radio1" name="em_gender" value="남자">남
+	  				</label>
+				</div>
+				<div class="form-check-inline">
+	  				<label class="form-check-label" for="radio2">
+	   			 		<input type="radio" class="form-check-input" id="radio2" name="em_gender" value="여자">여
+	  				</label>
+				</div>	
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-gender"></div>
 			<div class="form-group">
-				<label for="br_name">직책:</label>
-				<input type="text" class="form-control" id="br_name" name="br_name">
+				<label for="em_position">직책:</label>
+				<select name="em_position" class="custom-select mb-3 form-control">
+			      	<option value="요가강사">요가강사</option>
+			      	<option value="필라테스강사">필라테스강사</option>
+			      	<option value="PT트레이너">PT트레이너</option>
+			    </select>
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-position"></div>
 			<div class="form-group">
-				<label for="br_address">주소:</label> <br/>
-				<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;">
+				<label for="em_address">주소:</label> <br/>
+				<input type="text" class="address-input" id="em_postcode" name="em_postcode" placeholder="우편번호" style="width:130px;">
 				<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-				<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;"> <br/>
-				<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
-				<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
+				<input type="text" class="address-input" id="em_address" name="em_address" placeholder="주소" style="width:100%;"> <br/>
+				<input type="text" class="address-input" id="em_detailAddress" name="em_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
+				<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
 			</div>
 			<div class="error error-address"></div>
 			<div class="form-group">
-				<label for="br_name">소속:</label>
-				<input type="text" class="form-control" id="br_name" name="br_name">
+				<label for="em_br_name">소속:</label>
+				<select name="em_br_name" class="custom-select mb-3 form-control">
+			      	<c:forEach items="${brList}" var="br">
+				      	<option value="${br.br_name}">${br.br_name}</option>
+			      	</c:forEach>
+			    </select>
 			</div>
-			<div class="error error-address"></div>
+			<div class="error error-branch"></div>
 			<button class="btn btn-outline-info col-12">직원 등록</button>
 		</form>
 		<hr/>
@@ -82,187 +99,37 @@
 	
 	<script>
 		// 사진 파일
-		function displayFileList(fileList){
-			console.log(fileList);
-			var count = fileList.length;
-			$('.img-count').text(count);
-			if(count > 0){
-				for(var i = 0; i < count; i++){
-					$('.img-container').children().remove();
-					$('.img-container').removeClass('align-items-center')
-					let fReader = new FileReader();
-				    fReader.readAsDataURL(fileList[i]);
-				    fReader.num = i;
-				    fReader.onloadend = function(event){
-				        var num = this.num;
-				    	let path = event.target.result;
-				        img = `
-				        	<div class="img-box">
-					        	<img src="\${path}" style="width:100%; height:100%">
-						        	<button type="button" class="btn btn-outline-danger btn-delete-img" data-num="\${num}">
-										<i class="fi fi-bs-cross"></i>
-									</button>
-								</img>
-							</div>
-				        `;
-				        $('.img-container').append(img);
-				    }
-				}
-			}
-			else if(count == 0){
-				$('.img-container').children().remove();
-				$('.img-container').addClass('align-items-center')
-		        btn = `
-		        	<div class="mx-auto">
-						<label for="fileList" class="btn btn-outline-success btn-insert-img">
-							<i class="fi fi-br-plus align-items-center"></i>
-						</label>
-					</div>
+		function displayFileList(file){
+			console.log(file);
+			$('.card').children().remove();
+			let fReader = new FileReader();
+		    fReader.readAsDataURL(file[0]);
+		    fReader.onloadend = function(event){
+		    	let path = event.target.result;
+		        img = `
+		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
 		        `;
-		        $('.img-container').append(btn);
-			}
-		}
-		
-		$(document).on("change", "#fileList", function(){
-			displayFileList($("#fileList")[0].files);
-		});
-		
-		const deleteFile = (fileNum) => {
-		    const dataTransfer = new DataTransfer();
-		    let files = $('#fileList')[0].files;
-		    
-		    let fileArray = Array.from(files);
-		    fileArray.splice(fileNum, 1);
-		    
-		    fileArray.forEach(file => { dataTransfer.items.add(file); });
-		    $('#fileList')[0].files = dataTransfer.files;
-		}
-		const deleteFile2 = (length) => {
-		    const dataTransfer = new DataTransfer();
-		    let files = $('#fileList2')[0].files;
-		    
-		    let fileArray = Array.from(files);
-		    fileArray.splice(0, length);
-		    
-		    fileArray.forEach(file => { dataTransfer.items.add(file); });
-		    $('#fileList2')[0].files = dataTransfer.files;
-		}
-		
-		$(document).on("click", ".btn-delete-img", function(){
-			let fileNum = $(this).data("num");
-			console.log(fileNum);
-			deleteFile(fileNum);
-		    displayFileList($('#fileList')[0].files);
-			$(this).parent().remove();
-		});
-		
-		$(document).on("change", "#fileList2", function(){
-			const dataTransfer = new DataTransfer();
-		    
-			let files = $('#fileList')[0].files;
-		    let fileArray = Array.from(files);
-		    
-			let files2 = $('#fileList2')[0].files;
-		    let fileArray2 = Array.from(files2);
-		    
-		    for(var i = 0; i < fileArray2.length; i++){
-		    	fileArray.push(fileArray2[i]);
+		        $('.card').append(img);
 		    }
-		    
-		    fileArray.forEach(file => { dataTransfer.items.add(file); });
-		    $('#fileList')[0].files = dataTransfer.files;
-		    
-		    deleteFile2($('#fileList2')[0].files.length);
-			displayFileList($("#fileList")[0].files);
+		}
+		
+		$(document).on("change", "#file", function(){
+			displayFileList($("#file")[0].files);
 		});
     </script>
     
     <script type="text/javascript">
     	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
-		let regexEmail = /^\w{6,13}@\w{4,8}.[a-z]{2,3}$/;
+		let regexEmail = /^\w{4,13}@\w{4,8}.[a-z]{2,3}$/;
 		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
-		let imgRequired = `<span>사진은 최소 1장 등록해야합니다.</span>`;
+		let imgRequired = `<span>필수항목입니다.</span>`;
 		
-		$('#br_name').keyup(function(){
-			$('.error-name').children().remove();
-			
-			if($('#br_name').val() == ''){
-				$('.error-name').append(msgRequired);
-			}else{
-				$('.error-name').children().remove();	
-			}
-		});
-		
-		$('#br_phone').keyup(function(){
-			$('.error-phone').children().remove();
-			
-			if($('#br_phone').val() == ''){
-				$('.error-phone').append(msgRequired);
-			}else{
-				$('.error-phone').children().remove();	
-			}
-		});
-		
-		$('#br_detailAddress').keyup(function(){
-			$('.error-address').children().remove();
-			
-			if($('#br_address').val() == '' || $('#br_detailAddress').val() == ''){
-				$('.error-address').append(msgRequired);
-			}else{
-				$('.error-address').children().remove();	
-			}
-		});
-		
-		$('#me_id').keyup(function(){
-			$('.error-id').children().remove();
-			
-			if($('#me_id').val() == ''){
-				$('.error-id').append(msgRequired);
-			}else{
-				$('.error-id').children().remove();	
-			}
-		});
-		
-		$('#me_pw').keyup(function(){
-			$('.error-pw').children().remove();
-			
-			if($('#me_pw').val() == ''){
-				$('.error-pw').append(msgRequired);
-			}else{
-				$('.error-pw').children().remove();	
-			}
-		});
-		
-		$('#me_pw2').keyup(function(){
-			$('.error-pw2').children().remove();
-			
-			if($('#me_pw').val() != $('#me_pw2').val()){
-				$('.error-pw2').append(msgPw2);
-			}else{
-				$('.error-pw2').children().remove();	
-			}
-		});
-		
-		$('#me_email').keyup(function(){
-			$('.error-email').children().remove();
-			
-			if($('#me_email').val() == ''){
-				$('.error-email').append(msgRequired);
-			}else{
-				if(!regexEmail.test($('#me_email').val())){
-					$('.error-email').append(msgEmail);
-				}else{
-					$('.error-email').children().remove();
-				}
-			}
-		});
-		
-		$("#fileList").change(function(){
+		$("#file").change(function(){
 			$('.error-file').children().remove();
 			
-			var count = $('#fileList')[0].files.length;
+			var count = $('#file')[0].files.length;
 			if(count == 0){
 				$('.error-file').append(imgRequired);
 			}else{
@@ -270,69 +137,101 @@
 			}
 		});
 		
+		$('#em_name').keyup(function(){
+			$('.error-name').children().remove();
+			
+			if($('#em_name').val() == ''){
+				$('.error-name').append(msgRequired);
+			}else{
+				$('.error-name').children().remove();	
+			}
+		});
+		
+		$('#em_phone').keyup(function(){
+			$('.error-phone').children().remove();
+			
+			if($('#em_phone').val() == ''){
+				$('.error-phone').append(msgRequired);
+			}else{
+				$('.error-phone').children().remove();	
+			}
+		});
+		
+		$('#em_email').keyup(function(){
+			$('.error-email').children().remove();
+			
+			if($('#em_email').val() == ''){
+				$('.error-email').append(msgRequired);
+			}else{
+				if(!regexEmail.test($('#em_email').val())){
+					$('.error-email').append(msgEmail);
+				}else{
+					$('.error-email').children().remove();
+				}
+			}
+		});
+		
+		$('#em_detailAddress').keyup(function(){
+			$('.error-address').children().remove();
+			
+			if($('#em_address').val() == '' || $('#em_detailAddress').val() == ''){
+				$('.error-address').append(msgRequired);
+			}else{
+				$('.error-address').children().remove();	
+			}
+		});
+		
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
 			
-			if($('#br_name').val() == ''){
-				$('.error-name').append(msgRequired);
-				$('#br_name').focus();
-				flag = false;
-			}
-			
-			if($('#br_phone').val() == ''){
-				$('.error-phone').append(msgRequired);
-				$('#br_phone').focus();
-				flag = false;
-			}
-			
-			if($('#br_address').val() == '' || $('#br_detailAddress').val() == ''){
-				$('.error-address').append(msgRequired);
-				$('#br_detailAddress').focus();
-				flag = false;
-			}
-			
-			if($('#me_id').val() == ''){
-				$('.error-id').append(msgRequired);
-				$('#me_id').focus();
-				flag = false;
-			}
-			
-			if($('#me_pw').val() == ''){
-				$('.error-pw').append(msgRequired);
-				$('#me_pw').focus();
-				flag = false;
-			}
-			
-			if($('#me_pw').val() != $('#me_pw2').val()){
-				$('.error-pw2').append(msgPw2);
-				$('#me_pw2').focus();
-				flag = false;
-			}
-			
-			if($('#me_email').val() == ''){
-				$('.error-email').append(msgRequired);
-				$('#me_email').focus();
-				flag = false;
-			}else{
-				if(!regexEmail.test($('#me_email').val())){
-					$('.error-email').append(msgEmail);
-					$('#me_email').focus();
-					flag = false;
-				}
-			}
-			
-			if($('#fileList')[0].files.length == 0){
+			if($('#file')[0].files.length == 0){
 				$('.error-file').append(imgRequired);
 				flag = false;
 			}
 			
+			if($('#em_name').val() == ''){
+				$('.error-name').append(msgRequired);
+				$('#em_name').focus();
+				flag = false;
+			}
+			
+			if($('#em_phone').val() == ''){
+				$('.error-phone').append(msgRequired);
+				$('#em_phone').focus();
+				flag = false;
+			}
+			
+			if($('#em_email').val() == ''){
+				$('.error-email').append(msgRequired);
+				$('#em_email').focus();
+				flag = false;
+			}else{
+				if(!regexEmail.test($('#em_email').val())){
+					$('.error-email').append(msgEmail);
+					$('#em_email').focus();
+					flag = false;
+				}
+			}
+			
+			if($('input[name=em_gender]:checked').val() == null){
+				$('.error-gender').append(msgRequired);
+				$('#em_gender').focus();
+				flag = false;
+			}
+			
+			if($('#em_address').val() == '' || $('#em_detailAddress').val() == ''){
+				$('.error-address').append(msgRequired);
+				$('#em_detailAddress').focus();
+				flag = false;
+			}
+
 			return flag;
 		});
     </script>
     
     <script type="text/javascript">
-    	// 주소 api, 썸머노트
+    	// 주소 api
 	    function addressPostcode() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {
@@ -366,25 +265,20 @@
 	                        extraAddr = ' (' + extraAddr + ')';
 	                    }
 	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("br_extraAddress").value = extraAddr;
+	                    document.getElementById("em_extraAddress").value = extraAddr;
 	                
 	                } else {
-	                    document.getElementById("br_extraAddress").value = '';
+	                    document.getElementById("em_extraAddress").value = '';
 	                }
 	
 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('br_postcode').value = data.zonecode;
-	                document.getElementById("br_address").value = addr;
+	                document.getElementById('em_postcode').value = data.zonecode;
+	                document.getElementById("em_address").value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("br_detailAddress").focus();
+	                document.getElementById("em_detailAddress").focus();
 	            }
 	        }).open();
 	    }
-    	
-	    $('#br_detail').summernote({
-			  tabsize: 2,
-			  height: 350
-		});
     </script>
 </body>
 </html>

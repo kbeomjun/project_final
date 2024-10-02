@@ -34,4 +34,6 @@ public interface HQDAO {
 	boolean updatetAdmin(@Param("me") MemberVO admin, @Param("br_ori_name") String br_ori_name);
 
 	List<EmployeeVO> selectEmployeeList();
+
+	boolean insertEmployee(@Param("em") EmployeeVO employee);
 }
