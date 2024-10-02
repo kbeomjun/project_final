@@ -5,8 +5,8 @@
     padding: 1.5em;
 } */
 
-.calendar-wrapper {width: 55%;}
-.list-wrapper {width: 45%;}
+.calendar-wrapper {width: 65%;}
+.list-wrapper {width: 30%;}
 
 .calendar-wrapper table td {width: 100px; height: 100px;}
 .calendar-wrapper table td .selected {font-weight: 900; text-decoration: underline;}
