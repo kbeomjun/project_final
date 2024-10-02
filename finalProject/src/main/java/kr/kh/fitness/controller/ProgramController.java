@@ -2,8 +2,11 @@ package kr.kh.fitness.controller;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.model.dto.CalendarDTO;
+import kr.kh.fitness.model.dto.ProgramReservationMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -29,17 +35,17 @@ public class ProgramController {
 	@Autowired
 	private ProgramService programService;
 
-	@GetMapping("/main")
-	public String programMain(Model model) throws Exception {
-		log.info("/program/main");
-
-		LocalDate today = LocalDate.now();
-		model.addAttribute("year", today.getYear());
-		model.addAttribute("month", today.getMonthValue());
-		model.addAttribute("day", today.getDayOfMonth());
-
-		return "/program/main";
-	}
+//	@GetMapping("/main")
+//	public String programMain(Model model) throws Exception {
+//		log.info("/program/main");
+//
+//		LocalDate today = LocalDate.now();
+//		model.addAttribute("year", today.getYear());
+//		model.addAttribute("month", today.getMonthValue());
+//		model.addAttribute("day", today.getDayOfMonth());
+//
+//		return "/program/main";
+//	}
 
 	@GetMapping("/info")
 	public String programInfo(Model model) throws Exception {
@@ -145,24 +151,49 @@ public class ProgramController {
 	}
 	
 	@GetMapping("/reservation/{bs_num}")
-		
-	public String programReservation(Model model, HttpSession session, @PathVariable("bs_num") Integer bs_num) {
+	public String programReservation(Model model, HttpSession session, HttpServletRequest request, @PathVariable("bs_num") Integer bs_num) {
 		
 		log.info("/program/reservation");
 
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		boolean res = programService.addProgramReservation(user, bs_num);
+		ProgramReservationMessage rm = programService.addProgramReservation(user, bs_num);
 		
-		if(res) {
+		if(rm.isResult()) {
 			model.addAttribute("msg", "예약이 확정되었습니다.");
 		}
 		else {
-			model.addAttribute("msg", "예약에 실패하였습니다.");
+			model.addAttribute("msg", "예약에 실패하였습니다.\\n(" + rm.getMessage() + ")");
 		}
 	
-		model.addAttribute("url", "/program/schedule");
+		String prevUrl = request.getHeader("Referer");
+		if (prevUrl != null) {
+			model.addAttribute("url", prevUrl);
+			System.out.println("prevUrl : " + prevUrl);
+		}
+		else {
+			model.addAttribute("url", "/program/schedule");
+			System.out.println("prevUrl : none");
+		}
 		
 		return "/main/message";
 	}
+	
+	
+	// 이미 예약한 프로그램인 지 중복 체크
+	@ResponseBody
+	@GetMapping("/checkReservation")
+	public Map<String, Object> programCheckReservation(HttpSession session, @RequestParam("bs_num") int bs_num){
+		log.info("/program/CheckReservation");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		boolean isDuplicated = programService.checkReservation(user, bs_num);
+		
+		map.put("checkReservation", isDuplicated);
+		return map;
+	}
+	
 }

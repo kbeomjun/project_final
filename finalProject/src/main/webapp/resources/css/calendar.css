@@ -37,7 +37,8 @@
     border-radius: .25rem;
 }
 
-.btn-program-reservation {
+.btn-program-reservation1,
+.btn-program-reservation2 {
     padding: .11rem .5rem;
     line-height: 2;
     border-radius: .25rem;

@@ -65,7 +65,7 @@ public class UserController {
 	    public String signupPage() {
 	        return "/member/signup";
 	    }
-	    
+	    /*
 	    // 회원가입 처리
 	    @PostMapping("/signup")
 	    public String signup(Model model, @ModelAttribute MemberVO member) {
@@ -92,6 +92,7 @@ public class UserController {
 	        
 	        return "/main/message";
 	    }
+	    */
 
 }
 
