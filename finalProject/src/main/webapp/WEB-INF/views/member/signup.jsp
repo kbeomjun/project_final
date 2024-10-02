@@ -69,10 +69,20 @@
                 <input type="password" class="form-control" id="pw2" name="me_pw2" required>
                 <div id="pw2Error" class="error" style="display: none;">필수 입력 사항입니다</div>
             </div>
-            <div class="form-group">
-                <label for="email">이메일:</label>
-                <input type="email" class="form-control" id="email" name="me_email" required>
-            </div>
+           <div class="form-group">
+			    <label for="email">이메일:</label>
+			    <div style="display: flex; align-items: center;">
+			        <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
+			        <span style="margin-right: 10px;">@</span>
+			        <select class="form-control" id="me_emailDomain" name="me_emailDomain" required style="flex: 4;">
+			            <option value="">선택</option>
+			            <option value="naver.com">naver.com</option>
+			            <option value="daum.net">daum.net</option>
+			            <option value="google.com">google.com</option>
+			            <option value="yahoo.com">yahoo.com</option>
+			        </select>
+			    </div>
+			</div>
             <div class="form-group">
                 <label for="gender">성별:</label>
                 <select class="form-control" id="gender" name="me_gender">
@@ -94,18 +104,18 @@
 			    <br/>
 			    <input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목"/>
 			</div>
-            <div class="form-group" id="phoneGroup">
-                <label for="phone">전화번호:</label>
-                <div style="display: flex; align-items: center;">
-                    <input type="tel" class="form-control" id="phone1" maxlength="3" placeholder="000" required>
-                    <span>-</span>
-                    <input type="tel" class="form-control" id="phone2" maxlength="4" placeholder="0000" required>
-                    <span>-</span>
-                    <input type="tel" class="form-control" id="phone3" maxlength="4" placeholder="0000" required>
-                </div>
-                <input type="hidden" id="me_phone" name="me_phone">
-                <div id="phoneError" class="error" style="display: none;">전화번호를 모두 입력해주세요.</div>
-            </div>
+		    <div class="form-group" id="phoneGroup">
+		        <label for="phone">전화번호:</label>
+		        <div style="display: flex; align-items: center;">
+		            <input type="tel" class="form-control" id="phone1" maxlength="3" placeholder="000"/>
+		            <span>-</span>
+		            <input type="tel" class="form-control" id="phone2" maxlength="4" placeholder="0000"/>
+		            <span>-</span>
+		            <input type="tel" class="form-control" id="phone3" maxlength="4" placeholder="0000"/>
+		        </div>
+		        <input type="hidden" id="me_phone" name="me_phone">
+		        <div id="phoneError" class="error" style="display: none;">전화번호를 모두 입력해주세요.</div>
+		    </div>
 	        <div class="form-group birth-group">
 			    <label for="birth">생년월일:</label>
 			    <input type="date" class="form-control" id="birth" name="me_birth" required>
@@ -167,6 +177,12 @@
 				alert('이미 사용 중인 아이디입니다.');
 				return false;
 			}
+			//
+			if(!setPhoneNumber()){
+				alert('폰번호가 맞...')
+				return false;
+			}
+			
 			return true;
 		}
 	});
@@ -225,77 +241,59 @@
 		}
 	</script>
 	<script type="text/javascript">
-    // 전화번호를 하나의 필드로 결합하여 전송
-    document.getElementById('form').onsubmit = function() {
-        var phone1 = document.getElementById('phone1').value;
-        var phone2 = document.getElementById('phone2').value;
-        var phone3 = document.getElementById('phone3').value;
-        
-        // 전화번호 조합
-        var fullPhoneNumber = phone1 + phone2 + phone3;
-        document.getElementById('me_phone').value = fullPhoneNumber; // 결합된 전화번호를 hidden input에 설정
-
-        // 추가 유효성 검사 (필요할 경우)
-        if (!phone1 || !phone2 || !phone3) {
-            document.getElementById('phoneError').style.display = 'block';
-            return false; // 폼 제출 방지
-        } else {
-            document.getElementById('phoneError').style.display = 'none';
-        }
-
-        return true; // 유효성 검사가 통과하면 제출
-    };
-	</script>
+	    // 전화번호를 하나의 필드로 결합하여 전송
+	    function setPhoneNumber(){
+	    	var phone1 = document.getElementById('phone1').value;
+	        var phone2 = document.getElementById('phone2').value;
+	        var phone3 = document.getElementById('phone3').value;
+	        
+	        // 전화번호 조합
+	        var fullPhoneNumber = phone1 + phone2 + phone3;
+	        document.getElementById('me_phone').value = fullPhoneNumber; // 결합된 전화번호를 hidden input에 설정
 	
-  <!-- <script type="text/javascript">
-		function addressPostcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	        // 추가 유효성 검사 (필요할 경우)
+	        if (!phone1 || !phone2 || !phone3) {
+	            document.getElementById('phoneError').style.display = 'block';
+	            return false; // 폼 제출 방지
+	        } else {
+	            document.getElementById('phoneError').style.display = 'none';
+	        }
 	
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	
-	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                if(data.userSelectedType === 'R'){
-	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("me_extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("me_extraAddress").value = '';
-	                }
-	
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('me_postcode').value = data.zonecode;
-	                document.getElementById("me_address").value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("me_detailAddress").focus();
-	            }
-	        }).open();
+	        return true; // 유효성 검사가 통과하면 제출
 	    }
-	</script>  -->
+	    /*document.getElementById('form').onsubmit = function() {
+	        var phone1 = document.getElementById('phone1').value;
+	        var phone2 = document.getElementById('phone2').value;
+	        var phone3 = document.getElementById('phone3').value;
+	        
+	        // 전화번호 조합
+	        var fullPhoneNumber = phone1 + phone2 + phone3;
+	        document.getElementById('me_phone').value = fullPhoneNumber; // 결합된 전화번호를 hidden input에 설정
+	
+	        // 추가 유효성 검사 (필요할 경우)
+	        if (!phone1 || !phone2 || !phone3) {
+	            document.getElementById('phoneError').style.display = 'block';
+	            return false; // 폼 제출 방지
+	        } else {
+	            document.getElementById('phoneError').style.display = 'none';
+	        }
+	
+	        return true; // 유효성 검사가 통과하면 제출
+	    };*/
+	</script>
+	<script>
+	    function combineEmail() {
+	        const emailId = document.getElementById("me_emailId").value;
+	        const emailDomain = document.getElementById("me_emailDomain").value;
+	        const emailField = document.createElement("input");
+	        emailField.setAttribute("type", "hidden");
+	        emailField.setAttribute("name", "me_email");
+	        emailField.setAttribute("value", emailId + "@" + emailDomain);
+	        document.getElementById("form").appendChild(emailField);
+	    }
+	    
+	    document.getElementById("form").onsubmit = combineEmail;
+	</script>
 	<script>
     function addressPostcode() {
         new daum.Postcode({
