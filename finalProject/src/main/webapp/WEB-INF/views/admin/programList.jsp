@@ -35,12 +35,7 @@
 								</c:url>
 								<a href="${url}" class="btn btn-outline-warning btn-sm">수정</a>
 							</c:if>
-							<c:url var="url" value="/admin/program/delete">
-								<c:param name="bp_sp_name" value="${list.bp_sp_name}"/>
-								<c:param name="bp_em_num" value="${list.bp_em_num}"/>
-								<c:param name="bp_br_name" value="${list.bp_br_name}"/>
-							</c:url>						
-							<a href="${url}" class="btn btn-outline-danger btn-sm">삭제</a>
+							<a href="<c:url value="/admin/program/delete?bp_num=${list.bp_num}"/>" class="btn btn-outline-danger btn-sm">삭제</a>
 						</td>
 					</tr>
 				</c:forEach>

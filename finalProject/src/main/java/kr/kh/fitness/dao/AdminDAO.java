@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface AdminDAO {
@@ -27,13 +29,11 @@ public interface AdminDAO {
 	
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
-	boolean deleteBranchProgram(BranchProgramVO branchProgram);
+	boolean deleteBranchProgram(int bp_num);
 
 	List<BranchProgramScheduleVO> selectBranchScheduleList(String br_name);
 
 	List<MemberVO> selectScheduleMemberList(int bs_num);
-
-	List<BranchOrderVO> selectBranchOrderList(String br_name);
 	
 	BranchProgramScheduleVO selectSchedule(BranchProgramScheduleVO schedule);
 
@@ -48,5 +48,13 @@ public interface AdminDAO {
 	BranchProgramScheduleVO selectScheduleByNum(int bp_num);
 
 	boolean updateSchedule(BranchProgramScheduleVO schedule);
+	
+	List<BranchOrderVO> selectBranchOrderList(String br_name);
+
+	List<BranchEquipmentStockVO> selectEquipmentList();
+
+	boolean insertOrder(BranchOrderVO order);
+
+	boolean deleteOrder(int bo_num);
 
 }

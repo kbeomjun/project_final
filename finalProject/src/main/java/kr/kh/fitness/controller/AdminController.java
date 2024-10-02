@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.kh.fitness.dao.TestDAO;
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
@@ -96,8 +97,9 @@ public class AdminController {
 			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
 			model.addAttribute("msg", "등록에 실패했습니다.");
-			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
+			model.addAttribute("url", "/admin/program/insert");
 		}
+		
 		return "/main/message";
 	}
 	
@@ -117,34 +119,32 @@ public class AdminController {
 		
 		if(adminService.updateBranchProgram(branchProgram)) {
 			model.addAttribute("msg", "수정에 성공했습니다.");
-			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
 			model.addAttribute("msg", "수정에 실패했습니다.");
-			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		}
+		model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		return "/main/message";
 	}
 	
 	//지점 프로그램 삭제
 	@GetMapping("/program/delete")
-	public String programDelete(Model model, BranchProgramVO branchProgram) {
+	public String programDelete(Model model, int bp_num) {
 		
-		if(adminService.deleteBranchProgram(branchProgram)) {
+		if(adminService.deleteBranchProgram(bp_num)) {
 			model.addAttribute("msg", "삭제에 성공했습니다.");
-			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
 			model.addAttribute("msg", "삭제에 실패했습니다.");
-			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		}
+		model.addAttribute("url", "/admin/program/list");
 		return "/main/message";
 	}
 	
 	//지점 프로그램 일정 목록(프로그램명+트레이너명+[예약인원/총인원]+프로그램날짜+프로그램시간)
 	@GetMapping("/schedule/list")
-	public String programSchedule(Model model, HttpSession session, String br_name) {
+	public String programSchedule(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
-			br_name = user.getMe_name();
+			String br_name = user.getMe_name();
 			
 			List<BranchProgramScheduleVO> scheduleList = adminService.getBranchScheduleList(br_name);
 			model.addAttribute("scheduleList", scheduleList);
@@ -186,7 +186,7 @@ public class AdminController {
 	
 	//지점 프로그램 일정 추가 post
 	@PostMapping("/schedule/insert")
-	public String scheduleInsertPost(Model model, String br_name, String date, String startTime, String endTime, BranchProgramScheduleVO schedule, String me_id) {
+	public String scheduleInsertPost(Model model, String date, String startTime, String endTime, BranchProgramScheduleVO schedule, String me_id) {
 		
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm"); // 날짜 형식 지정
         Date bs_start;
@@ -204,13 +204,11 @@ public class AdminController {
 
 			if(adminService.insertSchedule(schedule, me_id)) {
 				model.addAttribute("msg", "등록에 성공했습니다.");
-				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
 			} else {
 				model.addAttribute("msg", "등록에 실패했습니다.");
-				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
 			}
-			
-			model.addAttribute("br_name", br_name);
+			model.addAttribute("url", "/admin/schedule/list");
+			model.addAttribute("br_name", schedule.getBp_br_name());
 			return "/main/message";
 			
 		} catch (ParseException e) {
@@ -243,15 +241,12 @@ public class AdminController {
 			bs_end = formatter.parse(date + " " + endTime);
 			schedule.setBs_start(bs_start);
 			schedule.setBs_end(bs_end);
-			System.out.println(schedule);
 			if(adminService.updateSchedule(schedule)) {
 				model.addAttribute("msg", "수정에 성공했습니다.");
-				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
 			} else {
 				model.addAttribute("msg", "수정에 실패했습니다.");
-				model.addAttribute("url", "/admin/schedule/list?br_name=" + br_name);
 			}
-			
+			model.addAttribute("url", "/admin/schedule/list");
 			model.addAttribute("br_name", br_name);
 			return "/main/message";
 			
@@ -260,14 +255,13 @@ public class AdminController {
 			return "/main/main";
 		}
 	}
-	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//지점 발주 신청목록
 	@GetMapping("/order/list")
-	public String orderList(Model model, HttpSession session, String br_name) {
+	public String orderList(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
-			br_name = user.getMe_name();
+			String br_name = user.getMe_name();
 			
 			List<BranchOrderVO> orderList = adminService.getBranchOrderList(br_name);
 			model.addAttribute("orderList", orderList);
@@ -279,5 +273,50 @@ public class AdminController {
 			//return "/main/home";
 			return "/main/main";
 		}		
+	}
+	
+	//지점 발주 등록 get
+	@GetMapping("/order/insert")
+	public String orderInsert(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		String br_name = user.getMe_name();
+		
+		List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentList();
+		
+		model.addAttribute("equipmentList", equipmentList);
+		model.addAttribute("br_name", br_name);
+		
+		return "/admin/orderInsert";
+	}
+	
+	//지점 발주 등록 post
+	@PostMapping("/order/insert")
+	public String orderInsertPost(Model model, BranchOrderVO order, String bo_other) {
+		
+		if(bo_other != null) {
+			order.setBo_se_name(bo_other);
+		}
+		
+		if(adminService.insertOrder(order)) {
+			model.addAttribute("msg", "등록에 성공했습니다.");
+		} else {
+			model.addAttribute("msg", "등록에 실패했습니다.");
+		}
+		model.addAttribute("url", "/admin/order/list");
+		
+		return "/main/message";
+	}
+	
+	//지점 발중 신청취소
+	@GetMapping("/order/delete")
+	public String orderDelete(Model model, int bo_num) {
+		
+		if(adminService.deleteOrder(bo_num)) {
+			model.addAttribute("msg", "취소에 성공했습니다.");
+		} else {
+			model.addAttribute("msg", "취소에 실패했습니다.");
+		}
+		model.addAttribute("url", "/admin/order/list");
+		return "/main/message";
 	}
 }

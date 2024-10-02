@@ -70,7 +70,7 @@
 	</update>
 
 	<delete id="deleteBranchProgram">
-		delete from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+		delete from branch_program where bp_num = #{bp_num}
 	</delete>
 	
 	<select id="selectBranchScheduleList" resultType="BranchProgramScheduleVO">
@@ -121,10 +121,6 @@
 		update branch_program_schedule set bs_current = bs_current + 1 where bs_num = #{bs_num}
 	</select>
 	
-	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_br_name = #{br_name}
-	</select>
-	
 	<select id="selectScheduleByNum" resultType="BranchProgramScheduleVO">
 		select 
 			* 
@@ -147,5 +143,31 @@
 		where
 			bs_num = #{bs_num}
 	</update>
+	
+	<select id="selectBranchOrderList" resultType="BranchOrderVO">
+		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc
+	</select>
+	
+	<select id="selectEquipmentList" resultType="BranchEquipmentStockVO">
+		select 
+			be_se_name, sum(be_amount) as total 
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = '본점' 
+		group by 
+			be_se_name 
+		having 
+			total >= 0
+	</select>
+	
+	<insert id="insertOrder">
+		insert into branch_order(bo_amount, bo_br_name, bo_se_name)
+		values(#{bo_amount}, #{bo_br_name}, #{bo_se_name})
+	</insert>
+	
+	<delete id="deleteOrder">
+		delete from branch_order where bo_num = #{bo_num}
+	</delete>
 	
 </mapper>

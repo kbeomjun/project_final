@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.AdminDAO;
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
@@ -76,16 +77,8 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean deleteBranchProgram(BranchProgramVO branchProgram) {
-		if(branchProgram == null) {
-			return false;
-		}
-		
-		if(adminDao.deleteBranchProgram(branchProgram)) {
-			return true;
-		}
-		
-		return false;
+	public boolean deleteBranchProgram(int bp_num) {
+		return adminDao.deleteBranchProgram(bp_num);
 	}
 
 	@Override
@@ -146,6 +139,27 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		return adminDao.updateSchedule(schedule);
+	}
+
+	@Override
+	public List<BranchEquipmentStockVO> getEquipmentList() {
+		return adminDao.selectEquipmentList();
+	}
+
+	@Override
+	public boolean insertOrder(BranchOrderVO order) {
+		if(order == null) {
+			return false;
+		}
+		if(order.getBo_se_name() == null || order.getBo_se_name().trim().length() == 0) {
+			return false;
+		}
+		return adminDao.insertOrder(order);
+	}
+
+	@Override
+	public boolean deleteOrder(int bo_num) {
+		return adminDao.deleteOrder(bo_num);
 	}
 	
 }

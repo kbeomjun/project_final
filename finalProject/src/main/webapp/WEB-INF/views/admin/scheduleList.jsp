@@ -33,7 +33,7 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="yyyy-MM-dd"/>
 						</td>
 						<td>
-							<fmt:formatDate value="${list.bs_start}" pattern="hh"/>-<fmt:formatDate value="${list.bs_end}" pattern="hh시"/>
+							<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 						</td>
 						<td>
 							<a href="<c:url value="/admin/schedule/update?bp_num=${list.bp_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>

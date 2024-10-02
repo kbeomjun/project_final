@@ -2,11 +2,13 @@ package kr.kh.fitness.service;
 
 import java.util.List;
 
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface AdminService {
@@ -21,7 +23,7 @@ public interface AdminService {
 
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
-	boolean deleteBranchProgram(BranchProgramVO branchProgram);
+	boolean deleteBranchProgram(int bp_num);
 
 	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name);
 
@@ -36,5 +38,11 @@ public interface AdminService {
 	List<BranchOrderVO> getBranchOrderList(String br_name);
 
 	boolean updateSchedule(BranchProgramScheduleVO schedule);
+
+	List<BranchEquipmentStockVO> getEquipmentList();
+
+	boolean insertOrder(BranchOrderVO order);
+
+	boolean deleteOrder(int bo_num);
 
 }

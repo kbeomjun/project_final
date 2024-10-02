@@ -19,4 +19,5 @@ public class BranchEquipmentStockVO {
     private String be_br_name;    // 지점 이름
     private String be_se_name;    // 스포츠 장비 이름
 
+    private int total;			//남은 수량 합산
 }

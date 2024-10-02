@@ -17,7 +17,7 @@
 	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
 		<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
-			<input type="hidden" name="br_name" value="${branchName}">
+			<input type="hidden" name="bp_br_name" value="${branchName}">
 			
 			<div class="form-group">
 				<label>프로그램:</label>
