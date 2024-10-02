@@ -20,6 +20,7 @@ public class MembershipController {
 	@Autowired
 	MembershipService membershipService;
 	
+	// 회원권 조회
 	@GetMapping("/membershipList")
 	public String membershipList(Model model) {
 		
@@ -33,6 +34,8 @@ public class MembershipController {
 		return "/membership/membershipList";
 	}
 
+	
+	// 회원권 결제
 	@GetMapping("/membershipInsert")
 	public String membershipInsertGet() {
 		System.out.println("회원권 결제 화면에 들어옴");
@@ -42,7 +45,6 @@ public class MembershipController {
 	
 	@PostMapping("/membershipInsert")
 	public String membershipInsertPost(Model model) {
-		
 		return "/membership/membershipList";
 	}
 }
