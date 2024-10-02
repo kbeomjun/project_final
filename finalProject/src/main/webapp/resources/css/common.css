@@ -476,7 +476,7 @@ dl, ol, ul{
 }
 .main_banner__img{
   width: 100%;
-  height: 919px;
+  height: 100vh;
 }
 .sub_container{
   margin-top: 110px;
