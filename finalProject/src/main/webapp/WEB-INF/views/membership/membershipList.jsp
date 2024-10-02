@@ -12,11 +12,15 @@
 	<!-- main container -->
 	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h2 class="mb10">회원권</h2>
+		<div>
+			<p>※PT이용권은 기간 이내에 사용하지 않으시면 소진 됩니다.</p>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
+					<th scope="col">이용권 종류</th>
 					<th scope="col">유형</th>
-					<th scope="col">기간(개월)</th>
+					<th scope="col">기간(일)</th>
 					<th scope="col">횟수</th>
 					<th scope="col">가격</th>
 				</tr>
@@ -35,6 +39,5 @@
 		<div>
 			<a href="<c:url value="/membership/membershipInsert" />" class="btn btn-primary">결제</a>
 		</div>
-	</main>
 </body>
 </html>

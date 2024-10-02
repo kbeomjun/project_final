@@ -10,8 +10,6 @@
 </head>
 <body>
 	<!-- main container -->
-	<main class="sub_container" id="skipnav_target">
 		<h2 class="mb10">회원권 결제</h2>
-	</main>
 </body>
 </html>
