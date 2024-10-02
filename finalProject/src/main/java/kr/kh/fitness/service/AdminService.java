@@ -39,10 +39,12 @@ public interface AdminService {
 
 	boolean updateSchedule(BranchProgramScheduleVO schedule);
 
-	List<BranchEquipmentStockVO> getEquipmentList();
+	List<BranchEquipmentStockVO> getEquipmentListInHQ();
 
 	boolean insertOrder(BranchOrderVO order);
 
 	boolean deleteOrder(int bo_num);
+
+	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
 
 }

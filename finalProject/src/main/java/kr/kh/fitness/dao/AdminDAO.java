@@ -51,10 +51,12 @@ public interface AdminDAO {
 	
 	List<BranchOrderVO> selectBranchOrderList(String br_name);
 
-	List<BranchEquipmentStockVO> selectEquipmentList();
+	List<BranchEquipmentStockVO> selectEquipmentListInHQ();
 
 	boolean insertOrder(BranchOrderVO order);
 
 	boolean deleteOrder(int bo_num);
+
+	List<BranchEquipmentStockVO> selectEquipmentListInBranch(@Param("br_name")String br_name, @Param("view")String view);
 
 }

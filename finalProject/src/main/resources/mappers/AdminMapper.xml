@@ -148,7 +148,7 @@
 		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc
 	</select>
 	
-	<select id="selectEquipmentList" resultType="BranchEquipmentStockVO">
+	<select id="selectEquipmentListInHQ" resultType="BranchEquipmentStockVO">
 		select 
 			be_se_name, sum(be_amount) as total 
 		from 
@@ -169,5 +169,28 @@
 	<delete id="deleteOrder">
 		delete from branch_order where bo_num = #{bo_num}
 	</delete>
+	
+	<select id="selectEquipmentListInBranch" resultType="BranchEquipmentStockVO">
+		select 
+			be_se_name, sum(be_amount) as total
+			<if test="view == 'all'">
+				, be_birth
+			</if>
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{br_name}
+		group by 
+			be_se_name
+			<if test="view == 'all'">
+				, be_birth 
+			</if>
+		having 
+			total >= 0
+		<if test="view == 'all'">		
+			order by
+				be_birth
+		</if>
+	</select>
 	
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.fitness.dao.TestDAO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
@@ -270,7 +271,6 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			//return "/main/home";
 			return "/main/main";
 		}		
 	}
@@ -281,7 +281,7 @@ public class AdminController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String br_name = user.getMe_name();
 		
-		List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentList();
+		List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentListInHQ();
 		
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
@@ -318,5 +318,24 @@ public class AdminController {
 		}
 		model.addAttribute("url", "/admin/order/list");
 		return "/main/message";
+	}
+	
+	//지점 운동기구 재고 조회
+	@GetMapping("/equipment/list")
+	public String equipmentList(Model model, HttpSession session, @RequestParam(value = "view", defaultValue = "all")String view) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			String br_name = user.getMe_name();
+			
+			List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentListInBranch(br_name, view);
+			model.addAttribute("equipmentList", equipmentList);
+			model.addAttribute("br_name", br_name);
+			model.addAttribute("view", view);
+			return "/admin/equipmentList";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/main";
+		}			
 	}
 }

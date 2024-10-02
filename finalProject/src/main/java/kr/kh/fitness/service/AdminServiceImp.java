@@ -142,8 +142,8 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getEquipmentList() {
-		return adminDao.selectEquipmentList();
+	public List<BranchEquipmentStockVO> getEquipmentListInHQ() {
+		return adminDao.selectEquipmentListInHQ();
 	}
 
 	@Override
@@ -160,6 +160,14 @@ public class AdminServiceImp implements AdminService{
 	@Override
 	public boolean deleteOrder(int bo_num) {
 		return adminDao.deleteOrder(bo_num);
+	}
+
+	@Override
+	public List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view) {
+		if(br_name == null) {
+			return null;
+		}
+		return adminDao.selectEquipmentListInBranch(br_name, view);
 	}
 	
 }
