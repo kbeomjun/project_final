@@ -297,6 +297,7 @@ dl, ol, ul{
 }
 .gnb{
   display: flex;
+  margin: 0px;
 }
 .gnb__item{
   display: flex;
