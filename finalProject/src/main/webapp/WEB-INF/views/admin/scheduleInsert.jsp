@@ -126,6 +126,25 @@
 			this.value = time[0] + ":00"; // 분을 00으로 고정
 		});		
 		
+		// 시작 시간과 마감 시간 비교 로직
+		function validateTime() {
+			var startTime = startTimeField.value;
+			var endTime = endTimeField.value;
+
+			if (startTime >= endTime) {
+				alert("시작시간은 마감시간보다 빨라야 합니다.");
+				return false; // 유효하지 않으면 폼 제출을 막음
+			}
+			return true; // 유효하면 제출 허용
+		}
+
+		// 폼 제출 시 유효성 검사 추가
+		document.getElementById('form').addEventListener('submit', function(event) {
+			if (!validateTime()) {
+				event.preventDefault(); // 유효하지 않으면 제출을 막음
+			}
+		});
+		
 		// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
 		document.getElementById('programSelect').addEventListener('change', function() {
 			var selectedOption = this.options[this.selectedIndex];

@@ -2,6 +2,7 @@ package kr.kh.fitness.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -95,23 +96,23 @@ public class AdminController {
 	@PostMapping("/program/insert")
 	public String programInsertPost(Model model, BranchProgramVO branchProgram) {
 		
-		if(adminService.insertBranchProgram(branchProgram)) {
-			model.addAttribute("msg", "등록에 성공했습니다.");
+		String msg = adminService.insertBranchProgram(branchProgram);
+		
+		if(msg == "") {
 			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
 		} else {
-			model.addAttribute("msg", "등록에 실패했습니다.");
 			model.addAttribute("url", "/admin/program/insert");
 		}
-		
+		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 	
 	//지점 프로그램 수정 get
-	@GetMapping("/program/update")
-	public String programUpdate(Model model, BranchProgramVO branchProgram, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
+	@GetMapping("/program/update/{bp_num}")
+	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num) {
+		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
+		
 		model.addAttribute("branchProgram", branchProgram);
-		model.addAttribute("branchName", user.getMe_name());
 		
 		return "/admin/programUpdate";
 	}
@@ -119,13 +120,13 @@ public class AdminController {
 	//지점 프로그램 수정 post
 	@PostMapping("/program/update")
 	public String programUpdatePost(Model model, BranchProgramVO branchProgram) {
-		
-		if(adminService.updateBranchProgram(branchProgram)) {
-			model.addAttribute("msg", "수정에 성공했습니다.");
+		String msg = adminService.updateBranchProgram(branchProgram);
+		if(msg == "") {
+			model.addAttribute("url", "/admin/program/list");
 		} else {
-			model.addAttribute("msg", "수정에 실패했습니다.");
+			model.addAttribute("url", "/admin/program/update/" + branchProgram.getBp_num());
 		}
-		model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
+		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 	
@@ -172,17 +173,15 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 추가 get
-	@GetMapping("/schedule/insert")
-	public String scheduleInsert(Model model, HttpSession session) {
+	@GetMapping("/schedule/insert/{br_name}")
+	public String scheduleInsert(Model model, @PathVariable("br_name")String br_name) {
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		List<BranchProgramVO> programList = adminService.getBranchProgramList(user.getMe_name());
+		List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
 		List<MemberVO> memberList = adminService.getMemberList();
 		
 		model.addAttribute("programList", programList);
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("branchName", user.getMe_name());
+		model.addAttribute("branchName", br_name);
 		
 		return "/admin/scheduleInsert";
 	}
@@ -191,13 +190,13 @@ public class AdminController {
 	@PostMapping("/schedule/insert")
 	public String scheduleInsertPost(Model model, String date, String startTime, String endTime, BranchProgramScheduleVO schedule, String me_id) {
 		
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm"); // 날짜 형식 지정
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // 날짜 형식 지정
         Date bs_start;
         Date bs_end;
-        
         if(me_id == null) {
         	me_id = "";
         }
+        
         
 		try {
 			bs_start = formatter.parse(date + " " + startTime);
@@ -205,13 +204,13 @@ public class AdminController {
 			schedule.setBs_start(bs_start);
 			schedule.setBs_end(bs_end);
 
-			if(adminService.insertSchedule(schedule, me_id)) {
-				model.addAttribute("msg", "등록에 성공했습니다.");
+			String msg = adminService.insertSchedule(schedule, me_id);
+			if(msg == "") {
+				model.addAttribute("url", "/admin/schedule/list");
 			} else {
-				model.addAttribute("msg", "등록에 실패했습니다.");
+				model.addAttribute("url", "/admin/schedule/insert/"+schedule.getBp_br_name());
 			}
-			model.addAttribute("url", "/admin/schedule/list");
-			model.addAttribute("br_name", schedule.getBp_br_name());
+			model.addAttribute("msg", msg);
 			return "/main/message";
 			
 		} catch (ParseException e) {
@@ -221,10 +220,10 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 수정 get
-	@GetMapping("/schedule/update")
-	public String scheduleUpdate(Model model, int bp_num) {
+	@GetMapping("/schedule/update/{bs_num}")
+	public String scheduleUpdate(Model model, @PathVariable("bs_num")int bs_num) {
 		
-		BranchProgramScheduleVO schedule = adminService.getSchedule(bp_num);
+		BranchProgramScheduleVO schedule = adminService.getSchedule(bs_num);
 		
 		model.addAttribute("schedule", schedule);
 		
@@ -235,7 +234,7 @@ public class AdminController {
 	@PostMapping("/schedule/update")
 	public String scheduleUpdatePost(Model model, String br_name, String date, String startTime, String endTime, BranchProgramScheduleVO schedule) {
 		
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm"); // 날짜 형식 지정
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // 날짜 형식 지정
         Date bs_start;
         Date bs_end;
         
@@ -244,12 +243,13 @@ public class AdminController {
 			bs_end = formatter.parse(date + " " + endTime);
 			schedule.setBs_start(bs_start);
 			schedule.setBs_end(bs_end);
-			if(adminService.updateSchedule(schedule)) {
-				model.addAttribute("msg", "수정에 성공했습니다.");
+			String msg = adminService.updateSchedule(schedule);
+			if(msg == "") {
+				model.addAttribute("url", "/admin/schedule/list");
 			} else {
-				model.addAttribute("msg", "수정에 실패했습니다.");
+				model.addAttribute("url", "/admin/schedule/update/"+schedule.getBs_num());
 			}
-			model.addAttribute("url", "/admin/schedule/list");
+			model.addAttribute("msg", msg);
 			model.addAttribute("br_name", br_name);
 			return "/main/message";
 			

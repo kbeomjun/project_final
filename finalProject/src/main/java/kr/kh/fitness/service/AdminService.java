@@ -17,13 +17,15 @@ public interface AdminService {
 
 	List<BranchProgramVO> getBranchProgramList(String branchName);
 
+	BranchProgramVO getBranchProgram(int bp_num);
+
 	List<SportsProgramVO> getProgramList();
 
 	List<EmployeeVO> getEmployeeListByBranch(String em_br_name);
 
-	boolean insertBranchProgram(BranchProgramVO branchProgram);
+	String insertBranchProgram(BranchProgramVO branchProgram);
 
-	boolean updateBranchProgram(BranchProgramVO branchProgram);
+	String updateBranchProgram(BranchProgramVO branchProgram);
 
 	boolean deleteBranchProgram(int bp_num);
 
@@ -33,13 +35,13 @@ public interface AdminService {
 	
 	List<MemberVO> getMemberList();
 	
-	boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id);
+	String insertSchedule(BranchProgramScheduleVO schedule, String me_id);
 	
-	BranchProgramScheduleVO getSchedule(int bp_num);
+	BranchProgramScheduleVO getSchedule(int bs_num);
 
 	List<BranchOrderVO> getBranchOrderList(String br_name);
 
-	boolean updateSchedule(BranchProgramScheduleVO schedule);
+	String updateSchedule(BranchProgramScheduleVO schedule);
 
 	List<BranchEquipmentStockVO> getEquipmentListInHQ();
 
@@ -54,5 +56,6 @@ public interface AdminService {
 	EmployeeVO getEmployee(int em_num);
 
 	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
+
 
 }

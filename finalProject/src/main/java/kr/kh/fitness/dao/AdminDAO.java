@@ -23,9 +23,11 @@ public interface AdminDAO {
 
 	BranchProgramVO selectBranchProgram(BranchProgramVO branchProgram);
 
+	BranchProgramVO selectBranchProgramByNum(int bp_num);
+
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
-	BranchProgramScheduleVO selectScheduleWithCurrent(BranchProgramVO branchProgram);
+	int selectScheduleWithCurrent(BranchProgramVO branchProgram);
 	
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
@@ -45,7 +47,7 @@ public interface AdminDAO {
 	
 	List<MemberVO> selectMemberList();
 
-	BranchProgramScheduleVO selectScheduleByNum(int bp_num);
+	BranchProgramScheduleVO selectScheduleByNum(int bs_num);
 
 	boolean updateSchedule(BranchProgramScheduleVO schedule);
 	
@@ -68,5 +70,6 @@ public interface AdminDAO {
 	String selectEmployeeFileName(EmployeeVO employee);
 
 	boolean updateEmployee(EmployeeVO employee);
+
 
 }

@@ -50,37 +50,43 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean insertBranchProgram(BranchProgramVO branchProgram) {
-		
+	public String insertBranchProgram(BranchProgramVO branchProgram) {
 		if(branchProgram == null) {
-			return false;
+			return "프로그램 정보가 없습니다.";
 		}
 		
 		BranchProgramVO checkProgram = adminDao.selectBranchProgram(branchProgram);
 		if(checkProgram != null) {
-			return false;
+			return "이미 존재하는 프로그램입니다.";
 		}
-		
-		return adminDao.insertBranchProgram(branchProgram);
+		if(!adminDao.insertBranchProgram(branchProgram)) {
+			return "프로그램 등록에 실패했습니다.";
+		}
+		return "";
 	}
 
 	@Override
-	public boolean updateBranchProgram(BranchProgramVO branchProgram) {
+	public BranchProgramVO getBranchProgram(int bp_num) {
+		return adminDao.selectBranchProgramByNum(bp_num);
+	}
+	
+	@Override
+	public String updateBranchProgram(BranchProgramVO branchProgram) {
 		if(branchProgram == null) {
-			return false;
+			return "프로그램 정보가 없습니다.";
 		}
 		
-		BranchProgramScheduleVO checkSchedule = adminDao.selectScheduleWithCurrent(branchProgram);
+		int checkSchedule = adminDao.selectScheduleWithCurrent(branchProgram);
 		
-		if(checkSchedule != null) {
-			return false;
+		if(checkSchedule > 0) {
+			return "현재 예약된 인원보다 작을 수 없습니다.";
 		}
 		
-		if(adminDao.updateBranchProgram(branchProgram)) {
-			return true;
+		if(!adminDao.updateBranchProgram(branchProgram)) {
+			return "프로그램 수정에 실패했습니다.";
 		}
 		
-		return false;
+		return "";
 	}
 
 	@Override
@@ -107,28 +113,27 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id) {
+	public String insertSchedule(BranchProgramScheduleVO schedule, String me_id) {
 		
 		BranchProgramScheduleVO checkSchedule = adminDao.selectSchedule(schedule);
 		if(checkSchedule != null) {
-			return false;
+			return "다른 일정과 시간이 겹칠 수 없습니다.";
 		}
 		if(!adminDao.insertSchedule(schedule)) {
-			return false;
+			return "스케줄을 등록하지 못했습니다.";
 		}
 		
-		System.out.println(me_id);
 		if(me_id.length() != 0) {
 			adminDao.insertReservationByPTManager(me_id, schedule.getBs_num());
 			adminDao.updateScheduleByPTReservation(schedule.getBs_num());
 		}
 		
-		return true;
+		return "";
 	}
 	
 	@Override
-	public BranchProgramScheduleVO getSchedule(int bp_num) {
-		return adminDao.selectScheduleByNum(bp_num);
+	public BranchProgramScheduleVO getSchedule(int bs_num) {
+		return adminDao.selectScheduleByNum(bs_num);
 	}
 
 	@Override
@@ -140,12 +145,15 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean updateSchedule(BranchProgramScheduleVO schedule) {
+	public String updateSchedule(BranchProgramScheduleVO schedule) {
 		BranchProgramScheduleVO checkSchedule = adminDao.selectSchedule(schedule);
 		if(checkSchedule != null) {
-			return false;
+			return "다른 일정과 시간이 겹칠 수 없습니다.";
 		}
-		return adminDao.updateSchedule(schedule);
+		if(!adminDao.updateSchedule(schedule)) {
+			return "스케줄 수정에 실패했습니다.";
+		}
+		return "";
 	}
 
 	@Override
@@ -255,5 +263,6 @@ public class AdminServiceImp implements AdminService{
 		if(!adminDao.updateEmployee(employee)) {msg = "직원을 수정하지 못했습니다.";}
 		return msg;
 	}
-	
+
+
 }

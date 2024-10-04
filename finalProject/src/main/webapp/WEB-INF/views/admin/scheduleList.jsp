@@ -36,7 +36,7 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 						</td>
 						<td>
-							<a href="<c:url value="/admin/schedule/update?bp_num=${list.bp_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
+							<a href="<c:url value="/admin/schedule/update/${list.bs_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
 						</td>
 					</tr>
 				</c:forEach>
@@ -48,7 +48,7 @@
 			</tbody>
 		</table>
 		<div class="text-right mb-3">	
-			<a href="<c:url value="/admin/schedule/insert"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
+			<a href="<c:url value="/admin/schedule/insert/${br_name}"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 		</div>
 	<!-- </main> -->
 </body>

@@ -61,12 +61,23 @@
 		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
 	</insert>
 	
-	<select id="selectScheduleWithCurrent" resultType="BranchProgramScheduleVO">
-		select * from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total}
+	<select id="selectBranchProgramByNum" resultMap="BranchProgramMap">
+		select 
+			* 
+		from 
+			branch_program 
+		join 
+			employee on em_num = bp_em_num
+		where 
+			bp_num = #{bp_num}
+	</select>
+	
+	<select id="selectScheduleWithCurrent" resultType="int">
+		select count(*) from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total} and bs_start > now()
 	</select>
 	
 	<update id="updateBranchProgram">
-		update branch_program set bp_total = #{bp_total} where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+		update branch_program set bp_total = #{bp_total} where bp_num = #{bp_num}
 	</update>
 
 	<delete id="deleteBranchProgram">
@@ -104,7 +115,7 @@
 	</select>
 	
 	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
-		select * from branch_program_schedule where bs_bp_num = #{bs_bp_num} and (#{bs_end} >= bs_start and bs_end >= #{bs_start})
+		select * from branch_program_schedule where bs_bp_num = #{bs_bp_num} and (#{bs_end} > bs_start and bs_end > #{bs_start})
 	</select>
 	
 	<insert id="insertSchedule" useGeneratedKeys="true" keyProperty="bs_num">
