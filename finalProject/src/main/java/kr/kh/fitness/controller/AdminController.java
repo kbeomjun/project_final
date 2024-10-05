@@ -131,8 +131,8 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 삭제
-	@GetMapping("/program/delete")
-	public String programDelete(Model model, int bp_num) {
+	@GetMapping("/program/delete/{bp_num}")
+	public String programDelete(Model model, @PathVariable("bp_num")int bp_num) {
 		
 		if(adminService.deleteBranchProgram(bp_num)) {
 			model.addAttribute("msg", "삭제에 성공했습니다.");

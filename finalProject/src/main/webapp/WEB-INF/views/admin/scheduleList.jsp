@@ -22,6 +22,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:set var="now" value="<%= new java.util.Date() %>" />
 				<c:forEach items="${scheduleList}" var="list">
 					<tr>
 						<td>
@@ -36,7 +37,9 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 						</td>
 						<td>
-							<a href="<c:url value="/admin/schedule/update/${list.bs_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
+							<c:if test="${list.bs_start > now}">
+								<a href="<c:url value="/admin/schedule/update/${list.bs_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>
