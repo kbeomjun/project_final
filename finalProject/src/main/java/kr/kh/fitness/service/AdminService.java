@@ -1,5 +1,6 @@
 package kr.kh.fitness.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +57,12 @@ public interface AdminService {
 	EmployeeVO getEmployee(int em_num);
 
 	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
+	
+	MemberVO getMember(String me_id);
+	
+	void updateMemberNoShow(String me_id, int me_noshow);
+	
+	LocalDate getCancelTime(String me_id);
 
 	BranchVO getBranch(String br_name);
 
@@ -63,8 +70,8 @@ public interface AdminService {
 
 	MemberVO getAdmin(BranchVO branch);
 
-	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
-
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
+	
+	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
 
 }

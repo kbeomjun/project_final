@@ -12,15 +12,15 @@ values("역삼점", "021231234", "06236", "서울 강남구 테헤란로 156", "
 # 회원(아이디, 비밀번호, 이메일, 이름, 전화번호, 주소, 생년월일, 성별, 권한)
 # 최고 관리자 = HeadQuartersADMIN, 지점 관리자 = BRanchADMIN
 delete from fitness.member;
-insert into fitness.member(me_id, me_pw, me_email, me_name, me_phone, me_address, me_birth, me_gender, me_authority)
-values("hq_admin", "1234", "hq_admin@naver.com", "최고관리자", "01012345678", "주소", "20000101", "남자", "HQADMIN")
-	,("br_admin1", "1234", "br_admin1@naver.com", "강남점", "01012345678", "주소", "20000101", "남자", "BRADMIN")
-    ,("br_admin2", "1234", "br_admin2@naver.com", "역삼점", "022342345", "주소", "20000101", "남자", "BRADMIN")
-    ,("br_admin3", "1234", "br_admin3@naver.com", "신논현점", "023453456", "주소", "20000101", "남자", "BRADMIN")
-    ,("admin", "1234", "admin@naver.com", "관리자", "01012345678", "주소", "20000101", "남자", "ADMIN")
-	,("user1", "1234", "user1@naver.com", "김유저", "01012345678", "주소", "19991231", "남자", "USER")
-    ,("user2", "1234", "user2@naver.com", "박유저", "01012345678", "주소", "20001212", "여자", "USER")
-    ,("user3", "1234", "user3@naver.com", "이유저", "01012345678", "주소", "20001212", "여자", "USER");
+insert into fitness.member(me_id, me_pw, me_email, me_name, me_phone, me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_gender, me_authority)
+values("hq_admin", "1234", "hq_admin@naver.com", "최고관리자", "01012345678", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20000101", "남자", "HQADMIN")
+	,("br_admin1", "1234", "br_admin1@naver.com", "강남점", "01012345678", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20000101", "남자", "BRADMIN")
+    ,("br_admin2", "1234", "br_admin2@naver.com", "역삼점", "022342345", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20000101", "남자", "BRADMIN")
+    ,("br_admin3", "1234", "br_admin3@naver.com", "신논현점", "023453456", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20000101", "남자", "BRADMIN")
+    ,("admin", "1234", "admin@naver.com", "관리자", "01012345678", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20000101", "남자", "ADMIN")
+	,("user1", "1234", "user1@naver.com", "김유저", "01012345678", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "19991231", "남자", "USER")
+    ,("user2", "1234", "user2@naver.com", "박유저", "01012345678", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20001212", "여자", "USER")
+    ,("user3", "1234", "user3@naver.com", "이유저", "01012345678", "06236", "서울 강남구 테헤란로 156", "1층", "(역삼동)", "20001212", "여자", "USER");
 
 
 #운동기구(운동기구명, 운동기구파일명)

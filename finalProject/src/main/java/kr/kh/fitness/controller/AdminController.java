@@ -2,6 +2,7 @@ package kr.kh.fitness.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.TestDAO;
+import kr.kh.fitness.model.dto.MemberResponseDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -383,6 +386,37 @@ public class AdminController {
 		model.addAttribute("url", "/admin/employee/list");
 		return "/main/message";
 	}	
+	
+	//전체 회원목록
+	@GetMapping("/member/list")
+	public String memberList(Model model) {
+		List<MemberVO> memberList = adminService.getMemberList();
+		model.addAttribute("memberList", memberList);
+		return "/admin/memberList";
+	}
+	
+	//회원 상세보기
+	@GetMapping("/member/detail/{me_id}")
+	public String memberDetail(Model model, @PathVariable("me_id")String me_id) {
+		MemberVO member = adminService.getMember(me_id);
+		model.addAttribute("me", member);		
+		return "/admin/memberDetail";		
+	}
+	
+	//회원 노쇼횟수 수정
+	@PostMapping("/member/update")
+	@ResponseBody
+	public MemberResponseDTO memberUpdate(@RequestParam("me_id") String me_id, @RequestParam("noshow") int me_noshow) {
+        try {
+            adminService.updateMemberNoShow(me_id, me_noshow);
+            LocalDate me_cancel = adminService.getCancelTime(me_id);
+            String cancelDate = me_cancel != null ? me_cancel.toString() : "";
+            return new MemberResponseDTO(cancelDate, "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new MemberResponseDTO(null, "error");
+        }
+	}
 	
 	//지점 상세보기 조회
 	@GetMapping("/branch/detail")

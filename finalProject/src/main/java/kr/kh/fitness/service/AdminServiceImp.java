@@ -1,5 +1,6 @@
 package kr.kh.fitness.service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -260,6 +261,27 @@ public class AdminServiceImp implements AdminService{
 		if(!adminDao.updateEmployee(employee)) {msg = "직원을 수정하지 못했습니다.";}
 		return msg;
 	}
+	
+	@Override
+	public MemberVO getMember(String me_id) {
+		return adminDao.selectMember(me_id);
+	}
+	
+	@Override
+	public void updateMemberNoShow(String me_id, int me_noshow) {
+	    LocalDate me_cancel = null;
+	    
+	    // 노쇼 횟수가 5회일 경우 제한시간을 1달 뒤로 설정
+	    if(me_noshow >= 5) {
+	        me_cancel = LocalDate.now().plusMonths(1);
+	    }
+	    adminDao.updateMemberNoShow(me_id, me_noshow, me_cancel);
+	}
+
+    public LocalDate getCancelTime(String me_id) {
+        Date sqlDate = adminDao.selectCancelTime(me_id); // SQL 타입 Date로 가져옴
+        return sqlDate != null ? sqlDate.toLocalDate() : null; // LocalDate로 변환
+    }
 
 	@Override
 	public BranchVO getBranch(String br_name) {

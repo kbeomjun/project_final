@@ -1,5 +1,7 @@
 package kr.kh.fitness.dao;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -70,7 +72,13 @@ public interface AdminDAO {
 	String selectEmployeeFileName(EmployeeVO employee);
 
 	boolean updateEmployee(EmployeeVO employee);
+	
+	MemberVO selectMember(String me_id);
+	
+	void updateMemberNoShow(@Param("me_id")String me_id, @Param("me_noshow")int me_noshow, @Param("me_cancel")LocalDate me_cancel);
 
+	Date selectCancelTime(String me_id);
+	
 	BranchVO selectBranch(String br_name);
 
 	List<BranchFileVO> selectBranchFileList(BranchVO branch);
