@@ -181,29 +181,6 @@
 		delete from branch_order where bo_num = #{bo_num}
 	</delete>
 	
-	<select id="selectEquipmentListInBranch" resultType="BranchEquipmentStockVO">
-		select 
-			be_se_name, sum(be_amount) as total
-			<if test="view == 'all'">
-				, be_birth
-			</if>
-		from 
-			branch_equipment_stock 
-		where 
-			be_br_name = #{br_name}
-		group by 
-			be_se_name
-			<if test="view == 'all'">
-				, be_birth 
-			</if>
-		having 
-			total >= 0
-		<if test="view == 'all'">		
-			order by
-				be_birth
-		</if>
-	</select>
-	
 	<select id="selectEmployeeList" resultType="EmployeeVO">
 		select * from employee order by em_num
 	</select>
@@ -240,5 +217,69 @@
 		where em_num = #{em_num};
 	</update>	
 	
+	<select id="selectBranch" resultType="BranchVO">
+		select * from branch where br_name = #{br_name}
+	</select>
+	
+	<select id="selectBranchFileList" resultType="BranchFileVO">
+		select * from branch_file where bf_br_name = #{br_name} order by bf_num;
+	</select>
+	
+	<select id="selectAdmin" resultType="MemberVO">
+		select * from member join branch on me_name = br_name where me_name = #{br_name}; 
+	</select>
+	
+	<update id="updateBranch">
+		update branch set 
+			br_phone = #{br_phone},
+			br_detail = #{br_detail}
+		where 
+			br_name = #{br_name};
+	</update>
+	
+	<select id="selectBranchFile" resultType="BranchFileVO">
+		select * from branch_file where bf_num = #{bf_num};
+	</select>
+
+	<delete id="deleteBranchFile">
+		delete from branch_file where bf_num = #{bf_num};
+	</delete>
+	
+	<update id="updateAdmin">
+		update member set
+			me_pw = #{me_pw},
+			me_email = #{me_email},
+			me_phone = #{me_phone}
+		where 
+			me_name = #{me_name};
+	</update>
+	
+	<insert id="insertBranchFile">
+		insert into branch_file(bf_name, bf_br_name)
+		values(#{bf_name}, #{bf_br_name});
+	</insert>
+	
+	<select id="selectEquipmentListInBranch" resultType="BranchEquipmentStockVO">
+		select 
+			be_se_name, sum(be_amount) as total
+			<if test="view == 'all'">
+				, be_birth
+			</if>
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{br_name}
+		group by 
+			be_se_name
+			<if test="view == 'all'">
+				, be_birth 
+			</if>
+		having 
+			total >= 0
+		<if test="view == 'all'">		
+			order by
+				be_birth
+		</if>
+	</select>
 	
 </mapper>

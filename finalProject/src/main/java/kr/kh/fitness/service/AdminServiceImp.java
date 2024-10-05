@@ -11,9 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.AdminDAO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
+import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
@@ -181,14 +183,6 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view) {
-		if(br_name == null) {
-			return null;
-		}
-		return adminDao.selectEquipmentListInBranch(br_name, view);
-	}
-
-	@Override
 	public String insertEmployee(EmployeeVO employee, MultipartFile file) {
 		String msg = "";
 		if(employee == null) {msg = "직원 정보가 없습니다.";}
@@ -267,5 +261,81 @@ public class AdminServiceImp implements AdminService{
 		return msg;
 	}
 
+	@Override
+	public BranchVO getBranch(String br_name) {
+		return adminDao.selectBranch(br_name);
+	}
+
+	@Override
+	public List<BranchFileVO> getBranchFileList(BranchVO branch) {
+		return adminDao.selectBranchFileList(branch);
+	}
+
+	@Override
+	public MemberVO getAdmin(BranchVO branch) {
+		return adminDao.selectAdmin(branch);
+	}
+	
+	@Override
+	public String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList) {
+		String msg = "";
+		if(branch == null) {
+			msg = "지점 정보가 없습니다.";
+		}
+		if(fileList == null) {
+			msg = "사진 정보가 없습니다.";
+		}
+		if(admin == null) {
+			msg = "관리자 정보가 없습니다.";
+		}
+		
+		if(!adminDao.updateBranch(branch)) {
+			msg = "지점 정보를 수정하지 못했습니다.";
+		}
+		if(!msg.equals("")) {
+			return msg;
+		}
+		
+		if(numList != null) {
+			for(int i = 0; i < numList.length; i++) {
+				int bf_num = Integer.parseInt(numList[i]);
+				BranchFileVO branchFile = adminDao.selectBranchFile(bf_num);
+				if(adminDao.deleteBranchFile(branchFile)) {
+					UploadFileUtils.delteFile(uploadPath, branchFile.getBf_name());
+				}
+			}
+		}
+		for(MultipartFile file : fileList) {
+			uploadFile(file, branch.getBr_name());
+		}
+		
+		admin.setMe_name(branch.getBr_name());
+		admin.setMe_phone(branch.getBr_phone());
+		if(!adminDao.updateAdmin(admin)) {
+			msg = "관리자 정보를 수정하지 못했습니다.";
+		}
+		return msg;
+	}
+
+	private void uploadFile(MultipartFile file, String br_name) {
+		if(file == null || file.getOriginalFilename().length() == 0) {
+			return;
+		}
+		try {
+			String bf_name = UploadFileUtils.uploadFile(uploadPath, "지점", br_name, file.getBytes());
+			BranchFileVO branchFile = new BranchFileVO(bf_name, br_name);
+			adminDao.insertBranchFile(branchFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view) {
+		if(br_name == null) {
+			return null;
+		}
+		return adminDao.selectEquipmentListInBranch(br_name, view);
+	}
 
 }

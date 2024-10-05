@@ -2,7 +2,6 @@ package kr.kh.fitness.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.TestDAO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
+import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
@@ -382,6 +383,40 @@ public class AdminController {
 		model.addAttribute("url", "/admin/employee/list");
 		return "/main/message";
 	}	
+	
+	//지점 상세보기 조회
+	@GetMapping("/branch/detail")
+	public String branchDetail(Model model, HttpSession session) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			String br_name = user.getMe_name();
+			BranchVO branch = adminService.getBranch(br_name);
+			List<BranchFileVO> bfList = adminService.getBranchFileList(branch);
+			MemberVO admin = adminService.getAdmin(branch);
+			
+			model.addAttribute("br", branch);
+			model.addAttribute("bfList", bfList);
+			model.addAttribute("me", admin);
+			
+			return "/admin/branchDetail";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/main";
+		}		
+	}
+	
+	//지점 상세보기 수정
+	@PostMapping("/branch/update")
+	public String branchUpdate(Model model, BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList) {
+		String msg = adminService.updateBranch(branch, fileList, admin, numList);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/admin/branch/detail");
+		}else {
+			model.addAttribute("url", "/admin/branch/detail");
+		}
+			model.addAttribute("msg", msg);
+		return "/main/message";
+	}
 	
 	//지점 운동기구 재고 조회
 	@GetMapping("/equipment/list")

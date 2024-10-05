@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
+import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
@@ -59,8 +61,6 @@ public interface AdminDAO {
 
 	boolean deleteOrder(int bo_num);
 
-	List<BranchEquipmentStockVO> selectEquipmentListInBranch(@Param("br_name")String br_name, @Param("view")String view);
-
 	List<EmployeeVO> selectEmployeeList();
 
 	boolean insertEmployee(EmployeeVO employee);
@@ -71,5 +71,22 @@ public interface AdminDAO {
 
 	boolean updateEmployee(EmployeeVO employee);
 
+	BranchVO selectBranch(String br_name);
+
+	List<BranchFileVO> selectBranchFileList(BranchVO branch);
+
+	MemberVO selectAdmin(BranchVO branch);
+
+	boolean updateBranch(BranchVO branch);
+
+	BranchFileVO selectBranchFile(int bf_num);
+
+	boolean deleteBranchFile(BranchFileVO branchFile);
+
+	boolean updateAdmin(MemberVO admin);
+
+	void insertBranchFile(BranchFileVO branchFile);
+	
+	List<BranchEquipmentStockVO> selectEquipmentListInBranch(@Param("br_name")String br_name, @Param("view")String view);
 
 }

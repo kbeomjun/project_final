@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
+import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
@@ -49,13 +51,20 @@ public interface AdminService {
 
 	boolean deleteOrder(int bo_num);
 
-	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
-
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
 
 	EmployeeVO getEmployee(int em_num);
 
 	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
 
+	BranchVO getBranch(String br_name);
+
+	List<BranchFileVO> getBranchFileList(BranchVO branch);
+
+	MemberVO getAdmin(BranchVO branch);
+
+	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
+
+	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
 
 }
