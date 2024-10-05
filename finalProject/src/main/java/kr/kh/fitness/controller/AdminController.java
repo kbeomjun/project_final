@@ -295,16 +295,19 @@ public class AdminController {
 	@PostMapping("/order/insert")
 	public String orderInsertPost(Model model, BranchOrderVO order, String bo_other) {
 		
+		//기타 선택 시 입력받은 운동기구 이름이 있을 경우 기구이름설정
 		if(bo_other != null) {
 			order.setBo_se_name(bo_other);
 		}
 		
-		if(adminService.insertOrder(order)) {
-			model.addAttribute("msg", "등록에 성공했습니다.");
+		String msg = adminService.insertOrder(order);
+		
+		if(msg == "") {
+			model.addAttribute("url", "/admin/order/list");
 		} else {
-			model.addAttribute("msg", "등록에 실패했습니다.");
+			model.addAttribute("url", "/admin/order/insert");
 		}
-		model.addAttribute("url", "/admin/order/list");
+		model.addAttribute("msg", msg);
 		
 		return "/main/message";
 	}

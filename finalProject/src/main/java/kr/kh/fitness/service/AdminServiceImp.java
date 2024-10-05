@@ -162,14 +162,17 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean insertOrder(BranchOrderVO order) {
+	public String insertOrder(BranchOrderVO order) {
 		if(order == null) {
-			return false;
+			return "발주 정보가 없습니다.";
 		}
 		if(order.getBo_se_name() == null || order.getBo_se_name().trim().length() == 0) {
-			return false;
+			return "운동기구 이름이 존재하지 않습니다.";
 		}
-		return adminDao.insertOrder(order);
+		if(!adminDao.insertOrder(order)) {
+			return "발주 등록에 실패했습니다.";
+		}
+		return "";
 	}
 
 	@Override

@@ -37,16 +37,16 @@
 				</tr>
 			</c:forEach>
 			<c:if test="${equipmentList.size() eq 0}">
-				<c:choose>
-					<tr>
+				<tr>
+					<c:choose>
 						<c:when test="${view eq 'all'}">
 							<th class="text-center" colspan="3">등록된 기구가 없습니다.</th>							
 						</c:when>
 						<c:otherwise>
 							<th class="text-center" colspan="2">등록된 기구가 없습니다.</th>
 						</c:otherwise>
-					</tr>
-				</c:choose>
+					</c:choose>
+				</tr>
 			</c:if>
 		</tbody>
 	</table>

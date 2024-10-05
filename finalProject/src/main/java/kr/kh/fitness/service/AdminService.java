@@ -45,7 +45,7 @@ public interface AdminService {
 
 	List<BranchEquipmentStockVO> getEquipmentListInHQ();
 
-	boolean insertOrder(BranchOrderVO order);
+	String insertOrder(BranchOrderVO order);
 
 	boolean deleteOrder(int bo_num);
 
