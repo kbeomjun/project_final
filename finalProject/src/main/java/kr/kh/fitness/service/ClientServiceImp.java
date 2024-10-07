@@ -74,4 +74,29 @@ public class ClientServiceImp implements ClientService{
 		return "";
 	}
 
+	@Override
+	public String updateReviewPost(ReviewPostVO review) {
+		if(review == null) {
+			return "작성한 글이 존재하지 않습니다.";
+		}
+		if(review.getRp_title() == null || review.getRp_title().trim().length() == 0) {
+			return "제목을 작성하세요.";
+		}
+		if(review.getRp_content() == null || review.getRp_content().trim().length() == 0) {
+			return "내용을 작성하세요";
+		}
+		if(!clientDao.updateReviewPost(review)) {
+			return "수정에 실패했습니다.";
+		}
+		return "";
+	}
+
+	@Override
+	public String deleteReviewPost(int rp_num) {
+		if(!clientDao.deleteReviewPost(rp_num)) {
+			return "삭제에 실패했습니다.";
+		}
+		return "";
+	}
+
 }

@@ -22,4 +22,8 @@ public interface ClientService {
 
 	String insertReviewPost(ReviewPostVO review);
 
+	String updateReviewPost(ReviewPostVO review);
+
+	String deleteReviewPost(int rp_num);
+
 }

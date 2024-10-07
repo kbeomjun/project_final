@@ -37,7 +37,8 @@
 		<a href="<c:url value="/client/review/list"/>" class="btn btn-outline-info">목록</a>
 		<c:if test="${review.pa_me_id eq user.me_id }">
 			<a href="<c:url value="/client/review/update/${review.rp_num}"/>" class="btn btn-outline-warning">수정</a>
-			<a href="<c:url value="/client/review/delete/${review.rp_num}"/>" class="btn btn-outline-danger">삭제</a>
+			<a href="<c:url value="/client/review/delete/${review.rp_num}"/>" class="btn btn-outline-danger" 
+						onclick="return confirm('삭제하면 해당 결제내역의 리뷰 게시글은 다시 작성할 수 없습니다. 삭제하시겠습니까?');">삭제</a>
 		</c:if>
 	</div>
 </body>

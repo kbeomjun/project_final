@@ -85,6 +85,43 @@ public class ClientController {
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
+	}
+	
+	@GetMapping("/review/update/{rp_num}")
+	public String reviewUpdate(Model model, @PathVariable("rp_num")int rp_num) {
+		ReviewPostVO review = clientService.getReviewPost(rp_num);
+		List<BranchVO> branchList = clientService.getBranchList();
 		
+		model.addAttribute("review", review);
+		model.addAttribute("branchList", branchList);
+		return "/client/reviewUpdate";
+	}
+	
+	@PostMapping("/review/update")
+	public String reviewUpdatePost(Model model, ReviewPostVO review) {
+		
+		String msg = clientService.updateReviewPost(review);
+		
+		if(msg == "") {
+			model.addAttribute("url", "/client/review/detail/" + review.getRp_num());
+		} else {
+			model.addAttribute("url", "/client/review/update/" + review.getRp_num());
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@GetMapping("/review/delete/{rp_num}")
+	public String reviewDelete(Model model, @PathVariable("rp_num")int rp_num) {
+		
+		String msg = clientService.deleteReviewPost(rp_num);
+		
+		if(msg == "") {
+			model.addAttribute("url", "/client/review/list");
+		} else {
+			model.addAttribute("url", "/client/review/detail/" + rp_num);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 }

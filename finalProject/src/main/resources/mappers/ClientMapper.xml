@@ -32,4 +32,19 @@
 	<update id="updatePaymentReview">
 		update payment set pa_review = 'Y' where pa_num = #{pa_num}
 	</update>
+	
+	<update id="updateReviewPost">
+		update 
+			review_post 
+		set
+			rp_title = #{rp_title},
+			rp_content = #{rp_content},
+			rp_br_name = #{rp_br_name}
+		where
+			rp_num = #{rp_num}
+	</update>
+	
+	<delete id="deleteReviewPost">
+		delete from review_post where rp_num = #{rp_num}
+	</delete>
 </mapper>

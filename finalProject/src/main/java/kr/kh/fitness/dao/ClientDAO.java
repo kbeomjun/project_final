@@ -22,4 +22,8 @@ public interface ClientDAO {
 
 	void updatePaymentReview(int pa_num);
 
+	boolean updateReviewPost(ReviewPostVO review);
+
+	boolean deleteReviewPost(int rp_num);
+
 }
