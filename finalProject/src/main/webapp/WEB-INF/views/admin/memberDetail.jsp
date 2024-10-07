@@ -57,7 +57,8 @@
 		    <div class="d-flex">
 		        <input type="text" class="form-control mr-2" id="noshow-count" value="${me.me_noshow}" readonly style="width: 130px;">
 		        <button type="button" class="btn btn-danger btn-sm mr-2" id="btn-noshow-minus" style="width: 30px;">-</button>
-		        <button type="button" class="btn btn-danger btn-sm" id="btn-noshow-plus" style="width: 30px;">+</button>
+		        <button type="button" class="btn btn-danger btn-sm mr-2" id="btn-noshow-plus" style="width: 30px;">+</button>
+		        <button type="button" class="btn btn-warning btn-sm" id="btn-noshow-reset" style="width: 60px;">초기화</button>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -82,32 +83,72 @@
 	    document.getElementById("btn-noshow-plus").addEventListener("click", function() {
 	        adjustNoshowCount(1);
 	    });
+	    
+	    // 초기화 버튼 클릭 시
+	    document.getElementById("btn-noshow-reset").addEventListener("click", function() {
+	        resetNoshow();
+	    });
 	
 	    function adjustNoshowCount(delta) {
 	        // 현재 노쇼 카운트 가져오기
 	        let currentCount = parseInt(document.getElementById("noshow-count").value);
+	        let memberId = document.getElementById("me_id").value;
 	        
 	        // 새로운 카운트 계산
 	        let newCount = currentCount + delta;
 	        if (newCount < 0) newCount = 0; // 0 이하로 내려가지 않게
 	        if (newCount > 5) newCount = 5; // 5회 이상으로 올라가지 않게
-	
-	        // AJAX 요청을 통해 서버에 업데이트 요청
-	        const xhr = new XMLHttpRequest();
-	        xhr.open("POST", "<c:url value='/admin/member/update'/>", true);
-	        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	        xhr.onreadystatechange = function () {
-	            if (xhr.readyState == 4 && xhr.status == 200) {
-	                const response = JSON.parse(xhr.responseText);
-	                // 서버 업데이트 성공 시, UI 갱신
-	                document.getElementById("noshow-count").value = newCount;
-	                
-	                // 노쇼 제한시간 UI 갱신
-	                document.getElementById("noshow-limit-time").value = response.me_cancel ? response.me_cancel : "";
+	        
+	        $.ajax({
+	            async: true,
+	            url: '<c:url value="/admin/member/update"/>', 
+	            type: 'post', 
+	            data: {noshow: newCount, me_id: memberId}, 
+	            dataType: "json", 
+	            success: function(data) {
+	                document.getElementById("noshow-count").value = data.me.me_noshow;
+	                // 'me_cancel' 값을 Unix Timestamp에서 사람이 읽을 수 있는 형식으로 변환
+	                if (data.me.me_cancel) {
+	                    let date = new Date(data.me.me_cancel); // Unix Timestamp를 Date 객체로 변환
+	                    let formattedDate = date.getFullYear() + '/' +
+	                        ('0' + (date.getMonth() + 1)).slice(-2) + '/' +
+	                        ('0' + date.getDate()).slice(-2) + ' ' +
+	                        ('0' + date.getHours()).slice(-2) + ':' +
+	                        ('0' + date.getMinutes()).slice(-2) + ':' +
+	                        ('0' + date.getSeconds()).slice(-2);
+	                    document.getElementById("noshow-limit-time").value = formattedDate;
+	                } else {
+	                    document.getElementById("noshow-limit-time").value = '';
+	                }
+	            }, 
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                console.log(jqXHR);
 	            }
-	        };
-	        xhr.send("me_id=${me.me_id}&noshow=" + newCount);
+	        });
 	    }
+	    
+	    // 노쇼 경고횟수 초기화 함수
+	    function resetNoshow() {
+	        let memberId = document.getElementById("me_id").value;
+
+	        // 초기화 요청 보내기
+	        $.ajax({
+	            async: true,
+	            url: '<c:url value="/admin/member/reset"/>',  // 초기화용 별도의 URL로 요청 보냄
+	            type: 'post',
+	            data: {me_id: memberId},
+	            dataType: "json",
+	            success: function(data) {
+	                // 노쇼 횟수 0으로 설정
+	                document.getElementById("noshow-count").value = 0;
+	                // 노쇼 제한시간 비우기
+	                document.getElementById("noshow-limit-time").value = '';
+	            },
+	            error: function(jqXHR, textStatus, errorThrown) {
+	                console.log(jqXHR);
+	            }
+	        });
+	    }	    
 	</script>
 
 </body>

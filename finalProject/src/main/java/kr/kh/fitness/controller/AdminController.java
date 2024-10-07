@@ -2,9 +2,10 @@ package kr.kh.fitness.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.TestDAO;
-import kr.kh.fitness.model.dto.MemberResponseDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -404,18 +404,31 @@ public class AdminController {
 	}
 	
 	//회원 노쇼횟수 수정
-	@PostMapping("/member/update")
 	@ResponseBody
-	public MemberResponseDTO memberUpdate(@RequestParam("me_id") String me_id, @RequestParam("noshow") int me_noshow) {
-        try {
-            adminService.updateMemberNoShow(me_id, me_noshow);
-            LocalDate me_cancel = adminService.getCancelTime(me_id);
-            String cancelDate = me_cancel != null ? me_cancel.toString() : "";
-            return new MemberResponseDTO(cancelDate, "success");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new MemberResponseDTO(null, "error");
-        }
+	@PostMapping("/member/update")
+	public Map<String, Object> 메서드명(
+					@RequestParam("noshow") int noshowCount,
+					@RequestParam("me_id") String memberId){
+			
+		adminService.updateMemberNoShow(memberId, noshowCount);
+		MemberVO member = adminService.getMember(memberId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("me", member);
+		return map;
+	}
+	
+	//회원 노쇼횟수 초기화
+	@ResponseBody
+	@PostMapping("/member/reset")
+	public Map<String, Object> resetNoshow(@RequestParam("me_id") String memberId) {
+	    // 노쇼 횟수를 0으로, 노쇼 제한시간을 null로 업데이트
+	    adminService.updateMemberNoShow(memberId, 0);
+	    
+	    // 업데이트된 회원 정보 반환
+	    MemberVO member = adminService.getMember(memberId);
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("me", member);
+	    return map;
 	}
 	
 	//지점 상세보기 조회

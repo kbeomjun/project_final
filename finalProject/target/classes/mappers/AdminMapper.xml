@@ -231,10 +231,6 @@
 			me_id = #{me_id}
 	</update>
 	
-	<select id="selectCancelTime" resultType="java.sql.Date">
-	    select me_cancel from member where me_id = #{me_id}
-	</select>
-	
 	<select id="selectBranch" resultType="BranchVO">
 		select * from branch where br_name = #{br_name}
 	</select>

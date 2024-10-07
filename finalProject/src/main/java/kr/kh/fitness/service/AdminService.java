@@ -13,7 +13,6 @@ import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface AdminService {
@@ -61,8 +60,6 @@ public interface AdminService {
 	MemberVO getMember(String me_id);
 	
 	void updateMemberNoShow(String me_id, int me_noshow);
-	
-	LocalDate getCancelTime(String me_id);
 
 	BranchVO getBranch(String br_name);
 

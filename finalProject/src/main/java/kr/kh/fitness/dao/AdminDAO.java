@@ -75,10 +75,8 @@ public interface AdminDAO {
 	
 	MemberVO selectMember(String me_id);
 	
-	void updateMemberNoShow(@Param("me_id")String me_id, @Param("me_noshow")int me_noshow, @Param("me_cancel")LocalDate me_cancel);
+	void updateMemberNoShow(@Param("me_id")String me_id, @Param("me_noshow")int me_noshow, @Param("me_cancel")String me_cancel);
 
-	Date selectCancelTime(String me_id);
-	
 	BranchVO selectBranch(String br_name);
 
 	List<BranchFileVO> selectBranchFileList(BranchVO branch);
