@@ -406,7 +406,7 @@ public class AdminController {
 	//회원 노쇼횟수 수정
 	@ResponseBody
 	@PostMapping("/member/update")
-	public Map<String, Object> 메서드명(
+	public Map<String, Object> memberUpdate(
 					@RequestParam("noshow") int noshowCount,
 					@RequestParam("me_id") String memberId){
 			
@@ -420,7 +420,7 @@ public class AdminController {
 	//회원 노쇼횟수 초기화
 	@ResponseBody
 	@PostMapping("/member/reset")
-	public Map<String, Object> resetNoshow(@RequestParam("me_id") String memberId) {
+	public Map<String, Object> memberReset(@RequestParam("me_id") String memberId) {
 	    // 노쇼 횟수를 0으로, 노쇼 제한시간을 null로 업데이트
 	    adminService.updateMemberNoShow(memberId, 0);
 	    
