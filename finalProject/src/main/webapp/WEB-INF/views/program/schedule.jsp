@@ -193,6 +193,9 @@
 		const bs_num = button.data('num');
 		
 /* 		if(${user == null}) {
+			if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
+					location.href = "<c:url value="/member/login"/>";
+			}
 			return;
 		}
 		var id = ${user.me_id};

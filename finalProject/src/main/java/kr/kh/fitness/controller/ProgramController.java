@@ -58,7 +58,7 @@ public class ProgramController {
 		List<SportsProgramVO> list = programService.getProgramList();
 		
 		model.addAttribute("list", list);
-		model.addAttribute("uploadPath", uploadPath);
+		//model.addAttribute("uploadPath", uploadPath);
 
 		return "/program/info";
 	}
@@ -206,7 +206,7 @@ public class ProgramController {
 		log.info("/program/getImageName");
 		
 		List<String> image_list = programService.getImageName(pr_name);
-		System.out.println("pr_name " + pr_name + ", image_list" + image_list);
+		//System.out.println("pr_name " + pr_name + ", image_list" + image_list);
 		
 		return image_list;
 	}
