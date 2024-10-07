@@ -1,0 +1,90 @@
+package kr.kh.fitness.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.ReviewPostVO;
+import kr.kh.fitness.service.ClientService;
+
+@Controller
+@RequestMapping("/client")
+public class ClientController {
+	
+	@Autowired
+	private ClientService clientService;
+	
+	@GetMapping("/menu/list")
+	private String menuList() {
+		return "/client/menuList";
+	}
+	
+	@GetMapping("/review/list")
+	public String reviewList(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<ReviewPostVO> reviewList = clientService.getReviewPostList();
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("user", user);
+		return "/client/reviewList";
+	}
+	
+	@GetMapping("/review/detail/{rp_num}")
+	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		clientService.updateReviewPostView(rp_num);
+		
+		ReviewPostVO review = clientService.getReviewPost(rp_num);
+		
+		model.addAttribute("review", review);
+		model.addAttribute("user", user);
+		return "/client/reviewDetail";
+	}
+
+	@GetMapping("/review/insert/{me_id}")
+	public String reviewInsert(Model model, @PathVariable("me_id")String me_id) {
+		//결제내역이 있는지 체크, 있으면 등록가능 없으면 등록불가
+		String msg = clientService.checkMemberPayment(me_id);
+		List<PaymentVO> paymentList = clientService.getPaymentList(me_id);
+		List<BranchVO> branchList = clientService.getBranchList();
+		
+		if(msg == "") {
+			model.addAttribute("paymentList", paymentList);
+			model.addAttribute("branchList", branchList);
+			return "/client/reviewInsert";
+		} else {
+			model.addAttribute("url", "/client/review/list");
+			model.addAttribute("msg", msg);
+			return "/main/message";
+		}
+	}
+	
+	@PostMapping("/review/insert")
+	public String reviewInsertPost(Model model, ReviewPostVO review, HttpSession session) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		String msg = clientService.insertReviewPost(review);
+		
+		if(msg == "") {
+			model.addAttribute("url", "/client/review/list");
+		} else {
+			model.addAttribute("url", "/client/review/" + user.getMe_id());
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+		
+	}
+}

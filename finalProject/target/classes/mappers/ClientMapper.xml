@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.ClientDAO">
+
+	<select id="selectReviewPostList" resultType="ReviewPostVO">
+		select * from review_post join payment on rp_pa_num = pa_num order by rp_num desc
+	</select>
+	
+	<update id="updateReviewPostView">
+		update review_post set rp_view = rp_view + 1 where rp_num = #{rp_num}
+	</update>
+	
+	<select id="selectReviewPost" resultType="ReviewPostVO">
+		select * from review_post join payment on rp_pa_num = pa_num where rp_num = #{rp_num}
+	</select>
+	
+	<select id="checkMemberPayment" resultType="PaymentVO">
+		select * from payment join payment_type on pa_pt_num = pt_num where pa_me_id = #{me_id} and pa_review = 'N'
+	</select>
+	
+	<select id="selectBranchList" resultType="BranchVO">
+		select * from branch
+	</select>
+	
+	<insert id="insertReviewPost">
+		insert into review_post(rp_title, rp_content, rp_br_name, rp_pa_num)
+		values(#{rp_title}, #{rp_content}, #{rp_br_name}, #{rp_pa_num})
+	</insert>
+	
+	<update id="updatePaymentReview">
+		update payment set pa_review = 'Y' where pa_num = #{pa_num}
+	</update>
+</mapper>

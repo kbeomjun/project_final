@@ -360,4 +360,12 @@ public class AdminServiceImp implements AdminService{
 		return adminDao.selectEquipmentListInBranch(br_name, view);
 	}
 
+	@Override
+	public List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name) {
+		if(br_name == null) {
+			return null;
+		}
+		return adminDao.selectEquipmentChangeInBranch(br_name);
+	}
+
 }

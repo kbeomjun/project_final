@@ -71,4 +71,6 @@ public interface AdminService {
 	
 	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
 
+	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
+
 }

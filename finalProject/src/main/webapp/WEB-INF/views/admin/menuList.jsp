@@ -17,7 +17,8 @@
 		<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-info">직원관리</a><br>
 		<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-info">회원관리</a><br>
 		<a href="<c:url value="/admin/branch/detail"/>" class="btn btn-outline-info">지점 상세보기</a><br>
-		<a href="<c:url value="/admin/equipment/list"/>" class="btn btn-outline-info">운동기구 재고조회</a>
+		<a href="<c:url value="/admin/equipment/list"/>" class="btn btn-outline-info">운동기구 보유목록</a><br>
+		<a href="<c:url value="/admin/equipment/change"/>" class="btn btn-outline-info">운동기구 재고 변동내역</a>
 	<!-- </main> -->
 </body>
 </html>

@@ -21,5 +21,7 @@ public class ReviewPostVO {
     private int rp_view;         // 조회 수
     private String rp_br_name;   // 지점 이름
     private int rp_pa_num;       // 결제 번호
+    
+    private String pa_me_id;
 
 }

@@ -9,8 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,15 +31,11 @@ import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.AdminService;
-import lombok.extern.log4j.Log4j;
 
 
-@Log4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Autowired
 	private AdminService adminService;
@@ -482,5 +476,20 @@ public class AdminController {
 			e.printStackTrace();
 			return "/main/main";
 		}			
+	}
+	
+	@GetMapping("/equipment/change")
+	public String equipmentChange(Model model, HttpSession session) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			String br_name = user.getMe_name();
+			
+			List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(br_name);
+			model.addAttribute("equipmentChange", equipmentChange);
+			return "/admin/equipmentChange";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/main";
+		}
 	}
 }

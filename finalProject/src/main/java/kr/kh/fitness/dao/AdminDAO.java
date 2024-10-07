@@ -95,4 +95,6 @@ public interface AdminDAO {
 	
 	List<BranchEquipmentStockVO> selectEquipmentListInBranch(@Param("br_name")String br_name, @Param("view")String view);
 
+	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(String br_name);
+
 }

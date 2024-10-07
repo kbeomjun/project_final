@@ -5,11 +5,11 @@
 <%@ page session="false"%>
 <html>
 <head>
-<title>운동기구 재고 목록</title>
+<title>운동기구 보유 목록</title>
 </head>
 <body>
 
-	<h1 class="mt-3 mb-3">${br_name} 재고 목록</h1>
+	<h1 class="mt-3 mb-3">${br_name} 보유 목록</h1>
 	<form action="<c:url value="/admin/equipment/list"/>" method="get">
 	    <button type="submit" name="view" value="all" class="btn btn<c:if test="${view ne 'all'}">-outline</c:if>-info">전체보기</button>
 	    <button type="submit" name="view" value="equipment" class="btn btn<c:if test="${view ne 'equipment'}">-outline</c:if>-info">기구별보기</button>
