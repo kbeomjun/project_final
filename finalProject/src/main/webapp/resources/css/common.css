@@ -478,7 +478,7 @@ dl, ol, ul{
 .main_banner__img{
   width: 100%;
   height: 100vh;
-  min-height: 953px; /* 북마크바를 뺀 기본 크롬 height값 */
+  min-height: 913px; /* 북마크바를 포함한 기본 크롬 height값 */
 }
 .sub_container{
   margin-top: 110px;

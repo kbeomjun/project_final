@@ -68,20 +68,19 @@
 		    var url = window.location.pathname;
 
 		    // 현재 URL을 콘솔에 출력
-		    console.log("현재 URL:", url);
+		    //console.log("현재 URL:", url);
 
 		    // '/fitness/' 다음의 첫 번째 '/'까지 포함된 공통 경로를 가져오기
 		    var firstSlashIndex = url.indexOf('/', 1); // 첫 번째 슬래시의 인덱스 (0은 '/'에 해당하므로 1부터 시작)
 		    var secondSlashIndex = url.indexOf('/', firstSlashIndex + 1); // 두 번째 슬래시의 인덱스
 		    var commonPath = url.substring(0, secondSlashIndex + 1); // '/fitness/'와 그 다음의 슬래시까지 포함
-		    console.log("공통 경로:", commonPath); // 공통 경로 출력
+		    //console.log("공통 경로:", commonPath); // 공통 경로 출력
 
 		    // 주소가 같으면 또는 하위 경로에 포함되면 메뉴에 _active
 		    $(".gnb__item").find(".gnb__link").each(function() {
 		        var href = $(this).attr("href");
 		        
-		        
-		        console.log("현재 href:", href); // 현재 href 출력
+		        // console.log("현재 href:", href); // 현재 href 출력
 
 		        // href에서 '/'로 시작하는지 확인
 		        if (href.startsWith('/')) {
@@ -89,10 +88,10 @@
 		            var hrefFirstSlashIndex = href.indexOf('/', 1); // href에서 첫 번째 슬래시의 인덱스
 		            var hrefSecondSlashIndex = href.indexOf('/', hrefFirstSlashIndex + 1); // href에서 두 번째 슬래시의 인덱스
 		            var hrefCommonPath = href.substring(0, hrefSecondSlashIndex + 1); // href의 공통 경로 가져오기
-		            console.log("href 공통 경로:", hrefCommonPath); // href의 공통 경로 출력
+		            //console.log("href 공통 경로:", hrefCommonPath); // href의 공통 경로 출력
 
 		            // 공통 경로가 일치하는지 비교
-		            console.log("비교:", commonPath, "=== ", hrefCommonPath); // 비교할 값 출력
+		            //console.log("비교:", commonPath, "=== ", hrefCommonPath); // 비교할 값 출력
 
 		            // href가 '#'이 아니고, commonPath가 hrefCommonPath와 일치할 경우
 		            if (href !== '#' && commonPath === hrefCommonPath) {
@@ -100,43 +99,23 @@
 		            }
 		        } else {
 		            // href가 '/'로 시작하지 않으면 공통 경로 비교 (예: '#' 등)
-		            console.log("href가 유효하지 않음:", href);
+		            //console.log("href가 유효하지 않음:", href);
 		        }
 		    });
 		});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		$(function(){
+			var url = window.location.pathname;
+			
+			// 메인이 아니면 로고 검은색으로 변경
+			$(".logo").each(function(){
+				if($(this).attr("href") != url){
+					$(this).addClass("logo-dark");
+				}
+				console.log($(this).attr("href") == url);
+			})
+			
+		});
 
 	</script>
 </body>

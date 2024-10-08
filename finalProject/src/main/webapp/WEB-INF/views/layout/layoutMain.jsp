@@ -60,20 +60,6 @@
 				}
 			}
 		});
-		
-
-		$(function(){
-			var url = window.location.pathname;
-			
-			// 메인에서 로고 하얀색으로 변경
-			$(".logo").each(function(){
-				if($(this).attr("href") == url){
-					$(this).addClass("logo-white");
-				}
-				console.log($(this).attr("href") == url);
-			})
-			
-		});
 	</script>
 </body>
 </html>

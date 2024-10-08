@@ -11,7 +11,7 @@
 		<!-- main header -->
 		<header class="main_header">
 			<div class="logo_wrap">
-				<h1><a href="<c:url value="/" />" class="logo logo-dark" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
+				<h1><a href="<c:url value="/" />" class="logo logo-light" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
 			</div>
 			<nav class="gnb_wrap">
 				<ul class="gnb">
