@@ -42,4 +42,8 @@ public interface ClientDAO {
 
 	int selectScheduleTotalCount(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
 
+	boolean deleteReservation(int pr_num);
+
+	void updateScheduleCurrent(int bs_num);
+
 }

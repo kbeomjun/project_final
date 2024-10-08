@@ -152,4 +152,14 @@ public class ClientServiceImp implements ClientService{
 		return new PageMaker(3, cri, totalCount);
 	}
 
+	@Override
+	public boolean deleteReservation(int pr_num) {
+		return clientDao.deleteReservation(pr_num);
+	}
+
+	@Override
+	public void updateScheduleCurrent(int bs_num) {
+		clientDao.updateScheduleCurrent(bs_num);
+	}
+
 }

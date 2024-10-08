@@ -163,4 +163,17 @@
 				</when>
 			</choose>	
 	</select>
+	
+	<delete id="deleteReservation">
+		delete from program_reservation where pr_num = #{pr_num}
+	</delete>
+	
+	<update id="updateScheduleCurrent">
+		update
+			branch_program_schedule
+		set
+			bs_current = bs_current - 1
+		where
+			bs_num = #{bs_num} 
+	</update>
 </mapper>

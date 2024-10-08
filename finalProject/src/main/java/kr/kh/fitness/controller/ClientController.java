@@ -177,6 +177,19 @@ public class ClientController {
 		return "/client/mypageSchedule";
 	}
 	
+	@GetMapping("/mypage/schedule/cancel/{pr_num}/{bs_num}/{me_id}")
+	public String mypageScheduleCancel(Model model, @PathVariable("pr_num")int pr_num, @PathVariable("bs_num")int bs_num, @PathVariable("me_id")String me_id) {
+		
+		if(clientService.deleteReservation(pr_num)) {
+			clientService.updateScheduleCurrent(bs_num);
+			model.addAttribute("msg", "성공적으로 취소되었습니다.");
+		} else {
+			model.addAttribute("msg", "취소에 실패했습니다.");
+		}
+		model.addAttribute("url", "/client/mypage/schedule/" + me_id);
+		return "/main/message";
+	}
+	
 	@GetMapping("/mypage/review/list/{me_id}")
 	public String mypageReviewList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
 		

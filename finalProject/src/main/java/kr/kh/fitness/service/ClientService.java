@@ -42,4 +42,8 @@ public interface ClientService {
 
 	PageMaker getPageMakerInSchedule(String view, String me_id, Criteria cri);
 
+	boolean deleteReservation(int pr_num);
+
+	void updateScheduleCurrent(int bs_num);
+
 }

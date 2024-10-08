@@ -95,7 +95,9 @@
 									</td>
 									<c:if test="${view eq 'present'}">
 										<td>
-											<a href="#" class="btn btn-outline-warning btn-sm">취소</a>
+											<a href="<c:url value="/client/mypage/schedule/cancel/${list.pr_num}/${list.bs_num}/${me_id}"/>" 
+															class="btn btn-outline-warning btn-sm"
+															onclick="return confirm('취소하시겠습니까?');">취소</a>
 										</td>
 									</c:if>
 								</tr>
