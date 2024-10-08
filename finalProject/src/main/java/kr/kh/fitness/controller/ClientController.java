@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
@@ -161,12 +162,13 @@ public class ClientController {
 	}
 	
 	@GetMapping("/mypage/schedule/{me_id}")
-	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id) {
+	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id, @RequestParam(value = "view", defaultValue = "present")String view) {
 		
 		
-		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(me_id);
+		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(view, me_id);
 		
 		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("view", view);
 		model.addAttribute("me_id", me_id);
 		
 		return "/client/mypageSchedule";

@@ -54,7 +54,9 @@
 								<th>[예약인원 / 총인원]</th>
 								<th>프로그램 날짜</th>
 								<th>프로그램 시간</th>
-								<th>예약취소</th>
+								<c:if test="${view eq 'present'}">
+									<th>예약취소</th>
+								</c:if>
 							</tr>
 						</thead>
 						<tbody>
@@ -70,14 +72,21 @@
 									<td>
 										<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 									</td>
-									<td>
-										<a href="#">취소</a>
-									</td>
+									<c:if test="${view eq 'present'}">
+										<td>
+											<a href="#">취소</a>
+										</td>
+									</c:if>
 								</tr>
 							</c:forEach>
 							<c:if test="${reservationList.size() eq 0}">
 								<tr>
-									<th class="text-center" colspan="7">등록된 스케줄이 없습니다.</th>
+									<c:if test="${view eq 'present'}">
+										<th class="text-center" colspan="7">등록된 스케줄이 없습니다.</th>
+									</c:if>
+									<c:if test="${view eq 'past'}">
+										<th class="text-center" colspan="6">등록된 스케줄이 없습니다.</th>
+									</c:if>
 								</tr>
 							</c:if>				
 						</tbody>

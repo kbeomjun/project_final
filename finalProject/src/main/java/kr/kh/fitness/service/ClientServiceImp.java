@@ -130,11 +130,11 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<BranchProgramScheduleVO> getReservationList(String me_id) {
+	public List<BranchProgramScheduleVO> getReservationList(String view, String me_id) {
 		if(me_id == null) {
 			return null;
 		}
-		return clientDao.selectReservationList(me_id);
+		return clientDao.selectReservationList(view, me_id);
 	}
 
 }

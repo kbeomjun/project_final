@@ -109,5 +109,13 @@
 			program_reservation on pr_bs_num = bs_num
 		where
 			pr_me_id = #{me_id}
+			<if test="view == 'present'">
+				and bs_start > now()
+			</if>
+			<if test="view == 'past'">
+				and now() > bs_end
+			</if>
+		order by
+			bs_start
 	</select>
 </mapper>

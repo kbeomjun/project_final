@@ -2,12 +2,13 @@ package kr.kh.fitness.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
-import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 
@@ -37,6 +38,6 @@ public interface ClientDAO {
 
 	List<InquiryTypeVO> selectInquiryTypeList();
 
-	List<BranchProgramScheduleVO> selectReservationList(String me_id);
+	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id);
 
 }

@@ -103,10 +103,10 @@ public class AdminServiceImp implements AdminService{
 
 	@Override
 	public List<BranchProgramScheduleVO> getBranchScheduleList(String view, BranchCriteria cri) {
-		if(cri.getBr_name() == null) {
+		if(cri == null) {
 			return null;
 		}
-		if(cri == null) {
+		if(cri.getBr_name() == null) {
 			return null;
 		}
 		return adminDao.selectBranchScheduleList(view, cri);
