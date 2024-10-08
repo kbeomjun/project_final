@@ -23,7 +23,8 @@ public class MembershipServiceImp implements MembershipService{
 	@Override
 	public boolean insertPaymentType(PaymentTypeVO payment, String formattedDateTime, MemberVO user) {
 		if(payment.getPt_num() == 0
-			|| payment.getPt_price() == 0) {
+			|| payment.getPt_price() == 0
+			|| payment.getPt_date() <= 0) {
 			return false;
 		}
 		

@@ -21,5 +21,8 @@ public class PaymentTypeVO {
     
     // 추가된 필드
     private String formattedPrice; // 포맷된 가격을 저장할 필드
-	    
+    private int amount;            // 결제 금액을 저장할 필드 추가
+    private String imp_uid;        // 결제 고유 ID를 저장할 필드 추가
+    private String status;        // 결제 고유 ID를 저장할 필드 추가
+    
 }

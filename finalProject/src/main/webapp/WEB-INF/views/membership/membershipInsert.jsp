@@ -59,14 +59,19 @@
                 <div class="modal-body" id="modalBody"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-danger" id="confirmPayment">결제하기</button>
+					<button type="button" id="confirmPayment" class="btn btn-danger">결제하기</button>
                 </div>
             </div>
         </div>
     </div>
     
+	<!-- 아이엠포트 SDK :: CDN -->
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
         $(document).ready(function () {
+        	var IMP = window.IMP; // 생략 가능
+            IMP.init('imp56284313'); // 실제 가맹점 식별 코드 - i'mport에서 가져와야 함
+        	
             // 초기 상태로 하위 select 값을 설정.
             $('#pt_num').trigger('change');
 
@@ -121,7 +126,7 @@
                 // 가격 포맷팅
                 const formattedPrice = Number(price).toLocaleString();
                 
-				// 디버깅 문
+				// 확인용...
                 console.log(date);
                 console.log(count);
                 console.log(type);
@@ -139,21 +144,79 @@
                 // 모달 내용 업데이트
                 $('#modalBody').html(modalContent);
                 $('#confirmModal').modal('show'); // 모달 표시
-
-                // 결제하기 버튼 클릭 시 하위 select 활성화 및 폼 제출
+                
+				// 결제하기 버튼 클릭 시 하위 select 활성화 및 결제 요청
                 $('#confirmPayment').off('click').on('click', function() {
                     // 하위 select 요소 활성화
                     $('#pt_date').prop('disabled', false);
                     $('#pt_count').prop('disabled', false);
                     $('#pt_price').prop('disabled', false);
 
-                    // 사용자 확인 후 폼 제출
-                    $('#paymentForm').submit();
-                });
+                    // 선택한 가격 가져오기
+                    const amount = $('#pt_price').val(); // 선택한 가격 가져오기
+                    
+                    // 아이엠포트 결제 요청
+                    IMP.request_pay({
+                        pg: 'kakaopay',
+                        pay_method: 'card',
+                        merchant_uid: 'merchant_' + new Date().getTime(),
+                        name: '카카오페이결제',
+                        amount: amount, // 동적으로 설정된 가격
+                        /* buyer_email: 'suvin5027@gamil.com', // 구매자 이메일
+                        buyer_name: '박수빈', // 구매자 이름
+                        buyer_tel: '010-1234-5678', // 구매자 전화번호
+                        buyer_addr: '서울시 강남구', // 구매자 주소
+                        buyer_postcode: '123-456', // 구매자 우편번호 */
+                    }, function(rsp) {
+                        if (rsp.success) {
+                            // [1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                            const postData = {
+                            	imp_uid: rsp.imp_uid, // 여기에서 imp_uid 값이 올바르게 전달되는지 확인
+                                status: rsp.status, // 상태 추가
+                                amount: amount,
+                                pt_num: $('#pt_num').val(),
+                                pt_type: $('#pt_type').val(),
+                                pt_date: $('#pt_date').val(),
+                                pt_count: $('#pt_count').val(),
+                                pt_price: $('#pt_price').val()
+                            };
+                            
+                            console.log("rsp 내용:", rsp);
+
+                            console.log("전송할 데이터:", postData); // 전송할 데이터 출력
+                            
+                            jQuery.ajax({
+                                url: "/fitness/membership/membershipInsert", // 서버의 결제 완료 처리 URL
+                                type: 'POST',
+                                contentType: 'application/json', // Content-Type 설정
+                                dataType: 'json',
+                                data: JSON.stringify(postData), // 데이터를 JSON 형식으로 변환하여 전송
+                                success: function(response) {
+                                    console.log("응답 데이터:", response); // 응답 데이터 출력
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("AJAX 요청 실패:", error);
+                                }
+                            });
+                        } else {
+                            // 결제 실패 처리
+                            msg = '결제에 실패하였습니다.';
+                            msg += '에러내용 : ' + rsp.error_msg;
+                            alert(msg);
+                            // 실패 시 이동할 페이지
+                            location.href = "<%=request.getContextPath()%>/membership/membershipInsert";
+                        }
+                        
+                    }); // rsp end
+                    
+                    
+                }); // #confirmPayment click end
+
             });
 
             
         });
     </script>
+	    
 </body>
 </html>
