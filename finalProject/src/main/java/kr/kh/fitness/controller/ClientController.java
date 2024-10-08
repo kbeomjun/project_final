@@ -16,6 +16,8 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
+import kr.kh.fitness.pagination.Criteria;
+import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.ClientService;
 
 @Controller
@@ -31,16 +33,22 @@ public class ClientController {
 	}
 	
 	@GetMapping("/review/list")
-	public String reviewList(Model model, HttpSession session) {
+	public String reviewList(Model model, HttpSession session, Criteria cri) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		List<ReviewPostVO> reviewList = clientService.getReviewPostList();
+		
+		cri.setPerPageNum(5);
+	
+		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
+		PageMaker pm = clientService.getPageMaker(cri);
+		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("user", user);
+		model.addAttribute("pm", pm);
 		return "/client/reviewList";
 	}
 	
-	@GetMapping("/review/detail/{rp_num}")
-	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session) {
+	@GetMapping("/review/detail")
+	public String reviewDetail(Model model, Integer rp_num, HttpSession session, Criteria cri) {
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
@@ -50,6 +58,7 @@ public class ClientController {
 		
 		model.addAttribute("review", review);
 		model.addAttribute("user", user);
+		model.addAttribute("cri", cri);
 		return "/client/reviewDetail";
 	}
 

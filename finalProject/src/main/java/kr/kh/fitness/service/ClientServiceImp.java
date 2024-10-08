@@ -9,6 +9,8 @@ import kr.kh.fitness.dao.ClientDAO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
+import kr.kh.fitness.pagination.Criteria;
+import kr.kh.fitness.pagination.PageMaker;
 
 @Service
 public class ClientServiceImp implements ClientService{
@@ -17,8 +19,11 @@ public class ClientServiceImp implements ClientService{
 	private ClientDAO clientDao;
 
 	@Override
-	public List<ReviewPostVO> getReviewPostList() {
-		return clientDao.selectReviewPostList();
+	public List<ReviewPostVO> getReviewPostList(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		return clientDao.selectReviewPostList(cri);
 	}
 
 	@Override
@@ -97,6 +102,15 @@ public class ClientServiceImp implements ClientService{
 			return "삭제에 실패했습니다.";
 		}
 		return "";
+	}
+
+	@Override
+	public PageMaker getPageMaker(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int totalCount = clientDao.selectReviewPostTotalCount(cri);
+		return new PageMaker(3, cri, totalCount);
 	}
 
 }

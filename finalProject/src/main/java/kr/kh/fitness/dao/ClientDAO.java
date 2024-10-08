@@ -5,10 +5,11 @@ import java.util.List;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
+import kr.kh.fitness.pagination.Criteria;
 
 public interface ClientDAO {
 
-	List<ReviewPostVO> selectReviewPostList();
+	List<ReviewPostVO> selectReviewPostList(Criteria cri);
 
 	void updateReviewPostView(int rp_num);
 
@@ -25,5 +26,7 @@ public interface ClientDAO {
 	boolean updateReviewPost(ReviewPostVO review);
 
 	boolean deleteReviewPost(int rp_num);
+
+	int selectReviewPostTotalCount(Criteria cri);
 
 }

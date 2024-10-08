@@ -5,10 +5,12 @@ import java.util.List;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
+import kr.kh.fitness.pagination.Criteria;
+import kr.kh.fitness.pagination.PageMaker;
 
 public interface ClientService {
 
-	List<ReviewPostVO> getReviewPostList();
+	List<ReviewPostVO> getReviewPostList(Criteria cri);
 
 	void updateReviewPostView(int rp_num);
 
@@ -25,5 +27,7 @@ public interface ClientService {
 	String updateReviewPost(ReviewPostVO review);
 
 	String deleteReviewPost(int rp_num);
+
+	PageMaker getPageMaker(Criteria cri);
 
 }
