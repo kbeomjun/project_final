@@ -169,11 +169,13 @@ public class AdminController {
 	
 	//지점 프로그램 일정 상세 -> 예약한 회원 목록(이름+전화번호+생년월일+성별+노쇼경고횟수)
 	@GetMapping("/schedule/detail")
-	public String scheduleDetail(Model model, int bs_num) {
+	public String scheduleDetail(Model model, Integer bs_num, String view, BranchCriteria cri) {
 		
 		List<MemberVO> memberList = adminService.getScheduleMemberList(bs_num);
 		
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("cri", cri);
+		model.addAttribute("view", view);
 		
 		return "/admin/scheduleDetail";
 	}
@@ -226,12 +228,14 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 수정 get
-	@GetMapping("/schedule/update/{bs_num}")
-	public String scheduleUpdate(Model model, @PathVariable("bs_num")int bs_num) {
+	@GetMapping("/schedule/update")
+	public String scheduleUpdate(Model model, Integer bs_num, String view, BranchCriteria cri) {
 		
 		BranchProgramScheduleVO schedule = adminService.getSchedule(bs_num);
 		
 		model.addAttribute("schedule", schedule);
+		model.addAttribute("view", view);
+		model.addAttribute("cri", cri);
 		
 		return "/admin/scheduleUpdate";
 	}

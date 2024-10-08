@@ -11,8 +11,8 @@
 	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${pm.cri.br_name} 스케줄 목록</h1>
 		<form action="<c:url value="/admin/schedule/list"/>" method="get">
-		    <button type="submit" name="view" value="present" class="btn btn<c:if test="${view ne 'present'}">-outline</c:if>-info">현재예약현황</button>
-		    <button type="submit" name="view" value="past" class="btn btn<c:if test="${view ne 'past'}">-outline</c:if>-info">이전예약내역</button>
+		    <button type="submit" name="view" value="present" class="btn btn<c:if test="${view ne 'present'}">-outline</c:if>-info mb-3">현재예약현황</button>
+		    <button type="submit" name="view" value="past" class="btn btn<c:if test="${view ne 'past'}">-outline</c:if>-info mb-3">이전예약내역</button>
 		</form>
 		<table class="table text-center">
 			<thead>
@@ -22,17 +22,31 @@
 					<th>[예약인원 / 총인원]</th>
 					<th>프로그램 날짜</th>
 					<th>프로그램 시간</th>
-					<th>수정</th>
+					<th>예약회원보기</th>
+					<c:if test="${view eq 'present'}">
+						<th>수정</th>
+					</c:if>
 				</tr>
 			</thead>
 			<tbody>
-				<c:set var="now" value="<%= new java.util.Date() %>" />
 				<c:forEach items="${scheduleList}" var="list">
 					<tr>
 						<td>
-							<a href="<c:url value="/admin/schedule/detail?bs_num=${list.bs_num}"/>">${list.bp_sp_name}</a>
+							<c:url var="url" value="/admin/schedule/list">
+								<c:param name="view" value="${view}"/>
+								<c:param name="type" value="program"/>
+								<c:param name="search" value="${list.bp_sp_name}"/>
+							</c:url>
+							<a href="${url}">${list.bp_sp_name}</a>
 						</td>
-						<td>${list.em_name}</td>
+						<td>
+							<c:url var="url" value="/admin/schedule/list">
+								<c:param name="view" value="${view}"/>
+								<c:param name="type" value="trainer"/>
+								<c:param name="search" value="${list.em_name}"/>
+							</c:url>
+							<a href="${url}">${list.em_name}</a>
+						</td>
 						<td>${list.bs_current} / ${list.bp_total}</td>
 						<td>
 							<fmt:formatDate value="${list.bs_start}" pattern="yyyy-MM-dd"/>
@@ -41,10 +55,27 @@
 							<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 						</td>
 						<td>
-							<c:if test="${list.bs_start > now}">
-								<a href="<c:url value="/admin/schedule/update/${list.bs_num }"/>" class="btn btn-outline-warning btn-sm">수정</a>
-							</c:if>
+							<c:url var="url" value="/admin/schedule/detail">
+								<c:param name="bs_num" value="${list.bs_num}"/>
+								<c:param name="view" value="${view}"/>
+								<c:param name="page" value="${pm.cri.page}"/>
+								<c:param name="type" value="${pm.cri.type}"/>
+								<c:param name="search" value="${pm.cri.search}"/>
+							</c:url>
+							<a href="${url}">조회</a>
 						</td>
+						<c:if test="${view eq 'present'}">
+							<td>
+								<c:url var="url" value="/admin/schedule/update">
+									<c:param name="bs_num" value="${list.bs_num}"/>
+									<c:param name="view" value="${view}"/>
+									<c:param name="page" value="${pm.cri.page}"/>
+									<c:param name="type" value="${pm.cri.type}"/>
+									<c:param name="search" value="${pm.cri.search}"/>
+								</c:url>
+								<a href="${url}" class="btn btn-outline-warning btn-sm">수정</a>
+							</td>
+						</c:if>
 					</tr>
 				</c:forEach>
 				<c:if test="${scheduleList.size() eq 0}">
@@ -102,7 +133,7 @@
 		</c:if>
 		<form action="<c:url value="/admin/schedule/list"/>">
 			<input type="hidden" name="view" value="${view}">
-			<div class="input-group mb-3">
+			<div class="input-group mb-3 mt-3">
 				<select class="form=control" name="type">
 					<option value="program"	<c:if test="${pm.cri.type eq 'program'}">selected</c:if>>프로그램명</option>
 					<option value="trainer"	<c:if test="${pm.cri.type eq 'trainer'}">selected</c:if>>트레이너명</option>
