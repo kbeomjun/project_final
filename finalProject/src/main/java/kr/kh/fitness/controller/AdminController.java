@@ -30,6 +30,8 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
+import kr.kh.fitness.pagination.BranchCriteria;
+import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.AdminService;
 
 
@@ -143,14 +145,20 @@ public class AdminController {
 	
 	//지점 프로그램 일정 목록(프로그램명+트레이너명+[예약인원/총인원]+프로그램날짜+프로그램시간)
 	@GetMapping("/schedule/list")
-	public String programSchedule(Model model, HttpSession session) {
+	public String programSchedule(Model model, HttpSession session, @RequestParam(value = "view", defaultValue = "present")String view, BranchCriteria cri) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<BranchProgramScheduleVO> scheduleList = adminService.getBranchScheduleList(br_name);
+			cri.setPerPageNum(5);
+			cri.setBr_name(br_name);
+			
+			List<BranchProgramScheduleVO> scheduleList = adminService.getBranchScheduleList(view, cri);
+			PageMaker pm = adminService.getPageMaker(view, cri);
+			
 			model.addAttribute("scheduleList", scheduleList);
-			model.addAttribute("br_name", br_name);
+			model.addAttribute("view", view);
+			model.addAttribute("pm", pm);
 			return "/admin/scheduleList";
 			
 		} catch (Exception e) {

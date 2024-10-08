@@ -21,6 +21,9 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
+import kr.kh.fitness.pagination.BranchCriteria;
+import kr.kh.fitness.pagination.Criteria;
+import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.utils.UploadFileUtils;
 
 @Service
@@ -99,11 +102,14 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchProgramScheduleVO> getBranchScheduleList(String br_name) {
-		if(br_name == null) {
+	public List<BranchProgramScheduleVO> getBranchScheduleList(String view, BranchCriteria cri) {
+		if(cri.getBr_name() == null) {
 			return null;
 		}
-		return adminDao.selectBranchScheduleList(br_name);
+		if(cri == null) {
+			return null;
+		}
+		return adminDao.selectBranchScheduleList(view, cri);
 	}
 
 	@Override
@@ -366,6 +372,15 @@ public class AdminServiceImp implements AdminService{
 			return null;
 		}
 		return adminDao.selectEquipmentChangeInBranch(br_name);
+	}
+
+	@Override
+	public PageMaker getPageMaker(String view, BranchCriteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int totalCount = adminDao.selectScheduleTotalCount(view, cri);
+		return new PageMaker(3, cri, totalCount);
 	}
 
 }

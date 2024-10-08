@@ -1,7 +1,5 @@
 package kr.kh.fitness.dao;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -14,8 +12,8 @@ import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
+import kr.kh.fitness.pagination.BranchCriteria;
 
 public interface AdminDAO {
 
@@ -37,7 +35,7 @@ public interface AdminDAO {
 
 	boolean deleteBranchProgram(int bp_num);
 
-	List<BranchProgramScheduleVO> selectBranchScheduleList(String br_name);
+	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("cri")BranchCriteria cri);
 
 	List<MemberVO> selectScheduleMemberList(int bs_num);
 	
@@ -96,5 +94,7 @@ public interface AdminDAO {
 	List<BranchEquipmentStockVO> selectEquipmentListInBranch(@Param("br_name")String br_name, @Param("view")String view);
 
 	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(String br_name);
+
+	int selectScheduleTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
 
 }

@@ -9,7 +9,11 @@
 </head>
 <body>
 	<!-- <main class="sub_container" id="skipnav_target"> -->
-		<h1 class="mt-3 mb-3">${br_name} 스케줄 목록</h1>
+		<h1 class="mt-3 mb-3">${pm.cri.br_name} 스케줄 목록</h1>
+		<form action="<c:url value="/admin/schedule/list"/>" method="get">
+		    <button type="submit" name="view" value="present" class="btn btn<c:if test="${view ne 'present'}">-outline</c:if>-info">현재예약현황</button>
+		    <button type="submit" name="view" value="past" class="btn btn<c:if test="${view ne 'past'}">-outline</c:if>-info">이전예약내역</button>
+		</form>
 		<table class="table text-center">
 			<thead>
 				<tr>
@@ -50,8 +54,67 @@
 				</c:if>				
 			</tbody>
 		</table>
+		
+		<c:if test="${pm.totalCount ne 0}">
+			<ul class="pagination justify-content-center">
+				<c:if test="${pm.prev}">
+					<c:url var="url" value="/admin/schedule/list">
+						<c:param name="view" value="${view}"/>
+						<c:param name="page" value="${pm.startPage - 1}"/>
+						<c:param name="type" value="${pm.cri.type}"/>
+						<c:param name="search" value="${pm.cri.search}"/>
+					</c:url>
+					<li class="page-item">
+						<a class="page-link" href="${url}">이전</a>
+					</li>
+				</c:if>
+				<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+					<c:url var="url" value="/admin/schedule/list">
+						<c:param name="view" value="${view}"/>
+						<c:param name="page" value="${i}"/>
+						<c:param name="type" value="${pm.cri.type}"/>
+						<c:param name="search" value="${pm.cri.search}"/>
+					</c:url>
+					<c:choose>
+						<c:when test="${pm.cri.page eq i}">
+							<c:set var="active" value="active"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="active" value=""/>
+						</c:otherwise>
+					</c:choose>
+					<li class="page-item ${active}">
+						<a class="page-link" href="${url}">${i}</a>
+					</li>
+				</c:forEach>
+				<c:if test="${pm.next}">
+					<c:url var="url" value="/admin/schedule/list">
+						<c:param name="view" value="${view}"/>
+						<c:param name="page" value="${pm.endPage + 1}"/>
+						<c:param name="type" value="${pm.cri.type}"/>
+						<c:param name="search" value="${pm.cri.search}"/>
+					</c:url>
+					<li class="page-item">
+						<a class="page-link" href="${url}">다음</a>
+					</li>
+				</c:if>
+			</ul>
+		</c:if>
+		<form action="<c:url value="/admin/schedule/list"/>">
+			<input type="hidden" name="view" value="${view}">
+			<div class="input-group mb-3">
+				<select class="form=control" name="type">
+					<option value="program"	<c:if test="${pm.cri.type eq 'program'}">selected</c:if>>프로그램명</option>
+					<option value="trainer"	<c:if test="${pm.cri.type eq 'trainer'}">selected</c:if>>트레이너명</option>
+				</select>
+				<input type="text" class="form-control" placeholder="검색어" name="search" value="${pm.cri.search}">
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-outline-info col-12">검색</button>
+				</div>
+			</div>	
+		</form>
 		<div class="text-right mb-3">	
-			<a href="<c:url value="/admin/schedule/insert/${br_name}"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
+			<a href="<c:url value="/admin/schedule/insert/${pm.cri.br_name}"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 		</div>
 	<!-- </main> -->
 </body>
