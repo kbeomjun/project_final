@@ -134,13 +134,13 @@
 		<form action="<c:url value="/admin/schedule/list"/>">
 			<input type="hidden" name="view" value="${view}">
 			<div class="input-group mb-3 mt-3">
-				<select class="form=control" name="type">
+				<select class="form-control col-md-1" name="type">
 					<option value="program"	<c:if test="${pm.cri.type eq 'program'}">selected</c:if>>프로그램명</option>
 					<option value="trainer"	<c:if test="${pm.cri.type eq 'trainer'}">selected</c:if>>트레이너명</option>
 				</select>
 				<input type="text" class="form-control" placeholder="검색어" name="search" value="${pm.cri.search}">
 				<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-info col-12">검색</button>
+					<button type="submit" class="btn btn-outline-info btn-sm col-12">검색</button>
 				</div>
 			</div>	
 		</form>

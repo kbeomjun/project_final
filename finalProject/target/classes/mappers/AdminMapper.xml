@@ -95,18 +95,18 @@
 			employee on bp_em_num = em_num
 		where
 			bp_br_name = #{cri.br_name}
-			<if test="view eq 'present'">
+			<if test="view == 'present'">
 				and bs_start > now()
 			</if>
-			<if test="view eq 'past'">
+			<if test="view == 'past'">
 				and now() > bs_end
 			</if>
 			<choose>
 				<when test="cri.type == 'program'">
-				and bp_sp_name like concat('%', #{cri.search},'%')
+					and bp_sp_name like concat('%', #{cri.search},'%')
 				</when>
 				<when test="cri.type == 'trainer'">
-				and em_name like concat('%', #{cri.search},'%')
+					and em_name like concat('%', #{cri.search},'%')
 				</when>
 			</choose>	
 		order by
@@ -126,17 +126,17 @@
 			employee on bp_em_num = em_num
 		where
 			bp_br_name = #{cri.br_name}
-			<if test="view eq 'present'">
+			<if test="view == 'present'">
 				and bs_start > now()
 			</if>
-			<if test="view eq 'past'">
+			<if test="view == 'past'">
 				and now() > bs_end
 			</if>
 			<choose>
-				<when test="cri.type eq 'program'">
+				<when test="cri.type == 'program'">
 				and bp_sp_name like concat('%', #{cri.search},'%')
 				</when>
-				<when test="cri.type eq 'trainer'">
+				<when test="cri.type == 'trainer'">
 				and em_name like concat('%', #{cri.search},'%')
 				</when>
 			</choose>
