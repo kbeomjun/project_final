@@ -33,8 +33,7 @@
 						<a href="${url}">${list.rp_br_name}</a>
 					</td>
 					<td>
-						<c:url var="url" value="/client/review/detail">
-							<c:param name="rp_num" value="${list.rp_num}"/>
+						<c:url var="url" value="/client/review/detail/${list.rp_num}">
 							<c:param name="page" value="${pm.cri.page}"/>
 							<c:param name="type" value="${pm.cri.type}"/>
 							<c:param name="search" value="${pm.cri.search}"/>

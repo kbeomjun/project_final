@@ -39,6 +39,10 @@
 			<button type="submit" class="btn btn-outline-info col-12">글 수정</button>
 		</div>
 	</form>
+	<hr>
+	<div>
+		<a href="<c:url value="/client/review/detail/${review.rp_num}"/>" class="btn btn-outline-danger col-12">취소</a>
+	</div>	
 	
     <script type="text/javascript">
     	// 필수항목 체크

@@ -16,6 +16,10 @@
 			<input type="text" class="form-control" readonly value="${review.rp_title}">
 		</div>
 		<div class="form-group">
+			<label>지점명:</label>
+			<input type="text" class="form-control" readonly value="${review.rp_br_name}">
+		</div>
+		<div class="form-group">
 			<label>작성자:</label>
 			<input type="text" class="form-control" readonly value="${review.pa_me_id}">
 		</div>

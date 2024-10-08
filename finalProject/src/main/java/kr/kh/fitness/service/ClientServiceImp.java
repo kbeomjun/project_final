@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.ClientDAO;
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
+import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -19,6 +21,14 @@ public class ClientServiceImp implements ClientService{
 	@Autowired
 	private ClientDAO clientDao;
 
+	@Override
+	public MemberVO getMember(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return clientDao.selectMember(me_id);
+	}
+	
 	@Override
 	public List<ReviewPostVO> getReviewPostList(Criteria cri) {
 		if(cri == null) {
@@ -117,6 +127,14 @@ public class ClientServiceImp implements ClientService{
 	@Override
 	public List<InquiryTypeVO> getInquiryTypeList() {
 		return clientDao.selectInquiryTypeList();
+	}
+
+	@Override
+	public List<BranchProgramScheduleVO> getReservationList(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return clientDao.selectReservationList(me_id);
 	}
 
 }

@@ -80,7 +80,12 @@
 				</c:forEach>
 				<c:if test="${scheduleList.size() eq 0}">
 					<tr>
-						<th class="text-center" colspan="6">등록된 스케줄이 없습니다.</th>
+						<c:if test="${view eq 'present'}">
+							<th class="text-center" colspan="7">등록된 스케줄이 없습니다.</th>
+						</c:if>
+						<c:if test="${view eq 'past'}">
+							<th class="text-center" colspan="6">등록된 스케줄이 없습니다.</th>
+						</c:if>
 					</tr>
 				</c:if>				
 			</tbody>

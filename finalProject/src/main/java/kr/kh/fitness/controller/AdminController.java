@@ -490,6 +490,7 @@ public class AdminController {
 		}			
 	}
 	
+	//지점 운동기구 재고 변동내역
 	@GetMapping("/equipment/change")
 	public String equipmentChange(Model model, HttpSession session) {
 		try {

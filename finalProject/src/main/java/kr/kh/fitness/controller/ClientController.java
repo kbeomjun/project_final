@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -29,8 +30,19 @@ public class ClientController {
 	private ClientService clientService;
 	
 	@GetMapping("/menu/list")
-	private String menuList() {
+	private String menuList(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		model.addAttribute("user", user);
+		
 		return "/client/menuList";
+	}
+	
+	@GetMapping("/mypage/{me_id}")
+	private String mypage(Model model, @PathVariable("me_id")String me_id) {
+		model.addAttribute("me_id", me_id);
+		
+		return "/client/mypage";
 	}
 	
 	@GetMapping("/review/list")
@@ -48,8 +60,8 @@ public class ClientController {
 		return "/client/reviewList";
 	}
 	
-	@GetMapping("/review/detail")
-	public String reviewDetail(Model model, Integer rp_num, HttpSession session, Criteria cri) {
+	@GetMapping("/review/detail/{rp_num}")
+	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, Criteria cri) {
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
@@ -147,4 +159,73 @@ public class ClientController {
 		
 		return "/client/inquiryInsert";
 	}
+	
+	@GetMapping("/mypage/schedule/{me_id}")
+	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id) {
+		
+		
+		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(me_id);
+		
+		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("me_id", me_id);
+		
+		return "/client/mypageSchedule";
+	}
+	
+	@GetMapping("/mypage/review/list/{me_id}")
+	public String mypageReviewList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
+		
+		cri.setPerPageNum(5);
+		cri.setType("id");
+		cri.setSearch(me_id);
+		
+		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
+		PageMaker pm = clientService.getPageMaker(cri);
+		
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("me_id", me_id);
+		model.addAttribute("pm", pm);
+		
+		return "/client/mypageReviewList";
+	}
+	
+	@GetMapping("/mypage/review/detail/{rp_num}/{me_id}")
+	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, @PathVariable("me_id")String me_id, Criteria cri) {
+		
+		clientService.updateReviewPostView(rp_num);
+		
+		ReviewPostVO review = clientService.getReviewPost(rp_num);
+		
+		model.addAttribute("review", review);
+		model.addAttribute("me_id", me_id);
+		model.addAttribute("cri", cri);
+		
+		return "/client/mypageReviewDetail";
+	}
+	
+	@GetMapping("/mypage/review/update/{rp_num}/{me_id}")
+	public String mypageReviewUpdate(Model model, @PathVariable("rp_num")int rp_num, @PathVariable("me_id")String me_id) {
+		ReviewPostVO review = clientService.getReviewPost(rp_num);
+		List<BranchVO> branchList = clientService.getBranchList();
+		
+		model.addAttribute("review", review);
+		model.addAttribute("branchList", branchList);
+		model.addAttribute("me_id", me_id);
+		
+		return "/client/mypageReviewUpdate";
+	}
+	
+	@PostMapping("/mypage/review/update")
+	public String mypageReviewUpdatePost(Model model, ReviewPostVO review, String me_id) {
+		
+		String msg = clientService.updateReviewPost(review);
+		if(msg == "") {
+			model.addAttribute("url", "/client/mypage/review/detail/" + review.getRp_num() + "/" + me_id);
+		} else {
+			model.addAttribute("url", "/client/mypage/review/update/" + review.getRp_num() + "/" + me_id);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
 }

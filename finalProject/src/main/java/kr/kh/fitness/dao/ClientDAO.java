@@ -2,14 +2,19 @@ package kr.kh.fitness.dao;
 
 import java.util.List;
 
+import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
+import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 
 public interface ClientDAO {
 
+	MemberVO selectMember(String me_id);
+	
 	List<ReviewPostVO> selectReviewPostList(Criteria cri);
 
 	void updateReviewPostView(int rp_num);
@@ -31,5 +36,7 @@ public interface ClientDAO {
 	int selectReviewPostTotalCount(Criteria cri);
 
 	List<InquiryTypeVO> selectInquiryTypeList();
+
+	List<BranchProgramScheduleVO> selectReservationList(String me_id);
 
 }
