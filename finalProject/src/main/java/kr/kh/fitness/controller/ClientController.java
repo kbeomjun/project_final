@@ -162,14 +162,17 @@ public class ClientController {
 	}
 	
 	@GetMapping("/mypage/schedule/{me_id}")
-	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id, @RequestParam(value = "view", defaultValue = "present")String view) {
+	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id, @RequestParam(value = "view", defaultValue = "present")String view, Criteria cri) {
 		
+		cri.setPerPageNum(5);
 		
-		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(view, me_id);
+		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(view, me_id, cri);
+		PageMaker pm = clientService.getPageMakerInSchedule(view, me_id, cri);
 		
 		model.addAttribute("reservationList", reservationList);
 		model.addAttribute("view", view);
 		model.addAttribute("me_id", me_id);
+		model.addAttribute("pm", pm);
 		
 		return "/client/mypageSchedule";
 	}

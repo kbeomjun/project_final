@@ -62,9 +62,30 @@
 						<tbody>
 							<c:forEach items="${reservationList}" var="list">
 								<tr>
-									<td>${list.bp_br_name}</td>
-									<td>${list.bp_sp_name}</td>
-									<td>${list.em_name}</td>
+									<td>
+										<c:url var="url" value="/client/mypage/schedule/${me_id}">
+											<c:param name="view" value="${view}"/>
+											<c:param name="type" value="branch"/>
+											<c:param name="search" value="${list.bp_br_name}"/>
+										</c:url>
+										<a href="${url}">${list.bp_br_name}</a>
+									</td>
+									<td>
+										<c:url var="url" value="/client/mypage/schedule/${me_id}">
+											<c:param name="view" value="${view}"/>
+											<c:param name="type" value="program"/>
+											<c:param name="search" value="${list.bp_sp_name}"/>
+										</c:url>
+										<a href="${url}">${list.bp_sp_name}</a>
+									</td>
+									<td>
+										<c:url var="url" value="/client/mypage/schedule/${me_id}">
+											<c:param name="view" value="${view}"/>
+											<c:param name="type" value="trainer"/>
+											<c:param name="search" value="${list.em_name}"/>
+										</c:url>
+										<a href="${url}">${list.em_name}</a>
+									</td>
 									<td>${list.bs_current} / ${list.bp_total}</td>
 									<td>
 										<fmt:formatDate value="${list.bs_start}" pattern="yyyy-MM-dd"/>
@@ -74,7 +95,7 @@
 									</td>
 									<c:if test="${view eq 'present'}">
 										<td>
-											<a href="#">취소</a>
+											<a href="#" class="btn btn-outline-warning btn-sm">취소</a>
 										</td>
 									</c:if>
 								</tr>
@@ -91,6 +112,67 @@
 							</c:if>				
 						</tbody>
 					</table>
+					
+					<c:if test="${pm.totalCount ne 0}">
+						<ul class="pagination justify-content-center">
+							<c:if test="${pm.prev}">
+								<c:url var="url" value="/client/mypage/schedule/${me_id}">
+									<c:param name="view" value="${view}"/>
+									<c:param name="page" value="${pm.startPage - 1}"/>
+									<c:param name="type" value="${pm.cri.type}"/>
+									<c:param name="search" value="${pm.cri.search}"/>
+								</c:url>
+								<li class="page-item">
+									<a class="page-link" href="${url}">이전</a>
+								</li>
+							</c:if>
+							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+								<c:url var="url" value="/client/mypage/schedule/${me_id}">
+									<c:param name="view" value="${view}"/>
+									<c:param name="page" value="${i}"/>
+									<c:param name="type" value="${pm.cri.type}"/>
+									<c:param name="search" value="${pm.cri.search}"/>
+								</c:url>
+								<c:choose>
+									<c:when test="${pm.cri.page eq i}">
+										<c:set var="active" value="active"/>
+									</c:when>
+									<c:otherwise>
+										<c:set var="active" value=""/>
+									</c:otherwise>
+								</c:choose>
+								<li class="page-item ${active}">
+									<a class="page-link" href="${url}">${i}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${pm.next}">
+								<c:url var="url" value="/client/mypage/schedule/${me_id}">
+									<c:param name="view" value="${view}"/>
+									<c:param name="page" value="${pm.endPage + 1}"/>
+									<c:param name="type" value="${pm.cri.type}"/>
+									<c:param name="search" value="${pm.cri.search}"/>
+								</c:url>
+								<li class="page-item">
+									<a class="page-link" href="${url}">다음</a>
+								</li>
+							</c:if>
+						</ul>
+					</c:if>
+					<form action="<c:url value="/client/mypage/schedule/${me_id}"/>">
+						<input type="hidden" name="view" value="${view}">
+						<div class="input-group mb-3 mt-3">
+							<select class="form-control col-md-1" name="type">
+								<option value="branch"	<c:if test="${pm.cri.type eq 'branch'}">selected</c:if>>지점명</option>
+								<option value="program"	<c:if test="${pm.cri.type eq 'program'}">selected</c:if>>프로그램명</option>
+								<option value="trainer"	<c:if test="${pm.cri.type eq 'trainer'}">selected</c:if>>트레이너명</option>
+							</select>
+							<input type="text" class="form-control" placeholder="검색어" name="search" value="${pm.cri.search}">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-outline-info btn-sm col-12">검색</button>
+							</div>
+						</div>	
+					</form>
+					
 	            </div>
 	        </main>
 	    </div>

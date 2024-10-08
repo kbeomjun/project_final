@@ -38,6 +38,8 @@ public interface ClientDAO {
 
 	List<InquiryTypeVO> selectInquiryTypeList();
 
-	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id);
+	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
+
+	int selectScheduleTotalCount(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
 
 }

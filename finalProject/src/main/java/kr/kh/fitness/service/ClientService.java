@@ -38,6 +38,8 @@ public interface ClientService {
 
 	List<InquiryTypeVO> getInquiryTypeList();
 
-	List<BranchProgramScheduleVO> getReservationList(String view, String me_id);
+	List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri);
+
+	PageMaker getPageMakerInSchedule(String view, String me_id, Criteria cri);
 
 }

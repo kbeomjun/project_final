@@ -130,11 +130,26 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<BranchProgramScheduleVO> getReservationList(String view, String me_id) {
+	public List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri) {
 		if(me_id == null) {
 			return null;
 		}
-		return clientDao.selectReservationList(view, me_id);
+		if(cri == null) {
+			return null;
+		}
+		return clientDao.selectReservationList(view, me_id, cri);
+	}
+
+	@Override
+	public PageMaker getPageMakerInSchedule(String view, String me_id, Criteria cri) {
+		if(me_id == null) {
+			return null;
+		}
+		if(cri == null) {
+			return null;
+		}
+		int totalCount = clientDao.selectScheduleTotalCount(view, me_id, cri);
+		return new PageMaker(3, cri, totalCount);
 	}
 
 }
