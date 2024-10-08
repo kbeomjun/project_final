@@ -3,6 +3,7 @@ package kr.kh.fitness.service;
 import java.util.List;
 
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -29,5 +30,7 @@ public interface ClientService {
 	String deleteReviewPost(int rp_num);
 
 	PageMaker getPageMaker(Criteria cri);
+
+	List<InquiryTypeVO> getInquiryTypeList();
 
 }

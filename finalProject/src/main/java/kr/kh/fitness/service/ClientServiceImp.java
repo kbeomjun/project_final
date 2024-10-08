@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.ClientDAO;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -111,6 +112,11 @@ public class ClientServiceImp implements ClientService{
 		}
 		int totalCount = clientDao.selectReviewPostTotalCount(cri);
 		return new PageMaker(3, cri, totalCount);
+	}
+
+	@Override
+	public List<InquiryTypeVO> getInquiryTypeList() {
+		return clientDao.selectInquiryTypeList();
 	}
 
 }

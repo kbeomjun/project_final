@@ -3,6 +3,7 @@ package kr.kh.fitness.dao;
 import java.util.List;
 
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -28,5 +29,7 @@ public interface ClientDAO {
 	boolean deleteReviewPost(int rp_num);
 
 	int selectReviewPostTotalCount(Criteria cri);
+
+	List<InquiryTypeVO> selectInquiryTypeList();
 
 }

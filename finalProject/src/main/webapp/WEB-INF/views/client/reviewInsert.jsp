@@ -45,7 +45,7 @@
 			<textarea class="form-control" id="rp_content" name="rp_content" style="min-height: 400px; height:auto" placeholder="내용을 입력하세요."></textarea>
 		</div>
 		<div class="error error-content"></div>
-		<div class="text-right mb-3">
+		<div class="form-group">
 			<button type="submit" class="btn btn-outline-info col-12">글 등록</button>
 		</div>
 	</form>

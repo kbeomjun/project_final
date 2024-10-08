@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
@@ -132,5 +133,18 @@ public class ClientController {
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
+	}
+	
+	@GetMapping("/inquiry/insert")
+	public String inquiryInsert(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<InquiryTypeVO> inquiryTypeList = clientService.getInquiryTypeList();
+		List<BranchVO> branchList = clientService.getBranchList();
+		
+		model.addAttribute("user", user);
+		model.addAttribute("inquiryTypeList", inquiryTypeList);
+		model.addAttribute("branchList", branchList);
+		
+		return "/client/inquiryInsert";
 	}
 }
