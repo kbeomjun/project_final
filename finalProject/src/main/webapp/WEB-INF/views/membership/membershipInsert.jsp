@@ -65,12 +65,19 @@
         </div>
     </div>
     
+    <c:set var="user" value="${sessionScope.user}" />
+    
 	<!-- 아이엠포트 SDK :: CDN -->
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
         $(document).ready(function () {
         	var IMP = window.IMP; // 생략 가능
             IMP.init('imp56284313'); // 실제 가맹점 식별 코드 - i'mport에서 가져와야 함
+            var buyerMeId = "${user.me_id}";    // 세션에서 가져온 사용자 이름
+            var buyerEmail = "${user.me_email}";  // 세션에서 가져온 사용자 이메일
+            
+            console.log(buyerMeId);
+            console.log(buyerEmail);
         	
             // 초기 상태로 하위 select 값을 설정.
             $('#pt_num').trigger('change');
@@ -162,9 +169,11 @@
                         merchant_uid: 'merchant_' + new Date().getTime(),
                         name: '카카오페이결제',
                         amount: amount, // 동적으로 설정된 가격
-                        /* buyer_email: 'suvin5027@gamil.com', // 구매자 이메일
-                        buyer_name: '박수빈', // 구매자 이름
-                        buyer_tel: '010-1234-5678', // 구매자 전화번호
+                        buyer_email: buyerEmail, // 구매자 이메일
+                        custom_data: {
+                        	buyer_me_id: buyerMeId, // 사용자 ID
+                        },
+                        /* buyer_tel: '010-1234-5678', // 구매자 전화번호
                         buyer_addr: '서울시 강남구', // 구매자 주소
                         buyer_postcode: '123-456', // 구매자 우편번호 */
                     }, function(rsp) {
@@ -173,12 +182,14 @@
                             const postData = {
                             	imp_uid: rsp.imp_uid, // 여기에서 imp_uid 값이 올바르게 전달되는지 확인
                                 status: rsp.status, // 상태 추가
+                                buyer_me_id: rsp.custom_data.buyer_me_id, // custom_data에서 ID 값 가져오기
                                 amount: amount,
                                 pt_num: $('#pt_num').val(),
                                 pt_type: $('#pt_type').val(),
                                 pt_date: $('#pt_date').val(),
                                 pt_count: $('#pt_count').val(),
-                                pt_price: $('#pt_price').val()
+                                pt_price: $('#pt_price').val(),
+                                
                             };
                             
                             console.log("rsp 내용:", rsp);
@@ -198,6 +209,7 @@
                                     console.error("AJAX 요청 실패:", error);
                                 }
                             });
+                            location.href='<%=request.getContextPath()%>/membership/membershipList?msg='+msg;
                         } else {
                             // 결제 실패 처리
                             msg = '결제에 실패하였습니다.';
