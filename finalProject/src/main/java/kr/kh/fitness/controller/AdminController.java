@@ -52,7 +52,7 @@ public class AdminController {
 	
 	@GetMapping("/login")
 	private String login(Model model, HttpSession session) {
-		MemberVO user = testDao.login("br_admin2");
+		MemberVO user = testDao.login("br_admin_ys1");
 
 		session.setAttribute("user", user);
 		return "/admin/menuList";
