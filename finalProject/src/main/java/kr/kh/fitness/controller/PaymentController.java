@@ -96,7 +96,7 @@ public class PaymentController {
 				if(res) {
 				    response.put("success", true);
 				    response.put("message", "결제가 완료되었습니다.");
-				    response.put("url", "/payment/paymentInsert");
+				    response.put("url", "/payment/paymentList");
 				}
 				else {
 				    response.put("success", false);
