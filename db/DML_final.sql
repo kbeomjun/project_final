@@ -458,3 +458,13 @@ values
     ('강남점 추천드려요', '역삼점만 다니다가 강남점으로 와봤는데 여기도 시설이 깔끔하고 너무 좋네요 추천드려요', '2024-10-15', '강남점', 15);
         
         
+# 프로그램 파일(파일 번호, 파일명, 프로그램 명)
+# 프로그램 안내에서 사용
+delete from `program_file`;
+insert into `program_file` (pf_name, pf_sp_name)
+	values
+		('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_요가.jpg', '요가'),
+        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_필라테스.png', '필라테스'),
+        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_PT.jpg', 'PT'),
+        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa9c949fc_PT.jpg', 'PT');
+        

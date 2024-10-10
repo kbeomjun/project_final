@@ -23,4 +23,5 @@ public class PaymentVO {
     private String pa_me_id;     // 회원 ID
     private int pa_pt_num;       // 결제 유형 번호
 	    
+    private String pt_type;
 }

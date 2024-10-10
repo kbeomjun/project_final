@@ -2,39 +2,78 @@ package kr.kh.fitness.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
+import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
+import kr.kh.fitness.pagination.BranchCriteria;
+import kr.kh.fitness.pagination.PageMaker;
 
 public interface AdminService {
 
 	List<BranchProgramVO> getBranchProgramList(String branchName);
 
+	BranchProgramVO getBranchProgram(int bp_num);
+
 	List<SportsProgramVO> getProgramList();
 
-	List<EmployeeVO> getEmployeeList(String em_br_name);
+	List<EmployeeVO> getEmployeeListByBranch(String em_br_name);
 
-	boolean insertBranchProgram(BranchProgramVO branchProgram);
+	String insertBranchProgram(BranchProgramVO branchProgram);
 
-	boolean updateBranchProgram(BranchProgramVO branchProgram);
+	String updateBranchProgram(BranchProgramVO branchProgram);
 
-	boolean deleteBranchProgram(BranchProgramVO branchProgram);
+	boolean deleteBranchProgram(int bp_num);
 
-	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name);
+	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name, BranchCriteria cri);
 
 	List<MemberVO> getScheduleMemberList(int bs_num);
 	
-	List<EmployeeVO> getMemberList();
+	List<MemberVO> getMemberList();
 	
-	boolean insertSchedule(BranchProgramScheduleVO schedule, String me_id);
+	String insertSchedule(BranchProgramScheduleVO schedule, String me_id);
 	
-	BranchProgramScheduleVO getSchedule(int bp_num);
+	BranchProgramScheduleVO getSchedule(int bs_num);
 
 	List<BranchOrderVO> getBranchOrderList(String br_name);
 
-	boolean updateSchedule(BranchProgramScheduleVO schedule);
+	String updateSchedule(BranchProgramScheduleVO schedule);
+
+	List<BranchEquipmentStockVO> getEquipmentListInHQ();
+
+	String insertOrder(BranchOrderVO order);
+
+	boolean deleteOrder(int bo_num);
+
+	String insertEmployee(EmployeeVO employee, MultipartFile file);
+
+	EmployeeVO getEmployee(int em_num);
+
+	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
+	
+	MemberVO getMember(String me_id);
+	
+	void updateMemberNoShow(String me_id, int me_noshow);
+
+	BranchVO getBranch(String br_name);
+
+	List<BranchFileVO> getBranchFileList(BranchVO branch);
+
+	MemberVO getAdmin(BranchVO branch);
+
+	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
+	
+	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
+
+	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
+
+	PageMaker getPageMaker(String view, BranchCriteria cri);
 
 }

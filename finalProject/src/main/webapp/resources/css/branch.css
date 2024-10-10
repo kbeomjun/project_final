@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+.customoverlay {
+	position: relative;
+	bottom: 72px;
+	left: 2px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+}
+
+.customoverlay:nth-of-type(n) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
+
+.customoverlay a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	text-align: center;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: bold;
+	overflow: hidden;
+	background: #d95050;
+	background: #d95050
+		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+		no-repeat right 14px center;
+}
+
+.customoverlay .title {
+	display: block;
+	text-align: center;
+	background: #fff;
+	margin-right: 35px;
+	padding: 5px 8px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.customoverlay:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: -12px;
+	width: 22px;
+	height: 12px;
+	background:
+		url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+
+.btn-branch {
+	width: 120px; /* 원하는 고정 너비 설정 */
+	text-align: center; /* 버튼 내 텍스트를 가운데 정렬 */
+}
+
+.branch-navbar {
+	position: relative;
+	float: left;
+	width: 16.66%;
+	float: left;
+	padding-left: 40px;
+}
+
+.branch-detail-container {
+	position: relative;
+	float: left;
+	width: 83.34%;
+	padding-left: 40px;
+	padding-bottom: 100px;
+	border-left: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+.branch-tab {
+	position: relative;
+	height: 60px;
+	margin: 0px;
+	border-bottom: 1px solid #555;
+	background: #eee;
+}
+
+.branch-detail-container .branch-detail .branch-tab ul li a {
+	display: block;
+	height: 60px;
+	line-height: 60px;
+	font-size: 17px;
+	color: #333;
+	text-align: center;
+	padding: 0;
+}
+
+.branch-detail-container .branch-detail .branch-tab ul li a.active {
+	color: #ed1b24;
+	border-bottom: 1px solid #ed1b24;
+}
+
+.branch-detail-container .branch-detail .branch-tab ul li {
+	float: left;
+	width: 25%;
+}
+
+.swiper-slide {
+	background-color: transparent;
+}
+
+.swiper-container {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}

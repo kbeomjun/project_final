@@ -14,10 +14,9 @@
 </style>
 </head>
 <body>
-	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${branchName} 스케줄 등록</h1>
 		<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
-			<input type="hidden" name="br_name" value="${branchName}">
+			<input type="hidden" name="bp_br_name" value="${branchName}">
 			
 			<div class="form-group">
 				<label>프로그램:</label>
@@ -68,6 +67,11 @@
 								<td>${member.me_email}</td>
 							</tr>
 						</c:forEach>
+						<c:if test="${memberList.size() eq 0}">
+							<tr>
+								<th class="text-center" colspan="4">등록된 회원이 없습니다.</th>
+							</tr>
+						</c:if>						
 					</tbody>
 				</table>
 			</div>		
@@ -76,7 +80,6 @@
 				<button type="submit" class="btn btn-outline-success">등록</button>
 			</div>
 		</form>
-	<!-- </main> -->
 
 	<script>
 		// 현재 날짜 계산
@@ -120,6 +123,25 @@
 			var time = this.value.split(":");
 			this.value = time[0] + ":00"; // 분을 00으로 고정
 		});		
+		
+		// 시작 시간과 마감 시간 비교 로직
+		function validateTime() {
+			var startTime = startTimeField.value;
+			var endTime = endTimeField.value;
+
+			if (startTime >= endTime) {
+				alert("시작시간은 마감시간보다 빨라야 합니다.");
+				return false; // 유효하지 않으면 폼 제출을 막음
+			}
+			return true; // 유효하면 제출 허용
+		}
+
+		// 폼 제출 시 유효성 검사 추가
+		document.getElementById('form').addEventListener('submit', function(event) {
+			if (!validateTime()) {
+				event.preventDefault(); // 유효하지 않으면 제출을 막음
+			}
+		});
 		
 		// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
 		document.getElementById('programSelect').addEventListener('change', function() {
