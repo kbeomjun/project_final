@@ -46,8 +46,8 @@
 			    <div>
 			    	<a href="<c:url value="/hq/employee/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
-		    	<div>
-			    	<table class="table table-hover mt-3">
+		    	<div class="mt-3">
+			    	<table class="table table-hover">
 				    	<thead>
 				      		<tr>
 				        		<th>직원번호</th>
