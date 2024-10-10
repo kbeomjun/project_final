@@ -150,4 +150,8 @@
 		insert into branch_equipment_stock(be_amount, be_birth, be_record, be_type, be_br_name, be_se_name)
 		values(#{be.be_amount}, current_timestamp(), current_timestamp(), #{be.be_type}, "본사", #{be.be_se_name});
 	</insert>
+	
+	<select id="selectBranchOrderList" resultType="BranchOrderVO">
+		select * from branch_order where bo_state not in("승인", "거부") order by bo_num;
+	</select>
 </mapper>

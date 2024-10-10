@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
+import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -64,4 +65,6 @@ public interface HQDAO {
 	List<BranchStockDTO> selectBranchStockList();
 
 	boolean insertBranchEquipmentStock(@Param("be") BranchEquipmentStockVO be);
+
+	List<BranchOrderVO> selectBranchOrderList();
 }

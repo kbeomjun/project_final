@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
+import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -49,4 +50,6 @@ public interface HQService {
 	List<BranchStockDTO> getBranchStockList();
 
 	String insertBranchEquipmentStock(BranchEquipmentStockVO be);
+
+	List<BranchOrderVO> getBranchOrderList();
 }

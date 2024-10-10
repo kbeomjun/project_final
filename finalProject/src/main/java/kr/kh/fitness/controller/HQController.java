@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
+import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -177,11 +178,25 @@ public class HQController {
 	}
 	@ResponseBody
 	@PostMapping("/stock/insert")
-	public Map<String, Object> stockInsertPost(Model model, @RequestParam String be_se_name, @RequestParam String be_amount) {
+	public Map<String, Object> stockInsertPost(@RequestParam String be_se_name, @RequestParam String be_amount) {
 		BranchEquipmentStockVO be = new BranchEquipmentStockVO(be_se_name, be_amount, "입고");
 		String msg = hqService.insertBranchEquipmentStock(be);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msg", msg);
 		return map;
+	}
+	
+	@GetMapping("/order/list")
+	public String orderList(Model model) {
+		List<BranchOrderVO> boList = hqService.getBranchOrderList();
+		model.addAttribute("boList", boList);
+	    return "/hq/order/list";
+	}
+	@GetMapping("/order/accept/{bo_num}")
+	public String orderAccpet(Model model, @PathVariable("bo_num") int bo_num) {
+		String msg = hqService.acceptOrder(bo_num);
+		model.addAttribute("url", "/hq/order/list");
+		model.addAttribute("msg", msg);
+	    return "/main/message";
 	}
 }

@@ -13,6 +13,7 @@ import kr.kh.fitness.dao.HQDAO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
+import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -250,4 +251,7 @@ public class HQServiceImp implements HQService {
 		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
 		return msg;
 	}
+
+	@Override
+	public List<BranchOrderVO> getBranchOrderList() {return hqDao.selectBranchOrderList();}
 }
