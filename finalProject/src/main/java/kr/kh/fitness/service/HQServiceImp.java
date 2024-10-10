@@ -237,7 +237,7 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {return hqDao.selectBranchEquipmentStockList();}
+	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {return hqDao.selectBranchEquipmentStockList(null, null);}
 
 	@Override
 	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}
@@ -254,4 +254,69 @@ public class HQServiceImp implements HQService {
 
 	@Override
 	public List<BranchOrderVO> getBranchOrderList() {return hqDao.selectBranchOrderList();}
+
+	@Override
+	public String acceptOrder(int bo_num) {
+		String msg = "";
+		
+		BranchOrderVO bo = hqDao.selectBranchOrder(bo_num);
+		BranchStockDTO st = hqDao.selectBranchStock(bo);
+		if(st.getBe_se_total() < bo.getBo_amount()) {msg = "재고가 부족합니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		List<BranchEquipmentStockVO> beStockList = hqDao.selectBranchEquipmentStockList(bo, "입고");
+		List<BranchEquipmentStockVO> beReleaseList = hqDao.selectBranchEquipmentStockList(bo, "출고");
+		int index = 0;
+		for(int i = 0; i < beStockList.size(); i++) {
+			if(index == beReleaseList.size()) {break;}
+			
+			int a = beStockList.get(i).getBe_amount();
+			while(true) {
+				if(a > -beReleaseList.get(index).getBe_amount()) {
+					beStockList.get(i).setBe_amount(a + beReleaseList.get(index).getBe_amount());
+					beReleaseList.get(index).setBe_amount(0);
+					index++;
+				}else if(beStockList.get(i).getBe_amount() == -beReleaseList.get(index).getBe_amount()) {
+					beStockList.get(i).setBe_amount(0);
+					beReleaseList.get(index).setBe_amount(0);
+					index++;
+				}else {
+					beStockList.get(i).setBe_amount(0);
+					beReleaseList.get(index).setBe_amount(beReleaseList.get(index).getBe_amount() + a);
+					break;
+				}
+				if(index == beReleaseList.size()) {break;}
+			}
+		}
+		
+		System.out.println(beStockList);
+		
+		int amount = bo.getBo_amount();
+		for(int i = 0; i < beStockList.size(); i++) {
+			if(beStockList.get(i).getBe_amount() == 0 ) {continue;}
+			
+			if(amount == 0) {break;}
+			
+			if(amount >= beStockList.get(i).getBe_amount()) {
+				hqDao.insertBranchEquipmentStock(
+						new BranchEquipmentStockVO(beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
+													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
+				hqDao.insertBranchEquipmentStock(
+						new BranchEquipmentStockVO(-beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
+													"출고", "본사", bo.getBo_se_name()));
+				amount -= beStockList.get(i).getBe_amount();
+			}else {
+				hqDao.insertBranchEquipmentStock(
+						new BranchEquipmentStockVO(amount, beStockList.get(i).getBe_birth(), 
+													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
+				hqDao.insertBranchEquipmentStock(
+						new BranchEquipmentStockVO(-amount, beStockList.get(i).getBe_birth(), 
+													"출고", "본사", bo.getBo_se_name()));
+				amount = 0;
+			}
+		}
+		
+		hqDao.updateBranchOrderState(bo);
+		return msg;
+	}
 }

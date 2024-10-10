@@ -137,21 +137,48 @@
 	</update>
 	
 	<select id="selectBranchEquipmentStockList" resultType="BranchEquipmentStockVO">
-		select * from branch_equipment_stock where be_br_name = "본사" order by be_num desc;
+		select * from branch_equipment_stock 
+		<if test="bo == null">
+			where be_br_name = "본사" order by be_num desc;
+		</if>
+		<if test="bo != null">
+			where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
+		</if> 
 	</select>
 	
 	<select id="selectBranchStockList" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본사" group by be_se_name;
+		where be_br_name = "본사" 
+		group by be_se_name;
 	</select>
 	
 	<insert id="insertBranchEquipmentStock">
 		insert into branch_equipment_stock(be_amount, be_birth, be_record, be_type, be_br_name, be_se_name)
-		values(#{be.be_amount}, current_timestamp(), current_timestamp(), #{be.be_type}, "본사", #{be.be_se_name});
+		<if test="be.be_br_name == null">
+			values(#{be.be_amount}, current_timestamp(), current_timestamp(), #{be.be_type}, "본사", #{be.be_se_name});
+		</if>
+		<if test="be.be_br_name != null">
+			values(#{be.be_amount}, #{be.be_birth}, current_timestamp(), #{be.be_type}, #{be.be_br_name}, #{be.be_se_name});
+		</if>
 	</insert>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
 		select * from branch_order where bo_state not in("승인", "거부") order by bo_num;
 	</select>
+	
+	<select id="selectBranchOrder" resultType="BranchOrderVO">
+		select * from branch_order where bo_num = #{bo_num};
+	</select>
+	
+	<select id="selectBranchStock" resultType="BranchStockDTO">
+		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
+		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
+		where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} 
+		group by be_se_name; 
+	</select>
+	
+	<update id="updateBranchOrderState">
+		update branch_order	set bo_state = "승인" where bo_num = #{bo.bo_num};
+	</update>
 </mapper>
