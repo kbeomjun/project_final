@@ -106,7 +106,7 @@
 				<input type="file" class="form-control" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
 			</div>
 			<div class="error error-file"></div>
-			<button class="btn btn-outline-warning col-12">지점 수정</button>
+			<button class="btn btn-outline-info col-12">지점 수정</button>
 		</form>
 		<hr/>
 		<a href="<c:url value="/hq/branch/list"/>" class="btn btn-outline-danger col-12">취소</a>
