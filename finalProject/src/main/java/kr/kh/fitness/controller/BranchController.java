@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.service.BranchService;
@@ -59,8 +60,8 @@ public class BranchController {
 			List<EmployeeVO> employee_list = branchService.getEmployeeList(selected_branch.getBr_name());
 			model.addAttribute("em_list", employee_list);
 			
-			List<String> image_list = branchService.getImageName(selected_branch.getBr_name());
-			model.addAttribute("image_list", image_list);
+			List<BranchFileVO> branch_image_list = branchService.getBranchImageList(selected_branch.getBr_name());
+			model.addAttribute("branch_image_list", branch_image_list);
 		}
 		model.addAttribute("br_list", br_list);
 		model.addAttribute("select", br_name);

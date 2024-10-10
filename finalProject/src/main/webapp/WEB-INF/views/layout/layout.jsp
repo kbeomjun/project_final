@@ -17,8 +17,8 @@
 </head>
 <body>
     <tiles:insertAttribute name="header"/>
-        <main class="sub_container" id="skipnav_target"> 
-				<tiles:insertAttribute name="body" />                                                 
+        <main class="sub_container" id="skipnav_target" style="height: 680px;"> 
+			<tiles:insertAttribute name="body" />                                                 
 	    </main>
     <tiles:insertAttribute name="footer" />
     

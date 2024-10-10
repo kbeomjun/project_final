@@ -2,12 +2,9 @@ package kr.kh.fitness.service;
 
 import java.util.List;
 
-import kr.kh.fitness.model.dto.ProgramReservationMessage;
-import kr.kh.fitness.model.dto.ProgramScheduleDTO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
-import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface BranchService {
 
@@ -15,7 +12,7 @@ public interface BranchService {
 
 	List<EmployeeVO> getEmployeeList(String br_name);
 
-	List<String> getImageName(String br_name);
+	List<BranchFileVO> getBranchImageList(String br_name);
 
 
 }

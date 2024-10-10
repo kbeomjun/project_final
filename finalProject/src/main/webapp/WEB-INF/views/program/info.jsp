@@ -9,72 +9,12 @@
 	href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <!-- JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Swiper -->
+<link rel="stylesheet" href="<c:url value="/resources/css/swiper.css"/>">
 <style>
-.swiper-container {
-	width: 100%;
-	max-width: 600px;
-	height: 300px;
-	position: relative; /* 버튼이 슬라이더 내부에 배치되도록 설정 */
-}
-
-.swiper-slide {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 18px;
-	background-color: #f0f0f0;
-	width: 100%; /* 모든 슬라이드가 100% 너비를 가지도록 설정 */
-	height: auto; /* 자동으로 높이 조정 */
-}
-
-.swiper-slide img {
-	width: 80% !important;
-	height: 80% !important;
-	object-fit: cover; /* 이미지 비율을 유지하면서 슬라이드에 맞춤 */
-}
-
-.swiper-button-next, .swiper-button-prev {
-	position: absolute;
-	top: 50%; /* 슬라이더의 세로 중간에 위치 */
-	transform: translateY(-50%);
-	width: 40px;
-	height: 40px;
-	z-index: 10; /* 슬라이더보다 버튼이 앞에 나오도록 설정 */
-	background-color: rgba(0, 0, 0, 0.5); /* 버튼 배경 색상 */
-	color: white;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 20px;
-}
-
-.swiper-button-next {
-	right: 10px; /* 슬라이더의 오른쪽에 위치 */
-}
-
-.swiper-button-prev {
-	left: 10px; /* 슬라이더의 왼쪽에 위치 */
-}
-
 #program-image {
 	text-align: center;
-}
-
-.swiper-button-next:after, .swiper-button-prev:after {
-	display: none;
-}
-
-.swiper-slide::before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 699px;
-	height: 363px;
-	background-image: none; background-size : cover;
-	transform: translate(-50%, -50%);
-	background-size: cover;
 }
 </style>
 </head>
@@ -128,33 +68,22 @@
 			navigation: {
 			    nextEl: '.swiper-button-next',
 			    prevEl: '.swiper-button-prev',
-		  	},
-		  	pagination: {
-		  	    el: '.swiper-pagination',
-		  	    type: 'bullets',
-	  			clickable: true
-	  	  	}
-		  	
+		  	}		  	
 		});
 	
-	// 마지막 이미지에서 "Next" 버튼 숨기기
+	// 이미지가 1개일 경우 Next, Prev 버튼 숨기기
 	mySwiper.on('slideChange', function () {
-	    const currentIndex = mySwiper.realIndex; // 현재 슬라이드 인덱스
+		
 	    const totalSlides = mySwiper.slides.length; // 전체 슬라이드 수
 
-	    // 마지막 슬라이드에서 "Next" 버튼 숨기기
-	    if (currentIndex === totalSlides - 1) {
+	    if (totalSlides === 1) {
 	        document.querySelector('.swiper-button-next').style.display = 'none'; // Next 버튼 숨기기
-	    } else {
-	        document.querySelector('.swiper-button-next').style.display = 'flex'; // Next 버튼 보이기
-	    }
-	    
-	    // 마지막 슬라이드에서 "Next" 버튼 숨기기
-	    if (currentIndex === 0) {
 	        document.querySelector('.swiper-button-prev').style.display = 'none'; // Prev 버튼 숨기기
 	    } else {
+	        document.querySelector('.swiper-button-next').style.display = 'flex'; // Next 버튼 보이기
 	        document.querySelector('.swiper-button-prev').style.display = 'flex'; // Prev 버튼 보이기
 	    }
+	    
 	});
 	
 	// 커스텀 페이지네이션 버튼 클릭 시 첫 번째 슬라이드로 이동
@@ -163,6 +92,7 @@
 	        mySwiper.slideTo(0); // 마지막 슬라이드에서 첫 번째 슬라이드로 이동
 	    }
 	});
+	
     // 페이지가 로드될 때 첫 번째 버튼의 세부 정보를 표시
     window.onload = function() {
         var firstButton = document.querySelector("button[id^='btn-sp-']");

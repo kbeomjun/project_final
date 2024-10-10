@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 
@@ -13,6 +14,6 @@ public interface BranchDAO {
 
 	List<EmployeeVO> selectEmployeeList(@Param("br_name") String br_name);
 
-	List<String> selectBranchImageList(@Param("br_name")String br_name);
+	List<BranchFileVO> selectBranchImageList(@Param("br_name")String br_name);
 	
 }

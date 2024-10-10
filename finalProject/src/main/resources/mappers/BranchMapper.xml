@@ -9,7 +9,7 @@
   <select id="selectEmployeeList" resultType="EmployeeVO">
   	select * from employee where em_br_name = #{br_name};
   </select>
-  <select id="selectBranchImageList" resultType="String">
+  <select id="selectBranchImageList" resultType="BranchFileVO">
   	select * from branch_file where bf_br_name = #{br_name}
   </select>
 </mapper>

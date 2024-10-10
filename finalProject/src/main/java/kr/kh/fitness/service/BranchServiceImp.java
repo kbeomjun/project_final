@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.BranchDAO;
+import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 
@@ -27,7 +28,7 @@ public class BranchServiceImp implements BranchService{
 	}
 
 	@Override
-	public List<String> getImageName(String br_name) {
+	public List<BranchFileVO> getBranchImageList(String br_name) {
 		return branchDao.selectBranchImageList(br_name);
 	}
 	

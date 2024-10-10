@@ -223,7 +223,7 @@ dl, ol, ul{
 .swiper-slide::before{
   content: "";
   position: absolute;
-  top: 55%;
+  top: 50%;
   left: 50%;
   width: 699px;
   height: 363px;
