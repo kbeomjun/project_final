@@ -1,6 +1,8 @@
 package kr.kh.fitness.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
@@ -157,19 +161,27 @@ public class HQController {
 	
 	@GetMapping("/stock/list")
 	public String stockList(Model model) {
-		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
-		List<BranchStockDTO> stList = hqService.getBranchStockList();
 		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
-		model.addAttribute("beList", beList);
-		model.addAttribute("stList", stList);
 		model.addAttribute("seList", seList);
 	    return "/hq/stock/list";
 	}
+	@ResponseBody
+	@GetMapping("/stock/lists")
+	public Map<String, Object> stockLists() {
+		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
+		List<BranchStockDTO> stList = hqService.getBranchStockList();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("beList", beList);
+		map.put("stList", stList);
+	    return map;
+	}
+	@ResponseBody
 	@PostMapping("/stock/insert")
-	public String stockInsertPost(Model model, BranchEquipmentStockVO be) {
+	public Map<String, Object> stockInsertPost(Model model, @RequestParam String be_se_name, @RequestParam String be_amount) {
+		BranchEquipmentStockVO be = new BranchEquipmentStockVO(be_se_name, be_amount, "입고");
 		String msg = hqService.insertBranchEquipmentStock(be);
-		model.addAttribute("url", "/hq/stock/list");
-		model.addAttribute("msg", msg);
-		return "/main/message";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msg", msg);
+		return map;
 	}
 }

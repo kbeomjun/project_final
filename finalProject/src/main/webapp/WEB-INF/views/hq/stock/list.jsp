@@ -7,7 +7,7 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:33.33%; height:200px; box-sizing: border-box; position: relative; margin:20px 0; display: none;}
+    	.img-box{width:33.33%; height:200px; box-sizing: border-box; position: relative; margin:20px 0;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.error{color:red; margin-bottom: 10px;}
@@ -52,8 +52,8 @@
 	    	</div>
 		    <div class="col-sm-10">
 			    <div>
-			    	<button type="button" class="btn btn-outline-info active" data-name="record">내역</button>
-			    	<button type="button" class="btn btn-outline-info" data-name="img">현황</button>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-record" data-name="record">내역</button>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-img" data-name="img">현황</button>
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">입고</button>
 			    </div>
 		    	<div class="mt-3 box record-box">
@@ -68,46 +68,16 @@
 				        		<th>상태</th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
-				    		<c:forEach items="${beList}" var="be">
-						      	<tr>
-						        	<td>
-								        ${be.be_num}
-							        </td>
-							        <td>
-										<fmt:formatDate value="${be.be_record}" pattern="yyyy.MM.dd hh:mm:ss"/>				        	
-						        	</td>
-							        <td>
-							        	${be.be_se_name}
-						        	</td>
-						        	<td>
-						        		<fmt:formatDate value="${be.be_birth}" pattern="yyyy.MM.dd"/>
-						        	</td>
-						        	<td>
-						        		${be.be_amount}
-						        	</td>
-						        	<td>
-						        		${be.be_type}
-						        	</td>
-						      	</tr>
-				    		</c:forEach>
-				    		<c:if test="${beList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="5">재고내역이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
+				    	<tbody id="beList">
+				    	
 				    	</tbody>
 					</table>
 				</div>
+				<div class="box">
+					<hr>
+				</div>
 				<div class="img-container d-flex flex-wrap">
-					<c:forEach items="${stList}" var="st">
-						<div class="card box img-box" style="width:250px; cursor:pointer">
-				        	<img class="card-img-top" style="width:100%; height:100%" src="<c:url value="/uploads${st.be_se_fi_name}"/>"></img>
-					    	<div class="img-name d-flex align-content-center">
-					      		<p class="img-text mx-auto">${st.be_se_name}(수량 : ${st.be_se_total})</p>
-					    	</div>
-						</div>
-					</c:forEach>
+					
 				</div>
 				<div class="modal fade" id="myModal">
 			    	<div class="modal-dialog modal-dialog-centered">
@@ -117,25 +87,23 @@
 				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
 				        	</div>
 				        	<div class="modal-body">
-				          		<form action="<c:url value="/hq/stock/insert"/>" method="post" id="form">
-					          		<div class="form-group">
-										<label for="be_se_name">기구명:</label>
-										<select name="be_se_name" class="custom-select mb-3 form-control">
-											<c:forEach items="${seList}" var="se">
-												<option value="${se.se_name}">${se.se_name}</option>
-											</c:forEach>
-									    </select>
-									</div>
-									<div class="form-group">
-										<label for="be_amount">수량:</label>
-										<select name="be_amount" class="custom-select mb-3 form-control">
-											<c:forEach begin="1" end="30" var="i">
-												<option value="${i}">${i}</option>
-											</c:forEach>
-									    </select>
-									</div>
-									<button class="btn btn-outline-info col-12">재고 추가</button>
-				          		</form>
+				          		<div class="form-group">
+									<label for="be_se_name">기구명:</label>
+									<select name="be_se_name" class="custom-select mb-3 form-control">
+										<c:forEach items="${seList}" var="se">
+											<option value="${se.se_name}">${se.se_name}</option>
+										</c:forEach>
+								    </select>
+								</div>
+								<div class="form-group">
+									<label for="be_amount">수량:</label>
+									<select name="be_amount" class="custom-select mb-3 form-control">
+										<c:forEach begin="1" end="30" var="i">
+											<option value="${i}">${i}</option>
+										</c:forEach>
+								    </select>
+								</div>
+								<button class="btn btn-outline-info col-12 btn-insert">재고 추가</button>
 				        	</div>
 				        	<div class="modal-footer">
 				          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -148,14 +116,134 @@
 	</div>
 	
 	<script type="text/javascript">
-		$('.btn-outline-info').click(function(){
+		$(document).ready(function(){
+			displayList();
+			
+			if($('.btn-record').hasClass("active")){
+				$('.box').css("display", "none");
+				$('.record-box').css("display", "block");
+			}
+			else if($('.btn-img').hasClass("active")){
+				$('.box').css("display", "none");
+				$('.img-box').css("display", "block");
+			}
+		});
+	
+		function displayList(){
+			$.ajax({
+				async : true,
+				url : '<c:url value="/hq/stock/lists"/>', 
+				type : 'get', 
+				dataType : "json",
+				success : function (data){
+					let beList = data.beList;
+					let stList = data.stList;
+					
+					let str = ``;
+					for(var be of beList){
+						var be_record_date = (new Date(be.be_record)).toLocaleDateString('ko-KR', {
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							})
+							.replace(/\./g, '')
+							.replace(/\s/g, '.')
+						var be_record_hour = (new Date(be.be_record)).toLocaleDateString('ko-KR', {
+							hour: '2-digit',
+							hour12 : false,
+							minute: '2-digit',
+							second: '2-digit'
+							})
+							.replace(/\./g, '')
+							.replace(/\s/g, ':')
+						var be_record = be_record_date + " " + be_record_hour.slice(11);
+						var be_birth = (new Date(be.be_birth)).toLocaleDateString('ko-KR', {
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							})
+							.replace(/\./g, '')
+							.replace(/\s/g, '.')
+						str += `
+							<tr>
+					        	<td>
+							        \${be.be_num}
+						        </td>
+						        <td>
+									\${be_record}				        	
+					        	</td>
+						        <td>
+						        	\${be.be_se_name}
+					        	</td>
+					        	<td>
+					        		\${be_birth}	
+					        	</td>
+					        	<td>
+					        		\${be.be_amount}
+					        	</td>
+					        	<td>
+					        		\${be.be_type}
+					        	</td>
+					      	</tr>
+						`;
+					}
+					$('#beList').html(str);
+					
+					str = ``;
+					for(var st of stList){
+						str += `
+							<div class="card box img-box" style="width:250px; cursor:pointer">
+					        	<img class="card-img-top" style="width:100%; height:100%" src="<c:url value="/uploads"/>\${st.be_se_fi_name}"></img>
+						    	<div class="img-name d-flex align-content-center">
+						      		<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
+						    	</div>
+							</div>
+						`;
+					}
+					$('.img-container').html(str);
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		}
+	
+		$(document).on('click', '.btn-menu', function(){
 			var name = $(this).data("name");
 			
-			$('.btn-outline-info').removeClass("active");
-			$(this).addClass("active");
+			if($(this).hasClass("active")){
+				$(this).removeClass("active");
+				$('.box').css("display", "block");
+				return;
+			}
 			
+			$('.btn-menu').removeClass("active");
+			$(this).addClass("active");
 			$('.box').css("display", "none");
 			$('.'+name+'-box').css("display", "block");
+		});
+		
+		$(document).on('click', '.btn-insert', function(){
+			var be_se_name = $("select[name=be_se_name]").val();
+			var be_amount = $("select[name=be_amount]").val();
+			
+			$.ajax({
+				async : true,
+				url : '<c:url value="/hq/stock/insert"/>', 
+				type : 'post', 
+				data : {be_se_name : be_se_name, be_amount : be_amount}, 
+				dataType : "json",
+				success : function (data){
+					let msg = data.msg;
+					if(!msg == ""){
+						alert(msg);
+					}
+					displayList();
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
 		});
 	</script>
 </body>
