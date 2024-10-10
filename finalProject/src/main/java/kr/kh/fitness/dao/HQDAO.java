@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
@@ -53,4 +55,8 @@ public interface HQDAO {
 	String selectSportsEquipmentFileName(@Param("se_ori_name") String se_ori_name);
 
 	boolean updateSportsEquipment(@Param("se") SportsEquipmentVO se, @Param("se_ori_name") String se_ori_name);
+
+	List<BranchEquipmentStockVO> selectBranchEquipmentStockList();
+
+	List<BranchStockDTO> selectBranchStockList();
 }

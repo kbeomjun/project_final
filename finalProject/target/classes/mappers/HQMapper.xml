@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.HQDAO">
 	<select id="selectBranchList" resultType="BranchVO">
-		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name order by br_name;
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본사") order by br_name;
 	</select>
 	
 	<insert id="insertBranch">
@@ -131,4 +131,14 @@
 			se_fi_name = #{se.se_fi_name}
 		where se_name = #{se_ori_name};
 	</update>
+	
+	<select id="selectBranchEquipmentStockList" resultType="BranchEquipmentStockVO">
+		select * from branch_equipment_stock where be_br_name = "본사" order by be_num desc;
+	</select>
+	
+	<select id="selectBranchStockList" resultType="BranchStockDTO">
+		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
+		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
+		where be_br_name = "본사" group by be_se_name;
+	</select>
 </mapper>

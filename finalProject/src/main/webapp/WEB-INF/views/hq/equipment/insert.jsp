@@ -19,7 +19,7 @@
 		<form action="<c:url value="/hq/equipment/insert"/>" method="post" enctype="multipart/form-data" id="form">
 			<div class="form-group">
 				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-				    <img class="card-img-top" alt="Card image" style="width:100%" 
+				    <img class="card-img-top" alt="Card image" style="width:100%; height:100%"
 				    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 				    <div class="card-img-overlay d-flex flex-wrap align-items-center">
 					    <div class="mx-auto">

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
@@ -38,4 +40,8 @@ public interface HQService {
 	SportsEquipmentVO getSportsEquipment(SportsEquipmentVO se);
 
 	String updateSportsEquipment(SportsEquipmentVO se, MultipartFile file, String se_ori_name, String isDel);
+
+	List<BranchEquipmentStockVO> getBranchEquipmentStockList();
+
+	List<BranchStockDTO> getBranchStockList();
 }

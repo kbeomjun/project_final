@@ -19,7 +19,7 @@
 		<form action="<c:url value="/hq/equipment/update/${se.se_name}"/>" method="post" enctype="multipart/form-data" id="form">
 			<div class="form-group">
 				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-				    <img class="card-img-top" alt="Card image" style="width:100%" src="<c:url value="/uploads${se.se_fi_name}"/>">
+				    <img class="card-img-top" alt="Card image" style="width:100%; height:100%" src="<c:url value="/uploads${se.se_fi_name}"/>">
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>

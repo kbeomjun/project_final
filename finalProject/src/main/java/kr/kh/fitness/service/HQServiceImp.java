@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.HQDAO;
+import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
@@ -228,4 +230,10 @@ public class HQServiceImp implements HQService {
 		if(!hqDao.updateSportsEquipment(se, se_ori_name)) {msg = "기구를 수정하지 못했습니다.";}
 		return msg;
 	}
+
+	@Override
+	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {return hqDao.selectBranchEquipmentStockList();}
+
+	@Override
+	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}
 }
