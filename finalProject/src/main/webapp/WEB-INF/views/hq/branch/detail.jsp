@@ -35,11 +35,11 @@
 			<div class="error error-phone"></div>
 			<div class="form-group">
 				<label for="br_address">주소:</label> <br/>
-				<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" value="${br.br_postcode}">
+				<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" readonly value="${br.br_postcode}">
 				<input class="btn btn-info" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-				<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" value="${br.br_address}"> <br/>
+				<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" readonly value="${br.br_address}"> <br/>
 				<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${br.br_detailAddress}">
-				<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${br.br_extraAddress}">
+				<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" readonly value="${br.br_extraAddress}">
 			</div>
 			<div class="error error-address"></div>
 			<div class="form-group">

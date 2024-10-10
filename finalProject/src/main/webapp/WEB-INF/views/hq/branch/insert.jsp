@@ -35,11 +35,11 @@
 			<div class="error error-phone"></div>
 			<div class="form-group">
 				<label for="br_address">주소:</label> <br/>
-				<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;">
+				<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" readonly>
 				<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-				<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;"> <br/>
+				<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" readonly> <br/>
 				<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
-				<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
+				<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" readonly>
 			</div>
 			<div class="error error-address"></div>
 			<div class="form-group">
