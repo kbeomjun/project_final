@@ -14,6 +14,6 @@ public interface PaymentDAO {
 
 	boolean insertPayment(@Param("pt")PaymentTypeVO payment, @Param("pc")PaymentCategoryVO category, @Param("end")String formattedDateTime, @Param("me")MemberVO user);
 
-	boolean insertPaymentCategory(@Param("pc")PaymentCategoryVO category);
+	boolean insertPaymentCategory(@Param("pt")PaymentTypeVO payment, @Param("pc")PaymentCategoryVO category, @Param("me")MemberVO user);
 
 }

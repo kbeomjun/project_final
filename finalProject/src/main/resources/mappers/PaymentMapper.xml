@@ -12,6 +12,7 @@
 	</insert>
 	
 	<insert id="insertPaymentCategory">
-		insert into payment_category()
+		insert into payment_category (pc_imp_uid, pc_merchant_uid, pc_amount, pc_status, pc_paid_at, pc_card_name, pc_card_number, pc_card_quota, pc_pt_num, pc_me_id)
+		values(#{pc.pc_imp_uid}, #{pc.pc_merchant_uid}, #{pc.pc_amount}, #{pc.pc_status}, #{pc.pc_paid_at}, #{pc.pc_card_name}, #{pc.pc_card_number}, #{pc.pc_card_quota}, #{pt.pt_num}, #{me.me_id})
 	</insert>
 </mapper>

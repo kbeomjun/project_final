@@ -17,7 +17,6 @@ public class PaymentCategoryVO {
     private String pc_merchant_uid;       // 가맹점에서 설정한 주문 ID
     private String pc_pg_tid;              // 결제 거래 ID
     private String pc_status;              // 결제 상태 (예: paid(결제완료), cancelled(결제취소))
-    private String pc_formattedPrice;     // 포맷된 가격 (예: 300,000)
     private int pc_amount;                 // 결제 총 금액
     private long pc_paid_at;               // 결제 완료 시간 (Unix Timestamp) 
     // 예시) paid_at : 1728525901 나오는데 Unix 타임스탬프(또는 Epoch 타임) 형식으로, 1970년 1월 1일 00:00:00 UTC부터 경과된 초의 수를 나타냄. 1728525901은 2024년 10월 10일 00:00:01 UTC에 해당함.

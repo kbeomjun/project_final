@@ -10,7 +10,7 @@
 </head>
 <body>
     <h2 class="mb10">회원권 결제</h2>
-    <form id="paymentForm" action="<c:url value='/membership/membershipInsert'/>" method="post">
+    <form id="paymentForm" action="<c:url value='/payment/paymentInsert'/>" method="post">
     	<input type="hidden" name="pt_type" id="pt_type" value="${pt_type}" />
         <div>
             <div class="mb10">
@@ -76,6 +76,8 @@
 	        IMP.init('imp56284313'); // 실제 가맹점 식별 코드 - i'mport에서 가져와야 함
 	        var me_id = "${user.me_id}";    // 세션에서 가져온 사용자 이름
 	        var me_email = "${user.me_email}";  // 세션에서 가져온 사용자 이메일
+            // 현재 경로를 가져오는 방법. 예) "/fitness"
+            var contextPath = '<%=request.getContextPath()%>';
 	        
 	        console.log(me_id);
 	        console.log(me_email);
@@ -199,25 +201,22 @@
 	                       		},
 	                       		paymentCategory: {
 	                       	        // PaymentCategoryVO의 필드들
-		                            pc_imp_uid: rsp.imp_uid,							// 여기에서 imp_uid 값이 올바르게 전달되는지 확인
-		                            , pc_merchant_uid: rsp.merchant_uid				// 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
-		                            , pc_pg_tid: rsp.pg_tid							// 결제 거래 ID. 결제 상태를 조회할 때 사용
-		                            , pc_status: rsp.status							// 상태 추가 paid = 결제완료, cancelled = 결제 실패
-		                            , pc_amount: amount								// 실제로 결제된 금액
-		                            , pc_paid_at: rsp.paid_at						// 결제 완료 시간 (Unix Timestamp)
-		                            , pc_card_name: card_name							// 결제된 카드 이름
-		                            , pc_card_number: card_number						// 결제된 카드 번호
-		                            , pc_card_quota: card_quota						// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
-		                            , pc_me_id: rsp.custom_data.buyer_me_id			// custom_data에서 me_id 값 가져오기
-		                            , pc_me_email: rsp.buyer_email						// user 이메일 추가
+		                            pc_imp_uid: rsp.imp_uid					// 결제 고유 ID
+		                            , pc_merchant_uid: rsp.merchant_uid		// 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
+		                            , pc_pg_tid: rsp.pg_tid					// 결제 거래 ID. 결제 상태를 조회할 때 사용
+		                            , pc_status: rsp.status					// 상태 추가 paid = 결제완료, cancelled = 결제 실패
+		                            , pc_amount: amount						// 실제로 결제된 금액
+		                            , pc_paid_at: rsp.paid_at				// 결제 완료 시간 (Unix Timestamp)
+		                            , pc_card_name: rsp.card_name				// 결제된 카드 이름
+		                            , pc_card_number: rsp.card_number			// 결제된 카드 번호
+		                            , pc_card_quota: rsp.card_quota				// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
+		                            , pc_me_id: rsp.custom_data.buyer_me_id	// custom_data에서 me_id 값 가져오기
+		                            , pc_me_email: rsp.buyer_email			// user 이메일 추가
 	                       	    }
 	                        };
 	                        
 	                        console.log("rsp 내용 : ", rsp);
 	                        console.log("전송할 데이터 : ", postData); // 전송할 데이터 출력
-	                        
-	                        // 현재 컨텍스트 경로를 가져오는 방법. 예) "/fitness"
-	                        var contextPath = '<%=request.getContextPath()%>';
 	                        
 	                        jQuery.ajax({
 	                            url: contextPath + "/payment/paymentInsert", // Ajax 요청 URL에 contextPath 경로 추가. contextPath 없으면 경로 못 불러옴.
@@ -228,16 +227,16 @@
 	                            success: function(response) {
 	                                console.log("응답 데이터 : ", response);
 	                                
-	                                /* if (response.success) {
+	                                if (response.success) {
 	                                    alert(response.message);
 	                                    window.location.href = contextPath + response.url; // 응답 URL에 컨텍스트 경로 추가
 	                                } else {
 	                                    alert(response.message);
-	                                } */
+	                                }
 	                            },
 	                            error: function(xhr, status, error) {
 	                                console.error("AJAX 요청 실패 : ", error);
-	                                alert(response.message);
+	                                alert("AJAX 요청 실패: " + xhr.responseText); // xhr에서 응답 메시지 출력
 	                            }
 	                        });
 	                    } else {

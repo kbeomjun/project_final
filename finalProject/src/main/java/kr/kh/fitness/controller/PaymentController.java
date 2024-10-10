@@ -37,14 +37,13 @@ public class PaymentController {
 	// 회원권 조회
 	@GetMapping("/paymentList")
 	public String membershipList(Model model) {
-		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
-		// 가격 포맷팅
-		for (PaymentTypeVO pt : paymentList) {
-			pt.getPaymentCategory().setPc_formattedPrice(
-		            NumberFormat.getInstance(Locale.KOREA).format(pt.getPaymentCategory().getPc_amount()));
-		}
-		model.addAttribute("paymentList", paymentList);
-		return "/payment/paymentList";
+	    List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
+	    // 가격 포맷팅
+ 		for (PaymentTypeVO pt : paymentList) {
+ 			pt.setFormattedPrice(NumberFormat.getInstance(Locale.KOREA).format(pt.getPt_price()));
+ 		}
+	    model.addAttribute("paymentList", paymentList);
+	    return "/payment/paymentList";
 	}
 
 	// 회원권 결제
@@ -64,8 +63,9 @@ public class PaymentController {
 	    
 		Map<String, Object> response = new HashMap<>();
 		try {
-			// payment 확인
+			// payment, category 확인
 			System.out.println("결제 정보 : " + payment);
+		    System.out.println("결제 유형 : " + category);
 			
 			// 현재 날짜와 시간 가져오기
 		    LocalDateTime now = LocalDateTime.now();

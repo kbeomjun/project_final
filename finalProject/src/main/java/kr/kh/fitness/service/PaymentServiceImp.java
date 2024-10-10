@@ -30,9 +30,7 @@ public class PaymentServiceImp implements PaymentService{
 		
 		if(category.getPc_imp_uid() == null
 			|| category.getPc_merchant_uid() == null
-			|| category.getPc_formattedPrice() == null
 			|| category.getPc_amount() == 0
-			|| category.getPc_card_number() == 0
 			|| category.getPc_status() == null
 			|| category.getPc_me_id() == null) {
 			return false;
@@ -41,6 +39,13 @@ public class PaymentServiceImp implements PaymentService{
 		if(user.getMe_id() == null) {
 			return false;
 		}
+		
+	    // 1. PaymentCategoryVO 삽입
+	    boolean categoryInserted = paymentDao.insertPaymentCategory(payment, category, user);
+	    
+	    if (!categoryInserted) {
+	        return false; // 카테고리 삽입 실패
+	    }
 		
 		return paymentDao.insertPayment(payment, category, formattedDateTime, user);
 	}

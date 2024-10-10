@@ -18,6 +18,10 @@ public class PaymentTypeVO {
     private int pt_count;			// 결제 수량
     private int pt_price;			// 결제 가격 (원 단위)
     
+    // 결제 관련 추가 필드
+    private String formattedPrice;	// 포맷된 가격 (예: 300,000원)
+    
     // PaymentCategoryVO 타입의 필드 추가
     private PaymentCategoryVO paymentCategory;
+
 }
