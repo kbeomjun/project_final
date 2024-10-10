@@ -10,7 +10,6 @@
 </style>
 </head>
 <body>
-	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${branchName} 프로그램 수정</h1>
 		<form action="<c:url value="/admin/program/update"/>" method="post" id="form">
 			<input type="hidden" name="bp_br_name" value="${branchName}">
@@ -32,7 +31,6 @@
 				<button type="submit" class="btn btn-outline-warning">수정</button>
 			</div>
 		</form>
-	<!-- </main> -->
 	<script type="text/javascript">
 		$('#form').validate({
 			rules : {

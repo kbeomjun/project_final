@@ -17,7 +17,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/uploads/**" location="file:///D:/git/project_final/storage/" />
+	<!-- <resources mapping="/uploads/**" location="file:///D:/git/final_project/project_final/storage/" /> -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
@@ -49,9 +49,21 @@
 		<!-- 업로드 최대 크기 10Mb -->
 		<beans:property name="maxUploadSize" value="10485760" />
 	</beans:bean>
-	
-	<context:component-scan base-package="kr.kh.fitness" />
 
+	<context:component-scan
+		base-package="kr.kh.fitness" />
 
+	<!-- 인터셉터 등록 -->
+
+	<beans:bean id="prevUrlInterceptor"
+		class="kr.kh.fitness.interceptor.PrevUrlInterceptor" />
+
+	<!-- 인터셉터 맵핑 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/program/reservation/*" />
+			<beans:ref bean="prevUrlInterceptor" />
+		</interceptor>
+	</interceptors>
 
 </beans:beans>

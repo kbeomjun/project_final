@@ -39,33 +39,23 @@ public class MemberServiceImp implements MemberService{
 
 	@Override
 	public boolean signup(MemberVO member) {
-		 if (member == null) {
-			 return false;
-		 }
-		 if (!checkRegex(member.getMe_id(), "^\\w{4,10}$")) {
-		     return false;
-		 }
-		 if (!checkRegex(member.getMe_pw(), "^[a-zA-Z0-9!@#$]{6,15}$")) {
-		     return false;
-		 }
-		 try {
-		     return memberDao.insertMember(member);
-		 } catch (Exception e) {
-		     e.printStackTrace(); // 예외 처리
-		     return false; // 삽입 실패 시 false 반환
-		 }
-    }
-	private boolean checkRegex(String str, String regex) {
-		if(str != null && Pattern.matches(regex, str)) {
-			return true;
-		}
-		return false;
-	}
+	    if (member == null) {
+	        return false; // member가 null이면 false 반환
+	    }
 
-	@Override
-	public boolean checkId(String id) {
-	    return memberDao.selectMember(id) == null;
-	}
+	    // 아이디가 이미 존재하는지 확인
+	    MemberVO existingMember = memberDao.selectMember(member.getMe_id());
+	    if (existingMember != null) {
+	        return false; // 아이디가 존재하면 false 반환
+	    }
 
+	    try {
+	        // 회원 정보를 데이터베이스에 삽입
+	        return memberDao.insertMember(member);
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 발생 시 스택 트레이스 출력
+	        return false; // 삽입 실패 시 false 반환
+	    }
+	}
 }
 
