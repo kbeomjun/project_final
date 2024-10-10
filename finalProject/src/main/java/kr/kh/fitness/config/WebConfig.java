@@ -21,10 +21,11 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		log.info("WebConfig. addResourceHandlers");
+		// log.info("uploadPath : "+uploadPath);
 		
 		// "/uploads/**" 경로를 로컬 디렉토리로 매핑
-		registry.addResourceHandler("/uploadss/**")
-				.addResourceLocations("file:///D:/git/final_project/project_final/storage/");
+		registry.addResourceHandler("/uploads/**")
+				.addResourceLocations("file:///"+ uploadPath + "/");
 		//.addResourceLocations("file:///" + uploadPath.replace("\\", "/"));
 	}
 }

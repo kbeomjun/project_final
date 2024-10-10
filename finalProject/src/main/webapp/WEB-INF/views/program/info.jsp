@@ -197,7 +197,7 @@
                 // List<String>에서 값을 하나씩 꺼내서 사용
                 imageNameList.forEach(function(imageName) {
                     // 여기에서 각 이미지 이름에 대한 추가 작업을 할 수 있습니다.
-                    var imgSrc = '<c:url value="/uploadss' + imageName + '" />';
+                    var imgSrc = '<c:url value="/uploads' + imageName + '" />';
                     console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
                     document.getElementById("swiper-wrapper").innerHTML += 
                     	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:50%; height:50%"><br></div>';

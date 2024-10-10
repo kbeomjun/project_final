@@ -223,11 +223,11 @@ dl, ol, ul{
 .swiper-slide::before{
   content: "";
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   width: 699px;
   height: 363px;
-  background-image: url("../image/main/main_text.png");
+  /* background-image: url("../image/main/main_text.png"); */
   background-repeat: no-repeat;
   background-size: cover;
   transform: translate(-50%, -50%);
