@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.MembershipPaymentDAO">
+	<select id="selectMembershipList" resultType="PaymentTypeVO">
+		select * from payment_type
+	</select>
+	<insert id="insertPaymentType">
+		insert into payment(pa_price, pa_start, pa_end, pa_state, pa_me_id, pa_pt_num)
+		values(#{pt.pt_price}, now(), #{end}, #{pt.pt_status}, #{me.me_id}, #{pt.pt_num});
+	</insert>
+</mapper>

@@ -5,10 +5,10 @@ import java.util.List;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 
-public interface MembershipService {
+public interface PaymentService {
 
 	List<PaymentTypeVO> getMembershipList();
 
-	boolean insertPaymentType(PaymentTypeVO payment, String formattedDateTime, MemberVO user);
+	boolean insertPayment(PaymentTypeVO payment, String formattedDateTime, MemberVO user);
 
 }

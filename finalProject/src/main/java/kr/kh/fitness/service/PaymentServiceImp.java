@@ -5,26 +5,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.kh.fitness.dao.MembershipDAO;
+import kr.kh.fitness.dao.PaymentDAO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 
 @Service
-public class MembershipServiceImp implements MembershipService{
-
+public class PaymentServiceImp implements PaymentService{
+	
 	@Autowired
-	private MembershipDAO membershipDao;
+	private PaymentDAO paymentDao;
 
-	@Override
 	public List<PaymentTypeVO> getMembershipList() {
-		return membershipDao.selectMembershipList();
+		return paymentDao.selectMembershipList();
 	}
 
 	@Override
-	public boolean insertPaymentType(PaymentTypeVO payment, String formattedDateTime, MemberVO user) {
+	public boolean insertPayment(PaymentTypeVO payment, String formattedDateTime, MemberVO user) {
 		if(payment.getPt_num() == 0
 			|| payment.getPt_price() == 0
-			|| payment.getPt_date() <= 0) {
+			|| payment.getPt_date() <= 0
+			|| payment.getPt_me_id() == null) {
 			return false;
 		}
 		
@@ -32,7 +32,7 @@ public class MembershipServiceImp implements MembershipService{
 			return false;
 		}
 		
-		return membershipDao.insertPaymentType(payment, formattedDateTime, user);
+		return paymentDao.insertPayment(payment, formattedDateTime, user);
 	}
 
 }

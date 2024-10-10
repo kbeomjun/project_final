@@ -22,38 +22,38 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
-import kr.kh.fitness.service.MembershipPaymentService;
+import kr.kh.fitness.service.PaymentService;
 
-// 회원권 컨트롤러
+//회원권 컨트롤러
 @Controller
-@RequestMapping("/membershipPayment")
-public class MembershipController {
+@RequestMapping("/payment")
+public class PaymentController {
 	
 	@Autowired
-	MembershipPaymentService membershipPaymentService;
+	PaymentService paymentService;
 
 	// 회원권 조회
-	@GetMapping("/membershipPaymentList")
+	@GetMapping("/paymentList")
 	public String membershipList(Model model) {
-		List<PaymentTypeVO> paymentList = membershipPaymentService.getMembershipList();
+		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
 		// 가격 포맷팅
 		for (PaymentTypeVO pt : paymentList) {
 			pt.setFormattedPrice(NumberFormat.getInstance(Locale.KOREA).format(pt.getPt_price()));
 		}
 		model.addAttribute("paymentList", paymentList);
-		return "/membershipPayment/membershipPaymentList";
+		return "/payment/paymentList";
 	}
 
 	// 회원권 결제
-	@GetMapping("/membershipPaymentInsert")
+	@GetMapping("/paymentInsert")
 	public String membershipInsertGet(Model model) {
-		List<PaymentTypeVO> paymentList = membershipPaymentService.getMembershipList();
+		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
 		model.addAttribute("paymentList", paymentList);
-		return "/membershipPayment/membershipPaymentInsert";
+		return "/payment/paymentInsert";
 	}
 
 	// 결제 처리 메서드 (JSON)
-	@PostMapping("/membershipPaymentInsert")
+	@PostMapping("/paymentInsert")
 	@ResponseBody
 	public ResponseEntity<?> processPayment(@RequestBody PaymentTypeVO payment, HttpSession session) {
 	    Map<String, Object> response = new HashMap<>();
@@ -81,24 +81,24 @@ public class MembershipController {
 		    
 		    if ("paid".equals(payment.getPt_status())) {
 		    	System.out.println(payment);
-				boolean res = membershipPaymentService.insertPaymentType(payment, formattedDateTime, user);
+				boolean res = paymentService.insertPayment(payment, formattedDateTime, user);
 				
 				// 결제가 완료되면 결제 완료 창이 뜨고, 결제에 실패하면 실패 창이 뜸.
 				// 결제가 성공적으로 끝나면 membershipList로 감, 실패하면 그대로 유지
 				if(res) {
 				    response.put("success", true);
 				    response.put("message", "결제가 완료되었습니다.");
-				    response.put("url", "/membershipPayment/membershipPaymentInsert");
+				    response.put("url", "/payment/paymentInsert");
 				}
 				else {
 				    response.put("success", false);
 				    response.put("message", "결제가 실패하였습니다.");
-				    response.put("url", "/membershipPayment/membershipPaymentInsert");
+				    response.put("url", "/payment/paymentInsert");
 				}
 			}else {
 				response.put("success", false);
 		        response.put("message", "결제가 실패하였습니다. 상태: " + payment.getPt_status());
-		        response.put("url", "/membershipPayment/membershipPaymentInsert");
+		        response.put("url", "/payment/paymentInsert");
 			}
 		}catch (Exception e) {
 	        response.put("success", false);

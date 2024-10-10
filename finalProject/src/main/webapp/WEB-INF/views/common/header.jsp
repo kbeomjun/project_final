@@ -16,7 +16,7 @@
 			<nav class="gnb_wrap">
 				<ul class="gnb">
 					<li class="gnb__item"><a href="#" class="gnb__link">지점 조회</a></li>
-					<li class="gnb__item"><a href="<c:url value="/membership/membershipList" />" class="gnb__link">회원권</a></li>
+					<li class="gnb__item"><a href="<c:url value="/payment/paymentList" />" class="gnb__link">회원권</a></li>
 					<li class="gnb__item"><a href=<c:url value="/program/main"/> class="gnb__link">프로그램</a></li>
 					<li class="gnb__item"><a href="#" class="gnb__link">고객센터</a></li>
 					<li class="gnb__item"><a href="<c:url value="/admin/menu/list"/>" class="gnb__link">지점관리</a></li>

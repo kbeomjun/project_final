@@ -83,7 +83,7 @@
 	        // user 정보가 없는 경우 결제 버튼 숨기기 및 경고 메시지 표시
 	        if (!me_id) {
 	            alert("로그인 정보가 없습니다. 결제를 진행할 수 없습니다.");
-	            location.href = '<%=request.getContextPath()%>/membership/membershipList'; // membershipPaymentList 페이지로 이동
+	            location.href = '<%=request.getContextPath()%>/payment/paymentList'; // paymentList 페이지로 이동
 	            return;
 	        }
 	        
@@ -126,18 +126,18 @@
 	            // 선택된 옵션이 비어 있지 않은지 확인
 	            if (selectedOption.length === 0) {
 	                console.error("선택된 옵션이 없습니다.");
-	                return; // 종료
+	                return;
 	            }
 	
+	            const type = selectedOption.data('type');
 	            const date = selectedOption.data('date');
 	            const count = selectedOption.data('count');
-	            const type = selectedOption.data('type');
 	            const price = selectedOption.data('price');
 	            
 	            // hidden input에 pt_type 설정
 	            $('#pt_type').val(type);
 	
-	            // 가격 포맷팅
+	            // 가격 포맷팅(1,000 이런 식으로)
 	            const formattedPrice = Number(price).toLocaleString();
 	            
 	            // 확인용...ㅎ
@@ -146,19 +146,21 @@
 	            console.log(type);
 	            console.log(price);
 	            console.log(formattedPrice);
-	
-	            // 팝업 내용 설정
-	            const modalContent = `
-	                <p>결제하시겠습니까?</p>
-	                <p>이용권 종류: ${type}</p>
-	                <p>기간(일): ${date}</p>
-	                <p>횟수: ${count}</p>
-	                <p>가격: ${formattedPrice}원</p>
-	            `;
-	
+
+                // 팝업 내용 설정
+                const modalContent = `
+                    <p>결제하시겠습니까?</p>
+                    <p>이용권 종류: \${type}</p>
+                    <p>기간(일): \${date}</p>
+                    <p>횟수: \${count}</p>
+                    <p>가격: \${formattedPrice}원</p>
+                `;
+                
+	            console.log(modalContent);
+	            
 	            // 팝업 내용 업데이트
 	            $('#modalBody').html(modalContent);
-	            $('#confirmModal').modal('show'); // 모달 표시
+	            $('#confirmModal').modal('show'); // 팝업 표시
 	            
 	            // 결제하기 버튼 클릭 시 하위 select 활성화 및 결제 요청
 	            $('#confirmPayment').off('click').on('click', function() {
@@ -188,18 +190,21 @@
 	                    if (rsp.success) {
 	                        // 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 	                        const postData = {
-	                            imp_uid: rsp.imp_uid,                     // 여기에서 imp_uid 값이 올바르게 전달되는지 확인
-	                            merchant_uid: rsp.merchant_uid,         // 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
-	                            pt_status: rsp.status,                   // 상태 추가 paid = 결제완료, null = 실패
-	                            pg_tid: rsp.pg_tid,                     // 결제 거래 ID. 결제 상태를 조회할 때 사용
-	                            pt_amount: amount,                      // 결제된 금액
-	                            pt_me_id: rsp.custom_data.buyer_me_id, // custom_data에서 me_id 값 가져오기
-	                            me_email: rsp.buyer_email,               // user 이메일 추가
-	                            pt_num: $('#pt_num').val(),
-	                            pt_type: $('#pt_type').val(),
-	                            pt_date: $('#pt_date').val(),
-	                            pt_count: $('#pt_count').val(),
-	                            pt_price: $('#pt_price').val()
+	                            imp_uid: rsp.imp_uid,							// 여기에서 imp_uid 값이 올바르게 전달되는지 확인
+	                            , merchant_uid: rsp.merchant_uid				// 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
+	                            , pt_status: rsp.status							// 상태 추가 paid = 결제완료, null = 실패
+	                            , pg_tid: rsp.pg_tid							// 결제 거래 ID. 결제 상태를 조회할 때 사용
+	                            , pt_amount: amount								// 결제된 금액
+	                            , card_name: card_name							// 결제된 카드 이름
+	                            , card_number: card_number						// 결제된 카드 번호
+	                            , card_quota: card_quota						// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
+	                            , pt_me_id: rsp.custom_data.buyer_me_id			// custom_data에서 me_id 값 가져오기
+	                            , pt_me_email: rsp.buyer_email						// user 이메일 추가
+	                            , pt_num: $('#pt_num').val()
+	                            , pt_type: $('#pt_type').val()
+	                            , pt_date: $('#pt_date').val()
+	                            , pt_count: $('#pt_count').val()
+	                            , pt_price: $('#pt_price').val()
 	                        };
 	                        
 	                        console.log("rsp 내용 : ", rsp);
@@ -209,7 +214,7 @@
 	                        var contextPath = '<%=request.getContextPath()%>';
 	                        
 	                        jQuery.ajax({
-	                            url: contextPath + "/membership/membershipInsert", // Ajax 요청 URL에 contextPath 경로 추가. contextPath 없으면 경로 못 불러옴.
+	                            url: contextPath + "/payment/paymentInsert", // Ajax 요청 URL에 contextPath 경로 추가. contextPath 없으면 경로 못 불러옴.
 	                            type: 'POST',
 	                            contentType: 'application/json',
 	                            dataType: 'json',
