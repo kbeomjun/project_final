@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.ClientDAO">
+
+	<select id="selectMember" resultType="MemberVO">
+		select * from member where me_id = #{me_id}
+	</select>
+
+	<select id="selectReviewPostList" resultType="ReviewPostVO">
+		select
+			* 
+		from 
+			review_post 
+		join 
+			payment on rp_pa_num = pa_num
+		<choose>
+			<when test="type == 'branch'">
+				where rp_br_name like concat('%', #{search},'%')
+			</when>
+			<when test="type == 'id'">
+				where pa_me_id = #{search}
+			</when>
+			<otherwise>
+				where rp_title like concat('%', #{search},'%')
+			</otherwise>
+		</choose>	 
+		order by 
+			rp_num desc
+		limit
+			#{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectReviewPostTotalCount" resultType="int">
+		select
+			count(*) 
+		from 
+			review_post 
+		join 
+			payment on rp_pa_num = pa_num
+		<choose>
+			<when test="type == 'branch'">
+				where rp_br_name like concat('%', #{search},'%')
+			</when>
+			<when test="type == 'id'">
+				where pa_me_id = #{search}
+			</when>
+			<otherwise>
+				where rp_title like concat('%', #{search},'%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<update id="updateReviewPostView">
+		update review_post set rp_view = rp_view + 1 where rp_num = #{rp_num}
+	</update>
+	
+	<select id="selectReviewPost" resultType="ReviewPostVO">
+		select * from review_post join payment on rp_pa_num = pa_num where rp_num = #{rp_num}
+	</select>
+	
+	<select id="checkMemberPayment" resultType="PaymentVO">
+		select * from payment join payment_type on pa_pt_num = pt_num where pa_me_id = #{me_id} and pa_review = 'N'
+	</select>
+	
+	<select id="selectBranchList" resultType="BranchVO">
+		select * from branch
+	</select>
+	
+	<insert id="insertReviewPost">
+		insert into review_post(rp_title, rp_content, rp_br_name, rp_pa_num)
+		values(#{rp_title}, #{rp_content}, #{rp_br_name}, #{rp_pa_num})
+	</insert>
+	
+	<update id="updatePaymentReview">
+		update payment set pa_review = 'Y' where pa_num = #{pa_num}
+	</update>
+	
+	<update id="updateReviewPost">
+		update 
+			review_post 
+		set
+			rp_title = #{rp_title},
+			rp_content = #{rp_content},
+			rp_br_name = #{rp_br_name}
+		where
+			rp_num = #{rp_num}
+	</update>
+	
+	<delete id="deleteReviewPost">
+		delete from review_post where rp_num = #{rp_num}
+	</delete>
+	
+	<select id="selectInquiryTypeList" resultType="InquiryTypeVO">
+		select * from inquiry_type
+	</select>
+	
+	<select id="selectReservationList" resultType="BranchProgramScheduleVO">
+		select
+			*  
+		from 
+			branch_program_schedule
+		join
+			branch_program on bp_num = bs_bp_num
+		join
+			employee on bp_em_num = em_num
+		join
+			program_reservation on pr_bs_num = bs_num
+		where
+			pr_me_id = #{me_id}
+			<if test="view == 'present'">
+				and bs_start > now()
+			</if>
+			<if test="view == 'past'">
+				and now() > bs_end
+			</if>
+			<choose>
+				<when test="cri.type == 'branch'">
+					and bp_br_name like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'program'">
+					and bp_sp_name like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'trainer'">
+					and em_name like concat('%', #{cri.search},'%')
+				</when>
+			</choose>				
+		order by
+			bs_start
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}			
+	</select>
+	
+	<select id="selectScheduleTotalCount" resultType="int">
+		select
+			count(*)
+		from 
+			branch_program_schedule
+		join
+			branch_program on bp_num = bs_bp_num
+		join
+			employee on bp_em_num = em_num
+		join
+			program_reservation on pr_bs_num = bs_num
+		where
+			pr_me_id = #{me_id}
+			<if test="view == 'present'">
+				and bs_start > now()
+			</if>
+			<if test="view == 'past'">
+				and now() > bs_end
+			</if>
+			<choose>
+				<when test="cri.type == 'branch'">
+					and bp_br_name like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'program'">
+					and bp_sp_name like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'trainer'">
+					and em_name like concat('%', #{cri.search},'%')
+				</when>
+			</choose>	
+	</select>
+	
+	<delete id="deleteReservation">
+		delete from program_reservation where pr_num = #{pr_num}
+	</delete>
+	
+	<update id="updateScheduleCurrent">
+		update
+			branch_program_schedule
+		set
+			bs_current = bs_current - 1
+		where
+			bs_num = #{bs_num} 
+	</update>
+	
+	<select id="selectPaymentList" resultType="PaymentVO">
+		select 
+			* 
+		from 
+			payment 
+		join 
+			payment_type on pt_num = pa_pt_num
+		where
+			pa_me_id = #{me_id}
+		order by
+			pa_date desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}		
+	</select>
+	
+	<select id="selectPaymentTotalCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			payment 
+		join 
+			payment_type on pt_num = pa_pt_num
+		where
+			pa_me_id = #{me_id}
+	</select>
+	
+	<select id="selectRefund" resultType="RefundVO">
+		select * from refund where re_pa_num = #{pa_num}
+	</select>
+	
+	<select id="selectInquiryList" resultType="MemberInquiryVO">
+		select
+			* 
+		from 
+			member_inquiry 
+		where 
+			mi_email = #{me_email}
+		order by
+			mi_date desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectInquiryTotalCount" resultType="int">
+		select count(*) from member_inquiry where mi_email = #{me_email}
+	</select>
+	
+	<select id="selectInquiry" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_num = #{mi_num}
+	</select>
+	
+</mapper>
