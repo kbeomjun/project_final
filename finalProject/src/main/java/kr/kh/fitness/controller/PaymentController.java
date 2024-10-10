@@ -26,7 +26,7 @@ import kr.kh.fitness.model.vo.PaymentCategoryVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.service.PaymentService;
 
-//회원권 컨트롤러
+// 회원권 결제 컨트롤러
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
@@ -46,7 +46,7 @@ public class PaymentController {
 	    return "/payment/paymentList";
 	}
 
-	// 회원권 결제
+	// 회원권 결제 get
 	@GetMapping("/paymentInsert")
 	public String membershipInsertGet(Model model) {
 		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
@@ -54,10 +54,10 @@ public class PaymentController {
 		return "/payment/paymentInsert";
 	}
 
-	// 결제 처리 메서드 (JSON)
+	// 회원권 결제 post 메서드 (JSON)
 	@PostMapping("/paymentInsert")
 	@ResponseBody
-	public ResponseEntity<?> processPayment(@RequestBody PaymentRequestDTO request, HttpSession session) {
+	public ResponseEntity<Map<String, Object>> processPayment(@RequestBody PaymentRequestDTO request, HttpSession session) {
 		PaymentTypeVO payment = request.getPaymentType();
 	    PaymentCategoryVO category = request.getPaymentCategory();
 	    
@@ -112,6 +112,6 @@ public class PaymentController {
 	        response.put("success", false);
 	        response.put("message", "오류가 발생하였습니다: " + e.getMessage());
 		}
-	    return ResponseEntity.ok(response); // JSON 형식으로 응답
+		return ResponseEntity.ok(response); // JSON 형식으로 응답 // JSON 형식으로 응답
 	}
 }
