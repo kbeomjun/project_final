@@ -15,6 +15,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.service.HQService;
 
 @Controller
@@ -55,8 +56,8 @@ public class HQController {
 		return "/hq/branch/detail";
 	}
 	@PostMapping("/branch/update/{br_ori_name}")
-	public String branchUpdate(Model model, @PathVariable("br_ori_name") String br_ori_name, BranchVO branch, 
-								MultipartFile[] fileList, MemberVO admin, String[] numList) {
+	public String branchUpdate(Model model, @PathVariable("br_ori_name") String br_ori_name, 
+								BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList) {
 		String msg = hqService.updateBranch(branch, fileList, admin, br_ori_name, numList);
 		if(msg.equals("")) {
 			model.addAttribute("url", "/hq/branch/detail/" + branch.getBr_name());
@@ -99,7 +100,8 @@ public class HQController {
 	    return "/hq/employee/detail";
 	}
 	@PostMapping("/employee/update/{em_num}")
-	public String employeeUpdatePost(Model model, @PathVariable("em_num") int em_num, EmployeeVO employee, MultipartFile file, String isDel) {
+	public String employeeUpdatePost(Model model, @PathVariable("em_num") int em_num, 
+										EmployeeVO employee, MultipartFile file, String isDel) {
 		String msg = hqService.updateEmployee(employee, file, isDel);
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", "/hq/employee/detail/" + em_num);
@@ -108,6 +110,41 @@ public class HQController {
 	
 	@GetMapping("/equipment/list")
 	public String equipmentList(Model model) {
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
+		model.addAttribute("seList", seList);
 	    return "/hq/equipment/list";
+	}
+	@GetMapping("/equipment/insert")
+	public String equipmentInsert() {
+	    return "/hq/equipment/insert";
+	}
+	@PostMapping("/equipment/insert")
+	public String equipmentInsertPost(Model model, SportsEquipmentVO se, MultipartFile file) {
+		String msg = hqService.insertSportsEquipment(se, file);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/equipment/list");
+		}else {
+			model.addAttribute("url", "/hq/equipment/insert");
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	@GetMapping("/equipment/update/{se_name}")
+	public String equipmentUpdate(Model model, @PathVariable("se_name") String se_name, SportsEquipmentVO seVo) {
+		SportsEquipmentVO se = hqService.getSportsEquipment(seVo);
+		model.addAttribute("se", se);
+	    return "/hq/equipment/update";
+	}
+	@PostMapping("/equipment/update/{se_ori_name}")
+	public String equipmentUpdatePost(Model model, @PathVariable("se_ori_name") String se_ori_name, 
+										SportsEquipmentVO se, MultipartFile file, String isDel) {
+		String msg = hqService.updateSportsEquipment(se, file, se_ori_name, isDel);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/equipment/update/" + se.getSe_name());
+		}else {
+			model.addAttribute("url", "/hq/equipment/update/" + se_ori_name);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 }

@@ -8,6 +8,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.SportsEquipmentVO;
 
 public interface HQService {
 	List<BranchVO> getBranchList();
@@ -29,4 +30,12 @@ public interface HQService {
 	EmployeeVO getEmployee(EmployeeVO employee);
 
 	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
+
+	List<SportsEquipmentVO> getSportsEquipmentList();
+
+	String insertSportsEquipment(SportsEquipmentVO se, MultipartFile file);
+
+	SportsEquipmentVO getSportsEquipment(SportsEquipmentVO se);
+
+	String updateSportsEquipment(SportsEquipmentVO se, MultipartFile file, String se_ori_name, String isDel);
 }

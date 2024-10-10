@@ -14,6 +14,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.utils.UploadFileUtils;
 
 @Service
@@ -176,6 +177,55 @@ public class HQServiceImp implements HQService {
 		}
 		
 		if(!hqDao.updateEmployee(employee)) {msg = "직원을 수정하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public List<SportsEquipmentVO> getSportsEquipmentList() {return hqDao.selectSportsEquipmentList();}
+
+	@Override
+	public String insertSportsEquipment(SportsEquipmentVO se, MultipartFile file) {
+		String msg = "";
+		if(se == null) {msg = "기구 정보가 없습니다.";}
+		if(file == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		String se_fi_name = uploadSportsEquipmentFile(file, se.getSe_name());
+		se.setSe_fi_name(se_fi_name);
+		
+		if(!hqDao.insertSportsEquipment(se)) {msg = "기구를 등록하지 못했습니다.";}
+		return msg;
+	}
+	private String uploadSportsEquipmentFile(MultipartFile file, String se_fi_ori_name) {
+		if(file == null) {return null;}
+		try {
+			String se_fi_name = UploadFileUtils.uploadFile(uploadPath, "기구", se_fi_ori_name, file.getBytes());
+			return se_fi_name;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public SportsEquipmentVO getSportsEquipment(SportsEquipmentVO se) {return hqDao.selectSportsEquipment(se);}
+
+	@Override
+	public String updateSportsEquipment(SportsEquipmentVO se, MultipartFile file, String se_ori_name, String isDel) {
+		String msg = "";
+		if(se == null) {msg = "기구 정보가 없습니다.";}
+		if(file == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		String se_fi_name = hqDao.selectSportsEquipmentFileName(se_ori_name);
+		se.setSe_fi_name(se_fi_name);
+		if(isDel != null) {
+			UploadFileUtils.delteFile(uploadPath, se.getSe_fi_name());
+			se_fi_name = uploadSportsEquipmentFile(file, se.getSe_name());
+			se.setSe_fi_name(se_fi_name);
+		}
+		
+		if(!hqDao.updateSportsEquipment(se, se_ori_name)) {msg = "기구를 수정하지 못했습니다.";}
 		return msg;
 	}
 }

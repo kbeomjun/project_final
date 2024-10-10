@@ -108,4 +108,27 @@
 			em_br_name = #{em.em_br_name}
 		where em_num = #{em.em_num};
 	</update>
+	
+	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
+		select * from sports_equipment;
+	</select>
+	
+	<insert id="insertSportsEquipment">
+		insert into sports_equipment(se_name, se_fi_name) values(#{se.se_name}, #{se.se_fi_name});
+	</insert>
+	
+	<select id="selectSportsEquipment" resultType="SportsEquipmentVO">
+		select * from sports_equipment where se_name = #{se.se_name};
+	</select>
+	
+	<select id="selectSportsEquipmentFileName" resultType="String">
+		select se_fi_name from sports_equipment where se_name = #{se_ori_name};
+	</select>
+	
+	<update id="updateSportsEquipment">
+		update sports_equipment set
+			se_name = #{se.se_name},
+			se_fi_name = #{se.se_fi_name}
+		where se_name = #{se_ori_name};
+	</update>
 </mapper>

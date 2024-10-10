@@ -22,22 +22,22 @@
 		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">재고 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">발주 내역</a>
+		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">회원권 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/payment/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">프로그램 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">문의 내역</a>
+		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">

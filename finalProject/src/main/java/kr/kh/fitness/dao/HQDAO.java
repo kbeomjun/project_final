@@ -8,6 +8,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.SportsEquipmentVO;
 
 public interface HQDAO {
 	
@@ -42,4 +43,14 @@ public interface HQDAO {
 	String selectEmployeeFileName(@Param("em") EmployeeVO employee);
 
 	boolean updateEmployee(@Param("em") EmployeeVO employee);
+
+	List<SportsEquipmentVO> selectSportsEquipmentList();
+
+	boolean insertSportsEquipment(@Param("se") SportsEquipmentVO se);
+
+	SportsEquipmentVO selectSportsEquipment(@Param("se") SportsEquipmentVO se);
+
+	String selectSportsEquipmentFileName(@Param("se_ori_name") String se_ori_name);
+
+	boolean updateSportsEquipment(@Param("se") SportsEquipmentVO se, @Param("se_ori_name") String se_ori_name);
 }
