@@ -37,7 +37,7 @@
 			</tbody>
 		</table>
 		<div class="text-right">
-			<a href="<c:url value="/membership/membershipInsert" />" class="btn btn-primary js-btn-insert">회원권 결제</a>
+			<a href="<c:url value="/payment/paymentInsert" />" class="btn btn-primary js-btn-insert">회원권 결제</a>
 		</div>
 	
 		<script type="text/javascript">

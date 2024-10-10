@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 
-public interface MembershipDAO {
+public interface MembershipPaymentDAO {
 
 	List<PaymentTypeVO> selectMembershipList();
 
