@@ -60,11 +60,17 @@ public interface HQDAO {
 
 	boolean updateSportsEquipment(@Param("se") SportsEquipmentVO se, @Param("se_ori_name") String se_ori_name);
 
-	List<BranchEquipmentStockVO> selectBranchEquipmentStockList();
+	List<BranchEquipmentStockVO> selectBranchEquipmentStockList(@Param("bo") BranchOrderVO bo, @Param("be_type") String be_type);
 
 	List<BranchStockDTO> selectBranchStockList();
 
 	boolean insertBranchEquipmentStock(@Param("be") BranchEquipmentStockVO be);
 
 	List<BranchOrderVO> selectBranchOrderList();
+
+	BranchOrderVO selectBranchOrder(@Param("bo_num") int bo_num);
+
+	BranchStockDTO selectBranchStock(@Param("bo") BranchOrderVO bo);
+
+	void updateBranchOrderState(@Param("bo") BranchOrderVO bo);
 }
