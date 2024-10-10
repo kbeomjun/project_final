@@ -190,21 +190,27 @@
 	                    if (rsp.success) {
 	                        // 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 	                        const postData = {
-	                            imp_uid: rsp.imp_uid,							// 여기에서 imp_uid 값이 올바르게 전달되는지 확인
-	                            , merchant_uid: rsp.merchant_uid				// 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
-	                            , pt_status: rsp.status							// 상태 추가 paid = 결제완료, cancelled = 결제 실패
-	                            , pg_tid: rsp.pg_tid							// 결제 거래 ID. 결제 상태를 조회할 때 사용
-	                            , pt_amount: amount								// 실제로 결제된 금액
-	                            , card_name: card_name							// 결제된 카드 이름
-	                            , card_number: card_number						// 결제된 카드 번호
-	                            , card_quota: card_quota						// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
-	                            , pt_me_id: rsp.custom_data.buyer_me_id			// custom_data에서 me_id 값 가져오기
-	                            , pt_me_email: rsp.buyer_email						// user 이메일 추가
-	                            , pt_num: $('#pt_num').val()
-	                            , pt_type: $('#pt_type').val()
-	                            , pt_date: $('#pt_date').val()
-	                            , pt_count: $('#pt_count').val()
-	                            , pt_price: $('#pt_price').val()
+                        		paymentType: {
+		                            pt_num: $('#pt_num').val()
+		                            , pt_type: $('#pt_type').val()
+		                            , pt_date: $('#pt_date').val()
+		                            , pt_count: $('#pt_count').val()
+		                            , pt_price: $('#pt_price').val()
+	                       		},
+	                       		paymentCategory: {
+	                       	        // PaymentCategoryVO의 필드들
+		                            pc_imp_uid: rsp.imp_uid,							// 여기에서 imp_uid 값이 올바르게 전달되는지 확인
+		                            , pc_merchant_uid: rsp.merchant_uid				// 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
+		                            , pc_pg_tid: rsp.pg_tid							// 결제 거래 ID. 결제 상태를 조회할 때 사용
+		                            , pc_status: rsp.status							// 상태 추가 paid = 결제완료, cancelled = 결제 실패
+		                            , pc_amount: amount								// 실제로 결제된 금액
+		                            , pc_paid_at: rsp.paid_at						// 결제 완료 시간 (Unix Timestamp)
+		                            , pc_card_name: card_name							// 결제된 카드 이름
+		                            , pc_card_number: card_number						// 결제된 카드 번호
+		                            , pc_card_quota: card_quota						// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
+		                            , pc_me_id: rsp.custom_data.buyer_me_id			// custom_data에서 me_id 값 가져오기
+		                            , pc_me_email: rsp.buyer_email						// user 이메일 추가
+	                       	    }
 	                        };
 	                        
 	                        console.log("rsp 내용 : ", rsp);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.PaymentDAO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentCategoryVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 
 @Service
@@ -20,11 +21,20 @@ public class PaymentServiceImp implements PaymentService{
 	}
 
 	@Override
-	public boolean insertPayment(PaymentTypeVO payment, String formattedDateTime, MemberVO user) {
+	public boolean insertPayment(PaymentTypeVO payment, PaymentCategoryVO category, String formattedDateTime, MemberVO user) {
 		if(payment.getPt_num() == 0
 			|| payment.getPt_price() == 0
-			|| payment.getPt_date() <= 0
-			|| payment.getPt_me_id() == null) {
+			|| payment.getPt_date() <= 0) {
+			return false;
+		}
+		
+		if(category.getPc_imp_uid() == null
+			|| category.getPc_merchant_uid() == null
+			|| category.getPc_formattedPrice() == null
+			|| category.getPc_amount() == 0
+			|| category.getPc_card_number() == 0
+			|| category.getPc_status() == null
+			|| category.getPc_me_id() == null) {
 			return false;
 		}
 		
@@ -32,7 +42,7 @@ public class PaymentServiceImp implements PaymentService{
 			return false;
 		}
 		
-		return paymentDao.insertPayment(payment, formattedDateTime, user);
+		return paymentDao.insertPayment(payment, category, formattedDateTime, user);
 	}
 
 }

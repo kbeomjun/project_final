@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.fitness.model.dto.PaymentRequestDTO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentCategoryVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.service.PaymentService;
 
@@ -38,7 +40,8 @@ public class PaymentController {
 		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
 		// 가격 포맷팅
 		for (PaymentTypeVO pt : paymentList) {
-			pt.setFormattedPrice(NumberFormat.getInstance(Locale.KOREA).format(pt.getPt_price()));
+			pt.getPaymentCategory().setPc_formattedPrice(
+		            NumberFormat.getInstance(Locale.KOREA).format(pt.getPaymentCategory().getPc_amount()));
 		}
 		model.addAttribute("paymentList", paymentList);
 		return "/payment/paymentList";
@@ -55,8 +58,11 @@ public class PaymentController {
 	// 결제 처리 메서드 (JSON)
 	@PostMapping("/paymentInsert")
 	@ResponseBody
-	public ResponseEntity<?> processPayment(@RequestBody PaymentTypeVO payment, HttpSession session) {
-	    Map<String, Object> response = new HashMap<>();
+	public ResponseEntity<?> processPayment(@RequestBody PaymentRequestDTO request, HttpSession session) {
+		PaymentTypeVO payment = request.getPaymentType();
+	    PaymentCategoryVO category = request.getPaymentCategory();
+	    
+		Map<String, Object> response = new HashMap<>();
 		try {
 			// payment 확인
 			System.out.println("결제 정보 : " + payment);
@@ -77,11 +83,13 @@ public class PaymentController {
 		    MemberVO user = (MemberVO) session.getAttribute("user");
 		    System.out.println("유저 정보 : " + user);
 		    
-		    System.out.println(payment.getPt_status());
+	        String paymentStatus = category.getPc_status(); // PaymentCategoryVO에서 pc_status 가져오기
+
+		    System.out.println(paymentStatus);
 		    
-		    if ("paid".equals(payment.getPt_status())) {
+		    if ("paid".equals(paymentStatus)) {
 		    	System.out.println(payment);
-				boolean res = paymentService.insertPayment(payment, formattedDateTime, user);
+				boolean res = paymentService.insertPayment(payment, category, formattedDateTime, user);
 				
 				// 결제가 완료되면 결제 완료 창이 뜨고, 결제에 실패하면 실패 창이 뜸.
 				// 결제가 성공적으로 끝나면 membershipList로 감, 실패하면 그대로 유지
@@ -97,7 +105,7 @@ public class PaymentController {
 				}
 			}else {
 				response.put("success", false);
-		        response.put("message", "결제가 실패하였습니다. 상태: " + payment.getPt_status());
+		        response.put("message", "결제가 실패하였습니다. 상태: " + paymentStatus);
 		        response.put("url", "/payment/paymentInsert");
 			}
 		}catch (Exception e) {

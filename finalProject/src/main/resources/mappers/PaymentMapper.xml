@@ -8,6 +8,10 @@
 	</select>
 	<insert id="insertPayment">
 		insert into payment(pa_price, pa_start, pa_end, pa_state, pa_me_id, pa_pt_num)
-		values(#{pt.pt_price}, now(), #{end}, #{pt.pt_status}, #{me.me_id}, #{pt.pt_num});
+		values(#{pt.pt_price}, now(), #{end}, #{pc.pc_status}, #{me.me_id}, #{pt.pt_num});
+	</insert>
+	
+	<insert id="insertPaymentCategory">
+		insert into payment_category()
 	</insert>
 </mapper>
