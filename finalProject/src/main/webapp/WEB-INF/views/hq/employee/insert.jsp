@@ -62,9 +62,16 @@
 			<div class="form-group">
 				<label for="em_position">직책:</label>
 				<select name="em_position" class="custom-select mb-3 form-control">
-			      	<option value="요가강사">요가강사</option>
-			      	<option value="필라테스강사">필라테스강사</option>
-			      	<option value="PT트레이너">PT트레이너</option>
+					<c:forEach items="${programList}" var="program">
+						<c:choose>
+							<c:when test="${program.sp_type == '단일'}">
+								<option value="${program.sp_name}트레이너">${program.sp_name}트레이너</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${program.sp_name}강사">${program.sp_name}강사</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 			    </select>
 			</div>
 			<div class="error error-position"></div>

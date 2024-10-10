@@ -18,6 +18,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
+import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.HQService;
 
 @Controller
@@ -79,7 +80,9 @@ public class HQController {
 	@GetMapping("/employee/insert")
 	public String employeeInsert(Model model) {
 		List<BranchVO> brList = hqService.getBranchList();
+		List<SportsProgramVO> programList = hqService.getProgramList();
 		model.addAttribute("brList", brList);
+		model.addAttribute("programList", programList);
 	    return "/hq/employee/insert";
 	}
 	@PostMapping("/employee/insert")
@@ -97,8 +100,10 @@ public class HQController {
 	public String employeeDetail(Model model, @PathVariable("em_num") int em_num, EmployeeVO employeeVo) {
 		EmployeeVO employee = hqService.getEmployee(employeeVo);
 		List<BranchVO> brList = hqService.getBranchList();
+		List<SportsProgramVO> programList = hqService.getProgramList();
 		model.addAttribute("em", employee);
 		model.addAttribute("brList", brList);
+		model.addAttribute("programList", programList);
 	    return "/hq/employee/detail";
 	}
 	@PostMapping("/employee/update/{em_num}")

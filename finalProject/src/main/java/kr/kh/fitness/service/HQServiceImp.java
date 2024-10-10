@@ -17,6 +17,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
+import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
 
 @Service
@@ -106,6 +107,9 @@ public class HQServiceImp implements HQService {
 
 	@Override
 	public List<EmployeeVO> getEmployeeList() {return hqDao.selectEmployeeList();}
+	
+	@Override
+	public List<SportsProgramVO> getProgramList() {return hqDao.selectProgramList();}
 
 	@Override
 	public String insertEmployee(EmployeeVO employee, MultipartFile file) {

@@ -11,6 +11,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
+import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface HQDAO {
 	
@@ -37,6 +38,8 @@ public interface HQDAO {
 	boolean updatetAdmin(@Param("me") MemberVO admin, @Param("br_ori_name") String br_ori_name);
 
 	List<EmployeeVO> selectEmployeeList();
+
+	List<SportsProgramVO> selectProgramList();
 
 	boolean insertEmployee(@Param("em") EmployeeVO employee);
 

@@ -76,6 +76,10 @@
 		select * from employee order by em_num;
 	</select>
 	
+	<select id="selectProgramList" resultType="SportsProgramVO">
+		select * from sports_program
+	</select>
+	
 	<insert id="insertEmployee">
 		insert into employee
 			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 

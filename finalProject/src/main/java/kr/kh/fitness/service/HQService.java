@@ -11,6 +11,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
+import kr.kh.fitness.model.vo.SportsProgramVO;
 
 public interface HQService {
 	List<BranchVO> getBranchList();
@@ -26,6 +27,8 @@ public interface HQService {
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String br_ori_name, String[] numList);
 
 	List<EmployeeVO> getEmployeeList();
+
+	List<SportsProgramVO> getProgramList();
 
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
 
