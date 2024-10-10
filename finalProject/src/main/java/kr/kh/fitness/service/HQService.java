@@ -47,4 +47,6 @@ public interface HQService {
 	List<BranchEquipmentStockVO> getBranchEquipmentStockList();
 
 	List<BranchStockDTO> getBranchStockList();
+
+	String insertBranchEquipmentStock(BranchEquipmentStockVO be);
 }

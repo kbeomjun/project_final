@@ -7,11 +7,12 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:33.33%; height:200px; box-sizing: border-box; position: relative; margin:20px 0;}
+    	.img-box{width:33.33%; height:200px; box-sizing: border-box; position: relative; margin:20px 0; display: none;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
-    	.btn-update-img{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%; padding: 9px 6px 6px;}
-		.box-stock{visibility: hidden;}
+    	.error{color:red; margin-bottom: 10px;}
+    	.form-group{margin: 0;}
+    	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
 	</style>
 </head>
 <body>
@@ -52,9 +53,10 @@
 		    <div class="col-sm-10">
 			    <div>
 			    	<button type="button" class="btn btn-outline-info active" data-name="record">내역</button>
-			    	<button type="button" class="btn btn-outline-info" data-name="stock">현황</button>
+			    	<button type="button" class="btn btn-outline-info" data-name="img">현황</button>
+			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">입고</button>
 			    </div>
-		    	<div class="mt-3 box box-record">
+		    	<div class="mt-3 box record-box">
 		    		<table class="table table-hover">
 				    	<thead>
 				      		<tr>
@@ -97,20 +99,50 @@
 				    	</tbody>
 					</table>
 				</div>
-				<div class="img-container d-flex flex-wrap box box-stock">
+				<div class="img-container d-flex flex-wrap">
 					<c:forEach items="${stList}" var="st">
-						<div class="card img-box" style="width:250px; cursor:pointer">
-				        	<img class="card-img-top" style="width:100%; height:100%" src="<c:url value="/uploads${st.be_se_fi_name}"/>">
-					        	<a href="#" class="btn btn-outline-warning btn-update-img">
-									<i class="fi fi-br-edit"></i>
-								</a>
-							</img>
+						<div class="card box img-box" style="width:250px; cursor:pointer">
+				        	<img class="card-img-top" style="width:100%; height:100%" src="<c:url value="/uploads${st.be_se_fi_name}"/>"></img>
 					    	<div class="img-name d-flex align-content-center">
 					      		<p class="img-text mx-auto">${st.be_se_name}(수량 : ${st.be_se_total})</p>
 					    	</div>
 						</div>
 					</c:forEach>
 				</div>
+				<div class="modal fade" id="myModal">
+			    	<div class="modal-dialog modal-dialog-centered">
+			      		<div class="modal-content">
+				        	<div class="modal-header">
+				          		<h4 class="modal-title">입고</h4>
+				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				        	</div>
+				        	<div class="modal-body">
+				          		<form action="<c:url value="/hq/stock/insert"/>" method="post" id="form">
+					          		<div class="form-group">
+										<label for="be_se_name">기구명:</label>
+										<select name="be_se_name" class="custom-select mb-3 form-control">
+											<c:forEach items="${seList}" var="se">
+												<option value="${se.se_name}">${se.se_name}</option>
+											</c:forEach>
+									    </select>
+									</div>
+									<div class="form-group">
+										<label for="be_amount">수량:</label>
+										<select name="be_amount" class="custom-select mb-3 form-control">
+											<c:forEach begin="1" end="30" var="i">
+												<option value="${i}">${i}</option>
+											</c:forEach>
+									    </select>
+									</div>
+									<button class="btn btn-outline-info col-12">재고 추가</button>
+				          		</form>
+				        	</div>
+				        	<div class="modal-footer">
+				          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+				        	</div>
+			      		</div>
+			    	</div>
+		  		</div>
 	    	</div>
 	  	</div>
 	</div>
@@ -122,13 +154,8 @@
 			$('.btn-outline-info').removeClass("active");
 			$(this).addClass("active");
 			
-			if(name == "record"){
-				$('.box-record').css("display", "block");
-				$('.box-stock').css("visibility", "hidden");
-			}else{
-				$('.box-record').css("display", "none");
-				$('.box-stock').css("visibility", "visible");
-			}
+			$('.box').css("display", "none");
+			$('.'+name+'-box').css("display", "block");
 		});
 	</script>
 </body>

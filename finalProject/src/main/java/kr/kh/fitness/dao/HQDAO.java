@@ -62,4 +62,6 @@ public interface HQDAO {
 	List<BranchEquipmentStockVO> selectBranchEquipmentStockList();
 
 	List<BranchStockDTO> selectBranchStockList();
+
+	boolean insertBranchEquipmentStock(@Param("be") BranchEquipmentStockVO be);
 }

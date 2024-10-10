@@ -240,4 +240,14 @@ public class HQServiceImp implements HQService {
 
 	@Override
 	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}
+
+	@Override
+	public String insertBranchEquipmentStock(BranchEquipmentStockVO be) {
+		String msg = "";
+		if(be == null) {msg = "재고 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
+		return msg;
+	}
 }

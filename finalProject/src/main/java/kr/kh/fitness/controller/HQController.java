@@ -159,8 +159,17 @@ public class HQController {
 	public String stockList(Model model) {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
 		List<BranchStockDTO> stList = hqService.getBranchStockList();
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
 		model.addAttribute("beList", beList);
 		model.addAttribute("stList", stList);
+		model.addAttribute("seList", seList);
 	    return "/hq/stock/list";
+	}
+	@PostMapping("/stock/insert")
+	public String stockInsertPost(Model model, BranchEquipmentStockVO be) {
+		String msg = hqService.insertBranchEquipmentStock(be);
+		model.addAttribute("url", "/hq/stock/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 }

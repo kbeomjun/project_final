@@ -145,4 +145,9 @@
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
 		where be_br_name = "본사" group by be_se_name;
 	</select>
+	
+	<insert id="insertBranchEquipmentStock">
+		insert into branch_equipment_stock(be_amount, be_birth, be_record, be_type, be_br_name, be_se_name)
+		values(#{be.be_amount}, current_timestamp(), current_timestamp(), "입고", "본사", #{be.be_se_name});
+	</insert>
 </mapper>
