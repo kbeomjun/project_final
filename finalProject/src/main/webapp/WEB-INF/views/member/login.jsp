@@ -39,7 +39,7 @@
 								<input type="password" class="form-control" id="pw" name="me_pw" required/>
 							</div>
 							<div class="mb-3 form-check">
-								<input type="checkbox" class="form-check-input" id="autologin" name="autologin"/>
+								<input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
 								<label class="form-check-label" for="autologin">자동 로그인</label>
 							</div>
 							<button type="submit" class="btn btn-success w-100">로그인</button>

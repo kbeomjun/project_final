@@ -10,4 +10,10 @@ public interface MemberService {
 
 	boolean signup(MemberVO member);
 
+	boolean checkId(String id);
+
+	MemberVO getMemberID(String sid);
+
+	void updateMemberCookie(MemberVO user);
+
 }
