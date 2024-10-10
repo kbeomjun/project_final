@@ -11,4 +11,6 @@ public interface MemberDAO {
 	boolean insertMember(@Param("m") MemberVO member);
 
 	MemberVO selectMemberByCookie(@Param("me_cookie") String id);
+
+	void updateMemberCookie(@Param("user") MemberVO user);
 }

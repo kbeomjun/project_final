@@ -39,35 +39,35 @@ public class UserController {
     }    
 
     @PostMapping("/login")
-    public String login(MemberVO member, Model model, HttpSession session, HttpServletResponse response) {
+    public String login(MemberVO member, @RequestParam(value = "autologin", required = false) String autologin, 
+                        Model model, HttpSession session, HttpServletResponse response) {
         logger.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
 
         try {
             MemberVO user = memberService.login(member, response);
             if (user != null) {
+                // 자동 로그인 플래그 설정: 체크박스가 선택되었으면 "true"로 전송됨
+                boolean isAutoLogin = "true".equals(autologin);
+                user.setAutoLogin(isAutoLogin);
+
                 session.setAttribute("user", user);
-                //로그인 시 쿠키생성
-                Cookie cookie = new Cookie("me_cookie", user.getMe_id());
-                cookie.setMaxAge(48 * 60 * 60); // 48시간
-                cookie.setPath("/"); // 모든 경로에서 유효
-                response.addCookie(cookie);
-                
                 model.addAttribute("msg", "로그인을 성공했습니다");
                 model.addAttribute("url", "/");
-                logger.info("로그인 성공: " + user.getMe_id()); // 로그인 성공 로그
+                logger.info("로그인 성공: " + user.getMe_id() + " (자동 로그인: " + isAutoLogin + ")");
             } else {
                 model.addAttribute("msg", "없는 아이디거나 잘못 입력하셨습니다");
                 model.addAttribute("url", "/login");
-                logger.warn("로그인 실패: 없는 아이디 또는 비밀번호 불일치"); // 로그인 실패 로그
+                logger.warn("로그인 실패: 없는 아이디 또는 비밀번호 불일치");
             }
             model.addAttribute("user", user);
         } catch (Exception e) {
-            logger.error("로그인 처리 중 오류 발생", e); // 예외 발생 시 로그 기록
+            logger.error("로그인 처리 중 오류 발생", e);
             model.addAttribute("msg", "로그인 처리 중 오류가 발생했습니다");
             model.addAttribute("url", "/login");
         }
         return "/main/message";
     }
+
 
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session, HttpServletResponse response) {

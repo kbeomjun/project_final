@@ -27,10 +27,6 @@ public class MemberServiceImp implements MemberService {
             return null;
         }
         if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
-            Cookie cookie = new Cookie("me_cookie", user.getMe_id());
-            cookie.setMaxAge(48 * 60 * 60); // 48시간
-            cookie.setPath("/"); // 모든 경로에서 유효
-            response.addCookie(cookie);
             return user;
         }
         return null;
@@ -78,7 +74,15 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public MemberVO getMemberID(String id) {
-		return memberDao.selectMemberByCookie(id);
+	public void updateMemberCookie(MemberVO user) {
+		if(user == null) {
+			return;
+		}
+		memberDao.updateMemberCookie(user);
+	}
+	
+	@Override
+	public MemberVO getMemberID(String sid) {
+		return memberDao.selectMemberByCookie(sid);
 	}
 }

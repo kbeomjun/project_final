@@ -30,5 +30,6 @@ public class MemberVO {
     private Date me_limit;			// 자동 로그인 유효 시간
     private int me_noshow;			// 노쇼 경고 횟수
     private Date me_cancel;			// 예약 제한 시간
-    
+    boolean autoLogin;
 }
+

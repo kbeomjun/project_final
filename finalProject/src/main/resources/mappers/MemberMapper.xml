@@ -16,4 +16,8 @@
   <select id="selectMemberByCookie" resultType="kr.kh.fitness.model.vo.MemberVO">
   	SELECT * from member WHERE me_cookie = #{me_cookie} AND me_limit > now()
   </select>
+  <update id="updateMemberCookie">
+  	update member set me_cookie = #{user.me_cookie}, me_limit = #{user.me_limit}
+		where me_id = #{user.me_id}
+  </update>
 </mapper>
