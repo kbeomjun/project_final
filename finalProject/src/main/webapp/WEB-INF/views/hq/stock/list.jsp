@@ -166,24 +166,12 @@
 							.replace(/\s/g, '.')
 						str += `
 							<tr>
-					        	<td>
-							        \${be.be_num}
-						        </td>
-						        <td>
-									\${be_record}				        	
-					        	</td>
-						        <td>
-						        	\${be.be_se_name}
-					        	</td>
-					        	<td>
-					        		\${be_birth}	
-					        	</td>
-					        	<td>
-					        		\${be.be_amount}
-					        	</td>
-					        	<td>
-					        		\${be.be_type}
-					        	</td>
+					        	<td>\${be.be_num}</td>
+						        <td>\${be_record}</td>
+						        <td>\${be.be_se_name}</td>
+					        	<td>\${be_birth}</td>
+					        	<td>\${be.be_amount}</td>
+					        	<td>\${be.be_type}</td>
 					      	</tr>
 						`;
 					}
