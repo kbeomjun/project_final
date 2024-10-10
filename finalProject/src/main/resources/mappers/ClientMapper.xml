@@ -207,4 +207,25 @@
 		select * from refund where re_pa_num = #{pa_num}
 	</select>
 	
+	<select id="selectInquiryList" resultType="MemberInquiryVO">
+		select
+			* 
+		from 
+			member_inquiry 
+		where 
+			mi_email = #{me_email}
+		order by
+			mi_date desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectInquiryTotalCount" resultType="int">
+		select count(*) from member_inquiry where mi_email = #{me_email}
+	</select>
+	
+	<select id="selectInquiry" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_num = #{mi_num}
+	</select>
+	
 </mapper>

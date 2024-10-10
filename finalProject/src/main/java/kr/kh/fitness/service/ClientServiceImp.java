@@ -9,6 +9,7 @@ import kr.kh.fitness.dao.ClientDAO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.RefundVO;
@@ -176,6 +177,9 @@ public class ClientServiceImp implements ClientService{
 
 	@Override
 	public PageMaker getPageMakerInMemberShip(String me_id, Criteria cri) {
+		if(me_id == null) {
+			return null;
+		}
 		if(cri == null) {
 			return null;
 		}
@@ -186,6 +190,34 @@ public class ClientServiceImp implements ClientService{
 	@Override
 	public RefundVO getRefund(int pa_num) {
 		return clientDao.selectRefund(pa_num);
+	}
+
+	@Override
+	public List<MemberInquiryVO> getInquiryList(String me_email, Criteria cri) {
+		if(me_email == null) {
+			return null;
+		}
+		if(cri == null) {
+			return null;
+		}
+		return clientDao.selectInquiryList(me_email, cri);
+	}
+
+	@Override
+	public PageMaker getPageMakerInInquiry(String me_email, Criteria cri) {
+		if(me_email == null) {
+			return null;
+		}
+		if(cri == null) {
+			return null;
+		}
+		int totalCount = clientDao.selectInquiryTotalCount(me_email);
+		return new PageMaker(3, cri, totalCount);
+	}
+
+	@Override
+	public MemberInquiryVO getInquiry(int mi_num) {
+		return clientDao.selectInquiry(mi_num);
 	}
 
 }

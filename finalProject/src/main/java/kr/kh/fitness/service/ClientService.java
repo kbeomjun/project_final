@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
@@ -52,5 +53,11 @@ public interface ClientService {
 	PageMaker getPageMakerInMemberShip(String me_id, Criteria cri);
 
 	RefundVO getRefund(int pa_num);
+
+	List<MemberInquiryVO> getInquiryList(String me_email, Criteria cri);
+
+	PageMaker getPageMakerInInquiry(String me_email, Criteria cri);
+
+	MemberInquiryVO getInquiry(int mi_num);
 
 }

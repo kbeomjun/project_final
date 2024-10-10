@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.RefundVO;
@@ -243,8 +244,6 @@ public class ClientController {
 		
 		RefundVO refund = clientService.getRefund(pa_num);
 		
-		System.out.println(refund);
-		
 		map.put("refund", refund);
 		return map;
 	}
@@ -305,4 +304,32 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	@GetMapping("/mypage/inquiry/list/{me_id}")
+	public String mypageInquiryList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
+		
+		MemberVO user = clientService.getMember(me_id);
+		
+		cri.setPerPageNum(3);
+		
+		List<MemberInquiryVO> inquiryList = clientService.getInquiryList(user.getMe_email(), cri);
+		PageMaker pm = clientService.getPageMakerInInquiry(user.getMe_email(), cri);
+		
+		model.addAttribute("me_id", me_id);
+		model.addAttribute("inquiryList", inquiryList);
+		model.addAttribute("pm", pm);
+		
+		return "/client/mypageInquiryList";
+	}
+	
+	@GetMapping("/mypage/inquiry/detail/{mi_num}/{me_id}")
+	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, @PathVariable("me_id")String me_id, int page) {
+		
+		MemberInquiryVO inquiry = clientService.getInquiry(mi_num);
+		
+		model.addAttribute("inquiry", inquiry);
+		model.addAttribute("me_id", me_id);
+		model.addAttribute("page", page);
+		
+		return "/client/mypageInquiryDetail";
+	}
 }

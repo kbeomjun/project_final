@@ -20,19 +20,19 @@
 	                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${me_id}"/>">프로그램 일정</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
+	                        <a class="nav-link active" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
+	                        <a class="nav-link" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">문의내역</a>
+	                        <a class="nav-link" href="<c:url value="/client/mypage/inquiry/list/${me_id}"/>">문의내역</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">개인정보수정</a>
+	                        <a class="nav-link" href="<c:url value="/client/mypage/info/${me_id}"/>">개인정보수정</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">비밀번호 변경</a>
+	                        <a class="nav-link" href="<c:url value="/client/mypage/pwchange/${me_id}"/>">비밀번호 변경</a>
 	                    </li>
 	                </ul>
 	            </div>

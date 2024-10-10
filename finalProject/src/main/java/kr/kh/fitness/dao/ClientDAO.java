@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.RefundVO;
@@ -52,5 +53,11 @@ public interface ClientDAO {
 	int selectPaymentTotalCount(String me_id);
 
 	RefundVO selectRefund(int pa_num);
+
+	List<MemberInquiryVO> selectInquiryList(@Param("me_email")String me_email, @Param("cri")Criteria cri);
+
+	int selectInquiryTotalCount(String me_email);
+
+	MemberInquiryVO selectInquiry(int mi_num);
 
 }
