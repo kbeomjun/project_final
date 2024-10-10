@@ -112,6 +112,6 @@ public class PaymentController {
 	        response.put("success", false);
 	        response.put("message", "오류가 발생하였습니다: " + e.getMessage());
 		}
-		return ResponseEntity.ok(response); // JSON 형식으로 응답 // JSON 형식으로 응답
+		return ResponseEntity.ok(response); // JSON 형식으로 응답
 	}
 }

@@ -191,8 +191,9 @@
 	                }, function(rsp) {
 	                    if (rsp.success) {
 	                        // 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	                        const postData = {
+	                        const paymentData = {
                         		paymentType: {
+	                       	        // PaymentTypeVO의 필드들
 		                            pt_num: $('#pt_num').val()
 		                            , pt_type: $('#pt_type').val()
 		                            , pt_date: $('#pt_date').val()
@@ -207,23 +208,23 @@
 		                            , pc_status: rsp.status					// 상태 추가 paid = 결제완료, cancelled = 결제 실패
 		                            , pc_amount: amount						// 실제로 결제된 금액
 		                            , pc_paid_at: rsp.paid_at				// 결제 완료 시간 (Unix Timestamp)
-		                            , pc_card_name: rsp.card_name				// 결제된 카드 이름
-		                            , pc_card_number: rsp.card_number			// 결제된 카드 번호
-		                            , pc_card_quota: rsp.card_quota				// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
+		                            , pc_card_name: rsp.card_name			// 결제된 카드 이름
+		                            , pc_card_number: rsp.card_number		// 결제된 카드 번호
+		                            , pc_card_quota: rsp.card_quota			// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)
 		                            , pc_me_id: rsp.custom_data.buyer_me_id	// custom_data에서 me_id 값 가져오기
 		                            , pc_me_email: rsp.buyer_email			// user 이메일 추가
 	                       	    }
 	                        };
 	                        
-	                        console.log("rsp 내용 : ", rsp);
-	                        console.log("전송할 데이터 : ", postData); // 전송할 데이터 출력
+	                        console.log("rsp 내용 : ", rsp); // response 내용 출력
+	                        console.log("전송할 데이터 : ", paymentData); // 전송할 데이터 출력
 	                        
 	                        jQuery.ajax({
 	                            url: contextPath + "/payment/paymentInsert", // Ajax 요청 URL에 contextPath 경로 추가. contextPath 없으면 경로 못 불러옴.
 	                            type: 'POST',
 	                            contentType: 'application/json',
 	                            dataType: 'json',
-	                            data: JSON.stringify(postData), // 데이터를 JSON 형식으로 변환하여 전송
+	                            data: JSON.stringify(paymentData), // 데이터를 JSON 형식으로 변환하여 전송
 	                            success: function(response) {
 	                                console.log("응답 데이터 : ", response);
 	                                
