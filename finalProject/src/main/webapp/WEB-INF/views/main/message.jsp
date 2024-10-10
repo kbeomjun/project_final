@@ -6,13 +6,13 @@
 <head>
 </head>
 <body>
-<script type="text/javascript">
-	var url = '<c:url value="${url}"/>';
-	var msg = '${msg}';
-	if(msg != ''){
-		alert(msg);
-	}
-	location.href = url;
-</script>
+	<script type="text/javascript">
+		var url = '<c:url value="${url}"/>';
+		var msg = '${msg}';
+		if(msg != ''){
+			alert(msg);
+		}
+		location.href = url;
+	</script>
 </body>
 </html>

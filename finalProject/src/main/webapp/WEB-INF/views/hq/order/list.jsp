@@ -16,7 +16,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
 	       	 		</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
@@ -25,7 +25,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
+		          		<a class="nav-link active" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/payment/list"/>">회원권 관리</a>
@@ -43,60 +43,39 @@
 		      	<hr class="d-sm-none">
 	    	</div>
 		    <div class="col-sm-10">
-			    <div>
-			    	<a href="<c:url value="/hq/employee/insert"/>" class="btn btn-outline-success">등록</a>
-			    </div>
-		    	<div class="mt-3">
-			    	<table class="table table-hover">
+		    	<div class="mt-3 box record-box">
+		    		<table class="table table-hover">
 				    	<thead>
 				      		<tr>
-				        		<th>직원번호</th>
-				        		<th>이름</th>
-				        		<th>전화번호</th>
-				        		<th>이메일</th>
-				        		<th>입사일</th>
-				        		<th>소속</th>
-				        		<th>직책</th>
-				        		<th>상세</th>
+				        		<th>내역번호</th>
+				        		<th>지점</th>
+				        		<th>신청날짜</th>
+				        		<th>기구명</th>
+				        		<th>수량</th>
+				        		<th>상태</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
-				    		<c:forEach items="${emList}" var="em">
-						      	<tr>
-						        	<td>
-								        ${em.em_num}
-							        </td>
-							        <td>
-								        ${em.em_name}
-							        </td>
-							        <td>
-								        ${em.em_phone}
-							        </td>
-							        <td>
-								        ${em.em_email}
-							        </td>
-							        <td>
-							        	<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
-							        </td>
-							        <td>
-								        ${em.em_br_name}
-							        </td>
-							        <td>
-								        ${em.em_position}
-							        </td>
-						        	<td>
-						        		<a href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
-						        	</td>
-						      	</tr>
-				    		</c:forEach>
-				    		<c:if test="${emList.size() == 0}">
+				    		<c:forEach items="${boList}" var="bo">
 				    			<tr>
-					        		<th class="text-center" colspan="8">등록된 직원이 없습니다.</th>
+					        		<td class="align-content-center">${bo.bo_num}</td>
+					        		<td class="align-content-center">${bo.bo_br_name}</td>
+					        		<td class="align-content-center">
+					        			<fmt:formatDate value="${bo.bo_date}" pattern="yyyy.MM.dd hh:mm:ss"/>
+				        			</td>
+					        		<td class="align-content-center">${bo.bo_se_name}</td>
+					        		<td class="align-content-center">${bo.bo_amount}</td>
+					        		<td class="align-content-center">${bo.bo_state}</td>
+					        		<td class="align-content-center">
+					        			<a href="<c:url value="/hq/order/accept/${bo.bo_num}"/>" class="btn btn-outline-success">승인</a>
+					        			<a href="<c:url value="/hq/order/deny/${bo.bo_num}"/>" class="btn btn-outline-danger">거부</a>
+					        		</td>
 					      		</tr>
-				    		</c:if>
+				    		</c:forEach>
 				    	</tbody>
 					</table>
-		    	</div>
+				</div>
 	    	</div>
 	  	</div>
 	</div>

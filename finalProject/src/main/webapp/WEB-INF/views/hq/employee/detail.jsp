@@ -17,44 +17,39 @@
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
-		<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
+		<form action="<c:url value="/hq/employee/update/${em.em_num}"/>" method="post" enctype="multipart/form-data" id="form">
 			<div class="form-group">
 				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-				    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
-				    <div class="card-img-overlay d-flex flex-wrap align-items-center">
-					    <div class="mx-auto">
-					      	<label for="file" class="btn">사진등록</label>
-					    </div>
-				    </div>
+				    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%">
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
 			<div class="error error-file"></div>
 			<div class="form-group">
 				<label for="em_name">이름:</label>
-				<input type="text" class="form-control" id="em_name" name="em_name">
+				<input type="text" class="form-control" id="em_name" name="em_name" value="${em.em_name}">
 			</div>
 			<div class="error error-name"></div>
 			<div class="form-group">
 				<label for="em_phone">전화번호:</label>
-				<input type="text" class="form-control" id="em_phone" name="em_phone">
+				<input type="text" class="form-control" id="em_phone" name="em_phone" value="${em.em_phone}">
 			</div>
 			<div class="error error-phone"></div>
 			<div class="form-group">
 				<label for="em_email">이메일:</label>
-				<input type="text" class="form-control" id="em_email" name="em_email">
+				<input type="text" class="form-control" id="em_email" name="em_email" value="${em.em_email}">
 			</div>
 			<div class="error error-email"></div>
 			<div class="form-group">
 				<label for="em_gender" style="margin-right: 10px;">성별:</label>
 				<div class="form-check-inline">
 	  				<label class="form-check-label" for="radio1">
-	    				<input type="radio" class="form-check-input" id="radio1" name="em_gender" value="남자">남
+	    				<input type="radio" class="form-check-input" id="radio1" name="em_gender" value="남자" <c:if test='${em.em_gender == "남자"}'>checked</c:if>>남
 	  				</label>
 				</div>
 				<div class="form-check-inline">
 	  				<label class="form-check-label" for="radio2">
-	   			 		<input type="radio" class="form-check-input" id="radio2" name="em_gender" value="여자">여
+	   			 		<input type="radio" class="form-check-input" id="radio2" name="em_gender" value="여자" <c:if test='${em.em_gender == "여자"}'>checked</c:if>>여
 	  				</label>
 				</div>	
 			</div>
@@ -62,13 +57,13 @@
 			<div class="form-group">
 				<label for="em_position">직책:</label>
 				<select name="em_position" class="custom-select mb-3 form-control">
-					<c:forEach items="${programList}" var="program">
+			      	<c:forEach items="${programList}" var="program">
 						<c:choose>
 							<c:when test="${program.sp_type == '단일'}">
-								<option value="${program.sp_name}트레이너">${program.sp_name}트레이너</option>
+								<option value="${program.sp_name}트레이너" <c:if test='${em.em_position eq program.sp_name.concat("트레이너")}'>selected</c:if>>${program.sp_name}트레이너</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${program.sp_name}강사">${program.sp_name}강사</option>
+								<option value="${program.sp_name}강사" <c:if test='${em.em_position eq program.sp_name.concat("강사")}'>selected</c:if>>${program.sp_name}강사</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -77,23 +72,23 @@
 			<div class="error error-position"></div>
 			<div class="form-group">
 				<label for="em_address">주소:</label> <br/>
-				<input type="text" class="address-input" id="em_postcode" name="em_postcode" placeholder="우편번호" style="width:130px;" readonly>
+				<input type="text" class="address-input" id="em_postcode" name="em_postcode" placeholder="우편번호" style="width:130px;" readonly value="${em.em_postcode}">
 				<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-				<input type="text" class="address-input" id="em_address" name="em_address" placeholder="주소" style="width:100%;" readonly> <br/>
-				<input type="text" class="address-input" id="em_detailAddress" name="em_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
-				<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" readonly>
+				<input type="text" class="address-input" id="em_address" name="em_address" placeholder="주소" style="width:100%;" readonly value="${em.em_address}"> <br/>
+				<input type="text" class="address-input" id="em_detailAddress" name="em_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${em.em_detailAddress}">
+				<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" readonly value="${em.em_extraAddress}">
 			</div>
 			<div class="error error-address"></div>
 			<div class="form-group">
 				<label for="em_br_name">소속:</label>
 				<select name="em_br_name" class="custom-select mb-3 form-control">
 			      	<c:forEach items="${brList}" var="br">
-				      	<option value="${br.br_name}">${br.br_name}</option>
+				      	<option value="${br.br_name}" <c:if test='${em.em_br_name == br.br_name}'>selected</c:if>>${br.br_name}</option>
 			      	</c:forEach>
 			    </select>
 			</div>
 			<div class="error error-branch"></div>
-			<button class="btn btn-outline-info col-12">직원 등록</button>
+			<button class="btn btn-outline-info col-12">직원 수정</button>
 		</form>
 		<hr/>
 		<a href="<c:url value="/hq/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
@@ -101,9 +96,18 @@
 	
 	<script>
 		// 사진 파일
+		var del = 0;
+		
 		function displayFileList(file){
 			console.log(file);
 			$('.card').children().remove();
+			if(del == 0){
+				var str = `
+					<input type="hidden" name="isDel" value="Y">
+				`;
+				$('#file').after(str);
+				del++;
+			}
 			let fReader = new FileReader();
 		    fReader.readAsDataURL(file[0]);
 		    fReader.onloadend = function(event){
@@ -186,11 +190,6 @@
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
-			
-			if($('#file')[0].files.length == 0){
-				$('.error-file').append(imgRequired);
-				flag = false;
-			}
 			
 			if($('#em_name').val() == ''){
 				$('.error-name').append(msgRequired);

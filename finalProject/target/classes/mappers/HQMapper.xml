@@ -4,12 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.HQDAO">
 	<select id="selectBranchList" resultType="BranchVO">
-		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name order by br_name;
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본사") order by br_name;
 	</select>
 	
 	<insert id="insertBranch">
 		insert into branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress, br_detail)
-		values(#{br.br_name}, #{br.br_phone}, #{br.br_postcode}, #{br.br_address}, #{br.br_detailAddress}, #{br.br_extraAddress}, #{br.br_detail});
+		values
+			(#{br.br_name}, #{br.br_phone}, #{br.br_postcode}, #{br.br_address}, 
+				#{br.br_detailAddress}, #{br.br_extraAddress}, #{br.br_detail});
 	</insert>
 	
 	<insert id="insertBranchFile">
@@ -18,8 +20,13 @@
 	</insert>
 	
 	<insert id="insertAdmin">
-		insert into member(me_id, me_pw, me_email, me_name, me_phone, me_address, me_birth, me_authority)
-		values(#{me.me_id}, #{me.me_pw}, #{me.me_email}, #{me.me_name}, #{me.me_phone}, #{me.me_address}, current_timestamp(), "BRADMIN")
+		insert into member
+			(me_id, me_pw, me_email, me_name, me_phone, 
+				me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_authority)
+		values
+			(#{me.me_id}, #{me.me_pw}, #{me.me_email}, #{me.me_name}, #{me.me_phone}, 
+				#{me.me_postcode}, #{me.me_address}, #{me.me_detailAddress}, #{me.me_extraAddress}, 
+				current_timestamp(), "BRADMIN")
 	</insert>
 	
 	<select id="selectBranch" resultType="BranchVO">
@@ -67,5 +74,84 @@
 	
 	<select id="selectEmployeeList" resultType="EmployeeVO">
 		select * from employee order by em_num;
+	</select>
+	
+	<select id="selectProgramList" resultType="SportsProgramVO">
+		select * from sports_program
+	</select>
+	
+	<insert id="insertEmployee">
+		insert into employee
+			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 
+				em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+		values
+			(#{em.em_num}, #{em.em_name}, #{em.em_phone}, #{em.em_email}, #{em.em_gender}, #{em.em_position}, current_timestamp(),
+				#{em.em_postcode}, #{em.em_address}, #{em.em_detailAddress}, #{em.em_extraAddress}, #{em.em_fi_name}, #{em.em_br_name})
+	</insert>
+	
+	<select id="selectEmployee" resultType="EmployeeVO">
+		select * from employee where em_num = #{em.em_num};
+	</select>
+	
+	<select id="selectEmployeeFileName" resultType="String">
+		select em_fi_name from employee where em_num = #{em.em_num};
+	</select>
+	
+	<update id="updateEmployee">
+		update employee set
+			em_name = #{em.em_name},
+			em_phone = #{em.em_phone},
+			em_email = #{em.em_email},
+			em_gender = #{em.em_gender},
+			em_position = #{em.em_position},
+			em_postcode = #{em.em_postcode},
+			em_address = #{em.em_address},
+			em_detailAddress = #{em.em_detailAddress},
+			em_extraAddress = #{em.em_extraAddress},
+			em_fi_name = #{em.em_fi_name},
+			em_br_name = #{em.em_br_name}
+		where em_num = #{em.em_num};
+	</update>
+	
+	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
+		select * from sports_equipment;
+	</select>
+	
+	<insert id="insertSportsEquipment">
+		insert into sports_equipment(se_name, se_fi_name) values(#{se.se_name}, #{se.se_fi_name});
+	</insert>
+	
+	<select id="selectSportsEquipment" resultType="SportsEquipmentVO">
+		select * from sports_equipment where se_name = #{se.se_name};
+	</select>
+	
+	<select id="selectSportsEquipmentFileName" resultType="String">
+		select se_fi_name from sports_equipment where se_name = #{se_ori_name};
+	</select>
+	
+	<update id="updateSportsEquipment">
+		update sports_equipment set
+			se_name = #{se.se_name},
+			se_fi_name = #{se.se_fi_name}
+		where se_name = #{se_ori_name};
+	</update>
+	
+	<select id="selectBranchEquipmentStockList" resultType="BranchEquipmentStockVO">
+		select * from branch_equipment_stock where be_br_name = "본사" order by be_num desc;
+	</select>
+	
+	<select id="selectBranchStockList" resultType="BranchStockDTO">
+		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
+		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
+		where be_br_name = "본사" group by be_se_name;
+	</select>
+	
+	<insert id="insertBranchEquipmentStock">
+		insert into branch_equipment_stock(be_amount, be_birth, be_record, be_type, be_br_name, be_se_name)
+		values(#{be.be_amount}, current_timestamp(), current_timestamp(), #{be.be_type}, "본사", #{be.be_se_name});
+	</insert>
+	
+	<select id="selectBranchOrderList" resultType="BranchOrderVO">
+		select * from branch_order where bo_state not in("승인", "거부") order by bo_num;
 	</select>
 </mapper>
