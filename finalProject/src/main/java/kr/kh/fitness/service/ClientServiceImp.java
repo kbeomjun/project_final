@@ -277,4 +277,24 @@ public class ClientServiceImp implements ClientService{
 		return "개인정보 수정에 성공했습니다.";
 	}
 
+	@Override
+	public String updateMemberPw(MemberVO member, String currentPw, String newPw) {
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		if(!member.getMe_pw().equals(currentPw)) {
+			return "현재 비밀번호가 일치하지 않습니다.";
+		}
+		if(currentPw.equals(newPw)) {
+			return "새 비밀번호는 현재 비밀번호와 같을 수 없습니다.";
+		}
+		
+		member.setMe_pw(newPw);
+		if(!clientDao.updateMemberPw(member)) {
+			return "비밀번호 변경에 실패했습니다.";
+		}
+		
+		return "";
+	}
+
 }

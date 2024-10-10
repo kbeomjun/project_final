@@ -66,4 +66,6 @@ public interface ClientService {
 
 	String updateMemberInfo(MemberVO member);
 
+	String updateMemberPw(MemberVO member, String currentPw, String newPw);
+
 }

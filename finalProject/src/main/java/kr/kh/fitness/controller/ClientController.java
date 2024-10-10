@@ -382,7 +382,6 @@ public class ClientController {
 	@PostMapping("/mypage/info/update")
 	public String mypageInfoUpdate(Model model, MemberVO member, HttpSession session, String birth) {
 	    
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date me_birth;
 		
@@ -396,13 +395,33 @@ public class ClientController {
 			model.addAttribute("me_id", member.getMe_id());
 			
 			return "/main/message";
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
 		}
+	}
+	
+	@GetMapping("/mypage/pwchange/{me_id}")
+	public String mypagePwChange(Model model, @PathVariable("me_id")String me_id) {
+		model.addAttribute("me_id", me_id);
+		return "/client/mypagePwChange";
+	}
+	
+	@PostMapping("/mypage/pwchange/update")
+	public String updatePassword(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id) {
+
+		MemberVO member = clientService.getMember(me_id);
+	    
+		String msg = clientService.updateMemberPw(member, currentPw, newPw);
 		
-		
+		if(msg == "") {
+			model.addAttribute("msg", "비밀번호가 성공적으로 변경되었습니다. 다시 로그인하시기 바랍니다.");
+			model.addAttribute("url", "/login");
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/client/mypage/pwchange/"+me_id);
+		}
+	    return "/main/message";
 	}
 	
 }

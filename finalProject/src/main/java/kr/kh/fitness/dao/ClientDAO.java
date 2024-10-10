@@ -64,4 +64,6 @@ public interface ClientDAO {
 
 	boolean updateMemberInfo(MemberVO member);
 
+	boolean updateMemberPw(MemberVO member);
+
 }

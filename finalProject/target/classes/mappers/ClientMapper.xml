@@ -249,4 +249,8 @@
 			me_id = #{me_id}
 	</update>
 	
+	<update id="updateMemberPw">
+		update member set me_pw = #{me_pw} where me_id = #{me_id}
+	</update>
+	
 </mapper>
