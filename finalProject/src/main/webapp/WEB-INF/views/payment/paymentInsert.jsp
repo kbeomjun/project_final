@@ -192,9 +192,9 @@
 	                        const postData = {
 	                            imp_uid: rsp.imp_uid,							// 여기에서 imp_uid 값이 올바르게 전달되는지 확인
 	                            , merchant_uid: rsp.merchant_uid				// 가맹점에서 설정한 주문 ID. 주문 추적 및 관리
-	                            , pt_status: rsp.status							// 상태 추가 paid = 결제완료, null = 실패
+	                            , pt_status: rsp.status							// 상태 추가 paid = 결제완료, cancelled = 결제 실패
 	                            , pg_tid: rsp.pg_tid							// 결제 거래 ID. 결제 상태를 조회할 때 사용
-	                            , pt_amount: amount								// 결제된 금액
+	                            , pt_amount: amount								// 실제로 결제된 금액
 	                            , card_name: card_name							// 결제된 카드 이름
 	                            , card_number: card_number						// 결제된 카드 번호
 	                            , card_quota: card_quota						// 결제된 카드 할부 개월 수(0: 일시불, 2: 2개월 할부 등)

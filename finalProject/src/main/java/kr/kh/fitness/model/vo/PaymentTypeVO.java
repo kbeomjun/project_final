@@ -19,6 +19,8 @@ public class PaymentTypeVO {
     private int pt_price;			// 결제 가격 (원 단위)
     
     // 결제 관련 추가 필드
+    // 추후에 payment_category로 빼낼 예정 pc_ 로 쓸 예정
+    // private int pc_num;
     private String formattedPrice;	// 포맷된 가격 (예: 300,000원)
     private String imp_uid;			// 결제 고유 ID
     private String merchant_uid;	// 가맹점에서 설정한 주문 ID
