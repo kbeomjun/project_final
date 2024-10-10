@@ -11,6 +11,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
@@ -60,7 +61,7 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<PaymentVO> getPaymentList(String me_id) {
+	public List<PaymentVO> getPaymentListForReview(String me_id) {
 		if(me_id == null) {
 			return null;
 		}
@@ -116,7 +117,7 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public PageMaker getPageMaker(Criteria cri) {
+	public PageMaker getPageMakerInReview(Criteria cri) {
 		if(cri == null) {
 			return null;
 		}
@@ -160,6 +161,31 @@ public class ClientServiceImp implements ClientService{
 	@Override
 	public void updateScheduleCurrent(int bs_num) {
 		clientDao.updateScheduleCurrent(bs_num);
+	}
+
+	@Override
+	public List<PaymentVO> getPaymentList(String me_id, Criteria cri) {
+		if(me_id == null) {
+			return null;
+		}
+		if(cri == null) {
+			return null;
+		}
+		return clientDao.selectPaymentList(me_id, cri);
+	}
+
+	@Override
+	public PageMaker getPageMakerInMemberShip(String me_id, Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int totalCount = clientDao.selectPaymentTotalCount(me_id);
+		return new PageMaker(3, cri, totalCount);
+	}
+
+	@Override
+	public RefundVO getRefund(int pa_num) {
+		return clientDao.selectRefund(pa_num);
 	}
 
 }

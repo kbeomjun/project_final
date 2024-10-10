@@ -1,6 +1,8 @@
 package kr.kh.fitness.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
@@ -53,7 +57,7 @@ public class ClientController {
 		cri.setPerPageNum(5);
 	
 		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
-		PageMaker pm = clientService.getPageMaker(cri);
+		PageMaker pm = clientService.getPageMakerInReview(cri);
 		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("user", user);
@@ -80,7 +84,7 @@ public class ClientController {
 	public String reviewInsert(Model model, @PathVariable("me_id")String me_id) {
 		//결제내역이 있는지 체크, 있으면 등록가능 없으면 등록불가
 		String msg = clientService.checkMemberPayment(me_id);
-		List<PaymentVO> paymentList = clientService.getPaymentList(me_id);
+		List<PaymentVO> paymentList = clientService.getPaymentListForReview(me_id);
 		List<BranchVO> branchList = clientService.getBranchList();
 		
 		if(msg == "") {
@@ -190,6 +194,61 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	@GetMapping("/mypage/membership/{me_id}")
+	public String mypageMembership(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
+		
+		cri.setPerPageNum(5);
+		
+		List<PaymentVO> paymentList = clientService.getPaymentList(me_id, cri);
+		PageMaker pm = clientService.getPageMakerInMemberShip(me_id, cri);
+		
+		model.addAttribute("me_id", me_id);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("pm", pm);
+		
+		return "/client/mypageMembership";
+	}
+	
+	@GetMapping("/mypage/review/insert/{pa_num}/{me_id}/{page}")
+	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, @PathVariable("me_id")String me_id, @PathVariable("page")int page) {
+		
+		List<BranchVO> branchList = clientService.getBranchList();
+		
+		model.addAttribute("pa_num", pa_num);
+		model.addAttribute("me_id", me_id);
+		model.addAttribute("page", page);
+		model.addAttribute("branchList", branchList);
+		return "/client/mypageReviewInsert";
+	}
+	
+	@PostMapping("/mypage/review/insert")
+	public String mypageReviewInsertPost(Model model, ReviewPostVO review, String me_id, int page) {
+		
+		String msg = clientService.insertReviewPost(review);
+		
+		if(msg == "") {
+			model.addAttribute("url", "/client/mypage/membership/" + me_id + "?page=" + page);
+		} else {
+			model.addAttribute("url", "/client/mypage/review/insert/" + review.getRp_pa_num() + "/" + me_id + "/" + page);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@ResponseBody
+	@GetMapping("/mypage/refundDetail")
+	public Map<String, Object> mypageRefundDetail(@RequestParam("pa_num") int pa_num){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		RefundVO refund = clientService.getRefund(pa_num);
+		
+		System.out.println(refund);
+		
+		map.put("refund", refund);
+		return map;
+	}
+	
 	@GetMapping("/mypage/review/list/{me_id}")
 	public String mypageReviewList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
 		
@@ -198,7 +257,7 @@ public class ClientController {
 		cri.setSearch(me_id);
 		
 		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
-		PageMaker pm = clientService.getPageMaker(cri);
+		PageMaker pm = clientService.getPageMakerInReview(cri);
 		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("me_id", me_id);

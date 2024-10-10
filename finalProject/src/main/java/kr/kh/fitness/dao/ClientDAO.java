@@ -9,6 +9,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 
@@ -45,5 +46,11 @@ public interface ClientDAO {
 	boolean deleteReservation(int pr_num);
 
 	void updateScheduleCurrent(int bs_num);
+
+	List<PaymentVO> selectPaymentList(@Param("me_id")String me_id, @Param("cri")Criteria cri);
+
+	int selectPaymentTotalCount(String me_id);
+
+	RefundVO selectRefund(int pa_num);
 
 }

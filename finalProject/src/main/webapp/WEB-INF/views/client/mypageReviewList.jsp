@@ -19,10 +19,10 @@
 	                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${me_id}"/>">프로그램 일정</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">회원권</a>
+	                        <a class="nav-link" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link active" href="/client/mypage/review/list/${me_id}">나의 작성글</a>
+	                        <a class="nav-link active" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="nav-link" href="#">문의내역</a>

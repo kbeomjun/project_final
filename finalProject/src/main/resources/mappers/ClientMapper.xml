@@ -176,4 +176,35 @@
 		where
 			bs_num = #{bs_num} 
 	</update>
+	
+	<select id="selectPaymentList" resultType="PaymentVO">
+		select 
+			* 
+		from 
+			payment 
+		join 
+			payment_type on pt_num = pa_pt_num
+		where
+			pa_me_id = #{me_id}
+		order by
+			pa_date desc
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}		
+	</select>
+	
+	<select id="selectPaymentTotalCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			payment 
+		join 
+			payment_type on pt_num = pa_pt_num
+		where
+			pa_me_id = #{me_id}
+	</select>
+	
+	<select id="selectRefund" resultType="RefundVO">
+		select * from refund where re_pa_num = #{pa_num}
+	</select>
+	
 </mapper>

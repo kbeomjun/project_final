@@ -8,6 +8,7 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
@@ -24,7 +25,7 @@ public interface ClientService {
 
 	String checkMemberPayment(String me_id);
 
-	List<PaymentVO> getPaymentList(String me_id);
+	List<PaymentVO> getPaymentListForReview(String me_id);
 
 	List<BranchVO> getBranchList();
 
@@ -34,7 +35,7 @@ public interface ClientService {
 
 	String deleteReviewPost(int rp_num);
 
-	PageMaker getPageMaker(Criteria cri);
+	PageMaker getPageMakerInReview(Criteria cri);
 
 	List<InquiryTypeVO> getInquiryTypeList();
 
@@ -45,5 +46,11 @@ public interface ClientService {
 	boolean deleteReservation(int pr_num);
 
 	void updateScheduleCurrent(int bs_num);
+
+	List<PaymentVO> getPaymentList(String me_id, Criteria cri);
+
+	PageMaker getPageMakerInMemberShip(String me_id, Criteria cri);
+
+	RefundVO getRefund(int pa_num);
 
 }

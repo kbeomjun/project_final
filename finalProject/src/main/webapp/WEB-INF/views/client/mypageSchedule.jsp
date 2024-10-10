@@ -16,10 +16,10 @@
 	                <h4 class="sidebar-heading mt-3">마이페이지 메뉴</h4>
 	                <ul class="nav flex-column">
 	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/client/mypage/program/${me_id}"/>">프로그램 일정</a>
+	                        <a class="nav-link active" href="<c:url value="/client/mypage/schedule/${me_id}"/>">프로그램 일정</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#">회원권</a>
+	                        <a class="nav-link" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
