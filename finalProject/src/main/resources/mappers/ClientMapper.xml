@@ -228,4 +228,25 @@
 		select * from member_inquiry where mi_num = #{mi_num}
 	</select>
 	
+	<select id="isEmailDuplicate" resultType="int">
+		select count(*) from member where me_email = #{email}
+	</select>
+	
+	<update id="updateMemberInfo">
+		update
+			member
+		set
+			me_email = #{me_email},
+			me_name = #{me_name},
+			me_phone = #{me_phone},
+			me_postcode = #{me_postcode},
+			me_address = #{me_address},
+			me_detailAddress = #{me_detailAddress},
+			me_extraAddress = #{me_extraAddress},
+			me_birth = #{me_birth},
+			me_gender = #{me_gender}
+		where
+			me_id = #{me_id}
+	</update>
+	
 </mapper>

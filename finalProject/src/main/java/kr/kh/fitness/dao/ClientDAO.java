@@ -60,4 +60,8 @@ public interface ClientDAO {
 
 	MemberInquiryVO selectInquiry(int mi_num);
 
+	int isEmailDuplicate(String email);
+
+	boolean updateMemberInfo(MemberVO member);
+
 }

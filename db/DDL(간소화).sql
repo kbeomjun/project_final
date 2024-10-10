@@ -145,7 +145,7 @@ CREATE TABLE `payment` (
 	`pa_start`		datetime		not NULL,
 	`pa_end`		datetime		not NULL,
 	`pa_review`		char(1)			not NULL default 'N',
-    `pa_state`		varchar(10)		not NULL default '결제완료',
+    `pa_state`		varchar(10)		not NULL,
 	`pa_me_id`		varchar(100)	NULL,
 	`pa_pt_num`		int				NOT NULL
 );

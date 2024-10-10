@@ -1,5 +1,7 @@
 package kr.kh.fitness.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -332,4 +334,75 @@ public class ClientController {
 		
 		return "/client/mypageInquiryDetail";
 	}
+	
+	@GetMapping("/mypage/pwcheck/{me_id}")
+	public String mypagePwCheck(Model model, @PathVariable("me_id")String me_id) {
+		model.addAttribute("me_id", me_id);
+		return "/client/mypagePwCheck";
+	}
+	
+	@PostMapping("/mypage/pwcheck")
+	public String mypagePwCheckPost(Model model, HttpSession session, MemberVO member) {
+		
+		String msg = clientService.checkPassword(member);
+		
+		if(msg == "") {
+			session.setAttribute("pwVerified", true);
+			return "redirect:/client/mypage/info/" + member.getMe_id();
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/client/mypage/pwcheck/"+member.getMe_id());
+			return "/main/message";
+		}
+	}
+	
+	@GetMapping("/mypage/info/{me_id}")
+	public String mypageInfo(Model model, @PathVariable("me_id") String me_id, HttpSession session) {
+	    Boolean pwVerified = (Boolean) session.getAttribute("pwVerified");
+	    
+	    if (pwVerified == null || !pwVerified) {
+	        // 비밀번호 확인이 안 된 경우, 비밀번호 확인 페이지로 이동
+	        return "redirect:/client/mypage/pwcheck" + me_id;
+	    }
+	    
+	    MemberVO member = clientService.getMember(me_id);
+	    
+	    model.addAttribute("member", member);
+	    
+	    return "/client/mypageInfo";
+	}
+	
+	@ResponseBody
+    @PostMapping("/mypage/checkEmail")
+    public boolean mypageCheckEmail(@RequestParam("email") String email) {
+    	
+    	return clientService.isEmailDuplicate(email);
+    }
+	
+	@PostMapping("/mypage/info/update")
+	public String mypageInfoUpdate(Model model, MemberVO member, HttpSession session, String birth) {
+	    
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date me_birth;
+		
+		try {
+			me_birth = formatter.parse(birth);
+			member.setMe_birth(me_birth);
+			String msg = clientService.updateMemberInfo(member);
+
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/client/mypage/info/"+member.getMe_id());
+			model.addAttribute("me_id", member.getMe_id());
+			
+			return "/main/message";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/main";
+		}
+		
+		
+	}
+	
 }
