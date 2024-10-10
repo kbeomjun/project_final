@@ -51,7 +51,7 @@ public class MemberServiceImp implements MemberService {
         if (!member.getMe_id().matches(usernameRegex)) {
             return false; // 아이디가 유효하지 않음
         }
-        
+
         if (!member.getMe_pw().matches(passwordRegex)) {
             return false; // 비밀번호가 유효하지 않음
         }
@@ -75,5 +75,10 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean checkId(String id) {
 		return memberDao.selectMember(id) == null;
+	}
+
+	@Override
+	public MemberVO getMemberID(String id) {
+		return memberDao.selectMemberByCookie(id);
 	}
 }

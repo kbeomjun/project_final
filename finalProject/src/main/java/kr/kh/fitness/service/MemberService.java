@@ -12,4 +12,6 @@ public interface MemberService {
 
 	boolean checkId(String id);
 
+	MemberVO getMemberID(String id);
+
 }

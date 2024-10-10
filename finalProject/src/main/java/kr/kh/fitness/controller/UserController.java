@@ -46,7 +46,7 @@ public class UserController {
             MemberVO user = memberService.login(member, response);
             if (user != null) {
                 session.setAttribute("user", user);
-
+                //로그인 시 쿠키생성
                 Cookie cookie = new Cookie("me_cookie", user.getMe_id());
                 cookie.setMaxAge(48 * 60 * 60); // 48시간
                 cookie.setPath("/"); // 모든 경로에서 유효
@@ -70,9 +70,14 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(Model model, HttpSession session) {
-        MemberVO member = (MemberVO) session.getAttribute("user");
+    public String logout(Model model, HttpSession session, HttpServletResponse response) {
         session.removeAttribute("user");
+        //로그아웃 시 쿠키 삭제
+        Cookie cookie = new Cookie("me_cookie", null);
+        cookie.setMaxAge(0); // 즉시 삭제
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        
         model.addAttribute("msg", "로그아웃 했습니다");
         model.addAttribute("url", "/");
         return "/main/message";
