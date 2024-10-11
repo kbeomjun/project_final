@@ -95,9 +95,8 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signupPost(Model model, MemberVO member, 
-                             @RequestParam("me_emailId") String emailId, 
-                             @RequestParam("me_emailDomain") String emailDomain) {
+    public String signupPost(Model model, MemberVO member) {
+        // 회원 정보가 null인 경우 로그 및 메시지 처리
         if (member == null) {
             logger.error("회원 정보가 null입니다.");
             model.addAttribute("msg", "회원 정보가 null입니다.");
@@ -107,14 +106,16 @@ public class UserController {
 
         try {
             // 이메일을 합쳐서 member 객체에 설정
-            String fullEmail = emailId + "@" + emailDomain;
-            member.setMe_email(fullEmail);
+            //String fullEmail = emailId + "@" + emailDomain;
+            //member.setMe_email(fullEmail);
+            logger.info("합쳐진 이메일: " + member.getMe_email());  // 추가된 로그
 
             // 전화번호 로그
-            logger.info("전화번호 (me_phone): " + member.getMe_phone());  // 추가된 로그
+            logger.info("전화번호 (me_phone): " + member.getMe_phone());
 
-            // 비밀번호 암호화
+            // 비밀번호 암호화 및 로그
             String encPw = passwordEncoder.encode(member.getMe_pw());
+            logger.info("암호화된 비밀번호: " + encPw);  // 추가된 로그
             member.setMe_pw(encPw);
             
             // 회원가입 시도
@@ -122,20 +123,24 @@ public class UserController {
             if (res) {
                 model.addAttribute("msg", "회원 가입을 했습니다.");
                 model.addAttribute("url", "/");
+                logger.info("회원 가입 성공: " + member.getMe_id());
             } else {
                 model.addAttribute("msg", "회원 가입을 하지 못했습니다.");
                 model.addAttribute("url", "/signup");
+                logger.warn("회원 가입 실패: " + member.getMe_id());
             }
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("msg", "회원 가입에 실패했습니다. (중복된 아이디 또는 이메일일 수 있습니다.)");
             model.addAttribute("url", "/signup");
+            logger.error("DataIntegrityViolationException 발생: 중복된 아이디 또는 이메일", e);  // 추가된 로그
         } catch (Exception e) {
             model.addAttribute("msg", "회원 가입 중 문제가 발생했습니다.");
             model.addAttribute("url", "/signup");
+            logger.error("회원 가입 중 예기치 않은 오류 발생", e);  // 추가된 로그
         }
 
-        // 전체 회원 정보 로그
-        logger.info("회원 가입 정보: " + member); // 추가된 로그
+        // 전체 회원 정보 로그 (디버깅용)
+        logger.info("회원 가입 정보: " + member);  // 추가된 로그
 
         return "/main/message";
     }
