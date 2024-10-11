@@ -220,4 +220,81 @@ public class ClientServiceImp implements ClientService{
 		return clientDao.selectInquiry(mi_num);
 	}
 
+	@Override
+	public String checkPassword(MemberVO member) {
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		if(member.getMe_id() == null || member.getMe_id().trim().length() == 0) {
+			return "아이디가 존재하지 않습니다.";
+		}
+		if(member.getMe_pw() == null || member.getMe_pw().trim().length() == 0) {
+			return "비밀번호가 존재하지 않습니다.";
+		}
+		
+		MemberVO checkMember = clientDao.selectMember(member.getMe_id());
+		
+		if(!checkMember.getMe_pw().equals(member.getMe_pw())) {
+			return "비밀번호가 일치하지 않습니다.";
+		}
+		
+		return "";
+	}
+
+	@Override
+	public boolean isEmailDuplicate(String email) {
+		if(email == null || email.trim().length() == 0) {
+			return false;
+		}
+		
+		int count = clientDao.isEmailDuplicate(email); 
+		return count > 0;
+	}
+
+	@Override
+	public String updateMemberInfo(MemberVO member) {
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		if(member.getMe_email() == null || member.getMe_email().trim().length() == 0) {
+			return "이메일이 존재하지 않습니다.";
+		}
+		if(member.getMe_name() == null || member.getMe_name().trim().length() == 0) {
+			return "이름이 존재하지 않습니다.";
+		}
+		if(member.getMe_phone() == null || member.getMe_phone().trim().length() == 0) {
+			return "전화번호가 존재하지 않습니다.";
+		}
+		if(member.getMe_postcode() == null || member.getMe_postcode().trim().length() == 0 ||
+			member.getMe_address() == null || member.getMe_address().trim().length() == 0 ||
+			member.getMe_detailAddress() == null || member.getMe_detailAddress().trim().length() == 0 ||
+			member.getMe_extraAddress() == null || member.getMe_extraAddress().trim().length() == 0) {
+			return "주소 정보가 존재하지 않습니다.";
+		}
+		if(!clientDao.updateMemberInfo(member)) {
+			return "개인정보 수정에 실패했습니다.";
+		}
+		return "개인정보 수정에 성공했습니다.";
+	}
+
+	@Override
+	public String updateMemberPw(MemberVO member, String currentPw, String newPw) {
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		if(!member.getMe_pw().equals(currentPw)) {
+			return "현재 비밀번호가 일치하지 않습니다.";
+		}
+		if(currentPw.equals(newPw)) {
+			return "새 비밀번호는 현재 비밀번호와 같을 수 없습니다.";
+		}
+		
+		member.setMe_pw(newPw);
+		if(!clientDao.updateMemberPw(member)) {
+			return "비밀번호 변경에 실패했습니다.";
+		}
+		
+		return "";
+	}
+
 }

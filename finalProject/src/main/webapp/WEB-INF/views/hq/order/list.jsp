@@ -28,7 +28,7 @@
 		          		<a class="nav-link active" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/payment/list"/>">회원권 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
@@ -43,7 +43,7 @@
 		      	<hr class="d-sm-none">
 	    	</div>
 		    <div class="col-sm-10">
-		    	<div class="mt-3 box record-box">
+		    	<div class="mt-3">
 		    		<table class="table table-hover">
 				    	<thead>
 				      		<tr>
@@ -73,6 +73,11 @@
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
+				    		<c:if test="${boList.size() == 0}">
+				    			<tr>
+					        		<th class="text-center" colspan="7">발주 내역이 없습니다.</th>
+					      		</tr>
+				    		</c:if>
 				    	</tbody>
 					</table>
 				</div>

@@ -11,6 +11,7 @@ import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -54,4 +55,14 @@ public interface HQService {
 	List<BranchOrderVO> getBranchOrderList();
 
 	String acceptOrder(int bo_num);
+
+	String denyOrder(int bo_num);
+
+	List<PaymentTypeVO> getPaymentTypeList();
+
+	String insertPaymentType(PaymentTypeVO pt);
+
+	PaymentTypeVO getPaymentType(PaymentTypeVO pt);
+
+	String updatePaymentType(PaymentTypeVO pt);
 }

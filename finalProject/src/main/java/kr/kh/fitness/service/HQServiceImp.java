@@ -1,11 +1,14 @@
 package kr.kh.fitness.service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +20,7 @@ import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
@@ -27,6 +31,8 @@ public class HQServiceImp implements HQService {
 	HQDAO hqDao;
 	@Resource
 	String uploadPath;
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
@@ -39,20 +45,32 @@ public class HQServiceImp implements HQService {
 		if(admin == null) {msg = "관리자 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		if(!hqDao.insertBranch(branch)) {msg = "지점을 등록하지 못했습니다.";}
+		
+		try {
+			if(!hqDao.insertBranch(branch)) {msg = "지점을 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "지점명 중복으로 등록하지 못했습니다.";
+		}
 		if(!msg.equals("")) {return msg;}
-
 		for(MultipartFile file : fileList) {
-			uploadBranchFile(file, branch.getBr_name());
+			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
+		String encPw = passwordEncoder.encode(admin.getMe_pw());
+		admin.setMe_pw(encPw);
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		admin.setMe_postcode(branch.getBr_postcode());
 		admin.setMe_address(branch.getBr_address());
 		admin.setMe_detailAddress(branch.getBr_detailAddress());
 		admin.setMe_extraAddress(branch.getBr_extraAddress());
-		if(!hqDao.insertAdmin(admin)) {msg = "관리자를 등록하지 못했습니다.";}
+		try {
+			if(!hqDao.insertAdmin(admin)) {msg = "관리자를 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "관리자 아이디 중복으로 등록하지 못했습니다.";
+		}
 		return msg;
 	}
 	private void uploadBranchFile(MultipartFile file, String br_name) {
@@ -85,7 +103,6 @@ public class HQServiceImp implements HQService {
 		
 		if(!hqDao.updateBranch(branch, br_ori_name)) {msg = "지점을 수정하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
-		
 		if(numList != null) {
 			for(int i = 0; i < numList.length; i++) {
 				int bf_num = Integer.parseInt(numList[i]);
@@ -96,13 +113,15 @@ public class HQServiceImp implements HQService {
 			}
 		}
 		for(MultipartFile file : fileList) {
-			uploadBranchFile(file, branch.getBr_name());
+			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
+		String encPw = passwordEncoder.encode(admin.getMe_pw());
+		admin.setMe_pw(encPw);
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		admin.setMe_address(branch.getBr_address());
-		if(!hqDao.updatetAdmin(admin, br_ori_name)) {msg = "관리자를 수정하지 못했습니다.";}
+		if(!hqDao.updateAdmin(admin, br_ori_name)) {msg = "관리자를 수정하지 못했습니다.";}
 		return msg;
 	}
 
@@ -199,8 +218,12 @@ public class HQServiceImp implements HQService {
 		
 		String se_fi_name = uploadSportsEquipmentFile(file, se.getSe_name());
 		se.setSe_fi_name(se_fi_name);
-		
-		if(!hqDao.insertSportsEquipment(se)) {msg = "기구를 등록하지 못했습니다.";}
+		try {
+			if(!hqDao.insertSportsEquipment(se)) {msg = "기구를 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "기구명 중복으로 등록하지 못했습니다.";
+		}
 		return msg;
 	}
 	private String uploadSportsEquipmentFile(MultipartFile file, String se_fi_ori_name) {
@@ -248,6 +271,9 @@ public class HQServiceImp implements HQService {
 		if(be == null) {msg = "재고 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
+		be.setBe_birth(new Date());
+		be.setBe_type("입고");
+		be.setBe_br_name("본점");
 		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
 		return msg;
 	}
@@ -258,8 +284,10 @@ public class HQServiceImp implements HQService {
 	@Override
 	public String acceptOrder(int bo_num) {
 		String msg = "";
-		
 		BranchOrderVO bo = hqDao.selectBranchOrder(bo_num);
+		if(bo == null) {msg = "발주 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
 		BranchStockDTO st = hqDao.selectBranchStock(bo);
 		if(st.getBe_se_total() < bo.getBo_amount()) {msg = "재고가 부족합니다.";}
 		if(!msg.equals("")) {return msg;}
@@ -270,53 +298,101 @@ public class HQServiceImp implements HQService {
 		for(int i = 0; i < beStockList.size(); i++) {
 			if(index == beReleaseList.size()) {break;}
 			
-			int a = beStockList.get(i).getBe_amount();
-			while(true) {
-				if(a > -beReleaseList.get(index).getBe_amount()) {
-					beStockList.get(i).setBe_amount(a + beReleaseList.get(index).getBe_amount());
+			int amount1 = beStockList.get(i).getBe_amount();
+			while(amount1 > 0) {
+				if(amount1 > -beReleaseList.get(index).getBe_amount()) {
+					beStockList.get(i).setBe_amount(amount1 + beReleaseList.get(index).getBe_amount());
 					beReleaseList.get(index).setBe_amount(0);
+					amount1 = beStockList.get(i).getBe_amount();
 					index++;
 				}else if(beStockList.get(i).getBe_amount() == -beReleaseList.get(index).getBe_amount()) {
 					beStockList.get(i).setBe_amount(0);
 					beReleaseList.get(index).setBe_amount(0);
+					amount1 = 0;
 					index++;
 				}else {
 					beStockList.get(i).setBe_amount(0);
-					beReleaseList.get(index).setBe_amount(beReleaseList.get(index).getBe_amount() + a);
+					beReleaseList.get(index).setBe_amount(beReleaseList.get(index).getBe_amount() + amount1);
+					amount1 = 0;
 					break;
 				}
 				if(index == beReleaseList.size()) {break;}
 			}
 		}
 		
-		System.out.println(beStockList);
-		
-		int amount = bo.getBo_amount();
+		int amount2 = bo.getBo_amount();
 		for(int i = 0; i < beStockList.size(); i++) {
 			if(beStockList.get(i).getBe_amount() == 0 ) {continue;}
 			
-			if(amount == 0) {break;}
+			if(amount2 == 0) {break;}
 			
-			if(amount >= beStockList.get(i).getBe_amount()) {
+			if(amount2 >= beStockList.get(i).getBe_amount()) {
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
-													"출고", "본사", bo.getBo_se_name()));
-				amount -= beStockList.get(i).getBe_amount();
+													"출고", "본점", bo.getBo_se_name()));
+				amount2 -= beStockList.get(i).getBe_amount();
 			}else {
 				hqDao.insertBranchEquipmentStock(
-						new BranchEquipmentStockVO(amount, beStockList.get(i).getBe_birth(), 
+						new BranchEquipmentStockVO(amount2, beStockList.get(i).getBe_birth(), 
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
-						new BranchEquipmentStockVO(-amount, beStockList.get(i).getBe_birth(), 
-													"출고", "본사", bo.getBo_se_name()));
-				amount = 0;
+						new BranchEquipmentStockVO(-amount2, beStockList.get(i).getBe_birth(), 
+													"출고", "본점", bo.getBo_se_name()));
+				amount2 = 0;
 			}
 		}
 		
+		bo.setBo_state("입고완료");
 		hqDao.updateBranchOrderState(bo);
+		return msg;
+	}
+
+	@Override
+	public String denyOrder(int bo_num) {
+		String msg = "";
+		BranchOrderVO bo = hqDao.selectBranchOrder(bo_num);
+		if(bo == null) {msg = "발주 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		bo.setBo_state("승인거절");
+		hqDao.updateBranchOrderState(bo);
+		return msg;
+	}
+
+	@Override
+	public List<PaymentTypeVO> getPaymentTypeList() {
+		List<PaymentTypeVO> ptList = hqDao.selectPaymentTypeList();
+		for(int i = 0; i < ptList.size(); i++) {
+			DecimalFormat df = new DecimalFormat("###,###");
+			String formattedPrice = df.format(ptList.get(i).getPt_price());
+			ptList.get(i).setFormattedPrice(formattedPrice);
+		}
+		return ptList;
+	}
+
+	@Override
+	public String insertPaymentType(PaymentTypeVO pt) {
+		String msg = "";
+		if(pt == null) {msg = "회원권 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.insertPaymentType(pt)) {msg = "회원권을 등록하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public PaymentTypeVO getPaymentType(PaymentTypeVO pt) {return hqDao.selectPaymentType(pt);}
+
+	@Override
+	public String updatePaymentType(PaymentTypeVO pt) {
+		String msg = "";
+		if(pt == null) {msg = "회원권 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.updatePaymentType(pt)) {msg = "회원권을 수정하지 못했습니다.";}
 		return msg;
 	}
 }

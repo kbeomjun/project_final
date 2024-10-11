@@ -53,7 +53,7 @@
 			<div class="error error-id"></div>
 			<div class="form-group">
 				<label for="me_pw">관리자 비밀번호:</label>
-				<input type="password" class="form-control" id="me_pw" name="me_pw" value="${me.me_id}">
+				<input type="password" class="form-control" id="me_pw" name="me_pw">
 			</div>
 			<div class="error error-pw"></div>
 			<div class="form-group">
@@ -74,7 +74,7 @@
 					<div class="img-container2 d-flex flex-wrap">
 						<c:forEach items="${bfList}" var="bf">
 							<div class="img-box2">
-					        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%">
+					        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%;">
 						        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
 										<i class="fi fi-bs-cross"></i>
 									</button>
@@ -84,6 +84,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="error"></div>
 			<div class="form-group">
 				<label>
 					추가할 사진:
@@ -143,7 +144,7 @@
 				    	let path = event.target.result;
 				        img = `
 				        	<div class="img-box">
-					        	<img src="\${path}" style="width:100%; height:100%">
+					        	<img src="\${path}" style="width:100%; height:100%;">
 						        	<button type="button" class="btn btn-outline-danger btn-delete-img" data-num="\${num}">
 										<i class="fi fi-bs-cross"></i>
 									</button>

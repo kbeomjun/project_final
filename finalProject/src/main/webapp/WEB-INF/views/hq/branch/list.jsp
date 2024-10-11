@@ -27,7 +27,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/payment/list"/>">회원권 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
@@ -53,26 +53,18 @@
 				        		<th>지점번호</th>
 				        		<th>지점주소</th>
 				        		<th>관리자아이디</th>
-				        		<th>상세</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${brList}" var="br">
 						      	<tr>
-						        	<td>
-								        ${br.br_name}
-							        </td>
-							        <td>
-										${br.br_phone}							        	
-						        	</td>
-							        <td>
-							        	${br.br_address}(${br.br_detailAddress})
-						        	</td>
-						        	<td>
-						        		${br.br_admin}
-						        	</td>
-						        	<td>
-						        		<a href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
+						        	<td class="align-content-center">${br.br_name}</td>
+							        <td class="align-content-center">${br.br_phone}</td>
+							        <td class="align-content-center">${br.br_address}(${br.br_detailAddress})</td>
+						        	<td class="align-content-center">${br.br_admin}</td>
+						        	<td class="align-content-center">
+						        		<a class="btn btn-outline-info" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
