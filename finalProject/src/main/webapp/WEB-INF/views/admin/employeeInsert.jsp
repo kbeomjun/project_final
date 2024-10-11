@@ -84,7 +84,6 @@
 				<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
 			</div>
 			<div class="error error-address"></div>			
-
 			<div class="text-right mb-3">
 				<button type="submit" class="btn btn-outline-success">직원 등록</button>
 			</div>
@@ -202,7 +201,6 @@
 				$('#em_detailAddress').focus();
 				flag = false;
 			}
-
 			return flag;
 		});
     </script>
@@ -258,6 +256,5 @@
 	    }
     </script>		
 	
-
 </body>
 </html>

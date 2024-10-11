@@ -60,4 +60,12 @@ public interface ClientService {
 
 	MemberInquiryVO getInquiry(int mi_num);
 
+	String checkPassword(MemberVO member);
+
+	boolean isEmailDuplicate(String email);
+
+	String updateMemberInfo(MemberVO member);
+
+	String updateMemberPw(MemberVO member, String currentPw, String newPw);
+
 }

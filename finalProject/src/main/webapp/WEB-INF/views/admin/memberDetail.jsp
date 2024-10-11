@@ -69,7 +69,7 @@
 		<hr>
 		
 		<div class="text-right mb-3">
-			<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger">취소</a>
+			<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger">뒤로가기</a>
 		</div>
 	</div>
 

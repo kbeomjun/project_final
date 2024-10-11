@@ -65,7 +65,7 @@ public class PaymentController {
 		PaymentTypeVO payment = request.getPaymentType();
 	    PaymentCategoryVO category = request.getPaymentCategory();
 	    
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> response = new HashMap<String, Object>();
 		try {
 	        MemberVO user = (MemberVO) session.getAttribute("user");
 	        String userId = user.getMe_id(); // 사용자 ID를 가져옴
