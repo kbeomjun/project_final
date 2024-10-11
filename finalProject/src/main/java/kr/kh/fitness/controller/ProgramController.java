@@ -1,7 +1,9 @@
 package kr.kh.fitness.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -126,10 +129,22 @@ public class ProgramController {
 		cal.setTdCnt(tdCnt);
 
 		LocalDate today = LocalDate.now();
+		
+		// 원하는 형식으로 출력하기 위한 DateTimeFormatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        // LocalDate를 문자열로 포맷
+        String formattedTodayDate = today.format(formatter);
+        
 		today = LocalDate.of(year, month + 1, day);
-
+		
 		String searchDate = String.format("%04d-%02d-%02d", year, month + 1, day);
 		String searchMonth = String.format("%04d-%02d", year, month + 1);
+		
+		if(formattedTodayDate.compareTo(searchDate) > 0) {
+			// 기한이 지난 경우 리다이렉트
+            return "redirect:/program/expire";
+		}
 		
 		// 지점 리스트
 		List<BranchVO> branch_list = programService.getBranchList();
@@ -139,6 +154,9 @@ public class ProgramController {
 		
 		// 
 		List<ProgramScheduleDTO> ps_list = programService.getProgramSchedule(searchMonth, br_name, pr_name);
+		
+		// 현재 날짜
+        Date nowDate = new Date();
 		
 		model.addAttribute("cal", cal);
 		model.addAttribute("selected", today);
@@ -152,11 +170,13 @@ public class ProgramController {
 
 		model.addAttribute("ps_list", ps_list);
 		
+		model.addAttribute("nowDate", nowDate);
+		
 		return "/program/schedule";
 	}
 	
-	@GetMapping("/reservation/{bs_num}")
-	public String programReservation(Model model, HttpSession session, HttpServletRequest request, @PathVariable("bs_num") Integer bs_num) {
+	@PostMapping("/reservation")
+	public String programReservationPost(Model model, HttpSession session, HttpServletRequest request, Integer bs_num) {
 		
 		log.info("/program/reservation");
 
@@ -209,6 +229,21 @@ public class ProgramController {
 		//System.out.println("pr_name " + pr_name + ", image_list" + image_list);
 		
 		return image_list;
-	}
+	}	
 	
+	@GetMapping("/expire")
+	public String programExpire(HttpServletRequest request, Model model){
+		log.info("/program/expire");
+		
+		model.addAttribute("msg", "기한이 지난 프로그램입니다.");
+		String prevUrl = request.getHeader("Referer");
+		if (prevUrl != null) {
+			model.addAttribute("url", prevUrl);
+		}
+		else {
+			model.addAttribute("url", "/program/schedule");
+		}
+	
+		return "/main/message";
+	}	
 }

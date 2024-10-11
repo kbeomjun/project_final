@@ -43,3 +43,9 @@
     line-height: 2;
     border-radius: .25rem;
 }
+
+a .disabled {
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    color: gray; /* 비활성화된 링크 스타일 */
+    text-decoration: none; /* 밑줄 제거 */
+}
