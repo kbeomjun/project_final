@@ -53,26 +53,18 @@
 				        		<th>지점번호</th>
 				        		<th>지점주소</th>
 				        		<th>관리자아이디</th>
-				        		<th>상세</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${brList}" var="br">
 						      	<tr>
-						        	<td>
-								        ${br.br_name}
-							        </td>
-							        <td>
-										${br.br_phone}							        	
-						        	</td>
-							        <td>
-							        	${br.br_address}(${br.br_detailAddress})
-						        	</td>
-						        	<td>
-						        		${br.br_admin}
-						        	</td>
-						        	<td>
-						        		<a href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
+						        	<td class="align-content-center">${br.br_name}</td>
+							        <td class="align-content-center">${br.br_phone}</td>
+							        <td class="align-content-center">${br.br_address}(${br.br_detailAddress})</td>
+						        	<td class="align-content-center">${br.br_admin}</td>
+						        	<td class="align-content-center">
+						        		<a class="btn btn-outline-info" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
