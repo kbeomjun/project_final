@@ -59,7 +59,7 @@
 		    	<div class="img-container d-flex flex-wrap">
 		    		<c:forEach items="${seList}" var="se">
 						<div class="card img-box" style="width:250px; cursor:pointer">
-				        	<img class="card-img-top" src="<c:url value="/uploads${se.se_fi_name}"/>" style="width:100%; height:100%">
+				        	<img class="card-img-top" src="<c:url value="/uploads${se.se_fi_name}"/>" style="width:100%; height:100%;">
 					        	<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-name="${se.se_name}">
 									<i class="fi fi-br-edit"></i>
 								</button>
@@ -80,7 +80,7 @@
 				        	<div class="modal-body">
 				        		<div class="form-group">
 									<label for="file" class="card card-insert mx-auto" style="width:250px; cursor:pointer">
-									    <img class="card-img-top" alt="Card image" style="width:100%; height:100%"
+									    <img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
 									    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 									    <div class="card-img-overlay d-flex flex-wrap align-items-center">
 										    <div class="mx-auto">
@@ -173,7 +173,7 @@
 		    	let path = event.target.result;
 		    	console.log(path);
 		        let img = `
-		        	<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%" src="\${path}">
+		        	<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%;" src="\${path}">
 		        `;
 		        $('.card-update').append(img);
 		    }
@@ -263,7 +263,7 @@
 					$('#se_ori_name').val(se.se_name);
 					
 					let img = `
-						<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%" src="<c:url value="/uploads\${se.se_fi_name}"/>">
+						<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%;" src="<c:url value="/uploads\${se.se_fi_name}"/>">
 			        `;
 			        $('.card-update').children().remove();
 			        $('.card-update').append(img);

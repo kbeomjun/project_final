@@ -74,7 +74,7 @@
 					<div class="img-container2 d-flex flex-wrap">
 						<c:forEach items="${bfList}" var="bf">
 							<div class="img-box2">
-					        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%">
+					        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%;">
 						        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
 										<i class="fi fi-bs-cross"></i>
 									</button>
@@ -143,7 +143,7 @@
 				    	let path = event.target.result;
 				        img = `
 				        	<div class="img-box">
-					        	<img src="\${path}" style="width:100%; height:100%">
+					        	<img src="\${path}" style="width:100%; height:100%;">
 						        	<button type="button" class="btn btn-outline-danger btn-delete-img" data-num="\${num}">
 										<i class="fi fi-bs-cross"></i>
 									</button>

@@ -20,7 +20,7 @@
 		<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
 			<div class="form-group">
 				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-				    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+				    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
 				    <div class="card-img-overlay d-flex flex-wrap align-items-center">
 					    <div class="mx-auto">
 					      	<label for="file" class="btn">사진등록</label>
@@ -109,7 +109,7 @@
 		    fReader.onloadend = function(event){
 		    	let path = event.target.result;
 		        img = `
-		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
+		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
 		        `;
 		        $('.card').append(img);
 		    }
