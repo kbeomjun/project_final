@@ -179,6 +179,6 @@
 	</select>
 	
 	<update id="updateBranchOrderState">
-		update branch_order	set bo_state = "승인" where bo_num = #{bo.bo_num};
+		update branch_order	set bo_state = #{bo.bo_state} where bo_num = #{bo.bo_num};
 	</update>
 </mapper>

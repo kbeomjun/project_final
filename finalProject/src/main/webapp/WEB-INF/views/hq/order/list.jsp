@@ -73,6 +73,11 @@
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
+				    		<c:if test="${boList.size() == 0}">
+				    			<tr>
+					        		<th class="text-center" colspan="7">발주 내역이 없습니다.</th>
+					      		</tr>
+				    		</c:if>
 				    	</tbody>
 					</table>
 				</div>

@@ -199,4 +199,11 @@ public class HQController {
 		model.addAttribute("msg", msg);
 	    return "/main/message";
 	}
+	@GetMapping("/order/deny/{bo_num}")
+	public String orderDeny(Model model, @PathVariable("bo_num") int bo_num) {
+		String msg = hqService.denyOrder(bo_num);
+		model.addAttribute("url", "/hq/order/list");
+		model.addAttribute("msg", msg);
+	    return "/main/message";
+	}
 }
