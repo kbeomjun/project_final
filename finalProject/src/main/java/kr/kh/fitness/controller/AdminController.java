@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.TestDAO;
+import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -297,7 +298,7 @@ public class AdminController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String br_name = user.getMe_name();
 		
-		List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentListInHQ();
+		List<BranchStockDTO> equipmentList = adminService.getEquipmentListInHQ();
 		
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
@@ -482,7 +483,7 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentListInBranch(br_name, view);
+			List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch(br_name, view);
 			model.addAttribute("equipmentList", equipmentList);
 			model.addAttribute("br_name", br_name);
 			model.addAttribute("view", view);

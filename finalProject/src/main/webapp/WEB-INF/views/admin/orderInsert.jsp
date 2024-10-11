@@ -14,7 +14,7 @@
 			<label>운동기구:</label>
 			<select class="form-control" name="bo_se_name" id="programSelect">
 				<c:forEach items="${equipmentList }" var="equip">
-					<option value="${equip.be_se_name}" data-total="${equip.total}">${equip.be_se_name}(남은수량: ${equip.total})</option>
+					<option value="${equip.be_se_name}" data-total="${equip.be_se_total}">${equip.be_se_name}(남은수량: ${equip.be_se_total})</option>
 				</c:forEach>		
 				<option>기타</option>
 			</select>

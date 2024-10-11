@@ -202,9 +202,9 @@
 		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc
 	</select>
 	
-	<select id="selectEquipmentListInHQ" resultType="BranchEquipmentStockVO">
+	<select id="selectEquipmentListInHQ" resultType="BranchStockDTO">
 		select 
-			be_se_name, sum(be_amount) as total 
+			be_se_name, sum(be_amount) as be_se_total 
 		from 
 			branch_equipment_stock 
 		where 
@@ -212,7 +212,7 @@
 		group by 
 			be_se_name 
 		having 
-			total >= 0
+			be_se_total >= 0
 	</select>
 	
 	<insert id="insertOrder">
@@ -316,9 +316,9 @@
 		values(#{bf_name}, #{bf_br_name});
 	</insert>
 	
-	<select id="selectEquipmentListInBranch" resultType="BranchEquipmentStockVO">
+	<select id="selectEquipmentListInBranch" resultType="BranchStockDTO">
 		select 
-			be_se_name, sum(be_amount) as total
+			be_se_name, sum(be_amount) as be_se_total
 			<if test="view == 'all'">
 				, be_birth
 			</if>
@@ -332,7 +332,7 @@
 				, be_birth 
 			</if>
 		having 
-			total >= 0
+			be_se_total >= 0
 		<if test="view == 'all'">		
 			order by
 				be_birth

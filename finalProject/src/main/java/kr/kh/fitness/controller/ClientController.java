@@ -37,15 +37,6 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@GetMapping("/menu/list")
-	private String menuList(Model model, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		model.addAttribute("user", user);
-		
-		return "/client/menuList";
-	}
-	
 	@GetMapping("/mypage/{me_id}")
 	private String mypage(Model model, @PathVariable("me_id")String me_id) {
 		model.addAttribute("me_id", me_id);

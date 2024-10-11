@@ -52,7 +52,7 @@
 		<div class="error error-id"></div>
 		<div class="form-group">
 			<label for="me_pw">관리자 비밀번호:</label>
-			<input type="password" class="form-control" id="me_pw" name="me_pw" value="${me.me_pw}">
+			<input type="password" class="form-control" id="me_pw" name="me_pw">
 		</div>
 		<div class="error error-pw"></div>
 		<div class="form-group">

@@ -33,7 +33,7 @@
 							<fmt:formatDate value="${list.be_birth}" pattern="yyyy-MM-dd"/>
 						</td>
 					</c:if>
-					<td>${list.total}</td>
+					<td>${list.be_se_total}</td>
 				</tr>
 			</c:forEach>
 			<c:if test="${equipmentList.size() eq 0}">

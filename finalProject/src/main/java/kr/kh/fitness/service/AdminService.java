@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -46,7 +47,7 @@ public interface AdminService {
 
 	String updateSchedule(BranchProgramScheduleVO schedule);
 
-	List<BranchEquipmentStockVO> getEquipmentListInHQ();
+	List<BranchStockDTO> getEquipmentListInHQ();
 
 	String insertOrder(BranchOrderVO order);
 
@@ -70,7 +71,7 @@ public interface AdminService {
 
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
 	
-	List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view);
+	List<BranchStockDTO> getEquipmentListInBranch(String br_name, String view);
 
 	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
 
