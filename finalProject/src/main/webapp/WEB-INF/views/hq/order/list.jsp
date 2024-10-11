@@ -43,7 +43,7 @@
 		      	<hr class="d-sm-none">
 	    	</div>
 		    <div class="col-sm-10">
-		    	<div class="mt-3 box record-box">
+		    	<div class="mt-3">
 		    		<table class="table table-hover">
 				    	<thead>
 				      		<tr>
