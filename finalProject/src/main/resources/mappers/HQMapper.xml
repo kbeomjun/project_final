@@ -61,7 +61,7 @@
 		delete from branch_file where bf_num = #{bf.bf_num};
 	</delete>
 	
-	<update id="updatetAdmin">
+	<update id="updateAdmin">
 		update member set
 			me_id = #{me.me_id},      
 			me_pw = #{me.me_pw}, 
