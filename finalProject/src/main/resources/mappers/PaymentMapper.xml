@@ -21,7 +21,7 @@
 		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
 		WHERE pa.pa_me_id = #{me_id}
 		  AND pa.pa_pt_num = #{pt_num}
-		ORDER BY pa.pa_date DESC
+		ORDER BY pa.pa_start DESC
 		LIMIT 1;
 	</select>
 
