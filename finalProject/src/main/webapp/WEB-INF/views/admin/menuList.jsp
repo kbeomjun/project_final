@@ -8,7 +8,6 @@
 <title>지점관리자메뉴</title>
 </head>
 <body>
-	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">지점관리자 메뉴 목록</h1>
 		<a href="<c:url value="/admin/login"/>" class="btn btn-success mb-2">로그인</a><br>
 		<a href="<c:url value="/admin/program/list"/>" class="btn btn-outline-info mb-2">프로그램관리</a><br>

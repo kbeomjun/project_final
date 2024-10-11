@@ -11,20 +11,20 @@
 		<!-- main header -->
 		<header class="main_header">
 			<div class="logo_wrap">
-				<h1><a href="<c:url value="/" />" class="logo logo-dark" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
+				<h1><a href="<c:url value="/" />" class="logo logo-light" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
 			</div>
 			<nav class="gnb_wrap">
 				<ul class="gnb">
-					<li class="gnb__item"><a href="#" class="gnb__link">지점 조회</a></li>
-					<li class="gnb__item"><a href="<c:url value="/membership/membershipList" />" class="gnb__link">회원권</a></li>
-					<li class="gnb__item"><a href=<c:url value="/program/main"/>>프로그램</a></li>
-					<li class="gnb__item"><a href="<c:url value="/client/menu/list"/>" class="gnb__link">고객센터</a></li>
+					<li class="gnb__item"><a href="<c:url value="/branch/info" />" class="gnb__link">지점 조회</a></li>
+					<li class="gnb__item"><a href="<c:url value="/payment/paymentList" />" class="gnb__link">회원권</a></li>
+					<li class="gnb__item"><a href="<c:url value="/program/info"/>" class="gnb__link">프로그램</a></li>
+					<li class="gnb__item"><a href="<c:url value="/client/menu/list" />" class="gnb__link">고객센터</a></li>
 					<li class="gnb__item"><a href="<c:url value="/admin/menu/list"/>" class="gnb__link">지점관리</a></li>
 					<li class="gnb__item"><a href="<c:url value="/hq/branch/list"/>" class="gnb__link">본사관리</a></li>
-					<li class="gnb__item"><a href="<c:url value="/login"/>" >로그인</a></li>
+					<li class="gnb__item"><a href="<c:url value="/login"/>" class="gnb__link">로그인</a></li>
 				</ul>
 				<div class="gnb_side">
-					<a href="#" class="gnb_side__link js-gnb_side__link">
+					<a href="javascript:void(0)" class="gnb_side__link js-gnb_side__link">
 						<span>정보</span>
 						<i class="ic_gnb_side_menu">
 							<svg width="50" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">

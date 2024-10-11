@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.BranchDAO">
+  <select id="selectBranchList" resultType="BranchVO">
+    select * from branch;
+  </select>
+  <select id="selectEmployeeList" resultType="EmployeeVO">
+  	select * from employee where em_br_name = #{br_name};
+  </select>
+  <select id="selectBranchImageList" resultType="BranchFileVO">
+  	select * from branch_file where bf_br_name = #{br_name}
+  </select>
+</mapper>

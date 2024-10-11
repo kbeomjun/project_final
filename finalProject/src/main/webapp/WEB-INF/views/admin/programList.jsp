@@ -7,7 +7,6 @@
 <title>프로그램 목록</title>
 </head>
 <body>
-	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h1 class="mt-3 mb-3">${br_name} 프로그램 목록</h1>
 		<table class="table text-center">
 			<thead>
@@ -42,6 +41,5 @@
 		<div class="text-right mb-3">	
 			<a href="<c:url value="/admin/program/insert"/>" class="btn btn-outline-success btn-sm">프로그램 추가</a>
 		</div>
-	<!-- </main> -->
 </body>
 </html>

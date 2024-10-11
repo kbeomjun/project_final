@@ -30,7 +30,6 @@
 				<button type="submit" class="btn btn-outline-warning">수정</button>
 			</div>
 		</form>
-	<!-- </main> -->
 	<script type="text/javascript">
 		$('#form').validate({
 			rules : {

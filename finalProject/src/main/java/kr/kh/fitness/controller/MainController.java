@@ -8,7 +8,7 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String home() {
-		System.out.println("메인");
+//		System.out.println("메인");
 		return "/main/main";
 	}
 

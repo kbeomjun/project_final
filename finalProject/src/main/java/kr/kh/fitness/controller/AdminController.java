@@ -163,6 +163,7 @@ public class AdminController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			//return "/main/home";
 			return "/main/main";		
 		}
 	}
@@ -211,6 +212,7 @@ public class AdminController {
 			bs_end = formatter.parse(date + " " + endTime);
 			schedule.setBs_start(bs_start);
 			schedule.setBs_end(bs_end);
+			System.out.println(schedule);
 
 			String msg = adminService.insertSchedule(schedule, me_id);
 			if(msg == "") {
@@ -223,8 +225,10 @@ public class AdminController {
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
+			//return "/main/home";
 			return "/main/main";
 		}
+ 
 	}
 	
 	//지점 프로그램 일정 수정 get

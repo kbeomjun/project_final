@@ -9,6 +9,15 @@
 <title>로그인</title>
 <!-- Bootstrap CSS 추가 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .body {
+            padding-top: 150px; /* 헤더와의 간격 */
+            padding-bottom: 150px; /* 푸터와의 간격 */
+        }
+        .card {
+            margin-top: 100px; /* 카드의 위쪽 여백 */
+        }
+    </style>
 </head>
 <body class="bg-light">
 	<div class="container mt-5">
@@ -30,7 +39,7 @@
 								<input type="password" class="form-control" id="pw" name="me_pw" required/>
 							</div>
 							<div class="mb-3 form-check">
-								<input type="checkbox" class="form-check-input" id="autologin" name="autologin"/>
+								<input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
 								<label class="form-check-label" for="autologin">자동 로그인</label>
 							</div>
 							<button type="submit" class="btn btn-success w-100">로그인</button>

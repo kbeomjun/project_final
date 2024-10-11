@@ -7,7 +7,6 @@
 <title>본사관리페이지</title>
 </head>
 <body>
-	<h1>지점관리</h1>
 	<div class="container" style="margin-top:30px">
 	  	<div class="row">
 	    	<div class="col-sm-2">
@@ -19,25 +18,25 @@
 		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
 	       	 		</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">운동기구 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">재고 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">발주 내역</a>
+		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">회원권 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/payment/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">프로그램 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">문의 내역</a>
+		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
@@ -46,8 +45,8 @@
 			    <div>
 			    	<a href="<c:url value="/hq/branch/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
-		    	<div>
-			    	<table class="table table-hover mt-3">
+		    	<div class="mt-3">
+			    	<table class="table table-hover">
 				    	<thead>
 				      		<tr>
 				        		<th>지점명</th>
