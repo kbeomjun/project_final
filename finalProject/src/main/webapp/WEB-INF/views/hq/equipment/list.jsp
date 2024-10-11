@@ -75,7 +75,7 @@
 			      		<form action="<c:url value="/hq/equipment/insert"/>" method="post" enctype="multipart/form-data" id="form" class="modal-content">
 				        	<div class="modal-header">
 				          		<h4 class="modal-title">등록</h4>
-				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 				        	</div>
 				        	<div class="modal-body">
 				        		<div class="form-group">
@@ -99,7 +99,7 @@
 								<button class="btn btn-outline-info col-12">기구 등록</button>
 				        	</div>
 				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger" data-dismiss="modal">취소</a>
+				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
 				        	</div>
 			      		</form>
 			    	</div>
@@ -109,7 +109,7 @@
 			      		<form action="<c:url value="/hq/equipment/update"/>" method="post" enctype="multipart/form-data" id="form2" class="modal-content">
 				        	<div class="modal-header">
 				          		<h4 class="modal-title">등록</h4>
-				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 				        	</div>
 				        	<div class="modal-body">
 				        		<div class="form-group">
@@ -128,7 +128,7 @@
 								<button class="btn btn-outline-warning col-12">기구 수정</button>
 				        	</div>
 				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger" data-dismiss="modal">취소</a>
+				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
 				        	</div>
 			      		</form>
 			    	</div>
@@ -273,6 +273,10 @@
 				}
 			});
 		});
+	    
+	    $('.btn-close').click(function(){
+	    	$('.error').children().remove();
+	    });
     </script>
 </body>
 </html>
