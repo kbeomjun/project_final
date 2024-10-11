@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.HQDAO">
 	<select id="selectBranchList" resultType="BranchVO">
-		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본사") order by br_name;
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본점") order by br_name;
 	</select>
 	
 	<insert id="insertBranch">
@@ -139,17 +139,17 @@
 	<select id="selectBranchEquipmentStockList" resultType="BranchEquipmentStockVO">
 		select * from branch_equipment_stock 
 		<if test="bo == null">
-			where be_br_name = "본사" order by be_num desc;
+			where be_br_name = "본점" order by be_num desc;
 		</if>
 		<if test="bo != null">
-			where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
+			where be_br_name = "본점" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
 		</if> 
 	</select>
 	
 	<select id="selectBranchStockList" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본사" 
+		where be_br_name = "본점" 
 		group by be_se_name;
 	</select>
 	
@@ -159,7 +159,7 @@
 	</insert>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_state not in("승인", "거부") order by bo_num;
+		select * from branch_order where bo_state not in("입고완료", "승인거절") order by bo_num;
 	</select>
 	
 	<select id="selectBranchOrder" resultType="BranchOrderVO">
@@ -169,7 +169,7 @@
 	<select id="selectBranchStock" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} 
+		where be_br_name = "본점" and be_se_name = #{bo.bo_se_name} 
 		group by be_se_name; 
 	</select>
 	

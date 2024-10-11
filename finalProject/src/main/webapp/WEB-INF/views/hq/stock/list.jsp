@@ -7,7 +7,7 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:33.33%; height:200px; box-sizing: border-box; position: relative; margin:20px 0;}
+    	.img-box{width:305px; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.error{color:red; margin-bottom: 10px;}
@@ -180,7 +180,7 @@
 					str = ``;
 					for(var st of stList){
 						str += `
-							<div class="card box img-box" style="width:250px; cursor:pointer">
+							<div class="card box img-box">
 					        	<img class="card-img-top" style="width:100%; height:100%;" src="<c:url value="/uploads"/>\${st.be_se_fi_name}"></img>
 						    	<div class="img-name d-flex align-content-center">
 						      		<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
