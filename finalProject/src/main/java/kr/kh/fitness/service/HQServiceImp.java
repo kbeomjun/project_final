@@ -2,6 +2,7 @@ package kr.kh.fitness.service;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -248,6 +249,9 @@ public class HQServiceImp implements HQService {
 		if(be == null) {msg = "재고 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
+		be.setBe_birth(new Date());
+		be.setBe_type("입고");
+		be.setBe_br_name("본사");
 		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
 		return msg;
 	}

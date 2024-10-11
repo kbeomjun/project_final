@@ -180,8 +180,7 @@ public class HQController {
 	}
 	@ResponseBody
 	@PostMapping("/stock/insert")
-	public Map<String, Object> stockInsertPost(@RequestParam String be_se_name, @RequestParam String be_amount) {
-		BranchEquipmentStockVO be = new BranchEquipmentStockVO(Integer.parseInt(be_amount), new Date(), "입고", "본사", be_se_name);
+	public Map<String, Object> stockInsertPost(@RequestParam String be_se_name, @RequestParam int be_amount, BranchEquipmentStockVO be) {
 		String msg = hqService.insertBranchEquipmentStock(be);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msg", msg);
