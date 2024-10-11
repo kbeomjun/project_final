@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.fitness.dao.TestDAO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
@@ -42,23 +41,7 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
-	@Autowired
-	private TestDAO testDao;
 	
-	//지점관리자 메뉴 목록
-	@GetMapping("/menu/list")
-	public String menuList() {
-		return "/admin/menuList";
-	}
-	
-	@GetMapping("/login")
-	private String login(Model model, HttpSession session) {
-		MemberVO user = testDao.login("br_admin_ys1");
-
-		session.setAttribute("user", user);
-		return "/admin/menuList";
-	}
-
 	//지점 프로그램 목록(프로그램명+트레이너명+총인원수)
 	@GetMapping("/program/list")
 	public String programMagagement(Model model, HttpSession session, String br_name) {

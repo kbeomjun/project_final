@@ -15,63 +15,108 @@
 </style>
 </head>
 <body>
-	<h1 class="mt-3 mb-3">${me.me_name} 회원 상세</h1>
-	<div class="container" style="margin-top:30px">
-		<div class="form-group">
-			<label for="me_id">아이디:</label>
-			<input type="text" class="form-control" id="me_id" name="me_id" value="${me.me_id}" readonly>
-		</div>
-		<div class="form-group">
-			<label for="me_name">이름:</label>
-			<input type="text" class="form-control" id="me_name" name="me_name" value="${me.me_name}" readonly>
-		</div>	
-		<div class="form-group">
-			<label for="me_gender">성별:</label>
-			<input type="text" class="form-control" id="me_gender" name="me_gender" value="${me.me_gender}" readonly>
-		</div>		
-		<div class="form-group">
-			<label for="me_birth">생년월일:</label>
-			<c:set var="formattedBirth">
-			    <fmt:formatDate value="${me.me_birth}" pattern="yyyy년 MM월 dd일" />
-			</c:set>
-			<input type="text" class="form-control" id="me_birth" name="me_birth" value="${formattedBirth}" readonly>
-		</div>							
-		<div class="form-group">
-			<label for="me_phone">전화번호:</label>
-			<input type="text" class="form-control" id="me_phone" name="me_phone" value="${me.me_phone}" readonly>
-		</div>
-		<div class="form-group">
-			<label for="me_email">이메일:</label>
-			<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}" readonly>
-		</div>
-		<div class="form-group">
-			<label for="me_address">주소:</label> <br/>
-			<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:130px;" value="${me.me_postcode}" readonly>
-			<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" value="${me.me_address}" readonly> <br/>
-			<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${me.me_detailAddress}" readonly>
-			<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${me.me_extraAddress}" readonly>
-		</div>
-		
-		<div class="form-group">
-			<label>노쇼 경고 횟수: </label>
-		    <div class="d-flex">
-		        <input type="text" class="form-control mr-2" id="noshow-count" value="${me.me_noshow}" readonly style="width: 130px;">
-		        <button type="button" class="btn btn-danger btn-sm mr-2" id="btn-noshow-minus" style="width: 30px;">-</button>
-		        <button type="button" class="btn btn-danger btn-sm mr-2" id="btn-noshow-plus" style="width: 30px;">+</button>
-		        <button type="button" class="btn btn-warning btn-sm" id="btn-noshow-reset" style="width: 60px;">초기화</button>
-		    </div>
-		</div>
-		<div class="form-group">
-			<label>노쇼 제한시간: </label>
-			<input type="text" class="form-control" id="noshow-limit-time" value="<fmt:formatDate value='${me.me_cancel}' pattern='yyyy/MM/dd HH:mm:ss' />" readonly>
-		</div>	
-				
-		<hr>
-		
-		<div class="text-right mb-3">
-			<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger">뒤로가기</a>
-		</div>
-	</div>
+
+	<div class="container-fluid">
+	    <div class="row">
+	        <!-- 왼쪽 사이드바 -->
+	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+	            <div class="sidebar-sticky">
+	                <h4 class="sidebar-heading mt-3">지점관리자 메뉴</h4>
+	                <ul class="nav flex-column">
+	                    <li class="nav-item">
+	                        <a href="<c:url value="/admin/program/list"/>" class="btn btn-outline-info mb-2">프로그램관리</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-info mb-2">프로그램일정관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/order/list"/>" class="btn btn-outline-info mb-2">운동기구 발주목록</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-info mb-2">직원관리</a>
+	                    </li>
+						<li class="nav-item active">
+	                        <a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-info mb-2">회원관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/branch/detail"/>" class="btn btn-outline-info mb-2">지점 상세보기</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/equipment/list"/>" class="btn btn-outline-info mb-2">운동기구 보유목록</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/equipment/change"/>" class="btn btn-outline-info mb-2">운동기구 재고 변동내역</a>
+	                    </li>	                    	                    	                    	                    	                    
+	                </ul>
+	            </div>
+	        </nav>
+	
+	        <!-- 오른쪽 컨텐츠 영역 -->
+	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+	            <div class="pt-3 pb-2 mb-3">
+					<h2 class="mt-3 mb-3">${me.me_name} 회원 상세</h2>
+					<div class="container" style="margin-top:30px">
+						<div class="form-group">
+							<label for="me_id">아이디:</label>
+							<input type="text" class="form-control" id="me_id" name="me_id" value="${me.me_id}" readonly>
+						</div>
+						<div class="form-group">
+							<label for="me_name">이름:</label>
+							<input type="text" class="form-control" id="me_name" name="me_name" value="${me.me_name}" readonly>
+						</div>	
+						<div class="form-group">
+							<label for="me_gender">성별:</label>
+							<input type="text" class="form-control" id="me_gender" name="me_gender" value="${me.me_gender}" readonly>
+						</div>		
+						<div class="form-group">
+							<label for="me_birth">생년월일:</label>
+							<c:set var="formattedBirth">
+							    <fmt:formatDate value="${me.me_birth}" pattern="yyyy년 MM월 dd일" />
+							</c:set>
+							<input type="text" class="form-control" id="me_birth" name="me_birth" value="${formattedBirth}" readonly>
+						</div>							
+						<div class="form-group">
+							<label for="me_phone">전화번호:</label>
+							<input type="text" class="form-control" id="me_phone" name="me_phone" value="${me.me_phone}" readonly>
+						</div>
+						<div class="form-group">
+							<label for="me_email">이메일:</label>
+							<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}" readonly>
+						</div>
+						<div class="form-group">
+							<label for="me_address">주소:</label> <br/>
+							<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:130px;" value="${me.me_postcode}" readonly>
+							<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" value="${me.me_address}" readonly> <br/>
+							<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${me.me_detailAddress}" readonly>
+							<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${me.me_extraAddress}" readonly>
+						</div>
+						
+						<div class="form-group">
+							<label>노쇼 경고 횟수: </label>
+						    <div class="d-flex">
+						        <input type="text" class="form-control mr-2" id="noshow-count" value="${me.me_noshow}" readonly style="width: 130px;">
+						        <button type="button" class="btn btn-danger btn-sm mr-2" id="btn-noshow-minus" style="width: 30px;">-</button>
+						        <button type="button" class="btn btn-danger btn-sm mr-2" id="btn-noshow-plus" style="width: 30px;">+</button>
+						        <button type="button" class="btn btn-warning btn-sm" id="btn-noshow-reset" style="width: 60px;">초기화</button>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label>노쇼 제한시간: </label>
+							<input type="text" class="form-control" id="noshow-limit-time" value="<fmt:formatDate value='${me.me_cancel}' pattern='yyyy/MM/dd HH:mm:ss' />" readonly>
+						</div>	
+								
+						<hr>
+						
+						<div class="text-right mb-3">
+							<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger">뒤로가기</a>
+						</div>
+					</div>
+	                
+	            </div>
+	        </main>
+	    </div>
+	</div>	
+
 
 	<script>
 	    // - 버튼 클릭 시

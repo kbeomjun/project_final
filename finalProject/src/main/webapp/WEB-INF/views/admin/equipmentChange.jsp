@@ -9,37 +9,81 @@
 </head>
 <body>
 
-	<h1 class="mt-3 mb-3">${br_name} 재고 변동내역</h1>
-	<table class="table text-center">
-		<thead>
-			<tr>
-				<th>운동기구명</th>
-				<th>제조년월일</th>
-				<th>수량</th>
-				<th>기록날짜</th>
-				<th>기록유형</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${equipmentChange}" var="change">
-				<tr>
-					<td>${change.be_se_name}</td>
-					<td>
-						<fmt:formatDate value="${change.be_birth}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td>${change.be_amount}</td>
-					<td>
-						<fmt:formatDate value="${change.be_record}" pattern="yyyy-MM-dd"/>
-					</td>
-					<td>${change.be_type}</td>
-				</tr>
-			</c:forEach>
-			<c:if test="${equipmentChange.size() eq 0}">
-				<tr>
-					<th class="text-center" colspan="5">변동내역이 없습니다.</th>							
-				</tr>
-			</c:if>
-		</tbody>
-	</table>
+	<div class="container-fluid">
+	    <div class="row">
+	        <!-- 왼쪽 사이드바 -->
+	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+	            <div class="sidebar-sticky">
+	                <h4 class="sidebar-heading mt-3">지점관리자 메뉴</h4>
+	                <ul class="nav flex-column">
+	                    <li class="nav-item">
+	                        <a href="<c:url value="/admin/program/list"/>" class="btn btn-outline-info mb-2">프로그램관리</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-info mb-2">프로그램일정관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/order/list"/>" class="btn btn-outline-info mb-2">운동기구 발주목록</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-info mb-2">직원관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-info mb-2">회원관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/branch/detail"/>" class="btn btn-outline-info mb-2">지점 상세보기</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a href="<c:url value="/admin/equipment/list"/>" class="btn btn-outline-info mb-2">운동기구 보유목록</a>
+	                    </li>
+						<li class="nav-item active">
+	                        <a href="<c:url value="/admin/equipment/change"/>" class="btn btn-outline-info mb-2">운동기구 재고 변동내역</a>
+	                    </li>	                    	                    	                    	                    	                    
+	                </ul>
+	            </div>
+	        </nav>
+	
+	        <!-- 오른쪽 컨텐츠 영역 -->
+	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+	            <div class="pt-3 pb-2 mb-3">
+					<h2 class="mt-3 mb-3">${br_name} 재고 변동내역</h2>
+					<table class="table text-center">
+						<thead>
+							<tr>
+								<th>운동기구명</th>
+								<th>제조년월일</th>
+								<th>수량</th>
+								<th>기록날짜</th>
+								<th>기록유형</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${equipmentChange}" var="change">
+								<tr>
+									<td>${change.be_se_name}</td>
+									<td>
+										<fmt:formatDate value="${change.be_birth}" pattern="yyyy-MM-dd"/>
+									</td>
+									<td>${change.be_amount}</td>
+									<td>
+										<fmt:formatDate value="${change.be_record}" pattern="yyyy-MM-dd"/>
+									</td>
+									<td>${change.be_type}</td>
+								</tr>
+							</c:forEach>
+							<c:if test="${equipmentChange.size() eq 0}">
+								<tr>
+									<th class="text-center" colspan="5">변동내역이 없습니다.</th>							
+								</tr>
+							</c:if>
+						</tbody>
+					</table>
+	                
+	            </div>
+	        </main>
+	    </div>
+	</div>	
+
 </body>
 </html>
