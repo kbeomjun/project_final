@@ -23,6 +23,7 @@ import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.HQService;
@@ -206,5 +207,34 @@ public class HQController {
 		model.addAttribute("url", "/hq/order/list");
 		model.addAttribute("msg", msg);
 	    return "/main/message";
+	}
+	
+	@GetMapping("/paymentType/list")
+	public String paymentTypeList(Model model) {
+		List<PaymentTypeVO> ptList = hqService.getPaymentTypeList();
+		model.addAttribute("ptList", ptList);
+	    return "/hq/paymentType/list";
+	}
+	@PostMapping("/paymentType/insert")
+	public String paymentTypeInsert(Model model, PaymentTypeVO pt) {
+		String msg = hqService.insertPaymentType(pt);
+		model.addAttribute("url", "/hq/paymentType/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	@ResponseBody
+	@GetMapping("/paymentType/data")
+	public Map<String, Object> paymentTypeData(@RequestParam int pt_num, PaymentTypeVO ptVo) {
+		PaymentTypeVO pt = hqService.getPaymentType(ptVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pt", pt);
+		return map;
+	}
+	@PostMapping("/paymentType/update")
+	public String paymentTypeUpdate(Model model, PaymentTypeVO pt) {
+		String msg = hqService.updatePaymentType(pt);
+		model.addAttribute("url", "/hq/paymentType/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 }

@@ -1,5 +1,6 @@
 package kr.kh.fitness.service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
@@ -331,6 +333,40 @@ public class HQServiceImp implements HQService {
 		
 		bo.setBo_state("거부");
 		hqDao.updateBranchOrderState(bo);
+		return msg;
+	}
+
+	@Override
+	public List<PaymentTypeVO> getPaymentTypeList() {
+		List<PaymentTypeVO> ptList = hqDao.selectPaymentTypeList();
+		for(int i = 0; i < ptList.size(); i++) {
+			DecimalFormat df = new DecimalFormat("###,###");
+			String formattedPrice = df.format(ptList.get(i).getPt_price());
+			ptList.get(i).setFormattedPrice(formattedPrice);
+		}
+		return ptList;
+	}
+
+	@Override
+	public String insertPaymentType(PaymentTypeVO pt) {
+		String msg = "";
+		if(pt == null) {msg = "회원권 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.insertPaymentType(pt)) {msg = "회원권을 등록하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public PaymentTypeVO getPaymentType(PaymentTypeVO pt) {return hqDao.selectPaymentType(pt);}
+
+	@Override
+	public String updatePaymentType(PaymentTypeVO pt) {
+		String msg = "";
+		if(pt == null) {msg = "회원권 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.updatePaymentType(pt)) {msg = "회원권을 수정하지 못했습니다.";}
 		return msg;
 	}
 }
