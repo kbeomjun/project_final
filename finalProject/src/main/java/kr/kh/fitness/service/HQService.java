@@ -54,4 +54,6 @@ public interface HQService {
 	List<BranchOrderVO> getBranchOrderList();
 
 	String acceptOrder(int bo_num);
+
+	String denyOrder(int bo_num);
 }

@@ -1,5 +1,6 @@
 package kr.kh.fitness.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +180,7 @@ public class HQController {
 	@ResponseBody
 	@PostMapping("/stock/insert")
 	public Map<String, Object> stockInsertPost(@RequestParam String be_se_name, @RequestParam String be_amount) {
-		BranchEquipmentStockVO be = new BranchEquipmentStockVO(be_se_name, be_amount, "입고");
+		BranchEquipmentStockVO be = new BranchEquipmentStockVO(Integer.parseInt(be_amount), new Date(), "입고", "본사", be_se_name);
 		String msg = hqService.insertBranchEquipmentStock(be);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msg", msg);
@@ -195,6 +196,13 @@ public class HQController {
 	@GetMapping("/order/accept/{bo_num}")
 	public String orderAccpet(Model model, @PathVariable("bo_num") int bo_num) {
 		String msg = hqService.acceptOrder(bo_num);
+		model.addAttribute("url", "/hq/order/list");
+		model.addAttribute("msg", msg);
+	    return "/main/message";
+	}
+	@GetMapping("/order/deny/{bo_num}")
+	public String orderDeny(Model model, @PathVariable("bo_num") int bo_num) {
+		String msg = hqService.denyOrder(bo_num);
 		model.addAttribute("url", "/hq/order/list");
 		model.addAttribute("msg", msg);
 	    return "/main/message";

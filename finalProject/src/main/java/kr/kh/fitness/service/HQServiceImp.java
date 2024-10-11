@@ -258,8 +258,10 @@ public class HQServiceImp implements HQService {
 	@Override
 	public String acceptOrder(int bo_num) {
 		String msg = "";
-		
 		BranchOrderVO bo = hqDao.selectBranchOrder(bo_num);
+		if(bo == null) {msg = "발주 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
 		BranchStockDTO st = hqDao.selectBranchStock(bo);
 		if(st.getBe_se_total() < bo.getBo_amount()) {msg = "재고가 부족합니다.";}
 		if(!msg.equals("")) {return msg;}
@@ -270,52 +272,66 @@ public class HQServiceImp implements HQService {
 		for(int i = 0; i < beStockList.size(); i++) {
 			if(index == beReleaseList.size()) {break;}
 			
-			int a = beStockList.get(i).getBe_amount();
-			while(true) {
-				if(a > -beReleaseList.get(index).getBe_amount()) {
-					beStockList.get(i).setBe_amount(a + beReleaseList.get(index).getBe_amount());
+			int amount1 = beStockList.get(i).getBe_amount();
+			while(amount1 > 0) {
+				if(amount1 > -beReleaseList.get(index).getBe_amount()) {
+					beStockList.get(i).setBe_amount(amount1 + beReleaseList.get(index).getBe_amount());
 					beReleaseList.get(index).setBe_amount(0);
+					amount1 = beStockList.get(i).getBe_amount();
 					index++;
 				}else if(beStockList.get(i).getBe_amount() == -beReleaseList.get(index).getBe_amount()) {
 					beStockList.get(i).setBe_amount(0);
 					beReleaseList.get(index).setBe_amount(0);
+					amount1 = 0;
 					index++;
 				}else {
 					beStockList.get(i).setBe_amount(0);
-					beReleaseList.get(index).setBe_amount(beReleaseList.get(index).getBe_amount() + a);
+					beReleaseList.get(index).setBe_amount(beReleaseList.get(index).getBe_amount() + amount1);
+					amount1 = 0;
 					break;
 				}
 				if(index == beReleaseList.size()) {break;}
 			}
 		}
 		
-		System.out.println(beStockList);
-		
-		int amount = bo.getBo_amount();
+		int amount2 = bo.getBo_amount();
 		for(int i = 0; i < beStockList.size(); i++) {
 			if(beStockList.get(i).getBe_amount() == 0 ) {continue;}
 			
-			if(amount == 0) {break;}
+			if(amount2 == 0) {break;}
 			
-			if(amount >= beStockList.get(i).getBe_amount()) {
+			if(amount2 >= beStockList.get(i).getBe_amount()) {
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
 													"출고", "본사", bo.getBo_se_name()));
-				amount -= beStockList.get(i).getBe_amount();
+				amount2 -= beStockList.get(i).getBe_amount();
 			}else {
 				hqDao.insertBranchEquipmentStock(
-						new BranchEquipmentStockVO(amount, beStockList.get(i).getBe_birth(), 
+						new BranchEquipmentStockVO(amount2, beStockList.get(i).getBe_birth(), 
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
-						new BranchEquipmentStockVO(-amount, beStockList.get(i).getBe_birth(), 
+						new BranchEquipmentStockVO(-amount2, beStockList.get(i).getBe_birth(), 
 													"출고", "본사", bo.getBo_se_name()));
-				amount = 0;
+				amount2 = 0;
 			}
 		}
 		
+		bo.setBo_state("승인");
+		hqDao.updateBranchOrderState(bo);
+		return msg;
+	}
+
+	@Override
+	public String denyOrder(int bo_num) {
+		String msg = "";
+		BranchOrderVO bo = hqDao.selectBranchOrder(bo_num);
+		if(bo == null) {msg = "발주 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		bo.setBo_state("거부");
 		hqDao.updateBranchOrderState(bo);
 		return msg;
 	}
