@@ -9,17 +9,20 @@ import kr.kh.fitness.dao.PaymentDAO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentCategoryVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 
 @Service
 public class PaymentServiceImp implements PaymentService{
 	
 	@Autowired
 	private PaymentDAO paymentDao;
-
+	
+	// 결제 리스트
 	public List<PaymentTypeVO> getMembershipList() {
 		return paymentDao.selectMembershipList();
 	}
 
+	// 결제 추가
 	@Override
 	public boolean insertPayment(PaymentTypeVO payment, PaymentCategoryVO category, String formattedDateTime, MemberVO user) {
 		if(payment.getPt_num() == 0
@@ -48,6 +51,22 @@ public class PaymentServiceImp implements PaymentService{
 	    }
 		
 		return paymentDao.insertPayment(payment, category, formattedDateTime, user);
+	}
+	
+
+	// user id와 pt_num을 주고 기존 결제 정보를 조회
+	@Override
+	public PaymentVO getLastPaymentByUserId(String userId, int pt_num) {
+		if(userId == null) {
+			return null;
+		}
+		return paymentDao.getLastPaymentByUserId(userId, pt_num);
+	}
+	
+	// 결제 업데이트
+	@Override
+	public boolean updatePayment(PaymentVO existingPayment) {
+		return paymentDao.updatePayment(existingPayment);
 	}
 
 }

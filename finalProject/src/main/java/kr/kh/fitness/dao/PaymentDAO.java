@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentCategoryVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 
 public interface PaymentDAO {
 
@@ -15,5 +16,9 @@ public interface PaymentDAO {
 	boolean insertPayment(@Param("pt")PaymentTypeVO payment, @Param("pc")PaymentCategoryVO category, @Param("end")String formattedDateTime, @Param("me")MemberVO user);
 
 	boolean insertPaymentCategory(@Param("pt")PaymentTypeVO payment, @Param("pc")PaymentCategoryVO category, @Param("me")MemberVO user);
+
+	PaymentVO getLastPaymentByUserId(@Param("me_id")String userId, @Param("pt_num")int pt_num);
+
+	boolean updatePayment(@Param("pa")PaymentVO existingPayment);
 
 }
