@@ -467,7 +467,7 @@ dl, ol, ul{
 
 /* main_container */
 .main_container, .sub_container{
-  min-height: calc(100vh - 524px);
+  min-height: calc(100vh);
 }
 .main_banner_wrap{
 
