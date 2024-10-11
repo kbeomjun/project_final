@@ -21,7 +21,14 @@
 					<li class="gnb__item"><a href="<c:url value="/client/menu/list" />" class="gnb__link">고객센터</a></li>
 					<li class="gnb__item"><a href="<c:url value="/admin/menu/list"/>" class="gnb__link">지점관리</a></li>
 					<li class="gnb__item"><a href="<c:url value="/hq/branch/list"/>" class="gnb__link">본사관리</a></li>
-					<li class="gnb__item"><a href="<c:url value="/login"/>" class="gnb__link">로그인</a></li>
+					<c:choose>
+		                <c:when test="${not empty sessionScope.user}">
+		                    <li class="gnb__item"><a href="<c:url value='/logout'/>" class="gnb__link">로그아웃</a></li>
+		                </c:when>
+		                <c:otherwise>
+		                    <li class="gnb__item"><a href="<c:url value='/login'/>" class="gnb__link">로그인</a></li>
+		                </c:otherwise>
+		            </c:choose>
 				</ul>
 				<div class="gnb_side">
 					<a href="javascript:void(0)" class="gnb_side__link js-gnb_side__link">
