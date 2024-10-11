@@ -47,20 +47,21 @@ public class ProgramServiceImp implements ProgramService {
 
 	@Override
 	public ProgramReservationMessage addProgramReservation(MemberVO user, Integer bs_num) {
-		
-		ProgramReservationMessage rm = new ProgramReservationMessage();
-		
-		user = new MemberVO();
-		user.setMe_id("user1");
 
-//		if(user == null) {
-//			return false;
-//		}
+		ProgramReservationMessage rm = new ProgramReservationMessage();
+
+		if (user == null) {
+			rm.setResult(false);
+			rm.setMessage("로그인이 되어 있지 않습니다.");
+			return rm;
+		}
 
 		// noshow 횟수가 초과되지 않았는지 확인
-//		if (user.getMe_noshow() >= 5) {
-//			return false;
-//		}
+		if (user.getMe_noshow() >= 5) {
+			rm.setResult(false);
+			rm.setMessage("노쇼 누적 5회로 예약이 불가능 합니다.");
+			return rm;
+		}
 
 		// bs_num으로 bps를 불러온다.
 		BranchProgramScheduleVO bps = programDao.selectBranchProgramSchedule(bs_num);
@@ -77,8 +78,9 @@ public class ProgramServiceImp implements ProgramService {
 
 		// 회원의 예약 리스트
 		List<ProgramReservationVO> pr_list = programDao.selectProgramReservationList(user);
-		
-		// System.out.println("bps.getBs_start().getTime() :" +bps.getBs_start() +"/"+ bps.getBs_start().getTime());
+
+		// System.out.println("bps.getBs_start().getTime() :" +bps.getBs_start() +"/"+
+		// bps.getBs_start().getTime());
 		// 기존 예약 리스트에서 동일한 시간에 예약이 있는 지 확인
 		for (ProgramReservationVO prev_pr : pr_list) {
 			BranchProgramScheduleVO prev_pr_bps = programDao.selectBranchProgramSchedule(prev_pr.getPr_bs_num());
@@ -86,7 +88,7 @@ public class ProgramServiceImp implements ProgramService {
 			if (prev_pr_bps.getBs_end().getTime() < bps.getBs_start().getTime()) {
 				continue;
 			}
-			
+
 			// 기존에 예약된 프로그램의 끝나는 시간이 현재 예약하려는 프로그램의 시작 시간이 같다면 같은 지점만 가능
 			if (prev_pr_bps.getBs_end().getTime() == bps.getBs_start().getTime()) {
 				if (prev_pr_bps.getBs_bp_num() == bps.getBs_bp_num())
@@ -97,7 +99,7 @@ public class ProgramServiceImp implements ProgramService {
 			if (prev_pr_bps.getBs_start().getTime() > bps.getBs_end().getTime()) {
 				continue;
 			}
-			
+
 			// 기존에 예약된 프로그램의 시작 시간이 현재 예약하려는 프로그램의 끝나는 시간과 같다면 같은 지점만 가능
 			if (prev_pr_bps.getBs_start().getTime() == bps.getBs_end().getTime()) {
 				if (prev_pr_bps.getBs_bp_num() == bps.getBs_bp_num())
@@ -125,7 +127,7 @@ public class ProgramServiceImp implements ProgramService {
 			rm.setMessage("예약 등록중 에러 발생");
 			return rm;
 		}
-		
+
 		rm.setResult(true);
 		rm.setMessage("예약 등록 성공");
 		return rm;
@@ -133,26 +135,26 @@ public class ProgramServiceImp implements ProgramService {
 
 	@Override
 	public boolean checkReservation(MemberVO user, int bs_num) {
-		
+
 		user = new MemberVO();
 		user.setMe_id("user1");
-		
+
 //		if(user == null) {
 //			return false;
 //		}
-		
+
 		ProgramReservationVO pr = programDao.selectProgramReservation(user, bs_num);
-		
-		if(pr == null) {
+
+		if (pr == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	@Override
 	public List<String> getImageName(String pr_name) {
-		
+
 		return programDao.selectProgramFileList(pr_name);
 	}
 

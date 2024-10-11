@@ -21,6 +21,14 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4dc87d628f2e532b0812b9e9aae7b2fa&libraries=services,clusterer,drawing"></script>
+<style type="text/css">
+.swiper-slide {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+}
+
+</style>
 
 </head>
 <body>
@@ -52,7 +60,7 @@
 			<c:when test="${select ne null}">
 				<h3>${branch.br_name}</h3>
 				<hr>
-				<div class="branch-detail mb-3">
+				<div class="branch-detail mb-5">
 					<div class="branch-tab">
 						<ul>
 							<li><a class="btn ${opt_num == 1 ? 'active' : ''}"
@@ -91,7 +99,10 @@
 									<p class="address">${branch.br_address},
 										${branch.br_detailAddress} ${branch.br_extraAddress}</p>
 									<hr>
-									<dl>
+									<div>
+									${branch.br_detail}
+									</div>
+<!-- 									<dl>
 										<dt>평일</dt>
 										<dd>06:00 ~ 23:00</dd>
 										<dt>토요일</dt>
@@ -100,7 +111,7 @@
 										<dd>09:00 ~ 18:00</dd>
 										<dt>정기휴일</dt>
 										<dd>매월 첫째, 셋째 일요일</dd>
-									</dl>
+									</dl> -->
 									<br> <span class="phone" style="font-size: 16px;">
 										<c:choose>
 											<c:when test="${fn:length(branch.br_phone) == 10}">
@@ -313,7 +324,7 @@
 				loop: true,
 				slidesPerView: 1,
 				watchOverflow: true,
-				spaceBetween: 1500,
+				spaceBetween: 10,
 				navigation: {
 				    nextEl: '.swiper-button-next',
 				    prevEl: '.swiper-button-prev',
@@ -325,29 +336,23 @@
 		  	  	}
 			  	
 			});
+		
+		// 이미지가 1개일 경우 Next, Prev 버튼 숨기기
+		const totalSlides = mySwiper.slides.length; // 전체 슬라이드 수
+
+	    if (totalSlides === 1) {
+	        document.querySelector('.swiper-button-next').style.display = 'none'; // Next 버튼 숨기기
+	        document.querySelector('.swiper-button-prev').style.display = 'none'; // Prev 버튼 숨기기
+	    } else {
+	        document.querySelector('.swiper-button-next').style.display = 'flex'; // Next 버튼 보이기
+	        document.querySelector('.swiper-button-prev').style.display = 'flex'; // Prev 버튼 보이기
+	    }
+		
 		// Swiper 슬라이드를 업데이트
 	    mySwiper.update();
 	}	
-	// 마지막 이미지에서 "Next" 버튼 숨기기
-	mySwiper.on('slideChange', function () {
-	    const currentIndex = mySwiper.realIndex; // 현재 슬라이드 인덱스
-	    const totalSlides = mySwiper.slides.length; // 전체 슬라이드 수
+
 	
-	    // 마지막 슬라이드에서 "Next" 버튼 숨기기
-	    if (currentIndex === totalSlides - 1) {
-	        document.querySelector('.swiper-button-next').style.display = 'none'; // Next 버튼 숨기기
-	    } else {
-	        document.querySelector('.swiper-button-next').style.display = 'flex'; // Next 버튼 보이기
-	    }
-	    
-	    // 첫 번째 슬라이드에서 "Prev" 버튼 숨기기
-	    if (currentIndex === 0) {
-	        document.querySelector('.swiper-button-prev').style.display = 'none'; // Prev 버튼 숨기기
-	    } else {
-	        document.querySelector('.swiper-button-prev').style.display = 'flex'; // Prev 버튼 보이기
-	
-		}	
-	});
 	/* // 커스텀 페이지네이션 버튼 클릭 시 첫 번째 슬라이드로 이동
 	document.querySelector('.swiper-pagination').addEventListener('click',
 	
