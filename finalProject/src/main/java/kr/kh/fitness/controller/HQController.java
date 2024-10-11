@@ -143,7 +143,8 @@ public class HQController {
 		return map;
 	}
 	@PostMapping("/equipment/update")
-	public String equipmentUpdatePost1(Model model, String se_ori_name, SportsEquipmentVO se, MultipartFile file2, String isDel) {
+	public String equipmentUpdatePost1(Model model, String se_ori_name, 
+										SportsEquipmentVO se, MultipartFile file2, String isDel) {
 		String msg = hqService.updateSportsEquipment(se, file2, se_ori_name, isDel);
 		model.addAttribute("url", "/hq/equipment/list");
 		model.addAttribute("msg", msg);
