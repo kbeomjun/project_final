@@ -273,7 +273,7 @@ public class HQServiceImp implements HQService {
 		
 		be.setBe_birth(new Date());
 		be.setBe_type("입고");
-		be.setBe_br_name("본사");
+		be.setBe_br_name("본점");
 		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
 		return msg;
 	}
@@ -332,7 +332,7 @@ public class HQServiceImp implements HQService {
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
-													"출고", "본사", bo.getBo_se_name()));
+													"출고", "본점", bo.getBo_se_name()));
 				amount2 -= beStockList.get(i).getBe_amount();
 			}else {
 				hqDao.insertBranchEquipmentStock(
@@ -340,12 +340,12 @@ public class HQServiceImp implements HQService {
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-amount2, beStockList.get(i).getBe_birth(), 
-													"출고", "본사", bo.getBo_se_name()));
+													"출고", "본점", bo.getBo_se_name()));
 				amount2 = 0;
 			}
 		}
 		
-		bo.setBo_state("승인");
+		bo.setBo_state("입고완료");
 		hqDao.updateBranchOrderState(bo);
 		return msg;
 	}
@@ -357,7 +357,7 @@ public class HQServiceImp implements HQService {
 		if(bo == null) {msg = "발주 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		bo.setBo_state("거부");
+		bo.setBo_state("승인거절");
 		hqDao.updateBranchOrderState(bo);
 		return msg;
 	}
