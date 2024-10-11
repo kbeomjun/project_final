@@ -36,7 +36,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/payment/list"/>">회원권 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
@@ -181,7 +181,7 @@
 					for(var st of stList){
 						str += `
 							<div class="card box img-box" style="width:250px; cursor:pointer">
-					        	<img class="card-img-top" style="width:100%; height:100%" src="<c:url value="/uploads"/>\${st.be_se_fi_name}"></img>
+					        	<img class="card-img-top" style="width:100%; height:100%;" src="<c:url value="/uploads"/>\${st.be_se_fi_name}"></img>
 						    	<div class="img-name d-flex align-content-center">
 						      		<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
 						    	</div>

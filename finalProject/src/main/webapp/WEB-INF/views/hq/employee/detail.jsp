@@ -20,7 +20,7 @@
 		<form action="<c:url value="/hq/employee/update/${em.em_num}"/>" method="post" enctype="multipart/form-data" id="form">
 			<div class="form-group">
 				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-				    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%">
+				    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%; height:100%;">
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
@@ -113,7 +113,7 @@
 		    fReader.onloadend = function(event){
 		    	let path = event.target.result;
 		        img = `
-		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
+		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
 		        `;
 		        $('.card').append(img);
 		    }

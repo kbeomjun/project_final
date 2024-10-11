@@ -61,7 +61,7 @@
 		delete from branch_file where bf_num = #{bf.bf_num};
 	</delete>
 	
-	<update id="updatetAdmin">
+	<update id="updateAdmin">
 		update member set
 			me_id = #{me.me_id},      
 			me_pw = #{me.me_pw}, 
@@ -175,5 +175,27 @@
 	
 	<update id="updateBranchOrderState">
 		update branch_order	set bo_state = #{bo.bo_state} where bo_num = #{bo.bo_num};
+	</update>
+	
+	<select id="selectPaymentTypeList" resultType="PaymentTypeVO">
+		select * from payment_type order by pt_num;
+	</select>
+	
+	<insert id="insertPaymentType">
+		insert into payment_type(pt_type, pt_date, pt_count, pt_price)
+		values(#{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
+	</insert>
+	
+	<select id="selectPaymentType" resultType="PaymentTypeVO">
+		select * from payment_type where pt_num = #{pt.pt_num};
+	</select>
+	
+	<update id="updatePaymentType">
+		update payment_type set
+			pt_type = #{pt.pt_type},
+			pt_date = #{pt.pt_date},
+			pt_count = #{pt.pt_count},
+			pt_price = #{pt.pt_price}
+		where pt_num = #{pt.pt_num};
 	</update>
 </mapper>
