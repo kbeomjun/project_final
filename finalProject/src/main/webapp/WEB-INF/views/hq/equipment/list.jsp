@@ -7,7 +7,7 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:33.33%; height:200px; box-sizing: border-box; position: relative; margin: 20px 0;}
+    	.img-box{width:305px; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.btn-update{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
@@ -58,7 +58,7 @@
 			    </div>
 		    	<div class="img-container d-flex flex-wrap">
 		    		<c:forEach items="${seList}" var="se">
-						<div class="card img-box" style="width:250px; cursor:pointer">
+						<div class="card img-box">
 				        	<img class="card-img-top" src="<c:url value="/uploads${se.se_fi_name}"/>" style="width:100%; height:100%;">
 					        	<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-name="${se.se_name}">
 									<i class="fi fi-br-edit"></i>
