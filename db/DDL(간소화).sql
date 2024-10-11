@@ -158,8 +158,8 @@ CREATE TABLE `payment_type` (
     `pt_count`		int				not NULL,
 	`pt_price`		int				not NULL
 );
-DROP TABLE IF EXISTS `payment_category`;
 
+DROP TABLE IF EXISTS `payment_category`;
 CREATE TABLE `payment_category` (
 	`pc_num`			int 			primary key auto_increment NOT NULL,
 	`pc_imp_uid`		varchar(30)		NOT NULL,
@@ -270,6 +270,19 @@ ADD CONSTRAINT `FK_payment_member`
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
+ALTER TABLE `payment_category`
+ADD CONSTRAINT `FK_payment_category_payment_type`
+  FOREIGN KEY (`pc_pt_num`)
+  REFERENCES `payment_type` (`pt_num`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
+
+ALTER TABLE `payment_category`
+ADD CONSTRAINT `FK_payment_category_member`
+  FOREIGN KEY (`pc_me_id`)
+  REFERENCES `member` (`me_id`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
 
 ALTER TABLE `review_post` 
 ADD CONSTRAINT `FK_review_post_branch`
