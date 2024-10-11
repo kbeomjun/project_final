@@ -84,6 +84,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="error"></div>
 			<div class="form-group">
 				<label>
 					추가할 사진:
