@@ -57,35 +57,23 @@
 				        		<th>입사일</th>
 				        		<th>소속</th>
 				        		<th>직책</th>
-				        		<th>상세</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${emList}" var="em">
 						      	<tr>
-						        	<td>
-								        ${em.em_num}
-							        </td>
-							        <td>
-								        ${em.em_name}
-							        </td>
-							        <td>
-								        ${em.em_phone}
-							        </td>
-							        <td>
-								        ${em.em_email}
-							        </td>
-							        <td>
+						        	<td class="align-content-center">${em.em_num}</td>
+							        <td class="align-content-center">${em.em_name} </td>
+							        <td class="align-content-center">${em.em_phone}</td>
+							        <td class="align-content-center">${em.em_email}</td>
+							        <td class="align-content-center">
 							        	<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
 							        </td>
-							        <td>
-								        ${em.em_br_name}
-							        </td>
-							        <td>
-								        ${em.em_position}
-							        </td>
-						        	<td>
-						        		<a href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
+							        <td class="align-content-center">${em.em_br_name}</td>
+							        <td class="align-content-center">${em.em_position}</td>
+						        	<td class="align-content-center">
+						        		<a class="btn btn-outline-info" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
