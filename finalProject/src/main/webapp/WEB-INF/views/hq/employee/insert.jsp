@@ -29,7 +29,7 @@
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
-			<div class="error error-file"></div>
+			<div class="error error-file d-flex justify-content-center"></div>
 			<div class="form-group">
 				<label for="em_name">이름:</label>
 				<input type="text" class="form-control" id="em_name" name="em_name">

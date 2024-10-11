@@ -29,7 +29,7 @@
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
-			<div class="error error-file"></div>
+			<div class="error error-file d-flex justify-content-center"></div>
 			<div class="form-group">
 				<label for="se_name">기구명:</label>
 				<input type="text" class="form-control" id="se_name" name="se_name">
