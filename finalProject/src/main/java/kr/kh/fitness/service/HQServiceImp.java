@@ -42,7 +42,13 @@ public class HQServiceImp implements HQService {
 		if(admin == null) {msg = "관리자 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		if(!hqDao.insertBranch(branch)) {msg = "지점을 등록하지 못했습니다.";}
+		
+		try {
+			if(!hqDao.insertBranch(branch)) {msg = "지점을 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "지점명 중복으로 등록하지 못했습니다.";
+		}
 		if(!msg.equals("")) {return msg;}
 		for(MultipartFile file : fileList) {
 			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
@@ -54,7 +60,12 @@ public class HQServiceImp implements HQService {
 		admin.setMe_address(branch.getBr_address());
 		admin.setMe_detailAddress(branch.getBr_detailAddress());
 		admin.setMe_extraAddress(branch.getBr_extraAddress());
-		if(!hqDao.insertAdmin(admin)) {msg = "관리자를 등록하지 못했습니다.";}
+		try {
+			if(!hqDao.insertAdmin(admin)) {msg = "관리자를 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "관리자 아이디 중복으로 등록하지 못했습니다.";
+		}
 		return msg;
 	}
 	private void uploadBranchFile(MultipartFile file, String br_name) {
@@ -200,8 +211,12 @@ public class HQServiceImp implements HQService {
 		
 		String se_fi_name = uploadSportsEquipmentFile(file, se.getSe_name());
 		se.setSe_fi_name(se_fi_name);
-		
-		if(!hqDao.insertSportsEquipment(se)) {msg = "기구를 등록하지 못했습니다.";}
+		try {
+			if(!hqDao.insertSportsEquipment(se)) {msg = "기구를 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "기구명 중복으로 등록하지 못했습니다.";
+		}
 		return msg;
 	}
 	private String uploadSportsEquipmentFile(MultipartFile file, String se_fi_ori_name) {

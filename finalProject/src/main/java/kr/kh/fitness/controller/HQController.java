@@ -127,36 +127,25 @@ public class HQController {
 		model.addAttribute("seList", seList);
 	    return "/hq/equipment/list";
 	}
-	@GetMapping("/equipment/insert")
-	public String equipmentInsert() {
-	    return "/hq/equipment/insert";
-	}
 	@PostMapping("/equipment/insert")
 	public String equipmentInsertPost(Model model, SportsEquipmentVO se, MultipartFile file) {
 		String msg = hqService.insertSportsEquipment(se, file);
-		if(msg.equals("")) {
-			model.addAttribute("url", "/hq/equipment/list");
-		}else {
-			model.addAttribute("url", "/hq/equipment/insert");
-		}
+		model.addAttribute("url", "/hq/equipment/list");
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
-	@GetMapping("/equipment/update/{se_name}")
-	public String equipmentUpdate(Model model, @PathVariable("se_name") String se_name, SportsEquipmentVO seVo) {
+	@ResponseBody
+	@GetMapping("/equipment/data")
+	public Map<String, Object> equipmentData(@RequestParam String se_name, SportsEquipmentVO seVo) {
 		SportsEquipmentVO se = hqService.getSportsEquipment(seVo);
-		model.addAttribute("se", se);
-	    return "/hq/equipment/update";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("se", se);
+		return map;
 	}
-	@PostMapping("/equipment/update/{se_ori_name}")
-	public String equipmentUpdatePost(Model model, @PathVariable("se_ori_name") String se_ori_name, 
-										SportsEquipmentVO se, MultipartFile file, String isDel) {
-		String msg = hqService.updateSportsEquipment(se, file, se_ori_name, isDel);
-		if(msg.equals("")) {
-			model.addAttribute("url", "/hq/equipment/update/" + se.getSe_name());
-		}else {
-			model.addAttribute("url", "/hq/equipment/update/" + se_ori_name);
-		}
+	@PostMapping("/equipment/update")
+	public String equipmentUpdatePost1(Model model, String se_ori_name, SportsEquipmentVO se, MultipartFile file2, String isDel) {
+		String msg = hqService.updateSportsEquipment(se, file2, se_ori_name, isDel);
+		model.addAttribute("url", "/hq/equipment/list");
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}

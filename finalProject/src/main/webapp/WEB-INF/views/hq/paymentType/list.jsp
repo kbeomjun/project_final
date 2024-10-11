@@ -200,6 +200,14 @@
 				$('.error-price').children().remove();	
 			}
 		});
+		$('#form').submit(function(){
+			$('.error').children().remove();
+			let flag1 = check("type");
+			let flag2 = check("date");
+			let flag3 = check("count");
+			let flag4 = check("price");
+			return flag1 && flag2 && flag3 && flag4;
+		});
 		
 		$('#pt_type2').keyup(function(){
 			$('.error-type2').children().remove();
@@ -237,16 +245,6 @@
 				$('.error-price2').children().remove();	
 			}
 		});
-		
-		
-		$('#form').submit(function(){
-			$('.error').children().remove();
-			let flag1 = check("type");
-			let flag2 = check("date");
-			let flag3 = check("count");
-			let flag4 = check("price");
-			return flag1 && flag2 && flag3 && flag4;
-		});
 		$('#form2').submit(function(){
 			$('.error').children().remove();
 			let flag1 = check("type2");
@@ -255,6 +253,7 @@
 			let flag4 = check("price2");
 			return flag1 && flag2 && flag3 && flag4;
 		});
+		
 		function check(str){
 			$('.error-'+str).children().remove();
 			
