@@ -1,5 +1,6 @@
 package kr.kh.fitness.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +180,8 @@ public class HQController {
 	@ResponseBody
 	@PostMapping("/stock/insert")
 	public Map<String, Object> stockInsertPost(@RequestParam String be_se_name, @RequestParam String be_amount) {
-		BranchEquipmentStockVO be = new BranchEquipmentStockVO(be_se_name, be_amount, "입고");
+		Date now = new Date();
+		BranchEquipmentStockVO be = new BranchEquipmentStockVO(Integer.parseInt(be_amount), now, "입고", "본사", be_se_name);
 		String msg = hqService.insertBranchEquipmentStock(be);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("msg", msg);

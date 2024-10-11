@@ -155,12 +155,7 @@
 	
 	<insert id="insertBranchEquipmentStock">
 		insert into branch_equipment_stock(be_amount, be_birth, be_record, be_type, be_br_name, be_se_name)
-		<if test="be.be_br_name == null">
-			values(#{be.be_amount}, current_timestamp(), current_timestamp(), #{be.be_type}, "본사", #{be.be_se_name});
-		</if>
-		<if test="be.be_br_name != null">
-			values(#{be.be_amount}, #{be.be_birth}, current_timestamp(), #{be.be_type}, #{be.be_br_name}, #{be.be_se_name});
-		</if>
+		values(#{be.be_amount}, #{be.be_birth}, current_timestamp(), #{be.be_type}, #{be.be_br_name}, #{be.be_se_name});
 	</insert>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
