@@ -1,5 +1,6 @@
 package kr.kh.fitness.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,9 +42,8 @@ public class HQServiceImp implements HQService {
 		
 		if(!hqDao.insertBranch(branch)) {msg = "지점을 등록하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
-
 		for(MultipartFile file : fileList) {
-			uploadBranchFile(file, branch.getBr_name());
+			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
 		admin.setMe_name(branch.getBr_name());
@@ -85,7 +85,6 @@ public class HQServiceImp implements HQService {
 		
 		if(!hqDao.updateBranch(branch, br_ori_name)) {msg = "지점을 수정하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
-		
 		if(numList != null) {
 			for(int i = 0; i < numList.length; i++) {
 				int bf_num = Integer.parseInt(numList[i]);
@@ -96,7 +95,7 @@ public class HQServiceImp implements HQService {
 			}
 		}
 		for(MultipartFile file : fileList) {
-			uploadBranchFile(file, branch.getBr_name());
+			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
 		admin.setMe_name(branch.getBr_name());
