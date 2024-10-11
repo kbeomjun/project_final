@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +31,8 @@ public class HQServiceImp implements HQService {
 	HQDAO hqDao;
 	@Resource
 	String uploadPath;
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
@@ -54,6 +57,8 @@ public class HQServiceImp implements HQService {
 			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
+		String encPw = passwordEncoder.encode(admin.getMe_pw());
+		admin.setMe_pw(encPw);
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		admin.setMe_postcode(branch.getBr_postcode());
@@ -111,6 +116,8 @@ public class HQServiceImp implements HQService {
 			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
+		String encPw = passwordEncoder.encode(admin.getMe_pw());
+		admin.setMe_pw(encPw);
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		admin.setMe_address(branch.getBr_address());
