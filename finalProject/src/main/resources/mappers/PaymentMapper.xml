@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.fitness.dao.PaymentDAO">
+	<select id="selectMembershipList" resultType="PaymentTypeVO">
+		select * from payment_type
+	</select>
+	<insert id="insertPayment">
+		insert into payment(pa_price, pa_start, pa_end, pa_state, pa_me_id, pa_pt_num)
+		values(#{pt.pt_price}, now(), #{end}, #{pc.pc_status}, #{me.me_id}, #{pt.pt_num});
+	</insert>
+	<insert id="insertPaymentCategory">
+		insert into payment_category (pc_imp_uid, pc_merchant_uid, pc_amount, pc_status, pc_paid_at, pc_card_name, pc_card_number, pc_card_quota, pc_pt_num, pc_me_id)
+		values(#{pc.pc_imp_uid}, #{pc.pc_merchant_uid}, #{pc.pc_amount}, #{pc.pc_status}, #{pc.pc_paid_at}, #{pc.pc_card_name}, #{pc.pc_card_number}, #{pc.pc_card_quota}, #{pt.pt_num}, #{me.me_id})
+	</insert>
+	
+	<select id="getLastPaymentByUserId" resultType="PaymentVO">
+	    SELECT pa.*
+		FROM payment pa
+		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
+		WHERE pa.pa_me_id = #{me_id}
+		  AND pa.pa_pt_num = #{pt_num}
+		ORDER BY pa.pa_date DESC
+		LIMIT 1;
+	</select>
+
+	
+	<update id="updatePayment">
+	    UPDATE payment pa
+	    JOIN (
+	        SELECT MAX(pa_num) AS max_pa_num
+	        FROM payment
+	        WHERE pa_me_id = #{pa.pa_me_id}
+	          AND pa_pt_num = #{pa.pa_pt_num}
+	    ) AS latest_payment ON pa.pa_num = latest_payment.max_pa_num
+	    SET 
+	        pa.pa_price = #{pa.pa_price},
+	        pa.pa_end = #{pa.pa_end},
+	        pa.pa_state = #{pa.pa_state}
+	    WHERE pa.pa_me_id = #{pa.pa_me_id}
+	      AND pa.pa_pt_num = #{pa.pa_pt_num};
+	</update>
+
+</mapper>

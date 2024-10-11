@@ -145,7 +145,7 @@ CREATE TABLE `payment` (
 	`pa_start`		datetime		not NULL,
 	`pa_end`		datetime		not NULL,
 	`pa_review`		char(1)			not NULL default 'N',
-    `pa_state`		varchar(10)		not NULL,
+    `pa_state`		varchar(10)		not NULL default '결제완료',
 	`pa_me_id`		varchar(100)	NULL,
 	`pa_pt_num`		int				NOT NULL
 );
@@ -158,6 +158,22 @@ CREATE TABLE `payment_type` (
     `pt_count`		int				not NULL,
 	`pt_price`		int				not NULL
 );
+DROP TABLE IF EXISTS `payment_category`;
+
+CREATE TABLE `payment_category` (
+	`pc_num`			int 			primary key auto_increment NOT NULL,
+	`pc_imp_uid`		varchar(30)		NOT NULL,
+	`pc_merchant_uid`	varchar(50)		NOT NULL,
+	`pc_amount`			int				NOT NULL,
+	`pc_status`			varchar(10)		NOT NULL,
+	`pc_paid_at`		bigint			NOT NULL,
+	`pc_card_name`		varchar(30)		NULL,
+	`pc_card_number`	bigint			NOT NULL,
+	`pc_card_quota`		varchar(5)		NOT NULL,
+	`pc_pt_num`			int				NOT NULL,
+	`pc_me_id`			varchar(100)	NOT NULL
+);
+
 
 drop table if exists `branch_program_schedule`;
 CREATE TABLE `branch_program_schedule` (
@@ -177,6 +193,20 @@ CREATE TABLE `refund` (
 	`re_reason`		longtext	NULL,
 	`re_pa_num`		int			NOT NULL
 );
+
+drop table if exists `program_file`;
+CREATE TABLE `program_file` (
+   `pf_num`			int				primary key auto_increment,
+   `pf_name`   		varchar(255)   	not NULL unique,
+   `pf_sp_name`		varchar(100)   	not NULL
+);
+
+ALTER TABLE `program_file` 
+ADD CONSTRAINT `FK_program_file_sports_program`
+  FOREIGN KEY (`pf_sp_name`)
+  REFERENCES `sports_program` (`sp_name`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 ALTER TABLE `employee` 
 ADD CONSTRAINT `FK_employee_branch`
@@ -239,6 +269,7 @@ ADD CONSTRAINT `FK_payment_member`
   REFERENCES `member` (`me_id`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
+
 
 ALTER TABLE `review_post` 
 ADD CONSTRAINT `FK_review_post_branch`

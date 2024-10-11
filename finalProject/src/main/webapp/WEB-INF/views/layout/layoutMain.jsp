@@ -60,26 +60,6 @@
 				}
 			}
 		});
-		
-
-		$(function(){
-			var url = window.location.pathname;
-			
-			// 주소가 같으면 메뉴에 _active
-			$(".gnb__item").find(".gnb__link").each(function(){
-				$(this).toggleClass("_active", $(this).attr("href") == url);
-				console.log($(this).attr("href") == url);
-			});
-			
-			// 메인에서 로고 하얀새으로 변경
-			$(".logo").each(function(){
-				if($(this).attr("href") == url){
-					$(this).addClass("logo-white");
-				}
-				console.log($(this).attr("href") == url);
-			})
-			
-		});
 	</script>
 </body>
 </html>

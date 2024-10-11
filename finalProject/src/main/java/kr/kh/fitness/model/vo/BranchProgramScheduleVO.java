@@ -26,4 +26,6 @@ public class BranchProgramScheduleVO {
     private String bp_br_name;
     private String bp_sp_name;
     private String em_name;
+    private Date pr_date;
+    private int pr_num;
 }

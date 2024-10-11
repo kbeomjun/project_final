@@ -227,7 +227,7 @@ dl, ol, ul{
   left: 50%;
   width: 699px;
   height: 363px;
-	background-image: url("../image/main/main_text.png");
+  /* background-image: url("../image/main/main_text.png"); */
   background-repeat: no-repeat;
   background-size: cover;
   transform: translate(-50%, -50%);
@@ -297,6 +297,7 @@ dl, ol, ul{
 }
 .gnb{
   display: flex;
+  margin: 0px;
 }
 .gnb__item{
   display: flex;
@@ -344,6 +345,15 @@ dl, ol, ul{
 }
 .gnb_side__sns:hover .gnb_side__sns_defualt, .gnb_side__sns:focus .gnb_side__sns_defualt{
   opacity: 0.5;
+}
+.gnb_side__logo{
+  display: inline-block;
+  width: 130px;
+  height: 92px;
+  background-image: url("../image/main/Logo-light.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 /* gnb info icon end */
 
@@ -467,7 +477,8 @@ dl, ol, ul{
 }
 .main_banner__img{
   width: 100%;
-  height: 919px;
+  height: 100vh;
+  min-height: 913px; /* 북마크바를 포함한 기본 크롬 height값 */
 }
 .sub_container{
   margin-top: 110px;

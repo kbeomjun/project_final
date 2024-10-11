@@ -10,7 +10,7 @@
 	href="<c:url value="/resources/css/calendar.css"/>">
 </head>
 <body>
-	<h1>프로그램 일정</h1>
+	<!-- <h1>프로그램 일정</h1> -->
 	<a class="btn btn-outline-dark br-3"
 		href="<c:url value="/program/info"/>">프로그램 안내</a>
 	<a class="btn btn-dark" href="<c:url value="/program/schedule"/>">프로그램
@@ -166,12 +166,13 @@
 									<td>
 										<c:choose>
 										<c:when test="${ps.bs_current ne ps.bp_total}">
-											<a class="btn btn-outline-primary btn-program-reservation" 
+											<a class="btn btn-outline-primary btn-program-reservation1" 
 											data-program="${ps.bp_sp_name}/${ps.bp_br_name}/${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})/<fmt:formatDate value="${ps.bs_start}" pattern="HH:mm"/>~<fmt:formatDate value="${ps.bs_end}" pattern="HH:mm" />"
+											data-num="${ps.bs_num}"
 											href="<c:url value="/program/reservation/${ps.bs_num }"/>">예약</a>
 										</c:when>
 										<c:otherwise>
-											<span>마감</span>
+											<span class="btn btn-program-reservation2">마감</span>
 										</c:otherwise>
 										</c:choose>
 									</td>
@@ -186,27 +187,63 @@
 	</div>
 	<script>
 	
-	$('.btn-program-reservation').click(function(e) {
+	$('.btn-program-reservation1').click(function(e) {
 		const button = $(this);  // 현재 클릭된 버튼 객체
 	    const program = button.data('program'); 
+		const bs_num = button.data('num');
 		
 /* 		if(${user == null}) {
+			if (confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?")) {
+					location.href = "<c:url value="/member/login"/>";
+			}
 			return;
 		}
 		var id = ${user.me_id};
 		var noshow = ${user.me_noshow};
  */		
-		if (
+ 		
+ 
 /* 				confirm( program+'으로 예약하시겠습니까?\n'+
 						'노쇼 누적시 예약이 제한될 수 있습니다.\n('+
 						id+'님의 누적 노쇼: '+noshow+'번)')) { */
-				confirm('['+program+'] 예약하시겠습니까?\n'+
-						'노쇼 누적시 예약이 제한될 수 있습니다.\n')) {
-			return;
-		} else {
+		if (confirm('['+program+'] 예약하시겠습니까?\n'+
+					'노쇼 누적시 예약이 제한될 수 있습니다.\n')) {
+			var isDuplicated = checkReservation(bs_num);
+			console.log(isDuplicated);
+			if(isDuplicated){
+				
+				alert('이미 예약한 프로그램입니다.');
+				e.preventDefault();
+			}
+			else {
+				return;
+			}
+		}
+		else {
 			e.preventDefault();
 		}
 	});
+	
+	function checkReservation(bs_num) {
+		
+		var isDuplicated = false;
+		
+		$.ajax({
+	        async : false,
+	        url : '<c:url value="/program/checkReservation"/>',
+	        type : 'get',
+	        data : { bs_num: bs_num }, 
+	        dataType : 'json',
+	        success : function(data) {
+	        	isDuplicated = data.checkReservation;
+	        },
+	        error : function(jqXHR, textStatus, errorThrown) {
+	            console.log(jqXHR);
+	        }
+	    });
+		
+		return isDuplicated;
+	}
 		
 	</script>
 </body>

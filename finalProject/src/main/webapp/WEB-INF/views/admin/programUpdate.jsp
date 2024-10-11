@@ -11,11 +11,9 @@
 </head>
 <body>
 	<!-- <main class="sub_container" id="skipnav_target"> -->
-		<h1 class="mt-3 mb-3">${branchName} 프로그램 수정</h1>
+		<h1 class="mt-3 mb-3">${branchProgram.bp_sp_name} 프로그램 수정</h1>
 		<form action="<c:url value="/admin/program/update"/>" method="post" id="form">
-			<input type="hidden" name="bp_br_name" value="${branchName}">
 			<input type="hidden" name="bp_num" value="${branchProgram.bp_num}">
-			<input type="hidden" name="bp_em_num" value="${branchProgram.bp_em_num}">
 			<div class="form-group">
 				<label>프로그램:</label>
 				<input class="form-control" name="bp_sp_name" value="${branchProgram.bp_sp_name}" readonly/>
@@ -32,7 +30,6 @@
 				<button type="submit" class="btn btn-outline-warning">수정</button>
 			</div>
 		</form>
-	<!-- </main> -->
 	<script type="text/javascript">
 		$('#form').validate({
 			rules : {
