@@ -144,7 +144,8 @@
 								<div class="card" style="width: 200px">
 									<img class="card-img-top"
 										src=<c:url value="/uploads${em.em_fi_name}" />
-										alt=" ${em.em_fi_name}"
+										alt=" ${em.em_fi_name}" 
+										onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
 										style="width: 100%; height: 250px; object-fit: cover;">
 									<div class="card-body">
 										<h4 class="card-title">${em.em_name}(${fn:substring(em.em_gender, 0, 1)})</h4>
