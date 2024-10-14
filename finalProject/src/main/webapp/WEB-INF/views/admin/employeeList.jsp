@@ -39,7 +39,10 @@
 	                    </li>
 						<li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
-	                    </li>	                    	                    	                    	                    	                    
+	                    </li>	 
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/inquiry/list"/>">문의내역</a>
+	                    </li>	                    
 	                </ul>
 	            </div>
 	        </nav>
@@ -47,7 +50,7 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-					<h2 class="mt-3 mb-3">${br_name} 직원 목록</h2>
+					<h2 class="mt-3 mb-3">${pm.cri.br_name} 직원 목록</h2>
 					<table class="table text-center">
 						<thead>
 							<tr>
@@ -83,6 +86,44 @@
 							</c:if>
 						</tbody>
 					</table>
+					
+					<c:if test="${pm.totalCount ne 0}">
+						<ul class="pagination justify-content-center">
+							<c:if test="${pm.prev}">
+								<c:url var="url" value="/admin/employee/list">
+									<c:param name="page" value="${pm.startPage - 1}"/>
+								</c:url>
+								<li class="page-item">
+									<a class="page-link" href="${url}">이전</a>
+								</li>
+							</c:if>
+							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+								<c:url var="url" value="/admin/employee/list">
+									<c:param name="page" value="${i}"/>
+								</c:url>
+								<c:choose>
+									<c:when test="${pm.cri.page eq i}">
+										<c:set var="active" value="active"/>
+									</c:when>
+									<c:otherwise>
+										<c:set var="active" value=""/>
+									</c:otherwise>
+								</c:choose>
+								<li class="page-item ${active}">
+									<a class="page-link" href="${url}">${i}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${pm.next}">
+								<c:url var="url" value="/admin/employee/list">
+									<c:param name="page" value="${pm.endPage + 1}"/>
+								</c:url>
+								<li class="page-item">
+									<a class="page-link" href="${url}">다음</a>
+								</li>
+							</c:if>
+						</ul>
+					</c:if>
+					
 					<div class="text-right mb-3">
 						<a href="<c:url value="/admin/employee/insert/${br_name}"/>" class="btn btn-outline-success btn-sm">직원등록</a>
 					</div>

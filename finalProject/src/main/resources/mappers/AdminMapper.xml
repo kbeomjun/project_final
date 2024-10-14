@@ -117,7 +117,6 @@
 			order by
 				bs_end desc
 		</if>
-
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
@@ -162,6 +161,32 @@
 	
 	<select id="selectMemberList" resultType="MemberVO">
 		select * from member where me_authority = 'user'
+	</select>
+	
+	<select id="selectMemberListWithPagination" resultType="MemberVO">
+		select 
+			* 
+		from 
+			member 
+		where 
+			me_authority = 'user'
+		and
+			me_name like concat('%', #{search},'%')
+		order by
+			me_name
+		limit
+			#{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectMemberTotalCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			member 
+		where 
+			me_authority = 'user'
+		and
+			me_name like concat('%', #{search},'%')
 	</select>
 	
 	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
@@ -210,7 +235,11 @@
 	</delete>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc
+		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectOrderTotalCount" resultType="int">
+		select count(*) from branch_order where bo_br_name = #{br_name}
 	</select>
 	
 	<select id="selectEquipmentListInHQ" resultType="BranchStockDTO">
@@ -234,6 +263,14 @@
 	<delete id="deleteOrder">
 		delete from branch_order where bo_num = #{bo_num}
 	</delete>
+	
+	<select id="selectEmployeeListByBranchWithPagination" resultType="EmployeeVO">
+		select * from Employee where em_br_name = #{br_name} order by em_num limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectEmployeeByBranchTotalCount" resultType="int">
+		select count(*) from Employee where em_br_name = #{br_name}
+	</select>
 	
 	<select id="selectEmployeeList" resultType="EmployeeVO">
 		select * from employee order by em_num
@@ -336,7 +373,9 @@
 		from 
 			branch_equipment_stock 
 		where 
-			be_br_name = #{br_name}
+			be_br_name = #{cri.br_name}
+		and
+			be_se_name like concat('%', #{cri.search},'%')
 		group by 
 			be_se_name
 			<if test="view == 'all'">
@@ -348,10 +387,49 @@
 			order by
 				be_birth
 		</if>
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectEquipmentListTotalCount" resultType="int">
+		select 
+			count(distinct be_se_name)
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{cri.br_name}
+		and
+			be_se_name like concat('%', #{cri.search},'%')	
 	</select>
 	
 	<select id="selectEquipmentChangeInBranch" resultType="BranchEquipmentStockVO">
-		select * from branch_equipment_stock where be_br_name = #{br_name} order by be_record desc
+		select
+			* 
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{br_name} 
+		and
+			be_se_name like concat('%', #{search}, '%')
+		order by 
+			be_record desc 
+		limit 
+			#{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectEquipmentChangeTotalCount" resultType="int">
+		select
+			count(*)
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{br_name} 
+		and
+			be_se_name like concat('%', #{search}, '%')
+	</select>
+	
+	<select id="selectInquiryList" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_br_name = #{br_name}
 	</select>
 	
 </mapper>

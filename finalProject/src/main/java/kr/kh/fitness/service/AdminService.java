@@ -12,9 +12,11 @@ import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
+import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
 
 public interface AdminService {
@@ -25,7 +27,7 @@ public interface AdminService {
 
 	List<SportsProgramVO> getProgramList();
 
-	List<EmployeeVO> getEmployeeListByBranch(String em_br_name);
+	List<EmployeeVO> getEmployeeListByBranch(String br_name);
 
 	String insertBranchProgram(BranchProgramVO branchProgram);
 
@@ -38,13 +40,19 @@ public interface AdminService {
 	List<MemberVO> getScheduleMemberList(int bs_num);
 	
 	List<MemberVO> getMemberList();
+
+	List<MemberVO> getMemberListWithPagination(Criteria cri);
+	
+	PageMaker getPageMakerInMember(Criteria cri);
 	
 	String insertSchedule(BranchProgramScheduleVO schedule, String me_id);
 	
 	BranchProgramScheduleVO getSchedule(int bs_num);
 
-	List<BranchOrderVO> getBranchOrderList(String br_name);
+	List<BranchOrderVO> getBranchOrderList(BranchCriteria cri);
 
+	PageMaker getPageMakerInOrder(BranchCriteria cri);
+	
 	String updateSchedule(BranchProgramScheduleVO schedule);
 
 	void deleteSchedule(int bs_num);
@@ -55,6 +63,10 @@ public interface AdminService {
 
 	boolean deleteOrder(int bo_num);
 
+	List<EmployeeVO> getEmployeeListByBranchWithPagination(BranchCriteria cri);
+	
+	PageMaker getPageMakerInEmployee(BranchCriteria cri);
+	
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
 
 	EmployeeVO getEmployee(int em_num);
@@ -73,10 +85,16 @@ public interface AdminService {
 
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
 	
-	List<BranchStockDTO> getEquipmentListInBranch(String br_name, String view);
+	List<BranchStockDTO> getEquipmentListInBranch(String view, BranchCriteria cri);
 
-	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
+	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(BranchCriteria cri);
+	
+	PageMaker getPageMakerInEquipmentChange(BranchCriteria cri);
+	
+	PageMaker getPageMakerInEquipmentList(String view, BranchCriteria cri);
 
 	PageMaker getPageMaker(String view, BranchCriteria cri);
+
+	List<MemberInquiryVO> getInquiryList(String br_name);
 
 }

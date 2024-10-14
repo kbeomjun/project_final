@@ -46,7 +46,10 @@
 	                    </li>
 						<li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
-	                    </li>	                    	                    	                    	                    	                    
+	                    </li>	
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/inquiry/list"/>">문의내역</a>
+	                    </li>	                                        	                    	                    	                    	                    
 	                </ul>
 	            </div>
 	        </nav>
@@ -108,7 +111,7 @@
 						<hr>
 						
 						<div class="text-right mb-3">
-							<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger">뒤로가기</a>
+							<a href="<c:url value="/admin/member/list?page=${cri.page}&search=${cri.search}"/>" class="btn btn-outline-danger">뒤로가기</a>
 						</div>
 					</div>
 	                

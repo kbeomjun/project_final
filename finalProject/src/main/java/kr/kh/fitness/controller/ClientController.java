@@ -37,13 +37,7 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@GetMapping("/mypage/{me_id}")
-	private String mypage(Model model, @PathVariable("me_id")String me_id) {
-		model.addAttribute("me_id", me_id);
-		
-		return "/client/mypage";
-	}
-	
+	//리뷰 게시판 목록
 	@GetMapping("/review/list")
 	public String reviewList(Model model, HttpSession session, Criteria cri) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -59,6 +53,7 @@ public class ClientController {
 		return "/client/reviewList";
 	}
 	
+	//리뷰 게시글 상세
 	@GetMapping("/review/detail/{rp_num}")
 	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, Criteria cri) {
 		
@@ -74,6 +69,7 @@ public class ClientController {
 		return "/client/reviewDetail";
 	}
 
+	//리뷰 게시글 등록 get
 	@GetMapping("/review/insert/{me_id}")
 	public String reviewInsert(Model model, @PathVariable("me_id")String me_id) {
 		//결제내역이 있는지 체크, 있으면 등록가능 없으면 등록불가
@@ -92,6 +88,7 @@ public class ClientController {
 		}
 	}
 	
+	//리뷰 게시글 등록 post
 	@PostMapping("/review/insert")
 	public String reviewInsertPost(Model model, ReviewPostVO review, HttpSession session) {
 		
@@ -108,6 +105,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//리뷰 게시글 수정 get
 	@GetMapping("/review/update/{rp_num}")
 	public String reviewUpdate(Model model, @PathVariable("rp_num")int rp_num) {
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
@@ -118,6 +116,7 @@ public class ClientController {
 		return "/client/reviewUpdate";
 	}
 	
+	//리뷰 게시글 수정 post
 	@PostMapping("/review/update")
 	public String reviewUpdatePost(Model model, ReviewPostVO review) {
 		
@@ -132,6 +131,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//리뷰 게시글 삭제
 	@GetMapping("/review/delete/{rp_num}")
 	public String reviewDelete(Model model, @PathVariable("rp_num")int rp_num) {
 		
@@ -146,6 +146,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//1:1문의 등록
 	@GetMapping("/inquiry/insert")
 	public String inquiryInsert(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -159,6 +160,7 @@ public class ClientController {
 		return "/client/inquiryInsert";
 	}
 	
+	//마이페이지 스케줄 조회
 	@GetMapping("/mypage/schedule/{me_id}")
 	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id, @RequestParam(value = "view", defaultValue = "present")String view, Criteria cri) {
 		
@@ -175,6 +177,7 @@ public class ClientController {
 		return "/client/mypageSchedule";
 	}
 	
+	//마이페이지 스케줄 예약취소
 	@GetMapping("/mypage/schedule/cancel/{pr_num}/{bs_num}/{me_id}")
 	public String mypageScheduleCancel(Model model, @PathVariable("pr_num")int pr_num, @PathVariable("bs_num")int bs_num, @PathVariable("me_id")String me_id) {
 		
@@ -188,6 +191,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//마이페이지 회원권 내역
 	@GetMapping("/mypage/membership/{me_id}")
 	public String mypageMembership(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
 		
@@ -203,6 +207,7 @@ public class ClientController {
 		return "/client/mypageMembership";
 	}
 	
+	//마이페이지 회원권 -> 리뷰 작성 get
 	@GetMapping("/mypage/review/insert/{pa_num}/{me_id}/{page}")
 	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, @PathVariable("me_id")String me_id, @PathVariable("page")int page) {
 		
@@ -215,6 +220,7 @@ public class ClientController {
 		return "/client/mypageReviewInsert";
 	}
 	
+	//마이페이지 회원권 -> 리뷰 작성 post
 	@PostMapping("/mypage/review/insert")
 	public String mypageReviewInsertPost(Model model, ReviewPostVO review, String me_id, int page) {
 		
@@ -229,6 +235,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//마이페이지 회원권 환불내역 상세조회
 	@ResponseBody
 	@GetMapping("/mypage/refundDetail")
 	public Map<String, Object> mypageRefundDetail(@RequestParam("pa_num") int pa_num){
@@ -241,6 +248,7 @@ public class ClientController {
 		return map;
 	}
 	
+	//마이페이지 리뷰게시글 내역 조회
 	@GetMapping("/mypage/review/list/{me_id}")
 	public String mypageReviewList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
 		
@@ -258,6 +266,7 @@ public class ClientController {
 		return "/client/mypageReviewList";
 	}
 	
+	//마이페이지 리뷰게시글 상세
 	@GetMapping("/mypage/review/detail/{rp_num}/{me_id}")
 	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, @PathVariable("me_id")String me_id, Criteria cri) {
 		
@@ -272,6 +281,7 @@ public class ClientController {
 		return "/client/mypageReviewDetail";
 	}
 	
+	//마이페이지 리뷰게시글 수정 get
 	@GetMapping("/mypage/review/update/{rp_num}/{me_id}")
 	public String mypageReviewUpdate(Model model, @PathVariable("rp_num")int rp_num, @PathVariable("me_id")String me_id) {
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
@@ -284,6 +294,7 @@ public class ClientController {
 		return "/client/mypageReviewUpdate";
 	}
 	
+	//마이페이지 리뷰게시글 수정 post
 	@PostMapping("/mypage/review/update")
 	public String mypageReviewUpdatePost(Model model, ReviewPostVO review, String me_id) {
 		
@@ -297,6 +308,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//마이페이지 문의내역 목록
 	@GetMapping("/mypage/inquiry/list/{me_id}")
 	public String mypageInquiryList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
 		
@@ -314,6 +326,7 @@ public class ClientController {
 		return "/client/mypageInquiryList";
 	}
 	
+	//마이페이지 문의내역 상세
 	@GetMapping("/mypage/inquiry/detail/{mi_num}/{me_id}")
 	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, @PathVariable("me_id")String me_id, int page) {
 		
@@ -326,12 +339,14 @@ public class ClientController {
 		return "/client/mypageInquiryDetail";
 	}
 	
+	//마이페이지 개인정보수정 시 비밀번호 확인 get
 	@GetMapping("/mypage/pwcheck/{me_id}")
 	public String mypagePwCheck(Model model, @PathVariable("me_id")String me_id) {
 		model.addAttribute("me_id", me_id);
 		return "/client/mypagePwCheck";
 	}
 	
+	//마이페이지 개인정보수정 시 비밀번호 확인 post
 	@PostMapping("/mypage/pwcheck")
 	public String mypagePwCheckPost(Model model, HttpSession session, MemberVO member) {
 		
@@ -347,6 +362,7 @@ public class ClientController {
 		}
 	}
 	
+	//마이페이지 개인정보수정 get
 	@GetMapping("/mypage/info/{me_id}")
 	public String mypageInfo(Model model, @PathVariable("me_id") String me_id, HttpSession session) {
 	    Boolean pwVerified = (Boolean) session.getAttribute("pwVerified");
@@ -363,6 +379,7 @@ public class ClientController {
 	    return "/client/mypageInfo";
 	}
 	
+	//마이페이지 개인정보수정 email중복체크
 	@ResponseBody
     @PostMapping("/mypage/checkEmail")
     public boolean mypageCheckEmail(@RequestParam("email") String email) {
@@ -370,6 +387,7 @@ public class ClientController {
     	return clientService.isEmailDuplicate(email);
     }
 	
+	//마이페이지 개인정보수정 post
 	@PostMapping("/mypage/info/update")
 	public String mypageInfoUpdate(Model model, MemberVO member, HttpSession session, String birth) {
 	    
@@ -392,12 +410,14 @@ public class ClientController {
 		}
 	}
 	
+	//마이페이지 비밀번호 변경 get
 	@GetMapping("/mypage/pwchange/{me_id}")
 	public String mypagePwChange(Model model, @PathVariable("me_id")String me_id) {
 		model.addAttribute("me_id", me_id);
 		return "/client/mypagePwChange";
 	}
 	
+	//마이페이지 비밀번호 변경 post
 	@PostMapping("/mypage/pwchange/update")
 	public String updatePassword(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id, HttpSession session) {
 
