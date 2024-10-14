@@ -12,6 +12,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -30,7 +31,7 @@ public interface HQService {
 
 	List<EmployeeVO> getEmployeeList();
 
-	List<SportsProgramVO> getProgramList();
+	List<SportsProgramVO> getSportsProgramList();
 
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
 
@@ -65,4 +66,12 @@ public interface HQService {
 	PaymentTypeVO getPaymentType(PaymentTypeVO pt);
 
 	String updatePaymentType(PaymentTypeVO pt);
+
+	String insertSportsProgram(SportsProgramVO sp, MultipartFile[] fileList);
+
+	SportsProgramVO getSportsProgram(SportsProgramVO sp);
+
+	List<ProgramFileVO> getProgramFileList(SportsProgramVO sp);
+
+	String updateSportsProgram(SportsProgramVO sp, MultipartFile[] fileList, String sp_ori_name, String[] numList);
 }

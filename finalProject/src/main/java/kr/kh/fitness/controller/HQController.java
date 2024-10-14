@@ -23,6 +23,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.HQService;
@@ -86,7 +87,7 @@ public class HQController {
 	@GetMapping("/employee/insert")
 	public String employeeInsert(Model model) {
 		List<BranchVO> brList = hqService.getBranchList();
-		List<SportsProgramVO> programList = hqService.getProgramList();
+		List<SportsProgramVO> programList = hqService.getSportsProgramList();
 		model.addAttribute("brList", brList);
 		model.addAttribute("programList", programList);
 	    return "/hq/employee/insert";
@@ -106,7 +107,7 @@ public class HQController {
 	public String employeeDetail(Model model, @PathVariable("em_num") int em_num, EmployeeVO employeeVo) {
 		EmployeeVO employee = hqService.getEmployee(employeeVo);
 		List<BranchVO> brList = hqService.getBranchList();
-		List<SportsProgramVO> programList = hqService.getProgramList();
+		List<SportsProgramVO> programList = hqService.getSportsProgramList();
 		model.addAttribute("em", employee);
 		model.addAttribute("brList", brList);
 		model.addAttribute("programList", programList);
@@ -222,6 +223,48 @@ public class HQController {
 	public String paymentTypeUpdate(Model model, PaymentTypeVO pt) {
 		String msg = hqService.updatePaymentType(pt);
 		model.addAttribute("url", "/hq/paymentType/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@GetMapping("/program/list")
+	public String programList(Model model) {
+		List<SportsProgramVO> spList = hqService.getSportsProgramList();
+		model.addAttribute("spList", spList);
+	    return "/hq/program/list";
+	}
+	@GetMapping("/program/insert")
+	public String programInsert() {
+	    return "/hq/program/insert";
+	}
+	@PostMapping("/program/insert")
+	public String programInsertPost(Model model, SportsProgramVO sp, MultipartFile[] fileList) {
+		String msg = hqService.insertSportsProgram(sp, fileList);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/program/list");
+		}else {
+			model.addAttribute("url", "/hq/program/insert");
+		}
+		model.addAttribute("msg", msg);
+	    return "/main/message";
+	}
+	@GetMapping("/program/detail/{sp_name}")
+	public String programDetail(Model model, @PathVariable("sp_name") String sp_name, SportsProgramVO spVo) {
+		SportsProgramVO sp = hqService.getSportsProgram(spVo);
+		List<ProgramFileVO> pfList = hqService.getProgramFileList(sp);
+		model.addAttribute("sp", sp);
+		model.addAttribute("pfList", pfList);
+		return "/hq/program/detail";
+	}
+	@PostMapping("/program/update/{sp_ori_name}")
+	public String branchUpdate(Model model, @PathVariable("sp_ori_name") String sp_ori_name, 
+								SportsProgramVO sp, MultipartFile[] fileList, String[] numList) {
+		String msg = hqService.updateSportsProgram(sp, fileList, sp_ori_name, numList);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/program/detail/" + sp.getSp_name());
+		}else {
+			model.addAttribute("url", "/hq/program/detail/" + sp_ori_name);
+		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}

@@ -76,7 +76,7 @@
 		select * from employee order by em_num;
 	</select>
 	
-	<select id="selectProgramList" resultType="SportsProgramVO">
+	<select id="selectSportsProgramList" resultType="SportsProgramVO">
 		select * from sports_program
 	</select>
 	
@@ -198,4 +198,36 @@
 			pt_price = #{pt.pt_price}
 		where pt_num = #{pt.pt_num};
 	</update>
+	
+	<insert id="insertSportsProgram">
+		insert into sports_program(sp_name, sp_detail, sp_type) values(#{sp.sp_name}, #{sp.sp_detail}, #{sp.sp_type});
+	</insert>
+	
+	<insert id="insertProgramFile">
+		insert into program_file(pf_name, pf_sp_name) values(#{pf.pf_name}, #{pf.pf_sp_name});
+	</insert>
+	
+	<select id="selectSportsProgram" resultType="SportsProgramVO">
+		select * from sports_program where sp_name = #{sp.sp_name};
+	</select>
+	
+	<select id="selectProgramFileList" resultType="ProgramFileVO">
+		select * from program_file where pf_sp_name = #{sp.sp_name};
+	</select>
+	
+	<update id="updateSportsProgram">
+		update sports_program set
+			sp_name = #{sp.sp_name},
+			sp_detail = #{sp.sp_detail},
+			sp_type = #{sp.sp_type}
+		where sp_name = #{sp_ori_name};
+	</update>
+	
+	<select id="selectProgramFile" resultType="ProgramFileVO">
+		select * from program_file where pf_num = #{pf_num};
+	</select>
+	
+	<delete id="deleteProgramFile">
+		delete from program_file where pf_num = #{pf.pf_num};
+	</delete>
 </mapper>

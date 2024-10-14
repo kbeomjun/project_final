@@ -12,6 +12,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -41,7 +42,7 @@ public interface HQDAO {
 
 	List<EmployeeVO> selectEmployeeList();
 
-	List<SportsProgramVO> selectProgramList();
+	List<SportsProgramVO> selectSportsProgramList();
 
 	boolean insertEmployee(@Param("em") EmployeeVO employee);
 
@@ -82,4 +83,18 @@ public interface HQDAO {
 	PaymentTypeVO selectPaymentType(@Param("pt") PaymentTypeVO pt);
 
 	boolean updatePaymentType(@Param("pt") PaymentTypeVO pt);
+
+	boolean insertSportsProgram(@Param("sp") SportsProgramVO sp);
+
+	void insertProgramFile(@Param("pf") ProgramFileVO programFile);
+
+	SportsProgramVO selectSportsProgram(@Param("sp") SportsProgramVO sp);
+
+	List<ProgramFileVO> selectProgramFileList(@Param("sp") SportsProgramVO sp);
+
+	boolean updateSportsProgram(@Param("sp") SportsProgramVO sp, @Param("sp_ori_name") String sp_ori_name);
+
+	ProgramFileVO selectProgramFile(@Param("pf_num") int pf_num);
+
+	boolean deleteProgramFile(@Param("pf") ProgramFileVO programFile);
 }

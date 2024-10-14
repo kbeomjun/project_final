@@ -21,6 +21,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
@@ -129,7 +130,7 @@ public class HQServiceImp implements HQService {
 	public List<EmployeeVO> getEmployeeList() {return hqDao.selectEmployeeList();}
 	
 	@Override
-	public List<SportsProgramVO> getProgramList() {return hqDao.selectProgramList();}
+	public List<SportsProgramVO> getSportsProgramList() {return hqDao.selectSportsProgramList();}
 
 	@Override
 	public String insertEmployee(EmployeeVO employee, MultipartFile file) {
@@ -393,6 +394,69 @@ public class HQServiceImp implements HQService {
 		if(!msg.equals("")) {return msg;}
 		
 		if(!hqDao.updatePaymentType(pt)) {msg = "회원권을 수정하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public String insertSportsProgram(SportsProgramVO sp, MultipartFile[] fileList) {
+		String msg = "";
+		if(sp == null) {msg = "프로그램 정보가 없습니다.";}
+		if(fileList == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		
+		try {
+			if(!hqDao.insertSportsProgram(sp)) {msg = "프로그램을 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "프로그램명 중복으로 등록하지 못했습니다.";
+		}
+		if(!msg.equals("")) {return msg;}
+		for(MultipartFile file : fileList) {
+			if(file.getSize() != 0) {uploadSportsProgramFile(file, sp.getSp_name());}
+		}
+		
+		return msg;
+	}
+	private void uploadSportsProgramFile(MultipartFile file, String sp_name) {
+		if(file == null) {return;}
+		try {
+			String pf_name = UploadFileUtils.uploadFile(uploadPath, "프로그램", sp_name, file.getBytes());
+			ProgramFileVO programFile = new ProgramFileVO(pf_name, sp_name);
+			hqDao.insertProgramFile(programFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public SportsProgramVO getSportsProgram(SportsProgramVO sp) {return hqDao.selectSportsProgram(sp);}
+
+	@Override
+	public List<ProgramFileVO> getProgramFileList(SportsProgramVO sp) {return hqDao.selectProgramFileList(sp);}
+
+	@Override
+	public String updateSportsProgram(SportsProgramVO sp, MultipartFile[] fileList, String sp_ori_name, String[] numList) {
+		String msg = "";
+		if(sp == null) {msg = "프로그램 정보가 없습니다.";}
+		if(fileList == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.updateSportsProgram(sp, sp_ori_name)) {msg = "프로그램을 수정하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		if(numList != null) {
+			for(int i = 0; i < numList.length; i++) {
+				int pf_num = Integer.parseInt(numList[i]);
+				ProgramFileVO programFile = hqDao.selectProgramFile(pf_num);
+				if(hqDao.deleteProgramFile(programFile)) {
+					UploadFileUtils.delteFile(uploadPath, programFile.getPf_name());
+				}
+			}
+		}
+		for(MultipartFile file : fileList) {
+			if(file.getSize() != 0) {uploadSportsProgramFile(file, sp.getSp_name());}
+		}
+		
 		return msg;
 	}
 }
