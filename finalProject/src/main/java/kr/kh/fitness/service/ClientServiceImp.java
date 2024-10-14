@@ -3,6 +3,7 @@ package kr.kh.fitness.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.ClientDAO;
@@ -22,6 +23,8 @@ public class ClientServiceImp implements ClientService{
 	
 	@Autowired
 	private ClientDAO clientDao;
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;	
 
 	@Override
 	public MemberVO getMember(String me_id) {
@@ -234,7 +237,12 @@ public class ClientServiceImp implements ClientService{
 		
 		MemberVO checkMember = clientDao.selectMember(member.getMe_id());
 		
-		if(!checkMember.getMe_pw().equals(member.getMe_pw())) {
+		//비번 암호화
+		String encPw = passwordEncoder.encode(member.getMe_pw());
+		//비번과 암호화된 비번이 같은 비번인지 알려줌
+		boolean res = passwordEncoder.matches(encPw, checkMember.getMe_pw());
+		
+		if(res) {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 		
@@ -282,14 +290,22 @@ public class ClientServiceImp implements ClientService{
 		if(member == null) {
 			return "회원 정보가 없습니다.";
 		}
-		if(!member.getMe_pw().equals(currentPw)) {
+		
+		//비번 암호화
+		String encPw = passwordEncoder.encode(currentPw);
+		//비번과 암호화된 비번이 같은 비번인지 알려줌
+		boolean res = passwordEncoder.matches(encPw, member.getMe_pw());
+		
+		if(res) {
 			return "현재 비밀번호가 일치하지 않습니다.";
 		}
 		if(currentPw.equals(newPw)) {
 			return "새 비밀번호는 현재 비밀번호와 같을 수 없습니다.";
 		}
 		
-		member.setMe_pw(newPw);
+		encPw = passwordEncoder.encode(newPw);
+		
+		member.setMe_pw(encPw);
 		if(!clientDao.updateMemberPw(member)) {
 			return "비밀번호 변경에 실패했습니다.";
 		}

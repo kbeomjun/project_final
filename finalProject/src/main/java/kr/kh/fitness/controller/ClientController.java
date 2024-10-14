@@ -399,7 +399,7 @@ public class ClientController {
 	}
 	
 	@PostMapping("/mypage/pwchange/update")
-	public String updatePassword(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id) {
+	public String updatePassword(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id, HttpSession session) {
 
 		MemberVO member = clientService.getMember(me_id);
 	    
@@ -407,6 +407,7 @@ public class ClientController {
 		
 		if(msg == "") {
 			model.addAttribute("msg", "비밀번호가 성공적으로 변경되었습니다. 다시 로그인하시기 바랍니다.");
+			session.removeAttribute("user");
 			model.addAttribute("url", "/login");
 		} else {
 			model.addAttribute("msg", msg);
