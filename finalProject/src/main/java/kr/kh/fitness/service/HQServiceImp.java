@@ -459,4 +459,10 @@ public class HQServiceImp implements HQService {
 		
 		return msg;
 	}
+
+	@Override
+	public List<MemberVO> getMemberList() {return hqDao.selectMemberList();}
+
+	@Override
+	public MemberVO getMember(MemberVO me) {return hqDao.selectMember(me);}
 }

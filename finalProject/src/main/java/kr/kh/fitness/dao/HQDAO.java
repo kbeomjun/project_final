@@ -97,4 +97,8 @@ public interface HQDAO {
 	ProgramFileVO selectProgramFile(@Param("pf_num") int pf_num);
 
 	boolean deleteProgramFile(@Param("pf") ProgramFileVO programFile);
+
+	List<MemberVO> selectMemberList();
+
+	MemberVO selectMember(@Param("me") MemberVO me);
 }

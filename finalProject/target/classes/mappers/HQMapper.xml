@@ -230,4 +230,12 @@
 	<delete id="deleteProgramFile">
 		delete from program_file where pf_num = #{pf.pf_num};
 	</delete>
+	
+	<select id="selectMemberList" resultType="MemberVO">
+		select * from member where me_authority = "USER";
+	</select>
+	
+	<select id="selectMember" resultType="MemberVO">
+		select * from member where me_id = #{me.me_id};
+	</select>
 </mapper>

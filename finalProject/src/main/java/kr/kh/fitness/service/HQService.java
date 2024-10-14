@@ -74,4 +74,8 @@ public interface HQService {
 	List<ProgramFileVO> getProgramFileList(SportsProgramVO sp);
 
 	String updateSportsProgram(SportsProgramVO sp, MultipartFile[] fileList, String sp_ori_name, String[] numList);
+
+	List<MemberVO> getMemberList();
+
+	MemberVO getMember(MemberVO me);
 }

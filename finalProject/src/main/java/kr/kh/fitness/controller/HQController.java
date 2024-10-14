@@ -268,4 +268,19 @@ public class HQController {
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
+	
+	@GetMapping("/member/list")
+	public String memberList(Model model) {
+		List<MemberVO> meList = hqService.getMemberList();
+		model.addAttribute("meList", meList);
+	    return "/hq/member/list";
+	}
+	@ResponseBody
+	@GetMapping("/member/detail")
+	public Map<String, Object> memberDetail(@RequestParam String me_id, MemberVO meVo) {
+		MemberVO me = hqService.getMember(meVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("me", me);
+		return map;
+	}
 }
