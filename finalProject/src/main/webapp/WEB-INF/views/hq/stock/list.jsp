@@ -42,7 +42,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>

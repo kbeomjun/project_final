@@ -14,7 +14,7 @@
     	.file-input{border: 1px solid gray; border-radius: 5px;}
     	.address-input{margin-bottom: 10px;}
     	.img-container{min-height: 400px;}
-    	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 8px;}
+    	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 10px 6px;}
     	.btn-delete-img, .btn-delete-img2{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
     	.img-box, .img-box2{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
     	#fileList, #fileList2{display: none;}
