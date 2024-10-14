@@ -261,7 +261,7 @@ ALTER TABLE `program_reservation`
 ADD CONSTRAINT `FK_program_reservation_schedule`
   FOREIGN KEY (`pr_bs_num`)
   REFERENCES `branch_program_schedule` (`bs_num`)
-  ON DELETE SET NULL;
+  ON DELETE CASCADE;
 
 ALTER TABLE `payment` 
 ADD CONSTRAINT `FK_payment_member`

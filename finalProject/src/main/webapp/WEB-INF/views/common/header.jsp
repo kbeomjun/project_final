@@ -18,8 +18,8 @@
 					<li class="gnb__item"><a href="<c:url value="/branch/info" />" class="gnb__link">지점 조회</a></li>
 					<li class="gnb__item"><a href="<c:url value="/payment/paymentList" />" class="gnb__link">회원권</a></li>
 					<li class="gnb__item"><a href="<c:url value="/program/info"/>" class="gnb__link">프로그램</a></li>
-					<li class="gnb__item"><a href="<c:url value="/client/menu/list" />" class="gnb__link">고객센터</a></li>
-					<li class="gnb__item"><a href="<c:url value="/admin/menu/list"/>" class="gnb__link">지점관리</a></li>
+					<li class="gnb__item"><a href="<c:url value="/client/review/list" />" class="gnb__link">고객센터</a></li>
+					<li class="gnb__item"><a href="<c:url value="/admin/program/list"/>" class="gnb__link">지점관리</a></li>
 					<li class="gnb__item"><a href="<c:url value="/hq/branch/list"/>" class="gnb__link">본사관리</a></li>
 					<c:choose>
 		                <c:when test="${not empty sessionScope.user}">

@@ -21,92 +21,137 @@
     </style>
 </head>
 <body>
-	<h1 class="mt-3 mb-3">${br.br_name} 상세</h1>
-	<form action="<c:url value="/admin/branch/update"/>" method="post" enctype="multipart/form-data" id="form">
-		<div class="form-group">
-			<label for="br_name">지점명:</label>
-			<input type="text" class="form-control" id="br_name" name="br_name" value="${br.br_name}" readonly>
-		</div>
-		<div class="error error-name"></div>
-		<div class="form-group">
-			<label for="br_phone">전화번호:</label>
-			<input type="text" class="form-control" id="br_phone" name="br_phone" value="${br.br_phone}">
-		</div>
-		<div class="error error-phone"></div>
-		<div class="form-group">
-			<label for="br_address">주소:</label> <br/>
-			<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" value="${br.br_postcode}" readonly>
-			<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" value="${br.br_address}" readonly> <br/>
-			<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${br.br_detailAddress}" readonly>
-			<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${br.br_extraAddress}" readonly>
-		</div>
-		<div class="error error-address"></div>
-		<div class="form-group">
-			<label for="br_detail">지점설명:</label>
-			<textarea class="form-control" id="br_detail" name="br_detail">${br.br_detail}</textarea>
-		</div>
-		<div class="form-group">
-			<label for="me_id">관리자 아이디:</label>
-			<input type="text" class="form-control" id="me_id" name="me_id" value="${me.me_id}" readonly>
-		</div>
-		<div class="error error-id"></div>
-		<div class="form-group">
-			<label for="me_pw">관리자 비밀번호:</label>
-			<input type="password" class="form-control" id="me_pw" name="me_pw" value="${me.me_pw}">
-		</div>
-		<div class="error error-pw"></div>
-		<div class="form-group">
-			<label for="me_pw2">비밀번호 확인:</label>
-			<input type="password" class="form-control" id="me_pw2" name="me_pw2">
-		</div>
-		<div class="error error-pw2"></div>
-		<div class="form-group">
-			<label for="me_email">관리자 이메일:</label>
-			<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}">
-		</div>
-		<div class="error error-email"></div>
-		<div class="form-group">
-			<label>
-				등록된 사진:
-			</label>
-			<div class="file-input">
-				<div class="img-container2 d-flex flex-wrap">
-					<c:forEach items="${bfList}" var="bf">
-						<div class="img-box2">
-				        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%">
-					        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
-									<i class="fi fi-bs-cross"></i>
-								</button>
-							</img>
+
+	<div class="container-fluid">
+	    <div class="row">
+	        <!-- 왼쪽 사이드바 -->
+	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+	            <div class="sidebar-sticky">
+	                <h4 class="sidebar-heading mt-3">지점관리자 메뉴</h4>
+	                <ul class="nav flex-column">
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/program/list"/>">프로그램관리</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/schedule/list"/>">프로그램일정관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/order/list"/>">운동기구 발주목록</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/employee/list"/>">직원관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/member/list"/>">회원관리</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link active" href="<c:url value="/admin/branch/detail"/>">지점 상세보기</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/equipment/list"/>">운동기구 보유목록</a>
+	                    </li>
+						<li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
+	                    </li>	                    	                    	                    	                    	                    
+	                </ul>
+	            </div>
+	        </nav>
+	
+	        <!-- 오른쪽 컨텐츠 영역 -->
+	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+	            <div class="pt-3 pb-2 mb-3">
+					<h2 class="mt-3 mb-3">${br.br_name} 상세</h2>
+					<form action="<c:url value="/admin/branch/update"/>" method="post" enctype="multipart/form-data" id="form">
+						<div class="form-group">
+							<label for="br_name">지점명:</label>
+							<input type="text" class="form-control" id="br_name" name="br_name" value="${br.br_name}" readonly>
 						</div>
-					</c:forEach>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label>
-				추가할 사진:
-			</label>
-			<div class="file-input">
-				<div class="img-container d-flex flex-wrap align-items-center">
-					<div class="mx-auto">
-						<label for="fileList" class="btn btn-outline-success btn-insert-img">
-							<i class="fi fi-br-plus align-items-center"></i>
-						</label>
-					</div>
-				</div>
-			</div>
-			<label for="fileList2" class="btn btn-outline-success col-12 mt-3">
-				<span>사진 추가(</span>
-				<span class="img-count">0</span>
-				<span>개)</span>
-			</label>
-			<input type="file" class="form-control" id="fileList" name="fileList" multiple="multiple" accept="image/*">
-			<input type="file" class="form-control" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
-		</div>
-		<div class="error error-file"></div>
-		<button class="btn btn-outline-warning col-12">지점 수정</button>
-	</form>
+						<div class="error error-name"></div>
+						<div class="form-group">
+							<label for="br_phone">전화번호:</label>
+							<input type="text" class="form-control" id="br_phone" name="br_phone" value="${br.br_phone}">
+						</div>
+						<div class="error error-phone"></div>
+						<div class="form-group">
+							<label for="br_address">주소:</label> <br/>
+							<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" value="${br.br_postcode}" readonly>
+							<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" value="${br.br_address}" readonly> <br/>
+							<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${br.br_detailAddress}" readonly>
+							<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${br.br_extraAddress}" readonly>
+						</div>
+						<div class="error error-address"></div>
+						<div class="form-group">
+							<label for="br_detail">지점설명:</label>
+							<textarea class="form-control" id="br_detail" name="br_detail">${br.br_detail}</textarea>
+						</div>
+						<div class="form-group">
+							<label for="me_id">관리자 아이디:</label>
+							<input type="text" class="form-control" id="me_id" name="me_id" value="${me.me_id}" readonly>
+						</div>
+						<div class="error error-id"></div>
+						<div class="form-group">
+							<label for="me_pw">관리자 비밀번호:</label>
+							<input type="password" class="form-control" id="me_pw" name="me_pw">
+						</div>
+						<div class="error error-pw"></div>
+						<div class="form-group">
+							<label for="me_pw2">비밀번호 확인:</label>
+							<input type="password" class="form-control" id="me_pw2" name="me_pw2">
+						</div>
+						<div class="error error-pw2"></div>
+						<div class="form-group">
+							<label for="me_email">관리자 이메일:</label>
+							<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}">
+						</div>
+						<div class="error error-email"></div>
+						<div class="form-group">
+							<label>
+								등록된 사진:
+							</label>
+							<div class="file-input">
+								<div class="img-container2 d-flex flex-wrap">
+									<c:forEach items="${bfList}" var="bf">
+										<div class="img-box2">
+								        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%">
+									        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
+													<i class="fi fi-bs-cross"></i>
+												</button>
+											</img>
+										</div>
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								추가할 사진:
+							</label>
+							<div class="file-input">
+								<div class="img-container d-flex flex-wrap align-items-center">
+									<div class="mx-auto">
+										<label for="fileList" class="btn btn-outline-success btn-insert-img">
+											<i class="fi fi-br-plus align-items-center"></i>
+										</label>
+									</div>
+								</div>
+							</div>
+							<label for="fileList2" class="btn btn-outline-success col-12 mt-3">
+								<span>사진 추가(</span>
+								<span class="img-count">0</span>
+								<span>개)</span>
+							</label>
+							<input type="file" class="form-control" id="fileList" name="fileList" multiple="multiple" accept="image/*">
+							<input type="file" class="form-control" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
+						</div>
+						<div class="error error-file"></div>
+						<button class="btn btn-outline-warning col-12">지점 수정</button>
+					</form>
+	                
+	            </div>
+	        </main>
+	    </div>
+	</div>
+
 	
 	<script>
 		// 사진 파일

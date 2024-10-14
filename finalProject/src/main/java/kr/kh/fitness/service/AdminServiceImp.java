@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.AdminDAO;
+import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -22,7 +23,6 @@ import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
-import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.utils.UploadFileUtils;
 
@@ -167,7 +167,12 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getEquipmentListInHQ() {
+	public void deleteSchedule(int bs_num) {
+		adminDao.deleteSchedule(bs_num);
+	}
+	
+	@Override
+	public List<BranchStockDTO> getEquipmentListInHQ() {
 		return adminDao.selectEquipmentListInHQ();
 	}
 
@@ -359,7 +364,7 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getEquipmentListInBranch(String br_name, String view) {
+	public List<BranchStockDTO> getEquipmentListInBranch(String br_name, String view) {
 		if(br_name == null) {
 			return null;
 		}

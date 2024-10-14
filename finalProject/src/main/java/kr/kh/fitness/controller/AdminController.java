@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.fitness.dao.TestDAO;
+import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -41,23 +41,7 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
-	@Autowired
-	private TestDAO testDao;
 	
-	//지점관리자 메뉴 목록
-	@GetMapping("/menu/list")
-	public String menuList() {
-		return "/admin/menuList";
-	}
-	
-	@GetMapping("/login")
-	private String login(Model model, HttpSession session) {
-		MemberVO user = testDao.login("br_admin_ys1");
-
-		session.setAttribute("user", user);
-		return "/admin/menuList";
-	}
-
 	//지점 프로그램 목록(프로그램명+트레이너명+총인원수)
 	@GetMapping("/program/list")
 	public String programMagagement(Model model, HttpSession session, String br_name) {
@@ -232,8 +216,8 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 수정 get
-	@GetMapping("/schedule/update")
-	public String scheduleUpdate(Model model, Integer bs_num, String view, BranchCriteria cri) {
+	@GetMapping("/schedule/update/{bs_num}")
+	public String scheduleUpdate(Model model, @PathVariable("bs_num")int bs_num, String view, BranchCriteria cri) {
 		
 		BranchProgramScheduleVO schedule = adminService.getSchedule(bs_num);
 		
@@ -273,6 +257,14 @@ public class AdminController {
 		}
 	}
 	
+	//지점 프로그램 일정 삭제
+	@GetMapping("/schedule/delete/{bs_num}")
+	public String scheduleDelete(Model model, @PathVariable("bs_num")int bs_num) {
+		adminService.deleteSchedule(bs_num);
+		
+		return "redirect:/admin/schedule/list";
+	}
+	
 	//지점 발주 신청목록
 	@GetMapping("/order/list")
 	public String orderList(Model model, HttpSession session) {
@@ -297,7 +289,7 @@ public class AdminController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String br_name = user.getMe_name();
 		
-		List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentListInHQ();
+		List<BranchStockDTO> equipmentList = adminService.getEquipmentListInHQ();
 		
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
@@ -482,7 +474,7 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<BranchEquipmentStockVO> equipmentList = adminService.getEquipmentListInBranch(br_name, view);
+			List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch(br_name, view);
 			model.addAttribute("equipmentList", equipmentList);
 			model.addAttribute("br_name", br_name);
 			model.addAttribute("view", view);
