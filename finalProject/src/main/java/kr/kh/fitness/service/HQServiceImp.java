@@ -1,13 +1,17 @@
 package kr.kh.fitness.service;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +39,8 @@ public class HQServiceImp implements HQService {
 	String uploadPath;
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
@@ -481,6 +487,37 @@ public class HQServiceImp implements HQService {
 		
 		mi.setMi_state("답변완료");
 		if(!hqDao.updateMemberInquiry(mi)) {msg = "문의 답변을 등록하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		MemberVO me = hqDao.selectMemberByEmail(mi.getMi_email());
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
+		String date = dtFormat.format(mi.getMi_date());
+		if(me == null) {
+			mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내", 
+						date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변:<br/><br/>" + mi.getMi_answer());
+		}else {
+			mailSend(me.getMe_email(), "KH피트니스 1:1문의 답변완료 안내", 
+						date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변은 KH피트니스 홈페이지에서 확인하실 수 있습니다.");
+		}
+		
 		return msg;
+	}
+	public boolean mailSend(String to, String title, String content) {
+	    String setfrom = "stajun@naver.com";
+	    try{
+	    	MimeMessage message = mailSender.createMimeMessage();
+	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+	        messageHelper.setFrom(setfrom);// 보내는사람 생략하거나 하면 정상작동을 안함
+	        messageHelper.setTo(to);// 받는사람 이메일
+	        messageHelper.setSubject(title);// 메일제목은 생략이 가능하다
+	        messageHelper.setText(content, true);// 메일 내용
+
+	        mailSender.send(message);
+	        return true;
+	    } catch(Exception e){
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 }

@@ -254,4 +254,8 @@
 			mi_answer = #{mi.mi_answer}
 		where mi_num = #{mi.mi_num};
 	</update>
+	
+	<select id="selectMemberByEmail" resultType="MemberVO">
+		select * from member where me_email = #{me_email};
+	</select>
 </mapper>

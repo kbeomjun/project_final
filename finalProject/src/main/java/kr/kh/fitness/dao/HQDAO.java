@@ -108,4 +108,6 @@ public interface HQDAO {
 	MemberInquiryVO selectMemberInquiry(@Param("mi") MemberInquiryVO mi);
 
 	boolean updateMemberInquiry(@Param("mi") MemberInquiryVO mi);
+
+	MemberVO selectMemberByEmail(@Param("me_email") String me_email);
 }
