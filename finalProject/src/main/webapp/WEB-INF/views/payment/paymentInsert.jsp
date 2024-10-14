@@ -14,7 +14,7 @@
     <h2 class="mb10">회원권 결제</h2>
     
     <!-- 기존 회원권 정보 표시 -->
-	<c:if test="${not empty paStart}">
+	<c:if test="${paStart != null && paStart != ''}">
 	    <div class="membership-info my-10">
 	        <p class="mb-0">현재 회원권 시작일: <strong class="text-success">${paStart}</strong></p>
 	        <p>현재 회원권 만료일: <strong class="text-primary">${paEnd}</strong></p>
@@ -54,7 +54,7 @@
 				    <label for="pa_start">회원권 시작 날짜:</label>
 				    <%-- value는 하단의 script로 값을 가져오고 있음. --%>
 				    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
-				    <p>${paStart} / ${currentDate}</p>
+				    <p>시작일 : ${paStart} / 만료일 : ${paEnd} / 오늘 날짜 : ${currentDate}</p>
                 </div>
             </div>
         </div>

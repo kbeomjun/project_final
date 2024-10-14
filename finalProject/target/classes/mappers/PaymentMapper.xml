@@ -8,7 +8,7 @@
 	</select>
 	<insert id="insertPayment">
 		insert into payment(pa_price, pa_start, pa_end, pa_state, pa_me_id, pa_pt_num)
-		values(#{pt.pt_price}, now(), #{end}, #{pc.pc_status}, #{me.me_id}, #{pt.pt_num});
+		values(#{pt.pt_price}, #{pa.pa_start}, #{end}, #{pc.pc_status}, #{me.me_id}, #{pt.pt_num});
 	</insert>
 	<insert id="insertPaymentCategory">
 		insert into payment_category (pc_imp_uid, pc_merchant_uid, pc_amount, pc_status, pc_paid_at, pc_card_name, pc_card_number, pc_card_quota, pc_pt_num, pc_me_id)
@@ -21,10 +21,9 @@
 		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
 		WHERE pa.pa_me_id = #{me_id}
 		  AND pa.pa_pt_num = #{pt_num}
-		ORDER BY pa.pa_date DESC
+		ORDER BY pa.pa_start DESC
 		LIMIT 1;
 	</select>
-
 	
 	<update id="updatePayment">
 	    UPDATE payment pa
@@ -41,5 +40,12 @@
 	    WHERE pa.pa_me_id = #{pa.pa_me_id}
 	      AND pa.pa_pt_num = #{pa.pa_pt_num};
 	</update>
+	
+	<select id="selectPayment" resultType="PaymentVO">
+		SELECT * FROM payment
+		WHERE pa_me_id = #{me_id}
+		ORDER BY pa_start DESC
+		LIMIT 1;
+	</select>
 
 </mapper>

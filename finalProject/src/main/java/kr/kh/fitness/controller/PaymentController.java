@@ -57,29 +57,48 @@ public class PaymentController {
 	// 회원권 결제 get
 	@GetMapping("/paymentInsert")
 	public String paymentInsert(Model model, HttpSession session) {
-	    List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
-	    
+		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
+
 	    // 현재 날짜를 yyyy-MM-dd 형식으로 포맷
 	    LocalDateTime today = LocalDateTime.now();
 	    String currentDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+	    
+	    
 	    // 사용자 ID 가져오기
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
+	    // 사용자가 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
+	    if (user == null) {
+	        return "redirect:/login";  // 로그인 페이지로 리다이렉트
+	    }
+	    
 	    // 기존 결제 정보를 조회
 	    PaymentVO existingPayment = paymentService.getPayment(user.getMe_id());
-	 
-	    // SimpleDateFormat을 사용하여 Date 타입을 String으로 변환하는 포맷터
-	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-	    // 기존 결제 정보가 있을 경우 시작일과 만료일을 포맷팅하여 가져옴
-	    String paStart = existingPayment != null && existingPayment.getPa_start() != null 
-		        ? formatter.format(existingPayment.getPa_start()) // Date를 String으로 변환
-		        : currentDate; // 기존 결제 정보가 없으면 현재 날짜 사용
 	    
-	    String paEnd = existingPayment != null && existingPayment.getPa_end() != null 
-	            ? formatter.format(existingPayment.getPa_end()) 
-	            : null;
+	    System.out.println(user.getMe_id() + "의 결제 정보 : " + existingPayment);
+	    
+	    // 기존 결제 정보가 있을 경우에만 시작일과 만료일을 설정
+	    String paStart = null;
+	    String paEnd = null;
+
+	    if (existingPayment != null) {
+	        if (existingPayment.getPa_start() != null) {
+	            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	            paStart = formatter.format(existingPayment.getPa_start()); // 시작일 설정
+	        }
+
+	        if (existingPayment.getPa_end() != null) {
+	            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	            paEnd = formatter.format(existingPayment.getPa_end()); // 만료일 설정
+	        }
+	        
+		    System.out.println("시작일 : " + paStart);
+		    System.out.println("만료일 : " + paEnd);
+	    } else {
+	        // 결제 정보가 없을 때
+	        System.out.println("해당 사용자는 기존 결제 정보가 없습니다.");
+	    }
+	    
 	    
 	    // 현재 날짜 및 기존 결제 시작일 추가
 	    model.addAttribute("currentDate", currentDate);
