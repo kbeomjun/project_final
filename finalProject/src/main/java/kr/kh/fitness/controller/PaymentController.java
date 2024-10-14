@@ -2,10 +2,13 @@ package kr.kh.fitness.controller;
 
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.model.dto.PaymentRequestDTO;
@@ -52,43 +56,72 @@ public class PaymentController {
 
 	// 회원권 결제 get
 	@GetMapping("/paymentInsert")
-	public String paymentInsert(Model model) {
-		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
-		model.addAttribute("paymentList", paymentList);
-		return "/payment/paymentInsert";
+	public String paymentInsert(Model model, HttpSession session) {
+	    List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
+	    
+	    // 현재 날짜를 yyyy-MM-dd 형식으로 포맷
+	    LocalDateTime today = LocalDateTime.now();
+	    String currentDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+	    // 사용자 ID 가져오기
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    
+	    // 기존 결제 정보를 조회
+	    PaymentVO existingPayment = paymentService.getPayment(user.getMe_id());
+	 
+	    // SimpleDateFormat을 사용하여 Date 타입을 String으로 변환하는 포맷터
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+	    // 기존 결제 정보가 있을 경우 시작일과 만료일을 포맷팅하여 가져옴
+	    String paStart = existingPayment != null && existingPayment.getPa_start() != null 
+		        ? formatter.format(existingPayment.getPa_start()) // Date를 String으로 변환
+		        : currentDate; // 기존 결제 정보가 없으면 현재 날짜 사용
+	    
+	    String paEnd = existingPayment != null && existingPayment.getPa_end() != null 
+	            ? formatter.format(existingPayment.getPa_end()) 
+	            : null;
+	    
+	    // 현재 날짜 및 기존 결제 시작일 추가
+	    model.addAttribute("currentDate", currentDate);
+	    model.addAttribute("paStart", paStart);  // 기존 회원권의 시작일
+	    model.addAttribute("paEnd", paEnd);  // 기존 회원권의 만료일
+	    model.addAttribute("paymentList", paymentList);
+	    
+	    return "/payment/paymentInsert";
 	}
 
 	// 회원권 결제 post 메서드 (JSON)
 	@PostMapping("/paymentInsert")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> paymentInsertPost(@RequestBody PaymentRequestDTO request, HttpSession session) {
-		PaymentTypeVO payment = request.getPaymentType();
+		PaymentVO payment = request.getPayment();
+		PaymentTypeVO paymentType = request.getPaymentType();
 	    PaymentCategoryVO category = request.getPaymentCategory();
 	    
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> response = new HashMap<String, Object>();
 		try {
 	        MemberVO user = (MemberVO) session.getAttribute("user");
 	        String userId = user.getMe_id(); // 사용자 ID를 가져옴
 	        System.out.println("유저 정보 : " + user);
 	        
 			// payment, category 확인
-			System.out.println("결제 정보 : " + payment);
+	        System.out.println("결제 정보 : " + payment);
+			System.out.println("결제 타입 : " + paymentType);
 		    System.out.println("결제 유형 : " + category);
 		    
 		    // 기존 결제 정보를 조회
-		    PaymentVO existingPayment = paymentService.getLastPaymentByUserId(userId, payment.getPt_num());
-		    System.out.println("넘버 : " + payment.getPt_num());
+		    PaymentVO existingPayment = paymentService.getLastPaymentByUserId(userId, paymentType.getPt_num());
+		    System.out.println("결제 타입 번호 : " + paymentType.getPt_num());
 		    
 		    if (existingPayment != null) {
 		        // 기존 결제가 있는 경우
-		        LocalDateTime now = LocalDateTime.now();
-		        
+		    	
 		        // pa_end를 long 타입으로 가져오기
 		        long pcPaidAtTimestamp = existingPayment.getPa_end().getTime(); // Date에서 long으로 변환
 		        LocalDateTime paidAtDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(pcPaidAtTimestamp), ZoneId.systemDefault());
 		        
 		        // 기존 결제의 만료일을 계산
-		        LocalDateTime expirationDateTime = paidAtDateTime.plusDays(payment.getPt_date());
+		        LocalDateTime expirationDateTime = paidAtDateTime.plusDays(paymentType.getPt_date());
 		        System.out.println("만료일 계산 : " + expirationDateTime);
 
 		        // LocalDateTime을 Timestamp로 변환
@@ -111,14 +144,30 @@ public class PaymentController {
 		            response.put("message", "결제 업데이트에 실패했습니다.");
 		        }
 		    } else {
-                // 새로운 결제인 경우
-	        	
-				// 현재 날짜와 시간 가져오기
-			    LocalDateTime now = LocalDateTime.now();
-			    
+		    	// 새로운 결제인 경우 - 사용자가 선택한 시작 날짜를 사용
+	            if (payment.getPa_start() == null) {
+	                response.put("success", false);
+	                response.put("message", "시작 날짜를 선택해주세요.");
+	                return ResponseEntity.ok(response);
+	            }
+	            
+	            // 날짜 문자열에서 타임존과 시간을 제거하고 'yyyy-MM-dd' 형식으로 변환
+	            Date paStartDate = payment.getPa_start();
+
+	            // Date 객체를 LocalDateTime으로 변환하여 시간 정보를 무시하고 00:00:00으로 설정
+	            LocalDateTime startDateTime = paStartDate.toInstant()
+	                                                       .atZone(ZoneId.systemDefault())
+	                                                       .toLocalDate()
+	                                                       .atStartOfDay(); // 시작일의 00:00:00으로 설정
+
+				// pa_start를 Timestamp로 변환하여 PaymentVO에 설정
+				payment.setPa_start(Timestamp.valueOf(startDateTime)); // Timestamp로 변환하여 설정
+	            
+	            System.out.println("사용자가 선택한 이용권 시작 날짜(시간은 자동으로 00:00:00으로 들어옴) : " + startDateTime);
+
 			    // 기간을 숫자로 변환
-			    int period = payment.getPt_date(); // 예: 30, 60, 90일
-			    LocalDateTime expirationDateTime = now.plusDays(period); // 기간을 더함
+			    int period = paymentType.getPt_date(); // 예: 30, 60, 90일
+			    LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
 
 			    // 날짜 및 시간 포맷팅
 			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -126,7 +175,7 @@ public class PaymentController {
 			    System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
 			    
 			    // 결제 처리
-			    boolean res = paymentService.insertPayment(payment, category, formattedDateTime, user);
+			    boolean res = paymentService.insertPayment(payment, paymentType, category, formattedDateTime, user);
 			    
 			    // 결제가 완료되면 결제 완료 창이 뜨고, 결제에 실패하면 실패 창이 뜸.
 				// 결제가 성공적으로 끝나면 membershipList로 감, 실패하면 그대로 유지
@@ -144,6 +193,44 @@ public class PaymentController {
 	        response.put("success", false);
 	        response.put("message", "오류가 발생하였습니다: " + e.getMessage());
 		}
-		return ResponseEntity.ok(response); // JSON 형식으로 응답
+		return ResponseEntity.ok(response); // JSON 형식으로 응답 : ajax에서는 model형식 쓰는거 불가능...
 	}
+	
+	// 유효성 체크 메서드
+	@GetMapping("/checkValidity")
+	public ResponseEntity<Map<String, Object>> checkValidity(HttpSession session, @RequestParam("pt_num") int ptNum) {
+	    // 세션에서 user 정보를 직접 가져옴
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    Map<String, Object> response = new HashMap<String, Object>();
+	    boolean hasValidLicense = false;
+
+	    // 세션에 user 정보가 올바르게 설정되었는지 확인
+	    if (user == null) {
+	        // 세션에 user 정보가 없음
+	        response.put("error", "로그인 정보가 없습니다."); // String 타입의 에러 메시지를 추가
+	        return ResponseEntity.badRequest().body(response);
+	    }
+
+	    // 사용자 ID로 결제 정보를 조회
+	    PaymentVO existingPayment = paymentService.getLastPaymentByUserId(user.getMe_id(), ptNum);
+	    
+	    if (existingPayment != null) {
+	        // pa_end가 현재 날짜 이후이면 유효한 라이센스
+	        LocalDate today = LocalDate.now();
+	        
+	        // existingPayment.getPa_end()가 Date 타입일 때
+	        Date paEndDate = existingPayment.getPa_end();
+	        LocalDate expirationDate = paEndDate.toInstant()
+	                                             .atZone(ZoneId.systemDefault())
+	                                             .toLocalDate();
+
+	        hasValidLicense = expirationDate.isAfter(today) || expirationDate.isEqual(today);
+	    }
+
+	    response.put("hasValidLicense", hasValidLicense);
+	    return ResponseEntity.ok(response);
+	}
+
+	
 }
