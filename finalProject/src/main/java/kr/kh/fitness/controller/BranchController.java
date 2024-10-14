@@ -43,7 +43,12 @@ public class BranchController {
 	public String branchDetail(Model model, @PathVariable("br_name") String br_name,  @PathVariable("opt_num") String opt_num) throws Exception {
 		log.info("/branch/detail");
 
-		System.out.println(br_name);
+		// System.out.println(br_name);
+		
+		if(br_name.equals("본점") || !branchService.isExistBranch(br_name)) {
+			return "redirect:/branch/info";
+		}
+		
 		List<BranchVO> br_list = branchService.getBranchList();
 		BranchVO selected_branch = null;
 		if (!br_name.equals("all")) {

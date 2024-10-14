@@ -12,4 +12,7 @@
   <select id="selectBranchImageList" resultType="BranchFileVO">
   	select * from branch_file where bf_br_name = #{br_name}
   </select>
+  <select id="isExistBranch" resultType="int">
+  	select count(*) from branch where br_name =#{br_name}
+  </select>
 </mapper>

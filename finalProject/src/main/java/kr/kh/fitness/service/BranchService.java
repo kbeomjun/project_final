@@ -14,5 +14,7 @@ public interface BranchService {
 
 	List<BranchFileVO> getBranchImageList(String br_name);
 
+	boolean isExistBranch(String br_name);
+
 
 }

@@ -31,6 +31,11 @@ public class BranchServiceImp implements BranchService{
 	public List<BranchFileVO> getBranchImageList(String br_name) {
 		return branchDao.selectBranchImageList(br_name);
 	}
+
+	@Override
+	public boolean isExistBranch(String br_name) {
+		return branchDao.isExistBranch(br_name)!=0?true:false;
+	}
 	
 	
 }

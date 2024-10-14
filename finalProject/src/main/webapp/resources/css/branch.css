@@ -15,29 +15,25 @@
 	box-shadow: 0px 1px 2px #888;
 }
 
+
 .customoverlay a {
-	display: block;
-	text-decoration: none;
-	color: #000;
-	text-align: center;
-	border-radius: 6px;
-	font-size: 14px;
-	font-weight: bold;
-	overflow: hidden;
-	background: #d95050;
-	background: #d95050
-		url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
-		no-repeat right 14px center;
+    display: inline-block; /* 인라인 블록으로 변경 */
+    padding: 5px 10px; /* 안쪽 여백 설정 */
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
 }
 
 .customoverlay .title {
-	display: block;
-	text-align: center;
-	background: #fff;
-	margin-right: 35px;
-	padding: 5px 8px;
-	font-size: 14px;
-	font-weight: bold;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
 }
 
 .customoverlay:after {

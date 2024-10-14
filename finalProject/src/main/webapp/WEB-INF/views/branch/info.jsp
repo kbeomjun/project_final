@@ -8,7 +8,7 @@
 <head>
 <!-- CSS -->
 <link rel="stylesheet"
-	href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+	href="<c:url value="/resources/css/swiper-bundle.min_branch.css"/>">
 <!-- JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
@@ -28,6 +28,23 @@
   background-color: #fff;
 }
 
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
+    width: 80px;
+    height: 80px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    text-align: center;
+    line-height: 50px;
+}
+
+
 </style>
 
 </head>
@@ -41,6 +58,7 @@
 				class="btn btn-outline-secondary btn-branch mb-1 ${active}"
 				href=<c:url value="/branch/info"/>>전지점보기</a></li>
 			<c:forEach items="${br_list}" var="br">
+				<c:if test="${br.br_name ne '본점'}">
 				<c:choose>
 					<c:when test="${br.br_name eq select}">
 						<c:set var="active" value="active" />
@@ -52,10 +70,11 @@
 				<li><a
 					class="btn btn-outline-secondary btn-branch mb-1 ${active}"
 					href=<c:url value="/branch/detail/${br.br_name}/1"/>>${br.br_name}</a></li>
+				</c:if>
 			</c:forEach>
 		</ul>
 	</div>
-	<div class="branch-detail-container">
+	<div class="branch-detail-container" >
 		<c:choose>
 			<c:when test="${select ne null}">
 				<h3>${branch.br_name}</h3>
@@ -63,46 +82,40 @@
 				<div class="branch-detail mb-5">
 					<div class="branch-tab">
 						<ul>
-							<li><a class="btn ${opt_num == 1 ? 'active' : ''}"
-								href="<c:url value="/branch/detail/${branch.br_name}/1"/>">지점정보</a></li>
-							<li><a class="btn ${opt_num == 2 ? 'active' : ''}"
-								href="<c:url value="/branch/detail/${branch.br_name}/2"/>">직원소개</a></li>
-							<li><a class="btn ${opt_num == 3 ? 'active' : ''}"
-								href="<c:url value="/branch/detail/${branch.br_name}/3"/>">지점위치</a></li>
+							<li><a class="btn" href="#branch">지점정보</a></li>
+							<li><a class="btn" href="#employee">직원소개</a></li>
+							<li><a class="btn" href="#mapinfo">지점위치</a></li>
 						</ul>
 					</div>
 				</div>
-				<div class="branch-content">
-					<c:choose>
-						<c:when test="${opt_num eq 1}">
-							<div class="content-box"
-								style="text-align: center; display: flex; flex-wrap: wrap; align-items: center;">
-								<div class="swiper-container">
-									<c:if test="${branch_image_list.size() ne 0 }">
-										<div class="swiper-wrapper" id="swiper-wrapper">
-											<c:forEach items="${branch_image_list}" var="image">
-												<div class="swiper-slide">
-													<img src="<c:url value="/uploads${image.bf_name}" />"
-														style="width: 400px; height: 300px;"><br>
-												</div>
-											</c:forEach>
+				<div class="branch-content" id="branch">
+					<h3>지점정보</h3>
+					<div class="content-box mb-5 mt-5"
+						style="text-align: center; display: flex; flex-wrap: wrap; align-items: center;">
+						<div class="swiper-container mr-5">
+							<c:if test="${branch_image_list.size() ne 0 }">
+								<div class="swiper-wrapper" id="swiper-wrapper">
+									<c:forEach items="${branch_image_list}" var="image">
+										<div class="swiper-slide">
+											<img src="<c:url value="/uploads${image.bf_name}" />"
+												style="width: 600px; height: 400px;"><br>
 										</div>
-										<div class="swiper-button-next">&gt;</div>
-										<div class="swiper-button-prev">&lt;</div>
-										<div class="swiper-pagination"></div>
-									</c:if>
+									</c:forEach>
 								</div>
-								<div class="jumbotron" style="margin: 45px 0; padding: 32px;">
-									<strong class="title"
-										style="padding-top: 50px; font-size: 28px; background-size: 50px;">KH
-										피트니스 ${branch.br_name }</strong>
-									<p class="address">${branch.br_address},
-										${branch.br_detailAddress} ${branch.br_extraAddress}</p>
-									<hr>
-									<div>
-									${branch.br_detail}
-									</div>
-<!-- 									<dl>
+								<div class="swiper-button-next">&gt;</div>
+								<div class="swiper-button-prev">&lt;</div>
+								<div class="swiper-pagination"></div>
+							</c:if>
+						</div>
+						<div class="jumbotron" style="margin: 45px 0; padding: 32px;">
+							<strong class="title"
+								style="padding-top: 50px; font-size: 28px; background-size: 50px;">KH
+								피트니스 ${branch.br_name }</strong>
+							<p class="address">${branch.br_address},
+								${branch.br_detailAddress} ${branch.br_extraAddress}</p>
+							<hr>
+							<div>${branch.br_detail}</div>
+							<!-- 									<dl>
 										<dt>평일</dt>
 										<dd>06:00 ~ 23:00</dd>
 										<dt>토요일</dt>
@@ -112,48 +125,53 @@
 										<dt>정기휴일</dt>
 										<dd>매월 첫째, 셋째 일요일</dd>
 									</dl> -->
-									<br> <span class="phone" style="font-size: 16px;">
-										<c:choose>
-											<c:when test="${fn:length(branch.br_phone) == 10}">
+							<br> <span class="phone" style="font-size: 16px;"> <c:choose>
+									<c:when test="${fn:length(branch.br_phone) == 10}">
 										☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
 									</c:when>
-											<c:when test="${fn:length(branch.br_phone) == 9}">
+									<c:when test="${fn:length(branch.br_phone) == 9}">
 										☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
 									</c:when>
-										</c:choose>
-									</span>
+								</c:choose>
+							</span>
+						</div>
+					</div>
+					<div class="em-container mb-5 mt-5" id="employee">
+						<h3>직원소개</h3>
+					<div class="mt-5" style="text-align: center; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+						<c:if test="${em_list.size() ne 0 }">
+							<c:forEach items="${em_list}" var="em">
+								<div class="card" style="width: 200px">
+									<img class="card-img-top"
+										src=<c:url value="/uploads${em.em_fi_name}" />
+										alt=" ${em.em_fi_name}"
+										style="width: 100%; height: 250px; object-fit: cover;">
+									<div class="card-body">
+										<h4 class="card-title">${em.em_name}(${fn:substring(em.em_gender, 0, 1)})</h4>
+										<p class="card-text">${em.em_position}</p>
+										<!-- <a href="#" class="btn btn-primary">뭘 둘까나~</a> -->
+									</div>
 								</div>
-							</div>
-						</c:when>
-						<c:when test="${opt_num eq 2}">
-							<c:if test="${em_list.size() ne 0 }">
-								<div class="em-container" style="text-align: center; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-								    <c:forEach items="${em_list}" var="em">
-								        <div class="card" style="width: 200px">
-								            <img class="card-img-top" src=<c:url value="/uploads${em.em_fi_name}" /> alt="${em.em_fi_name}" style="width: 100%; height: 250px; object-fit: cover;">
-								            <div class="card-body">
-								                <h4 class="card-title">${em.em_name}(${fn:substring(em.em_gender, 0, 1)})</h4>
-								                <p class="card-text">${em.em_position}</p>
-								                <a href="#" class="btn btn-primary">뭘 둘까나~</a>
-								            </div>
-								        </div>
-								    </c:forEach>
-								</div>
-							</c:if>
-						</c:when>
-						<c:when test="${opt_num eq 3}">
-						
-							<div class="mt-5" id="map" data-address="${branch.br_address}" data-name="${branch.br_name }" style="width: 600px; background-color: lightgray; height: 400px; margin: 0 auto;"></div>
-						</c:when>
-					</c:choose>
+							</c:forEach>
+						</c:if>
+					</div></div>
+					<div class="branch-map-container mt-5" id="mapinfo">
+						<h3>지점위치</h3>
+						<div class="mt-5" id="map" data-address="${branch.br_address}"
+							data-name="${branch.br_name }"
+							style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;">
+						</div>
+					</div>
+
 				</div>
 			</c:when>
 			<c:otherwise>
 				<h3>전지점보기</h3>
 				<hr>
-				<div class="mt-5" id="map-total" style="width: 600px; background-color: lightgray; height: 400px; margin: 0 auto;"></div>
+				<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;"></div>
 			</c:otherwise>
 		</c:choose>
+		<button id="scrollToTopBtn" style="display: none;">맨 위로</button>
 	</div>
 <c:if test="${select eq null}">
 	<script type="text/javascript">
@@ -190,14 +208,18 @@
 	                title: branch.title, // 마커의 타이틀
 	                image: markerImage // 마커 이미지 설정
 	            });
-	            
-	            var content = '<div class="customoverlay">'
-					+ '<a href="<c:url value="/branch/detail/'+ branch.title +'/1" />"'
-					+ '>'
-					+ '<span class="title">'
-					+ branch.title
-					+ '</span></a></div>';
 
+					
+			 	content = '<div class="customoverlay">'
+		 		content += '<a href="<c:url value="/branch/detail/'+ branch.title +'/1" />"'
+			 	if(branch.title == '본점'){
+				 	content += 'onclick="return false;"'
+			 	}
+		 		content += '>'
+			 	content += '<span class="title">'
+		 		content += branch.title
+	 			content += '</span></a></div>';
+	 			
 				// 커스텀 오버레이를 생성합니다
 				var customOverlay = new kakao.maps.CustomOverlay(
 						{
@@ -237,7 +259,6 @@
 	</script>
 </c:if>
 
-<c:if test="${opt_num eq 3}">
 	<script type="text/javascript">
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		
@@ -313,9 +334,8 @@
 		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 		// marker.setMap(null);
 	</script>
-</c:if>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	window.onload = function() {
 		
 		const mySwiper = new Swiper('.swiper-container', {
@@ -358,7 +378,40 @@
 	
 		function () { if (mySwiper.isEnd) { mySwiper.slideTo(0); // 마지막 슬라이드에서
 		첫 번째 슬라이드로 이동 } }); */
-		
+</script>
+<script type="text/javascript">
+
+	// tab 클릭 시 아래로 이동하도록.
+	document.querySelectorAll('.branch-tab a').forEach(anchor => {
+	    anchor.addEventListener('click', function(e) {
+	        e.preventDefault();
+	        const target = document.querySelector(this.getAttribute('href'));
+	        const offset = 0; // 원하는 오프셋 값
+	        window.scrollTo({
+	            top: target.offsetTop - offset,
+	            behavior: 'smooth'
+	        });
+	    });
+	});
+
+	// 스크롤 이벤트 리스너 등록
+	window.addEventListener('scroll', function() {
+	    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+	    // 스크롤 위치가 300px 이상일 때 버튼 표시
+	    if (window.scrollY > 300) {
+	        scrollToTopBtn.style.display = 'block';
+	    } else {
+	        scrollToTopBtn.style.display = 'none';
+	    }
+	});
+	
+	// "맨 위로 가기" 버튼 클릭 시 부드럽게 스크롤
+	document.getElementById('scrollToTopBtn').addEventListener('click', function() {
+	    window.scrollTo({
+	        top: 0,
+	        behavior: 'smooth'
+	    });
+	});
 </script>
 
 </body>

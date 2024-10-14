@@ -15,5 +15,7 @@ public interface BranchDAO {
 	List<EmployeeVO> selectEmployeeList(@Param("br_name") String br_name);
 
 	List<BranchFileVO> selectBranchImageList(@Param("br_name")String br_name);
+
+	int isExistBranch(@Param("br_name")String br_name);
 	
 }
