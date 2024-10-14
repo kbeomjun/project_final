@@ -492,14 +492,15 @@ public class HQServiceImp implements HQService {
 		MemberVO me = hqDao.selectMemberByEmail(mi.getMi_email());
 		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
 		String date = dtFormat.format(mi.getMi_date());
+		boolean isSend = false;
 		if(me == null) {
-			mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내", 
-						date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변:<br/><br/>" + mi.getMi_answer());
+			isSend = mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내",
+								date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변:<br/><br/>" + mi.getMi_answer());
 		}else {
-			mailSend(me.getMe_email(), "KH피트니스 1:1문의 답변완료 안내", 
-						date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변은 KH피트니스 홈페이지에서 확인하실 수 있습니다.");
+			isSend = mailSend(me.getMe_email(), "KH피트니스 1:1문의 답변완료 안내",
+								date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변은 KH피트니스 홈페이지에서 확인하실 수 있습니다.");
 		}
-		
+		if(!isSend) {msg = "메일을 전송하지 못했습니다.";}
 		return msg;
 	}
 	public boolean mailSend(String to, String title, String content) {
