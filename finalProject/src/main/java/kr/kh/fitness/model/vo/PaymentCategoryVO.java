@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class PaymentCategoryVO {
 	
     private int pc_num;                   // 결제 카테고리 번호

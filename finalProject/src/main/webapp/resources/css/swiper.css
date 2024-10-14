@@ -18,8 +18,12 @@
 }
 
 .swiper-slide img {
-	width: 80% !important;
-	height: 80% !important;
+	
+	max-width: 600px;   /* 가로 최대 크기 설정 */
+    max-height: 480px;  /* 세로 최대 크기 설정 */
+    width: auto;        /* 가로 비율을 자동으로 맞춤 */
+    height: auto;       /* 세로 비율을 자동으로 맞춤 */
+
 	object-fit: cover; /* 이미지 비율을 유지하면서 슬라이드에 맞춤 */
 }
 
