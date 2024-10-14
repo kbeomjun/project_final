@@ -7,7 +7,8 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:305px; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
+		.img-container{height: 800px; overflow-y: auto;}
+    	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.btn-update{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
