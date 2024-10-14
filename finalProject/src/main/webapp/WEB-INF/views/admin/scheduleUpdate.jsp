@@ -59,21 +59,21 @@
 						</div>
 						<div class="form-group">
 							<label>현재일정:</label>
-							<input class="form-control" value="<fmt:formatDate value="${schedule.bs_start}" pattern="MM월dd일"/> <fmt:formatDate value="${schedule.bs_start}" pattern="hh"/>-<fmt:formatDate value="${schedule.bs_end}" pattern="hh시"/>" readonly/>
+							<input class="form-control" value="<fmt:formatDate value="${schedule.bs_start}" pattern="MM월dd일"/> <fmt:formatDate value="${schedule.bs_start}" pattern="HH"/>-<fmt:formatDate value="${schedule.bs_end}" pattern="HH시"/>" readonly/>
 						</div>
 						<div class="form-group">
 							<label>수정날짜:</label>
-							<input type="date" id="currentDate" name="date"/>
+							<input type="date" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
 						</div>
 						
 						<div class="form-group">
 							<label>수정시작시간:</label>
-							<input type="time" id="startTime" name="startTime" step="3600"/>
+							<input type="time" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
 						</div>
 						
 						<div class="form-group">
 							<label>수정마감시간:</label>
-							<input type="time" id="endTime" name="endTime" step="3600"/>
+							<input type="time" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
 						</div>
 						<div class="form-group d-flex justify-content-between">
 						    <c:url var="url" value="/admin/schedule/list">
@@ -104,27 +104,29 @@
 		var formattedToday = today.toISOString().substring(0, 10);
 		var formattedLastDay = lastDay.toISOString().substring(0, 10);
 
-		// input 필드의 min과 max 값을 설정
-		document.getElementById('currentDate').value = formattedToday;
-		document.getElementById('currentDate').min = formattedToday;
-		document.getElementById('currentDate').max = formattedLastDay;
+	    var currentDateField = document.getElementById('currentDate');
+	    var startTimeField = document.getElementById('startTime');
+	    var endTimeField = document.getElementById('endTime');
+
+	    // 만약 input 값이 없으면 기본값 설정
+	    if (!currentDateField.value) {
+	        currentDateField.value = formattedToday;
+	        currentDateField.min = formattedToday;
+	        currentDateField.max = formattedLastDay;
+	    }
 		
-		// 시간 필드에 시작 시간 및 마감 시간 설정 (분 단위 00 고정)
-		var startTimeField = document.getElementById('startTime');
-		var endTimeField = document.getElementById('endTime');
+	    // 시간 필드에 시작 시간 및 마감 시간 설정 (분 단위 00 고정)
+	    if (!startTimeField.value) {
+	        startTimeField.value = "09:00";
+	        startTimeField.min = "09:00";
+	        startTimeField.max = "19:00";
+	    }
 
-		// 기본 시작 시간과 마감 시간 (예: 09:00, 10:00)
-		var defaultStartTime = "09:00";
-		var defaultEndTime = "10:00";
-
-		// 시간 필드 설정
-		startTimeField.value = defaultStartTime;
-		startTimeField.min = "09:00";
-		startTimeField.max = "19:00";
-
-		endTimeField.value = defaultEndTime;
-		endTimeField.min = "10:00";
-		endTimeField.max = "20:00";	
+	    if (!endTimeField.value) {
+	        endTimeField.value = "10:00";
+	        endTimeField.min = "10:00";
+	        endTimeField.max = "20:00";
+	    }
 		
 		// 시간 선택 시, 분을 항상 00으로 설정
 		startTimeField.addEventListener('input', function() {

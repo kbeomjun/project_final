@@ -104,8 +104,7 @@
 									</td>
 									<c:if test="${view eq 'present'}">
 										<td>
-											<c:url var="url" value="/admin/schedule/update">
-												<c:param name="bs_num" value="${list.bs_num}"/>
+											<c:url var="url" value="/admin/schedule/update/${list.bs_num}">
 												<c:param name="view" value="${view}"/>
 												<c:param name="page" value="${pm.cri.page}"/>
 												<c:param name="type" value="${pm.cri.type}"/>

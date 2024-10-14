@@ -216,8 +216,8 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 수정 get
-	@GetMapping("/schedule/update")
-	public String scheduleUpdate(Model model, Integer bs_num, String view, BranchCriteria cri) {
+	@GetMapping("/schedule/update/{bs_num}")
+	public String scheduleUpdate(Model model, @PathVariable("bs_num")int bs_num, String view, BranchCriteria cri) {
 		
 		BranchProgramScheduleVO schedule = adminService.getSchedule(bs_num);
 		
