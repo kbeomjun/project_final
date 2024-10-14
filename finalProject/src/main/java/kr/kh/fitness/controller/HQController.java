@@ -21,6 +21,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
@@ -66,7 +67,7 @@ public class HQController {
 		return "/hq/branch/detail";
 	}
 	@PostMapping("/branch/update/{br_ori_name}")
-	public String branchUpdate(Model model, @PathVariable("br_ori_name") String br_ori_name, 
+	public String branchUpdatePost(Model model, @PathVariable("br_ori_name") String br_ori_name, 
 								BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList) {
 		String msg = hqService.updateBranch(branch, fileList, admin, br_ori_name, numList);
 		if(msg.equals("")) {
@@ -205,7 +206,7 @@ public class HQController {
 	    return "/hq/paymentType/list";
 	}
 	@PostMapping("/paymentType/insert")
-	public String paymentTypeInsert(Model model, PaymentTypeVO pt) {
+	public String paymentTypeInsertPost(Model model, PaymentTypeVO pt) {
 		String msg = hqService.insertPaymentType(pt);
 		model.addAttribute("url", "/hq/paymentType/list");
 		model.addAttribute("msg", msg);
@@ -213,14 +214,14 @@ public class HQController {
 	}
 	@ResponseBody
 	@GetMapping("/paymentType/update")
-	public Map<String, Object> paymentTypeData(@RequestParam int pt_num, PaymentTypeVO ptVo) {
+	public Map<String, Object> paymentTypeUpdate(@RequestParam int pt_num, PaymentTypeVO ptVo) {
 		PaymentTypeVO pt = hqService.getPaymentType(ptVo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pt", pt);
 		return map;
 	}
 	@PostMapping("/paymentType/update")
-	public String paymentTypeUpdate(Model model, PaymentTypeVO pt) {
+	public String paymentTypeUpdatePost(Model model, PaymentTypeVO pt) {
 		String msg = hqService.updatePaymentType(pt);
 		model.addAttribute("url", "/hq/paymentType/list");
 		model.addAttribute("msg", msg);
@@ -257,7 +258,7 @@ public class HQController {
 		return "/hq/program/detail";
 	}
 	@PostMapping("/program/update/{sp_ori_name}")
-	public String branchUpdate(Model model, @PathVariable("sp_ori_name") String sp_ori_name, 
+	public String branchUpdatePost(Model model, @PathVariable("sp_ori_name") String sp_ori_name, 
 								SportsProgramVO sp, MultipartFile[] fileList, String[] numList) {
 		String msg = hqService.updateSportsProgram(sp, fileList, sp_ori_name, numList);
 		if(msg.equals("")) {
@@ -282,5 +283,29 @@ public class HQController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("me", me);
 		return map;
+	}
+	
+	@GetMapping("/inquiry/list")
+	public String inquiryList(Model model) {
+		List<MemberInquiryVO> miWaitList = hqService.getMemberInquiryList("답변대기");
+		List<MemberInquiryVO> miDoneList = hqService.getMemberInquiryList("답변완료");
+		model.addAttribute("miWaitList", miWaitList);
+		model.addAttribute("miDoneList", miDoneList);
+	    return "/hq/inquiry/list";
+	}
+	@ResponseBody
+	@GetMapping("/inquiry/detail")
+	public Map<String, Object> inquiryDetail(@RequestParam int mi_num, MemberInquiryVO miVo) {
+		MemberInquiryVO mi = hqService.getMemberInquiry(miVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mi", mi);
+		return map;
+	}
+	@PostMapping("/inquiry/update")
+	public String inquiryUpdatePost(Model model, MemberInquiryVO mi) {
+	    String msg = hqService.updateMemberInquiry(mi);
+	    model.addAttribute("url", "/hq/inquiry/list");
+	    model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 }

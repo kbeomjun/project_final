@@ -19,6 +19,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
@@ -465,4 +466,21 @@ public class HQServiceImp implements HQService {
 
 	@Override
 	public MemberVO getMember(MemberVO me) {return hqDao.selectMember(me);}
+
+	@Override
+	public List<MemberInquiryVO> getMemberInquiryList(String mi_state) {return hqDao.selectMemberInquiryList(mi_state);}
+
+	@Override
+	public MemberInquiryVO getMemberInquiry(MemberInquiryVO mi) {return hqDao.selectMemberInquiry(mi);}
+
+	@Override
+	public String updateMemberInquiry(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "문의 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("답변완료");
+		if(!hqDao.updateMemberInquiry(mi)) {msg = "문의 답변을 등록하지 못했습니다.";}
+		return msg;
+	}
 }

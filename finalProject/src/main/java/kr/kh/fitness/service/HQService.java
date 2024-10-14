@@ -10,6 +10,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
@@ -78,4 +79,10 @@ public interface HQService {
 	List<MemberVO> getMemberList();
 
 	MemberVO getMember(MemberVO me);
+
+	List<MemberInquiryVO> getMemberInquiryList(String mi_state);
+
+	MemberInquiryVO getMemberInquiry(MemberInquiryVO mi);
+
+	String updateMemberInquiry(MemberInquiryVO mi);
 }

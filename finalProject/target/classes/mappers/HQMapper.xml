@@ -238,4 +238,20 @@
 	<select id="selectMember" resultType="MemberVO">
 		select * from member where me_id = #{me.me_id};
 	</select>
+	
+	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_state = #{mi_state} and mi_br_name = "본점" 
+		order by mi_date <if test="mi_state == '답변완료'">desc</if>;
+	</select>
+	
+	<select id="selectMemberInquiry" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_num = #{mi.mi_num};
+	</select>
+	
+	<update id="updateMemberInquiry">
+		update member_inquiry set
+			mi_state = #{mi.mi_state},
+			mi_answer = #{mi.mi_answer}
+		where mi_num = #{mi.mi_num};
+	</update>
 </mapper>
