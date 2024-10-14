@@ -257,6 +257,14 @@ public class AdminController {
 		}
 	}
 	
+	//지점 프로그램 일정 삭제
+	@GetMapping("/schedule/delete/{bs_num}")
+	public String scheduleDelete(Model model, @PathVariable("bs_num")int bs_num) {
+		adminService.deleteSchedule(bs_num);
+		
+		return "redirect:/admin/schedule/list";
+	}
+	
 	//지점 발주 신청목록
 	@GetMapping("/order/list")
 	public String orderList(Model model, HttpSession session) {

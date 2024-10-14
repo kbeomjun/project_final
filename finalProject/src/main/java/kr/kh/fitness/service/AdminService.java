@@ -47,6 +47,8 @@ public interface AdminService {
 
 	String updateSchedule(BranchProgramScheduleVO schedule);
 
+	void deleteSchedule(int bs_num);
+
 	List<BranchStockDTO> getEquipmentListInHQ();
 
 	String insertOrder(BranchOrderVO order);

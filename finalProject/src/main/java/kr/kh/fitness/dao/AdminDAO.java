@@ -53,6 +53,8 @@ public interface AdminDAO {
 	BranchProgramScheduleVO selectScheduleByNum(int bs_num);
 
 	boolean updateSchedule(BranchProgramScheduleVO schedule);
+
+	void deleteSchedule(int bs_num);
 	
 	List<BranchOrderVO> selectBranchOrderList(String br_name);
 

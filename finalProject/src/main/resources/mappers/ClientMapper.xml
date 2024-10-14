@@ -125,9 +125,15 @@
 				<when test="cri.type == 'trainer'">
 					and em_name like concat('%', #{cri.search},'%')
 				</when>
-			</choose>				
-		order by
-			bs_start
+			</choose>	
+		<if test="view == 'present'">
+			order by
+				bs_start
+		</if>
+		<if test="view == 'past'">
+			order by
+				bs_end desc
+		</if>						
 		limit
 			#{cri.pageStart}, #{cri.perPageNum}			
 	</select>

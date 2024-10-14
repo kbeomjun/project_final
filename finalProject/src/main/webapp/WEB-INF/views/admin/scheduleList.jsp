@@ -62,7 +62,7 @@
 								<th>프로그램 시간</th>
 								<th>예약회원보기</th>
 								<c:if test="${view eq 'present'}">
-									<th>수정</th>
+									<th>수정/삭제</th>
 								</c:if>
 							</tr>
 						</thead>
@@ -111,6 +111,7 @@
 												<c:param name="search" value="${pm.cri.search}"/>
 											</c:url>
 											<a href="${url}" class="btn btn-outline-warning btn-sm">수정</a>
+											<a href="<c:url value="/admin/schedule/delete/${list.bs_num}"/>" onclick="return confirm('삭제하시겠습니까?');"  class="btn btn-outline-danger btn-sm">삭제</a>
 										</td>
 									</c:if>
 								</tr>

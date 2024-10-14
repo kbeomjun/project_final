@@ -167,6 +167,11 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
+	public void deleteSchedule(int bs_num) {
+		adminDao.deleteSchedule(bs_num);
+	}
+	
+	@Override
 	public List<BranchStockDTO> getEquipmentListInHQ() {
 		return adminDao.selectEquipmentListInHQ();
 	}
