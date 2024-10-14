@@ -55,7 +55,6 @@
 		    		<table class="table table-hover">
 				    	<thead>
 				      		<tr>
-				        		<th>회원권번호</th>
 				        		<th>유형</th>
 				        		<th>기한(일)</th>
 				        		<th>PT횟수(회)</th>
@@ -66,7 +65,6 @@
 				    	<tbody>
 				    		<c:forEach items="${ptList}" var="pt">
 				    			<tr>
-					        		<td class="align-content-center">${pt.pt_num}</td>
 					        		<td class="align-content-center">${pt.pt_type}</td>
 					        		<td class="align-content-center">${pt.pt_date}</td>
 					        		<td class="align-content-center">${pt.pt_count}</td>
@@ -78,7 +76,7 @@
 				    		</c:forEach>
 				    		<c:if test="${ptList.size() == 0}">
 				    			<tr>
-					        		<th class="text-center" colspan="6">등록된 회원권이 없습니다.</th>
+					        		<th class="text-center" colspan="5">등록된 회원권이 없습니다.</th>
 					      		</tr>
 				    		</c:if>
 				    	</tbody>
