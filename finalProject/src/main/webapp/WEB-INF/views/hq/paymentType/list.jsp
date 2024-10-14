@@ -273,7 +273,7 @@
     		
     		$.ajax({
 				async : true,
-				url : '<c:url value="/hq/paymentType/data"/>', 
+				url : '<c:url value="/hq/paymentType/update"/>', 
 				type : 'get', 
 				data : {pt_num : pt_num}, 
 				dataType : "json",

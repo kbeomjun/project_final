@@ -136,15 +136,15 @@ public class HQController {
 		return "/main/message";
 	}
 	@ResponseBody
-	@GetMapping("/equipment/data")
-	public Map<String, Object> equipmentData(@RequestParam String se_name, SportsEquipmentVO seVo) {
+	@GetMapping("/equipment/update")
+	public Map<String, Object> equipmentUpdate(@RequestParam String se_name, SportsEquipmentVO seVo) {
 		SportsEquipmentVO se = hqService.getSportsEquipment(seVo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("se", se);
 		return map;
 	}
 	@PostMapping("/equipment/update")
-	public String equipmentUpdatePost1(Model model, String se_ori_name, 
+	public String equipmentUpdatePost(Model model, String se_ori_name, 
 										SportsEquipmentVO se, MultipartFile file2, String isDel) {
 		String msg = hqService.updateSportsEquipment(se, file2, se_ori_name, isDel);
 		model.addAttribute("url", "/hq/equipment/list");
@@ -159,8 +159,8 @@ public class HQController {
 	    return "/hq/stock/list";
 	}
 	@ResponseBody
-	@GetMapping("/stock/lists")
-	public Map<String, Object> stockLists() {
+	@PostMapping("/stock/list")
+	public Map<String, Object> stockListPost() {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
 		List<BranchStockDTO> stList = hqService.getBranchStockList();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -212,7 +212,7 @@ public class HQController {
 		return "/main/message";
 	}
 	@ResponseBody
-	@GetMapping("/paymentType/data")
+	@GetMapping("/paymentType/update")
 	public Map<String, Object> paymentTypeData(@RequestParam int pt_num, PaymentTypeVO ptVo) {
 		PaymentTypeVO pt = hqService.getPaymentType(ptVo);
 		Map<String, Object> map = new HashMap<String, Object>();

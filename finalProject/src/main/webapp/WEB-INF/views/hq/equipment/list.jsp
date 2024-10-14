@@ -253,7 +253,7 @@
 			
 			$.ajax({
 				async : true,
-				url : '<c:url value="/hq/equipment/data"/>', 
+				url : '<c:url value="/hq/equipment/update"/>', 
 				type : 'get', 
 				data : {se_name : se_name}, 
 				dataType : "json",

@@ -132,8 +132,8 @@
 		function displayList(){
 			$.ajax({
 				async : true,
-				url : '<c:url value="/hq/stock/lists"/>', 
-				type : 'get', 
+				url : '<c:url value="/hq/stock/list"/>', 
+				type : 'post', 
 				dataType : "json",
 				success : function (data){
 					let beList = data.beList;
