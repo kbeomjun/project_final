@@ -146,11 +146,14 @@
 						var be_record_date = (new Date(be.be_record)).toLocaleDateString('ko-KR', {
 							year: 'numeric',
 							month: '2-digit',
-							day: '2-digit',
+							day: '2-digit'
 							})
 							.replace(/\./g, '')
 							.replace(/\s/g, '.')
 						var be_record_hour = (new Date(be.be_record)).toLocaleDateString('ko-KR', {
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
 							hour: '2-digit',
 							hour12 : false,
 							minute: '2-digit',

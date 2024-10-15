@@ -163,6 +163,7 @@
 										<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
 									</div>
 									<div class="error error-answer"></div>
+									<input type="hidden" id="mi_num" name="mi_num">
 									<button class="btn btn-outline-info col-12">답변 등록</button>
 					        	</div>
 					        	<div class="modal-footer">
@@ -281,16 +282,13 @@
 						})
 						.replace(/\./g, '')
 						.replace(/\s/g, '.')
-					var str = `
-						<input type="hidden" name="mi_num" value="\${mi.mi_num}">
-					`;
 					
 					$('#mi_title').val(mi.mi_title);
 					$('#mi_email').val(mi.mi_email);
 					$('#mi_date').val(mi_date);
 					$('#mi_it_name').val(mi.mi_it_name);
 					$('#mi_content').val(mi.mi_content);
-					$('#form').append(str);					
+					$('#mi_num').val(mi_num);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
