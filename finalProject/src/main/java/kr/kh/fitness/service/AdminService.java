@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -96,9 +97,9 @@ public interface AdminService {
 
 	PageMaker getPageMaker(String view, BranchCriteria cri);
 
-	boolean insertBranchProgramSchedule(ProgramInsertFormDTO pif);
+	ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif);
 
-	boolean insertBranchProgramScheduleList(ProgramInsertFormDTO pif);
+	ResultMessage insertBranchProgramScheduleList(ProgramInsertFormDTO pif);
 
 	List<MemberInquiryVO> getMemberInquiryList(String br_name, String mi_state);
 

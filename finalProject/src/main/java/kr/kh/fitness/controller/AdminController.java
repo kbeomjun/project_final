@@ -24,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.dto.MessageDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -237,20 +239,18 @@ public class AdminController {
 	//지점 프로그램 일정 추가 post
 	@PostMapping("/schedule/insert")
 	public String scheduleInsertPost(Model model, HttpServletRequest request, @ModelAttribute ProgramInsertFormDTO pif) {
-		System.out.println(pif);
 		
-		boolean res;
+		// System.out.println(pif);
+		
+		ResultMessage rm = new ResultMessage();
+		
 		if(pif.getSp_type().equals("단일")) {
-			res = adminService.insertBranchProgramSchedule(pif);
+			rm = adminService.insertBranchProgramSchedule(pif);
 		}else {
-			res = adminService.insertBranchProgramScheduleList(pif);
+			rm = adminService.insertBranchProgramScheduleList(pif);
 		}
-		if(res) {
-			model.addAttribute("msg", "스케쥴 등록을 완료했습니다.");
-		}
-		else {
-			model.addAttribute("msg", "스케쥴 등록 과정에서 에러가 발생했습니다. \\n 이전에 등록한 시간과 중복되지 않았는 지 확인바랍니다. \\n 이상이 없다면 관리자에게 문의해주세요.");
-		}
+		
+		model.addAttribute("msg", rm.getMessage());
 		model.addAttribute("url", "/admin/schedule/list");
 		return "/main/message";
  

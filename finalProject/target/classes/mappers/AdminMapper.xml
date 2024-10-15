@@ -463,6 +463,6 @@
        values
        <foreach collection="bps_list" item="bps" separator=",">
             (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
-        </foreach>
+       </foreach>
     </insert>
 </mapper>

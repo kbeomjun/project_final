@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.fitness.dao.AdminDAO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -475,16 +476,16 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean insertBranchProgramSchedule(ProgramInsertFormDTO pif) {
+	public ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif) {
 		
 		// 지점에 등록된 프로그램이 없다면
 		if(adminDao.selectBranchProgramByNum(pif.getBs_bp_num()) == null) {
-			return false;
+			return new ResultMessage(false, "프로그램을 불러오는데 실패하였습니다.");
 		}
 		
 		// 시간이 중복 등록되었거나 등록되지 않았다면
 		if(pif.getHours().size() != 1) {
-			return false;
+			return new ResultMessage(false, "시간을 선택하지 않았거나 중복하였습니다.");
 		}
 		
 		int hour = pif.getHours().get(0);
@@ -492,9 +493,15 @@ public class AdminServiceImp implements AdminService{
 		// bps 객체 생성
 		BranchProgramScheduleVO bps = newBranchProgramSchedule(pif.getSelectDate(), hour, pif.getBs_bp_num(), 1);
 		
-		if(bps == null) return false;
-		return adminDao.insertBranchProgramSchedule(bps);
-        
+		if(bps == null) {
+			return new ResultMessage(false, "스케쥴을 생성하는데 실패하였습니다. \\\\n(같은 시간에 이미 등록된 스케쥴이 있을 수 있습니다.)");
+		}
+		
+		boolean res = adminDao.insertBranchProgramSchedule(bps);
+		if(res) {
+			return new ResultMessage(true,"스케쥴이 정상적으로 등록되었습니다.");
+		}
+		return new ResultMessage(false,"DB에 등록하는데 실패하였습니다.(관리자 문의!)");
 	}
 
 	private BranchProgramScheduleVO newBranchProgramSchedule(Date selectDate, int hour, int bp_num, int current) {
@@ -521,16 +528,14 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean insertBranchProgramScheduleList(ProgramInsertFormDTO pif) {
-		
+	public ResultMessage insertBranchProgramScheduleList(ProgramInsertFormDTO pif) {
 		// 지점에 등록된 프로그램이 없다면
 		if (adminDao.selectBranchProgramByNum(pif.getBs_bp_num()) == null) {
-			return false;
+			return new ResultMessage(false,"프로그램을 불러오는데 실패하였습니다.");
 		}
-		
 		// 시작 시간 혹은 마감 시간이 null이라면
 		if(pif.getStartDate() == null || pif.getEndDate() == null) {
-			return false;
+			return new ResultMessage(false,"시작 날짜와 마감 날짜가 정상적으로 입력되지 않았습니다.");
 		}
 		
 		List<BranchProgramScheduleVO> bps_list = new ArrayList<BranchProgramScheduleVO>();
@@ -565,8 +570,7 @@ public class AdminServiceImp implements AdminService{
             		
             		BranchProgramScheduleVO bps = newBranchProgramSchedule(weekDate, hour, pif.getBs_bp_num(), 0);
             		if(bps == null) {
-            			System.err.println("bps 생성하는 과정에서 에러 발생!");
-            			return false;
+            			return new ResultMessage(false,"스케쥴을 생성하는데 실패하였습니다. \\n(같은 시간에 이미 등록된 스케쥴이 있을 수 있습니다.)");
             		}else {
             			bps_list.add(bps);
             		}
@@ -579,7 +583,16 @@ public class AdminServiceImp implements AdminService{
             
         }
 		
-		return adminDao.insertBranchProgramScheduleList(bps_list);
+		if(bps_list.size() == 0) {
+			return new ResultMessage(false,"선택한 날짜 사이에 요청한 요일이 존재하지 않습니다.");
+		}
+		
+		boolean res = adminDao.insertBranchProgramScheduleList(bps_list);
+		if(res) {
+			return new ResultMessage(true,"입력한 스케쥴이 모두 등록되었습니다.");
+		}
+		
+		return new ResultMessage(false,"DB에 등록하는데 실패하였습니다.(관리자 문의!)");
 	}
 
 	public List<MemberInquiryVO> getMemberInquiryList(String br_name, String mi_state) {

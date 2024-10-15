@@ -2,7 +2,7 @@ package kr.kh.fitness.service;
 
 import java.util.List;
 
-import kr.kh.fitness.model.dto.ProgramReservationMessage;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -16,7 +16,7 @@ public interface ProgramService {
 
 	List<ProgramScheduleDTO> getProgramSchedule(String searchMonth, String br_name, String pr_name);
 
-	ProgramReservationMessage addProgramReservation(MemberVO user, Integer bs_num);
+	ResultMessage addProgramReservation(MemberVO user, Integer bs_num);
 
 	boolean checkReservation(MemberVO user, int bs_num);
 
