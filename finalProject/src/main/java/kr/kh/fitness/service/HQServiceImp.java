@@ -268,7 +268,19 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {return hqDao.selectBranchEquipmentStockList(null, null);}
+	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {
+		List<BranchEquipmentStockVO> beList = hqDao.selectBranchEquipmentStockList(null, null);
+		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
+		for(int i = 0; i < beList.size(); i++) {
+			String be_recordStr = dtFormat1.format(beList.get(i).getBe_record());
+			String be_birthStr = dtFormat2.format(beList.get(i).getBe_birth());
+			
+			beList.get(i).setBe_recordStr(be_recordStr);
+			beList.get(i).setBe_birthStr(be_birthStr);
+		}
+		return beList;
+	}
 
 	@Override
 	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}

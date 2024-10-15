@@ -11,6 +11,8 @@
     	.form-group{margin: 0;}
     	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	.address-input{margin-bottom: 10px;}
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
     </style>
 </head>
 <body>
@@ -51,29 +53,29 @@
 		    <div class="col-sm-10">
 		    	<div class="mt-3">
 		    		<table class="table table-hover" id="table">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">이름</th>
-				        		<th class="text-center">생년월일</th>
-				        		<th class="text-center">성별</th>
-				        		<th class="text-center">전화번호</th>
-				        		<th class="text-center">이메일</th>
-				        		<th class="text-center">아이디</th>
-				        		<th class="text-center"></th>
+				        		<th>이름</th>
+				        		<th>생년월일</th>
+				        		<th>성별</th>
+				        		<th>전화번호</th>
+				        		<th>이메일</th>
+				        		<th>아이디</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${meList}" var="me">
 				    			<tr>
-					        		<td class="align-content-center text-left">${me.me_name}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${me.me_name}</td>
+					        		<td class="align-content-center">
 					        			<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center text-left">${me.me_gender}</td>
-					        		<td class="align-content-center text-left">${me.me_phone}</td>
-					        		<td class="align-content-center text-left">${me.me_email}</td>
-					        		<td class="align-content-center text-left">${me.me_id}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${me.me_gender}</td>
+					        		<td class="align-content-center">${me.me_phone}</td>
+					        		<td class="align-content-center">${me.me_email}</td>
+					        		<td class="align-content-center">${me.me_id}</td>
+					        		<td class="align-content-center">
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 					        		</td>
 					      		</tr>

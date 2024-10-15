@@ -160,12 +160,17 @@ public class HQController {
 	    return "/hq/stock/list";
 	}
 	@ResponseBody
-	@PostMapping("/stock/list")
-	public Map<String, Object> stockListPost() {
+	@PostMapping("/stock/list1")
+	public List<BranchEquipmentStockVO> stockListPost1(Model model) {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
+		model.addAttribute("beList", beList);
+		return beList;
+	}
+	@ResponseBody
+	@PostMapping("/stock/list2")
+	public Map<String, Object> stockListPost2() {
 		List<BranchStockDTO> stList = hqService.getBranchStockList();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("beList", beList);
 		map.put("stList", stList);
 	    return map;
 	}

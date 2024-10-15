@@ -10,6 +10,8 @@
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
     </style>
 </head>
 <body>
@@ -54,23 +56,23 @@
 			    <hr>
 		    	<div class="mt-3">
 		    		<table class="table table-hover" id="table">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">유형</th>
-				        		<th class="text-center">기한(일)</th>
-				        		<th class="text-center">PT횟수(회)</th>
-				        		<th class="text-center">가격(원)</th>
-				        		<th class="text-center"></th>
+				        		<th>유형</th>
+				        		<th>기한(일)</th>
+				        		<th>PT횟수(회)</th>
+				        		<th>가격(원)</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${ptList}" var="pt">
 				    			<tr>
-					        		<td class="align-content-center text-center">${pt.pt_type}</td>
-					        		<td class="align-content-center text-center">${pt.pt_date}</td>
-					        		<td class="align-content-center text-center">${pt.pt_count}</td>
-					        		<td class="align-content-center text-center">${pt.formattedPrice}</td>
-					        		<td class="align-content-center text-center">
+					        		<td class="align-content-center">${pt.pt_type}</td>
+					        		<td class="align-content-center">${pt.pt_date}</td>
+					        		<td class="align-content-center">${pt.pt_count}</td>
+					        		<td class="align-content-center">${pt.formattedPrice}</td>
+					        		<td class="align-content-center">
 					        			<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
 					        		</td>
 					      		</tr>

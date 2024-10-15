@@ -6,6 +6,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -50,29 +54,29 @@
 			    <hr>
 		    	<div class="mt-3 box box-wait">
 		    		<table class="table table-hover table-wait">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">내역번호</th>
-				        		<th class="text-center">지점</th>
-				        		<th class="text-center">신청날짜</th>
-				        		<th class="text-center">기구명</th>
-				        		<th class="text-center">수량</th>
-				        		<th class="text-center">상태</th>
-				        		<th class="text-center"></th>
+				        		<th>내역번호</th>
+				        		<th>지점</th>
+				        		<th>신청날짜</th>
+				        		<th>기구명</th>
+				        		<th>수량</th>
+				        		<th>상태</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${boWaitList}" var="bo">
 				    			<tr>
-					        		<td class="align-content-center text-left">${bo.bo_num}</td>
-					        		<td class="align-content-center text-left">${bo.bo_br_name}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${bo.bo_num}</td>
+					        		<td class="align-content-center">${bo.bo_br_name}</td>
+					        		<td class="align-content-center">
 					        			<fmt:formatDate value="${bo.bo_date}" pattern="yyyy.MM.dd hh:mm:ss"/>
 				        			</td>
-					        		<td class="align-content-center text-left">${bo.bo_se_name}</td>
-					        		<td class="align-content-center text-left">${bo.bo_amount}</td>
-					        		<td class="align-content-center text-left">${bo.bo_state}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${bo.bo_se_name}</td>
+					        		<td class="align-content-center">${bo.bo_amount}</td>
+					        		<td class="align-content-center">${bo.bo_state}</td>
+					        		<td class="align-content-center">
 					        			<a href="<c:url value="/hq/order/accept/${bo.bo_num}"/>" class="btn btn-outline-success">승인</a>
 					        			<a href="<c:url value="/hq/order/deny/${bo.bo_num}"/>" class="btn btn-outline-danger">거부</a>
 					        		</td>
@@ -83,29 +87,29 @@
 				</div>
 				<div class="mt-3 box box-done" style="display: none;">
 		    		<table class="table table-hover table-done">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">내역번호</th>
-				        		<th class="text-center">지점</th>
-				        		<th class="text-center">신청날짜</th>
-				        		<th class="text-center">기구명</th>
-				        		<th class="text-center">수량</th>
-				        		<th class="text-center">상태</th>
-				        		<th class="text-center"></th>
+				        		<th>내역번호</th>
+				        		<th>지점</th>
+				        		<th>신청날짜</th>
+				        		<th>기구명</th>
+				        		<th>수량</th>
+				        		<th>상태</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${boDoneList}" var="bo">
 				    			<tr>
-					        		<td class="align-content-center text-left">${bo.bo_num}</td>
-					        		<td class="align-content-center text-left">${bo.bo_br_name}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${bo.bo_num}</td>
+					        		<td class="align-content-center">${bo.bo_br_name}</td>
+					        		<td class="align-content-center">
 					        			<fmt:formatDate value="${bo.bo_date}" pattern="yyyy.MM.dd hh:mm:ss"/>
 				        			</td>
-					        		<td class="align-content-center text-left">${bo.bo_se_name}</td>
-					        		<td class="align-content-center text-left">${bo.bo_amount}</td>
-					        		<td class="align-content-center text-left">${bo.bo_state}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${bo.bo_se_name}</td>
+					        		<td class="align-content-center">${bo.bo_amount}</td>
+					        		<td class="align-content-center">${bo.bo_state}</td>
+					        		<td class="align-content-center">
 					        		
 					        		</td>
 					      		</tr>
@@ -127,6 +131,7 @@
 			scrollY: 600,
 		    paging: false,
 		    info: false,
+		    order: [[ 2, "asc" ]],
 		    columnDefs: [
 		        {
 		        	targets: [5, 6], 
@@ -145,22 +150,43 @@
 			$('.box-'+name).css("display", "block");
 			
 			table.destroy();
-			table = $('.table-'+name).DataTable({
-				language: {
-			        search: "검색:",
-			        zeroRecords: "",
-			        emptyTable: "등록된 내역이 없습니다."
-			    },
-				scrollY: 600,
-			    paging: false,
-			    info: false,
-			    columnDefs: [
-			        {
-			        	targets: [5, 6], 
-			        	orderable: false
-		        	}
-			    ]
-			});
+			if(name == 'wait'){
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 2, "asc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}else{
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 2, "desc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}
 		});
 	</script>
 </body>

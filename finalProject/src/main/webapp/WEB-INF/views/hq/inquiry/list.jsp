@@ -11,6 +11,8 @@
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
     </style>
 </head>
 <body>
@@ -56,29 +58,29 @@
 			    <hr>
 		    	<div class="mt-3 box box-wait">
 		    		<table class="table table-hover table-wait">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">문의번호</th>
-				        		<th class="text-center">제목</th>
-				        		<th class="text-center">작성자</th>
-				        		<th class="text-center">날짜</th>
-				        		<th class="text-center">유형</th>
-				        		<th class="text-center">상태</th>
-				        		<th class="text-center"></th>
+				        		<th>문의번호</th>
+				        		<th>제목</th>
+				        		<th>작성자</th>
+				        		<th>날짜</th>
+				        		<th>유형</th>
+				        		<th>상태</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${miWaitList}" var="mi">
 				    			<tr>
-					        		<td class="align-content-center text-left">${mi.mi_num}</td>
-					        		<td class="align-content-center text-left">${mi.mi_title}</td>
-					        		<td class="align-content-center text-left">${mi.mi_email}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${mi.mi_num}</td>
+					        		<td class="align-content-center">${mi.mi_title}</td>
+					        		<td class="align-content-center">${mi.mi_email}</td>
+					        		<td class="align-content-center">
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center text-left">${mi.mi_it_name}</td>
-					        		<td class="align-content-center text-left">${mi.mi_state}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${mi.mi_it_name}</td>
+					        		<td class="align-content-center">${mi.mi_state}</td>
+					        		<td class="align-content-center">
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -88,29 +90,29 @@
 				</div>
 				<div class="mt-3 box box-done" style="display: none;">
 					<table class="table table-hover table-done">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">문의번호</th>
-				        		<th class="text-center">제목</th>
-				        		<th class="text-center">작성자</th>
-				        		<th class="text-center">날짜</th>
-				        		<th class="text-center">유형</th>
-				        		<th class="text-center">상태</th>
-				        		<th class="text-center"></th>
+				        		<th>문의번호</th>
+				        		<th>제목</th>
+				        		<th>작성자</th>
+				        		<th>날짜</th>
+				        		<th>유형</th>
+				        		<th>상태</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${miDoneList}" var="mi">
 				    			<tr>
-					        		<td class="align-content-center text-left">${mi.mi_num}</td>
-					        		<td class="align-content-center text-left">${mi.mi_title}</td>
-					        		<td class="align-content-center text-left">${mi.mi_email}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${mi.mi_num}</td>
+					        		<td class="align-content-center">${mi.mi_title}</td>
+					        		<td class="align-content-center">${mi.mi_email}</td>
+					        		<td class="align-content-center">
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center text-left">${mi.mi_it_name}</td>
-					        		<td class="align-content-center text-left">${mi.mi_state}</td>
-					        		<td class="align-content-center text-left">
+					        		<td class="align-content-center">${mi.mi_it_name}</td>
+					        		<td class="align-content-center">${mi.mi_state}</td>
+					        		<td class="align-content-center">
 					        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -252,6 +254,7 @@
 			scrollY: 600,
 		    paging: false,
 		    info: false,
+		    order: [[ 3, "asc" ]],
 		    columnDefs: [
 		        {
 		        	targets: [5, 6], 
@@ -270,22 +273,43 @@
 			$('.box-'+name).css("display", "block");
 			
 			table.destroy();
-			table = $('.table-'+name).DataTable({
-				language: {
-			        search: "검색:",
-			        zeroRecords: "",
-			        emptyTable: "등록된 내역이 없습니다."
-			    },
-				scrollY: 600,
-			    paging: false,
-			    info: false,
-			    columnDefs: [
-			        {
-			        	targets: [5, 6], 
-			        	orderable: false
-		        	}
-			    ]
-			});
+			if(name == 'wait'){
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 3, "asc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}else{
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 3, "desc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}
 		});
 	
 		$('.btn-detail').click(function(){

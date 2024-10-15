@@ -5,6 +5,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -48,23 +52,23 @@
 		    	<hr>
 		    	<div class="mt-3">
 			    	<table class="table table-hover" id="table">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">지점명</th>
-				        		<th class="text-center">지점번호</th>
-				        		<th class="text-center">지점주소</th>
-				        		<th class="text-center">관리자아이디</th>
-				        		<th class="text-center"></th>
+				        		<th>지점명</th>
+				        		<th>지점번호</th>
+				        		<th>지점주소</th>
+				        		<th>관리자아이디</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${brList}" var="br">
 						      	<tr>
-						        	<td class="align-content-center text-left">${br.br_name}</td>
-							        <td class="align-content-center text-left">${br.br_phone}</td>
-							        <td class="align-content-center text-left">${br.br_address}(${br.br_detailAddress})</td>
-						        	<td class="align-content-center text-left">${br.br_admin}</td>
-						        	<td class="align-content-center text-left">
+						        	<td class="align-content-center">${br.br_name}</td>
+							        <td class="align-content-center">${br.br_phone}</td>
+							        <td class="align-content-center">${br.br_address}(${br.br_detailAddress})</td>
+						        	<td class="align-content-center">${br.br_admin}</td>
+						        	<td class="align-content-center">
 						        		<a class="btn btn-outline-info" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
 						        	</td>
 						      	</tr>

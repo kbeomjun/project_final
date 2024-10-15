@@ -6,6 +6,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -49,19 +53,19 @@
 			    <hr>
 		    	<div class="mt-3">
 		    		<table class="table table-hover" id="table">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">프로그램명</th>
-				        		<th class="text-center">유형</th>
-				        		<th class="text-center"></th>
+				        		<th>프로그램명</th>
+				        		<th>유형</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${spList}" var="sp">
 				    			<tr>
-					        		<td class="align-content-center text-center">${sp.sp_name}</td>
-					        		<td class="align-content-center text-center">${sp.sp_type}</td>
-					        		<td class="align-content-center text-center">
+					        		<td class="align-content-center">${sp.sp_name}</td>
+					        		<td class="align-content-center">${sp.sp_type}</td>
+					        		<td class="align-content-center">
 					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">상세</a>
 					        		</td>
 					      		</tr>
