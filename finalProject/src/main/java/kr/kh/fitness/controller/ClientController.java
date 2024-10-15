@@ -50,7 +50,7 @@ public class ClientController {
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("user", user);
 		model.addAttribute("pm", pm);
-		return "/client/reviewList";
+		return "/client/review/list";
 	}
 	
 	//리뷰 게시글 상세
@@ -66,7 +66,7 @@ public class ClientController {
 		model.addAttribute("review", review);
 		model.addAttribute("user", user);
 		model.addAttribute("cri", cri);
-		return "/client/reviewDetail";
+		return "/client/review/detail";
 	}
 
 	//리뷰 게시글 등록 get
@@ -80,7 +80,7 @@ public class ClientController {
 		if(msg == "") {
 			model.addAttribute("paymentList", paymentList);
 			model.addAttribute("branchList", branchList);
-			return "/client/reviewInsert";
+			return "/client/review/insert";
 		} else {
 			model.addAttribute("url", "/client/review/list");
 			model.addAttribute("msg", msg);
@@ -113,7 +113,7 @@ public class ClientController {
 		
 		model.addAttribute("review", review);
 		model.addAttribute("branchList", branchList);
-		return "/client/reviewUpdate";
+		return "/client/review/update";
 	}
 	
 	//리뷰 게시글 수정 post
@@ -157,7 +157,7 @@ public class ClientController {
 		model.addAttribute("inquiryTypeList", inquiryTypeList);
 		model.addAttribute("branchList", branchList);
 		
-		return "/client/inquiryInsert";
+		return "/client/inquiry/insert";
 	}
 	
 	//1:1문의 등록 post
@@ -188,7 +188,7 @@ public class ClientController {
 		model.addAttribute("me_id", me_id);
 		model.addAttribute("pm", pm);
 		
-		return "/client/mypageSchedule";
+		return "/client/mypage/schedule";
 	}
 	
 	//마이페이지 스케줄 예약취소
@@ -218,7 +218,7 @@ public class ClientController {
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("pm", pm);
 		
-		return "/client/mypageMembership";
+		return "/client/mypage/membership";
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 get
@@ -231,7 +231,7 @@ public class ClientController {
 		model.addAttribute("me_id", me_id);
 		model.addAttribute("page", page);
 		model.addAttribute("branchList", branchList);
-		return "/client/mypageReviewInsert";
+		return "/client/mypage/reviewInsert";
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 post
@@ -277,7 +277,7 @@ public class ClientController {
 		model.addAttribute("me_id", me_id);
 		model.addAttribute("pm", pm);
 		
-		return "/client/mypageReviewList";
+		return "/client/mypage/reviewList";
 	}
 	
 	//마이페이지 리뷰게시글 상세
@@ -292,7 +292,7 @@ public class ClientController {
 		model.addAttribute("me_id", me_id);
 		model.addAttribute("cri", cri);
 		
-		return "/client/mypageReviewDetail";
+		return "/client/mypage/reviewDetail";
 	}
 	
 	//마이페이지 리뷰게시글 수정 get
@@ -305,7 +305,7 @@ public class ClientController {
 		model.addAttribute("branchList", branchList);
 		model.addAttribute("me_id", me_id);
 		
-		return "/client/mypageReviewUpdate";
+		return "/client/mypage/reviewUpdate";
 	}
 	
 	//마이페이지 리뷰게시글 수정 post
@@ -337,7 +337,7 @@ public class ClientController {
 		model.addAttribute("inquiryList", inquiryList);
 		model.addAttribute("pm", pm);
 		
-		return "/client/mypageInquiryList";
+		return "/client/mypage/inquiryList";
 	}
 	
 	//마이페이지 문의내역 상세
@@ -350,14 +350,14 @@ public class ClientController {
 		model.addAttribute("me_id", me_id);
 		model.addAttribute("page", page);
 		
-		return "/client/mypageInquiryDetail";
+		return "/client/mypage/inquiryDetail";
 	}
 	
 	//마이페이지 개인정보수정 시 비밀번호 확인 get
 	@GetMapping("/mypage/pwcheck/{me_id}")
 	public String mypagePwCheck(Model model, @PathVariable("me_id")String me_id) {
 		model.addAttribute("me_id", me_id);
-		return "/client/mypagePwCheck";
+		return "/client/mypage/pwCheck";
 	}
 	
 	//마이페이지 개인정보수정 시 비밀번호 확인 post
@@ -390,7 +390,7 @@ public class ClientController {
 	    
 	    model.addAttribute("member", member);
 	    
-	    return "/client/mypageInfo";
+	    return "/client/mypage/info";
 	}
 	
 	//마이페이지 개인정보수정 email중복체크
@@ -428,7 +428,7 @@ public class ClientController {
 	@GetMapping("/mypage/pwchange/{me_id}")
 	public String mypagePwChange(Model model, @PathVariable("me_id")String me_id) {
 		model.addAttribute("me_id", me_id);
-		return "/client/mypagePwChange";
+		return "/client/mypage/pwChange";
 	}
 	
 	//마이페이지 비밀번호 변경 post
