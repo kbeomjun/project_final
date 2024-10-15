@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import kr.kh.fitness.model.vo.MemberVO;
-
 //스케쥴 등록 후 해당 페이지 유지를 위해 추가하였습니다.
 
 public class PrevUrlInterceptor extends HandlerInterceptorAdapter{

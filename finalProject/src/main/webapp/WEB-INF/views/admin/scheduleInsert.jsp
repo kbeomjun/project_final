@@ -2,8 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
+
+<!DOCTYPE html>
+<html lang="ko">
+
 <head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>스케줄 등록</title>
 <style type="text/css">
 	table {
@@ -11,6 +16,53 @@
 		border-collapse: collapse;
 		margin-top: 10px;
 	}
+</style>
+<style>
+/* 체크박스 숨기기 */
+.checkbox-button,
+.radio-button {
+    display: none; /* 기본 체크박스 숨기기 */
+}
+
+/* 체크박스가 체크되었을 때를 위한 스타일 */
+.checkbox-label,
+.radio-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white; /* 기본 버튼 색상 */
+    color: black; /* 글자 색상 */
+    border : 1px solid black;
+    border-radius: 5px;
+    cursor: pointer; /* 포인터 커서 */
+    transition: background-color 0.3s ease;
+}
+
+.checkbox-button:checked + .checkbox-label,
+.radio-button:checked + .radio-label {
+    background-color: #007bff; /* 체크박스 체크 시 버튼 색상 */
+}
+
+.checkbox-label:hover,
+.radio-label:hover {
+    background-color: #007bff; /* 마우스 오버 시 색상 변화 */
+}
+
+.radio-button:disabled,
+.checkbox-button:disabled {
+    cursor: not-allowed; /* 비활성화된 경우 커서 스타일 */
+    opacity: 0.5; /* 비활성화된 체크박스 투명도 */
+    color: #b0b0b0; /* 회색으로 비활성화 색상 */
+}
+
+/* 레이블 스타일 추가 */
+.radio-button:disabled + .radio-label,
+.checkbox-button:disabled + .checkbox-label {
+    color: #b0b0b0; /* 비활성화 상태에서 레이블 색상 */
+    text-decoration: line-through; /* 레이블에 취소선 추가 */
+    pointer-events: none; /* 레이블 클릭 방지 */
+}
+
+
 </style>
 </head>
 <body>
@@ -56,6 +108,7 @@
 					<h2 class="mt-3 mb-3">${branchName} 스케줄 등록</h2>
 					<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
 						<input type="hidden" name="bp_br_name" value="${branchName}">
+    					<input type="hidden" name="sp_type" id="sp_type">
 						
 						<div class="form-group">
 							<label>프로그램:</label>
@@ -65,59 +118,94 @@
 										${list.bp_sp_name}(${list.employee.em_name}, ${list.bp_total}인)
 									</option>
 								</c:forEach>		
+								<option value="" disabled selected></option>
 							</select>
 						</div>
 						
-						<div class="form-group">
-							<label>날짜:</label>
-							<input type="date" id="currentDate" name="date"/>
+						<div class="form-group" id="select-date-form" style="display: none;">
+							<label>날짜 선택:</label>
+							<input class="form-control" type="date" name="selectDate" id="selectDate"/>
 						</div>
 						
-						<div class="form-group">
-							<label>시작시간:</label>
-							<input type="time" id="startTime" name="startTime" step="3600"/>
+						<div class="form-group" id="start-date-form" style="display: none;">
+							<label>시작 날짜:</label>
+							<input class="form-control" type="date" name="startDate" id="startDate"/>
 						</div>
 						
-						<div class="form-group">
-							<label>마감시간:</label>
-							<input type="time" id="endTime" name="endTime" step="3600"/>
+						<div class="form-group" id="end-date-form" style="display: none;">
+							<label>마감 날짜:</label>
+							<input class="form-control" type="date" name="endDate" id="endDate"/>
 						</div>
 						
-						<!-- 회원 선택 테이블 -->
-						<div class="form-group" id="memberListTable" style="display: none;">
-							<label>회원 선택:</label>
-							<table class="table text-center">
-								<thead>
+						<div class="form-group" style="display: none;" id="weeks-program-table">  
+					    <label for="weeks">요일 선택:</label>	
+					    <c:forEach var="day" begin="1" end="7">
+					        <input type="checkbox" id="checkbox-${day}" class="checkbox-button form-control" value="${day}" name="weeks"/>
+					        <label for="checkbox-${day}" class="checkbox-label">
+					            <c:choose>
+					                <c:when test="${day == 1}">일요일</c:when>
+					                <c:when test="${day == 2}">월요일</c:when>
+					                <c:when test="${day == 3}">화요일</c:when>
+					                <c:when test="${day == 4}">수요일</c:when>
+					                <c:when test="${day == 5}">목요일</c:when>
+					                <c:when test="${day == 6}">금요일</c:when>
+					                <c:when test="${day == 7}">토요일</c:when>
+					            </c:choose>
+					        </label>
+					    </c:forEach>
+						</div>
+														
+				    <div class="form-group" id="program-time-table" style="display: none;">
+					    <label for="hours">시간 선택:</label>
+				        <c:forEach var="hour" begin="9" end="19">
+					        <input type="checkbox" id="checkbox-${hour}" class="checkbox-button form-control" value="${hour}" name="hours"/>
+					        <label for="checkbox-${hour}" class="checkbox-label">${hour}:00</label>
+					    </c:forEach>
+					</div>
+					
+					<div class="form-group" id="pt-time-table" style="display: none;">
+					    <label for="hours">시간 선택:</label><br>
+					    <c:forEach var="hour" begin="9" end="19">
+					        <input type="radio" id="radio-${hour}" class="radio-button form-control" value="${hour}" name="hours"/>
+					        <label for="radio-${hour}" class="radio-label">${hour}:00</label>
+					    </c:forEach>
+					</div>
+		
+					<!-- 회원 선택 테이블 -->
+					<div class="form-group" id="memberListTable" style="display: none;" id="pt-time-table">
+						<label>회원 선택:</label>
+						<table class="table text-center">
+							<thead>
+								<tr>
+									<th></th>
+									<th>회원 이름</th>
+									<th>번호</th>
+									<th>이메일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${memberList}" var="member">
 									<tr>
-										<th></th>
-										<th>회원 이름</th>
-										<th>번호</th>
-										<th>이메일</th>
+										<td>
+											<input type="radio" id="member-id" name="me_id" value="${member.me_id}"/>
+										</td>
+										<td>${member.me_name} (${member.me_gender})</td>
+										<td>${member.me_phone}</td>
+										<td>${member.me_email}</td>
 									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${memberList}" var="member">
-										<tr>
-											<td>
-												<input type="radio" name="me_id" value="${member.me_id}"/>
-											</td>
-											<td>${member.me_name} (${member.me_gender})</td>
-											<td>${member.me_phone}</td>
-											<td>${member.me_email}</td>
-										</tr>
-									</c:forEach>
-									<c:if test="${memberList.size() eq 0}">
-										<tr>
-											<th class="text-center" colspan="4">등록된 회원이 없습니다.</th>
-										</tr>
-									</c:if>						
-								</tbody>
-							</table>
-						</div>		
+								</c:forEach>
+								<c:if test="${memberList.size() eq 0}">
+									<tr>
+										<th class="text-center" colspan="4">등록된 회원이 없습니다.</th>
+									</tr>
+								</c:if>						
+							</tbody>
+						</table>
+					</div>	
 						
-						<div class="text-right mb-3">
-							<button type="submit" class="btn btn-outline-success">등록</button>
-						</div>
+					<div class="text-right mb-3">
+						<button type="submit" class="btn btn-outline-success">등록</button>
+					</div>
 					</form>
 	                
 	            </div>
@@ -125,82 +213,210 @@
 	    </div>
 	</div>
 
-
-	<script>
-		// 현재 날짜 계산
+<script type="text/javascript">
+	
+	// 현재 날짜 가져오기
+	const today = new Date();
+	
+	// 날짜 형식 맞추기 (YYYY-MM-DD)
+	const year = today.getFullYear();
+	const month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+	const day = String(today.getDate()).padStart(2, '0');
+    
+    // 현재 날짜를 기본값으로 설정
+    const currentDate = year + '-' + month + '-' + day;
+    // 현재 시간을 저장
+    const currentHour = today.getHours();
+    
+	document.getElementById('startDate').value = currentDate;
+	document.getElementById('endDate').value = currentDate;
+	document.getElementById('selectDate').value = currentDate;
+	
+	// min 속성 설정하기
+	document.getElementById('startDate').min = currentDate;
+	document.getElementById('endDate').min = currentDate;
+	document.getElementById('selectDate').min = currentDate;
+	
+	// 한 달 뒤 날짜 계산하기 (max 속성 설정)
+	const nextMonth = new Date();
+	nextMonth.setMonth(today.getMonth() + 1);
+	
+	// max 속성 설정하기
+	const maxYear = nextMonth.getFullYear();
+	const maxMonth = String(nextMonth.getMonth() + 1).padStart(2, '0'); 
+	const maxDay = String(nextMonth.getDate()).padStart(2, '0');
+	
+	document.getElementById('startDate').max = maxYear + '-' + maxMonth + '-' + maxDay;
+	document.getElementById('endDate').max = maxYear + '-' + maxMonth + '-' + maxDay;
+	document.getElementById('selectDate').max = maxYear + '-' + maxMonth + '-' + maxDay;
+	
+    // startDate 값 변경 시 endDate의 min 값 변경
+    document.getElementById('startDate').addEventListener('input', function() {
+        const startDateValue = this.value;
+        document.getElementById('endDate').min = startDateValue;
+        document.getElementById('endDate').value = startDateValue;
+    });
+</script>
+<script>
+		
+	// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
+	document.getElementById('programSelect').addEventListener('change', function() {
+		var selectedOption = this.options[this.selectedIndex];
+		var spType = selectedOption.getAttribute('data-sp-type');
+		
+		document.getElementById('sp_type').value = spType;
+		
+		// 현재 날짜 가져오기
 		var today = new Date();
-		var lastDay = new Date();
-		lastDay.setDate(today.getDate() + 30); // 현재 날짜에서 30일 더함
-
-		// 오늘 날짜 포맷팅 (YYYY-MM-DD)
-		var formattedToday = today.toISOString().substring(0, 10);
-		var formattedLastDay = lastDay.toISOString().substring(0, 10);
-
-		// input 필드의 min과 max 값을 설정
-		document.getElementById('currentDate').value = formattedToday;
-		document.getElementById('currentDate').min = formattedToday;
-		document.getElementById('currentDate').max = formattedLastDay;
 		
-		// 시간 필드에 시작 시간 및 마감 시간 설정 (분 단위 00 고정)
-		var startTimeField = document.getElementById('startTime');
-		var endTimeField = document.getElementById('endTime');
-
-		// 기본 시작 시간과 마감 시간 (예: 09:00, 10:00)
-		var defaultStartTime = "09:00";
-		var defaultEndTime = "10:00";
-
-		// 시간 필드 설정
-		startTimeField.value = defaultStartTime;
-		startTimeField.min = "09:00";
-		startTimeField.max = "19:00";
-
-		endTimeField.value = defaultEndTime;
-		endTimeField.min = "10:00";
-		endTimeField.max = "20:00";	
+		// 날짜 형식 맞추기 (YYYY-MM-DD)
+		var year = today.getFullYear();
+		var month = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+		var day = String(today.getDate()).padStart(2, '0');
+	    
+		// 현재 시간을 불러옴
+	    const currentHour = today.getHours();
 		
-		// 시간 선택 시, 분을 항상 00으로 설정
-		startTimeField.addEventListener('input', function() {
-			var time = this.value.split(":");
-			this.value = time[0] + ":00"; // 분을 00으로 고정
-		});
-
-		endTimeField.addEventListener('input', function() {
-			var time = this.value.split(":");
-			this.value = time[0] + ":00"; // 분을 00으로 고정
-		});		
+		// 선택한 프로그램에 따른 UI 변경
+	    if (spType === '단일') {
+	        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], true);
+	        toggleVisibility(['start-date-form', 'end-date-form', 'program-time-table', 'weeks-program-table'], false);
+	        
+	        if (document.getElementById('selectDate').value === currentDate) {
+	            toggleHourCheckboxes('radio', currentHour);
+	        }
+	    } else {
+	        toggleVisibility(['start-date-form', 'end-date-form', 'weeks-program-table', 'program-time-table'], true);
+	        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], false);
+	        if (document.getElementById('endDate').value === currentDate) {
+	            toggleHourCheckboxes('checkbox', currentHour);
+	        }
+	    }
 		
-		// 시작 시간과 마감 시간 비교 로직
-		function validateTime() {
-			var startTime = startTimeField.value;
-			var endTime = endTimeField.value;
-
-			if (startTime >= endTime) {
-				alert("시작시간은 마감시간보다 빨라야 합니다.");
-				return false; // 유효하지 않으면 폼 제출을 막음
-			}
-			return true; // 유효하면 제출 허용
-		}
-
-		// 폼 제출 시 유효성 검사 추가
-		document.getElementById('form').addEventListener('submit', function(event) {
-			if (!validateTime()) {
-				event.preventDefault(); // 유효하지 않으면 제출을 막음
-			}
-		});
+		// 프로그램 변경 시 모든 입력 초기화.
+	    resetInputs();
 		
-		// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
-		document.getElementById('programSelect').addEventListener('change', function() {
-			var selectedOption = this.options[this.selectedIndex];
-			var spType = selectedOption.getAttribute('data-sp-type');
+	});		
+	
+	// 시간 변경 시 hours 박스 조정
+	document.getElementById('selectDate').addEventListener('change', function() {
+		
+		const hourCheckboxes = document.querySelectorAll('input[type="radio"][name="hours"]');
+			hourCheckboxes.forEach(radio => {
+				radio.disabled = false; // 모든 체크박스 비활성화 해제
+			});
+			
+        if (document.getElementById('selectDate').value === currentDate) {
+            toggleHourCheckboxes('radio', currentHour);
+            const hourRadioButtons = document.querySelectorAll('input[type="radio"][name="hours"]');
+    	    hourRadioButtons.forEach(radio => {
+    	        radio.checked = false; // 라디오 버튼 해제
+    	    });
+        }
+	});		
+	
+	// 시간 변경 시 hours 박스 조정
+	document.getElementById('endDate').addEventListener('change', function() {
+		
+		const hourCheckboxes = document.querySelectorAll('input[type="checkbox"][name="hours"]');
+			hourCheckboxes.forEach(checkbox => {
+			    checkbox.disabled = false; // 모든 체크박스 비활성화 해제
+			});
+			
+        if (document.getElementById('endDate').value === currentDate) {
+            toggleHourCheckboxes('checkbox', currentHour);
+            const hourRadioButtons = document.querySelectorAll('input[type="checkbox"][name="hours"]');
+    	    hourRadioButtons.forEach(check => {
+    	    	check.checked = false; // 라디오 버튼 해제
+    	    });
+        }
+	});		
+	
+	// 가시성을 토글하는 함수
+	function toggleVisibility(elementIds, isVisible) {
+	    elementIds.forEach(id => {
+	        document.getElementById(id).style.display = isVisible ? 'block' : 'none';
+	    });
+	}
 
-			// 프로그램의 sp_type이 '단일'인 경우 테이블 표시
-			if (spType === '단일') {
-				document.getElementById('memberListTable').style.display = 'block';
-			} else {
-				document.getElementById('memberListTable').style.display = 'none';
-				document.getElementById('hiddenMeId').value = ""; // 테이블이 보이지 않으면 me_id 초기화
-			}
-		});		
-	</script>			
+	// 시간 체크박스를 활성화/비활성화하는 함수
+	function toggleHourCheckboxes(type, currentHour) {
+	    const hourCheckboxes = document.querySelectorAll('input[type="'+type+'"][name="hours"]');
+	    hourCheckboxes.forEach(checkbox => {
+	        const hourValue = parseInt(checkbox.value);
+	        checkbox.disabled = hourValue <= currentHour; // 비활성화 조건
+	    });
+	}
+	
+	function resetInputs() {
+		
+		document.getElementById('startDate').value = currentDate;
+		document.getElementById('endDate').value = currentDate;
+		document.getElementById('selectDate').value = currentDate;
+		
+	    // 체크박스 해제
+	    const weekCheckboxes = document.querySelectorAll('input[type="checkbox"][name="weeks"]');
+	    weekCheckboxes.forEach(checkbox => {
+	        checkbox.checked = false; // 체크박스 해제
+	    });
+
+	    const hourCheckboxes = document.querySelectorAll('input[type="checkbox"][name="hours"]');
+	    hourCheckboxes.forEach(checkbox => {
+	        checkbox.checked = false; // 체크박스 해제
+	    });
+
+	    // 라디오 버튼 해제
+	    const weekRadioButtons = document.querySelectorAll('input[type="radio"][name="weeks"]');
+	    weekRadioButtons.forEach(radio => {
+	        radio.checked = false; // 라디오 버튼 해제
+	    });
+
+	    const hourRadioButtons = document.querySelectorAll('input[type="radio"][name="hours"]');
+	    hourRadioButtons.forEach(radio => {
+	        radio.checked = false; // 라디오 버튼 해제
+	    });
+	    
+	 	// 모든 라디오 버튼 해제
+	    const radioButtons = document.querySelectorAll('input[type="radio"][name="me_id"]');
+	    radioButtons.forEach(radio => {
+	        radio.checked = false; // 라디오 버튼 해제
+	    });
+	    
+	}
+</script>		
+<script type="text/javascript">
+	// 폼 제출 시 유효성 검사 추가
+	document.getElementById('form').addEventListener('submit', function(event) {
+		
+		const sp_type = document.getElementById('sp_type').value;
+        const me_id = document.querySelector('input[name="me_id"]:checked');
+        
+        // const selectDate = document.getElementById('selectDate').value;
+        const startDate = document.getElementById('startDate').value;
+		const endDate = document.getElementById('endDate').value;
+		
+	    const weeks = document.querySelectorAll('input[name="weeks"]:checked');
+	    const hours = document.querySelectorAll('input[name="hours"]:checked');
+        
+        // sp_type이 "단일"일 때
+        if (sp_type === "단일") {
+        	// 아이디가 null이거나 선택한 시간이 없다면 
+        	if(!me_id || hours.length === 0) {
+            alert("회원 및 시간을 선택해 주세요.");
+            event.preventDefault(); 
+	        }
+        }
+        // 그 외 프로그램일 때
+       	else {
+       		// weeks와 hours 선택된 값이 없는 경우
+            if (weeks.length === 0 || hours.length === 0) {
+                alert("요일 및 시간을 선택해 주세요.");
+                event.preventDefault();
+            }
+       	}
+        
+       
+	});
+</script>	
 </body>
 </html>

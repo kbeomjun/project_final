@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -78,5 +79,9 @@ public interface AdminService {
 	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
 
 	PageMaker getPageMaker(String view, BranchCriteria cri);
+
+	boolean insertBranchProgramSchedule(ProgramInsertFormDTO pif);
+
+	boolean insertBranchProgramScheduleList(ProgramInsertFormDTO pif);
 
 }
