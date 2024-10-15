@@ -113,6 +113,10 @@
 		where em_num = #{em.em_num};
 	</update>
 	
+	<delete id="deleteEmployee">
+		delete from employee where em_num = #{em.em_num};
+	</delete>
+	
 	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
 		select * from sports_equipment;
 	</select>

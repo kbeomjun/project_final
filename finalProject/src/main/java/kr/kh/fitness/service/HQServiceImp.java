@@ -213,6 +213,23 @@ public class HQServiceImp implements HQService {
 		if(!hqDao.updateEmployee(employee)) {msg = "직원을 수정하지 못했습니다.";}
 		return msg;
 	}
+	
+	@Override
+	public String deleteEmployee(EmployeeVO employee) {
+		String msg = "";
+		if(employee == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		EmployeeVO employeeVo = hqDao.selectEmployee(employee);
+		if(employeeVo == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.deleteEmployee(employeeVo)) {msg = "직원을 삭제하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		UploadFileUtils.delteFile(uploadPath, employeeVo.getEm_fi_name());
+		return msg;
+	}
 
 	@Override
 	public List<SportsEquipmentVO> getSportsEquipmentList() {return hqDao.selectSportsEquipmentList();}

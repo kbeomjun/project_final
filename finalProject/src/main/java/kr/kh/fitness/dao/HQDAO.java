@@ -52,6 +52,8 @@ public interface HQDAO {
 	String selectEmployeeFileName(@Param("em") EmployeeVO employee);
 
 	boolean updateEmployee(@Param("em") EmployeeVO employee);
+	
+	boolean deleteEmployee(@Param("em") EmployeeVO employee);
 
 	List<SportsEquipmentVO> selectSportsEquipmentList();
 

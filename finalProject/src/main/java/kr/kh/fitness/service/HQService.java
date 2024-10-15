@@ -39,6 +39,8 @@ public interface HQService {
 	EmployeeVO getEmployee(EmployeeVO employee);
 
 	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
+	
+	String deleteEmployee(EmployeeVO employee);
 
 	List<SportsEquipmentVO> getSportsEquipmentList();
 

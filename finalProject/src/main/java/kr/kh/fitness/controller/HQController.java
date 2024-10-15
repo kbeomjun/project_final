@@ -122,6 +122,17 @@ public class HQController {
 		model.addAttribute("url", "/hq/employee/detail/" + em_num);
 		return "/main/message";
 	}
+	@GetMapping("/employee/delete/{em_num}")
+	public String employeeDelete(Model model, @PathVariable("em_num") int em_num, EmployeeVO employee) {
+		String msg = hqService.deleteEmployee(employee);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/employee/list");
+		}else {
+			model.addAttribute("url", "/hq/employee/detail/" + em_num);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
 	
 	@GetMapping("/equipment/list")
 	public String equipmentList(Model model) {
