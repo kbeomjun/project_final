@@ -45,8 +45,9 @@
 			    <div>
 			    	<a href="<c:url value="/hq/branch/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
+		    	<hr>
 		    	<div class="mt-3">
-			    	<table class="table table-hover">
+			    	<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
 				        		<th>지점명</th>
@@ -79,5 +80,18 @@
 	    	</div>
 	  	</div>
 	</div>
+	
+	<script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false
+		});
+	</script>
 </body>
 </html>

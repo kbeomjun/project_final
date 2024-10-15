@@ -46,6 +46,7 @@
 		    	<div>
 			    	<a href="<c:url value="/hq/program/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
+			    <hr>
 		    	<div class="mt-3">
 		    		<table class="table table-hover">
 				    	<thead>

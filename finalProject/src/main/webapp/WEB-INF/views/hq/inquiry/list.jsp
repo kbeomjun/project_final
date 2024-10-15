@@ -53,6 +53,7 @@
 			    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">답변대기</button>
 			    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">답변완료</button>
 			    </div>
+			    <hr>
 		    	<div class="mt-3">
 		    		<table class="table table-hover table-wait">
 				    	<thead>

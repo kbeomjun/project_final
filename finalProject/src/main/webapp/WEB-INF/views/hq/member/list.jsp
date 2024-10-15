@@ -50,7 +50,7 @@
 	    	</div>
 		    <div class="col-sm-10">
 		    	<div class="mt-3">
-		    		<table class="table table-hover">
+		    		<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
 				        		<th>이름</th>
@@ -194,6 +194,19 @@
 					console.log(jqXHR);
 				}
 			});
+		});
+	</script>
+	
+	<script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false
 		});
 	</script>
 </body>

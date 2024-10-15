@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/sprite.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/swiper-bundle.min.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/common.css"/>">
+	<link rel="stylesheet" href="<c:url value="/resources/css/dataTables.min.css"/>">
 
 	<!-- js -->
 	<script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
@@ -21,6 +22,7 @@
 	<script src="<c:url value="/resources/js/bootstrap.bundle.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/jquery.validate.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/additional-methods.min.js"/>"></script>
+	<script src="<c:url value="/resources/js/dataTables.min.js"/>"></script>
 	<!-- swiper 알 수 없는 오류로 우선 cdn으로 대체 -->
 	<%-- <script src="<c:url value="/resources/js/swiper-bundle.min.js"/>"></script> --%>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

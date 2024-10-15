@@ -57,6 +57,7 @@
 			    	<button type="button" class="btn btn-outline-info btn-menu btn-img" data-name="img">현황</button>
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">입고</button>
 			    </div>
+			    <hr>
 		    	<div class="mt-3 box record-box">
 		    		<table class="table table-hover">
 				    	<thead>

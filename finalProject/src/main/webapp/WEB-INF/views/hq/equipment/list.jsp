@@ -57,6 +57,7 @@
 			    <div>
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
 			    </div>
+			    <hr>
 		    	<div class="img-container d-flex flex-wrap">
 		    		<c:forEach items="${seList}" var="se">
 						<div class="card img-box">
