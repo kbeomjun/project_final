@@ -39,6 +39,8 @@ public interface ClientDAO {
 	int selectReviewPostTotalCount(Criteria cri);
 
 	List<InquiryTypeVO> selectInquiryTypeList();
+	
+	boolean insertInquiry(MemberInquiryVO inquiry);
 
 	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
 

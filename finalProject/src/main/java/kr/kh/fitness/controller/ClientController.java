@@ -146,7 +146,7 @@ public class ClientController {
 		return "/main/message";
 	}
 	
-	//1:1문의 등록
+	//1:1문의 등록 get
 	@GetMapping("/inquiry/insert")
 	public String inquiryInsert(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -158,6 +158,20 @@ public class ClientController {
 		model.addAttribute("branchList", branchList);
 		
 		return "/client/inquiryInsert";
+	}
+	
+	//1:1문의 등록 post
+	@PostMapping("/inquiry/insert")
+	public String inquiryInsertPost(Model model, MemberInquiryVO inquiry) {
+		
+		if(clientService.insertInquiry(inquiry)) {
+			model.addAttribute("msg", "등록에 성공했습니다.");
+		} else {
+			model.addAttribute("msg", "등록에 실패했습니다.");
+		}
+		model.addAttribute("url", "/client/inquiry/insert");
+		
+		return "/main/message";
 	}
 	
 	//마이페이지 스케줄 조회

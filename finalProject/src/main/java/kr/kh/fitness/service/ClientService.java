@@ -39,6 +39,8 @@ public interface ClientService {
 	PageMaker getPageMakerInReview(Criteria cri);
 
 	List<InquiryTypeVO> getInquiryTypeList();
+	
+	boolean insertInquiry(MemberInquiryVO inquiry);
 
 	List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri);
 

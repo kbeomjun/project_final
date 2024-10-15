@@ -135,6 +135,14 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
+	public boolean insertInquiry(MemberInquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return clientDao.insertInquiry(inquiry);
+	}
+
+	@Override
 	public List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri) {
 		if(me_id == null) {
 			return null;

@@ -96,6 +96,11 @@
 		select * from inquiry_type
 	</select>
 	
+	<insert id="insertInquiry">
+		insert into member_inquiry(mi_title, mi_content, mi_email, mi_br_name, mi_it_name)
+		values(#{mi_title}, #{mi_content}, #{mi_email}, #{mi_br_name}, #{mi_it_name})
+	</insert>
+	
 	<select id="selectReservationList" resultType="BranchProgramScheduleVO">
 		select
 			*  
