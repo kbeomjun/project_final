@@ -57,7 +57,7 @@
 									<td>${list.mi_it_name}</td>
 									<td>${list.mi_br_name}</td>
 									<td>
-										<c:url var="url" value="/client/mypage/inquiry/detail/${list.mi_num}/${me_id}">
+										<c:url var="url" value="/client/mypage/inquiry/detail/${list.mi_num}">
 											<c:param name="page" value="${pm.cri.page}"/>
 										</c:url>
 										<a href="${url}">${list.mi_title}</a>

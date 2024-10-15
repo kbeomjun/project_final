@@ -58,7 +58,7 @@
 									<td>${list.rp_num}</td>
 									<td>${list.rp_br_name}</td>
 									<td>
-										<c:url var="url" value="/client/mypage/review/detail/${list.rp_num}/${me_id}">
+										<c:url var="url" value="/client/mypage/review/detail/${list.rp_num}">
 											<c:param name="page" value="${pm.cri.page}"/>
 											<c:param name="type" value="${pm.cri.type}"/>
 											<c:param name="search" value="${pm.cri.search}"/>

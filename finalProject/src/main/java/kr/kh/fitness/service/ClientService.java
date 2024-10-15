@@ -46,6 +46,8 @@ public interface ClientService {
 
 	PageMaker getPageMakerInSchedule(String view, String me_id, Criteria cri);
 
+	ProgramReservationVO getReservation(int pr_num);
+	
 	boolean deleteReservation(int pr_num);
 
 	void updateScheduleCurrent(int bs_num);
@@ -53,6 +55,8 @@ public interface ClientService {
 	List<PaymentVO> getPaymentList(String me_id, Criteria cri);
 
 	PageMaker getPageMakerInMemberShip(String me_id, Criteria cri);
+	
+	PaymentVO getpayment(int pa_num);
 
 	RefundVO getRefund(int pa_num);
 

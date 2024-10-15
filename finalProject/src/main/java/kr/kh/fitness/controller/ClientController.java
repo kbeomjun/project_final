@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
@@ -24,6 +25,7 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -111,10 +113,16 @@ public class ClientController {
 	
 	//리뷰 게시글 수정 get
 	@GetMapping("/review/update/{rp_num}")
-	public String reviewUpdate(Model model, @PathVariable("rp_num")int rp_num, HttpSession session) {
+	public String reviewUpdate(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
 		List<BranchVO> branchList = clientService.getBranchList();
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(!user.getMe_id().equals(review.getPa_me_id())) {
+	        redirectAttributes.addFlashAttribute("msg", "자신의 게시글만 접근 가능합니다.");
+	        return "redirect:/client/review/list";
+		}
+		
 		
 		model.addAttribute("review", review);
 		model.addAttribute("branchList", branchList);
@@ -139,7 +147,14 @@ public class ClientController {
 	
 	//리뷰 게시글 삭제
 	@GetMapping("/review/delete/{rp_num}")
-	public String reviewDelete(Model model, @PathVariable("rp_num")int rp_num) {
+	public String reviewDelete(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+		ReviewPostVO review = clientService.getReviewPost(rp_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null || !user.getMe_id().equals(review.getPa_me_id())) {
+	        redirectAttributes.addFlashAttribute("msg", "자신의 게시글만 접근 가능합니다.");
+	        return "redirect:/client/review/list";
+		}		
 		
 		String msg = clientService.deleteReviewPost(rp_num);
 		
@@ -182,7 +197,17 @@ public class ClientController {
 	
 	//마이페이지 스케줄 조회
 	@GetMapping("/mypage/schedule/{me_id}")
-	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id, @RequestParam(value = "view", defaultValue = "present")String view, Criteria cri) {
+	public String mypageSchedule(Model model, @PathVariable("me_id")String me_id, 
+								@RequestParam(value = "view", defaultValue = "present")String view, 
+								Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+	    
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/schedule/" + user.getMe_id();
+	    }
+		
 		
 		cri.setPerPageNum(5);
 		
@@ -198,8 +223,17 @@ public class ClientController {
 	}
 	
 	//마이페이지 스케줄 예약취소
-	@GetMapping("/mypage/schedule/cancel/{pr_num}/{bs_num}/{me_id}")
-	public String mypageScheduleCancel(Model model, @PathVariable("pr_num")int pr_num, @PathVariable("bs_num")int bs_num, @PathVariable("me_id")String me_id) {
+	@GetMapping("/mypage/schedule/cancel/{pr_num}/{bs_num}")
+	public String mypageScheduleCancel(Model model, @PathVariable("pr_num")int pr_num, @PathVariable("bs_num")int bs_num,
+										HttpSession session, RedirectAttributes redirectAttributes) {
+		
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    ProgramReservationVO reservation = clientService.getReservation(pr_num);
+
+	    if (user == null || !user.getMe_id().equals(reservation.getPr_me_id())) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/schedule/" + user.getMe_id();
+	    }
 		
 		if(clientService.deleteReservation(pr_num)) {
 			clientService.updateScheduleCurrent(bs_num);
@@ -207,13 +241,20 @@ public class ClientController {
 		} else {
 			model.addAttribute("msg", "취소에 실패했습니다.");
 		}
-		model.addAttribute("url", "/client/mypage/schedule/" + me_id);
+		model.addAttribute("url", "/client/mypage/schedule/" + user.getMe_id());
 		return "/main/message";
 	}
 	
 	//마이페이지 회원권 내역
 	@GetMapping("/mypage/membership/{me_id}")
-	public String mypageMembership(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
+	public String mypageMembership(Model model, @PathVariable("me_id")String me_id, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+		
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/membership/" + user.getMe_id();
+	    }
 		
 		cri.setPerPageNum(5);
 		
@@ -228,13 +269,22 @@ public class ClientController {
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 get
-	@GetMapping("/mypage/review/insert/{pa_num}/{me_id}/{page}")
-	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, @PathVariable("me_id")String me_id, @PathVariable("page")int page) {
+	@GetMapping("/mypage/review/insert/{pa_num}/{page}")
+	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, @PathVariable("page")int page,
+										HttpSession session, RedirectAttributes redirectAttributes) {
+		
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    PaymentVO payment = clientService.getpayment(pa_num);
+
+	    if (user == null || !user.getMe_id().equals(payment.getPa_me_id())) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/membership/" + user.getMe_id();
+	    }
 		
 		List<BranchVO> branchList = clientService.getBranchList();
 		
 		model.addAttribute("pa_num", pa_num);
-		model.addAttribute("me_id", me_id);
+		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("page", page);
 		model.addAttribute("branchList", branchList);
 		return "/client/mypage/reviewInsert";
@@ -270,7 +320,14 @@ public class ClientController {
 	
 	//마이페이지 리뷰게시글 내역 조회
 	@GetMapping("/mypage/review/list/{me_id}")
-	public String mypageReviewList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
+	public String mypageReviewList(Model model, @PathVariable("me_id")String me_id, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+		
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/review/list/" + user.getMe_id();
+	    }
 		
 		cri.setPerPageNum(5);
 		cri.setType("id");
@@ -287,29 +344,41 @@ public class ClientController {
 	}
 	
 	//마이페이지 리뷰게시글 상세
-	@GetMapping("/mypage/review/detail/{rp_num}/{me_id}")
-	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, @PathVariable("me_id")String me_id, Criteria cri) {
+	@GetMapping("/mypage/review/detail/{rp_num}")
+	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+		
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    ReviewPostVO review = clientService.getReviewPost(rp_num);
+
+	    if (user == null || !user.getMe_id().equals(review.getPa_me_id())) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/review/list/" + user.getMe_id();
+	    }
 		
 		clientService.updateReviewPostView(rp_num);
 		
-		ReviewPostVO review = clientService.getReviewPost(rp_num);
-		
 		model.addAttribute("review", review);
-		model.addAttribute("me_id", me_id);
+		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("cri", cri);
 		
 		return "/client/mypage/reviewDetail";
 	}
 	
 	//마이페이지 리뷰게시글 수정 get
-	@GetMapping("/mypage/review/update/{rp_num}/{me_id}")
-	public String mypageReviewUpdate(Model model, @PathVariable("rp_num")int rp_num, @PathVariable("me_id")String me_id) {
+	@GetMapping("/mypage/review/update/{rp_num}")
+	public String mypageReviewUpdate(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
 		List<BranchVO> branchList = clientService.getBranchList();
 		
+	    if (user == null || !user.getMe_id().equals(review.getPa_me_id())) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/review/list/" + user.getMe_id();
+	    }
+		
 		model.addAttribute("review", review);
 		model.addAttribute("branchList", branchList);
-		model.addAttribute("me_id", me_id);
+		model.addAttribute("me_id", user.getMe_id());
 		
 		return "/client/mypage/reviewUpdate";
 	}
@@ -330,10 +399,15 @@ public class ClientController {
 	
 	//마이페이지 문의내역 목록
 	@GetMapping("/mypage/inquiry/list/{me_id}")
-	public String mypageInquiryList(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
+	public String mypageInquiryList(Model model, @PathVariable("me_id")String me_id, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
 		
-		MemberVO user = clientService.getMember(me_id);
-		
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/inquiry/list/" + user.getMe_id();
+	    }
+	    
 		cri.setPerPageNum(3);
 		
 		List<MemberInquiryVO> inquiryList = clientService.getInquiryList(user.getMe_email(), cri);
@@ -347,13 +421,19 @@ public class ClientController {
 	}
 	
 	//마이페이지 문의내역 상세
-	@GetMapping("/mypage/inquiry/detail/{mi_num}/{me_id}")
-	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, @PathVariable("me_id")String me_id, int page) {
+	@GetMapping("/mypage/inquiry/detail/{mi_num}")
+	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, int page, HttpSession session, RedirectAttributes redirectAttributes) {
 		
+		MemberVO user = (MemberVO) session.getAttribute("user");
 		MemberInquiryVO inquiry = clientService.getInquiry(mi_num);
 		
+	    if (user == null || !user.getMe_email().equals(inquiry.getMi_email())) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/inquiry/list/" + user.getMe_id();
+	    }
+		
 		model.addAttribute("inquiry", inquiry);
-		model.addAttribute("me_id", me_id);
+		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("page", page);
 		
 		return "/client/mypage/inquiryDetail";
@@ -361,7 +441,14 @@ public class ClientController {
 	
 	//마이페이지 개인정보수정 시 비밀번호 확인 get
 	@GetMapping("/mypage/pwcheck/{me_id}")
-	public String mypagePwCheck(Model model, @PathVariable("me_id")String me_id) {
+	public String mypagePwCheck(Model model, @PathVariable("me_id")String me_id, HttpSession session, RedirectAttributes redirectAttributes) {
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/pwcheck/" + user.getMe_id();
+	    }
+	    
 		model.addAttribute("me_id", me_id);
 		return "/client/mypage/pwCheck";
 	}
@@ -384,7 +471,7 @@ public class ClientController {
 	
 	//마이페이지 개인정보수정 get
 	@GetMapping("/mypage/info/{me_id}")
-	public String mypageInfo(Model model, @PathVariable("me_id") String me_id, HttpSession session) {
+	public String mypageInfo(Model model, @PathVariable("me_id") String me_id, HttpSession session, RedirectAttributes redirectAttributes) {
 	    Boolean pwVerified = (Boolean) session.getAttribute("pwVerified");
 	    
 	    if (pwVerified == null || !pwVerified) {
@@ -392,9 +479,13 @@ public class ClientController {
 	        return "redirect:/client/mypage/pwcheck" + me_id;
 	    }
 	    
-	    MemberVO member = clientService.getMember(me_id);
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/pwcheck/" + user.getMe_id();
+	    }
 	    
-	    model.addAttribute("member", member);
+	    model.addAttribute("member", user);
 	    
 	    return "/client/mypage/info";
 	}
@@ -432,7 +523,15 @@ public class ClientController {
 	
 	//마이페이지 비밀번호 변경 get
 	@GetMapping("/mypage/pwchange/{me_id}")
-	public String mypagePwChange(Model model, @PathVariable("me_id")String me_id) {
+	public String mypagePwChange(Model model, @PathVariable("me_id")String me_id, HttpSession session, RedirectAttributes redirectAttributes) {
+	    
+		MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    if (user == null || !user.getMe_id().equals(me_id)) {
+	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
+	        return "redirect:/client/mypage/pwchange/" + user.getMe_id();
+	    }
+		
 		model.addAttribute("me_id", me_id);
 		return "/client/mypage/pwChange";
 	}
