@@ -112,7 +112,7 @@
 				if($(this).attr("href") != url){
 					$(this).addClass("logo-dark");
 				}
-				console.log($(this).attr("href") == url);
+				// console.log($(this).attr("href") == url);
 			})
 			
 		});

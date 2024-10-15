@@ -11,10 +11,14 @@ public interface PaymentService {
 
 	List<PaymentTypeVO> getMembershipList();
 
-	boolean insertPayment(PaymentTypeVO payment, PaymentCategoryVO category, String formattedDateTime, MemberVO user);
+	boolean insertPayment(PaymentVO payment, PaymentTypeVO paymentType, PaymentCategoryVO category, String formattedDateTime, MemberVO user);
 
 	PaymentVO getLastPaymentByUserId(String userId, int pt_num);
 
 	boolean updatePayment(PaymentVO existingPayment);
+
+	PaymentVO getPayment(String me_id);
+
+	boolean insertPaymentCategory(PaymentTypeVO paymentType, PaymentCategoryVO category, MemberVO user);
 
 }

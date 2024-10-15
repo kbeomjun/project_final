@@ -13,12 +13,14 @@ public interface PaymentDAO {
 
 	List<PaymentTypeVO> selectMembershipList();
 
-	boolean insertPayment(@Param("pt")PaymentTypeVO payment, @Param("pc")PaymentCategoryVO category, @Param("end")String formattedDateTime, @Param("me")MemberVO user);
+	boolean insertPayment(@Param("pa")PaymentVO payment, @Param("pt")PaymentTypeVO paymentType, @Param("pc")PaymentCategoryVO category, @Param("end")String formattedDateTime, @Param("me")MemberVO user);
 
 	boolean insertPaymentCategory(@Param("pt")PaymentTypeVO payment, @Param("pc")PaymentCategoryVO category, @Param("me")MemberVO user);
 
 	PaymentVO getLastPaymentByUserId(@Param("me_id")String userId, @Param("pt_num")int pt_num);
 
 	boolean updatePayment(@Param("pa")PaymentVO existingPayment);
+
+	PaymentVO selectPayment(String me_id);
 
 }
