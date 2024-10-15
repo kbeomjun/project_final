@@ -10,8 +10,10 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -30,13 +32,15 @@ public interface HQService {
 
 	List<EmployeeVO> getEmployeeList();
 
-	List<SportsProgramVO> getProgramList();
+	List<SportsProgramVO> getSportsProgramList();
 
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
 
 	EmployeeVO getEmployee(EmployeeVO employee);
 
 	String updateEmployee(EmployeeVO employee, MultipartFile file, String isDel);
+	
+	String deleteEmployee(EmployeeVO employee);
 
 	List<SportsEquipmentVO> getSportsEquipmentList();
 
@@ -52,7 +56,7 @@ public interface HQService {
 
 	String insertBranchEquipmentStock(BranchEquipmentStockVO be);
 
-	List<BranchOrderVO> getBranchOrderList();
+	List<BranchOrderVO> getBranchOrderList(String str);
 
 	String acceptOrder(int bo_num);
 
@@ -65,4 +69,22 @@ public interface HQService {
 	PaymentTypeVO getPaymentType(PaymentTypeVO pt);
 
 	String updatePaymentType(PaymentTypeVO pt);
+
+	String insertSportsProgram(SportsProgramVO sp, MultipartFile[] fileList);
+
+	SportsProgramVO getSportsProgram(SportsProgramVO sp);
+
+	List<ProgramFileVO> getProgramFileList(SportsProgramVO sp);
+
+	String updateSportsProgram(SportsProgramVO sp, MultipartFile[] fileList, String sp_ori_name, String[] numList);
+
+	List<MemberVO> getMemberList();
+
+	MemberVO getMember(MemberVO me);
+
+	List<MemberInquiryVO> getMemberInquiryList(String mi_state);
+
+	MemberInquiryVO getMemberInquiry(MemberInquiryVO mi);
+
+	String updateMemberInquiry(MemberInquiryVO mi);
 }

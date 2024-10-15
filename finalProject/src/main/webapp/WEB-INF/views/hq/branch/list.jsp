@@ -5,6 +5,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -33,7 +37,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
@@ -45,9 +49,10 @@
 			    <div>
 			    	<a href="<c:url value="/hq/branch/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
+		    	<hr>
 		    	<div class="mt-3">
-			    	<table class="table table-hover">
-				    	<thead>
+			    	<table class="table table-hover" id="table">
+				    	<thead id="thead">
 				      		<tr>
 				        		<th>지점명</th>
 				        		<th>지점번호</th>
@@ -56,7 +61,7 @@
 				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${brList}" var="br">
 						      	<tr>
 						        	<td class="align-content-center">${br.br_name}</td>
@@ -68,16 +73,31 @@
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
-				    		<c:if test="${brList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="5">등록된 지점이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 		    	</div>
 	    	</div>
 	  	</div>
 	</div>
+	
+	<script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: "등록된 지점이 없습니다."
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [4], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	</script>
 </body>
 </html>

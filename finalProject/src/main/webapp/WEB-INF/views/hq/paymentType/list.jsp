@@ -10,6 +10,8 @@
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
     </style>
 </head>
 <body>
@@ -39,7 +41,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
@@ -51,11 +53,11 @@
 		    	<div>
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
 			    </div>
+			    <hr>
 		    	<div class="mt-3">
-		    		<table class="table table-hover">
-				    	<thead>
+		    		<table class="table table-hover" id="table">
+				    	<thead id="thead">
 				      		<tr>
-				        		<th>회원권번호</th>
 				        		<th>유형</th>
 				        		<th>기한(일)</th>
 				        		<th>PT횟수(회)</th>
@@ -63,10 +65,9 @@
 				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${ptList}" var="pt">
 				    			<tr>
-					        		<td class="align-content-center">${pt.pt_num}</td>
 					        		<td class="align-content-center">${pt.pt_type}</td>
 					        		<td class="align-content-center">${pt.pt_date}</td>
 					        		<td class="align-content-center">${pt.pt_count}</td>
@@ -76,11 +77,6 @@
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
-				    		<c:if test="${ptList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="6">등록된 회원권이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 				</div>
@@ -273,7 +269,7 @@
     		
     		$.ajax({
 				async : true,
-				url : '<c:url value="/hq/paymentType/data"/>', 
+				url : '<c:url value="/hq/paymentType/update"/>', 
 				type : 'get', 
 				data : {pt_num : pt_num}, 
 				dataType : "json",
@@ -291,5 +287,25 @@
 			});
     	});
     </script>
+    
+    <script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: "등록된 회원권이 없습니다."
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [4], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	</script>
 </body>
 </html>

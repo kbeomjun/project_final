@@ -90,9 +90,18 @@
 			<div class="error error-branch"></div>
 			<button class="btn btn-outline-info col-12">직원 수정</button>
 		</form>
+		<a href="<c:url value="/hq/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
 		<hr/>
 		<a href="<c:url value="/hq/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
 	</div>
+	
+	<script type="text/javascript">
+		$('.btn-delete').click(function(e){
+			if(!confirm("정말 삭제하시겠습니까?\n삭제하시면 복구할 수 없습니다.")){
+				e.preventDefault();
+			}
+		});
+	</script>
 	
 	<script>
 		// 사진 파일

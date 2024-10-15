@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="selectAdmin" resultType="MemberVO">
-		select * from member join branch on me_name = br_name where me_name = #{br.br_name}; 
+		select * from member join branch on me_name = br_name where me_name = #{br.br_name} and me_authority = "BRADMIN";
 	</select>
 	
 	<select id="selectBranchFileList" resultType="BranchFileVO">
@@ -76,7 +76,7 @@
 		select * from employee order by em_num;
 	</select>
 	
-	<select id="selectProgramList" resultType="SportsProgramVO">
+	<select id="selectSportsProgramList" resultType="SportsProgramVO">
 		select * from sports_program
 	</select>
 	
@@ -112,6 +112,10 @@
 			em_br_name = #{em.em_br_name}
 		where em_num = #{em.em_num};
 	</update>
+	
+	<delete id="deleteEmployee">
+		delete from employee where em_num = #{em.em_num};
+	</delete>
 	
 	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
 		select * from sports_equipment;
@@ -159,7 +163,13 @@
 	</insert>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_state not in("입고완료", "승인거절") order by bo_num;
+		select * from branch_order 
+		<if test="str == 'wait'">
+			where bo_state in("승인대기") order by bo_num;
+		</if>
+		<if test="str == 'done'">
+			where bo_state in("입고완료", "승인거절") order by bo_num desc;
+		</if>
 	</select>
 	
 	<select id="selectBranchOrder" resultType="BranchOrderVO">
@@ -198,4 +208,69 @@
 			pt_price = #{pt.pt_price}
 		where pt_num = #{pt.pt_num};
 	</update>
+	
+	<insert id="insertSportsProgram">
+		insert into sports_program(sp_name, sp_detail, sp_type) values(#{sp.sp_name}, #{sp.sp_detail}, #{sp.sp_type});
+	</insert>
+	
+	<insert id="insertProgramFile">
+		insert into program_file(pf_name, pf_sp_name) values(#{pf.pf_name}, #{pf.pf_sp_name});
+	</insert>
+	
+	<select id="selectSportsProgram" resultType="SportsProgramVO">
+		select * from sports_program where sp_name = #{sp.sp_name};
+	</select>
+	
+	<select id="selectProgramFileList" resultType="ProgramFileVO">
+		select * from program_file where pf_sp_name = #{sp.sp_name};
+	</select>
+	
+	<update id="updateSportsProgram">
+		update sports_program set
+			sp_name = #{sp.sp_name},
+			sp_detail = #{sp.sp_detail},
+			sp_type = #{sp.sp_type}
+		where sp_name = #{sp_ori_name};
+	</update>
+	
+	<select id="selectProgramFile" resultType="ProgramFileVO">
+		select * from program_file where pf_num = #{pf_num};
+	</select>
+	
+	<delete id="deleteProgramFile">
+		delete from program_file where pf_num = #{pf.pf_num};
+	</delete>
+	
+	<select id="selectMemberList" resultType="MemberVO">
+		select * from member where me_authority = "USER";
+	</select>
+	
+	<select id="selectMember" resultType="MemberVO">
+		select * from member where me_id = #{me.me_id};
+	</select>
+	
+	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
+		select * from member_inquiry 
+		<if test="str == 'wait'">
+			where mi_state in("답변대기") and mi_br_name = "본점" order by mi_date;
+		</if>
+		<if test="str == 'done'">
+			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_date desc;
+		</if>
+	</select>
+	
+	<select id="selectMemberInquiry" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_num = #{mi.mi_num};
+	</select>
+	
+	<update id="updateMemberInquiry">
+		update member_inquiry set
+			mi_state = #{mi.mi_state},
+			mi_answer = #{mi.mi_answer}
+		where mi_num = #{mi.mi_num};
+	</update>
+	
+	<select id="selectMemberByEmail" resultType="MemberVO">
+		select * from member where me_email = #{me_email};
+	</select>
 </mapper>

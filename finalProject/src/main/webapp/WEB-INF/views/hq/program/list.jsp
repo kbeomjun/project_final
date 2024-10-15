@@ -6,6 +6,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -16,7 +20,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
 	       	 		</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
@@ -31,7 +35,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
+		          		<a class="nav-link active" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
@@ -43,44 +47,32 @@
 		      	<hr class="d-sm-none">
 	    	</div>
 		    <div class="col-sm-10">
-			    <div>
-			    	<a href="<c:url value="/hq/employee/insert"/>" class="btn btn-outline-success">등록</a>
+		    	<div>
+			    	<a href="<c:url value="/hq/program/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
-		    	<hr>
+			    <hr>
 		    	<div class="mt-3">
-			    	<table class="table table-hover" id="table">
-				    	<thead>
+		    		<table class="table table-hover" id="table">
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">직원번호</th>
-				        		<th class="text-center">이름</th>
-				        		<th class="text-center">전화번호</th>
-				        		<th class="text-center">이메일</th>
-				        		<th class="text-center">입사일</th>
-				        		<th class="text-center">소속</th>
-				        		<th class="text-center">직책</th>
-				        		<th class="text-center"></th>
+				        		<th>프로그램명</th>
+				        		<th>유형</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
-				    		<c:forEach items="${emList}" var="em">
-						      	<tr>
-						        	<td class="align-content-center text-left">${em.em_num}</td>
-							        <td class="align-content-center text-left">${em.em_name} </td>
-							        <td class="align-content-center text-left">${em.em_phone}</td>
-							        <td class="align-content-center text-left">${em.em_email}</td>
-							        <td class="align-content-center text-left">
-							        	<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
-							        </td>
-							        <td class="align-content-center text-left">${em.em_br_name}</td>
-							        <td class="align-content-center text-left">${em.em_position}</td>
-						        	<td class="align-content-center text-left">
-						        		<a class="btn btn-outline-info" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
-						        	</td>
-						      	</tr>
+				    	<tbody id="tbody">
+				    		<c:forEach items="${spList}" var="sp">
+				    			<tr>
+					        		<td class="align-content-center">${sp.sp_name}</td>
+					        		<td class="align-content-center">${sp.sp_type}</td>
+					        		<td class="align-content-center">
+					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">상세</a>
+					        		</td>
+					      		</tr>
 				    		</c:forEach>
 				    	</tbody>
 					</table>
-		    	</div>
+				</div>
 	    	</div>
 	  	</div>
 	</div>
@@ -91,14 +83,14 @@
 			language: {
 		        search: "검색:",
 		        zeroRecords: "",
-		        emptyTable: "등록된 직원이 없습니다."
+		        emptyTable: "등록된 프로그램이 없습니다."
 		    },
 			scrollY: 600,
 		    paging: false,
 		    info: false,
 		    columnDefs: [
 		        {
-		        	targets: [7], 
+		        	targets: [2], 
 		        	orderable: false
 	        	}
 		    ]
