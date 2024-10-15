@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
@@ -95,12 +96,20 @@ public class AdminController {
 	
 	//지점 프로그램 수정 get
 	@GetMapping("/program/update/{bp_num}")
-	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num) {
+	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+		
 		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
 		
-		model.addAttribute("branchProgram", branchProgram);
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		return "/admin/program/update";
+		if(user.getMe_name().equals(branchProgram.getBp_br_name())) {
+			model.addAttribute("branchProgram", branchProgram);
+			return "/admin/program/update";
+		} else {
+	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램입니다.");
+	        return "redirect:/admin/program/list";
+		}
+		
 	}
 	
 	//지점 프로그램 수정 post
@@ -118,7 +127,14 @@ public class AdminController {
 	
 	//지점 프로그램 삭제
 	@GetMapping("/program/delete/{bp_num}")
-	public String programDelete(Model model, @PathVariable("bp_num")int bp_num) {
+	public String programDelete(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+		
+		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(!user.getMe_name().equals(branchProgram.getBp_br_name())) {
+	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램입니다.");
+	        return "redirect:/admin/program/list";
+		}
 		
 		if(adminService.deleteBranchProgram(bp_num)) {
 			model.addAttribute("msg", "삭제에 성공했습니다.");
@@ -361,11 +377,12 @@ public class AdminController {
 	}
 	
 	//지점 직원 등록 get
-	@GetMapping("/employee/insert/{em_br_name}")
-	public String employeeInsert(Model model, @PathVariable("em_br_name")String em_br_name) {
+	@GetMapping("/employee/insert")
+	public String employeeInsert(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<SportsProgramVO> programList = adminService.getProgramList();
 		
-		model.addAttribute("em_br_name", em_br_name);
+		model.addAttribute("em_br_name", user.getMe_name());
 		model.addAttribute("programList", programList);
 		return "/admin/employee/insert";
 	}
@@ -385,8 +402,15 @@ public class AdminController {
 	
 	//지점 직원 상세조회
 	@GetMapping("/employee/detail/{em_num}")
-	public String employeeDetail(Model model, @PathVariable("em_num") int em_num) {
+	public String employeeDetail(Model model, @PathVariable("em_num") int em_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		EmployeeVO employee = adminService.getEmployee(em_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(!user.getMe_name().equals(employee.getEm_br_name())) {
+	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 직원입니다.");
+	        return "redirect:/admin/employee/list";
+		}
+		
 		List<SportsProgramVO> programList = adminService.getProgramList();
 		model.addAttribute("em", employee);
 		model.addAttribute("programList", programList);		
