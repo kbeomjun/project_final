@@ -13,7 +13,7 @@
 	<!-- <main class="sub_container" id="skipnav_target"> -->
 		<h2 class="mb10">회원권</h2>
 		<ul class="mb10">
-			<li>※ PT이용권은 기간 이내에 사용하지 않으시면 소진 됩니다.</li>
+			<li>※ PT 이용권은 지정된 기간 내에 사용하지 않으면 소멸됩니다.</li>
 			<li>※ 회원권 결제는 로그인 후 이용 가능 합니다.</li>
 		</ul>
 		<table class="table">
