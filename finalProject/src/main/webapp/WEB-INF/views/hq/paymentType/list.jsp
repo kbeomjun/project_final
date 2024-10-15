@@ -53,24 +53,24 @@
 			    </div>
 			    <hr>
 		    	<div class="mt-3">
-		    		<table class="table table-hover">
+		    		<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
-				        		<th>유형</th>
-				        		<th>기한(일)</th>
-				        		<th>PT횟수(회)</th>
-				        		<th>가격(원)</th>
-				        		<th></th>
+				        		<th class="text-center">유형</th>
+				        		<th class="text-center">기한(일)</th>
+				        		<th class="text-center">PT횟수(회)</th>
+				        		<th class="text-center">가격(원)</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${ptList}" var="pt">
 				    			<tr>
-					        		<td class="align-content-center">${pt.pt_type}</td>
-					        		<td class="align-content-center">${pt.pt_date}</td>
-					        		<td class="align-content-center">${pt.pt_count}</td>
-					        		<td class="align-content-center">${pt.formattedPrice}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-center">${pt.pt_type}</td>
+					        		<td class="align-content-center text-center">${pt.pt_date}</td>
+					        		<td class="align-content-center text-center">${pt.pt_count}</td>
+					        		<td class="align-content-center text-center">${pt.formattedPrice}</td>
+					        		<td class="align-content-center text-center">
 					        			<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
 					        		</td>
 					      		</tr>
@@ -290,5 +290,24 @@
 			});
     	});
     </script>
+    
+    <script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [4], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	</script>
 </body>
 </html>

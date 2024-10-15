@@ -287,7 +287,7 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchOrderVO> getBranchOrderList() {return hqDao.selectBranchOrderList();}
+	public List<BranchOrderVO> getBranchOrderList(String str) {return hqDao.selectBranchOrderList(str);}
 
 	@Override
 	public String acceptOrder(int bo_num) {
@@ -474,7 +474,7 @@ public class HQServiceImp implements HQService {
 	public MemberVO getMember(MemberVO me) {return hqDao.selectMember(me);}
 
 	@Override
-	public List<MemberInquiryVO> getMemberInquiryList(String mi_state) {return hqDao.selectMemberInquiryList(mi_state);}
+	public List<MemberInquiryVO> getMemberInquiryList(String str) {return hqDao.selectMemberInquiryList(str);}
 
 	@Override
 	public MemberInquiryVO getMemberInquiry(MemberInquiryVO mi) {return hqDao.selectMemberInquiry(mi);}

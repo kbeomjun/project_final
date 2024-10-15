@@ -50,35 +50,35 @@
 	    	</div>
 		    <div class="col-sm-10">
 		    	<div>
-			    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">답변대기</button>
-			    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">답변완료</button>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">대기</button>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">완료</button>
 			    </div>
 			    <hr>
-		    	<div class="mt-3">
+		    	<div class="mt-3 box box-wait">
 		    		<table class="table table-hover table-wait">
 				    	<thead>
 				      		<tr>
-				        		<th>문의번호</th>
-				        		<th>제목</th>
-				        		<th>작성자</th>
-				        		<th>날짜</th>
-				        		<th>유형</th>
-				        		<th>상태</th>
-				        		<th></th>
+				        		<th class="text-center">문의번호</th>
+				        		<th class="text-center">제목</th>
+				        		<th class="text-center">작성자</th>
+				        		<th class="text-center">날짜</th>
+				        		<th class="text-center">유형</th>
+				        		<th class="text-center">상태</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${miWaitList}" var="mi">
 				    			<tr>
-					        		<td class="align-content-center">${mi.mi_num}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">${mi.mi_email}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-left">${mi.mi_num}</td>
+					        		<td class="align-content-center text-left">${mi.mi_title}</td>
+					        		<td class="align-content-center text-left">${mi.mi_email}</td>
+					        		<td class="align-content-center text-left">
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">${mi.mi_it_name}</td>
-					        		<td class="align-content-center">${mi.mi_state}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-left">${mi.mi_it_name}</td>
+					        		<td class="align-content-center text-left">${mi.mi_state}</td>
+					        		<td class="align-content-center text-left">
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -90,30 +90,32 @@
 				    		</c:if>
 				    	</tbody>
 					</table>
-					<table class="table table-hover table-done" style="display: none;">
+				</div>
+				<div class="mt-3 box box-done" style="display: none;">
+					<table class="table table-hover table-done">
 				    	<thead>
 				      		<tr>
-				        		<th>문의번호</th>
-				        		<th>제목</th>
-				        		<th>작성자</th>
-				        		<th>날짜</th>
-				        		<th>유형</th>
-				        		<th>상태</th>
-				        		<th></th>
+				        		<th class="text-center">문의번호</th>
+				        		<th class="text-center">제목</th>
+				        		<th class="text-center">작성자</th>
+				        		<th class="text-center">날짜</th>
+				        		<th class="text-center">유형</th>
+				        		<th class="text-center">상태</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${miDoneList}" var="mi">
 				    			<tr>
-					        		<td class="align-content-center">${mi.mi_num}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">${mi.mi_email}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-left">${mi.mi_num}</td>
+					        		<td class="align-content-center text-left">${mi.mi_title}</td>
+					        		<td class="align-content-center text-left">${mi.mi_email}</td>
+					        		<td class="align-content-center text-left">
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">${mi.mi_it_name}</td>
-					        		<td class="align-content-center">${mi.mi_state}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-left">${mi.mi_it_name}</td>
+					        		<td class="align-content-center text-left">${mi.mi_state}</td>
+					        		<td class="align-content-center text-left">
 					        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -125,99 +127,99 @@
 				    		</c:if>
 				    	</tbody>
 					</table>
-					<div class="modal fade" id="myModal">
-				    	<div class="modal-dialog modal-dialog-centered">
-				    		<form action="<c:url value="/hq/inquiry/update"/>" method="post" id="form" class="modal-content">
-					        	<div class="modal-header">
-					          		<h4 class="modal-title">정보</h4>
-					          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-					        	</div>
-					        	<div class="modal-body">
-					          		<div class="form-group">
-										<label for="mi_title">제목:</label>
-										<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_email">이메일:</label>
-										<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_date">날짜:</label>
-										<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_it_name">유형:</label>
-										<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_content">내용:</label>
-										<textarea class="form-control" id="mi_content" name="mi_content" readonly></textarea>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_answer">답변:</label>
-										<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
-									</div>
-									<div class="error error-answer"></div>
-									<input type="hidden" id="mi_num" name="mi_num">
-									<button class="btn btn-outline-info col-12">답변 등록</button>
-					        	</div>
-					        	<div class="modal-footer">
-					          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
-					        	</div>
-				      		</form>
-				    	</div>
-			  		</div>
-			  		<div class="modal fade" id="myModal2">
-				    	<div class="modal-dialog modal-dialog-centered">
-				    		<div class="modal-content">
-					        	<div class="modal-header">
-					          		<h4 class="modal-title">정보</h4>
-					          		<button type="button" class="close" data-dismiss="modal">&times;</button>
-					        	</div>
-					        	<div class="modal-body">
-					          		<div class="form-group">
-										<label for="mi_title2">제목:</label>
-										<input type="text" class="form-control" id="mi_title2" name="mi_title2" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_email2">이메일:</label>
-										<input type="text" class="form-control" id="mi_email2" name="mi_email2" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_date2">날짜:</label>
-										<input type="text" class="form-control" id="mi_date2" name="mi_date2" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_it_name2">유형:</label>
-										<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name2" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_content2">내용:</label>
-										<textarea class="form-control" id="mi_content2" name="mi_content2" readonly></textarea>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="mi_answer2">답변:</label>
-										<textarea class="form-control" id="mi_answer2" name="mi_answer2" readonly></textarea>
-									</div>
-									<div class="error error-answer"></div>
-					        	</div>
-					        	<div class="modal-footer">
-					          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-					        	</div>
-				      		</div>
-				    	</div>
-			  		</div>
 				</div>
+				<div class="modal fade" id="myModal">
+			    	<div class="modal-dialog modal-dialog-centered">
+			    		<form action="<c:url value="/hq/inquiry/update"/>" method="post" id="form" class="modal-content">
+				        	<div class="modal-header">
+				          		<h4 class="modal-title">정보</h4>
+				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+				        	</div>
+				        	<div class="modal-body">
+				          		<div class="form-group">
+									<label for="mi_title">제목:</label>
+									<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_email">이메일:</label>
+									<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_date">날짜:</label>
+									<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_it_name">유형:</label>
+									<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_content">내용:</label>
+									<textarea class="form-control" id="mi_content" name="mi_content" readonly></textarea>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_answer">답변:</label>
+									<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
+								</div>
+								<div class="error error-answer"></div>
+								<input type="hidden" id="mi_num" name="mi_num">
+								<button class="btn btn-outline-info col-12">답변 등록</button>
+				        	</div>
+				        	<div class="modal-footer">
+				          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+				        	</div>
+			      		</form>
+			    	</div>
+		  		</div>
+		  		<div class="modal fade" id="myModal2">
+			    	<div class="modal-dialog modal-dialog-centered">
+			    		<div class="modal-content">
+				        	<div class="modal-header">
+				          		<h4 class="modal-title">정보</h4>
+				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				        	</div>
+				        	<div class="modal-body">
+				          		<div class="form-group">
+									<label for="mi_title2">제목:</label>
+									<input type="text" class="form-control" id="mi_title2" name="mi_title2" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_email2">이메일:</label>
+									<input type="text" class="form-control" id="mi_email2" name="mi_email2" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_date2">날짜:</label>
+									<input type="text" class="form-control" id="mi_date2" name="mi_date2" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_it_name2">유형:</label>
+									<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name2" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_content2">내용:</label>
+									<textarea class="form-control" id="mi_content2" name="mi_content2" readonly></textarea>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="mi_answer2">답변:</label>
+									<textarea class="form-control" id="mi_answer2" name="mi_answer2" readonly></textarea>
+								</div>
+								<div class="error error-answer"></div>
+				        	</div>
+				        	<div class="modal-footer">
+				          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+				        	</div>
+			      		</div>
+			    	</div>
+		  		</div>
 	    	</div>
 	  	</div>
 	</div>
@@ -246,22 +248,52 @@
 				flag = false;
 			}
 			
-			console.log($('#mi_title').val());
-			console.log($('#mi_content').val());
-			
 			return flag;
 		});
     </script>
 	
 	<script type="text/javascript">
+		var table = $('.table-wait').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [5, 6], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	
 		$('.btn-menu').click(function(){
 			var name = $(this).data("name");
 			
 			$('.btn-menu').removeClass("active");
 			$('.btn-'+name).addClass("active");
 			
-			$('.table').css("display", "none");
-			$('.table-'+name).css("display", "block");
+			$('.box').css("display", "none");
+			$('.box-'+name).css("display", "block");
+			
+			table.destroy();
+			table = $('.table-'+name).DataTable({
+				language: {
+			        search: "검색:",
+			        zeroRecords: ""
+			    },
+				scrollY: 600,
+			    paging: false,
+			    info: false,
+			    columnDefs: [
+			        {
+			        	targets: [5, 6], 
+			        	orderable: false
+		        	}
+			    ]
+			});
 		});
 	
 		$('.btn-detail').click(function(){

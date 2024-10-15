@@ -180,8 +180,10 @@ public class HQController {
 	
 	@GetMapping("/order/list")
 	public String orderList(Model model) {
-		List<BranchOrderVO> boList = hqService.getBranchOrderList();
-		model.addAttribute("boList", boList);
+		List<BranchOrderVO> boWaitList = hqService.getBranchOrderList("wait");
+		List<BranchOrderVO> boDoneList = hqService.getBranchOrderList("done");
+		model.addAttribute("boWaitList", boWaitList);
+		model.addAttribute("boDoneList", boDoneList);
 	    return "/hq/order/list";
 	}
 	@GetMapping("/order/accept/{bo_num}")
@@ -287,8 +289,8 @@ public class HQController {
 	
 	@GetMapping("/inquiry/list")
 	public String inquiryList(Model model) {
-		List<MemberInquiryVO> miWaitList = hqService.getMemberInquiryList("답변대기");
-		List<MemberInquiryVO> miDoneList = hqService.getMemberInquiryList("답변완료");
+		List<MemberInquiryVO> miWaitList = hqService.getMemberInquiryList("wait");
+		List<MemberInquiryVO> miDoneList = hqService.getMemberInquiryList("done");
 		model.addAttribute("miWaitList", miWaitList);
 		model.addAttribute("miDoneList", miDoneList);
 	    return "/hq/inquiry/list";

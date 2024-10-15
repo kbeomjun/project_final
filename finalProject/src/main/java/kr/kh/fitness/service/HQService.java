@@ -54,7 +54,7 @@ public interface HQService {
 
 	String insertBranchEquipmentStock(BranchEquipmentStockVO be);
 
-	List<BranchOrderVO> getBranchOrderList();
+	List<BranchOrderVO> getBranchOrderList(String str);
 
 	String acceptOrder(int bo_num);
 

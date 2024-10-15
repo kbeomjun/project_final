@@ -50,21 +50,21 @@
 			    	<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
-				        		<th>지점명</th>
-				        		<th>지점번호</th>
-				        		<th>지점주소</th>
-				        		<th>관리자아이디</th>
-				        		<th></th>
+				        		<th class="text-center">지점명</th>
+				        		<th class="text-center">지점번호</th>
+				        		<th class="text-center">지점주소</th>
+				        		<th class="text-center">관리자아이디</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${brList}" var="br">
 						      	<tr>
-						        	<td class="align-content-center">${br.br_name}</td>
-							        <td class="align-content-center">${br.br_phone}</td>
-							        <td class="align-content-center">${br.br_address}(${br.br_detailAddress})</td>
-						        	<td class="align-content-center">${br.br_admin}</td>
-						        	<td class="align-content-center">
+						        	<td class="align-content-center text-left">${br.br_name}</td>
+							        <td class="align-content-center text-left">${br.br_phone}</td>
+							        <td class="align-content-center text-left">${br.br_address}(${br.br_detailAddress})</td>
+						        	<td class="align-content-center text-left">${br.br_admin}</td>
+						        	<td class="align-content-center text-left">
 						        		<a class="btn btn-outline-info" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
 						        	</td>
 						      	</tr>
@@ -90,7 +90,13 @@
 		    },
 			scrollY: 600,
 		    paging: false,
-		    info: false
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [4], 
+		        	orderable: false
+	        	}
+		    ]
 		});
 	</script>
 </body>

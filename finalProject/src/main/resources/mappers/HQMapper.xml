@@ -159,7 +159,13 @@
 	</insert>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_state not in("입고완료", "승인거절") order by bo_num;
+		select * from branch_order 
+		<if test="str == 'wait'">
+			where bo_state in("승인대기") order by bo_num;
+		</if>
+		<if test="str == 'done'">
+			where bo_state in("입고완료", "승인거절") order by bo_num desc;
+		</if>
 	</select>
 	
 	<select id="selectBranchOrder" resultType="BranchOrderVO">
@@ -240,8 +246,13 @@
 	</select>
 	
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
-		select * from member_inquiry where mi_state = #{mi_state} and mi_br_name = "본점" 
-		order by mi_date <if test="mi_state == '답변완료'">desc</if>;
+		select * from member_inquiry 
+		<if test="str == 'wait'">
+			where mi_state in("답변대기") and mi_br_name = "본점" order by mi_date;
+		</if>
+		<if test="str == 'done'">
+			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_date desc;
+		</if>
 	</select>
 	
 	<select id="selectMemberInquiry" resultType="MemberInquiryVO">

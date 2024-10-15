@@ -48,20 +48,20 @@
 			    </div>
 			    <hr>
 		    	<div class="mt-3">
-		    		<table class="table table-hover">
+		    		<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
-				        		<th>프로그램명</th>
-				        		<th>유형</th>
-				        		<th></th>
+				        		<th class="text-center">프로그램명</th>
+				        		<th class="text-center">유형</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${spList}" var="sp">
 				    			<tr>
-					        		<td class="align-content-center">${sp.sp_name}</td>
-					        		<td class="align-content-center">${sp.sp_type}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-center">${sp.sp_name}</td>
+					        		<td class="align-content-center text-center">${sp.sp_type}</td>
+					        		<td class="align-content-center text-center">
 					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">상세</a>
 					        		</td>
 					      		</tr>
@@ -77,5 +77,24 @@
 	    	</div>
 	  	</div>
 	</div>
+	
+	<script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [2], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	</script>
 </body>
 </html>

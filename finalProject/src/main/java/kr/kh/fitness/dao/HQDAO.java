@@ -69,7 +69,7 @@ public interface HQDAO {
 
 	boolean insertBranchEquipmentStock(@Param("be") BranchEquipmentStockVO be);
 
-	List<BranchOrderVO> selectBranchOrderList();
+	List<BranchOrderVO> selectBranchOrderList(@Param("str") String str);
 
 	BranchOrderVO selectBranchOrder(@Param("bo_num") int bo_num);
 
@@ -103,7 +103,7 @@ public interface HQDAO {
 
 	MemberVO selectMember(@Param("me") MemberVO me);
 
-	List<MemberInquiryVO> selectMemberInquiryList(@Param("mi_state") String mi_state);
+	List<MemberInquiryVO> selectMemberInquiryList(@Param("str") String str);
 
 	MemberInquiryVO selectMemberInquiry(@Param("mi") MemberInquiryVO mi);
 

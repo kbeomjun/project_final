@@ -53,27 +53,27 @@
 		    		<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
-				        		<th>이름</th>
-				        		<th>생년월일</th>
-				        		<th>성별</th>
-				        		<th>전화번호</th>
-				        		<th>이메일</th>
-				        		<th>아이디</th>
-				        		<th></th>
+				        		<th class="text-center">이름</th>
+				        		<th class="text-center">생년월일</th>
+				        		<th class="text-center">성별</th>
+				        		<th class="text-center">전화번호</th>
+				        		<th class="text-center">이메일</th>
+				        		<th class="text-center">아이디</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${meList}" var="me">
 				    			<tr>
-					        		<td class="align-content-center">${me.me_name}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-left">${me.me_name}</td>
+					        		<td class="align-content-center text-left">
 					        			<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">${me.me_gender}</td>
-					        		<td class="align-content-center">${me.me_phone}</td>
-					        		<td class="align-content-center">${me.me_email}</td>
-					        		<td class="align-content-center">${me.me_id}</td>
-					        		<td class="align-content-center">
+					        		<td class="align-content-center text-left">${me.me_gender}</td>
+					        		<td class="align-content-center text-left">${me.me_phone}</td>
+					        		<td class="align-content-center text-left">${me.me_email}</td>
+					        		<td class="align-content-center text-left">${me.me_id}</td>
+					        		<td class="align-content-center text-left">
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 					        		</td>
 					      		</tr>
@@ -85,65 +85,65 @@
 				    		</c:if>
 				    	</tbody>
 					</table>
-					<div class="modal fade" id="myModal">
-				    	<div class="modal-dialog modal-dialog-centered">
-				      		<div class="modal-content">
-					        	<div class="modal-header">
-					          		<h4 class="modal-title">정보</h4>
-					          		<button type="button" class="close" data-dismiss="modal">&times;</button>
-					        	</div>
-					        	<div class="modal-body">
-					          		<div class="form-group">
-										<label for="me_name">이름:</label>
-										<input type="text" class="form-control" id="me_name" name="me_name" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_birth">생년월일:</label>
-										<input type="text" class="form-control" id="me_birth" name="me_birth" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_phone">전화번호:</label>
-										<input type="text" class="form-control" id="me_phone" name="me_phone" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_address">주소:</label> <br/>
-										<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:20%;" readonly>
-										<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" readonly> <br/>
-										<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" readonly>
-										<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.3%; margin-bottom: 0;" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_id">아이디:</label>
-										<input type="text" class="form-control" id="me_id" name="me_id" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_email">이메일:</label>
-										<input type="text" class="form-control" id="me_email" name="me_email" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_noshow">경고횟수:</label>
-										<input type="text" class="form-control" id="me_noshow" name="me_noshow" readonly>
-									</div>
-									<div class="error"></div>
-									<div class="form-group">
-										<label for="me_cancel">정지기한:</label>
-										<input type="text" class="form-control" id="me_cancel" name="me_cancel" readonly>
-									</div>
-									<div class="error"></div>
-					        	</div>
-					        	<div class="modal-footer">
-					          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-					        	</div>
-				      		</div>
-				    	</div>
-			  		</div>
 				</div>
+				<div class="modal fade" id="myModal">
+			    	<div class="modal-dialog modal-dialog-centered">
+			      		<div class="modal-content">
+				        	<div class="modal-header">
+				          		<h4 class="modal-title">정보</h4>
+				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				        	</div>
+				        	<div class="modal-body">
+				          		<div class="form-group">
+									<label for="me_name">이름:</label>
+									<input type="text" class="form-control" id="me_name" name="me_name" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_birth">생년월일:</label>
+									<input type="text" class="form-control" id="me_birth" name="me_birth" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_phone">전화번호:</label>
+									<input type="text" class="form-control" id="me_phone" name="me_phone" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_address">주소:</label> <br/>
+									<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:20%;" readonly>
+									<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" readonly> <br/>
+									<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" readonly>
+									<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.3%; margin-bottom: 0;" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_id">아이디:</label>
+									<input type="text" class="form-control" id="me_id" name="me_id" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_email">이메일:</label>
+									<input type="text" class="form-control" id="me_email" name="me_email" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_noshow">경고횟수:</label>
+									<input type="text" class="form-control" id="me_noshow" name="me_noshow" readonly>
+								</div>
+								<div class="error"></div>
+								<div class="form-group">
+									<label for="me_cancel">정지기한:</label>
+									<input type="text" class="form-control" id="me_cancel" name="me_cancel" readonly>
+								</div>
+								<div class="error"></div>
+				        	</div>
+				        	<div class="modal-footer">
+				          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+				        	</div>
+			      		</div>
+			    	</div>
+		  		</div>
 	    	</div>
 	  	</div>
 	</div>
@@ -206,7 +206,13 @@
 		    },
 			scrollY: 600,
 		    paging: false,
-		    info: false
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [6], 
+		        	orderable: false
+	        	}
+		    ]
 		});
 	</script>
 </body>
