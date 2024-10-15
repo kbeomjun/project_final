@@ -78,11 +78,6 @@
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
-				    		<c:if test="${emList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="8">등록된 직원이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 		    	</div>
@@ -95,7 +90,8 @@
 		$('#table').DataTable({
 			language: {
 		        search: "검색:",
-		        zeroRecords: ""
+		        zeroRecords: "",
+		        emptyTable: "등록된 직원이 없습니다."
 		    },
 			scrollY: 600,
 		    paging: false,

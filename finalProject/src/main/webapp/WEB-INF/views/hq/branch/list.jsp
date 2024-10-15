@@ -69,11 +69,6 @@
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
-				    		<c:if test="${brList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="5">등록된 지점이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 		    	</div>
@@ -86,7 +81,8 @@
 		$('#table').DataTable({
 			language: {
 		        search: "검색:",
-		        zeroRecords: ""
+		        zeroRecords: "",
+		        emptyTable: "등록된 지점이 없습니다."
 		    },
 			scrollY: 600,
 		    paging: false,

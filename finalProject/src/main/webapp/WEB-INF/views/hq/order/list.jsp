@@ -78,11 +78,6 @@
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
-				    		<c:if test="${boWaitList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="7">발주대기 내역이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 				</div>
@@ -115,11 +110,6 @@
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
-				    		<c:if test="${boDoneList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="7">발주완료 내역이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 				</div>
@@ -131,7 +121,8 @@
 		var table = $('.table-wait').DataTable({
 			language: {
 		        search: "검색:",
-		        zeroRecords: ""
+		        zeroRecords: "",
+		        emptyTable: "등록된 내역이 없습니다."
 		    },
 			scrollY: 600,
 		    paging: false,
@@ -157,7 +148,8 @@
 			table = $('.table-'+name).DataTable({
 				language: {
 			        search: "검색:",
-			        zeroRecords: ""
+			        zeroRecords: "",
+			        emptyTable: "등록된 내역이 없습니다."
 			    },
 				scrollY: 600,
 			    paging: false,
