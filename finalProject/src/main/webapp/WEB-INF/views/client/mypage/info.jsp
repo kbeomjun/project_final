@@ -110,7 +110,7 @@
 			
 			
 						<div class="text-right mb-3">
-							<button type="submit" class="btn btn-outline-warning">개인정보 수정</button>
+							<button type="submit" class="btn btn-outline-warning mt-3">개인정보 수정</button>
 						</div>
 					</form>	                
 	                

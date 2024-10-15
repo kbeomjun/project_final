@@ -70,16 +70,20 @@ public class ClientController {
 	}
 
 	//리뷰 게시글 등록 get
-	@GetMapping("/review/insert/{me_id}")
-	public String reviewInsert(Model model, @PathVariable("me_id")String me_id) {
+	@GetMapping("/review/insert")
+	public String reviewInsert(Model model, HttpSession session) {
 		//결제내역이 있는지 체크, 있으면 등록가능 없으면 등록불가
-		String msg = clientService.checkMemberPayment(me_id);
-		List<PaymentVO> paymentList = clientService.getPaymentListForReview(me_id);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		String msg = clientService.checkMemberPayment(user.getMe_id());
+		
+		List<PaymentVO> paymentList = clientService.getPaymentListForReview(user.getMe_id());
 		List<BranchVO> branchList = clientService.getBranchList();
 		
 		if(msg == "") {
 			model.addAttribute("paymentList", paymentList);
 			model.addAttribute("branchList", branchList);
+			model.addAttribute("user", user);
 			return "/client/review/insert";
 		} else {
 			model.addAttribute("url", "/client/review/list");
@@ -107,12 +111,14 @@ public class ClientController {
 	
 	//리뷰 게시글 수정 get
 	@GetMapping("/review/update/{rp_num}")
-	public String reviewUpdate(Model model, @PathVariable("rp_num")int rp_num) {
+	public String reviewUpdate(Model model, @PathVariable("rp_num")int rp_num, HttpSession session) {
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
 		List<BranchVO> branchList = clientService.getBranchList();
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		model.addAttribute("review", review);
 		model.addAttribute("branchList", branchList);
+		model.addAttribute("user", user);
 		return "/client/review/update";
 	}
 	

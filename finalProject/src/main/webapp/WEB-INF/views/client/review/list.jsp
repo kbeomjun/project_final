@@ -144,7 +144,7 @@
 					
 					<c:if test="${user ne null && user.me_authority eq 'USER'}">
 						<div class="text-right mb-3">
-							<a href="<c:url value="/client/review/insert/${user.me_id}"/>" class="btn btn-outline-info btn-sm">글쓰기</a>
+							<a href="<c:url value="/client/review/insert"/>" class="btn btn-outline-info btn-sm">글쓰기</a>
 						</div>
 					</c:if>
 		                
