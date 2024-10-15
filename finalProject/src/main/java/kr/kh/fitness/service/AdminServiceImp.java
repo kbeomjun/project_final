@@ -1,13 +1,17 @@
 package kr.kh.fitness.service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +39,8 @@ public class AdminServiceImp implements AdminService{
 	private AdminDAO adminDao;
 	@Resource
 	String uploadPath;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public List<BranchProgramVO> getBranchProgramList(String br_name) {
@@ -465,11 +471,62 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<MemberInquiryVO> getInquiryList(String br_name) {
+	public List<MemberInquiryVO> getMemberInquiryList(String br_name, String mi_state) {
 		if(br_name == null) {
 			return null;
 		}
-		return adminDao.selectInquiryList(br_name);
+		return adminDao.selectMemberInquiryList(br_name, mi_state);
 	}
 
+	@Override
+	public MemberInquiryVO getMemberInquiry(MemberInquiryVO mi) {
+		if(mi == null) {
+			return null;
+		}
+		return adminDao.selectMemberInquiry(mi);
+	}
+
+	@Override
+	public String updateMemberInquiry(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "문의 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("답변완료");
+		if(!adminDao.updateMemberInquiry(mi)) {msg = "문의 답변을 등록하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		MemberVO me = adminDao.selectMemberByEmail(mi.getMi_email());
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
+		String date = dtFormat.format(mi.getMi_date());
+		boolean isSend = false;
+		if(me == null) {
+			isSend = mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내",
+								date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변:<br/><br/>" + mi.getMi_answer());
+		}else {
+			isSend = mailSend(me.getMe_email(), "KH피트니스 1:1문의 답변완료 안내",
+								date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변은 KH피트니스 홈페이지에서 확인하실 수 있습니다.");
+		}
+		if(!isSend) {msg = "메일을 전송하지 못했습니다.";}
+		return msg;
+	}
+	public boolean mailSend(String to, String title, String content) {
+	    String setfrom = "stajun@naver.com";
+	    try{
+	    	MimeMessage message = mailSender.createMimeMessage();
+	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+	        messageHelper.setFrom(setfrom);// 보내는사람 생략하거나 하면 정상작동을 안함
+	        messageHelper.setTo(to);// 받는사람 이메일
+	        messageHelper.setSubject(title);// 메일제목은 생략이 가능하다
+	        messageHelper.setText(content, true);// 메일 내용
+
+	        mailSender.send(message);
+	        return true;
+	    } catch(Exception e){
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
 }

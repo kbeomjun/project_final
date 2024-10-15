@@ -95,6 +95,10 @@ public interface AdminService {
 
 	PageMaker getPageMaker(String view, BranchCriteria cri);
 
-	List<MemberInquiryVO> getInquiryList(String br_name);
+	List<MemberInquiryVO> getMemberInquiryList(String br_name, String mi_state);
+
+	MemberInquiryVO getMemberInquiry(MemberInquiryVO mi);
+
+	String updateMemberInquiry(MemberInquiryVO mi);
 
 }

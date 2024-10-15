@@ -116,6 +116,12 @@ public interface AdminDAO {
 
 	int selectScheduleTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
 
-	List<MemberInquiryVO> selectInquiryList(String br_name);
+	List<MemberInquiryVO> selectMemberInquiryList(@Param("br_name")String br_name, @Param("mi_state")String mi_state);
+
+	MemberInquiryVO selectMemberInquiry(MemberInquiryVO mi);
+
+	boolean updateMemberInquiry(MemberInquiryVO mi);
+
+	MemberVO selectMemberByEmail(String me_email);
 
 }

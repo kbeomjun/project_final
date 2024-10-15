@@ -541,15 +541,37 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<MemberInquiryVO> inquiryList = adminService.getInquiryList(br_name);
+			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "답변대기");
+			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "답변완료");
 			
-			model.addAttribute("inquiryList", inquiryList);
+			model.addAttribute("miWaitList", miWaitList);
+			model.addAttribute("miDoneList", miDoneList);
 			model.addAttribute("br_name", br_name);
 			return "/admin/inquiryList";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
 		}
+	}
+	
+	//지점 문의내역 상세
+	@ResponseBody
+	@GetMapping("/inquiry/detail")
+	public Map<String, Object> inquiryDetail(@RequestParam int mi_num, MemberInquiryVO miVo) {
+		MemberInquiryVO mi = adminService.getMemberInquiry(miVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mi", mi);
+		return map;
+	}
+	
+	
+	//지점 문의내역 답변(수정)
+	@PostMapping("/inquiry/update")
+	public String inquiryUpdatePost(Model model, MemberInquiryVO mi) {
+	    String msg = adminService.updateMemberInquiry(mi);
+	    model.addAttribute("url", "/admin/inquiry/list");
+	    model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 	
 }

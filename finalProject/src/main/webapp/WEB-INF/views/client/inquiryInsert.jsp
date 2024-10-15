@@ -71,7 +71,7 @@
 						<div class="form-group">
 							<label for="mi_email">이메일:</label>
 							<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>
-							<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}">
+							<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}" <c:if test="${user ne null}">readonly</c:if> >
 						</div>
 						<div class="error error-email"></div>
 						
@@ -100,15 +100,15 @@
 			}
 		});
 		
-	    $('#mi_content').on('summernote.change', function() {
-	        $('.error-content').children().remove();
-	        
-	        if ($('#mi_content').summernote('isEmpty')) {
-	            $('.error-content').append(msgRequired);
-	        } else {
-	            $('.error-content').children().remove();
-	        }
-	    });
+		$('#mi_content').keyup(function(){
+			$('.error-content').children().remove();
+			
+			if($('#mi_content').val() == ''){
+				$('.error-content').append(msgRequired);
+			}else{
+				$('.error-content').children().remove();	
+			}
+		});
 	    
 		$('#mi_email').keyup(function(){
 			$('.error-email').children().remove();
@@ -131,12 +131,12 @@
 				flag = false;
 			}
 			
-	        if ($('#mi_content').summernote('isEmpty')) {
-	            $('.error-content').append(msgRequired);
-	            $('#mi_content').focus();
-	            flag = false;
-	        }
-	        
+			if($('#mi_content').val() == ''){
+				$('.error-content').append(msgRequired);
+				$('#mi_content').focus();
+				flag = false;
+			}
+			
 			if($('#mi_email').val() == ''){
 				$('.error-email').append(msgRequired);
 				$('#mi_email').focus();
@@ -147,12 +147,5 @@
 		});
     </script>
     
-	<script>
-		$('#mi_content').summernote({
-			placeholder: '내용을 작성하세요.',
-			tabsize: 2,
-			height: 350
-		});
-    </script>
 </body>
 </html>
