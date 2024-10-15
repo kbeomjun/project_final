@@ -79,7 +79,7 @@
 							
 							<div>
 								<c:if test="${review.pa_me_id eq me_id }">
-									<a href="<c:url value="/client/mypage/review/update/${review.rp_num}/${me_id}"/>" class="btn btn-outline-warning ml-2">수정</a>
+									<a href="<c:url value="/client/mypage/review/update/${review.rp_num}"/>" class="btn btn-outline-warning ml-2">수정</a>
 									<a href="<c:url value="/client/review/delete/${review.rp_num}"/>" class="btn btn-outline-danger ml-2" 
 												onclick="return confirm('삭제하면 해당 결제내역의 리뷰 게시글은 다시 작성할 수 없습니다. 삭제하시겠습니까?');">삭제</a>
 								</c:if>

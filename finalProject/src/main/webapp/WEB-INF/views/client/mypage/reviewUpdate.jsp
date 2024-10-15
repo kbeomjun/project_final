@@ -126,5 +126,12 @@
 		});
     </script>
     	
+    <script>
+		$('#rp_content').summernote({
+			placeholder: '내용을 작성하세요.',
+			tabsize: 2,
+			height: 350
+		});
+    </script>
 </body>
 </html>

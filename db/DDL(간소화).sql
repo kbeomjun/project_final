@@ -108,7 +108,7 @@ CREATE TABLE `member_inquiry` (
 	`mi_title`		varchar(255)	not NULL,
 	`mi_content`	longtext		not NULL,
     `mi_answer`		longtext		null,
-	`mi_state`		varchar(100)	not NULL default '답변대기중',
+	`mi_state`		varchar(100)	not NULL default '답변대기',
 	`mi_email`		varchar(100)	not NULL,
     `mi_date`		datetime		not NULL default current_timestamp,
 	`mi_br_name`	varchar(100)	NOT NULL,

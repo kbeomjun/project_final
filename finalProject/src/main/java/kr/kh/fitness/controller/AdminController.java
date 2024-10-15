@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
@@ -31,9 +32,11 @@ import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
+import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.AdminService;
 
@@ -55,7 +58,7 @@ public class AdminController {
 			List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
 			model.addAttribute("programList", programList);
 			model.addAttribute("br_name", br_name);
-			return "/admin/programList";
+			return "/admin/program/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +78,7 @@ public class AdminController {
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("branchName", user.getMe_name());
 		
-		return "/admin/programInsert";
+		return "/admin/program/insert";
 	}
 	
 	//지점 프로그램 등록 post
@@ -95,12 +98,20 @@ public class AdminController {
 	
 	//지점 프로그램 수정 get
 	@GetMapping("/program/update/{bp_num}")
-	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num) {
+	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+		
 		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
 		
-		model.addAttribute("branchProgram", branchProgram);
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		return "/admin/programUpdate";
+		if(user.getMe_name().equals(branchProgram.getBp_br_name())) {
+			model.addAttribute("branchProgram", branchProgram);
+			return "/admin/program/update";
+		} else {
+	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램입니다.");
+	        return "redirect:/admin/program/list";
+		}
+		
 	}
 	
 	//지점 프로그램 수정 post
@@ -118,7 +129,14 @@ public class AdminController {
 	
 	//지점 프로그램 삭제
 	@GetMapping("/program/delete/{bp_num}")
-	public String programDelete(Model model, @PathVariable("bp_num")int bp_num) {
+	public String programDelete(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+		
+		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(!user.getMe_name().equals(branchProgram.getBp_br_name())) {
+	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램입니다.");
+	        return "redirect:/admin/program/list";
+		}
 		
 		if(adminService.deleteBranchProgram(bp_num)) {
 			model.addAttribute("msg", "삭제에 성공했습니다.");
@@ -290,15 +308,20 @@ public class AdminController {
 	
 	//지점 발주 신청목록
 	@GetMapping("/order/list")
-	public String orderList(Model model, HttpSession session) {
+	public String orderList(Model model, HttpSession session, BranchCriteria cri) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<BranchOrderVO> orderList = adminService.getBranchOrderList(br_name);
+			cri.setPerPageNum(5);
+			cri.setBr_name(br_name);
+			
+			List<BranchOrderVO> orderList = adminService.getBranchOrderList(cri);
+			PageMaker pm = adminService.getPageMakerInOrder(cri);
+			
 			model.addAttribute("orderList", orderList);
-			model.addAttribute("br_name", br_name);
-			return "/admin/orderList";
+			model.addAttribute("pm", pm);
+			return "/admin/order/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -317,7 +340,7 @@ public class AdminController {
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
 		
-		return "/admin/orderInsert";
+		return "/admin/order/insert";
 	}
 	
 	//지점 발주 등록 post
@@ -356,14 +379,20 @@ public class AdminController {
 	
 	//직원 목록 조회
 	@GetMapping("/employee/list")
-	public String employeeList(Model model, HttpSession session) {
+	public String employeeList(Model model, HttpSession session, BranchCriteria cri) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
-			List<EmployeeVO> employeeList = adminService.getEmployeeListByBranch(br_name);
+			
+			cri.setPerPageNum(5);
+			cri.setBr_name(br_name);
+			
+			List<EmployeeVO> employeeList = adminService.getEmployeeListByBranchWithPagination(cri);
+			PageMaker pm = adminService.getPageMakerInEmployee(cri);
+			
 			model.addAttribute("employeeList", employeeList);
-			model.addAttribute("br_name", br_name);
-			return "/admin/employeeList";
+			model.addAttribute("pm", pm);
+			return "/admin/employee/list";
 		}catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
@@ -371,13 +400,14 @@ public class AdminController {
 	}
 	
 	//지점 직원 등록 get
-	@GetMapping("/employee/insert/{em_br_name}")
-	public String employeeInsert(Model model, @PathVariable("em_br_name")String em_br_name) {
+	@GetMapping("/employee/insert")
+	public String employeeInsert(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<SportsProgramVO> programList = adminService.getProgramList();
 		
-		model.addAttribute("em_br_name", em_br_name);
+		model.addAttribute("em_br_name", user.getMe_name());
 		model.addAttribute("programList", programList);
-		return "/admin/employeeInsert";
+		return "/admin/employee/insert";
 	}
 	
 	//지점 직원 등록 post
@@ -395,12 +425,19 @@ public class AdminController {
 	
 	//지점 직원 상세조회
 	@GetMapping("/employee/detail/{em_num}")
-	public String employeeDetail(Model model, @PathVariable("em_num") int em_num) {
+	public String employeeDetail(Model model, @PathVariable("em_num") int em_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		EmployeeVO employee = adminService.getEmployee(em_num);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(!user.getMe_name().equals(employee.getEm_br_name())) {
+	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 직원입니다.");
+	        return "redirect:/admin/employee/list";
+		}
+		
 		List<SportsProgramVO> programList = adminService.getProgramList();
 		model.addAttribute("em", employee);
 		model.addAttribute("programList", programList);		
-		return "/admin/employeeDetail";
+		return "/admin/employee/detail";
 	}
 	
 	//지점 직원 상세수정
@@ -414,18 +451,25 @@ public class AdminController {
 	
 	//전체 회원목록
 	@GetMapping("/member/list")
-	public String memberList(Model model) {
-		List<MemberVO> memberList = adminService.getMemberList();
+	public String memberList(Model model, Criteria cri) {
+		
+		cri.setPerPageNum(5);
+		
+		List<MemberVO> memberList = adminService.getMemberListWithPagination(cri);
+		PageMaker pm = adminService.getPageMakerInMember(cri);
+		
 		model.addAttribute("memberList", memberList);
-		return "/admin/memberList";
+		model.addAttribute("pm", pm);
+		return "/admin/member/list";
 	}
 	
 	//회원 상세보기
 	@GetMapping("/member/detail/{me_id}")
-	public String memberDetail(Model model, @PathVariable("me_id")String me_id) {
+	public String memberDetail(Model model, @PathVariable("me_id")String me_id, Criteria cri) {
 		MemberVO member = adminService.getMember(me_id);
-		model.addAttribute("me", member);		
-		return "/admin/memberDetail";		
+		model.addAttribute("me", member);
+		model.addAttribute("cri", cri);
+		return "/admin/member/detail";		
 	}
 	
 	//회원 노쇼횟수 수정
@@ -470,7 +514,7 @@ public class AdminController {
 			model.addAttribute("bfList", bfList);
 			model.addAttribute("me", admin);
 			
-			return "/admin/branchDetail";
+			return "/admin/branch/detail";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
@@ -492,16 +536,21 @@ public class AdminController {
 	
 	//지점 운동기구 재고 조회
 	@GetMapping("/equipment/list")
-	public String equipmentList(Model model, HttpSession session, @RequestParam(value = "view", defaultValue = "all")String view) {
+	public String equipmentList(Model model, HttpSession session, @RequestParam(value = "view", defaultValue = "all")String view, BranchCriteria cri) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch(br_name, view);
+			cri.setPerPageNum(5);
+			cri.setBr_name(br_name);
+			
+			List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch(view, cri);
+			PageMaker pm = adminService.getPageMakerInEquipmentList(view, cri);
+			
 			model.addAttribute("equipmentList", equipmentList);
-			model.addAttribute("br_name", br_name);
 			model.addAttribute("view", view);
-			return "/admin/equipmentList";
+			model.addAttribute("pm", pm);
+			return "/admin/equipment/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -511,17 +560,65 @@ public class AdminController {
 	
 	//지점 운동기구 재고 변동내역
 	@GetMapping("/equipment/change")
-	public String equipmentChange(Model model, HttpSession session) {
+	public String equipmentChange(Model model, HttpSession session, BranchCriteria cri) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(br_name);
+			cri.setPerPageNum(5);
+			cri.setBr_name(br_name);
+			
+			List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(cri);
+			PageMaker pm = adminService.getPageMakerInEquipmentChange(cri);
+			
 			model.addAttribute("equipmentChange", equipmentChange);
-			return "/admin/equipmentChange";
+			model.addAttribute("pm", pm);
+			
+			return "/admin/equipment/change";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
 		}
 	}
+	
+	//지점 문의내역 목록 조회
+	@GetMapping("/inquiry/list")
+	public String inquiryList(Model model, HttpSession session) {
+		try {
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			String br_name = user.getMe_name();
+			
+			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "답변대기");
+			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "답변완료");
+			
+			model.addAttribute("miWaitList", miWaitList);
+			model.addAttribute("miDoneList", miDoneList);
+			model.addAttribute("br_name", br_name);
+			return "/admin/inquiry/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/main/main";
+		}
+	}
+	
+	//지점 문의내역 상세
+	@ResponseBody
+	@GetMapping("/inquiry/detail")
+	public Map<String, Object> inquiryDetail(@RequestParam int mi_num, MemberInquiryVO miVo) {
+		MemberInquiryVO mi = adminService.getMemberInquiry(miVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mi", mi);
+		return map;
+	}
+	
+	
+	//지점 문의내역 답변(수정)
+	@PostMapping("/inquiry/update")
+	public String inquiryUpdatePost(Model model, MemberInquiryVO mi) {
+	    String msg = adminService.updateMemberInquiry(mi);
+	    model.addAttribute("url", "/admin/inquiry/list");
+	    model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
 }

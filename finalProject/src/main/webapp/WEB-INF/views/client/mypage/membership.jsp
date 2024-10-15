@@ -75,7 +75,7 @@
 										<c:choose>
 											<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
 											<c:otherwise>
-												<a href="<c:url value="/client/mypage/review/insert/${list.pa_num}/${me_id}/${pm.cri.page}"/>">작성하기</a>
+												<a href="<c:url value="/client/mypage/review/insert/${list.pa_num}/${pm.cri.page}"/>">작성하기</a>
 											</c:otherwise>
 										</c:choose>
 									</td>

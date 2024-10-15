@@ -39,6 +39,9 @@
 						<li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
 	                    </li>	                    	                    	                    	                    	                    
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/inquiry/list"/>">문의내역</a>
+	                    </li>
 	                </ul>
 	            </div>
 	        </nav>
@@ -62,8 +65,13 @@
 							<label>발주개수:</label>
 							<input class="form-control" id="bo_amount" name="bo_amount" placeholder="숫자를 입력하세요."/>
 						</div>
-						<div class="text-right mb-3">
-							<button type="submit" class="btn btn-outline-success">발주 등록</button>
+						
+						<div class="d-flex justify-content-between">
+							<a href="<c:url value="/admin/order/list"/>" class="btn btn-outline-danger">취소</a>
+						
+							<div class="text-right">
+								<button type="submit" class="btn btn-outline-success">발주 등록</button>
+							</div>
 						</div>
 					</form>
 	                

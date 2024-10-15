@@ -13,6 +13,7 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -135,6 +136,14 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
+	public boolean insertInquiry(MemberInquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return clientDao.insertInquiry(inquiry);
+	}
+
+	@Override
 	public List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri) {
 		if(me_id == null) {
 			return null;
@@ -156,7 +165,12 @@ public class ClientServiceImp implements ClientService{
 		int totalCount = clientDao.selectScheduleTotalCount(view, me_id, cri);
 		return new PageMaker(3, cri, totalCount);
 	}
-
+	
+	@Override
+	public ProgramReservationVO getReservation(int pr_num) {
+		return clientDao.selectReservation(pr_num);
+	}
+	
 	@Override
 	public boolean deleteReservation(int pr_num) {
 		return clientDao.deleteReservation(pr_num);
@@ -188,6 +202,11 @@ public class ClientServiceImp implements ClientService{
 		}
 		int totalCount = clientDao.selectPaymentTotalCount(me_id);
 		return new PageMaker(3, cri, totalCount);
+	}
+	
+	@Override
+	public PaymentVO getpayment(int pa_num) {
+		return clientDao.selectPayment(pa_num);
 	}
 
 	@Override

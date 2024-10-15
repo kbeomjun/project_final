@@ -1,14 +1,18 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <html>
 <head>
-<title>직원 목록</title>
+<title>프로그램 목록</title>
 </head>
 <body>
-
+	<c:if test="${not empty msg}">
+	    <script type="text/javascript">
+	        alert("${msg}");
+	    </script>
+	</c:if>
+	
 	<div class="container-fluid">
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
@@ -17,7 +21,7 @@
 	                <h4 class="sidebar-heading mt-3">지점관리자 메뉴</h4>
 	                <ul class="nav flex-column">
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/program/list"/>">프로그램관리</a>
+	                        <a class="nav-link active" href="<c:url value="/admin/program/list"/>">프로그램관리</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/admin/schedule/list"/>">프로그램일정관리</a>
@@ -26,7 +30,7 @@
 	                        <a class="nav-link" href="<c:url value="/admin/order/list"/>">운동기구 발주목록</a>
 	                    </li>
 						<li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/admin/employee/list"/>">직원관리</a>
+	                        <a class="nav-link" href="<c:url value="/admin/employee/list"/>">직원관리</a>
 	                    </li>
 						<li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/admin/member/list"/>">회원관리</a>
@@ -39,7 +43,10 @@
 	                    </li>
 						<li class="nav-item">
 	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
-	                    </li>	                    	                    	                    	                    	                    
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="<c:url value="/admin/inquiry/list"/>">문의내역</a>
+	                    </li>	                    	                    	                    	                    	                    	                    
 	                </ul>
 	            </div>
 	        </nav>
@@ -47,50 +54,44 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-					<h2 class="mt-3 mb-3">${br_name} 직원 목록</h2>
+					<h2 class="mt-3 mb-3">${br_name} 프로그램 목록</h2>
 					<table class="table text-center">
 						<thead>
 							<tr>
-								<th>직원번호</th>
-								<th>이름</th>
-								<th>전화번호</th>
-								<th>이메일</th>
-								<th>입사일</th>
-								<th>직책</th>
-								<th>상세</th>
+								<th>프로그램명</th>
+								<th>트레이너명</th>
+								<th>총 인원수</th>
+								<th>수정 / 삭제</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${employeeList}" var="em">
+							<c:forEach items="${programList}" var="list">
 								<tr>
-									<td>${em.em_num}</td>
-									<td>${em.em_name}</td>
-									<td>${em.em_phone}</td>
-									<td>${em.em_email}</td>
+									<td>${list.bp_sp_name}</td>
+									<td>${list.employee.em_name}</td>
+									<td>${list.bp_total}</td>
 									<td>
-										<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
+										<c:if test="${list.program.sp_type == '그룹'}">
+											<a href="<c:url value="/admin/program/update/${list.bp_num}"/>" class="btn btn-outline-warning btn-sm">수정</a>
+										</c:if>
+										<a href="<c:url value="/admin/program/delete/${list.bp_num}"/>" class="btn btn-outline-danger btn-sm" onclick="return confirm('삭제하시겠습니까?');">삭제</a>
 									</td>
-									<td>${em.em_position}</td>
-									<td>
-										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>">조회</a>
-									</td>							
 								</tr>
 							</c:forEach>
-							<c:if test="${employeeList.size() eq 0}">
+							<c:if test="${programList.size() eq 0}">
 								<tr>
-									<th class="text-center" colspan="7">등록된 직원이 없습니다.</th>
+									<th class="text-center" colspan="4">등록된 프로그램이 없습니다.</th>
 								</tr>
-							</c:if>
+							</c:if>				
 						</tbody>
 					</table>
-					<div class="text-right mb-3">
-						<a href="<c:url value="/admin/employee/insert/${br_name}"/>" class="btn btn-outline-success btn-sm">직원등록</a>
+					<div class="text-right mb-3">	
+						<a href="<c:url value="/admin/program/insert"/>" class="btn btn-outline-success btn-sm">프로그램 추가</a>
 					</div>
 	                
 	            </div>
 	        </main>
 	    </div>
-	</div>	
-
+	</div>
 </body>
 </html>

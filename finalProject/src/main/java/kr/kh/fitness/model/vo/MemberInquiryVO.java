@@ -25,5 +25,5 @@ public class MemberInquiryVO {
     private String mi_br_name;   // 지점 이름
     private String mi_it_name;   // 문의 유형 이름
     private String mi_answer;
-
+    
 }

@@ -10,6 +10,7 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentVO;
+import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
@@ -39,10 +40,14 @@ public interface ClientDAO {
 	int selectReviewPostTotalCount(Criteria cri);
 
 	List<InquiryTypeVO> selectInquiryTypeList();
+	
+	boolean insertInquiry(MemberInquiryVO inquiry);
 
 	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
 
 	int selectScheduleTotalCount(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
+
+	ProgramReservationVO selectReservation(int pr_num);
 
 	boolean deleteReservation(int pr_num);
 
@@ -51,6 +56,8 @@ public interface ClientDAO {
 	List<PaymentVO> selectPaymentList(@Param("me_id")String me_id, @Param("cri")Criteria cri);
 
 	int selectPaymentTotalCount(String me_id);
+	
+	PaymentVO selectPayment(int pa_num);
 
 	RefundVO selectRefund(int pa_num);
 

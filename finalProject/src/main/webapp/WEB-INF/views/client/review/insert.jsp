@@ -75,6 +75,10 @@
 							<button type="submit" class="btn btn-outline-info col-12">글 등록</button>
 						</div>
 					</form>
+					<hr>
+					<div>
+						<a href="<c:url value="/client/review/list"/>" class="btn btn-outline-danger col-12">취소</a>
+					</div>	
 	                
 	            </div>
 	        </main>

@@ -5,34 +5,34 @@
 <%@ page session="false"%>
 <html>
 <head>
-<title>마이페이지</title>
+<title>리뷰게시글 목록</title>
 </head>
 <body>
+
+	<c:if test="${not empty msg}">
+	    <script type="text/javascript">
+	        alert("${msg}");
+	    </script>
+	</c:if>
+
 	<div class="container-fluid">
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
 	            <div class="sidebar-sticky">
-	                <h4 class="sidebar-heading mt-3">마이페이지 메뉴</h4>
+	                <h4 class="sidebar-heading mt-3">고객센터 메뉴</h4>
 	                <ul class="nav flex-column">
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${me_id}"/>">프로그램 일정</a>
+	                        <a class="nav-link active" href="<c:url value="/client/review/list"/>">리뷰게시판</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
+	                        <a class="nav-link" href="<c:url value="/client/inquiry/insert"/>">1:1문의</a>
 	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/inquiry/list/${me_id}"/>">문의내역</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/pwcheck/${me_id}"/>">개인정보수정</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/pwchange/${me_id}"/>">비밀번호 변경</a>
-	                    </li>
+	                    <c:if test="${user ne null && user.me_authority eq 'USER'}">
+		                    <li class="nav-item">
+		                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${user.me_id}"/>">마이페이지</a>
+		                    </li>
+	                    </c:if>
 	                </ul>
 	            </div>
 	        </nav>
@@ -40,7 +40,7 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-	                <h2>나의 작성글</h2>
+	                <h2>리뷰게시글 목록</h2>
 					<table class="table text-center">
 						<thead>
 							<tr>
@@ -56,16 +56,28 @@
 							<c:forEach items="${reviewList}" var="list">
 								<tr>
 									<td>${list.rp_num}</td>
-									<td>${list.rp_br_name}</td>
 									<td>
-										<c:url var="url" value="/client/mypage/review/detail/${list.rp_num}/${me_id}">
+										<c:url var="url" value="/client/review/list">
+											<c:param name="type" value="branch"/>
+											<c:param name="search" value="${list.rp_br_name}"/>
+										</c:url>
+										<a href="${url}">${list.rp_br_name}</a>
+									</td>
+									<td>
+										<c:url var="url" value="/client/review/detail/${list.rp_num}">
 											<c:param name="page" value="${pm.cri.page}"/>
 											<c:param name="type" value="${pm.cri.type}"/>
 											<c:param name="search" value="${pm.cri.search}"/>
 										</c:url>
 										<a href="${url}">${list.rp_title}</a>
 									</td>
-									<td>${list.pa_me_id}</td>
+									<td>
+										<c:url var="url" value="/client/review/list">
+											<c:param name="type" value="id"/>
+											<c:param name="search" value="${list.pa_me_id}"/>
+										</c:url>
+										<a href="${url}">${list.pa_me_id}</a>
+									</td>
 									<td>
 										<fmt:formatDate value="${list.rp_date}" pattern="yyyy-MM-dd"/>
 									</td>
@@ -83,7 +95,7 @@
 					<c:if test="${pm.totalCount ne 0}">
 						<ul class="pagination justify-content-center">
 							<c:if test="${pm.prev}">
-								<c:url var="url" value="/client/mypage/review/list/${me_id}">
+								<c:url var="url" value="/client/review/list">
 									<c:param name="page" value="${pm.startPage - 1}"/>
 									<c:param name="type" value="${pm.cri.type}"/>
 									<c:param name="search" value="${pm.cri.search}"/>
@@ -93,7 +105,7 @@
 								</li>
 							</c:if>
 							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<c:url var="url" value="/client/mypage/review/list/${me_id}">
+								<c:url var="url" value="/client/review/list">
 									<c:param name="page" value="${i}"/>
 									<c:param name="type" value="${pm.cri.type}"/>
 									<c:param name="search" value="${pm.cri.search}"/>
@@ -111,7 +123,7 @@
 								</li>
 							</c:forEach>
 							<c:if test="${pm.next}">
-								<c:url var="url" value="/client/mypage/review/list/${me_id}">
+								<c:url var="url" value="/client/review/list">
 									<c:param name="page" value="${pm.endPage + 1}"/>
 									<c:param name="type" value="${pm.cri.type}"/>
 									<c:param name="search" value="${pm.cri.search}"/>
@@ -122,9 +134,30 @@
 							</c:if>
 						</ul>
 					</c:if>
+					<form action="<c:url value="/client/review/list"/>">
+						<div class="input-group mb-3 mt-3">
+							<select class="form-control col-md-1" name="type">
+								<option value="branch"	<c:if test="${pm.cri.type eq 'branch'}">selected</c:if>>지점명</option>
+								<option value="title"	<c:if test="${pm.cri.type eq 'title'}">selected</c:if>>제목</option>
+								<option value="id"		<c:if test="${pm.cri.type eq 'id'}">selected</c:if>>작성자명</option>
+							</select>
+							<input type="text" class="form-control" placeholder="검색어" name="search" value="${pm.cri.search}">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-outline-info btn-sm col-12">검색</button>
+							</div>
+						</div>	
+					</form>
+					
+					<c:if test="${user ne null && user.me_authority eq 'USER'}">
+						<div class="text-right mb-3">
+							<a href="<c:url value="/client/review/insert"/>" class="btn btn-outline-info btn-sm">글쓰기</a>
+						</div>
+					</c:if>
+		                
 	            </div>
 	        </main>
 	    </div>
 	</div>
+
 </body>
 </html>
