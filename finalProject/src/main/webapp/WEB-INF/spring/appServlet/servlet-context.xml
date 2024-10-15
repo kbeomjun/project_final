@@ -61,6 +61,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/program/reservation/*" />
+			<!-- <mapping path="/admin/schedule/insert" /> -->
 			<beans:ref bean="prevUrlInterceptor" />
 		</interceptor>
 		<interceptor>

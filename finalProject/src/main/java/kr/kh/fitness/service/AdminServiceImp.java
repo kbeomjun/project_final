@@ -3,6 +3,9 @@ package kr.kh.fitness.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.AdminDAO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -386,6 +390,114 @@ public class AdminServiceImp implements AdminService{
 		}
 		int totalCount = adminDao.selectScheduleTotalCount(view, cri);
 		return new PageMaker(3, cri, totalCount);
+	}
+
+	@Override
+	public boolean insertBranchProgramSchedule(ProgramInsertFormDTO pif) {
+		
+		// 지점에 등록된 프로그램이 없다면
+		if(adminDao.selectBranchProgramByNum(pif.getBs_bp_num()) == null) {
+			return false;
+		}
+		
+		// 시간이 중복 등록되었거나 등록되지 않았다면
+		if(pif.getHours().size() != 1) {
+			return false;
+		}
+		
+		int hour = pif.getHours().get(0);
+		
+		// bps 객체 생성
+		BranchProgramScheduleVO bps = newBranchProgramSchedule(pif.getSelectDate(), hour, pif.getBs_bp_num(), 1);
+		
+		if(bps == null) return false;
+		return adminDao.insertBranchProgramSchedule(bps);
+        
+	}
+
+	private BranchProgramScheduleVO newBranchProgramSchedule(Date selectDate, int hour, int bp_num, int current) {
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectDate);
+
+        // 스케줄 시간 시간
+        calendar.add(Calendar.HOUR, hour);
+        Date startDate = calendar.getTime();
+        // 스케줄 마감 시간
+        calendar.add(Calendar.HOUR, 1);
+        Date endDate = calendar.getTime();
+        
+        //해당 프로그램이 현재 등록하려는 시간으로 이미 스케쥴이 등록되어 있는 지 확인
+        if(adminDao.selectBranchSchedule(bp_num, startDate) != null) {
+        	System.err.println("이미 스케쥴이 등록된 시간");
+        	return null;
+        }
+        
+        BranchProgramScheduleVO bps = new BranchProgramScheduleVO(startDate, endDate, current, bp_num);
+        
+        return bps;
+	}
+
+	@Override
+	public boolean insertBranchProgramScheduleList(ProgramInsertFormDTO pif) {
+		
+		// 지점에 등록된 프로그램이 없다면
+		if (adminDao.selectBranchProgramByNum(pif.getBs_bp_num()) == null) {
+			return false;
+		}
+		
+		// 시작 시간 혹은 마감 시간이 null이라면
+		if(pif.getStartDate() == null || pif.getEndDate() == null) {
+			return false;
+		}
+		
+		List<BranchProgramScheduleVO> bps_list = new ArrayList<BranchProgramScheduleVO>();
+		
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(pif.getStartDate());
+        int dayOfWeek = startCalendar.get(Calendar.DAY_OF_WEEK);
+
+        // 요일 숫자 값 (일요일: 1, 월요일: 2, ..., 토요일: 7)
+        for(int week : pif.getWeeks()) {
+        	
+			/*
+			 * 시작 날짜가 수요일(4), 선택한 요일이 목요일(5)이라면
+			 * 5-4 = 1일 시작 날짜에서 1일을 더해준 값이 해당 요일의 시작 날짜
+			 * 시작 날짜가 수요일(4), 선택한 요일이 일요일(1)이라면
+			 * 1-4 = -3, 시작 날짜 3일 전은 등록이 불가하므로 +7일 해준 날짜가 시작 날짜 
+			 */
+        	
+            int start = week - dayOfWeek;
+            if(start < 0) start += 7;
+            
+            Calendar weekcalendar = Calendar.getInstance();
+            weekcalendar.setTime(pif.getStartDate());
+            
+            weekcalendar.add(Calendar.DATE, start);
+            Date weekDate = weekcalendar.getTime();
+
+            // weekDate가 마감날짜보다 앞이라면 계속 일정 추가
+            while(pif.getEndDate().compareTo(weekDate) >= 0) {
+            	
+            	for(int hour : pif.getHours()) {
+            		
+            		BranchProgramScheduleVO bps = newBranchProgramSchedule(weekDate, hour, pif.getBs_bp_num(), 0);
+            		if(bps == null) {
+            			System.err.println("bps 생성하는 과정에서 에러 발생!");
+            			return false;
+            		}else {
+            			bps_list.add(bps);
+            		}
+            	}
+            	
+            	// 다음 주 같은 요일 = 요일의 시작 날짜에서 7일을 더해준 값
+            	weekcalendar.add(Calendar.DATE, 7); 
+                weekDate = weekcalendar.getTime();
+            }
+            
+        }
+		
+		return adminDao.insertBranchProgramScheduleList(bps_list);
 	}
 
 }

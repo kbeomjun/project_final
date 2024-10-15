@@ -21,10 +21,31 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4dc87d628f2e532b0812b9e9aae7b2fa&libraries=services,clusterer,drawing"></script>
-	
-<!--  fancy box css -->	
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/fancybox.css"/>" />
-<script src="<c:url value="/resources/js/fancybox.umd.js"/>"></script>
+<style type="text/css">
+.swiper-slide {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+}
+
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
+    width: 80px;
+    height: 80px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    text-align: center;
+    line-height: 50px;
+}
+
+
+</style>
 
 </head>
 <body>
@@ -56,56 +77,27 @@
 	<div class="branch-detail-container" >
 		<c:choose>
 			<c:when test="${select ne null}">
-				<h2>${branch.br_name}</h2>
+				<h3>${branch.br_name}</h3>
 				<hr>
-<!-- 기능 제거 예정 (상단 navbar)-->				
-<!-- 				<div class="branch-detail mb-5">
+				<div class="branch-detail mb-5">
 					<div class="branch-tab">
 						<ul>
-							<li><a class="btn" href="#mapinfo">지점안내</a></li>
-							<li><a class="btn" href="#branch">시설소개</a></li>
+							<li><a class="btn" href="#branch">지점정보</a></li>
 							<li><a class="btn" href="#employee">직원소개</a></li>
+							<li><a class="btn" href="#mapinfo">지점위치</a></li>
 						</ul>
 					</div>
-				</div> -->
-				<h3 class="mt-4">지점위치</h3>
-				<div class="branch-info-wrap">
-					<div class="branch-map-container" id="mapinfo">
-							<div class="mt-5" id="map" data-address="${branch.br_address}"
-								data-name="${branch.br_name }"
-								style="float:left; background-color: lightgray; margin: 0 auto;">
-							</div>
-					</div>
-					<div class="branch-content-container">
-						<strong class="title"
-							style="padding-top: 50px; font-size: 28px; background-size: 50px;">KH
-							피트니스 ${branch.br_name }</strong>
-						<p class="address">${branch.br_address},
-							${branch.br_detailAddress} ${branch.br_extraAddress}</p>
-						<hr style="border:0; height:1px; background: #000;">
-						<div>${branch.br_detail}</div><br> 
-						<span class="phone" style="font-size: 16px;"> 
-						<c:choose>
-							<c:when test="${fn:length(branch.br_phone) == 10}">
-								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
-							</c:when>
-							<c:when test="${fn:length(branch.br_phone) == 9}">
-								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
-							</c:when>
-						</c:choose>
-						</span>
-					</div>
 				</div>
-				<div class="branch-content mt-3" id="branch">
+				<div class="branch-content" id="branch">
 					<h3>지점정보</h3>
-					<%-- <div class="content-box mb-5 mt-5"
+					<div class="content-box mb-5 mt-5"
 						style="text-align: center; display: flex; flex-wrap: wrap; align-items: center;">
 						<div class="swiper-container mr-5">
 							<c:if test="${branch_image_list.size() ne 0 }">
 								<div class="swiper-wrapper" id="swiper-wrapper">
 									<c:forEach items="${branch_image_list}" var="image">
 										<div class="swiper-slide">
-										<img src="<c:url value="/uploads${image.bf_name}" />"
+											<img src="<c:url value="/uploads${image.bf_name}" />"
 												style="width: 600px; height: 400px;"><br>
 										</div>
 									</c:forEach>
@@ -115,17 +107,35 @@
 								<div class="swiper-pagination"></div>
 							</c:if>
 						</div>
-						
-					</div> --%>
-				<div class="branch-image-container mb-5 mt-5">
-					<c:forEach items="${branch_image_list}" var="image">
-					<a href="<c:url value="/uploads${image.bf_name}" />" data-fancybox="gallery">
-						<img src="<c:url value="/uploads${image.bf_name}" />"><br>
-							<!-- style="width: 600px; height: 400px;" -->
-					</a>
-					</c:forEach>
-				</div>	
-				</div>
+						<div class="jumbotron" style="margin: 45px 0; padding: 32px;">
+							<strong class="title"
+								style="padding-top: 50px; font-size: 28px; background-size: 50px;">KH
+								피트니스 ${branch.br_name }</strong>
+							<p class="address">${branch.br_address},
+								${branch.br_detailAddress} ${branch.br_extraAddress}</p>
+							<hr>
+							<div>${branch.br_detail}</div>
+							<!-- 									<dl>
+										<dt>평일</dt>
+										<dd>06:00 ~ 23:00</dd>
+										<dt>토요일</dt>
+										<dd>09:00 ~ 18:00</dd>
+										<dt>일요일/공휴일</dt>
+										<dd>09:00 ~ 18:00</dd>
+										<dt>정기휴일</dt>
+										<dd>매월 첫째, 셋째 일요일</dd>
+									</dl> -->
+							<br> <span class="phone" style="font-size: 16px;"> <c:choose>
+									<c:when test="${fn:length(branch.br_phone) == 10}">
+										☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
+									</c:when>
+									<c:when test="${fn:length(branch.br_phone) == 9}">
+										☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
+									</c:when>
+								</c:choose>
+							</span>
+						</div>
+					</div>
 					<div class="em-container mb-5 mt-5" id="employee">
 						<h3>직원소개</h3>
 					<div class="mt-5" style="text-align: center; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
@@ -146,8 +156,15 @@
 							</c:forEach>
 						</c:if>
 					</div></div>
-					
+					<div class="branch-map-container mt-5" id="mapinfo">
+						<h3>지점위치</h3>
+						<div class="mt-5" id="map" data-address="${branch.br_address}"
+							data-name="${branch.br_name }"
+							style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;">
+						</div>
+					</div>
 
+				</div>
 			</c:when>
 			<c:otherwise>
 				<h3>전지점보기</h3>
@@ -318,9 +335,8 @@
 		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 		// marker.setMap(null);
 	</script>
-	
-<!-- swiper 기능 제거 -->
-<!-- 	<script type="text/javascript">
+
+	<script type="text/javascript">
 	window.onload = function() {
 		
 		const mySwiper = new Swiper('.swiper-container', {
@@ -357,19 +373,16 @@
 	    mySwiper.update();
 	}	
 
-
 	
 	/* // 커스텀 페이지네이션 버튼 클릭 시 첫 번째 슬라이드로 이동
 	document.querySelector('.swiper-pagination').addEventListener('click',
 	
 		function () { if (mySwiper.isEnd) { mySwiper.slideTo(0); // 마지막 슬라이드에서
 		첫 번째 슬라이드로 이동 } }); */
-</script> -->
-
+</script>
 <script type="text/javascript">
 
-<!-- 기능 제거 예정 (상단 navbar)-->		
-/* 	// tab 클릭 시 아래로 이동하도록.
+	// tab 클릭 시 아래로 이동하도록.
 	document.querySelectorAll('.branch-tab a').forEach(anchor => {
 	    anchor.addEventListener('click', function(e) {
 	        e.preventDefault();
@@ -380,7 +393,7 @@
 	            behavior: 'smooth'
 	        });
 	    });
-	}); */
+	});
 
 	// 스크롤 이벤트 리스너 등록
 	window.addEventListener('scroll', function() {
@@ -401,11 +414,6 @@
 	    });
 	});
 </script>
-<script type="text/javascript">
-Fancybox.bind('[data-fancybox="gallery"]', {
-	  // Your custom options
-	 	
-	});
-</script>
+
 </body>
 </html>

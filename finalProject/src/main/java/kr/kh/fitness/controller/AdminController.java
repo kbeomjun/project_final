@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.model.dto.BranchStockDTO;
+import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
@@ -33,7 +36,6 @@ import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
 import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.AdminService;
-
 
 @Controller
 @RequestMapping("/admin")
@@ -171,47 +173,68 @@ public class AdminController {
 		
 		List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
 		List<MemberVO> memberList = adminService.getMemberList();
-		
 		model.addAttribute("programList", programList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("branchName", br_name);
 		
 		return "/admin/scheduleInsert";
 	}
+//	
+//	//지점 프로그램 일정 추가 post
+//	@PostMapping("/schedule/insert")
+//	public String scheduleInsertPost(Model model, String date, String startTime, String endTime, BranchProgramScheduleVO schedule, String me_id) {
+//		
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // 날짜 형식 지정
+//        Date bs_start;
+//        Date bs_end;
+//        if(me_id == null) {
+//        	me_id = "";
+//        }
+//        
+//        
+//		try {
+//			bs_start = formatter.parse(date + " " + startTime);
+//			bs_end = formatter.parse(date + " " + endTime);
+//			schedule.setBs_start(bs_start);
+//			schedule.setBs_end(bs_end);
+//			System.out.println(schedule);
+//
+//			String msg = adminService.insertSchedule(schedule, me_id);
+//			if(msg == "") {
+//				model.addAttribute("url", "/admin/schedule/list");
+//			} else {
+//				model.addAttribute("url", "/admin/schedule/insert/"+schedule.getBp_br_name());
+//			}
+//			model.addAttribute("msg", msg);
+//			return "/main/message";
+//			
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//			//return "/main/home";
+//			return "/main/main";
+//		}
+// 
+//	}
 	
 	//지점 프로그램 일정 추가 post
 	@PostMapping("/schedule/insert")
-	public String scheduleInsertPost(Model model, String date, String startTime, String endTime, BranchProgramScheduleVO schedule, String me_id) {
+	public String scheduleInsertPost(Model model, HttpServletRequest request, @ModelAttribute ProgramInsertFormDTO pif) {
+		System.out.println(pif);
 		
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // 날짜 형식 지정
-        Date bs_start;
-        Date bs_end;
-        if(me_id == null) {
-        	me_id = "";
-        }
-        
-        
-		try {
-			bs_start = formatter.parse(date + " " + startTime);
-			bs_end = formatter.parse(date + " " + endTime);
-			schedule.setBs_start(bs_start);
-			schedule.setBs_end(bs_end);
-			System.out.println(schedule);
-
-			String msg = adminService.insertSchedule(schedule, me_id);
-			if(msg == "") {
-				model.addAttribute("url", "/admin/schedule/list");
-			} else {
-				model.addAttribute("url", "/admin/schedule/insert/"+schedule.getBp_br_name());
-			}
-			model.addAttribute("msg", msg);
-			return "/main/message";
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			//return "/main/home";
-			return "/main/main";
+		boolean res;
+		if(pif.getSp_type().equals("단일")) {
+			res = adminService.insertBranchProgramSchedule(pif);
+		}else {
+			res = adminService.insertBranchProgramScheduleList(pif);
 		}
+		if(res) {
+			model.addAttribute("msg", "스케쥴 등록을 완료했습니다.");
+		}
+		else {
+			model.addAttribute("msg", "스케쥴 등록 과정에서 에러가 발생했습니다. \\n 이전에 등록한 시간과 중복되지 않았는 지 확인바랍니다. \\n 이상이 없다면 관리자에게 문의해주세요.");
+		}
+		model.addAttribute("url", "/admin/schedule/list");
+		return "/main/message";
  
 	}
 	

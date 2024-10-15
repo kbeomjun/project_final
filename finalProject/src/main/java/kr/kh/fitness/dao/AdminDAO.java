@@ -1,5 +1,6 @@
 package kr.kh.fitness.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -99,5 +100,11 @@ public interface AdminDAO {
 	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(String br_name);
 
 	int selectScheduleTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
+
+	BranchProgramScheduleVO selectBranchSchedule(@Param("bp_num")int bs_bp_num, @Param("start")Date startDate);
+
+	boolean insertBranchProgramSchedule(@Param("bps")BranchProgramScheduleVO bps);
+
+	boolean insertBranchProgramScheduleList(@Param("bps_list")List<BranchProgramScheduleVO> bps_list);
 
 }

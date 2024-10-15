@@ -354,4 +354,21 @@
 		select * from branch_equipment_stock where be_br_name = #{br_name} order by be_record desc
 	</select>
 	
+	<select id="selectBranchSchedule" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule
+		where bs_start = #{start} and bs_bp_num = #{bp_num}
+	</select>
+	
+	<insert id="insertBranchProgramSchedule">
+		insert into branch_program_schedule(bs_start, bs_end, bs_current, bs_bp_num)
+		values (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
+	</insert>
+	
+	<insert id="insertBranchProgramScheduleList">
+       insert into branch_program_schedule(bs_start, bs_end, bs_current, bs_bp_num)
+       values
+       <foreach collection="bps_list" item="bps" separator=",">
+            (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
+        </foreach>
+    </insert>
 </mapper>
