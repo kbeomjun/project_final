@@ -125,7 +125,7 @@
 					</c:if>
 					
 					<div class="text-right mb-3">
-						<a href="<c:url value="/admin/employee/insert/${br_name}"/>" class="btn btn-outline-success btn-sm">직원등록</a>
+						<a href="<c:url value="/admin/employee/insert/${pm.cri.br_name}"/>" class="btn btn-outline-success btn-sm">직원등록</a>
 					</div>
 	                
 	            </div>

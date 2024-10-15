@@ -55,7 +55,7 @@ public class AdminController {
 			List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
 			model.addAttribute("programList", programList);
 			model.addAttribute("br_name", br_name);
-			return "/admin/programList";
+			return "/admin/program/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class AdminController {
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("branchName", user.getMe_name());
 		
-		return "/admin/programInsert";
+		return "/admin/program/insert";
 	}
 	
 	//지점 프로그램 등록 post
@@ -100,7 +100,7 @@ public class AdminController {
 		
 		model.addAttribute("branchProgram", branchProgram);
 		
-		return "/admin/programUpdate";
+		return "/admin/program/update";
 	}
 	
 	//지점 프로그램 수정 post
@@ -282,7 +282,7 @@ public class AdminController {
 			
 			model.addAttribute("orderList", orderList);
 			model.addAttribute("pm", pm);
-			return "/admin/orderList";
+			return "/admin/order/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -301,7 +301,7 @@ public class AdminController {
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
 		
-		return "/admin/orderInsert";
+		return "/admin/order/insert";
 	}
 	
 	//지점 발주 등록 post
@@ -353,7 +353,7 @@ public class AdminController {
 			
 			model.addAttribute("employeeList", employeeList);
 			model.addAttribute("pm", pm);
-			return "/admin/employeeList";
+			return "/admin/employee/list";
 		}catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
@@ -367,7 +367,7 @@ public class AdminController {
 		
 		model.addAttribute("em_br_name", em_br_name);
 		model.addAttribute("programList", programList);
-		return "/admin/employeeInsert";
+		return "/admin/employee/insert";
 	}
 	
 	//지점 직원 등록 post
@@ -390,7 +390,7 @@ public class AdminController {
 		List<SportsProgramVO> programList = adminService.getProgramList();
 		model.addAttribute("em", employee);
 		model.addAttribute("programList", programList);		
-		return "/admin/employeeDetail";
+		return "/admin/employee/detail";
 	}
 	
 	//지점 직원 상세수정
@@ -413,7 +413,7 @@ public class AdminController {
 		
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pm", pm);
-		return "/admin/memberList";
+		return "/admin/member/list";
 	}
 	
 	//회원 상세보기
@@ -422,7 +422,7 @@ public class AdminController {
 		MemberVO member = adminService.getMember(me_id);
 		model.addAttribute("me", member);
 		model.addAttribute("cri", cri);
-		return "/admin/memberDetail";		
+		return "/admin/member/detail";		
 	}
 	
 	//회원 노쇼횟수 수정
@@ -467,7 +467,7 @@ public class AdminController {
 			model.addAttribute("bfList", bfList);
 			model.addAttribute("me", admin);
 			
-			return "/admin/branchDetail";
+			return "/admin/branch/detail";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
@@ -503,7 +503,7 @@ public class AdminController {
 			model.addAttribute("equipmentList", equipmentList);
 			model.addAttribute("view", view);
 			model.addAttribute("pm", pm);
-			return "/admin/equipmentList";
+			return "/admin/equipment/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -527,7 +527,7 @@ public class AdminController {
 			model.addAttribute("equipmentChange", equipmentChange);
 			model.addAttribute("pm", pm);
 			
-			return "/admin/equipmentChange";
+			return "/admin/equipment/change";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
@@ -547,7 +547,7 @@ public class AdminController {
 			model.addAttribute("miWaitList", miWaitList);
 			model.addAttribute("miDoneList", miDoneList);
 			model.addAttribute("br_name", br_name);
-			return "/admin/inquiryList";
+			return "/admin/inquiry/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "/main/main";
