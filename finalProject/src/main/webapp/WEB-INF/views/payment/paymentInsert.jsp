@@ -97,6 +97,34 @@
 		    var me_email = "${user.me_email}"; // 세션에서 가져온 사용자 이메일
 		    var contextPath = '<%=request.getContextPath()%>'; // 현재 경로를 가져옴
 		    console.log("Context Path:", contextPath); // 확인용 출력
+		    
+		    
+			// 페이지 로드 시 서버에서 넘긴 paStart 값 설정 및 min 속성 설정
+	        var paStart = '${paStart}';  // 서버에서 넘긴 paStart 값
+	        var currentDate = new Date().toISOString().split('T')[0];  // 현재 날짜 yyyy-MM-dd
+
+	        $('#pa_start').attr('min', currentDate);  // 최소 선택 가능한 날짜는 현재 날짜
+
+	        console.log('paStart:', paStart);
+	        console.log('currentDate:', currentDate);
+	        
+	        // 페이지 로드 시 입력 요소의 값 설정
+	        if (paStart < currentDate) {
+	            $('#pa_start').val(currentDate); // paStart가 현재 날짜보다 이전이면 현재 날짜로 설정
+	        } else {
+	            $('#pa_start').val(paStart); // 그렇지 않으면 paStart 값을 설정
+	        }
+
+			// 선택된 날짜가 기존 시작일 이전일 경우 경고 및 수정
+	        $('#pa_start').on('change', function() {
+	            const selectedDate = $(this).val(); // 사용자가 선택한 날짜
+	            
+	            // 선택된 날짜가 기존 시작일보다 이전이면 경고 및 기존 시작일로 설정
+	            if (selectedDate < paStart) {
+	                alert("시작 날짜는 기존 회원권 시작일(" + paStart + ") 이후여야 합니다.");
+	                $(this).val(paStart);  // 기존 시작일로 다시 설정
+	            }
+	        });
 		
 		    // user 정보가 없는 경우 결제 버튼 숨기기 및 경고 메시지 표시
 		    if (!me_id) {
@@ -181,13 +209,19 @@
 		        // 선택된 옵션의 데이터 가져오기
 		        const type = selectedOption.data('type'); // 종류
 		        const date = selectedOption.data('date'); // 날짜
-		        const start = $('#pa_start').val(); // 시작 날짜
+		        const start = $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
 		        const count = selectedOption.data('count'); // 횟수
 		        const price = selectedOption.data('price'); // 가격
 		        const formattedPrice = Number(price).toLocaleString(); // 가격 포맷팅
-		
 		        // hidden input에 pt_type 설정
 		        $('#pt_type').val(type);
+		        
+		        // 확인용
+		        console.log(type);
+		        console.log(date);
+		        console.log("사용자가 선택한 최종 시작 날짜:", start);
+		        console.log(count);
+		        console.log(formattedPrice);
 		
 		        // 팝업 내용 설정
 		        const modalContent = `
@@ -307,38 +341,6 @@
 		        
 		    }); // js-btn-insert click
 			
-			
-			// 페이지 로드 시 서버에서 넘긴 paStart 값 설정 및 min 속성 설정
-	        var paStart = '${paStart}';  // 서버에서 넘긴 paStart 값
-	        var currentDate = new Date().toISOString().split('T')[0];  // 현재 날짜 yyyy-MM-dd
-
-	        $('#pa_start').attr('min', currentDate);  // 최소 선택 가능한 날짜는 현재 날짜
-
-	        console.log('paStart:', paStart);
-	        console.log('currentDate:', currentDate);
-	        
-	        // 페이지 로드 시 입력 요소의 값 설정
-	        if (paStart < currentDate) {
-	            $('#pa_start').val(currentDate); // paStart가 현재 날짜보다 이전이면 현재 날짜로 설정
-	        } else {
-	            $('#pa_start').val(paStart); // 그렇지 않으면 paStart 값을 설정
-	        }
-
-			// 선택된 날짜가 기존 시작일 이전일 경우 경고 및 수정
-	        $('#pa_start').on('change', function() {
-	            const selectedDate = $(this).val();
-	            
-	            // 선택된 날짜가 기존 시작일보다 이전이면 경고 및 기존 시작일로 설정
-	            if (selectedDate < paStart) {
-	                alert("시작 날짜는 기존 회원권 시작일(" + paStart + ") 이후여야 합니다.");
-	                $(this).val(paStart);  // 기존 시작일로 다시 설정
-	            }
-	        });
-
-
-
-
-		    
 		}); // document ready
 	</script>
 

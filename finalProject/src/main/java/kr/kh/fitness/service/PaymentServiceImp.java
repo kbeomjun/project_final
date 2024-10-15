@@ -48,7 +48,7 @@ public class PaymentServiceImp implements PaymentService{
 		}
 		
 	    // 1. PaymentCategoryVO 삽입
-	    boolean categoryInserted = paymentDao.insertPaymentCategory(paymentType, category, user);
+	    boolean categoryInserted = insertPaymentCategory(paymentType, category, user);
 	    
 	    if (!categoryInserted) {
 	        return false; // 카테고리 삽입 실패
@@ -79,6 +79,11 @@ public class PaymentServiceImp implements PaymentService{
 			return null;
 		}
 		return paymentDao.selectPayment(me_id);
+	}
+
+	@Override
+	public boolean insertPaymentCategory(PaymentTypeVO paymentType, PaymentCategoryVO category, MemberVO user) {
+	    return paymentDao.insertPaymentCategory(paymentType, category, user);
 	}
 
 }

@@ -1,5 +1,6 @@
 package kr.kh.fitness.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,20 +59,34 @@ public class PaymentController {
 
 	// 회원권 결제 get
 	@GetMapping("/paymentInsert")
-	public String paymentInsert(Model model, HttpSession session) {
+	public String paymentInsert(Model model, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
 
 	    // 현재 날짜를 yyyy-MM-dd 형식으로 포맷
 	    LocalDateTime today = LocalDateTime.now();
 	    String currentDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	    
-	    
 	    // 사용자 ID 가져오기
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
-	    // 사용자가 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
+	    // 로그인하지 않은 상태라면, 사용자가 로그인되어 있지 않으면 이전 URL을 세션에 저장하고 로그인 페이지로 리다이렉트
 	    if (user == null) {
-	        return "redirect:/login";  // 로그인 페이지로 리다이렉트
+	        try {
+	            // 현재 요청 URL을 세션에 저장 (로그인 후 돌아올 수 있게)
+	            String prevUrl = request.getRequestURL().toString();
+	            session.setAttribute("prevUrl", prevUrl);
+	            System.out.println("저장된 이전 URL: " + prevUrl);
+
+	            // 로그인 페이지로 리다이렉트 (JavaScript로 처리)
+	            response.setContentType("text/html; charset=UTF-8");
+	            response.getWriter().write("<script>alert(\"로그인이 필요합니다. 로그인 페이지로 이동합니다.\");</script>");
+	            response.getWriter().write("<script>window.location.href='" + request.getContextPath() + "/login';</script>");
+	            return null;  // 더 이상 처리하지 않음
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        return null;
 	    }
 	    
 	    // 기존 결제 정보를 조회
@@ -98,8 +115,6 @@ public class PaymentController {
 	        // 결제 정보가 없을 때
 	        System.out.println("해당 사용자는 기존 결제 정보가 없습니다.");
 	    }
-	    
-	    
 	    // 현재 날짜 및 기존 결제 시작일 추가
 	    model.addAttribute("currentDate", currentDate);
 	    model.addAttribute("paStart", paStart);  // 기존 회원권의 시작일
@@ -112,7 +127,7 @@ public class PaymentController {
 	// 회원권 결제 post 메서드 (JSON)
 	@PostMapping("/paymentInsert")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> paymentInsertPost(@RequestBody PaymentRequestDTO request, HttpSession session) {
+	public Map<String, Object> paymentInsertPost(@RequestBody PaymentRequestDTO request, HttpSession session) {
 		PaymentVO payment = request.getPayment();
 		PaymentTypeVO paymentType = request.getPaymentType();
 	    PaymentCategoryVO category = request.getPaymentCategory();
@@ -132,27 +147,52 @@ public class PaymentController {
 		    PaymentVO existingPayment = paymentService.getLastPaymentByUserId(userId, paymentType.getPt_num());
 		    System.out.println("결제 타입 번호 : " + paymentType.getPt_num());
 		    
+		    // 기존 결제가 있는 경우 - 결제 시작일 및 만료일 업데이트
 		    if (existingPayment != null) {
-		        // 기존 결제가 있는 경우
-		    	
-		        // pa_end를 long 타입으로 가져오기
+		    	// Ajax로 전달된 새로운 결제 시작일을 받아와서 설정
+		    	Date newStartDate = payment.getPa_start(); // Ajax로 전달된 시작일 가져오기
+		        
+		    	// Date를 String으로 변환 (yyyy-MM-dd 형식으로 변환)
+		        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		        String formattedStartDate = formatter.format(newStartDate);  // Date를 String으로 변환
+		        System.out.println("새로운 시작 날짜 : " + formattedStartDate);
+
+		        /// String을 LocalDateTime으로 변환하여 처리
+		        LocalDateTime startDateTime = LocalDate.parse(formattedStartDate, 
+		        					DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        			.atStartOfDay();  // 시작일의 00:00:00으로 설정
+		        
+		        // 새로운 시작일을 Timestamp로 변환하여 PaymentVO에 설정
+		        existingPayment.setPa_start(Timestamp.valueOf(startDateTime));  // Timestamp로 변환하여 설정
+		        System.out.println("새로운 결제 시작 날짜: " + startDateTime);
+
+		        // 기존 결제의 만료일 계산
 		        long pcPaidAtTimestamp = existingPayment.getPa_end().getTime(); // Date에서 long으로 변환
 		        LocalDateTime paidAtDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(pcPaidAtTimestamp), ZoneId.systemDefault());
 		        
-		        // 기존 결제의 만료일을 계산
+		        // 만료일 계산 (기간 추가)
 		        LocalDateTime expirationDateTime = paidAtDateTime.plusDays(paymentType.getPt_date());
 		        System.out.println("만료일 계산 : " + expirationDateTime);
 
-		        // LocalDateTime을 Timestamp로 변환
+		        // 만료일을 LocalDateTime에서 Timestamp로 변환
 		        Timestamp expirationTimestamp = Timestamp.valueOf(expirationDateTime);
 
-		        // 결제 업데이트를 위한 필드 설정
+		        // 만료일 업데이트
 		        existingPayment.setPa_end(expirationTimestamp);
 		        System.out.println("실제 들어간 만료일 계산값 : " + existingPayment.getPa_end());
 
+		        // 카테고리 삽입 (카테고리 객체는 DTO에서 가져옴)
+	            boolean categoryInserted = paymentService.insertPaymentCategory(paymentType, category, user);
+	            if (!categoryInserted) {
+	                response.put("success", false);
+	                response.put("message", "카테고리 삽입에 실패했습니다.");
+	                return response; // 카테고리 삽입 실패 시 응답
+	            }
+		        
 		        // 결제 업데이트 서비스 호출
+		        System.out.println("결제 업데이트를 위한 필드 : " + existingPayment);
 		        paymentService.updatePayment(existingPayment);
-		        // 결제 업데이트 서비스 호출
+
 		        boolean updateResult = paymentService.updatePayment(existingPayment);
 		        if (updateResult) {
 		            response.put("success", true);
@@ -167,7 +207,7 @@ public class PaymentController {
 	            if (payment.getPa_start() == null) {
 	                response.put("success", false);
 	                response.put("message", "시작 날짜를 선택해주세요.");
-	                return ResponseEntity.ok(response);
+	                return response;
 	            }
 	            
 	            // 날짜 문자열에서 타임존과 시간을 제거하고 'yyyy-MM-dd' 형식으로 변환
@@ -212,12 +252,13 @@ public class PaymentController {
 	        response.put("success", false);
 	        response.put("message", "오류가 발생하였습니다: " + e.getMessage());
 		}
-		return ResponseEntity.ok(response); // JSON 형식으로 응답 : ajax에서는 model형식 쓰는거 불가능...
+		return response; // JSON 형식으로 응답 : ajax에서는 model형식 쓰는거 불가능...
 	}
 	
 	// 유효성 체크 메서드
 	@GetMapping("/checkValidity")
-	public ResponseEntity<Map<String, Object>> checkValidity(HttpSession session, @RequestParam("pt_num") int ptNum) {
+	@ResponseBody
+	public Map<String, Object> checkValidity(HttpSession session, @RequestParam("pt_num") int ptNum) {
 	    // 세션에서 user 정보를 직접 가져옴
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 
@@ -228,7 +269,7 @@ public class PaymentController {
 	    if (user == null) {
 	        // 세션에 user 정보가 없음
 	        response.put("error", "로그인 정보가 없습니다."); // String 타입의 에러 메시지를 추가
-	        return ResponseEntity.badRequest().body(response);
+	        return response;
 	    }
 
 	    // 사용자 ID로 결제 정보를 조회
@@ -248,7 +289,7 @@ public class PaymentController {
 	    }
 
 	    response.put("hasValidLicense", hasValidLicense);
-	    return ResponseEntity.ok(response);
+	    return response;
 	}
 
 	

@@ -20,9 +20,8 @@
 		FROM payment pa
 		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
 		WHERE pa.pa_me_id = #{me_id}
-		  AND pa.pa_pt_num = #{pt_num}
 		ORDER BY pa.pa_start DESC
-		LIMIT 1;
+		LIMIT 1
 	</select>
 	
 	<update id="updatePayment">
@@ -31,14 +30,13 @@
 	        SELECT MAX(pa_num) AS max_pa_num
 	        FROM payment
 	        WHERE pa_me_id = #{pa.pa_me_id}
-	          AND pa_pt_num = #{pa.pa_pt_num}
 	    ) AS latest_payment ON pa.pa_num = latest_payment.max_pa_num
 	    SET 
 	        pa.pa_price = #{pa.pa_price},
+	        pa.pa_start = #{pa.pa_start},
 	        pa.pa_end = #{pa.pa_end},
 	        pa.pa_state = #{pa.pa_state}
 	    WHERE pa.pa_me_id = #{pa.pa_me_id}
-	      AND pa.pa_pt_num = #{pa.pa_pt_num};
 	</update>
 	
 	<select id="selectPayment" resultType="PaymentVO">

@@ -19,4 +19,6 @@ public interface PaymentService {
 
 	PaymentVO getPayment(String me_id);
 
+	boolean insertPaymentCategory(PaymentTypeVO paymentType, PaymentCategoryVO category, MemberVO user);
+
 }
