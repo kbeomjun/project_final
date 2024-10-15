@@ -96,6 +96,11 @@
 		select * from inquiry_type
 	</select>
 	
+	<insert id="insertInquiry">
+		insert into member_inquiry(mi_title, mi_content, mi_email, mi_br_name, mi_it_name)
+		values(#{mi_title}, #{mi_content}, #{mi_email}, #{mi_br_name}, #{mi_it_name})
+	</insert>
+	
 	<select id="selectReservationList" resultType="BranchProgramScheduleVO">
 		select
 			*  
@@ -170,6 +175,10 @@
 			</choose>	
 	</select>
 	
+	<select id="selectReservation" resultType="ProgramReservationVO">
+		select * from program_reservation where pr_num = #{pr_num}
+	</select>
+	
 	<delete id="deleteReservation">
 		delete from program_reservation where pr_num = #{pr_num}
 	</delete>
@@ -207,6 +216,10 @@
 			payment_type on pt_num = pa_pt_num
 		where
 			pa_me_id = #{me_id}
+	</select>
+	
+	<select id="selectPayment" resultType="PaymentVO">
+		select * from payment where pa_num = #{pa_num}
 	</select>
 	
 	<select id="selectRefund" resultType="RefundVO">

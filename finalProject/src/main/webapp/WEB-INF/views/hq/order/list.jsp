@@ -6,6 +6,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -34,7 +38,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
@@ -43,9 +47,14 @@
 		      	<hr class="d-sm-none">
 	    	</div>
 		    <div class="col-sm-10">
-		    	<div class="mt-3">
-		    		<table class="table table-hover">
-				    	<thead>
+		    	<div>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">대기</button>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">완료</button>
+			    </div>
+			    <hr>
+		    	<div class="mt-3 box box-wait">
+		    		<table class="table table-hover table-wait">
+				    	<thead id="thead">
 				      		<tr>
 				        		<th>내역번호</th>
 				        		<th>지점</th>
@@ -56,8 +65,8 @@
 				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
-				    		<c:forEach items="${boList}" var="bo">
+				    	<tbody id="tbody">
+				    		<c:forEach items="${boWaitList}" var="bo">
 				    			<tr>
 					        		<td class="align-content-center">${bo.bo_num}</td>
 					        		<td class="align-content-center">${bo.bo_br_name}</td>
@@ -73,16 +82,112 @@
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
-				    		<c:if test="${boList.size() == 0}">
+				    	</tbody>
+					</table>
+				</div>
+				<div class="mt-3 box box-done" style="display: none;">
+		    		<table class="table table-hover table-done">
+				    	<thead id="thead">
+				      		<tr>
+				        		<th>내역번호</th>
+				        		<th>지점</th>
+				        		<th>신청날짜</th>
+				        		<th>기구명</th>
+				        		<th>수량</th>
+				        		<th>상태</th>
+				        		<th></th>
+				      		</tr>
+				    	</thead>
+				    	<tbody id="tbody">
+				    		<c:forEach items="${boDoneList}" var="bo">
 				    			<tr>
-					        		<th class="text-center" colspan="7">발주 내역이 없습니다.</th>
+					        		<td class="align-content-center">${bo.bo_num}</td>
+					        		<td class="align-content-center">${bo.bo_br_name}</td>
+					        		<td class="align-content-center">
+					        			<fmt:formatDate value="${bo.bo_date}" pattern="yyyy.MM.dd hh:mm:ss"/>
+				        			</td>
+					        		<td class="align-content-center">${bo.bo_se_name}</td>
+					        		<td class="align-content-center">${bo.bo_amount}</td>
+					        		<td class="align-content-center">${bo.bo_state}</td>
+					        		<td class="align-content-center">
+					        		
+					        		</td>
 					      		</tr>
-				    		</c:if>
+				    		</c:forEach>
 				    	</tbody>
 					</table>
 				</div>
 	    	</div>
 	  	</div>
 	</div>
+	
+	<script type="text/javascript">
+		var table = $('.table-wait').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: "등록된 내역이 없습니다."
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    order: [[ 2, "asc" ]],
+		    columnDefs: [
+		        {
+		        	targets: [5, 6], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+		
+		$('.btn-menu').click(function(){
+			var name = $(this).data("name");
+			
+			$('.btn-menu').removeClass("active");
+			$('.btn-'+name).addClass("active");
+			
+			$('.box').css("display", "none");
+			$('.box-'+name).css("display", "block");
+			
+			table.destroy();
+			if(name == 'wait'){
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 2, "asc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}else{
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 2, "desc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}
+		});
+	</script>
 </body>
 </html>

@@ -24,10 +24,14 @@ public class PaymentServiceImp implements PaymentService{
 
 	// 결제 추가
 	@Override
-	public boolean insertPayment(PaymentTypeVO payment, PaymentCategoryVO category, String formattedDateTime, MemberVO user) {
-		if(payment.getPt_num() == 0
-			|| payment.getPt_price() == 0
-			|| payment.getPt_date() <= 0) {
+	public boolean insertPayment(PaymentVO payment, PaymentTypeVO paymentType, PaymentCategoryVO category, String formattedDateTime, MemberVO user) {
+		if(payment.getPa_start() == null) {
+			return false;
+		}
+		
+		if(paymentType.getPt_num() == 0
+			|| paymentType.getPt_price() == 0
+			|| paymentType.getPt_date() <= 0) {
 			return false;
 		}
 		
@@ -44,13 +48,13 @@ public class PaymentServiceImp implements PaymentService{
 		}
 		
 	    // 1. PaymentCategoryVO 삽입
-	    boolean categoryInserted = paymentDao.insertPaymentCategory(payment, category, user);
+	    boolean categoryInserted = insertPaymentCategory(paymentType, category, user);
 	    
 	    if (!categoryInserted) {
 	        return false; // 카테고리 삽입 실패
 	    }
 		
-		return paymentDao.insertPayment(payment, category, formattedDateTime, user);
+		return paymentDao.insertPayment(payment, paymentType, category, formattedDateTime, user);
 	}
 	
 
@@ -67,6 +71,19 @@ public class PaymentServiceImp implements PaymentService{
 	@Override
 	public boolean updatePayment(PaymentVO existingPayment) {
 		return paymentDao.updatePayment(existingPayment);
+	}
+
+	@Override
+	public PaymentVO getPayment(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return paymentDao.selectPayment(me_id);
+	}
+
+	@Override
+	public boolean insertPaymentCategory(PaymentTypeVO paymentType, PaymentCategoryVO category, MemberVO user) {
+	    return paymentDao.insertPaymentCategory(paymentType, category, user);
 	}
 
 }

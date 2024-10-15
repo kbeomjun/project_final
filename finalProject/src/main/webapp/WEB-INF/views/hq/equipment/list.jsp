@@ -7,7 +7,8 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:305px; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
+		.img-container{height: 800px; overflow-y: auto;}
+    	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.btn-update{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
@@ -44,7 +45,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
@@ -56,6 +57,7 @@
 			    <div>
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
 			    </div>
+			    <hr>
 		    	<div class="img-container d-flex flex-wrap">
 		    		<c:forEach items="${seList}" var="se">
 						<div class="card img-box">
@@ -253,7 +255,7 @@
 			
 			$.ajax({
 				async : true,
-				url : '<c:url value="/hq/equipment/data"/>', 
+				url : '<c:url value="/hq/equipment/update"/>', 
 				type : 'get', 
 				data : {se_name : se_name}, 
 				dataType : "json",

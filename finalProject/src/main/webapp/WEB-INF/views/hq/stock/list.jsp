@@ -7,12 +7,15 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-box{width:305px; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
+    	.img-container{height: 800px; overflow-y: auto;}
+    	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: left;}
 	</style>
 </head>
 <body>
@@ -42,7 +45,7 @@
 		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
@@ -52,13 +55,14 @@
 	    	</div>
 		    <div class="col-sm-10">
 			    <div>
-			    	<button type="button" class="btn btn-outline-info btn-menu btn-record" data-name="record">내역</button>
+			    	<button type="button" class="btn btn-outline-info btn-menu btn-record active" data-name="record">내역</button>
 			    	<button type="button" class="btn btn-outline-info btn-menu btn-img" data-name="img">현황</button>
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">입고</button>
 			    </div>
-		    	<div class="mt-3 box record-box">
-		    		<table class="table table-hover">
-				    	<thead>
+			    <hr>
+		    	<div class="mt-3 box box-record">
+		    		<table class="table table-hover" id="table">
+				    	<thead id="thead">
 				      		<tr>
 				        		<th>내역번호</th>
 				        		<th>기록날짜</th>
@@ -68,16 +72,15 @@
 				        		<th>상태</th>
 				      		</tr>
 				    	</thead>
-				    	<tbody id="beList">
+				    	<tbody id="tbody">
 				    	
 				    	</tbody>
 					</table>
 				</div>
-				<div class="box">
-					<hr>
-				</div>
-				<div class="img-container d-flex flex-wrap">
-					
+				<div class="mt-3 box box-img" style="display: none;">
+					<div class="img-container d-flex flex-wrap">
+						
+					</div>
 				</div>
 				<div class="modal fade" id="myModal">
 			    	<div class="modal-dialog modal-dialog-centered">
@@ -116,71 +119,47 @@
 	</div>
 	
 	<script type="text/javascript">
+		var table = $('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: "등록된 내역이 없습니다."
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    order: [[ 1, "desc" ]],
+		    ajax:{
+	        	url:'<c:url value="/hq/stock/list1"/>',
+	        	type:"post",
+	        	dataSrc :""
+	        },
+	        columns:[
+	        	{data:"be_num"},
+	        	{data:"be_record"},
+	        	{data:"be_se_name"},
+	        	{data:"be_birth"},
+	        	{data:"be_amount"},
+	        	{data:"be_type"}
+	        ]
+		});
+	
 		$(document).ready(function(){
 			displayList();
-			
-			if($('.btn-record').hasClass("active")){
-				$('.box').css("display", "none");
-				$('.record-box').css("display", "block");
-			}
-			else if($('.btn-img').hasClass("active")){
-				$('.box').css("display", "none");
-				$('.img-box').css("display", "block");
-			}
 		});
 	
 		function displayList(){
 			$.ajax({
 				async : true,
-				url : '<c:url value="/hq/stock/lists"/>', 
-				type : 'get', 
+				url : '<c:url value="/hq/stock/list2"/>', 
+				type : 'post', 
 				dataType : "json",
 				success : function (data){
-					let beList = data.beList;
 					let stList = data.stList;
-					
 					let str = ``;
-					for(var be of beList){
-						var be_record_date = (new Date(be.be_record)).toLocaleDateString('ko-KR', {
-							year: 'numeric',
-							month: '2-digit',
-							day: '2-digit',
-							})
-							.replace(/\./g, '')
-							.replace(/\s/g, '.')
-						var be_record_hour = (new Date(be.be_record)).toLocaleDateString('ko-KR', {
-							hour: '2-digit',
-							hour12 : false,
-							minute: '2-digit',
-							second: '2-digit'
-							})
-							.replace(/\./g, '')
-							.replace(/\s/g, ':')
-						var be_record = be_record_date + " " + be_record_hour.slice(11);
-						var be_birth = (new Date(be.be_birth)).toLocaleDateString('ko-KR', {
-							year: 'numeric',
-							month: '2-digit',
-							day: '2-digit',
-							})
-							.replace(/\./g, '')
-							.replace(/\s/g, '.')
-						str += `
-							<tr>
-					        	<td>\${be.be_num}</td>
-						        <td>\${be_record}</td>
-						        <td>\${be.be_se_name}</td>
-					        	<td>\${be_birth}</td>
-					        	<td>\${be.be_amount}</td>
-					        	<td>\${be.be_type}</td>
-					      	</tr>
-						`;
-					}
-					$('#beList').html(str);
-					
-					str = ``;
 					for(var st of stList){
 						str += `
-							<div class="card box img-box">
+							<div class="card img-box">
 					        	<img class="card-img-top" style="width:100%; height:100%;" src="<c:url value="/uploads"/>\${st.be_se_fi_name}"></img>
 						    	<div class="img-name d-flex align-content-center">
 						      		<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
@@ -194,21 +173,41 @@
 					console.log(jqXHR);
 				}
 			});
+			
+			table.destroy();
+			table = $('#table').DataTable({
+				language: {
+			        search: "검색:",
+			        zeroRecords: "",
+			        emptyTable: "등록된 내역이 없습니다."
+			    },
+				scrollY: 600,
+			    paging: false,
+			    info: false,
+			    order: [[ 1, "desc" ]],
+			    ajax:{
+		        	url:'<c:url value="/hq/stock/list1"/>',
+		        	type:"post",
+		        	dataSrc :""
+		        },
+		        columns:[
+		        	{data:"be_num"},
+		        	{data:"be_recordStr"},
+		        	{data:"be_se_name"},
+		        	{data:"be_birthStr"},
+		        	{data:"be_amount"},
+		        	{data:"be_type"}
+		        ]
+			});
 		}
 	
 		$(document).on('click', '.btn-menu', function(){
 			var name = $(this).data("name");
 			
-			if($(this).hasClass("active")){
-				$(this).removeClass("active");
-				$('.box').css("display", "block");
-				return;
-			}
-			
 			$('.btn-menu').removeClass("active");
-			$(this).addClass("active");
+			$('.btn-'+name).addClass("active");
 			$('.box').css("display", "none");
-			$('.'+name+'-box').css("display", "block");
+			$('.box-'+name).css("display", "block");
 		});
 		
 		$(document).on('click', '.btn-insert', function(){

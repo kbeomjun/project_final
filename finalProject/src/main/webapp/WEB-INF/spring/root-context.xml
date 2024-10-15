@@ -42,7 +42,6 @@
     <bean id="uploadPath" class="java.lang.String">
         <constructor-arg value="${file.upload-dir}" />
     </bean>
-
     <!-- gmail -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />

@@ -56,12 +56,21 @@
 	<beans:bean id="prevUrlInterceptor" class="kr.kh.fitness.interceptor.PrevUrlInterceptor" />
 	<beans:bean id="loginInterceptor" class="kr.kh.fitness.interceptor.LoginInterceptor"/>
 	<beans:bean id="autoLoginInterceptor" class="kr.kh.fitness.interceptor.AutoLoginInterceptor"/>
+	<beans:bean id="brAdminInterceptor" class="kr.kh.fitness.interceptor.BrAdminInterceptor"/>
+	<beans:bean id="clientInterceptor" class="kr.kh.fitness.interceptor.ClientInterceptor"/>
 
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/program/reservation/*" />
-			<!-- <mapping path="/admin/schedule/insert" /> -->
+		
+			<!-- 로그인해야만 접근할 수 있는 경로에만 인터셉터 적용 -->
+			<mapping path="/payment/paymentInsert" />
+			
+			<!-- /login 경로와 /resources/** 경로에서 인터셉터 제외 -->
+			<exclude-mapping path="/login" />
+			<exclude-mapping path="/resources/**" />
+		    
 			<beans:ref bean="prevUrlInterceptor" />
 		</interceptor>
 		<interceptor>
@@ -72,6 +81,14 @@
 			<mapping path="/**"/>
 			<beans:ref bean="autoLoginInterceptor"/>
 		</interceptor>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:ref bean="brAdminInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/client/mypage/**"/>
+			<beans:ref bean="clientInterceptor"/>
+		</interceptor>		
 	</interceptors>
 
 </beans:beans>

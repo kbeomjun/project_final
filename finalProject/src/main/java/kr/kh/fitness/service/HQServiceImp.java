@@ -1,13 +1,17 @@
 package kr.kh.fitness.service;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +23,10 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
@@ -33,6 +39,8 @@ public class HQServiceImp implements HQService {
 	String uploadPath;
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
@@ -129,7 +137,7 @@ public class HQServiceImp implements HQService {
 	public List<EmployeeVO> getEmployeeList() {return hqDao.selectEmployeeList();}
 	
 	@Override
-	public List<SportsProgramVO> getProgramList() {return hqDao.selectProgramList();}
+	public List<SportsProgramVO> getSportsProgramList() {return hqDao.selectSportsProgramList();}
 
 	@Override
 	public String insertEmployee(EmployeeVO employee, MultipartFile file) {
@@ -205,6 +213,23 @@ public class HQServiceImp implements HQService {
 		if(!hqDao.updateEmployee(employee)) {msg = "직원을 수정하지 못했습니다.";}
 		return msg;
 	}
+	
+	@Override
+	public String deleteEmployee(EmployeeVO employee) {
+		String msg = "";
+		if(employee == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		EmployeeVO employeeVo = hqDao.selectEmployee(employee);
+		if(employeeVo == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.deleteEmployee(employeeVo)) {msg = "직원을 삭제하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		UploadFileUtils.delteFile(uploadPath, employeeVo.getEm_fi_name());
+		return msg;
+	}
 
 	@Override
 	public List<SportsEquipmentVO> getSportsEquipmentList() {return hqDao.selectSportsEquipmentList();}
@@ -260,7 +285,19 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {return hqDao.selectBranchEquipmentStockList(null, null);}
+	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {
+		List<BranchEquipmentStockVO> beList = hqDao.selectBranchEquipmentStockList(null, null);
+		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
+		for(int i = 0; i < beList.size(); i++) {
+			String be_recordStr = dtFormat1.format(beList.get(i).getBe_record());
+			String be_birthStr = dtFormat2.format(beList.get(i).getBe_birth());
+			
+			beList.get(i).setBe_recordStr(be_recordStr);
+			beList.get(i).setBe_birthStr(be_birthStr);
+		}
+		return beList;
+	}
 
 	@Override
 	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}
@@ -279,7 +316,7 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchOrderVO> getBranchOrderList() {return hqDao.selectBranchOrderList();}
+	public List<BranchOrderVO> getBranchOrderList(String str) {return hqDao.selectBranchOrderList(str);}
 
 	@Override
 	public String acceptOrder(int bo_num) {
@@ -394,5 +431,123 @@ public class HQServiceImp implements HQService {
 		
 		if(!hqDao.updatePaymentType(pt)) {msg = "회원권을 수정하지 못했습니다.";}
 		return msg;
+	}
+
+	@Override
+	public String insertSportsProgram(SportsProgramVO sp, MultipartFile[] fileList) {
+		String msg = "";
+		if(sp == null) {msg = "프로그램 정보가 없습니다.";}
+		if(fileList == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		
+		try {
+			if(!hqDao.insertSportsProgram(sp)) {msg = "프로그램을 등록하지 못했습니다.";}
+		}catch (Exception e){
+			e.printStackTrace();
+			msg = "프로그램명 중복으로 등록하지 못했습니다.";
+		}
+		if(!msg.equals("")) {return msg;}
+		for(MultipartFile file : fileList) {
+			if(file.getSize() != 0) {uploadSportsProgramFile(file, sp.getSp_name());}
+		}
+		
+		return msg;
+	}
+	private void uploadSportsProgramFile(MultipartFile file, String sp_name) {
+		if(file == null) {return;}
+		try {
+			String pf_name = UploadFileUtils.uploadFile(uploadPath, "프로그램", sp_name, file.getBytes());
+			ProgramFileVO programFile = new ProgramFileVO(pf_name, sp_name);
+			hqDao.insertProgramFile(programFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public SportsProgramVO getSportsProgram(SportsProgramVO sp) {return hqDao.selectSportsProgram(sp);}
+
+	@Override
+	public List<ProgramFileVO> getProgramFileList(SportsProgramVO sp) {return hqDao.selectProgramFileList(sp);}
+
+	@Override
+	public String updateSportsProgram(SportsProgramVO sp, MultipartFile[] fileList, String sp_ori_name, String[] numList) {
+		String msg = "";
+		if(sp == null) {msg = "프로그램 정보가 없습니다.";}
+		if(fileList == null) {msg = "사진 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.updateSportsProgram(sp, sp_ori_name)) {msg = "프로그램을 수정하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		if(numList != null) {
+			for(int i = 0; i < numList.length; i++) {
+				int pf_num = Integer.parseInt(numList[i]);
+				ProgramFileVO programFile = hqDao.selectProgramFile(pf_num);
+				if(hqDao.deleteProgramFile(programFile)) {
+					UploadFileUtils.delteFile(uploadPath, programFile.getPf_name());
+				}
+			}
+		}
+		for(MultipartFile file : fileList) {
+			if(file.getSize() != 0) {uploadSportsProgramFile(file, sp.getSp_name());}
+		}
+		
+		return msg;
+	}
+
+	@Override
+	public List<MemberVO> getMemberList() {return hqDao.selectMemberList();}
+
+	@Override
+	public MemberVO getMember(MemberVO me) {return hqDao.selectMember(me);}
+
+	@Override
+	public List<MemberInquiryVO> getMemberInquiryList(String str) {return hqDao.selectMemberInquiryList(str);}
+
+	@Override
+	public MemberInquiryVO getMemberInquiry(MemberInquiryVO mi) {return hqDao.selectMemberInquiry(mi);}
+
+	@Override
+	public String updateMemberInquiry(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "문의 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("답변완료");
+		if(!hqDao.updateMemberInquiry(mi)) {msg = "문의 답변을 등록하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		MemberVO me = hqDao.selectMemberByEmail(mi.getMi_email());
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
+		String date = dtFormat.format(mi.getMi_date());
+		boolean isSend = false;
+		if(me == null) {
+			isSend = mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내",
+								date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변:<br/><br/>" + mi.getMi_answer());
+		}else {
+			isSend = mailSend(me.getMe_email(), "KH피트니스 1:1문의 답변완료 안내",
+								date + " 문의하신 내역에 답변이 완료되었습니다.<br/><br/>답변은 KH피트니스 홈페이지에서 확인하실 수 있습니다.");
+		}
+		if(!isSend) {msg = "메일을 전송하지 못했습니다.";}
+		return msg;
+	}
+	public boolean mailSend(String to, String title, String content) {
+	    String setfrom = "stajun@naver.com";
+	    try{
+	    	MimeMessage message = mailSender.createMimeMessage();
+	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+	        messageHelper.setFrom(setfrom);// 보내는사람 생략하거나 하면 정상작동을 안함
+	        messageHelper.setTo(to);// 받는사람 이메일
+	        messageHelper.setSubject(title);// 메일제목은 생략이 가능하다
+	        messageHelper.setText(content, true);// 메일 내용
+
+	        mailSender.send(message);
+	        return true;
+	    } catch(Exception e){
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 }

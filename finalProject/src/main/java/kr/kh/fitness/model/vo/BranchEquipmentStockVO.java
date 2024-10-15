@@ -18,6 +18,8 @@ public class BranchEquipmentStockVO {
     private String be_type;       // 장비 유형
     private String be_br_name;    // 지점 이름
     private String be_se_name;    // 스포츠 장비 이름
+    private String be_birthStr;
+    private String be_recordStr;
 
 	public BranchEquipmentStockVO(int be_amount, Date be_birth, String be_type, String be_br_name, String be_se_name) {
 		this.be_amount = be_amount;

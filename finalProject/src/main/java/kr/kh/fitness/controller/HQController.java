@@ -21,8 +21,10 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.HQService;
@@ -65,7 +67,7 @@ public class HQController {
 		return "/hq/branch/detail";
 	}
 	@PostMapping("/branch/update/{br_ori_name}")
-	public String branchUpdate(Model model, @PathVariable("br_ori_name") String br_ori_name, 
+	public String branchUpdatePost(Model model, @PathVariable("br_ori_name") String br_ori_name, 
 								BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList) {
 		String msg = hqService.updateBranch(branch, fileList, admin, br_ori_name, numList);
 		if(msg.equals("")) {
@@ -86,7 +88,7 @@ public class HQController {
 	@GetMapping("/employee/insert")
 	public String employeeInsert(Model model) {
 		List<BranchVO> brList = hqService.getBranchList();
-		List<SportsProgramVO> programList = hqService.getProgramList();
+		List<SportsProgramVO> programList = hqService.getSportsProgramList();
 		model.addAttribute("brList", brList);
 		model.addAttribute("programList", programList);
 	    return "/hq/employee/insert";
@@ -106,7 +108,7 @@ public class HQController {
 	public String employeeDetail(Model model, @PathVariable("em_num") int em_num, EmployeeVO employeeVo) {
 		EmployeeVO employee = hqService.getEmployee(employeeVo);
 		List<BranchVO> brList = hqService.getBranchList();
-		List<SportsProgramVO> programList = hqService.getProgramList();
+		List<SportsProgramVO> programList = hqService.getSportsProgramList();
 		model.addAttribute("em", employee);
 		model.addAttribute("brList", brList);
 		model.addAttribute("programList", programList);
@@ -118,6 +120,17 @@ public class HQController {
 		String msg = hqService.updateEmployee(employee, file, isDel);
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", "/hq/employee/detail/" + em_num);
+		return "/main/message";
+	}
+	@GetMapping("/employee/delete/{em_num}")
+	public String employeeDelete(Model model, @PathVariable("em_num") int em_num, EmployeeVO employee) {
+		String msg = hqService.deleteEmployee(employee);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/employee/list");
+		}else {
+			model.addAttribute("url", "/hq/employee/detail/" + em_num);
+		}
+		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 	
@@ -135,15 +148,15 @@ public class HQController {
 		return "/main/message";
 	}
 	@ResponseBody
-	@GetMapping("/equipment/data")
-	public Map<String, Object> equipmentData(@RequestParam String se_name, SportsEquipmentVO seVo) {
+	@GetMapping("/equipment/update")
+	public Map<String, Object> equipmentUpdate(@RequestParam String se_name, SportsEquipmentVO seVo) {
 		SportsEquipmentVO se = hqService.getSportsEquipment(seVo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("se", se);
 		return map;
 	}
 	@PostMapping("/equipment/update")
-	public String equipmentUpdatePost1(Model model, String se_ori_name, 
+	public String equipmentUpdatePost(Model model, String se_ori_name, 
 										SportsEquipmentVO se, MultipartFile file2, String isDel) {
 		String msg = hqService.updateSportsEquipment(se, file2, se_ori_name, isDel);
 		model.addAttribute("url", "/hq/equipment/list");
@@ -158,12 +171,17 @@ public class HQController {
 	    return "/hq/stock/list";
 	}
 	@ResponseBody
-	@GetMapping("/stock/lists")
-	public Map<String, Object> stockLists() {
+	@PostMapping("/stock/list1")
+	public List<BranchEquipmentStockVO> stockListPost1(Model model) {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
+		model.addAttribute("beList", beList);
+		return beList;
+	}
+	@ResponseBody
+	@PostMapping("/stock/list2")
+	public Map<String, Object> stockListPost2() {
 		List<BranchStockDTO> stList = hqService.getBranchStockList();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("beList", beList);
 		map.put("stList", stList);
 	    return map;
 	}
@@ -178,8 +196,10 @@ public class HQController {
 	
 	@GetMapping("/order/list")
 	public String orderList(Model model) {
-		List<BranchOrderVO> boList = hqService.getBranchOrderList();
-		model.addAttribute("boList", boList);
+		List<BranchOrderVO> boWaitList = hqService.getBranchOrderList("wait");
+		List<BranchOrderVO> boDoneList = hqService.getBranchOrderList("done");
+		model.addAttribute("boWaitList", boWaitList);
+		model.addAttribute("boDoneList", boDoneList);
 	    return "/hq/order/list";
 	}
 	@GetMapping("/order/accept/{bo_num}")
@@ -204,25 +224,106 @@ public class HQController {
 	    return "/hq/paymentType/list";
 	}
 	@PostMapping("/paymentType/insert")
-	public String paymentTypeInsert(Model model, PaymentTypeVO pt) {
+	public String paymentTypeInsertPost(Model model, PaymentTypeVO pt) {
 		String msg = hqService.insertPaymentType(pt);
 		model.addAttribute("url", "/hq/paymentType/list");
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 	@ResponseBody
-	@GetMapping("/paymentType/data")
-	public Map<String, Object> paymentTypeData(@RequestParam int pt_num, PaymentTypeVO ptVo) {
+	@GetMapping("/paymentType/update")
+	public Map<String, Object> paymentTypeUpdate(@RequestParam int pt_num, PaymentTypeVO ptVo) {
 		PaymentTypeVO pt = hqService.getPaymentType(ptVo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pt", pt);
 		return map;
 	}
 	@PostMapping("/paymentType/update")
-	public String paymentTypeUpdate(Model model, PaymentTypeVO pt) {
+	public String paymentTypeUpdatePost(Model model, PaymentTypeVO pt) {
 		String msg = hqService.updatePaymentType(pt);
 		model.addAttribute("url", "/hq/paymentType/list");
 		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@GetMapping("/program/list")
+	public String programList(Model model) {
+		List<SportsProgramVO> spList = hqService.getSportsProgramList();
+		model.addAttribute("spList", spList);
+	    return "/hq/program/list";
+	}
+	@GetMapping("/program/insert")
+	public String programInsert() {
+	    return "/hq/program/insert";
+	}
+	@PostMapping("/program/insert")
+	public String programInsertPost(Model model, SportsProgramVO sp, MultipartFile[] fileList) {
+		String msg = hqService.insertSportsProgram(sp, fileList);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/program/list");
+		}else {
+			model.addAttribute("url", "/hq/program/insert");
+		}
+		model.addAttribute("msg", msg);
+	    return "/main/message";
+	}
+	@GetMapping("/program/detail/{sp_name}")
+	public String programDetail(Model model, @PathVariable("sp_name") String sp_name, SportsProgramVO spVo) {
+		SportsProgramVO sp = hqService.getSportsProgram(spVo);
+		List<ProgramFileVO> pfList = hqService.getProgramFileList(sp);
+		model.addAttribute("sp", sp);
+		model.addAttribute("pfList", pfList);
+		return "/hq/program/detail";
+	}
+	@PostMapping("/program/update/{sp_ori_name}")
+	public String branchUpdatePost(Model model, @PathVariable("sp_ori_name") String sp_ori_name, 
+								SportsProgramVO sp, MultipartFile[] fileList, String[] numList) {
+		String msg = hqService.updateSportsProgram(sp, fileList, sp_ori_name, numList);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/program/detail/" + sp.getSp_name());
+		}else {
+			model.addAttribute("url", "/hq/program/detail/" + sp_ori_name);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@GetMapping("/member/list")
+	public String memberList(Model model) {
+		List<MemberVO> meList = hqService.getMemberList();
+		model.addAttribute("meList", meList);
+	    return "/hq/member/list";
+	}
+	@ResponseBody
+	@GetMapping("/member/detail")
+	public Map<String, Object> memberDetail(@RequestParam String me_id, MemberVO meVo) {
+		MemberVO me = hqService.getMember(meVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("me", me);
+		return map;
+	}
+	
+	@GetMapping("/inquiry/list")
+	public String inquiryList(Model model) {
+		List<MemberInquiryVO> miWaitList = hqService.getMemberInquiryList("wait");
+		List<MemberInquiryVO> miDoneList = hqService.getMemberInquiryList("done");
+		model.addAttribute("miWaitList", miWaitList);
+		model.addAttribute("miDoneList", miDoneList);
+	    return "/hq/inquiry/list";
+	}
+	@ResponseBody
+	@GetMapping("/inquiry/detail")
+	public Map<String, Object> inquiryDetail(@RequestParam int mi_num, MemberInquiryVO miVo) {
+		MemberInquiryVO mi = hqService.getMemberInquiry(miVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mi", mi);
+		return map;
+	}
+	@PostMapping("/inquiry/update")
+	public String inquiryUpdatePost(Model model, MemberInquiryVO mi) {
+	    String msg = hqService.updateMemberInquiry(mi);
+	    model.addAttribute("url", "/hq/inquiry/list");
+	    model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 }
