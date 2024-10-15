@@ -153,6 +153,7 @@ CREATE TABLE `payment` (
 drop table if exists `payment_type`;
 CREATE TABLE `payment_type` (
 	`pt_num`		int 			primary key auto_increment,
+	`pt_name`		varchar(100)	not NULL,
 	`pt_type`		varchar(100)	not NULL,
 	`pt_date`		int				not NULL,
     `pt_count`		int				not NULL,
