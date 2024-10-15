@@ -407,6 +407,7 @@ public class AdminServiceImp implements AdminService{
 		
 		int hour = pif.getHours().get(0);
 		
+		// bps 객체 생성
 		BranchProgramScheduleVO bps = newBranchProgramSchedule(pif.getSelectDate(), hour, pif.getBs_bp_num(), 1);
 		
 		if(bps == null) return false;
@@ -419,18 +420,16 @@ public class AdminServiceImp implements AdminService{
 		Calendar calendar = Calendar.getInstance();
         calendar.setTime(selectDate);
 
-        // 스케줄 시간만큼 증가시키기
+        // 스케줄 시간 시간
         calendar.add(Calendar.HOUR, hour);
         Date startDate = calendar.getTime();
+        // 스케줄 마감 시간
         calendar.add(Calendar.HOUR, 1);
         Date endDate = calendar.getTime();
         
-        System.out.println("기존 날짜: " + startDate);
-        System.out.println("마감 시간: " + endDate);
-        
         //해당 프로그램이 현재 등록하려는 시간으로 이미 스케쥴이 등록되어 있는 지 확인
         if(adminDao.selectBranchSchedule(bp_num, startDate) != null) {
-        	System.out.println("이미 스케쥴이 등록된 시간");
+        	System.err.println("이미 스케쥴이 등록된 시간");
         	return null;
         }
         
@@ -452,18 +451,22 @@ public class AdminServiceImp implements AdminService{
 			return false;
 		}
 		
+		List<BranchProgramScheduleVO> bps_list = new ArrayList<BranchProgramScheduleVO>();
+		
         Calendar startCalendar = Calendar.getInstance();
         startCalendar.setTime(pif.getStartDate());
-        
-        List<BranchProgramScheduleVO> bps_list = new ArrayList<BranchProgramScheduleVO>();
+        int dayOfWeek = startCalendar.get(Calendar.DAY_OF_WEEK);
 
+        // 요일 숫자 값 (일요일: 1, 월요일: 2, ..., 토요일: 7)
         for(int week : pif.getWeeks()) {
         	
-        	// 요일 숫자 값 출력 (일요일: 1, 월요일: 2, ..., 토요일: 7)
-            int dayOfWeek = startCalendar.get(Calendar.DAY_OF_WEEK);
-            System.out.println("오늘의 요일 숫자 값: " + dayOfWeek);
-            System.out.println("입력받은 요일 값: " + week);
-            
+			/*
+			 * 시작 날짜가 수요일(4), 선택한 요일이 목요일(5)이라면
+			 * 5-4 = 1일 시작 날짜에서 1일을 더해준 값이 해당 요일의 시작 날짜
+			 * 시작 날짜가 수요일(4), 선택한 요일이 일요일(1)이라면
+			 * 1-4 = -3, 시작 날짜 3일 전은 등록이 불가하므로 +7일 해준 날짜가 시작 날짜 
+			 */
+        	
             int start = week - dayOfWeek;
             if(start < 0) start += 7;
             
@@ -473,9 +476,6 @@ public class AdminServiceImp implements AdminService{
             weekcalendar.add(Calendar.DATE, start);
             Date weekDate = weekcalendar.getTime();
 
-            System.out.println("현재 날짜: " + pif.getStartDate());
-            System.out.println(start+"일 후 날짜: " + weekDate);
-            
             // weekDate가 마감날짜보다 앞이라면 계속 일정 추가
             while(pif.getEndDate().compareTo(weekDate) >= 0) {
             	
@@ -483,14 +483,14 @@ public class AdminServiceImp implements AdminService{
             		
             		BranchProgramScheduleVO bps = newBranchProgramSchedule(weekDate, hour, pif.getBs_bp_num(), 0);
             		if(bps == null) {
-            			System.out.println("bps 생성하는 과정에서 에러 발생!");
+            			System.err.println("bps 생성하는 과정에서 에러 발생!");
             			return false;
             		}else {
             			bps_list.add(bps);
             		}
             	}
             	
-            	// 다음주 같은 요일
+            	// 다음 주 같은 요일 = 요일의 시작 날짜에서 7일을 더해준 값
             	weekcalendar.add(Calendar.DATE, 7); 
                 weekDate = weekcalendar.getTime();
             }

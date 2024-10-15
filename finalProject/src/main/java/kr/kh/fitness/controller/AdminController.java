@@ -231,7 +231,7 @@ public class AdminController {
 			model.addAttribute("msg", "스케쥴 등록을 완료했습니다.");
 		}
 		else {
-			model.addAttribute("msg", "스케쥴 등록 과정에서 에러가 발생했습니다.\\n 관리자에게 문의해주세요.");
+			model.addAttribute("msg", "스케쥴 등록 과정에서 에러가 발생했습니다. \\n 이전에 등록한 시간과 중복되지 않았는 지 확인바랍니다. \\n 이상이 없다면 관리자에게 문의해주세요.");
 		}
 		model.addAttribute("url", "/admin/schedule/list");
 		return "/main/message";
