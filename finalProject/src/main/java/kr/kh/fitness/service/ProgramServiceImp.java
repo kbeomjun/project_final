@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.ProgramDAO;
-import kr.kh.fitness.model.dto.ProgramReservationMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.model.vo.ProgramFileVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -46,9 +45,9 @@ public class ProgramServiceImp implements ProgramService {
 	}
 
 	@Override
-	public ProgramReservationMessage addProgramReservation(MemberVO user, Integer bs_num) {
+	public ResultMessage addProgramReservation(MemberVO user, Integer bs_num) {
 
-		ProgramReservationMessage rm = new ProgramReservationMessage();
+		ResultMessage rm = new ResultMessage();
 
 		if (user == null) {
 			rm.setResult(false);

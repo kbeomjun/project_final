@@ -37,4 +37,12 @@ public class BranchProgramScheduleVO {
     	bs_current = current;
     	bs_bp_num = bp_num;
 	}
+
+	@Override
+	public String toString() {
+		return "BranchProgramScheduleVO [bs_start=" + bs_start + ", bs_end=" + bs_end + ", bs_current=" + bs_current
+				+ ", bs_bp_num=" + bs_bp_num + "]\n";
+	}
+    
+    
 }

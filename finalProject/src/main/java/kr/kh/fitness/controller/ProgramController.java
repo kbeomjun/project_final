@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.model.dto.CalendarDTO;
-import kr.kh.fitness.model.dto.ProgramReservationMessage;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.MemberVO;
@@ -182,7 +182,7 @@ public class ProgramController {
 
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		ProgramReservationMessage rm = programService.addProgramReservation(user, bs_num);
+		ResultMessage rm = programService.addProgramReservation(user, bs_num);
 		
 		if(rm.isResult()) {
 			model.addAttribute("msg", "예약이 확정되었습니다.");
