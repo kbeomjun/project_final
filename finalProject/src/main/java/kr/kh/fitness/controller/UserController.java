@@ -144,10 +144,24 @@ public class UserController {
 
         return "/main/message";
     }
+    
     @ResponseBody
 	@GetMapping("/check/id")
 	public boolean checkId(@RequestParam("id")String id) {
 		boolean res = memberService.checkId(id);
+		return res;
+	}
+    
+    //비밀번호 찾기
+    @GetMapping("/find/pw")
+	public String findPw() {
+		return "/member/findPw";
+	}
+    
+	@ResponseBody
+	@PostMapping("/find/pw")
+	public boolean findPwPost(@RequestParam String id) {
+		boolean res = memberService.findPw(id);
 		return res;
 	}
 }
