@@ -9,7 +9,6 @@
 	<select id="selectBranchList" resultType="BranchVO">
 		select * from branch
 	</select>
-<!-- 	searchMonth, br_name, pr_name); -->
 	
 	<select id="selectProgramSchedule" resultType="ProgramScheduleDTO">
 		select 
