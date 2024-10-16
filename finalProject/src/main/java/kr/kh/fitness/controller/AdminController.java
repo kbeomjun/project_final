@@ -599,8 +599,8 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "답변대기");
-			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "답변완료");
+			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "wait");
+			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "done");
 			
 			model.addAttribute("miWaitList", miWaitList);
 			model.addAttribute("miDoneList", miDoneList);
