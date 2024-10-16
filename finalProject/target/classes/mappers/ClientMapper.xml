@@ -260,10 +260,9 @@
 			sports_program on bp_sp_name = sp_name
 		where
 			pr_me_id = #{me_id} and
-			pr_date >= #{pa_start} and
-			#{pa_end} >= pr_date and
-			sp_type = '단일' and
-			pa_state = '결제완료'
+			bs_start >= #{pa_start} and
+			#{pa_end} >= bs_end and
+			sp_type = '단일'
 	</select>
 	
 	<select id="selectPayment" resultType="PaymentVO">

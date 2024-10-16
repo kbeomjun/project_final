@@ -213,6 +213,9 @@ public class ClientServiceImp implements ClientService{
 	@Override
 	public MembershipDTO getCurrentPT(String me_id) {
 		MembershipDTO pt = clientDao.selectCurrentPT(me_id);
+		if(pt == null) {
+			return null;
+		}
 		int scheduled = clientDao.selectScheduledPT(me_id, pt.getPa_start(), pt.getPa_end());
 		pt.setRemain_count(pt.getTotal_count()-scheduled);
 		return pt;
