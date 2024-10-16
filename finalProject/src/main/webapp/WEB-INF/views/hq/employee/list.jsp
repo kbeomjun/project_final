@@ -39,6 +39,9 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
