@@ -123,7 +123,7 @@
 			language: {
 		        search: "검색:",
 		        zeroRecords: "",
-		        emptyTable: "등록된 내역이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
@@ -179,7 +179,7 @@
 				language: {
 			        search: "검색:",
 			        zeroRecords: "",
-			        emptyTable: "등록된 내역이 없습니다."
+			        emptyTable: ""
 			    },
 				scrollY: 600,
 			    paging: false,
@@ -208,6 +208,34 @@
 			$('.btn-'+name).addClass("active");
 			$('.box').css("display", "none");
 			$('.box-'+name).css("display", "block");
+			
+			if(name == 'record'){
+				table.destroy();
+				table = $('#table').DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: ""
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 1, "desc" ]],
+				    ajax:{
+			        	url:'<c:url value="/hq/stock/list1"/>',
+			        	type:"post",
+			        	dataSrc :""
+			        },
+			        columns:[
+			        	{data:"be_num"},
+			        	{data:"be_recordStr"},
+			        	{data:"be_se_name"},
+			        	{data:"be_birthStr"},
+			        	{data:"be_amount"},
+			        	{data:"be_type"}
+			        ]
+				});
+			}
 		});
 		
 		$(document).on('click', '.btn-insert', function(){

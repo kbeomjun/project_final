@@ -249,7 +249,7 @@
 			language: {
 		        search: "검색:",
 		        zeroRecords: "",
-		        emptyTable: "등록된 내역이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
@@ -278,7 +278,7 @@
 					language: {
 				        search: "검색:",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
@@ -296,7 +296,7 @@
 					language: {
 				        search: "검색:",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
