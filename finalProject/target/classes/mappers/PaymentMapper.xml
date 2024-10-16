@@ -52,5 +52,21 @@
 		select * from payment_type
 		where pt_type = 'PT';
 	</select>
+	
+	<select id="selectPaymentMembership" resultType="PaymentVO">
+		SELECT *
+		FROM payment pa
+		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
+		WHERE pa.pa_me_id = #{me_id}
+		and pt_type = '이용권';
+	</select>
+	
+	<select id="selectPaymentPT" resultType="PaymentVO">
+		SELECT *
+		FROM payment pa
+		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
+		WHERE pa.pa_me_id = #{me_id}
+		and pt_type = 'PT';
+	</select>
 
 </mapper>

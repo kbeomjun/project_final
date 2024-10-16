@@ -386,14 +386,20 @@ public class PaymentController {
 	    */
 	    
 	    // 기존 결제 정보를 조회
-	    PaymentVO existingPayment = paymentService.getPayment(user.getMe_id());
-
+	    PaymentVO existingMembership = paymentService.getPaymentMembership(user.getMe_id());
+	    // 기존 PT 결제 정보를 조회
+	    PaymentVO existingMembershipPT = paymentService.getPaymentPT(user.getMe_id());
+	    
 	    String firstStartDateStr = null;
 	    String lastEndDateStr = null;
 	    boolean isRePayment = false; // 재결제 여부
+	    
+	    // 첫 결제 여부 판단
+	    boolean hasMembership = (existingMembership != null); // 회원권 여부
+	    boolean hasPTPayment = existingMembershipPT != null; // PT 결제 정보가 있는지
 
 	    // 기존 결제의 최초 시작일과 최근 만료일 가져오기
-	    if (existingPayment != null) {
+	    if (existingMembership != null) {
 	        String startDateString = paymentService.getFirstPaymentStartDate(user.getMe_id());
 	        String endDateString = paymentService.getLastPaymentEndDate(user.getMe_id());
 
@@ -419,6 +425,7 @@ public class PaymentController {
 	    model.addAttribute("firstStartDate", firstStartDateStr);  // 최초 시작일 추가
 	    model.addAttribute("lastEndDate", lastEndDateStr);  // 최근 만료일 추가
 	    model.addAttribute("isRePayment", isRePayment); // 재결제 여부 추가
+	    model.addAttribute("hasMembership", hasMembership); // 회원권 여부 추가
 	    model.addAttribute("paymentPTList", paymentPTList);
 	    
 	    // 시작일을 최초 시작일 +1일로 설정
@@ -427,6 +434,14 @@ public class PaymentController {
 	        LocalDate newStartDate = lastEndDate.plusDays(1); // 만료일에 +1일 추가
 	        System.out.println("새시작일 : " + newStartDate);
 	        model.addAttribute("newStartDate", newStartDate); // 새로운 시작일을 model에 추가
+	    }
+
+	    if (hasMembership && hasPTPayment) {
+	        model.addAttribute("isFirstPayment", false); // 재결제
+	    } else if (hasMembership && !hasPTPayment) {
+	        model.addAttribute("isFirstPayment", true); // 첫 결제
+	    } else {
+	        model.addAttribute("isFirstPayment", false); // 회원권 없음
 	    }
 	    
 	    return "/payment/paymentInsertPT";
@@ -493,7 +508,7 @@ public class PaymentController {
 	            if (!historyInserted) {
 	                response.put("success", false);
 	                response.put("message", "결제 기록 추가에 실패했습니다.");
-	                return response; // 결제 기록 추ㅏㄱ 실패 시 응답
+	                return response; // 결제 기록 추가 실패 시 응답
 	            }
 	            
 	            // 결제 상태 처리

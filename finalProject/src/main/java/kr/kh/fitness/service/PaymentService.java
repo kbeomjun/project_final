@@ -24,5 +24,9 @@ public interface PaymentService {
 	String getLastPaymentEndDate(String me_id);
 
 	List<PaymentTypeVO> getPTMembershipList();
+	
+	PaymentVO getPaymentMembership(String me_id);
+
+	PaymentVO getPaymentPT(String me_id);
 
 }

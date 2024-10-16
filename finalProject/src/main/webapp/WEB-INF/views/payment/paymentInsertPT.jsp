@@ -23,6 +23,14 @@
         </div>
     </c:if>
     
+    <!-- PT 결제 여부 표시 -->
+	<c:if test="${isFirstPayment}">
+	    <div class="alert alert-info">PT 결제는 첫 결제입니다.</div>
+	</c:if>
+	<c:if test="${!isFirstPayment}">
+	    <div class="alert alert-warning">PT 결제는 재결제입니다.</div>
+	</c:if>
+    
     <form id="paymentForm" action="<c:url value='/payment/paymentInsertPT'/>" method="post">
     	<input type="hidden" name="pt_type" id="pt_type" value="${pt_type}" />
         <div>

@@ -94,4 +94,20 @@ public class PaymentServiceImp implements PaymentService{
 		return paymentDao.selectPTMembershipList();
 	}
 
+	@Override
+	public PaymentVO getPaymentMembership(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return paymentDao.selectPaymentMembership(me_id);
+	}
+
+	@Override
+	public PaymentVO getPaymentPT(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return paymentDao.selectPaymentPT(me_id);
+	}
+
 }

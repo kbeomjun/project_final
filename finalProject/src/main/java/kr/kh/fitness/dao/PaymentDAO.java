@@ -27,4 +27,8 @@ public interface PaymentDAO {
 
 	List<PaymentTypeVO> selectPTMembershipList();
 
+	PaymentVO selectPaymentMembership(@Param("me_id")String me_id);
+	
+	PaymentVO selectPaymentPT(@Param("me_id")String me_id);
+
 }
