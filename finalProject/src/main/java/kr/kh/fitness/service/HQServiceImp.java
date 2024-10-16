@@ -27,7 +27,9 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
@@ -403,9 +405,9 @@ public class HQServiceImp implements HQService {
 	@Override
 	public List<PaymentTypeVO> getPaymentTypeList() {
 		List<PaymentTypeVO> ptList = hqDao.selectPaymentTypeList();
+		DecimalFormat dfFormat = new DecimalFormat("###,###");
 		for(int i = 0; i < ptList.size(); i++) {
-			DecimalFormat df = new DecimalFormat("###,###");
-			String formattedPrice = df.format(ptList.get(i).getPt_price());
+			String formattedPrice = dfFormat.format(ptList.get(i).getPt_price());
 			ptList.get(i).setFormattedPrice(formattedPrice);
 		}
 		return ptList;
@@ -578,6 +580,44 @@ public class HQServiceImp implements HQService {
 		mi.setMi_email("hq_admin@naver.com");
 		mi.setMi_br_name("본점");
 		if(!hqDao.updateMemberInquiry(mi)) {msg = "FAQ를 수정하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public List<PaymentVO> getPaymentList(String email) {
+		List<PaymentVO> paList = hqDao.selectPaymentList(email);
+		
+		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
+		DecimalFormat dfFormat = new DecimalFormat("###,###");
+		for(int i = 0; i < paList.size(); i++) {
+			String pa_dateStr = dtFormat1.format(paList.get(i).getPa_date());
+		    String pa_startStr = dtFormat2.format(paList.get(i).getPa_start());
+		    String pa_endStr = dtFormat2.format(paList.get(i).getPa_end());
+		    String pa_formattedPrice = dfFormat.format(paList.get(i).getPa_price());
+		    
+		    paList.get(i).setPa_dateStr(pa_dateStr);
+		    paList.get(i).setPa_startStr(pa_startStr);
+		    paList.get(i).setPa_endStr(pa_endStr);
+		    paList.get(i).setPa_formattedPrice(pa_formattedPrice);
+		}
+		return paList;
+	}
+
+	@Override
+	public String insertRefund(RefundVO re) {
+		String msg = "";
+		if(re == null) {msg = "환불 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		PaymentVO pa = hqDao.selectPayment(re.getRe_pa_num());
+		pa.setPa_state("환불완료");
+		if(!hqDao.updatePayment(pa)) {msg = "결제 정보를 수정하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		double re_percentDouble = (re.getRe_price() / pa.getPa_price() * 100);
+		re.setRe_percent((int)Math.round(re_percentDouble));
+		if(!hqDao.insertRefund(re)) {msg = "환불을 등록하지 못했습니다.";}
 		return msg;
 	}
 }

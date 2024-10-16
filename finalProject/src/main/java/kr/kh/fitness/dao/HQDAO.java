@@ -14,7 +14,9 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -117,4 +119,12 @@ public interface HQDAO {
 	List<InquiryTypeVO> selectInquiryTypeList();
 
 	boolean insertMemberInquiry(@Param("mi") MemberInquiryVO mi);
+
+	List<PaymentVO> selectPaymentList(@Param("email") String email);
+
+	PaymentVO selectPayment(@Param("pa_num") int pa_num);
+
+	boolean updatePayment(@Param("pa") PaymentVO pa);
+
+	boolean insertRefund(@Param("re") RefundVO re);
 }

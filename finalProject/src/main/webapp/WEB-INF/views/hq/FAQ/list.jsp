@@ -50,6 +50,9 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link active" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
@@ -58,7 +61,7 @@
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
 			    </div>
 			    <hr>
-		    	<div class="mt-3 box">
+		    	<div class="mt-3">
 		    		<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>

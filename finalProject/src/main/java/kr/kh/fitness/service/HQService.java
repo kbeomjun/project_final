@@ -14,7 +14,9 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -94,4 +96,8 @@ public interface HQService {
 	String insertFAQ(MemberInquiryVO mi);
 
 	String updateFAQ(MemberInquiryVO mi);
+
+	List<PaymentVO> getPaymentList(String email);
+
+	String insertRefund(RefundVO re);
 }

@@ -46,6 +46,9 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
@@ -69,7 +72,7 @@
 					        		<td class="align-content-center">${sp.sp_name}</td>
 					        		<td class="align-content-center">${sp.sp_type}</td>
 					        		<td class="align-content-center">
-					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">상세</a>
+					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">조회</a>
 					        		</td>
 					      		</tr>
 				    		</c:forEach>

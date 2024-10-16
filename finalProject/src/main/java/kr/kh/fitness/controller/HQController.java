@@ -25,7 +25,9 @@ import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.HQService;
@@ -357,5 +359,27 @@ public class HQController {
 		model.addAttribute("url", "/hq/FAQ/list");
 		model.addAttribute("msg", msg);
 		return "/main/message";
+	}
+	
+	@GetMapping("/refund/list")
+	public String refundList() {
+	    return "/hq/refund/list";
+	}
+	@ResponseBody
+	@PostMapping("/refund/list")
+	public Map<String, Object> refundListPost(@RequestParam String email) {
+	    List<PaymentVO> paList = hqService.getPaymentList(email);
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("paList", paList);
+		return map;
+	}
+	@ResponseBody
+	@GetMapping("/refund/insert")
+	public Map<String, Object> refundInsert(@RequestParam int re_price, @RequestParam String re_reason, 
+											@RequestParam int re_pa_num, RefundVO re) {
+		String msg = hqService.insertRefund(re);
+		Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("msg", msg);
+		return map;
 	}
 }

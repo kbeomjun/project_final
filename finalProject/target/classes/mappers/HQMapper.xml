@@ -290,4 +290,27 @@
 		values(#{mi.mi_title}, #{mi.mi_content}, #{mi.mi_state}, #{mi.mi_email}, 
 				current_timestamp(), #{mi.mi_br_name}, #{mi.mi_it_name});
 	</insert>
+	
+	<select id="selectPaymentList" resultType="PaymentVO">
+		select payment.*, pt_name as pa_pt_name, me_email as pa_me_email from payment 
+			join member on me_id = pa_me_id
+		    join payment_type on pt_num = pa_pt_num
+		where me_email like concat("%", #{email}, "%") and pa_end > current_timestamp() and pa_state in("결제완료")
+		order by pa_start;
+	</select>
+	
+	<select id="selectPayment" resultType="PaymentVO">
+		select * from payment where pa_num = #{pa_num};
+	</select>
+	
+	<update id="updatePayment">
+		update payment set
+			pa_state = #{pa.pa_state}
+		where pa_num = #{pa.pa_num};
+	</update>
+	
+	<insert id="insertRefund">
+		insert into refund(re_date, re_percent, re_price, re_reason, re_pa_num)
+		values(current_timestamp(), #{re.re_percent}, #{re.re_price}, #{re.re_reason}, #{re.re_pa_num});
+	</insert>
 </mapper>
