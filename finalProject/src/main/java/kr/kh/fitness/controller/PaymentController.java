@@ -71,6 +71,7 @@ public class PaymentController {
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
 	    // 로그인하지 않은 상태라면, 사용자가 로그인되어 있지 않으면 이전 URL을 세션에 저장하고 로그인 페이지로 리다이렉트
+	    /*
 	    if (user == null) {
 	        try {
 	            // 현재 요청 URL을 세션에 저장 (로그인 후 돌아올 수 있게)
@@ -88,6 +89,7 @@ public class PaymentController {
 	        }
 	        return null;
 	    }
+	    */
 	    
 	    // 기존 결제 정보를 조회
 	    PaymentVO existingPayment = paymentService.getPayment(user.getMe_id());
