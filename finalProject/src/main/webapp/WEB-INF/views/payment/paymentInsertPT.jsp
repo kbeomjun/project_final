@@ -8,10 +8,10 @@
 
 <html>
 <head>
-    <title>회원권 결제</title>
+    <title>PT 결제</title>
 </head>
 <body>
-    <h2 class="mb10">회원권 결제</h2>
+    <h2 class="mb10">PT 결제</h2>
     
     <!-- 기존 회원권 정보 표시 -->
     <c:set var="isRePayment" value="${not empty firstStartDate}" />
@@ -23,13 +23,13 @@
         </div>
     </c:if>
     
-    <form id="paymentForm" action="<c:url value='/payment/paymentInsert'/>" method="post">
+    <form id="paymentForm" action="<c:url value='/payment/paymentInsertPT'/>" method="post">
     	<input type="hidden" name="pt_type" id="pt_type" value="${pt_type}" />
         <div>
             <div class="mb10">
                 <label for="pt_num">이용권 종류를 선택하세요</label>
                 <select name="pt_num" id="pt_num" class="form-control">
-                	<c:forEach items="${paymentList}" var="pt">
+                	<c:forEach items="${paymentPTList}" var="pt">
 					    <option value="${pt.pt_num}" data-name="${pt.pt_name}" data-type="${pt.pt_type}" data-date="${pt.pt_date}" data-count="${pt.pt_count}" data-price="${pt.pt_price}" <c:if test="${pt.pt_num == 1}">selected</c:if>>${pt.pt_name}</option>
 					</c:forEach>
 				</select>
@@ -52,17 +52,11 @@
                         <option value="300000">300,000원</option>
                     </select>
                     
-                    <c:if test="${isRePayment}">
-	                    <!-- 재결제인 경우 시작일 필드 숨김 -->
-	                    <p>회원님의 이용권 재시작일: <strong class="text-success">${newStartDate}</strong></p>
-	                    <input type="hidden" name="pa_start" value="${newStartDate}" />
-	                </c:if>
-	
-	                <c:if test="${!isRePayment}">
-	                    <!-- 첫 결제인 경우 시작일 입력 필드 표시 -->
-	                    <label for="pa_start">회원권 시작 날짜:</label>
-	                    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
-	                </c:if>
+                    <!-- 날짜 선택 -->
+				    <label for="pa_start">PT 시작 날짜:</label>
+				    <%-- value는 하단의 script로 값을 가져오고 있음. --%>
+				    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
+				    <p>시작일 : ${firstStartDate} / 만료일 : ${lastEndDate} / 오늘 날짜 : ${currentDate}</p>
                 </div>
             </div>
         </div>
@@ -220,7 +214,7 @@
 		        const name = selectedOption.data('name'); // 이름
 		        const type = selectedOption.data('type'); // 종류
 		        const date = selectedOption.data('date'); // 날짜
-		        const start = isRePayment ? '${newStartDate}' : $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
+		        const start = $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
 		        const count = selectedOption.data('count'); // 횟수
 		        const price = selectedOption.data('price'); // 가격
 		        const formattedPrice = Number(price).toLocaleString(); // 가격 포맷팅
@@ -253,25 +247,17 @@
 		        // 결제하기 버튼 클릭 시 결제 요청
 		        $('#confirmPayment').off('click').on('click', function() {
 		            // 시작 날짜가 비어있으면 경고 메시지 표시 및 제출 방지
-				    let pa_start;
-				    if (isRePayment) {
-				        // 재결제인 경우 hidden input에서 값 가져오기
-				        pa_start = $('input[name="pa_start"]').val();
-				    } else {
-				        // 첫 결제인 경우 사용자가 선택한 날짜 가져오기
-				        pa_start = $('#pa_start').val();
-				    }
-				
-				    if (!pa_start) {
-				        console.log("시작 날짜 선택 안함"); // 선택하지 않은 경우 메시지 출력
-				        alert("시작 날짜를 선택해주세요."); // 경고 메시지
-				        event.preventDefault(); // 폼 제출 방지
-				        return;
-				    }
-				    console.log(pa_start);
+				    const pa_start = $('#pa_start').val(); // 시작 날짜 값 가져오기
+		            if (!pa_start) {
+		                console.log("시작 날짜 선택 안함"); // 선택하지 않은 경우 메시지 출력
+		                alert("시작 날짜를 선택해주세요."); // 경고 메시지
+		                event.preventDefault(); // 폼 제출 방지
+		                return;
+		            }
+		            console.log(pa_start);
 		            
 		            // 현재 사용자의 시작 날짜 (예시: 2024-10-15)
-		            const currentStartDate = new Date('2024-10-15T00:00:00'); // DB에서 가져와야 함
+		            const currentStartDate = new Date('${currentDate}'); // DB에서 가져와야 함
 		            const selectedStartDate = new Date(pa_start); // 사용자가 선택한 날짜
 		
 		            // 사용자가 선택한 시작 날짜가 현재 시작 날짜보다 이전인지 확인
@@ -335,7 +321,7 @@
 		
 		                    // AJAX 요청으로 결제 정보 전송
 		                    jQuery.ajax({
-		                        url: contextPath + "/payment/paymentInsert", // Ajax 요청 URL
+		                        url: contextPath + "/payment/paymentInsertPT", // Ajax 요청 URL
 		                        type: 'POST',
 		                        contentType: 'application/json',
 		                        dataType: 'json',

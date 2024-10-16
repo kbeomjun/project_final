@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.PaymentDAO;
 import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.model.vo.PaymentCategoryVO;
+import kr.kh.fitness.model.vo.PaymentHistoryVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.PaymentVO;
 
@@ -24,7 +24,7 @@ public class PaymentServiceImp implements PaymentService{
 
 	// 결제 추가
 	@Override
-	public boolean insertPayment(PaymentVO payment, PaymentTypeVO paymentType, PaymentCategoryVO category, String formattedDateTime, MemberVO user) {
+	public boolean insertPayment(PaymentVO payment, PaymentTypeVO paymentType, PaymentHistoryVO history, String formattedDateTime, MemberVO user) {
 		if(payment.getPa_start() == null) {
 			return false;
 		}
@@ -35,11 +35,11 @@ public class PaymentServiceImp implements PaymentService{
 			return false;
 		}
 		
-		if(category.getPc_imp_uid() == null
-			|| category.getPc_merchant_uid() == null
-			|| category.getPc_amount() == 0
-			|| category.getPc_status() == null
-			|| category.getPc_me_id() == null) {
+		if(history.getPh_imp_uid() == null
+			|| history.getPh_merchant_uid() == null
+			|| history.getPh_amount() == 0
+			|| history.getPh_status() == null
+			|| history.getPh_me_id() == null) {
 			return false;
 		}
 		
@@ -48,16 +48,15 @@ public class PaymentServiceImp implements PaymentService{
 		}
 		
 	    // 1. PaymentCategoryVO 삽입
-	    boolean categoryInserted = insertPaymentCategory(paymentType, category, user);
+	    boolean categoryInserted = insertPaymentHistory(paymentType, history, user);
 	    
 	    if (!categoryInserted) {
 	        return false; // 카테고리 삽입 실패
 	    }
 		
-		return paymentDao.insertPayment(payment, paymentType, category, formattedDateTime, user);
+		return paymentDao.insertPayment(payment, paymentType, history, formattedDateTime, user);
 	}
 	
-
 	// user id와 pt_num을 주고 기존 결제 정보를 조회
 	@Override
 	public PaymentVO getLastPaymentByUserId(String userId, int pt_num) {
@@ -65,12 +64,6 @@ public class PaymentServiceImp implements PaymentService{
 			return null;
 		}
 		return paymentDao.getLastPaymentByUserId(userId, pt_num);
-	}
-	
-	// 결제 업데이트
-	@Override
-	public boolean updatePayment(PaymentVO existingPayment) {
-		return paymentDao.updatePayment(existingPayment);
 	}
 
 	@Override
@@ -82,8 +75,23 @@ public class PaymentServiceImp implements PaymentService{
 	}
 
 	@Override
-	public boolean insertPaymentCategory(PaymentTypeVO paymentType, PaymentCategoryVO category, MemberVO user) {
-	    return paymentDao.insertPaymentCategory(paymentType, category, user);
+	public boolean insertPaymentHistory(PaymentTypeVO paymentType, PaymentHistoryVO history, MemberVO user) {
+	    return paymentDao.insertPaymentHistory(paymentType, history, user);
+	}
+
+	@Override
+	public String getFirstPaymentStartDate(String me_id) {
+		return paymentDao.selectFirstPaymentStartDate(me_id);
+	}
+
+	@Override
+	public String getLastPaymentEndDate(String me_id) {
+		return paymentDao.selectLastPaymentEndDate(me_id);
+	}
+
+	@Override
+	public List<PaymentTypeVO> getPTMembershipList() {
+		return paymentDao.selectPTMembershipList();
 	}
 
 }

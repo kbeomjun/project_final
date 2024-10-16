@@ -22,6 +22,6 @@ public class PaymentVO {
     private String pa_state;     // 결제 상태 ('결제완료' or ...) 
     private String pa_me_id;     // 회원 ID
     private int pa_pt_num;       // 결제 유형 번호
-	    
-    private String pt_type;
+    
+    private String pt_name;
 }

@@ -367,8 +367,8 @@ values
 
 
 # 결제 유형(결제 고유 ID, 결제 가맹점 ID, 결제 포맷 금액, 결제 총 금액, 결제 상태, 결제 완료 시간, 결제 카드 이름, 결제 카드 번호, 결제 카드 할부 개월 수, 결제 종류 번호, 결제 아이디)
-delete from fitness.payment_category;
-insert into fitness.payment_category (pc_imp_uid, pc_merchant_uid, pc_amount, pc_status, pc_paid_at, pc_card_name, pc_card_number, pc_card_quota, pc_pt_num, pc_me_id)
+delete from fitness.payment_historypayment_history;
+INSERT INTO fitness.payment_history (ph_imp_uid, ph_merchant_uid, ph_amount, ph_status, ph_paid_at, ph_card_name, ph_card_number, ph_card_quota, ph_pt_num, ph_me_id)
 values("imp_490884848424", "merchant_1728536884548", 300000, "paid", 1728536902, "KB국민카드", "111111", 0, 1, "user2")
 	,("imp_490884848424", "merchant_1728536884548", 300000, "paid", 1728536902, null, "0", 0, 1, "user2");
 
