@@ -149,14 +149,15 @@
 							</c:forEach>
 						</c:if>
 					</div></div>
-					
 
 			</c:when>
 			<c:otherwise>
 				<h3>전지점보기</h3>
 				<hr>
 				<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;"></div>
+				<button id="original-location-btn">원래 위치</button>
 			</c:otherwise>
+			
 		</c:choose>
 		<button id="scrollToTopBtn" style="display: none;">맨 위로</button>
 	</div>
@@ -618,10 +619,17 @@ function MarkerTracker(map, target) {
 		for (var i = 0; i < branchList.length; i++) {
 		    setMarkerByAddress(branchList[i]);
 		}
+		
+		// 원래 위치 버튼 클릭 이벤트
+	    document.getElementById('original-location-btn').addEventListener('click', function() {
+	        map.setCenter(originalPosition); // 원래 위치로 지도 중심 설정
+	        map.setLevel(3); // 필요한 경우 줌 레벨도 설정
+	    });
 	
 	}).catch(error => {
 	    console.error('오류:', error);
 	});
+	
 /* 	// 지도의 중심을 '본점' 위치로 설정
     map.setCenter(mapOption.center); */
 	</script>
@@ -657,7 +665,7 @@ function MarkerTracker(map, target) {
 				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
 				var imageSrc = '<c:url value="/resources/image/icon/sample_fitness_icon.svg"/>', // 마커이미지의 주소입니다    
-				imageSize = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+				imageSize = new kakao.maps.Size(48, 48), // 마커이미지의 크기입니다
 				imageOption = {
 					offset : new kakao.maps.Point(22, 60)
 				}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.

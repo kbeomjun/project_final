@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-
 <!-- Bootstrap CSS 추가 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -49,31 +48,6 @@
 					<div class="card-footer text-center">
 						<a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
 					</div>
-					
-
-
-
-<!-- kakao button -->
-<div class="col-lg-12 text-center mt-3">
-    <a href=#>
-    	<img alt="카카오로그인" src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>" onclick="loginWithKakao()">
-    </a>
-</div>
-
-<!-- 카카오 로그인 -->
-<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        Kakao.init('${kakaoApiKey}');
-        Kakao.isInitialized();
-    });
-
-    function loginWithKakao() {
-        Kakao.Auth.authorize({ 
-        redirectUri: '${redirectUri}' 
-        }); // 등록한 리다이렉트uri 입력
-    }
-</script>
 				</div>
 			</div>
 		</div>

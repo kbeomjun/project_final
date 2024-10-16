@@ -503,6 +503,8 @@ public class AdminServiceImp implements AdminService{
 		}
 		
 		boolean res = adminDao.insertBranchProgramSchedule(bps);
+		System.out.println(pif.getMe_id()+bps.getBs_start()+bps.getBs_num());
+		
 		if(res && bps.getBs_num() != 0) {
 			adminDao.insertProgramReservation(pif.getMe_id(),bps.getBs_start(),bps.getBs_num());
 			return new ResultMessage(true,"스케쥴이 정상적으로 등록되었습니다.");

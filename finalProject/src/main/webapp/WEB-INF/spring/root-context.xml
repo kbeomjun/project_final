@@ -42,6 +42,22 @@
     <bean id="uploadPath" class="java.lang.String">
         <constructor-arg value="${file.upload-dir}" />
     </bean>
+    
+    <!-- kakao login을 위한 api key -->
+    <bean id="kakaoApiKey" class="java.lang.String">
+        <constructor-arg value="${kakao.api_key}" />
+    </bean>
+    
+    <!-- kakao login을 위한 api key -->
+    <bean id="kakaoRestKey" class="java.lang.String">
+        <constructor-arg value="${kakao.rest_key}" />
+    </bean>
+    
+    <!-- kakao dev에 등록한 uri -->
+    <bean id="kakaoRedirectUri" class="java.lang.String">
+        <constructor-arg value="${kakao.redirect_uri}" />
+    </bean>
+    
     <!-- gmail -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />
