@@ -10,6 +10,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
@@ -112,4 +113,8 @@ public interface HQDAO {
 	boolean updateMemberInquiry(@Param("mi") MemberInquiryVO mi);
 
 	MemberVO selectMemberByEmail(@Param("me_email") String me_email);
+
+	List<InquiryTypeVO> selectInquiryTypeList();
+
+	boolean insertMemberInquiry(@Param("mi") MemberInquiryVO mi);
 }

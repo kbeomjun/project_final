@@ -339,7 +339,7 @@
 					$('#mi_date').val(mi_date);
 					$('#mi_it_name').val(mi.mi_it_name);
 					$('#mi_content').val(mi.mi_content);
-					$('#mi_num').val(mi_num);
+					$('#mi_num').val(mi.mi_num);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);

@@ -21,6 +21,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
@@ -324,6 +325,37 @@ public class HQController {
 	    String msg = hqService.updateMemberInquiry(mi);
 	    model.addAttribute("url", "/hq/inquiry/list");
 	    model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@GetMapping("/FAQ/list")
+	public String FAQList(Model model) {
+		List<MemberInquiryVO> FAQList = hqService.getMemberInquiryList("FAQ");
+		List<InquiryTypeVO> itList = hqService.getInquiryTypeList();
+		model.addAttribute("FAQList", FAQList);
+		model.addAttribute("itList", itList);
+	    return "/hq/FAQ/list";
+	}
+	@PostMapping("/FAQ/insert")
+	public String FAQinsertPost(Model model, MemberInquiryVO mi) {
+		String msg = hqService.insertFAQ(mi);
+		model.addAttribute("url", "/hq/FAQ/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	@ResponseBody
+	@GetMapping("/FAQ/detail")
+	public Map<String, Object> FAQDetail(@RequestParam int mi_num, MemberInquiryVO miVo) {
+		MemberInquiryVO mi = hqService.getMemberInquiry(miVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("mi", mi);
+		return map;
+	}
+	@PostMapping("/FAQ/update")
+	public String FAQupdatePost(Model model, MemberInquiryVO mi) {
+		String msg = hqService.updateFAQ(mi);
+		model.addAttribute("url", "/hq/FAQ/list");
+		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 }

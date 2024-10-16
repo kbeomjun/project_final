@@ -23,6 +23,7 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
@@ -549,5 +550,34 @@ public class HQServiceImp implements HQService {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	
+	@Override
+	public List<InquiryTypeVO> getInquiryTypeList() {return hqDao.selectInquiryTypeList();}
+
+	@Override
+	public String insertFAQ(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "FAQ 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("FAQ");
+		mi.setMi_email("hq_admin@naver.com");
+		mi.setMi_br_name("본점");
+		if(!hqDao.insertMemberInquiry(mi)) {msg = "FAQ를 등록하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public String updateFAQ(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "FAQ 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("FAQ");
+		mi.setMi_email("hq_admin@naver.com");
+		mi.setMi_br_name("본점");
+		if(!hqDao.updateMemberInquiry(mi)) {msg = "FAQ를 수정하지 못했습니다.";}
+		return msg;
 	}
 }
