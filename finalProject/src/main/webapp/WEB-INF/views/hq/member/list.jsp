@@ -65,8 +65,8 @@
 				        		<th>생년월일</th>
 				        		<th>성별</th>
 				        		<th>전화번호</th>
+				        		<th>계정</th>
 				        		<th>이메일</th>
-				        		<th>아이디</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
@@ -79,8 +79,8 @@
 				        			</td>
 					        		<td class="align-content-center">${me.me_gender}</td>
 					        		<td class="align-content-center">${me.me_phone}</td>
-					        		<td class="align-content-center">${me.me_email}</td>
 					        		<td class="align-content-center">${me.me_id}</td>
+					        		<td class="align-content-center">${me.me_email}</td>
 					        		<td class="align-content-center">
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 					        		</td>

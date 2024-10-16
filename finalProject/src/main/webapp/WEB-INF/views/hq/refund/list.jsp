@@ -66,13 +66,13 @@
 		    		<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>
+				        		<th>회원계정</th>
+				        		<th>이메일</th>
+				        		<th>결제날짜</th>
+				        		<th>금액(원)</th>
 				        		<th>회원권유형</th>
-				        		<th>날짜</th>
-				        		<th>금액</th>
 				        		<th>시작일</th>
 				        		<th>마감일</th>
-				        		<th>이메일</th>
-				        		<th>아이디</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
@@ -141,13 +141,13 @@
 					for(pa of paList){
 						str += `
 							<tr>
-				        		<td class="align-content-center">\${pa.pa_pt_name}</td>
+				        		<td class="align-content-center">\${pa.pa_me_id}</td>
+				        		<td class="align-content-center">\${pa.pa_me_email}</td>
 				        		<td class="align-content-center">\${pa.pa_dateStr}</td>
 				        		<td class="align-content-center">\${pa.pa_formattedPrice}</td>
+				        		<td class="align-content-center">\${pa.pa_pt_name}</td>
 				        		<td class="align-content-center">\${pa.pa_startStr}</td>
 				        		<td class="align-content-center">\${pa.pa_endStr}</td>
-				        		<td class="align-content-center">\${pa.pa_me_email}</td>
-				        		<td class="align-content-center">\${pa.pa_me_id}</td>
 				        		<td class="align-content-center">
 				        			<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal" data-num="\${pa.pa_num}" data-price="\${pa.pa_price}">환불</button>
 				        		</td>

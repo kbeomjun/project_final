@@ -60,10 +60,10 @@
 			    	<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>
-				        		<th>지점명</th>
+				        		<th>지점</th>
 				        		<th>지점번호</th>
 				        		<th>지점주소</th>
-				        		<th>관리자아이디</th>
+				        		<th>관리자계정</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>

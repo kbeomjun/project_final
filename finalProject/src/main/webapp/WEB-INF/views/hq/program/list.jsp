@@ -61,7 +61,7 @@
 		    		<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>
-				        		<th>프로그램명</th>
+				        		<th>프로그램</th>
 				        		<th>유형</th>
 				        		<th></th>
 				      		</tr>

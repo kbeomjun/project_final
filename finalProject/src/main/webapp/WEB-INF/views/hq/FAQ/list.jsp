@@ -67,7 +67,7 @@
 				      		<tr>
 				        		<th>FAQ번호</th>
 				        		<th>제목</th>
-				        		<th>날짜</th>
+				        		<th>작성날짜</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
