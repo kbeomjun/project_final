@@ -6,6 +6,10 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
+	</style>
 </head>
 <body>
 	<div class="container" style="margin-top:30px">
@@ -95,7 +99,8 @@
 		// 테이블 api
 		$('#table').DataTable({
 			language: {
-		        search: "검색:",
+				search: "",
+		        searchPlaceholder: "검색",
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },

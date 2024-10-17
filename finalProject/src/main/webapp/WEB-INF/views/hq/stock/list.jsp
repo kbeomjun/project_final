@@ -16,6 +16,8 @@
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#thead th{text-align: center;}
     	#tbody td{text-align: left;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 	</style>
 </head>
 <body>
@@ -127,7 +129,8 @@
 	<script type="text/javascript">
 		var table = $('#table').DataTable({
 			language: {
-		        search: "검색:",
+				search: "",
+		        searchPlaceholder: "검색",
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
@@ -183,7 +186,8 @@
 			table.destroy();
 			table = $('#table').DataTable({
 				language: {
-			        search: "검색:",
+					search: "",
+			        searchPlaceholder: "검색",
 			        zeroRecords: "",
 			        emptyTable: ""
 			    },
@@ -219,7 +223,8 @@
 				table.destroy();
 				table = $('#table').DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+				        searchPlaceholder: "검색",
 				        zeroRecords: "",
 				        emptyTable: ""
 				    },
