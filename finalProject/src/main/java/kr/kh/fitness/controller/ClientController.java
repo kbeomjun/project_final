@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,10 +41,17 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
+    @ModelAttribute
+    public void addUserToModel(HttpSession session, Model model) {
+        MemberVO user = (MemberVO) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+    }
+	
 	//리뷰 게시판 목록
 	@GetMapping("/review/list")
-	public String reviewList(Model model, HttpSession session, Criteria cri) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
+	public String reviewList(Model model, Criteria cri) {
 		
 		cri.setPerPageNum(5);
 	
@@ -51,23 +59,19 @@ public class ClientController {
 		PageMaker pm = clientService.getPageMakerInReview(cri);
 		
 		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("user", user);
 		model.addAttribute("pm", pm);
 		return "/client/review/list";
 	}
 	
 	//리뷰 게시글 상세
 	@GetMapping("/review/detail/{rp_num}")
-	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, Criteria cri) {
-		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, Criteria cri) {
 		
 		clientService.updateReviewPostView(rp_num);
 		
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
 		
 		model.addAttribute("review", review);
-		model.addAttribute("user", user);
 		model.addAttribute("cri", cri);
 		return "/client/review/detail";
 	}
@@ -86,7 +90,6 @@ public class ClientController {
 		if(msg == "") {
 			model.addAttribute("paymentList", paymentList);
 			model.addAttribute("branchList", branchList);
-			model.addAttribute("user", user);
 			return "/client/review/insert";
 		} else {
 			model.addAttribute("url", "/client/review/list");
@@ -127,7 +130,6 @@ public class ClientController {
 		
 		model.addAttribute("review", review);
 		model.addAttribute("branchList", branchList);
-		model.addAttribute("user", user);
 		return "/client/review/update";
 	}
 	
@@ -171,11 +173,9 @@ public class ClientController {
 	//1:1문의 등록 get
 	@GetMapping("/inquiry/insert")
 	public String inquiryInsert(Model model, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<InquiryTypeVO> inquiryTypeList = clientService.getInquiryTypeList();
 		List<BranchVO> branchList = clientService.getBranchList();
 		
-		model.addAttribute("user", user);
 		model.addAttribute("inquiryTypeList", inquiryTypeList);
 		model.addAttribute("branchList", branchList);
 		
