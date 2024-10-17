@@ -104,19 +104,15 @@
 				          		<div class="form-group">
 									<label for="be_se_name">기구명:</label>
 									<select name="be_se_name" class="custom-select mb-3 form-control">
-										<c:forEach items="${seList}" var="se">
-											<option value="${se.se_name}">${se.se_name}</option>
-										</c:forEach>
+										
 								    </select>
 								</div>
+								<div class="error error-name"></div>
 								<div class="form-group">
 									<label for="be_amount">수량:</label>
-									<select name="be_amount" class="custom-select mb-3 form-control">
-										<c:forEach begin="1" end="30" var="i">
-											<option value="${i}">${i}</option>
-										</c:forEach>
-								    </select>
+									<input type="text" class="form-control" id="be_amount" name="be_amount">
 								</div>
+								<div class="error error-amount"></div>
 								<button class="btn btn-outline-info col-12 btn-insert">재고 추가</button>
 				        	</div>
 				        	<div class="modal-footer">
@@ -130,45 +126,86 @@
 	</div>
 	
 	<script type="text/javascript">
-		var table = $('#table').DataTable({
-			language: {
-				search: "",
-		        searchPlaceholder: "검색",
-		        zeroRecords: "",
-		        emptyTable: ""
-		    },
-			scrollY: 600,
-		    paging: false,
-		    info: false,
-		    order: [[ 1, "desc" ]],
-		    ajax:{
-	        	url:'<c:url value="/hq/stock/list1"/>',
-	        	type:"post",
-	        	dataSrc :"data"
-	        },
-	        columns:[
-	        	{data:"be_num"},
-	        	{data:"be_recordStr"},
-	        	{data:"be_se_name"},
-	        	{data:"be_birthStr"},
-	        	{data:"be_amount"},
-	        	{data:"be_type"}
-	        ]
+		let msgRequired = `<span>필수항목입니다.</span>`;
+		let msgAmount = `<span>0보다 적은 개수로 입고할 수 없습니다.</span>`;
+		let msgNum = `<span>숫자가 아닙니다.</span>`;
+		let regexNum = /^[0-9]{1,}$/;
+
+		$('#be_amount').keyup(function(){
+			$('.error-amount').children().remove();
+			
+			if($('#be_amount').val() == ''){
+				$('.error-amount').append(msgRequired);
+			}else if($('#be_amount').val() <= 0){
+				$('.error-amount').append(msgAmount);
+			}else if(!regexNum.test($('#be_amount').val())){
+				$('.error-amount').append(msgNum);
+			}else{
+				$('.error-amount').children().remove();	
+			}
 		});
+		
+		$(document).on('click', '.btn-insert', function(){
+			let flag = true;
+			
+			$('.error').children().remove();
+			if($('#be_amount').val() == ''){
+				$('.error-amount').append(msgRequired);
+				$('#be_amount').focus();
+				flag = false;
+			}else if($('#be_amount').val() <= 0){
+				$('.error-amount').append(msgAmount);
+				$('#be_amount').focus();
+				flag = false;
+			}else if(!regexNum.test($('#be_amount').val())){
+				$('.error-amount').append(msgNum);
+				$('#be_amount').focus();
+				flag = false;
+			}
+			
+			if(flag){
+				var be_se_name = $("select[name=be_se_name]").val();
+				var be_amount = $("#be_amount").val();
+				
+				$.ajax({
+					async : true,
+					url : '<c:url value="/hq/stock/insert"/>', 
+					type : 'post', 
+					data : {be_se_name : be_se_name, be_amount : be_amount}, 
+					dataType : "json",
+					success : function (data){
+						let msg = data.msg;
+						if(!msg == ""){
+							alert(msg);
+						}
+						displayList(search);
+						$('#myModal').modal("hide");
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			}
+		});
+	</script>
 	
+	<script type="text/javascript">
 		var search = "";
+
 		$(document).ready(function(){
 			displayList(search);
 		});
-	    $('#search').keyup(function(){
+		
+		$('#search').keyup(function(){
 	    	search = $('#search').val();
 	    	displayList(search);
 	    });
+		
 		function displayList(search){
 			$.ajax({
 				async : true,
-				url : '<c:url value="/hq/stock/list2"/>', 
-				type : 'post', 
+				url : '<c:url value="/hq/stock/list/items"/>', 
+				type : 'get', 
 				data : {search : search}, 
 				dataType : "json",
 				success : function (data){
@@ -185,39 +222,76 @@
 						`;
 					}
 					$('.img-container').html(str);
+					
+					let seList = data.seList;
+					str = ``;
+					for(var se of seList){
+						str += `
+							<option value="\${se.se_name}">\${se.se_name}</option>
+						`;
+					}
+					$('.custom-select').html(str);
+					
+					table.destroy();
+					table = $('#table').DataTable({
+						language: {
+							search: "",
+					        searchPlaceholder: "검색",
+					        zeroRecords: "",
+					        emptyTable: ""
+					    },
+						scrollY: 600,
+					    paging: false,
+					    info: false,
+					    order: [[ 0, "desc" ]],
+					    ajax:{
+				        	url:'<c:url value="/hq/stock/list"/>',
+				        	type:"post",
+				        	dataSrc :"data"
+				        },
+				        columns:[
+				        	{data:"be_num"},
+				        	{data:"be_recordStr"},
+				        	{data:"be_se_name"},
+				        	{data:"be_birthStr"},
+				        	{data:"be_amount"},
+				        	{data:"be_type"}
+				        ]
+					});
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
 				}
 			});
-			
-			table.destroy();
-			table = $('#table').DataTable({
-				language: {
-					search: "",
-			        searchPlaceholder: "검색",
-			        zeroRecords: "",
-			        emptyTable: ""
-			    },
-				scrollY: 600,
-			    paging: false,
-			    info: false,
-			    order: [[ 1, "desc" ]],
-			    ajax:{
-		        	url:'<c:url value="/hq/stock/list1"/>',
-		        	type:"post",
-		        	dataSrc :"data"
-		        },
-		        columns:[
-		        	{data:"be_num"},
-		        	{data:"be_recordStr"},
-		        	{data:"be_se_name"},
-		        	{data:"be_birthStr"},
-		        	{data:"be_amount"},
-		        	{data:"be_type"}
-		        ]
-			});
 		}
+	</script>
+	
+	<script type="text/javascript">
+		var table = $('#table').DataTable({
+			language: {
+				search: "",
+		        searchPlaceholder: "검색",
+		        zeroRecords: "",
+		        emptyTable: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    order: [[ 0, "desc" ]],
+		    ajax:{
+	        	url:'<c:url value="/hq/stock/list"/>',
+	        	type:"post",
+	        	dataSrc :"data"
+	        },
+	        columns:[
+	        	{data:"be_num"},
+	        	{data:"be_recordStr"},
+	        	{data:"be_se_name"},
+	        	{data:"be_birthStr"},
+	        	{data:"be_amount"},
+	        	{data:"be_type"}
+	        ]
+		});	
 	
 		$(document).on('click', '.btn-menu', function(){
 			var name = $(this).data("name");
@@ -239,9 +313,9 @@
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 1, "desc" ]],
+				    order: [[ 0, "desc" ]],
 				    ajax:{
-			        	url:'<c:url value="/hq/stock/list1"/>',
+			        	url:'<c:url value="/hq/stock/list"/>',
 			        	type:"post",
 			        	dataSrc :"data"
 			        },
@@ -255,29 +329,6 @@
 			        ]
 				});
 			}
-		});
-		
-		$(document).on('click', '.btn-insert', function(){
-			var be_se_name = $("select[name=be_se_name]").val();
-			var be_amount = $("select[name=be_amount]").val();
-			
-			$.ajax({
-				async : true,
-				url : '<c:url value="/hq/stock/insert"/>', 
-				type : 'post', 
-				data : {be_se_name : be_se_name, be_amount : be_amount}, 
-				dataType : "json",
-				success : function (data){
-					let msg = data.msg;
-					if(!msg == ""){
-						alert(msg);
-					}
-					displayList(search);
-				},
-				error : function(jqXHR, textStatus, errorThrown){
-					console.log(jqXHR);
-				}
-			});
 		});
 	</script>
 </body>

@@ -174,25 +174,25 @@ public class HQController {
 	}
 	
 	@GetMapping("/stock/list")
-	public String stockList(Model model) {
-		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList("");
-		model.addAttribute("seList", seList);
+	public String stockList() {
 	    return "/hq/stock/list";
 	}
 	@ResponseBody
-	@PostMapping("/stock/list1")
-	public Map<String, Object> stockListPost1() {
+	@PostMapping("/stock/list")
+	public Map<String, Object> stockListPost() {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", beList);
 	    return map;
 	}
 	@ResponseBody
-	@PostMapping("/stock/list2")
-	public Map<String, Object> stockListPost2(@RequestParam String search) {
+	@GetMapping("/stock/list/items")
+	public Map<String, Object> stockListImg(@RequestParam String search) {
 		List<BranchStockDTO> stList = hqService.getBranchStockList(search);
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList(search);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("stList", stList);
+		map.put("seList", seList);
 	    return map;
 	}
 	@ResponseBody
