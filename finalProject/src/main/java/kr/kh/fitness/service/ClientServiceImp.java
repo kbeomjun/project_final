@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.ClientDAO;
+import kr.kh.fitness.model.dto.MembershipDTO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
@@ -203,7 +204,23 @@ public class ClientServiceImp implements ClientService{
 		int totalCount = clientDao.selectPaymentTotalCount(me_id);
 		return new PageMaker(3, cri, totalCount);
 	}
-	
+
+	@Override
+	public MembershipDTO getCurrentMembership(String me_id) {
+		return clientDao.selectCurrentMembership(me_id);
+	}
+
+	@Override
+	public MembershipDTO getCurrentPT(String me_id) {
+		MembershipDTO pt = clientDao.selectCurrentPT(me_id);
+		if(pt == null) {
+			return null;
+		}
+		int scheduled = clientDao.selectScheduledPT(me_id, pt.getPa_start(), pt.getPa_end());
+		pt.setRemain_count(pt.getTotal_count()-scheduled);
+		return pt;
+	}
+
 	@Override
 	public PaymentVO getpayment(int pa_num) {
 		return clientDao.selectPayment(pa_num);

@@ -429,8 +429,13 @@
 	</select>
 	
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
-		select * from member_inquiry where mi_state = #{mi_state} and mi_br_name = #{br_name}
-		order by mi_date <if test="mi_state == '답변완료'">desc</if>;
+		select * from member_inquiry 
+		<if test="mi_state == 'wait'">
+			where mi_state in("답변대기") and mi_br_name = #{br_name} order by mi_date;
+		</if>
+		<if test="mi_state == 'done'">
+			where mi_state in("답변완료") and mi_br_name = #{br_name} order by mi_date desc;
+		</if>
 	</select>
 	
 	<select id="selectMemberInquiry" resultType="MemberInquiryVO">
@@ -453,7 +458,7 @@
 		where bs_start = #{start} and bs_bp_num = #{bp_num}
 	</select>
 	
-	<insert id="insertBranchProgramSchedule">
+	<insert id="insertBranchProgramSchedule" useGeneratedKeys="true" keyProperty="bps.bs_num">
 		insert into branch_program_schedule(bs_start, bs_end, bs_current, bs_bp_num)
 		values (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
 	</insert>
@@ -464,5 +469,15 @@
        <foreach collection="bps_list" item="bps" separator=",">
             (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
        </foreach>
+    </insert>
+    
+    <select id="selectProgramReservation" resultType="ProgramReservationVO">
+    	select * from program_reservation
+    	where pr_date = #{date} and pr_me_id = #{me_id}
+    </select>
+
+    <insert id="insertProgramReservation">
+    	insert into program_reservation(pr_date, pr_me_id, pr_bs_num)
+    	values (#{date}, #{me_id}, #{bs_num})
     </insert>
 </mapper>

@@ -63,7 +63,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/program/reservation/*" />
-			<mapping path="/admin/schedule/insert" />
+			<mapping path="/admin/schedule/insert/*" />
 		
 			<!-- 로그인해야만 접근할 수 있는 경로에만 인터셉터 적용 -->
 			<mapping path="/payment/paymentInsert" />

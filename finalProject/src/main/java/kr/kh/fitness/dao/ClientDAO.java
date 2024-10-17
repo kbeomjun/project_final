@@ -1,9 +1,11 @@
 package kr.kh.fitness.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.fitness.model.dto.MembershipDTO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
@@ -56,7 +58,13 @@ public interface ClientDAO {
 	List<PaymentVO> selectPaymentList(@Param("me_id")String me_id, @Param("cri")Criteria cri);
 
 	int selectPaymentTotalCount(String me_id);
-	
+
+	MembershipDTO selectCurrentMembership(String me_id);
+
+	MembershipDTO selectCurrentPT(String me_id);
+
+	int selectScheduledPT(@Param("me_id")String me_id, @Param("pa_start")Date pa_start, @Param("pa_end")Date pa_end);
+
 	PaymentVO selectPayment(int pa_num);
 
 	RefundVO selectRefund(int pa_num);

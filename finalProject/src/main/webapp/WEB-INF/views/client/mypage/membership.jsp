@@ -7,6 +7,35 @@
 <html>
 <head>
 <title>마이페이지</title>
+<style>
+    .info-box {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 5px;
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-box h5 {
+        margin-bottom: 10px;
+    }
+
+    .info-box .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .info-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -42,6 +71,36 @@
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 	                <h2>나의 결제내역</h2>
+	                
+	                <div class="info-container">
+	                    <!-- 현재 이용권 정보 박스 -->
+	                    <div class="info-box">
+	                        <h5>헬스장 이용권</h5>
+	                        <div class="content">
+		                        <c:if test="${not empty currentMembership}">
+		                            <p>기간 : <fmt:formatDate value="${currentMembership.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentMembership.pa_end}" pattern="yyyy-MM-dd"/></p>
+		                        </c:if>
+		                        <c:if test="${empty currentMembership}">
+		                            <p>현재 이용 중인 회원권이 없습니다.</p>
+		                        </c:if>
+	                        </div>
+	                    </div>
+
+	                    <!-- 진행 중인 PT 정보 박스 -->
+	                    <div class="info-box">
+	                        <h5>진행 중인 PT</h5>
+	                        <div class="content">
+		                        <c:if test="${not empty currentPT}">
+		                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
+		                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
+		                        </c:if>
+		                        <c:if test="${empty currentPT}">
+		                            <p>현재 진행 중인 PT가 없습니다.</p>
+		                        </c:if>
+	                        </div>
+	                    </div>
+	                </div>
+	                
 					<table class="table text-center">
 						<thead>
 							<tr>

@@ -15,6 +15,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
 import kr.kh.fitness.pagination.Criteria;
@@ -130,5 +131,9 @@ public interface AdminDAO {
 	boolean updateMemberInquiry(MemberInquiryVO mi);
 
 	MemberVO selectMemberByEmail(String me_email);
+
+	ProgramReservationVO selectProgramReservation(@Param("me_id")String me_id, @Param("date")Date date);
+
+	void insertProgramReservation(@Param("me_id")String me_id, @Param("date")Date date, @Param("bs_num")int bs_num);
 
 }

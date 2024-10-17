@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.kh.fitness.model.dto.MembershipDTO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
@@ -261,9 +262,14 @@ public class ClientController {
 		List<PaymentVO> paymentList = clientService.getPaymentList(me_id, cri);
 		PageMaker pm = clientService.getPageMakerInMemberShip(me_id, cri);
 		
+		MembershipDTO currentMembership = clientService.getCurrentMembership(me_id);
+		MembershipDTO currentPT = clientService.getCurrentPT(me_id);
+		
 		model.addAttribute("me_id", me_id);
 		model.addAttribute("paymentList", paymentList);
 		model.addAttribute("pm", pm);
+		model.addAttribute("currentMembership", currentMembership);
+		model.addAttribute("currentPT", currentPT);
 		
 		return "/client/mypage/membership";
 	}
@@ -389,9 +395,9 @@ public class ClientController {
 		
 		String msg = clientService.updateReviewPost(review);
 		if(msg == "") {
-			model.addAttribute("url", "/client/mypage/review/detail/" + review.getRp_num() + "/" + me_id);
+			model.addAttribute("url", "/client/mypage/review/detail/" + review.getRp_num());
 		} else {
-			model.addAttribute("url", "/client/mypage/review/update/" + review.getRp_num() + "/" + me_id);
+			model.addAttribute("url", "/client/mypage/review/update/" + review.getRp_num());
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
@@ -509,10 +515,13 @@ public class ClientController {
 			me_birth = formatter.parse(birth);
 			member.setMe_birth(me_birth);
 			String msg = clientService.updateMemberInfo(member);
+			
+			MemberVO updatedUser = clientService.getMember(member.getMe_id());
 
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/client/mypage/info/"+member.getMe_id());
 			model.addAttribute("me_id", member.getMe_id());
+			session.setAttribute("user", updatedUser);
 			
 			return "/main/message";
 		} catch (Exception e) {

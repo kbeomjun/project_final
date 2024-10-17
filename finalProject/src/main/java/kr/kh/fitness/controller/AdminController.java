@@ -249,9 +249,20 @@ public class AdminController {
 		}else {
 			rm = adminService.insertBranchProgramScheduleList(pif);
 		}
+		if(rm.isResult()) {
+			model.addAttribute("msg", "등록 성공\\n" + rm.getMessage());
+		}
+		else {
+			model.addAttribute("msg", "등록 실패\\n" + rm.getMessage());
+		}
 		
-		model.addAttribute("msg", rm.getMessage());
-		model.addAttribute("url", "/admin/schedule/list");
+		String prevUrl = request.getHeader("Referer");
+		if (prevUrl != null) {
+			model.addAttribute("url", prevUrl);
+		}
+		else {
+			model.addAttribute("url", "/admin/schedule/list");
+		}
 		return "/main/message";
  
 	}
@@ -588,8 +599,8 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "답변대기");
-			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "답변완료");
+			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "wait");
+			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "done");
 			
 			model.addAttribute("miWaitList", miWaitList);
 			model.addAttribute("miDoneList", miDoneList);

@@ -73,7 +73,7 @@
 					</form>
 					<hr>
 					<div>
-						<a href="<c:url value="/client/mypage/review/detail/${review.rp_num}/${me_id}"/>" class="btn btn-outline-danger col-12">취소</a>
+						<a href="<c:url value="/client/mypage/review/detail/${review.rp_num}"/>" class="btn btn-outline-danger col-12">취소</a>
 					</div>
 	            </div>
 	        </main>
