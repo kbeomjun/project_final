@@ -252,7 +252,7 @@
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 2, "asc" ]],
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
 		        { targets: [3], orderable: false }
 		    ]

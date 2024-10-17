@@ -66,6 +66,7 @@
 		    		<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>
+				      			<th>회원권</th>
 				        		<th>유형</th>
 				        		<th>기한(일)</th>
 				        		<th>PT횟수(회)</th>
@@ -76,6 +77,7 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${ptList}" var="pt">
 				    			<tr>
+				    				<td class="align-content-center">${pt.pt_name}</td>
 					        		<td class="align-content-center">${pt.pt_type}</td>
 					        		<td class="align-content-center">${pt.pt_date}</td>
 					        		<td class="align-content-center">${pt.pt_count}</td>
@@ -308,6 +310,7 @@
 			scrollY: 600,
 		    paging: false,
 		    info: false,
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
 		        { targets: [4], orderable: false }
 		    ]

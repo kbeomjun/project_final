@@ -129,7 +129,7 @@
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 7, "desc" ]],
+		    order: [[ 0, "desc" ]],
 		    ajax:{
 	        	url:'<c:url value="/hq/refund/list"/>',
 	        	type:"post",
@@ -212,7 +212,7 @@
 								scrollY: 600,
 							    paging: false,
 							    info: false,
-							    order: [[ 7, "desc" ]],
+							    order: [[ 0, "desc" ]],
 							    ajax:{
 						        	url:'<c:url value="/hq/refund/list"/>',
 						        	type:"post",

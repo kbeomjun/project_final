@@ -140,7 +140,7 @@
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 2, "asc" ]],
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
 		        { targets: [5, 6], orderable: false }
 		    ]
@@ -167,7 +167,7 @@
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 2, "asc" ]],
+				    order: [[ 0, "asc" ]],
 				    columnDefs: [
 				        { targets: [5, 6], orderable: false }
 				    ]
@@ -183,7 +183,7 @@
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 2, "desc" ]],
+				    order: [[ 0, "desc" ]],
 				    columnDefs: [
 				        { targets: [5, 6], orderable: false }
 				    ]
