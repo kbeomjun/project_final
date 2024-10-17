@@ -306,10 +306,7 @@
 		    paging: false,
 		    info: false,
 		    columnDefs: [
-		        {
-		        	targets: [4], 
-		        	orderable: false
-	        	}
+		        { targets: [4], orderable: false }
 		    ]
 		});
 	</script>

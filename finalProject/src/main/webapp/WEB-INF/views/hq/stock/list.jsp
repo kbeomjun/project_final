@@ -138,13 +138,13 @@
 		    ajax:{
 	        	url:'<c:url value="/hq/stock/list1"/>',
 	        	type:"post",
-	        	dataSrc :""
+	        	dataSrc :"data"
 	        },
 	        columns:[
 	        	{data:"be_num"},
-	        	{data:"be_record"},
+	        	{data:"be_recordStr"},
 	        	{data:"be_se_name"},
-	        	{data:"be_birth"},
+	        	{data:"be_birthStr"},
 	        	{data:"be_amount"},
 	        	{data:"be_type"}
 	        ]
@@ -194,7 +194,7 @@
 			    ajax:{
 		        	url:'<c:url value="/hq/stock/list1"/>',
 		        	type:"post",
-		        	dataSrc :""
+		        	dataSrc :"data"
 		        },
 		        columns:[
 		        	{data:"be_num"},
@@ -230,7 +230,7 @@
 				    ajax:{
 			        	url:'<c:url value="/hq/stock/list1"/>',
 			        	type:"post",
-			        	dataSrc :""
+			        	dataSrc :"data"
 			        },
 			        columns:[
 			        	{data:"be_num"},

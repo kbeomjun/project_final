@@ -56,16 +56,11 @@
 		      	<hr class="d-sm-none">
 	    	</div>
 		    <div class="col-sm-10">
-		    	<div>
-		    		<div class="form-group">
-						<input type="text" class="form-control" id="email" name="email" placeholder="이메일">
-					</div>
-		    	</div>
-		    	<hr>
 		    	<div class="mt-3">
 		    		<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>
+				      			<th>결제번호</th>
 				        		<th>회원계정</th>
 				        		<th>이메일</th>
 				        		<th>결제날짜</th>
@@ -118,60 +113,55 @@
 	</div>
 	
 	<script type="text/javascript">
-		var email = "";	
 		var price = "";
+		var pa_num = "";
 		let msgPrice = `<span>결제금액을 초과합니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
-	
-		$('#email').keyup(function(){
-			email = $('#email').val();
-			displayList(email);			
+		var table = $('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    order: [[ 7, "desc" ]],
+		    ajax:{
+	        	url:'<c:url value="/hq/refund/list"/>',
+	        	type:"post",
+	        	dataSrc :"data"
+	        },
+	        columns:[
+	        	{data:"pa_num"},
+	        	{data:"pa_me_id"},
+	        	{data:"pa_me_email"},
+	        	{data:"pa_dateStr"},
+	        	{data:"pa_price"},
+	        	{data:"pa_pt_name"},
+	        	{data:"pa_startStr"},
+	        	{data:"pa_endStr"},
+	        	{
+	        		data: null,
+		        	defaultContent : '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal">환불</button>'
+        		}
+	        ],
+	        columnDefs: [
+		        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"},
+		    ]
 		});
-		
-		function displayList(email){
-			$.ajax({
-				async : true,
-				url : '<c:url value="/hq/refund/list"/>', 
-				type : 'post', 
-				data : {email : email}, 
-				dataType : "json",
-				success : function (data){
-					let paList = data.paList;
-					var str = ``;
-					for(pa of paList){
-						str += `
-							<tr>
-				        		<td class="align-content-center">\${pa.pa_me_id}</td>
-				        		<td class="align-content-center">\${pa.pa_me_email}</td>
-				        		<td class="align-content-center">\${pa.pa_dateStr}</td>
-				        		<td class="align-content-center">\${pa.pa_formattedPrice}</td>
-				        		<td class="align-content-center">\${pa.pa_pt_name}</td>
-				        		<td class="align-content-center">\${pa.pa_startStr}</td>
-				        		<td class="align-content-center">\${pa.pa_endStr}</td>
-				        		<td class="align-content-center">
-				        			<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal" data-num="\${pa.pa_num}" data-price="\${pa.pa_price}">환불</button>
-				        		</td>
-				      		</tr>
-						`;
-					}
-					$('#tbody').html(str);
-				},
-				error : function(jqXHR, textStatus, errorThrown){
-					console.log(jqXHR);
-				}
-			});
-		};
-		
+
 		$(document).on("click", ".btn-refund-modal", function(){
-			price = $(this).data("price");
-			var re_pa_num = $(this).data("num");
-			$('#re_pa_num').val(re_pa_num);
+			price = $(this).parent().prev().prev().prev().prev().text();
+			pa_num = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+			$('#re_pa_num').val(pa_num);
 		});
 		$(document).on("keyup", "#re_price", function(){
 			$('.error').children().remove();
 			if($('#re_price').val() == ''){
 				$('.error-price').append(msgRequired);
-			}else if($('#re_price').val() > price){
+			}else if($('#re_price').val() > price || $('#re_price').val().length > price.length){
 				$('.error-price').append(msgPrice);
 			}
 		});
@@ -184,7 +174,7 @@
 				$('.error-price').append(msgRequired);
 				$('#re_price').focus();
 				flag = false;
-			}else if($('#re_price').val() > price){
+			}else if($('#re_price').val() > price || $('#re_price').val().length > price.length){
 				$('.error-price').append(msgPrice);
 				$('#re_price').focus();
 				flag = false;
@@ -206,8 +196,43 @@
 							if(msg != ""){
 								alert(msg);
 							}
-							displayList(email);
 							$('#myModal').modal("hide");
+							
+							table.destroy();
+							table = $('#table').DataTable({
+								language: {
+							        search: "검색:",
+							        zeroRecords: "",
+							        emptyTable: ""
+							    },
+								scrollY: 600,
+							    paging: false,
+							    info: false,
+							    order: [[ 7, "desc" ]],
+							    ajax:{
+						        	url:'<c:url value="/hq/refund/list"/>',
+						        	type:"post",
+						        	dataSrc :"data"
+						        },
+						        columns:[
+						        	{data:"pa_num"},
+						        	{data:"pa_me_id"},
+						        	{data:"pa_me_email"},
+						        	{data:"pa_dateStr"},
+						        	{data:"pa_price"},
+						        	{data:"pa_pt_name"},
+						        	{data:"pa_startStr"},
+						        	{data:"pa_endStr"},
+						        	{
+						        		data: null,
+							        	defaultContent : '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal">환불</button>'
+					        		}
+						        ],
+						        columnDefs: [
+							        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
+							        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"},
+							    ]
+							});
 						},
 						error : function(jqXHR, textStatus, errorThrown){
 							console.log(jqXHR);

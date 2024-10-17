@@ -584,8 +584,8 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<PaymentVO> getPaymentList(String email) {
-		List<PaymentVO> paList = hqDao.selectPaymentList(email);
+	public List<PaymentVO> getPaymentList() {
+		List<PaymentVO> paList = hqDao.selectPaymentList();
 		
 		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
 		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");

@@ -103,10 +103,7 @@
 		    paging: false,
 		    info: false,
 		    columnDefs: [
-		        {
-		        	targets: [7], 
-		        	orderable: false
-	        	}
+		        { targets: [7], orderable: false }
 		    ]
 		});
 	</script>

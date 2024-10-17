@@ -251,10 +251,7 @@
 		    info: false,
 		    order: [[ 2, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [3], 
-		        	orderable: false
-	        	}
+		        { targets: [3], orderable: false }
 		    ]
 		});
 	

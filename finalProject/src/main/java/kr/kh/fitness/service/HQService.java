@@ -97,7 +97,7 @@ public interface HQService {
 
 	String updateFAQ(MemberInquiryVO mi);
 
-	List<PaymentVO> getPaymentList(String email);
+	List<PaymentVO> getPaymentList();
 
 	String insertRefund(RefundVO re);
 }

@@ -139,10 +139,7 @@
 		    info: false,
 		    order: [[ 2, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [5, 6], 
-		        	orderable: false
-	        	}
+		        { targets: [5, 6], orderable: false }
 		    ]
 		});
 		
@@ -168,10 +165,7 @@
 				    info: false,
 				    order: [[ 2, "asc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}else{
@@ -186,10 +180,7 @@
 				    info: false,
 				    order: [[ 2, "desc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}

@@ -95,10 +95,7 @@
 		    paging: false,
 		    info: false,
 		    columnDefs: [
-		        {
-		        	targets: [2], 
-		        	orderable: false
-	        	}
+		        { targets: [2], orderable: false }
 		    ]
 		});
 	</script>

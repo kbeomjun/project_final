@@ -175,10 +175,11 @@ public class HQController {
 	}
 	@ResponseBody
 	@PostMapping("/stock/list1")
-	public List<BranchEquipmentStockVO> stockListPost1(Model model) {
+	public Map<String, Object> stockListPost1() {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
-		model.addAttribute("beList", beList);
-		return beList;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", beList);
+	    return map;
 	}
 	@ResponseBody
 	@PostMapping("/stock/list2")
@@ -367,10 +368,10 @@ public class HQController {
 	}
 	@ResponseBody
 	@PostMapping("/refund/list")
-	public Map<String, Object> refundListPost(@RequestParam String email) {
-	    List<PaymentVO> paList = hqService.getPaymentList(email);
+	public Map<String, Object> refundListPost() {
+	    List<PaymentVO> paList = hqService.getPaymentList();
 	    Map<String, Object> map = new HashMap<String, Object>();
-	    map.put("paList", paList);
+	    map.put("data", paList);
 		return map;
 	}
 	@ResponseBody

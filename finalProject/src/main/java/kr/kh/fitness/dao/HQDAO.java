@@ -120,7 +120,7 @@ public interface HQDAO {
 
 	boolean insertMemberInquiry(@Param("mi") MemberInquiryVO mi);
 
-	List<PaymentVO> selectPaymentList(@Param("email") String email);
+	List<PaymentVO> selectPaymentList();
 
 	PaymentVO selectPayment(@Param("pa_num") int pa_num);
 
