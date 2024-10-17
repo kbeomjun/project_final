@@ -3,9 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.PaymentDAO">
+	<select id="membershipList" resultType="PaymentTypeVO">
+		select * from payment_type
+	</select>
 	<select id="selectMembershipList" resultType="PaymentTypeVO">
 		select * from payment_type
-		where pt_type = '이용권';
+		where pt_type = '이용권'
+	</select>
+	<select id="selectMembershipPTList" resultType="PaymentTypeVO">
+		select * from payment_type
+		where pt_type = 'PT'
 	</select>
 	<insert id="insertPayment">
 		insert into payment(pa_price, pa_start, pa_end, pa_state, pa_me_id, pa_pt_num)
@@ -53,20 +60,21 @@
 		where pt_type = 'PT';
 	</select>
 	
-	<select id="selectPaymentMembership" resultType="PaymentVO">
-		SELECT *
-		FROM payment pa
-		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
-		WHERE pa.pa_me_id = #{me_id}
-		and pt_type = '이용권';
-	</select>
-	
-	<select id="selectPaymentPT" resultType="PaymentVO">
-		SELECT *
-		FROM payment pa
-		JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
-		WHERE pa.pa_me_id = #{me_id}
-		and pt_type = 'PT';
+	<select id="selectPayments" resultType="PaymentVO">
+	    SELECT *
+	    FROM payment pa
+	    JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
+	    WHERE pa.pa_me_id = #{me_id}
+	    AND pt_type IN ('이용권', 'PT');
 	</select>
 
+	<select id="selectPaymentsByType" parameterType="map" resultType="PaymentVO">
+	    SELECT *
+	    FROM payment pa
+	    JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
+	    WHERE pa.pa_me_id = #{me_id} AND pt.pt_type = #{pt_type}
+	    ORDER BY pa.pa_start ASC;
+	</select>
+	
+	
 </mapper>

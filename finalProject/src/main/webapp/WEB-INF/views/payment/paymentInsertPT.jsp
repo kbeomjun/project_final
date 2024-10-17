@@ -18,17 +18,19 @@
 
     <c:if test="${firstStartDate != null && firstStartDate != ''}">
         <div class="membership-info my-10">
-            <p class="mb-0">회원님의 이용권 시작일: <strong class="text-success">${firstStartDate}</strong></p>
-            <p>회원님의 이용권 만료일: <strong class="text-primary">${lastEndDate}</strong></p>
+            <p class="mb-0">회원님의 회원권 시작일: <strong class="text-success">${firstStartDate}</strong></p>
+            <p>회원님의 회원권 만료일: <strong class="text-primary">${lastEndDate}</strong></p>
         </div>
     </c:if>
     
     <!-- PT 결제 여부 표시 -->
-	<c:if test="${isFirstPayment}">
+	<c:if test="${!isRePaymentForPT}">
 	    <div class="alert alert-info">PT 결제는 첫 결제입니다.</div>
 	</c:if>
-	<c:if test="${!isFirstPayment}">
+	<c:if test="${isRePaymentForPT}">
 	    <div class="alert alert-warning">PT 결제는 재결제입니다.</div>
+	    <p class="mb-0">회원님의 PT 시작일: <strong class="text-success">${ptFirstStartDate}</strong></p>
+            <p>회원님의 PT 만료일: <strong class="text-primary">${ptLastEndDate}</strong></p>
 	</c:if>
     
     <form id="paymentForm" action="<c:url value='/payment/paymentInsertPT'/>" method="post">
@@ -60,11 +62,23 @@
                         <option value="300000">300,000원</option>
                     </select>
                     
-                    <!-- 날짜 선택 -->
-				    <label for="pa_start">PT 시작 날짜:</label>
 				    <%-- value는 하단의 script로 값을 가져오고 있음. --%>
-				    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
-				    <p>시작일 : ${firstStartDate} / 만료일 : ${lastEndDate} / 오늘 날짜 : ${currentDate}</p>
+					<!-- PT 결제 시작일 표시 -->
+					<c:if test="${isRePaymentForPT}">
+					    <!-- 재결제인 경우 시작일 필드 숨김 -->
+					    <p>회원님의 PT 재시작일: <strong class="text-success">${newStartDate}</strong></p>
+					    <input type="hidden" name="pa_start" value="${newStartDate}" />
+					</c:if>
+					
+					<c:if test="${!isRePaymentForPT}">
+					    <!-- 첫 결제인 경우 시작일 입력 필드 표시 -->
+					    <label for="pa_start">PT 시작 날짜:</label>
+					    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${firstStartDate}" max="${lastEndDate}" required>
+					</c:if>
+					
+					<p>시작일 : ${firstStartDate} / 만료일 : ${lastEndDate} / 오늘 날짜 : ${currentDate}</p>
+					
+					<p>PT 시작일 : ${ptFirstStartDate} / PT 만료일 : ${ptLastEndDate} / 오늘 날짜 : ${currentDate}</p>
                 </div>
             </div>
         </div>
@@ -113,29 +127,29 @@
 		    
 			// 페이지 로드 시 서버에서 넘긴 paEnd 값 설정 및 min 속성 설정
 	        var paEnd = '${lastEndDate}';  // 서버에서 넘긴 paEnd 값
-	        var currentDate = new Date().toISOString().split('T')[0];  // 현재 날짜 yyyy-MM-dd
-
-	        $('#pa_start').attr('min', currentDate);  // 최소 선택 가능한 날짜는 현재 날짜
+	        var currentDate = new Date().toISOString().split('T')[0]; // 현재 날짜 yyyy-MM-dd
 
 	        console.log('paEnd:', paEnd);
 	        console.log('currentDate:', currentDate);
-	        
-	        // 페이지 로드 시 입력 요소의 값 설정
-	        if (paEnd < currentDate) {
-	            $('#pa_start').val(currentDate); // paEnd가 현재 날짜보다 이전이면 현재 날짜로 설정
-	        } else {
-	            $('#pa_start').val(paEnd); // 그렇지 않으면 paEnd 값을 설정
-	        }
 
-			// 선택된 날짜가 기존 만료일보다 이전일 경우 경고 및 수정
+			// 선택된 날짜가 회원권 시작일과 만료일 사이인지 확인
 	        $('#pa_start').on('change', function() {
 	            const selectedDate = new Date($(this).val());
+	            const startDate = new Date('${firstStartDate}'); // JSP에서 시작일을 가져옴
 	            const expirationDate = new Date('${lastEndDate}'); // JSP에서 만료일을 가져옴
 
-	            // 선택된 날짜가 만료일보다 이전이면 경고 및 기존 만료일로 설정
-	            if (selectedDate < expirationDate) {
-	                alert("시작 날짜는 이용권 만료일(" + '${lastEndDate}' + ") 이후여야 합니다.");
-	                $(this).val('${lastEndDate}'); // 기존 만료일로 다시 설정
+	            // 선택된 날짜가 회원권 기간 내에 있는지 확인
+	            if (selectedDate < startDate || selectedDate > expirationDate) {
+	                alert("PT 시작 날짜는 회원권 기간 내에 있어야 합니다.\n" + 
+	                      "시작일: " + '${firstStartDate}' + "\n" + 
+	                      "만료일: " + '${lastEndDate}' + "를 참고하세요.");
+	                $(this).val(''); // 잘못된 날짜를 선택했을 경우 입력 필드 비우기
+	            }
+	            
+	            // 선택한 PT의 시작 날짜가 회원권 만료일보다 이전인지 확인
+	            if (selectedStartDate < membershipEndDate) {
+	                alert("선택한 PT 이용권의 시작 날짜가 회원권 만료일(${lastEndDate})보다 이전입니다. 회원권을 먼저 결제하세요.");
+	                $(this).val(''); // 시작 날짜 필드 초기화
 	            }
 	        });
 		
@@ -151,7 +165,7 @@
 		    	console.log('pt_num change event triggered');
 		        updateSubSelectOptions(); // 하위 Select 옵션 업데이트 함수 호출
 		    });
-		
+			
 		    // 초기 상태로 하위 Select 값을 설정
 		    $('#pt_num').trigger('change');
 		    
@@ -222,7 +236,7 @@
 		        const name = selectedOption.data('name'); // 이름
 		        const type = selectedOption.data('type'); // 종류
 		        const date = selectedOption.data('date'); // 날짜
-		        const start = $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
+		        const start = ${isRePaymentForPT} ? '${newStartDate}' : $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
 		        const count = selectedOption.data('count'); // 횟수
 		        const price = selectedOption.data('price'); // 가격
 		        const formattedPrice = Number(price).toLocaleString(); // 가격 포맷팅
@@ -236,14 +250,60 @@
 		        console.log("사용자가 선택한 최종 시작 날짜:", start);
 		        console.log(count);
 		        console.log(formattedPrice);
-		
+		        
+		     	// 선택된 옵션의 데이터 가져오기
+		        const ptPeriod = parseInt(selectedOption.data('date'), 10); // PT 기간 가져오기 (예: 30일)
+		        let ptEndDate;
+		        
+		        if (${isRePaymentForPT}) {
+		            const ptLastEndDateStr = '${ptLastEndDate}'; // 서버에서 전달받은 PT 마지막 만료일
+		            ptEndDate = new Date(ptLastEndDateStr); // PT 마지막 만료일을 Date 객체로 변환
+		            ptEndDate.setDate(ptEndDate.getDate() + 1); // 재결제는 마지막 만료일 + 1일로 설정
+		        } else {
+		            const startDate = $('#pa_start').val(); // 사용자가 선택한 시작 날짜
+		            if (startDate) {
+		                ptEndDate = new Date(startDate);
+		            } else {
+		                alert("시작 날짜를 선택해야 합니다."); // 시작 날짜가 없으면 경고
+		                return;
+		            }
+		        }
+
+		        ptEndDate.setDate(ptEndDate.getDate() + ptPeriod); // PT 만료일 계산
+
+				// 회원권 만료일 비교
+		        const membershipEndDateStr = '${lastEndDate}'; // 서버에서 전달받은 회원권 만료일
+		        const membershipEndDate = new Date(membershipEndDateStr);
+
+		        if (ptEndDate > membershipEndDate) {
+		            // PT 시작일 계산
+		            const ptStartDate = ${isRePaymentForPT} ? ptEndDate : new Date($('#pa_start').val()); // 시작일 설정
+		            const formattedPtEndDate = ptEndDate.toISOString().split('T')[0]; // 만료일 형식 지정
+
+		            alert("PT 만료일이 회원권 만료일보다 큽니다. 회원권을 결제해야 합니다.\n" +
+		            	  "회원님의 회원권 만료일 : " + membershipEndDateStr + "\n" +
+		                  "선택한 PT의 만료일 : " + formattedPtEndDate);
+		            
+					// 추가 알림을 띄우기
+		            const confirmPayment = confirm("회원권을 결제하시겠습니까?");
+		            if (confirmPayment) {
+		                // 회원권 결제 페이지로 리다이렉트
+		                window.location.href = "<c:url value='/payment/paymentInsert'/>"; // 회원권 결제 URL로 변경
+		            }
+		            
+		            return; // 결제 모달을 열지 않도록 종료
+		        } else {
+		            // 결제 모달을 표시하는 코드
+		            $('#confirmModal').modal('show'); // 결제 확인 모달을 띄움
+		        }
+		        
 		        // 팝업 내용 설정
 		        const modalContent = `
 		            <p>결제하시겠습니까?</p>
 		            <p>이용권: \${name}</p>
 		            <p>이용권 종류: \${type}</p>
 		            <p>기간(일): \${date}</p>
-		            <p>회원권 시작일: \${start}</p>
+		            <p>PT 시작일: \${start}</p>
 		            <p>횟수: \${count}</p>
 		            <p>가격: \${formattedPrice}원</p>
 		        `;
@@ -254,25 +314,43 @@
 		
 		        // 결제하기 버튼 클릭 시 결제 요청
 		        $('#confirmPayment').off('click').on('click', function() {
-		            // 시작 날짜가 비어있으면 경고 메시지 표시 및 제출 방지
-				    const pa_start = $('#pa_start').val(); // 시작 날짜 값 가져오기
-		            if (!pa_start) {
-		                console.log("시작 날짜 선택 안함"); // 선택하지 않은 경우 메시지 출력
-		                alert("시작 날짜를 선택해주세요."); // 경고 메시지
-		                event.preventDefault(); // 폼 제출 방지
-		                return;
-		            }
-		            console.log(pa_start);
-		            
-		            // 현재 사용자의 시작 날짜 (예시: 2024-10-15)
+					// 현재 사용자의 시작 날짜 (예시: 2024-10-15)
 		            const currentStartDate = new Date('${currentDate}'); // DB에서 가져와야 함
-		            const selectedStartDate = new Date(pa_start); // 사용자가 선택한 날짜
-		
-		            // 사용자가 선택한 시작 날짜가 현재 시작 날짜보다 이전인지 확인
-		            if (selectedStartDate < currentStartDate) {
-		                alert("시작 날짜는 현재 시작 날짜 이후여야 합니다."); // 경고 메시지
-		                event.preventDefault(); // 폼 제출 방지
-		                return;
+		            const lastPTEndDate = new Date('${newStartDate}'); // JSP에서 마지막 PT 결제 만료일 가져오기
+
+		            console.log(lastPTEndDate);
+		            
+		            // PT 재결제 여부 확인
+		            const isRePaymentForPT = ${isRePaymentForPT}; // JSP에서 변수 가져오기
+
+		            if (isRePaymentForPT) {
+		                // 재결제인 경우, 시작 날짜를 마지막 만료일 +1로 설정
+		                const expectedStartDate = new Date(lastPTEndDate);
+		                expectedStartDate.setDate(expectedStartDate.getDate() + 1); // +1일 추가
+		                
+		                // 시작 날짜를 자동으로 입력
+		                $('#pa_start').val(expectedStartDate.toISOString().split('T')[0]); // YYYY-MM-DD 형식으로 입력
+		                
+		                // 추가적인 유효성 검사를 건너뛰고, 다음 단계로 진행
+		            } else {
+		                // 시작 날짜가 비어있으면 경고 메시지 표시 및 제출 방지
+		                const pa_start = $('#pa_start').val(); // 시작 날짜 값 가져오기
+		                if (!pa_start) {
+		                    console.log("시작 날짜 선택 안함"); // 선택하지 않은 경우 메시지 출력
+		                    alert("시작 날짜를 선택해주세요."); // 경고 메시지
+		                    event.preventDefault(); // 폼 제출 방지
+		                    return;
+		                }
+		                
+		                // 현재 사용자가 선택한 날짜와 비교하는 기존 로직 유지
+		                const selectedStartDate = new Date(pa_start); // 사용자가 선택한 날짜
+		                
+		                // 선택한 시작 날짜가 현재 시작 날짜보다 이전인지 확인
+		                if (selectedStartDate < currentStartDate) {
+		                    alert("시작 날짜는 현재 시작 날짜 이후여야 합니다."); // 경고 메시지
+		                    event.preventDefault(); // 폼 제출 방지
+		                    return;
+		                }
 		            }
 		            
 		            // 하위 Select 요소 활성화
@@ -282,6 +360,7 @@
 		
 		            // 선택한 가격 가져오기
 		            const amount = $('#pt_price').val(); // 선택한 가격 가져오기
+		            const newStartDate = '${newStartDate}'; // JSP 변수를 JavaScript 변수에 할당
 		            
 		            // 아이엠포트 결제 요청
 		            IMP.request_pay({
@@ -299,15 +378,15 @@
 		                    // 서버에서 결제 정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 		                    const paymentData = {
 		                        payment: {
-		                        	pa_start: isRePayment ? '${newStartDate}' : $('#pa_start').val() // 재결제인 경우 newStartDate 사용
+		                        	pa_start: isRePaymentForPT ? newStartDate : $('#pa_start').val() // 재결제인 경우 newStartDate 사용
 		                        },
 		                        paymentType: {
 		                            pt_num: $('#pt_num').val(), // 이용권 번호
 		                            pt_name: name, // 이용권
-		                            pt_type: $('#pt_type').val(), // 이용권 종류
-		                            pt_date: $('#pt_date').val(), // 기간
-		                            pt_count: $('#pt_count').val(), // 횟수
-		                            pt_price: $('#pt_price').val(), // 가격
+		                            pt_type: type, // 이용권 종류
+		                            pt_date: date, // 기간
+		                            pt_count: count, // 횟수
+		                            pt_price: price, // 가격
 		                        },
 		                        paymentHistory: {
 		                            ph_imp_uid: rsp.imp_uid, // 결제 고유 ID
@@ -323,7 +402,10 @@
 		                            ph_me_email: rsp.buyer_email, // 사용자 이메일
 		                        }
 		                    };
-		
+		                    
+		                 	// 콘솔 로그로 값 확인
+		                 	console.log("사용자가 선택한 시작 날짜:", start);
+
 		                    console.log("rsp 내용 : ", rsp); // 응답 내용 출력
 		                    console.log("전송할 데이터 : ", paymentData); // 전송할 데이터 출력
 		

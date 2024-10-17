@@ -11,7 +11,11 @@ import kr.kh.fitness.model.vo.PaymentVO;
 
 public interface PaymentDAO {
 
+	List<PaymentTypeVO> membershipList();
+	
 	List<PaymentTypeVO> selectMembershipList();
+	
+	List<PaymentTypeVO> selectMembershipPTList();
 
 	boolean insertPayment(@Param("pa")PaymentVO payment, @Param("pt")PaymentTypeVO paymentType, @Param("pc")PaymentHistoryVO category, @Param("end")String formattedDateTime, @Param("me")MemberVO user);
 
@@ -30,5 +34,9 @@ public interface PaymentDAO {
 	PaymentVO selectPaymentMembership(@Param("me_id")String me_id);
 	
 	PaymentVO selectPaymentPT(@Param("me_id")String me_id);
+
+	List<PaymentVO> selectPayments(@Param("me_id")String me_id);
+	
+	List<PaymentVO> selectPaymentsByType(@Param("me_id")String me_id, @Param("pt_type")String pt_type);
 
 }

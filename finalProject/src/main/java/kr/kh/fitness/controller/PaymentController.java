@@ -1,9 +1,6 @@
 package kr.kh.fitness.controller;
 
 import java.sql.Timestamp;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -11,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.fitness.model.dto.PaymentDetailsDTO;
 import kr.kh.fitness.model.dto.PaymentRequestDTO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentHistoryVO;
@@ -59,93 +56,55 @@ public class PaymentController {
 	    // 모델에 회원권 유무 추가
 	    model.addAttribute("hasMembership", hasMembership);
 		
-	    List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
-	    // 가격 포맷팅
- 		for (PaymentTypeVO pt : paymentList) {
- 			pt.setFormattedPrice(NumberFormat.getInstance(Locale.KOREA).format(pt.getPt_price()));
- 		}
+	    // 회원권 조회
+	    List<PaymentTypeVO> membershipList = paymentService.membershipList();
  		
-	    model.addAttribute("paymentList", paymentList);
+	    model.addAttribute("membershipList", membershipList);
 	    return "/payment/paymentList";
 	}
 
 	// 회원권 결제 get
 	@GetMapping("/paymentInsert")
 	public String paymentInsert(Model model, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
-		List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
+	        HttpServletRequest request, HttpServletResponse response) {
 
 	    // 현재 날짜를 yyyy-MM-dd 형식으로 포맷
 	    LocalDateTime today = LocalDateTime.now();
 	    String currentDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    
+
 	    // 사용자 ID 가져오기
 	    MemberVO user = (MemberVO) session.getAttribute("user");
+
+	    // 기존 결제 정보를 가져옴
+	    PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
 	    
-	    // 로그인하지 않은 상태라면, 사용자가 로그인되어 있지 않으면 이전 URL을 세션에 저장하고 로그인 페이지로 리다이렉트
-	    /*
-	    if (user == null) {
-	        try {
-	            // 현재 요청 URL을 세션에 저장 (로그인 후 돌아올 수 있게)
-	            String prevUrl = request.getRequestURL().toString();
-	            session.setAttribute("prevUrl", prevUrl);
-	            System.out.println("저장된 이전 URL: " + prevUrl);
+		// 디버깅 정보 출력
+		System.out.println("컨트롤러의 첫 번째 결제 시작일 : " + paymentDetails.getFirstStartDate());
+		System.out.println("컨트롤러의 마지막 결제의 만료일 : " + paymentDetails.getLastEndDate());
+		System.out.println("컨트롤러의 재결제 여부 : " + paymentDetails.isRePayment());
+		System.out.println("컨트롤러의 재결제 시작일 : " + paymentDetails.getNewStartDate()); // newStartDate 확인
 
-	            // 로그인 페이지로 리다이렉트 (JavaScript로 처리)
-	            response.setContentType("text/html; charset=UTF-8");
-	            response.getWriter().write("<script>alert(\"로그인이 필요합니다. 로그인 페이지로 이동합니다.\");</script>");
-	            response.getWriter().write("<script>window.location.href='" + request.getContextPath() + "/login';</script>");
-	            return null;  // 더 이상 처리하지 않음
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        return null;
-	    }
-	    */
-	    
-	    // 기존 결제 정보를 조회
-	    PaymentVO existingPayment = paymentService.getPayment(user.getMe_id());
-
-	    String firstStartDateStr = null;
-	    String lastEndDateStr = null;
-	    boolean isRePayment = false; // 재결제 여부
-
-	    // 기존 결제의 최초 시작일과 최근 만료일 가져오기
-	    if (existingPayment != null) {
-	        String startDateString = paymentService.getFirstPaymentStartDate(user.getMe_id());
-	        String endDateString = paymentService.getLastPaymentEndDate(user.getMe_id());
-
-	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 형식에 맞게 설정
-	        
-	        try {
-	            if (startDateString != null) {
-	                Date firstStartDate = formatter.parse(startDateString); // String을 Date로 변환
-	                firstStartDateStr = formatter.format(firstStartDate); // 원하는 형식으로 다시 포맷팅
-	            }
-	            if (endDateString != null) {
-	                Date lastEndDate = formatter.parse(endDateString); // String을 Date로 변환
-	                lastEndDateStr = formatter.format(lastEndDate); // 원하는 형식으로 다시 포맷팅
-	                isRePayment = true; // 재결제임을 나타냄
-	            }
-	        } catch (ParseException e) {
-	            e.printStackTrace(); // 날짜 형식이 맞지 않을 경우 예외 처리
-	        }
-	    }
-
-	    // 현재 날짜 및 기존 결제 시작일 추가
+	    // 모델에 필요한 값 추가
 	    model.addAttribute("currentDate", currentDate);
-	    model.addAttribute("firstStartDate", firstStartDateStr);  // 최초 시작일 추가
-	    model.addAttribute("lastEndDate", lastEndDateStr);  // 최근 만료일 추가
-	    model.addAttribute("isRePayment", isRePayment); // 재결제 여부 추가
-	    model.addAttribute("paymentList", paymentList);
+	    model.addAttribute("firstStartDate", paymentDetails.getFirstStartDate());
+	    model.addAttribute("lastEndDate", paymentDetails.getLastEndDate());
+	    model.addAttribute("isRePayment", paymentDetails.isRePayment());
 	    
 	    // 시작일을 최초 시작일 +1일로 설정
-	    if (firstStartDateStr != null && lastEndDateStr != null) {
+	    if (paymentDetails.getFirstStartDate() != null && paymentDetails.getLastEndDate() != null) {
+	        String lastEndDateStr = paymentDetails.getLastEndDate(); // 여기를 수정
+	        System.out.println("컨트롤러의 가져온 lastEndDate : " + lastEndDateStr); // 디버깅 출력
 	        LocalDate lastEndDate = LocalDate.parse(lastEndDateStr);
-	        LocalDate newStartDate = lastEndDate.plusDays(1); // 만료일에 +1일 추가
-	        System.out.println("새시작일 : " + newStartDate);
-	        model.addAttribute("newStartDate", newStartDate); // 새로운 시작일을 model에 추가
+	        LocalDate newStartDate = lastEndDate.plusDays(1);
+
+	        System.out.println("컨트롤러의 회원의 재결제 시작일 : " + newStartDate);
+
+	        model.addAttribute("newStartDate", newStartDate);
 	    }
+	    
+	    // 회원권 조회
+	    List<PaymentTypeVO> paymentList = paymentService.getMembershipList();
+	    model.addAttribute("paymentList", paymentList);
 	    
 	    return "/payment/paymentInsert";
 	}
@@ -186,7 +145,6 @@ public class PaymentController {
 	                    .atZone(ZoneId.systemDefault())
 	                    .toLocalDate()
 	                    .atStartOfDay(); // 시작일의 00:00:00으로 설정
-	
 	                existingPayment.setPa_start(Timestamp.valueOf(startDateTime)); // 새로운 시작일로 설정
 	                System.out.println("새로운 결제 시작 날짜: " + startDateTime);
 	            }
@@ -215,27 +173,8 @@ public class PaymentController {
 	            
 	            // 결제 상태 처리
 	            String paymentStatus = history.getPh_status();
-	            switch (paymentStatus) {
-	                case "paid":
-	                    payment.setPa_state("결제완료");
-	                    break;
-	                case "pending":
-	                    payment.setPa_state("결제진행중");
-	                    break;
-	                case "failed":
-	                    payment.setPa_state("결제실패");
-	                    break;
-	                case "canceled":
-	                    payment.setPa_state("결제취소");
-	                    break;
-	                case "refunded":
-	                    payment.setPa_state("결제환불");
-	                    break;
-	                default:
-	                    payment.setPa_state("알 수 없는 상태");
-	                    break;
-	            }
-	            System.out.println("결제 기록 저장용 텍스트 값 : " + paymentStatus);
+	            StatusName(payment, paymentStatus);
+	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
 
 	            // 결제 업데이트 - 하지만 결제 관리 때문에 update가 아닌 insert임
 	            boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
@@ -269,29 +208,10 @@ public class PaymentController {
 	            LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
 	            String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	            System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
-	
+
 	            // 결제 상태 처리
 	            String paymentStatus = history.getPh_status();
-	            switch (paymentStatus) {
-	                case "paid":
-	                    payment.setPa_state("결제완료");
-	                    break;
-	                case "pending":
-	                    payment.setPa_state("결제진행중");
-	                    break;
-	                case "failed":
-	                    payment.setPa_state("결제실패");
-	                    break;
-	                case "canceled":
-	                    payment.setPa_state("결제취소");
-	                    break;
-	                case "refunded":
-	                    payment.setPa_state("결제환불");
-	                    break;
-	                default:
-	                    payment.setPa_state("알 수 없는 상태");
-	                    break;
-	            }
+	            StatusName(payment, paymentStatus);
 	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
 	            
 	            // 결제 처리
@@ -353,106 +273,75 @@ public class PaymentController {
 
 	// PT 결제 get
 	@GetMapping("/paymentInsertPT")
-	public String paymentPTInsert(Model model, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
-		List<PaymentTypeVO> paymentPTList = paymentService.getPTMembershipList();
-
+	public String paymentInsertPT(Model model, HttpSession session,
+	        HttpServletRequest request, HttpServletResponse response) {
+		
 	    // 현재 날짜를 yyyy-MM-dd 형식으로 포맷
 	    LocalDateTime today = LocalDateTime.now();
 	    String currentDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	    
+
 	    // 사용자 ID 가져오기
 	    MemberVO user = (MemberVO) session.getAttribute("user");
-	    
-	    // 로그인하지 않은 상태라면, 사용자가 로그인되어 있지 않으면 이전 URL을 세션에 저장하고 로그인 페이지로 리다이렉트
-	    /*
-	    if (user == null) {
-	        try {
-	            // 현재 요청 URL을 세션에 저장 (로그인 후 돌아올 수 있게)
-	            String prevUrl = request.getRequestURL().toString();
-	            session.setAttribute("prevUrl", prevUrl);
-	            System.out.println("저장된 이전 URL: " + prevUrl);
 
-	            // 로그인 페이지로 리다이렉트 (JavaScript로 처리)
-	            response.setContentType("text/html; charset=UTF-8");
-	            response.getWriter().write("<script>alert(\"로그인이 필요합니다. 로그인 페이지로 이동합니다.\");</script>");
-	            response.getWriter().write("<script>window.location.href='" + request.getContextPath() + "/login';</script>");
-	            return null;  // 더 이상 처리하지 않음
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        return null;
-	    }
-	    */
+	    // 회원권 조회
+	    List<PaymentTypeVO> paymentPTList = paymentService.getMembershipPTList();
 	    
-	    // 기존 결제 정보를 조회
-	    PaymentVO existingMembership = paymentService.getPaymentMembership(user.getMe_id());
-	    // 기존 PT 결제 정보를 조회
-	    PaymentVO existingMembershipPT = paymentService.getPaymentPT(user.getMe_id());
+	    // 결제 정보를 가져옴
+	    PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
 	    
-	    String firstStartDateStr = null;
-	    String lastEndDateStr = null;
-	    boolean isRePayment = false; // 재결제 여부
+	    // 회원권 유무 확인
+	    boolean hasMembership = paymentDetails.getFirstStartDate() != null;
 	    
-	    // 첫 결제 여부 판단
-	    boolean hasMembership = (existingMembership != null); // 회원권 여부
-	    boolean hasPTPayment = existingMembershipPT != null; // PT 결제 정보가 있는지
-
-	    // 기존 결제의 최초 시작일과 최근 만료일 가져오기
-	    if (existingMembership != null) {
-	        String startDateString = paymentService.getFirstPaymentStartDate(user.getMe_id());
-	        String endDateString = paymentService.getLastPaymentEndDate(user.getMe_id());
-
-	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 형식에 맞게 설정
-	        
-	        try {
-	            if (startDateString != null) {
-	                Date firstStartDate = formatter.parse(startDateString); // String을 Date로 변환
-	                firstStartDateStr = formatter.format(firstStartDate); // 원하는 형식으로 다시 포맷팅
-	            }
-	            if (endDateString != null) {
-	                Date lastEndDate = formatter.parse(endDateString); // String을 Date로 변환
-	                lastEndDateStr = formatter.format(lastEndDate); // 원하는 형식으로 다시 포맷팅
-	                isRePayment = true; // 재결제임을 나타냄
-	            }
-	        } catch (ParseException e) {
-	            e.printStackTrace(); // 날짜 형식이 맞지 않을 경우 예외 처리
-	        }
-	    }
-
-	    // 현재 날짜 및 기존 결제 시작일 추가
-	    model.addAttribute("currentDate", currentDate);
-	    model.addAttribute("firstStartDate", firstStartDateStr);  // 최초 시작일 추가
-	    model.addAttribute("lastEndDate", lastEndDateStr);  // 최근 만료일 추가
-	    model.addAttribute("isRePayment", isRePayment); // 재결제 여부 추가
-	    model.addAttribute("hasMembership", hasMembership); // 회원권 여부 추가
+	    // PT 결제 가능 여부
+	    boolean canPayPT = hasMembership && paymentDetails.isRePayment();
+	    
+	    // model에 보내기
 	    model.addAttribute("paymentPTList", paymentPTList);
+	    model.addAttribute("hasMembership", hasMembership);
+	    model.addAttribute("canPayPT", canPayPT);
+	    model.addAttribute("firstStartDate", paymentDetails.getFirstStartDate());
+	    model.addAttribute("lastEndDate", paymentDetails.getLastEndDate());
+	    model.addAttribute("ptFirstStartDate", paymentDetails.getPtFirstStartDate());
+	    model.addAttribute("ptLastEndDate", paymentDetails.getPtLastEndDate());
+	    model.addAttribute("isRePaymentForPT", paymentDetails.isRePaymentForPT());
+	    model.addAttribute("currentDate", currentDate);
 	    
-	    // 시작일을 최초 시작일 +1일로 설정
-	    if (firstStartDateStr != null && lastEndDateStr != null) {
-	        LocalDate lastEndDate = LocalDate.parse(lastEndDateStr);
-	        LocalDate newStartDate = lastEndDate.plusDays(1); // 만료일에 +1일 추가
-	        System.out.println("새시작일 : " + newStartDate);
-	        model.addAttribute("newStartDate", newStartDate); // 새로운 시작일을 model에 추가
+	    System.out.println("회원권 유무 확인 : " + hasMembership);
+	    System.out.println("PT결제 가능 여부 : " + canPayPT);
+	    System.out.println("PT 결제 정보 : " + paymentDetails);
+	    System.out.println("이용권 시작일 : " + paymentDetails.getFirstStartDate());
+	    System.out.println("이용권 만료일 : " + paymentDetails.getLastEndDate());
+	    System.out.println("PT 시작일 : " + paymentDetails.getPtFirstStartDate());
+	    System.out.println("PT 만료일 : " + paymentDetails.getPtLastEndDate());
+	    System.out.println("PT는 재결제 인가요? : " + paymentDetails.isRePaymentForPT());
+	    
+	    // newStartDate 선언
+	    LocalDate newStartDate = null; // 여기에서 선언
+
+	    // 재시작일을 마지막 결제일의 만료일 +1일로 설정
+	    String ptLastEndDateStr = paymentDetails.getPtLastEndDate(); 
+
+	    if (ptLastEndDateStr != null) {
+	        LocalDate lastPTEndDate = LocalDate.parse(ptLastEndDateStr);
+	        newStartDate = lastPTEndDate.plusDays(1); // 만료일 + 1
+	        System.out.println("재시작일: " + newStartDate);
+	    } else {
+	        // ptLastEndDateStr가 null일 경우 첫 결제로 처리
+	        System.out.println("PT 결제 내역이 없습니다. 첫 결제로 처리합니다.");
+	        // 여기에서 첫 결제에 대한 처리 로직 추가 가능
+	        // 예: newStartDate = LocalDate.now(); 또는 다른 적절한 날짜
 	    }
 
-	    if (hasMembership && hasPTPayment) {
-	        model.addAttribute("isFirstPayment", false); // 재결제
-	    } else if (hasMembership && !hasPTPayment) {
-	        model.addAttribute("isFirstPayment", true); // 첫 결제
-	    } else {
-	        model.addAttribute("isFirstPayment", false); // 회원권 없음
-	    }
+	    model.addAttribute("newStartDate", newStartDate);
 	    
 	    return "/payment/paymentInsertPT";
 	}
-
-
+	
 	// PT 결제 post 메서드 (JSON)
 	@PostMapping("/paymentInsertPT")
 	@ResponseBody
 	public Map<String, Object> paymentInsertPTPost(@RequestBody PaymentRequestDTO request, HttpSession session) {
-	    PaymentVO payment = request.getPayment();
+		PaymentVO payment = request.getPayment();
 	    PaymentTypeVO paymentType = request.getPaymentType();
 	    PaymentHistoryVO history = request.getPaymentHistory();
 	    
@@ -484,7 +373,6 @@ public class PaymentController {
 	                    .atZone(ZoneId.systemDefault())
 	                    .toLocalDate()
 	                    .atStartOfDay(); // 시작일의 00:00:00으로 설정
-	
 	                existingPayment.setPa_start(Timestamp.valueOf(startDateTime)); // 새로운 시작일로 설정
 	                System.out.println("새로운 결제 시작 날짜: " + startDateTime);
 	            }
@@ -513,27 +401,8 @@ public class PaymentController {
 	            
 	            // 결제 상태 처리
 	            String paymentStatus = history.getPh_status();
-	            switch (paymentStatus) {
-	                case "paid":
-	                    payment.setPa_state("결제완료");
-	                    break;
-	                case "pending":
-	                    payment.setPa_state("결제진행중");
-	                    break;
-	                case "failed":
-	                    payment.setPa_state("결제실패");
-	                    break;
-	                case "canceled":
-	                    payment.setPa_state("결제취소");
-	                    break;
-	                case "refunded":
-	                    payment.setPa_state("결제환불");
-	                    break;
-	                default:
-	                    payment.setPa_state("알 수 없는 상태");
-	                    break;
-	            }
-	            System.out.println("결제 기록 저장용 텍스트 값 : " + paymentStatus);
+	            StatusName(payment, paymentStatus);
+	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
 
 	            // 결제 업데이트 - 하지만 결제 관리 때문에 update가 아닌 insert임
 	            boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
@@ -567,29 +436,10 @@ public class PaymentController {
 	            LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
 	            String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	            System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
-	
+
 	            // 결제 상태 처리
 	            String paymentStatus = history.getPh_status();
-	            switch (paymentStatus) {
-	                case "paid":
-	                    payment.setPa_state("결제완료");
-	                    break;
-	                case "pending":
-	                    payment.setPa_state("결제진행중");
-	                    break;
-	                case "failed":
-	                    payment.setPa_state("결제실패");
-	                    break;
-	                case "canceled":
-	                    payment.setPa_state("결제취소");
-	                    break;
-	                case "refunded":
-	                    payment.setPa_state("결제환불");
-	                    break;
-	                default:
-	                    payment.setPa_state("알 수 없는 상태");
-	                    break;
-	            }
+	            StatusName(payment, paymentStatus);
 	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
 	            
 	            // 결제 처리
@@ -611,6 +461,41 @@ public class PaymentController {
 	    }
 	    return response; // JSON 형식으로 응답
 	}
-
+	
+	
+	
+	
+	
+	
+	/**
+	 * 결제 상태에 따라 PaymentVO 객체의 결제 상태를 업데이트하는 메서드
+	 * @param payment 결제 정보 객체
+	 * @param paymentStatus 
+	 * @return paymentStatus에 따라 pa_state를 설정하고, 해당 상태를 반환한다.
+	 * 예) 결제 상태가 "paid"이면 pa_state를 "결제완료"로 설정
+	 */
+	public String StatusName(PaymentVO payment, String paymentStatus) {
+		switch (paymentStatus) {
+	        case "paid":
+	            payment.setPa_state("결제완료");
+	            break;
+	        case "pending":
+	            payment.setPa_state("결제진행중");
+	            break;
+	        case "failed":
+	            payment.setPa_state("결제실패");
+	            break;
+	        case "canceled":
+	            payment.setPa_state("결제취소");
+	            break;
+	        case "refunded":
+	            payment.setPa_state("결제환불");
+	            break;
+	        default:
+	            payment.setPa_state("알 수 없는 상태");
+	            break;
+	    }
+		return paymentStatus;
+	}
 	
 }

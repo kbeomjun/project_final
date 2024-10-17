@@ -26,7 +26,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${paymentList}" var="ptList">
+				<c:forEach items="${membershipList}" var="ptList">
 		            <tr>
 		                <td>${ptList.pt_name}</td>
 		                <td>${ptList.pt_date}</td>

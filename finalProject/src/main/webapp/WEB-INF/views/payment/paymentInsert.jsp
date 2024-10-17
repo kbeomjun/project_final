@@ -18,8 +18,8 @@
 
     <c:if test="${firstStartDate != null && firstStartDate != ''}">
         <div class="membership-info my-10">
-            <p class="mb-0">회원님의 이용권 시작일: <strong class="text-success">${firstStartDate}</strong></p>
-            <p>회원님의 이용권 만료일: <strong class="text-primary">${lastEndDate}</strong></p>
+            <p class="mb-0">회원님의 회원권 시작일: <strong class="text-success">${firstStartDate}</strong></p>
+            <p>회원님의 회원권 만료일: <strong class="text-primary">${lastEndDate}</strong></p>
         </div>
     </c:if>
     
@@ -235,7 +235,7 @@
 		        console.log(count);
 		        console.log(formattedPrice);
 		
-		        // 팝업 내용 설정
+				// 팝업 내용 설정
 		        const modalContent = `
 		            <p>결제하시겠습니까?</p>
 		            <p>이용권: \${name}</p>
@@ -271,7 +271,7 @@
 				    console.log(pa_start);
 		            
 		            // 현재 사용자의 시작 날짜 (예시: 2024-10-15)
-		            const currentStartDate = new Date('2024-10-15T00:00:00'); // DB에서 가져와야 함
+		            const currentStartDate = new Date('${currentDate}'); // DB에서 가져와야 함
 		            const selectedStartDate = new Date(pa_start); // 사용자가 선택한 날짜
 		
 		            // 사용자가 선택한 시작 날짜가 현재 시작 날짜보다 이전인지 확인
@@ -310,10 +310,10 @@
 		                        paymentType: {
 		                            pt_num: $('#pt_num').val(), // 이용권 번호
 		                            pt_name: name, // 이용권
-		                            pt_type: $('#pt_type').val(), // 이용권 종류
-		                            pt_date: $('#pt_date').val(), // 기간
-		                            pt_count: $('#pt_count').val(), // 횟수
-		                            pt_price: $('#pt_price').val(), // 가격
+		                            pt_type: type, // 이용권 종류
+		                            pt_date: date, // 기간
+		                            pt_count: count, // 횟수
+		                            pt_price: price, // 가격
 		                        },
 		                        paymentHistory: {
 		                            ph_imp_uid: rsp.imp_uid, // 결제 고유 ID
