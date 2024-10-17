@@ -142,15 +142,24 @@
 		function displayFileList(file){
 			console.log(file);
 			$('.card-insert').children().remove();
-			let fReader = new FileReader();
-		    fReader.readAsDataURL(file[0]);
-		    fReader.onloadend = function(event){
-		    	let path = event.target.result;
-		        let img = `
-		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
-		        `;
+			if(file.length > 0){
+				let fReader = new FileReader();
+			    fReader.readAsDataURL(file[0]);
+			    fReader.onloadend = function(event){
+			    	let path = event.target.result;
+			        let img = `
+			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
+			        `;
+			        $('.card-insert').append(img);
+			    }
+			}else{
+			    let img = `
+		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
+		    	`;
 		        $('.card-insert').append(img);
-		    }
+			}
+		    
 		}
 		$(document).on("change", "#file", function(){
 			displayFileList($("#file")[0].files);
@@ -167,16 +176,25 @@
 				$('#file2').after(str);
 				del++;
 			}
-			let fReader = new FileReader();
-		    fReader.readAsDataURL(file[0]);
-		    fReader.onloadend = function(event){
-		    	let path = event.target.result;
-		    	console.log(path);
-		        let img = `
-		        	<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%;" src="\${path}">
-		        `;
+			var count = $('#file2')[0].files.length - del;
+			if(count == 0){
+				let fReader = new FileReader();
+			    fReader.readAsDataURL(file[0]);
+			    fReader.onloadend = function(event){
+			    	let path = event.target.result;
+			    	console.log(path);
+			        let img = `
+			        	<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%;" src="\${path}">
+			        `;
+			        $('.card-update').append(img);
+			    }
+			}else{
+				let img = `
+		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
+		    	`;
 		        $('.card-update').append(img);
-		    }
+			}
 		}
 		$(document).on("change", "#file2", function(){
 			displayFileList2($("#file2")[0].files);
@@ -214,7 +232,6 @@
 				$('.error-file').append(msgRequired);
 				flag = false;
 			}
-			
 			if($('#se_name').val() == ''){
 				$('.error-name').append(msgRequired);
 				$('#se_name').focus();
@@ -224,6 +241,16 @@
 			return flag;
 		});
 		
+		$("#file2").change(function(){
+			$('.error-file2').children().remove();
+			
+			var count = $('#file2')[0].files.length - del;
+			if(count < 0){
+				$('.error-file2').append(msgRequired);
+			}else{
+				$('.error-file2').children().remove();
+			}
+		});
 		$('#se_name2').keyup(function(){
 			$('.error-name2').children().remove();
 			
@@ -236,7 +263,12 @@
 		$('#form2').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
+			var count = $('#file2')[0].files.length - del;
 			
+			if(count < 0){
+				$('.error-file2').append(msgRequired);
+				flag = false;
+			}
 			if($('#se_name2').val() == ''){
 				$('.error-name2').append(msgRequired);
 				$('#se_name2').focus();
@@ -276,6 +308,7 @@
 	    
 	    $('.btn-close').click(function(){
 	    	$('.error').children().remove();
+	    	$('#se_name').val("");
 	    });
 	    
 	    var search = "";

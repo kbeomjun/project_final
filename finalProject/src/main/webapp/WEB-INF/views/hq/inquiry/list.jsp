@@ -346,6 +346,7 @@
 			});
 		});
 		$('.btn-close').click(function(){
+			$('.error').children().remove();
 			$('#mi_answer').val("");
 		});
 		

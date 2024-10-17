@@ -282,6 +282,7 @@
 		});
 		
 		$('.btn-close').click(function(){
+			$('.error').children().remove();
 			$('#mi_title').val("");
 			$('#mi_content').val("");
 		});

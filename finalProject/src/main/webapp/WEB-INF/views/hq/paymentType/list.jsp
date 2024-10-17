@@ -291,6 +291,7 @@
     
     <script type="text/javascript">
     	$('.btn-close').click(function(){
+    		$('.error').children().remove();
     		$('#pt_name').val("");
 			$('#pt_date').val("");
 			$('#pt_count').val("");

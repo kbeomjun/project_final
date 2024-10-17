@@ -98,7 +98,7 @@
 			      		<div class="modal-content">
 				        	<div class="modal-header">
 				          		<h4 class="modal-title">입고</h4>
-				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 				        	</div>
 				        	<div class="modal-body">
 				          		<div class="form-group">
@@ -116,7 +116,7 @@
 								<button class="btn btn-outline-info col-12 btn-insert">재고 추가</button>
 				        	</div>
 				        	<div class="modal-footer">
-				          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+				          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
 				        	</div>
 			      		</div>
 			    	</div>
@@ -180,6 +180,7 @@
 						}
 						displayList(search);
 						$('#myModal').modal("hide");
+						$('#be_amount').val("");
 					},
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
@@ -264,6 +265,11 @@
 				}
 			});
 		}
+		
+		$('.btn-close').click(function(){
+    		$('.error').children().remove();
+    		$('#be_amount').val("");
+    	});
 	</script>
 	
 	<script type="text/javascript">
