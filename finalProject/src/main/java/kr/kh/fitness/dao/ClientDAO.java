@@ -41,6 +41,8 @@ public interface ClientDAO {
 
 	int selectReviewPostTotalCount(Criteria cri);
 
+	List<MemberInquiryVO> selectFaqList();
+
 	List<InquiryTypeVO> selectInquiryTypeList();
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);
