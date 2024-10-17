@@ -96,7 +96,7 @@
 										<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 									</td>
 									<td>
-										<c:url var="url" value="/admin/schedule/detail">
+										<c:url var="url" value="/admin/schedule/member">
 											<c:param name="bs_num" value="${list.bs_num}"/>
 											<c:param name="view" value="${view}"/>
 											<c:param name="page" value="${pm.cri.page}"/>
@@ -191,7 +191,7 @@
 						</div>	
 					</form>
 					<div class="text-right mb-3">	
-						<a href="<c:url value="/admin/schedule/insert/${pm.cri.br_name}"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
+						<a href="<c:url value="/admin/schedule/regist/${pm.cri.br_name}"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 					</div>
 	                
 	            </div>

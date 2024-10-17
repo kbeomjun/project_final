@@ -110,7 +110,7 @@
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${branchName} 스케줄 등록</h2>
 					<p class="text-danger"> 안내: 이전에 등록한 프로그램과 일정이 겹치면 등록이 안됩니다. </p>
-					<form action="<c:url value="/admin/schedule/insert"/>" method="post" id="form">
+					<form action="<c:url value="/admin/schedule/regist"/>" method="post" id="form">
 						<input type="hidden" name="bp_br_name" value="${branchName}">
     					<input type="hidden" name="sp_type" id="sp_type">
 						

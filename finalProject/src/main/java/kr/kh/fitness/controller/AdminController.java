@@ -165,7 +165,7 @@ public class AdminController {
 			model.addAttribute("scheduleList", scheduleList);
 			model.addAttribute("view", view);
 			model.addAttribute("pm", pm);
-			return "/admin/scheduleList";
+			return "/admin/schedule/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,8 +175,8 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 상세 -> 예약한 회원 목록(이름+전화번호+생년월일+성별+노쇼경고횟수)
-	@GetMapping("/schedule/detail")
-	public String scheduleDetail(Model model, Integer bs_num, String view, BranchCriteria cri) {
+	@GetMapping("/schedule/member")
+	public String scheduleMember(Model model, Integer bs_num, String view, BranchCriteria cri) {
 		
 		List<MemberVO> memberList = adminService.getScheduleMemberList(bs_num);
 		
@@ -184,11 +184,11 @@ public class AdminController {
 		model.addAttribute("cri", cri);
 		model.addAttribute("view", view);
 		
-		return "/admin/scheduleDetail";
+		return "/admin/schedule/member";
 	}
 	
 	//지점 프로그램 일정 추가 get
-	@GetMapping("/schedule/insert/{br_name}")
+	@GetMapping("/schedule/regist/{br_name}")
 	public String scheduleInsert(Model model, @PathVariable("br_name")String br_name) {
 		
 		List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
@@ -197,7 +197,7 @@ public class AdminController {
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("branchName", br_name);
 		
-		return "/admin/scheduleInsert";
+		return "/admin/schedule/regist";
 	}
 //	
 //	//지점 프로그램 일정 추가 post
@@ -237,7 +237,7 @@ public class AdminController {
 //	}
 	
 	//지점 프로그램 일정 추가 post
-	@PostMapping("/schedule/insert")
+	@PostMapping("/schedule/regist")
 	public String scheduleInsertPost(Model model, HttpServletRequest request, @ModelAttribute ProgramInsertFormDTO pif) {
 		
 		// System.out.println(pif);
@@ -277,7 +277,7 @@ public class AdminController {
 		model.addAttribute("view", view);
 		model.addAttribute("cri", cri);
 		
-		return "/admin/scheduleUpdate";
+		return "/admin/schedule/update";
 	}
 	
 	//지점 프로그램 일정 수정 post
