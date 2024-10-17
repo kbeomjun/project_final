@@ -621,7 +621,7 @@ public class HQServiceImp implements HQService {
 		if(!hqDao.updatePayment(pa)) {msg = "결제 정보를 수정하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		double re_percentDouble = (re.getRe_price() / pa.getPa_price() * 100);
+		double re_percentDouble = ((double)re.getRe_price() / pa.getPa_price() * 100);
 		re.setRe_percent((int)Math.round(re_percentDouble));
 		if(!hqDao.insertRefund(re)) {msg = "환불을 등록하지 못했습니다.";}
 		return msg;
