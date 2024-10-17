@@ -91,6 +91,10 @@
 	<delete id="deleteReviewPost">
 		delete from review_post where rp_num = #{rp_num}
 	</delete>
+
+	<select id="selectFaqList" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_state = 'FAQ' order by mi_it_name
+	</select>
 	
 	<select id="selectInquiryTypeList" resultType="InquiryTypeVO">
 		select * from inquiry_type

@@ -132,6 +132,11 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
+	public List<MemberInquiryVO> getFaqList() {
+		return clientDao.selectFaqList();
+	}
+
+	@Override
 	public List<InquiryTypeVO> getInquiryTypeList() {
 		return clientDao.selectInquiryTypeList();
 	}

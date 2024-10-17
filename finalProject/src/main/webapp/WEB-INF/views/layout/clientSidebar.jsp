@@ -40,6 +40,9 @@
                 <a class="nav-link" href="<c:url value='/client/review/list'/>">리뷰게시판</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<c:url value='/client/inquiry/faq'/>">자주묻는질문</a>
+            </li>            
+            <li class="nav-item">
                 <a class="nav-link" href="<c:url value='/client/inquiry/insert'/>">1:1문의</a>
             </li>
             <c:if test="${user ne null && user.me_authority eq 'USER'}">

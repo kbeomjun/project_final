@@ -39,6 +39,8 @@ public interface ClientService {
 
 	PageMaker getPageMakerInReview(Criteria cri);
 
+	List<MemberInquiryVO> getFaqList();
+
 	List<InquiryTypeVO> getInquiryTypeList();
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);

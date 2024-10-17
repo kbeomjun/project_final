@@ -170,6 +170,17 @@ public class ClientController {
 		return "/main/message";
 	}
 	
+	//자주묻는질문
+	@GetMapping("/inquiry/faq")
+	public String inquiryFaq(Model model) {
+		
+		List<MemberInquiryVO> faqList = clientService.getFaqList();
+		
+		model.addAttribute("faqList", faqList);
+		
+		return "/client/inquiry/faq";
+	}
+	
 	//1:1문의 등록 get
 	@GetMapping("/inquiry/insert")
 	public String inquiryInsert(Model model, HttpSession session) {
