@@ -70,21 +70,40 @@
         </ul>
     </div>
 	
-	<script type="text/javascript">
-	    document.addEventListener('DOMContentLoaded', function() {
-	        const toggle = document.getElementById('mypageToggle');
-	        const submenu = document.getElementById('mypageMenu');
-	
-	        toggle.addEventListener('click', function(event) {
-	            event.preventDefault(); // 페이지 이동 방지
-	            if (submenu.style.display === "none") {
-	                submenu.style.display = "block"; // 메뉴 보이기
-	            } else {
-	                submenu.style.display = "none"; // 메뉴 숨기기
-	            }
-	        });
-	    });
-	</script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('mypageToggle');
+            const submenu = document.getElementById('mypageMenu');
+
+            // 현재 URL이 마이페이지와 관련된지 확인
+            const currentPath = window.location.pathname;
+
+            // 마이페이지 관련 경로
+            const myPagePaths = [
+                '/client/mypage/schedule/',
+                '/client/mypage/membership/',
+                '/client/mypage/review/',
+                '/client/mypage/inquiry/',
+                '/client/mypage/pwcheck/',
+                '/client/mypage/pwchange/'
+            ];
+
+            // 마이페이지 경로라면 서브메뉴를 자동으로 펼침
+            if (myPagePaths.some(path => currentPath.includes(path))) {
+                submenu.style.display = 'block';
+            }
+
+            // 마이페이지 메뉴 토글 클릭 이벤트
+            toggle.addEventListener('click', function (event) {
+                event.preventDefault(); // 페이지 이동 방지
+                if (submenu.style.display === 'none') {
+                    submenu.style.display = 'block'; // 메뉴 보이기
+                } else {
+                    submenu.style.display = 'none'; // 메뉴 숨기기
+                }
+            });
+        });
+    </script>
 	
 </body>
 </html>
