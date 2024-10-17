@@ -1,0 +1,236 @@
+@charset "UTF-8";
+
+.customoverlay {
+	position: relative;
+	bottom: 72px;
+	left: 2px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ddd;
+	float: left;
+}
+
+.customoverlay:nth-of-type(n) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
+
+
+.customoverlay a {
+    display: inline-block; /* 인라인 블록으로 변경 */
+    padding: 5px 10px; /* 안쪽 여백 설정 */
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
+}
+
+.customoverlay .title {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
+}
+
+.customoverlay:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: -12px;
+	width: 22px;
+	height: 12px;
+	background:
+		url('../image/icon/vertex_white.png')
+}
+
+.btn-branch {
+	width: 120px; /* 원하는 고정 너비 설정 */
+	text-align: center; /* 버튼 내 텍스트를 가운데 정렬 */
+}
+
+.branch-navbar {
+	position: relative;
+	float: left;
+	width: 16.66%;
+	float: left;
+	padding-left: 40px;
+}
+
+.branch-detail-container {
+	position: relative;
+	float: left;
+	width: 83.34%;
+	padding-left: 40px;
+	padding-bottom: 100px;
+	border-left: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+.branch-tab {
+	position: relative;
+	height: 60px;
+	margin: 0px;
+	border-bottom: 1px solid #555;
+	background: #eee;
+}
+
+.branch-detail-container .branch-detail .branch-tab ul li a {
+	display: block;
+	height: 60px;
+	line-height: 60px;
+	font-size: 17px;
+	color: #333;
+	text-align: center;
+	padding: 0;
+}
+
+.branch-detail-container .branch-detail .branch-tab ul li a.active {
+	color: #ed1b24;
+	border-bottom: 1px solid #ed1b24;
+}
+
+.branch-detail-container .branch-detail .branch-tab ul li {
+	float: left;
+	width: 25%;
+}
+
+.swiper-slide {
+	background-color: transparent;
+}
+
+.swiper-container {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.swiper-slide {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+}
+
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
+    width: 80px;
+    height: 80px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    text-align: center;
+    line-height: 50px;
+}
+
+
+.branch-image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* 이미지 간격 */
+}
+.branch-image-container a {
+    flex: 0 0 calc(25% - 15px); /* 3개씩 배치, 간격 계산 */
+    box-sizing: border-box;
+}
+.branch-image-container img {
+    width: 100%;
+    height: 176px; /* 고정된 높이 설정 */
+    object-fit: cover; /* 이미지 비율 유지하면서 크기에 맞춤 */
+}
+
+.half-width {
+    flex: 0 0 45%; /* 너비를 50%로 설정 */
+    box-sizing: border-box;
+}
+
+.branch-info-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* 요소들을 가운데 정렬 */
+    gap: 30px; /* 요소 간의 간격 */
+    max-width: 1200px; /* 전체 컨테이너의 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위해 자동 마진 */
+}
+.branch-map-container {
+	width: 60%;
+}
+
+.branch-content-container {
+	padding: 32px;
+    width: 30%;
+}
+    
+/* 반응형 설정: 화면이 작아지면 세로 배치 */
+@media (max-width: 768px) {
+    .branch-map-container, .branch-content-container {
+        flex: 1 1 100%; /* 모바일에서는 전체 너비 사용 */
+        max-width: none;
+    }
+}
+
+/* 지도 스타일 조정 */
+#map {
+    width: 100%; /* 부모 요소의 너비에 맞춤 */
+    height: 400px;
+    background-color: lightgray;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.node {
+    position: absolute;
+    cursor: pointer;
+    width: 64px;
+    height: 64px;
+}
+
+.tooltip {
+    background-color: #fff;
+    position: absolute;
+    border: 2px solid #333;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 3px 5px 0;
+    left: 65px;
+    top: 14px;
+    border-radius: 5px;
+    white-space: nowrap;
+    display: none;
+}
+
+.tracker {
+    position: absolute;
+    margin: -35px 0 0 -30px;
+    display: none;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.icon {
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    width: 48px;
+    height: 48px;
+    background-image: url('../image/icon/sample_fitness_icon.svg');
+    background-size: 48px 48px; /* 이미지 크기를 48px × 48px로 조정 */
+    background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
+}
+
+.balloon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('../image/icon/balloon.png');
+    -ms-transform-origin: 50% 34px;
+    -webkit-transform-origin: 50% 34px;
+    transform-origin: 50% 34px;
+}

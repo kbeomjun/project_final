@@ -107,7 +107,8 @@ CREATE TABLE `member_inquiry` (
 	`mi_num`		int 			primary key auto_increment,
 	`mi_title`		varchar(255)	not NULL,
 	`mi_content`	longtext		not NULL,
-	`mi_state`		varchar(100)	not NULL default '답변대기중',
+    `mi_answer`		longtext		null,
+	`mi_state`		varchar(100)	not NULL default '답변대기',
 	`mi_email`		varchar(100)	not NULL,
     `mi_date`		datetime		not NULL default current_timestamp,
 	`mi_br_name`	varchar(100)	NOT NULL,
@@ -153,11 +154,28 @@ CREATE TABLE `payment` (
 drop table if exists `payment_type`;
 CREATE TABLE `payment_type` (
 	`pt_num`		int 			primary key auto_increment,
+	`pt_name`		varchar(100)	not NULL,
 	`pt_type`		varchar(100)	not NULL,
 	`pt_date`		int				not NULL,
     `pt_count`		int				not NULL,
 	`pt_price`		int				not NULL
 );
+
+DROP TABLE IF EXISTS `payment_category`;
+CREATE TABLE `payment_category` (
+	`pc_num`			int 			primary key auto_increment NOT NULL,
+	`pc_imp_uid`		varchar(30)		NOT NULL,
+	`pc_merchant_uid`	varchar(50)		NOT NULL,
+	`pc_amount`			int				NOT NULL,
+	`pc_status`			varchar(10)		NOT NULL,
+	`pc_paid_at`		bigint			NOT NULL,
+	`pc_card_name`		varchar(30)		NULL,
+	`pc_card_number`	bigint			NOT NULL,
+	`pc_card_quota`		varchar(5)		NOT NULL,
+	`pc_pt_num`			int				NOT NULL,
+	`pc_me_id`			varchar(100)	NOT NULL
+);
+
 
 drop table if exists `branch_program_schedule`;
 CREATE TABLE `branch_program_schedule` (
@@ -245,11 +263,25 @@ ALTER TABLE `program_reservation`
 ADD CONSTRAINT `FK_program_reservation_schedule`
   FOREIGN KEY (`pr_bs_num`)
   REFERENCES `branch_program_schedule` (`bs_num`)
-  ON DELETE SET NULL;
+  ON DELETE CASCADE;
 
 ALTER TABLE `payment` 
 ADD CONSTRAINT `FK_payment_member`
   FOREIGN KEY (`pa_me_id`)
+  REFERENCES `member` (`me_id`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
+
+ALTER TABLE `payment_category`
+ADD CONSTRAINT `FK_payment_category_payment_type`
+  FOREIGN KEY (`pc_pt_num`)
+  REFERENCES `payment_type` (`pt_num`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
+
+ALTER TABLE `payment_category`
+ADD CONSTRAINT `FK_payment_category_member`
+  FOREIGN KEY (`pc_me_id`)
   REFERENCES `member` (`me_id`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;

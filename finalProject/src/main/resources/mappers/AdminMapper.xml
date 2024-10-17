@@ -48,8 +48,8 @@
 		select * from sports_program
 	</select>
 	
-	<select id="selectEmployeeList" resultType="EmployeeVO">
-		select * from Employee where em_br_name = #{em_br_name}
+	<select id="selectEmployeeListByBranch" resultType="EmployeeVO">
+		select * from Employee where em_br_name = #{em_br_name} order by em_num
 	</select>
 	
 	<select id="selectBranchProgram" resultType="BranchProgramVO">
@@ -61,16 +61,27 @@
 		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
 	</insert>
 	
-	<select id="selectScheduleWithCurrent" resultType="BranchProgramScheduleVO">
-		select * from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total}
+	<select id="selectBranchProgramByNum" resultMap="BranchProgramMap">
+		select 
+			* 
+		from 
+			branch_program 
+		join 
+			employee on em_num = bp_em_num
+		where 
+			bp_num = #{bp_num}
+	</select>
+	
+	<select id="selectScheduleWithCurrent" resultType="int">
+		select count(*) from branch_program_schedule where bs_bp_num = #{bp_num} and bs_current > #{bp_total} and bs_start > now()
 	</select>
 	
 	<update id="updateBranchProgram">
-		update branch_program set bp_total = #{bp_total} where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+		update branch_program set bp_total = #{bp_total} where bp_num = #{bp_num}
 	</update>
 
 	<delete id="deleteBranchProgram">
-		delete from branch_program where bp_br_name = #{bp_br_name} and bp_sp_name = #{bp_sp_name} and bp_em_num = #{bp_em_num}
+		delete from branch_program where bp_num = #{bp_num}
 	</delete>
 	
 	<select id="selectBranchScheduleList" resultType="BranchProgramScheduleVO">
@@ -83,9 +94,58 @@
 		join
 			employee on bp_em_num = em_num
 		where
-			bp_br_name = #{br_name}
-		order by
-			bs_start
+			bp_br_name = #{cri.br_name}
+			<if test="view == 'present'">
+				and bs_start > now()
+			</if>
+			<if test="view == 'past'">
+				and now() > bs_end
+			</if>
+			<choose>
+				<when test="cri.type == 'program'">
+					and bp_sp_name like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'trainer'">
+					and em_name like concat('%', #{cri.search},'%')
+				</when>
+			</choose>	
+		<if test="view == 'present'">
+			order by
+				bs_start
+		</if>
+		<if test="view == 'past'">
+			order by
+				bs_end desc
+		</if>
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectScheduleTotalCount" resultType="int">
+		select
+			count(*)  
+		from 
+			branch_program_schedule
+		join
+			branch_program on bp_num = bs_bp_num
+		join
+			employee on bp_em_num = em_num
+		where
+			bp_br_name = #{cri.br_name}
+			<if test="view == 'present'">
+				and bs_start > now()
+			</if>
+			<if test="view == 'past'">
+				and now() > bs_end
+			</if>
+			<choose>
+				<when test="cri.type == 'program'">
+				and bp_sp_name like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'trainer'">
+				and em_name like concat('%', #{cri.search},'%')
+				</when>
+			</choose>
 	</select>
 	
 	<select id="selectScheduleMemberList" resultType="MemberVO">
@@ -95,18 +155,42 @@
 			program_reservation
 		join
 			member on pr_me_id = me_id
-		join
-			branch_program_schedule on pr_bs_num = bs_num
 		where
-			bs_bp_num = #{bp_num} 
+			pr_bs_num = #{bs_num} 
 	</select>
 	
 	<select id="selectMemberList" resultType="MemberVO">
 		select * from member where me_authority = 'user'
 	</select>
 	
+	<select id="selectMemberListWithPagination" resultType="MemberVO">
+		select 
+			* 
+		from 
+			member 
+		where 
+			me_authority = 'user'
+		and
+			me_name like concat('%', #{search},'%')
+		order by
+			me_name
+		limit
+			#{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectMemberTotalCount" resultType="int">
+		select 
+			count(*) 
+		from 
+			member 
+		where 
+			me_authority = 'user'
+		and
+			me_name like concat('%', #{search},'%')
+	</select>
+	
 	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
-		select * from branch_program_schedule where bs_bp_num = #{bs_bp_num} and (#{bs_end} >= bs_start and bs_end >= #{bs_start})
+		select * from branch_program_schedule where bs_bp_num = #{bs_bp_num} and (#{bs_end} > bs_start and bs_end > #{bs_start})
 	</select>
 	
 	<insert id="insertSchedule" useGeneratedKeys="true" keyProperty="bs_num">
@@ -121,10 +205,6 @@
 	
 	<select id="updateScheduleByPTReservation">
 		update branch_program_schedule set bs_current = bs_current + 1 where bs_num = #{bs_num}
-	</select>
-	
-	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_br_name = #{br_name}
 	</select>
 	
 	<select id="selectScheduleByNum" resultType="BranchProgramScheduleVO">
@@ -150,4 +230,254 @@
 			bs_num = #{bs_num}
 	</update>
 	
+	<delete id="deleteSchedule">
+		delete from branch_program_schedule where bs_num = #{bs_num}
+	</delete>
+	
+	<select id="selectBranchOrderList" resultType="BranchOrderVO">
+		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectOrderTotalCount" resultType="int">
+		select count(*) from branch_order where bo_br_name = #{br_name}
+	</select>
+	
+	<select id="selectEquipmentListInHQ" resultType="BranchStockDTO">
+		select 
+			be_se_name, sum(be_amount) as be_se_total 
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = '본점' 
+		group by 
+			be_se_name 
+		having 
+			be_se_total >= 0
+	</select>
+	
+	<insert id="insertOrder">
+		insert into branch_order(bo_amount, bo_br_name, bo_se_name)
+		values(#{bo_amount}, #{bo_br_name}, #{bo_se_name})
+	</insert>
+	
+	<delete id="deleteOrder">
+		delete from branch_order where bo_num = #{bo_num}
+	</delete>
+	
+	<select id="selectEmployeeListByBranchWithPagination" resultType="EmployeeVO">
+		select * from Employee where em_br_name = #{br_name} order by em_num limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectEmployeeByBranchTotalCount" resultType="int">
+		select count(*) from Employee where em_br_name = #{br_name}
+	</select>
+	
+	<select id="selectEmployeeList" resultType="EmployeeVO">
+		select * from employee order by em_num
+	</select>
+	
+	<insert id="insertEmployee">
+		insert into employee
+			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 
+				em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+		values
+			(#{em_num}, #{em_name}, #{em_phone}, #{em_email}, #{em_gender}, #{em_position}, current_timestamp(),
+				#{em_postcode}, #{em_address}, #{em_detailAddress}, #{em_extraAddress}, #{em_fi_name}, #{em_br_name})	
+	</insert>
+	
+	<select id="selectEmployee" resultType="EmployeeVO">
+		select * from employee where em_num = #{em_num};
+	</select>
+	
+	<select id="selectEmployeeFileName" resultType="String">
+		select em_fi_name from employee where em_num = #{em_num}
+	</select>
+	
+	<update id="updateEmployee">
+		update employee set
+			em_name = #{em_name},
+			em_phone = #{em_phone},
+			em_email = #{em_email},
+			em_gender = #{em_gender},
+			em_position = #{em_position},
+			em_postcode = #{em_postcode},
+			em_address = #{em_address},
+			em_detailAddress = #{em_detailAddress},
+			em_extraAddress = #{em_extraAddress},
+			em_fi_name = #{em_fi_name}
+		where em_num = #{em_num};
+	</update>	
+	
+	<select id="selectMember" resultType="MemberVO">
+		select * from member where me_id = #{me_id}
+	</select>
+	
+	<update id="updateMemberNoShow">
+		update 
+			member
+		set
+			me_noshow = #{me_noshow},
+			me_cancel = #{me_cancel}
+		where
+			me_id = #{me_id}
+	</update>
+	
+	<select id="selectBranch" resultType="BranchVO">
+		select * from branch where br_name = #{br_name}
+	</select>
+	
+	<select id="selectBranchFileList" resultType="BranchFileVO">
+		select * from branch_file where bf_br_name = #{br_name} order by bf_num;
+	</select>
+	
+	<select id="selectAdmin" resultType="MemberVO">
+		select * from member join branch on me_name = br_name where me_name = #{br_name}; 
+	</select>
+	
+	<update id="updateBranch">
+		update branch set 
+			br_phone = #{br_phone},
+			br_detail = #{br_detail}
+		where 
+			br_name = #{br_name};
+	</update>
+	
+	<select id="selectBranchFile" resultType="BranchFileVO">
+		select * from branch_file where bf_num = #{bf_num};
+	</select>
+
+	<delete id="deleteBranchFile">
+		delete from branch_file where bf_num = #{bf_num};
+	</delete>
+	
+	<update id="updateAdmin">
+		update member set
+			me_pw = #{me_pw},
+			me_email = #{me_email},
+			me_phone = #{me_phone}
+		where 
+			me_name = #{me_name};
+	</update>
+	
+	<insert id="insertBranchFile">
+		insert into branch_file(bf_name, bf_br_name)
+		values(#{bf_name}, #{bf_br_name});
+	</insert>
+	
+	<select id="selectEquipmentListInBranch" resultType="BranchStockDTO">
+		select 
+			be_se_name, sum(be_amount) as be_se_total
+			<if test="view == 'all'">
+				, be_birth
+			</if>
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{cri.br_name}
+		and
+			be_se_name like concat('%', #{cri.search},'%')
+		group by 
+			be_se_name
+			<if test="view == 'all'">
+				, be_birth 
+			</if>
+		having 
+			be_se_total >= 0
+		<if test="view == 'all'">		
+			order by
+				be_birth
+		</if>
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectEquipmentListTotalCount" resultType="int">
+		select 
+			count(distinct be_se_name)
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{cri.br_name}
+		and
+			be_se_name like concat('%', #{cri.search},'%')	
+	</select>
+	
+	<select id="selectEquipmentChangeInBranch" resultType="BranchEquipmentStockVO">
+		select
+			* 
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{br_name} 
+		and
+			be_se_name like concat('%', #{search}, '%')
+		order by 
+			be_record desc 
+		limit 
+			#{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectEquipmentChangeTotalCount" resultType="int">
+		select
+			count(*)
+		from 
+			branch_equipment_stock 
+		where 
+			be_br_name = #{br_name} 
+		and
+			be_se_name like concat('%', #{search}, '%')
+	</select>
+	
+	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
+		select * from member_inquiry 
+		<if test="mi_state == 'wait'">
+			where mi_state in("답변대기") and mi_br_name = #{br_name} order by mi_date;
+		</if>
+		<if test="mi_state == 'done'">
+			where mi_state in("답변완료") and mi_br_name = #{br_name} order by mi_date desc;
+		</if>
+	</select>
+	
+	<select id="selectMemberInquiry" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_num = #{mi_num};
+	</select>
+	
+	<update id="updateMemberInquiry">
+		update member_inquiry set
+			mi_state = #{mi_state},
+			mi_answer = #{mi_answer}
+		where mi_num = #{mi_num};
+	</update>
+	
+	<select id="selectMemberByEmail" resultType="MemberVO">
+		select * from member where me_email = #{me_email};
+	</select>
+	
+	<select id="selectBranchSchedule" resultType="BranchProgramScheduleVO">
+		select * from branch_program_schedule
+		where bs_start = #{start} and bs_bp_num = #{bp_num}
+	</select>
+	
+	<insert id="insertBranchProgramSchedule" useGeneratedKeys="true" keyProperty="bps.bs_num">
+		insert into branch_program_schedule(bs_start, bs_end, bs_current, bs_bp_num)
+		values (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
+	</insert>
+	
+	<insert id="insertBranchProgramScheduleList">
+       insert into branch_program_schedule(bs_start, bs_end, bs_current, bs_bp_num)
+       values
+       <foreach collection="bps_list" item="bps" separator=",">
+            (#{bps.bs_start}, #{bps.bs_end}, #{bps.bs_current}, #{bps.bs_bp_num})
+       </foreach>
+    </insert>
+    
+    <select id="selectProgramReservation" resultType="ProgramReservationVO">
+    	select * from program_reservation
+    	where pr_date = #{date} and pr_me_id = #{me_id}
+    </select>
+
+    <insert id="insertProgramReservation">
+    	insert into program_reservation(pr_date, pr_me_id, pr_bs_num)
+    	values (#{date}, #{me_id}, #{bs_num})
+    </insert>
 </mapper>

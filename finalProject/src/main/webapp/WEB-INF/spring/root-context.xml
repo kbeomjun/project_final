@@ -42,6 +42,22 @@
     <bean id="uploadPath" class="java.lang.String">
         <constructor-arg value="${file.upload-dir}" />
     </bean>
+    <!-- gmail -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="${email.username}"/>
+	    <property name="password" value="${email.password}"/>
+	    <property name="javaMailProperties">
+	        <props>
+	            <prop key="mail.transport.protocol">smtp</prop>
+	            <prop key="mail.smtp.auth">true</prop>
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+	            <prop key="mail.debug">true</prop>
+	            <prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+	        </props>
+	    </property>
+	</bean>
 
 	<mybatis-spring:scan
 		base-package="kr.kh.fitness.dao" />

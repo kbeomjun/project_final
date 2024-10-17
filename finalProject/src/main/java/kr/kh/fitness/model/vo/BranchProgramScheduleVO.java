@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BranchProgramScheduleVO {
 	
-    private int bs_num;          // 스케줄 번호
+    
+	private int bs_num;          // 스케줄 번호
     private Date bs_start;       // 시작일
     private Date bs_end;         // 종료일
     private int bs_current;      // 현재 참가자 수
@@ -26,4 +27,22 @@ public class BranchProgramScheduleVO {
     private String bp_br_name;
     private String bp_sp_name;
     private String em_name;
+    private Date pr_date;
+    private int pr_num;
+    
+    public BranchProgramScheduleVO(Date startDate, Date endDate, int current, int bp_num) {
+    	
+    	bs_start = startDate;
+    	bs_end = endDate;
+    	bs_current = current;
+    	bs_bp_num = bp_num;
+	}
+
+	@Override
+	public String toString() {
+		return "BranchProgramScheduleVO [bs_start=" + bs_start + ", bs_end=" + bs_end + ", bs_current=" + bs_current
+				+ ", bs_bp_num=" + bs_bp_num + "]\n";
+	}
+    
+    
 }

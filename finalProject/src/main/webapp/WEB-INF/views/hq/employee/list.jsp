@@ -8,7 +8,6 @@
 <title>본사관리페이지</title>
 </head>
 <body>
-	<h1>지점관리</h1>
 	<div class="container" style="margin-top:30px">
 	  	<div class="row">
 	    	<div class="col-sm-2">
@@ -20,25 +19,25 @@
 		          		<a class="nav-link active" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
 	       	 		</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">운동기구 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">재고 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">발주 내역</a>
+		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">회원권 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">프로그램 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">회원 관리</a>
+		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
 		        	</li>
 		        	<li class="nav-item">
-		          		<a class="nav-link" href="#">문의 내역</a>
+		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
@@ -47,59 +46,63 @@
 			    <div>
 			    	<a href="<c:url value="/hq/employee/insert"/>" class="btn btn-outline-success">등록</a>
 			    </div>
-		    	<div>
-			    	<table class="table table-hover mt-3">
+		    	<hr>
+		    	<div class="mt-3">
+			    	<table class="table table-hover" id="table">
 				    	<thead>
 				      		<tr>
-				        		<th>직원번호</th>
-				        		<th>이름</th>
-				        		<th>전화번호</th>
-				        		<th>이메일</th>
-				        		<th>입사일</th>
-				        		<th>소속</th>
-				        		<th>직책</th>
-				        		<th>상세</th>
+				        		<th class="text-center">직원번호</th>
+				        		<th class="text-center">이름</th>
+				        		<th class="text-center">전화번호</th>
+				        		<th class="text-center">이메일</th>
+				        		<th class="text-center">입사일</th>
+				        		<th class="text-center">소속</th>
+				        		<th class="text-center">직책</th>
+				        		<th class="text-center"></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody>
 				    		<c:forEach items="${emList}" var="em">
 						      	<tr>
-						        	<td>
-								        ${em.em_num}
-							        </td>
-							        <td>
-								        ${em.em_name}
-							        </td>
-							        <td>
-								        ${em.em_phone}
-							        </td>
-							        <td>
-								        ${em.em_email}
-							        </td>
-							        <td>
+						        	<td class="align-content-center text-left">${em.em_num}</td>
+							        <td class="align-content-center text-left">${em.em_name} </td>
+							        <td class="align-content-center text-left">${em.em_phone}</td>
+							        <td class="align-content-center text-left">${em.em_email}</td>
+							        <td class="align-content-center text-left">
 							        	<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
 							        </td>
-							        <td>
-								        ${em.em_br_name}
-							        </td>
-							        <td>
-								        ${em.em_position}
-							        </td>
-						        	<td>
-						        		<a href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
+							        <td class="align-content-center text-left">${em.em_br_name}</td>
+							        <td class="align-content-center text-left">${em.em_position}</td>
+						        	<td class="align-content-center text-left">
+						        		<a class="btn btn-outline-info" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
 						        	</td>
 						      	</tr>
 				    		</c:forEach>
-				    		<c:if test="${emList.size() == 0}">
-				    			<tr>
-					        		<th class="text-center" colspan="8">등록된 직원이 없습니다.</th>
-					      		</tr>
-				    		</c:if>
 				    	</tbody>
 					</table>
 		    	</div>
 	    	</div>
 	  	</div>
 	</div>
+	
+	<script type="text/javascript">
+		// 테이블 api
+		$('#table').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: "등록된 직원이 없습니다."
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    columnDefs: [
+		        {
+		        	targets: [7], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	</script>
 </body>
 </html>
