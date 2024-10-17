@@ -192,8 +192,8 @@
 	</select>
 	
 	<insert id="insertPaymentType">
-		insert into payment_type(pt_type, pt_date, pt_count, pt_price)
-		values(#{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
+		insert into payment_type(pt_name, pt_type, pt_date, pt_count, pt_price)
+		values(#{pt.pt_name}, #{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
 	</insert>
 	
 	<select id="selectPaymentType" resultType="PaymentTypeVO">
@@ -202,6 +202,7 @@
 	
 	<update id="updatePaymentType">
 		update payment_type set
+			pt_name = #{pt.pt_name},
 			pt_type = #{pt.pt_type},
 			pt_date = #{pt.pt_date},
 			pt_count = #{pt.pt_count},

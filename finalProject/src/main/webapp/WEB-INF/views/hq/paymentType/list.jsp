@@ -95,12 +95,20 @@
 			      		<form action="<c:url value="/hq/paymentType/insert"/>" method="post" id="form" class="modal-content">
 				        	<div class="modal-header">
 				          		<h4 class="modal-title">등록</h4>
-				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 				        	</div>
 				        	<div class="modal-body">
 				        		<div class="form-group">
+									<label for="pt_name">회원권명:</label>
+									<input type="text" class="form-control" id="pt_name" name="pt_name">
+								</div>
+								<div class="error error-name"></div>
+				        		<div class="form-group">
 									<label for="pt_type">회원권 유형:</label>
-									<input type="text" class="form-control" id="pt_type" name="pt_type">
+									<select name="pt_type" class="custom-select mb-3 form-control">
+										<option value="이용권">이용권</option>
+										<option value="PT">PT</option>
+								    </select>
 								</div>
 								<div class="error error-type"></div>
 								<div class="form-group">
@@ -121,7 +129,7 @@
 								<button class="btn btn-outline-info col-12">회원권 등록</button>
 				        	</div>
 				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger" data-dismiss="modal">취소</a>
+				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
 				        	</div>
 			      		</form>
 			    	</div>
@@ -131,12 +139,20 @@
 			      		<form action="<c:url value="/hq/paymentType/update"/>" method="post" id="form2" class="modal-content">
 				        	<div class="modal-header">
 				          		<h4 class="modal-title">수정</h4>
-				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 				        	</div>
 				        	<div class="modal-body">
 				        		<div class="form-group">
-									<label for="pt_type">회원권 유형:</label>
-									<input type="text" class="form-control" id="pt_type2" name="pt_type">
+									<label for="pt_name2">회원권명:</label>
+									<input type="text" class="form-control" id="pt_name2" name="pt_name">
+								</div>
+								<div class="error error-name"></div>
+				        		<div class="form-group">
+									<label for="pt_type2">회원권 유형:</label>
+									<select id="pt_type2" name="pt_type" class="custom-select mb-3 form-control">
+										<option value="이용권">이용권</option>
+										<option value="PT">PT</option>
+								    </select>
 								</div>
 								<div class="error error-type2"></div>
 								<div class="form-group">
@@ -158,7 +174,7 @@
 								<button class="btn btn-outline-warning col-12">회원권 수정</button>
 				        	</div>
 				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger" data-dismiss="modal">취소</a>
+				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
 				        	</div>
 			      		</form>
 			    	</div>
@@ -170,13 +186,13 @@
 	<script type="text/javascript">
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		
-		$('#pt_type').keyup(function(){
-			$('.error-type').children().remove();
+		$('#pt_name').keyup(function(){
+			$('.error-name').children().remove();
 			
-			if($('#pt_type').val() == ''){
-				$('.error-type').append(msgRequired);
+			if($('#pt_name').val() == ''){
+				$('.error-name').append(msgRequired);
 			}else{
-				$('.error-type').children().remove();	
+				$('.error-name').children().remove();	
 			}
 		});
 		$('#pt_date').keyup(function(){
@@ -208,20 +224,20 @@
 		});
 		$('#form').submit(function(){
 			$('.error').children().remove();
-			let flag1 = check("type");
+			let flag1 = check("name");
 			let flag2 = check("date");
 			let flag3 = check("count");
 			let flag4 = check("price");
 			return flag1 && flag2 && flag3 && flag4;
 		});
 		
-		$('#pt_type2').keyup(function(){
-			$('.error-type2').children().remove();
+		$('#pt_name2').keyup(function(){
+			$('.error-name2').children().remove();
 			
-			if($('#pt_type2').val() == ''){
-				$('.error-type2').append(msgRequired);
+			if($('#pt_name2').val() == ''){
+				$('.error-name2').append(msgRequired);
 			}else{
-				$('.error-type2').children().remove();	
+				$('.error-name2').children().remove();	
 			}
 		});
 		$('#pt_date2').keyup(function(){
@@ -253,7 +269,7 @@
 		});
 		$('#form2').submit(function(){
 			$('.error').children().remove();
-			let flag1 = check("type2");
+			let flag1 = check("name2");
 			let flag2 = check("date2");
 			let flag3 = check("count2");
 			let flag4 = check("price2");
@@ -274,6 +290,14 @@
     </script>
     
     <script type="text/javascript">
+    	$('.btn-close').click(function(){
+    		$('#pt_name').val("");
+			$('#pt_date').val("");
+			$('#pt_count').val("");
+			$('#pt_price').val("");
+			$('#pt_num').val("");
+    	});
+    
     	$('.btn-update').click(function(){
     		var pt_num = $(this).data("num");
     		
@@ -285,7 +309,8 @@
 				dataType : "json",
 				success : function (data){
 					let pt = data.pt;
-					$('#pt_type2').val(pt.pt_type);
+					$('#pt_name2').val(pt.pt_name);
+					$("select[name=pt_type]").val(pt.pt_type).prop("selected", true);
 					$('#pt_date2').val(pt.pt_date);
 					$('#pt_count2').val(pt.pt_count);
 					$('#pt_price2').val(pt.pt_price);
