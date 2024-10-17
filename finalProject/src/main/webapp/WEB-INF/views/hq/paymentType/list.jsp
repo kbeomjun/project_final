@@ -185,6 +185,8 @@
 	
 	<script type="text/javascript">
 		let msgRequired = `<span>필수항목입니다.</span>`;
+		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
+		let regexNum = /^[0-9]{1,}$/;
 		
 		$('#pt_name').keyup(function(){
 			$('.error-name').children().remove();
@@ -200,6 +202,10 @@
 			
 			if($('#pt_date').val() == ''){
 				$('.error-date').append(msgRequired);
+			}else if(!regexNum.test($('#pt_date').val())){
+				$('.error-date').append(msgNum);
+			}else if($('#pt_date').val() == '0'){
+				$('.error-date').append(msgNum);
 			}else{
 				$('.error-date').children().remove();	
 			}
@@ -209,6 +215,10 @@
 			
 			if($('#pt_count').val() == ''){
 				$('.error-count').append(msgRequired);
+			}else if(!regexNum.test($('#pt_count').val())){
+				$('.error-count').append(msgNum);
+			}else if($('#pt_count').val() == '0'){
+				$('.error-count').append(msgNum);
 			}else{
 				$('.error-count').children().remove();	
 			}
@@ -218,6 +228,10 @@
 			
 			if($('#pt_price').val() == ''){
 				$('.error-price').append(msgRequired);
+			}else if(!regexNum.test($('#pt_price').val())){
+				$('.error-price').append(msgNum);
+			}else if($('#pt_price').val() == '0'){
+				$('.error-price').append(msgNum);
 			}else{
 				$('.error-price').children().remove();	
 			}
@@ -245,6 +259,10 @@
 			
 			if($('#pt_date2').val() == ''){
 				$('.error-date2').append(msgRequired);
+			}else if(!regexNum.test($('#pt_date2').val())){
+				$('.error-date2').append(msgNum);
+			}else if($('#pt_date2').val() == '0'){
+				$('.error-date2').append(msgNum);
 			}else{
 				$('.error-date2').children().remove();	
 			}
@@ -254,6 +272,10 @@
 			
 			if($('#pt_count2').val() == ''){
 				$('.error-count2').append(msgRequired);
+			}else if(!regexNum.test($('#pt_count2').val())){
+				$('.error-count2').append(msgNum);
+			}else if($('#pt_count2').val() == '0'){
+				$('.error-count2').append(msgNum);
 			}else{
 				$('.error-count2').children().remove();	
 			}
@@ -263,6 +285,10 @@
 			
 			if($('#pt_price2').val() == ''){
 				$('.error-price2').append(msgRequired);
+			}else if(!regexNum.test($('#pt_price2').val())){
+				$('.error-price2').append(msgNum);
+			}else if($('#pt_price2').val() == '0'){
+				$('.error-price2').append(msgNum);
 			}else{
 				$('.error-price2').children().remove();	
 			}
@@ -279,12 +305,28 @@
 		function check(str){
 			$('.error-'+str).children().remove();
 			
-			if($('#pt_'+str).val() == ''){
-				$('.error-'+str).append(msgRequired);
-				return false;
+			if(str == 'name' || str == 'name2'){
+				if($('#pt_'+str).val() == ''){
+					$('.error-'+str).append(msgRequired);
+					return false;
+				}else{
+					$('.error-'+str).children().remove();	
+					return true;
+				}
 			}else{
-				$('.error-'+str).children().remove();	
-				return true;
+				if($('#pt_'+str).val() == ''){
+					$('.error-'+str).append(msgRequired);
+					return false;
+				}else if(!regexNum.test($('#pt_'+str).val())){
+					$('.error-'+str).append(msgNum);
+					return false;
+				}else if($('#pt_'+str).val() == '0'){
+					$('.error-'+str).append(msgNum);
+					return false;
+				}else{
+					$('.error-'+str).children().remove();	
+					return true;
+				}
 			}
 		}
     </script>

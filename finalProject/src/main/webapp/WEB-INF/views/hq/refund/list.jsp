@@ -115,57 +115,23 @@
 	</div>
 	
 	<script type="text/javascript">
-		var price = "";
-		var pa_num = "";
 		let msgPrice = `<span>결제금액을 초과합니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
-		var table = $('#table').DataTable({
-			language: {
-				search: "",
-				searchPlaceholder: "검색",
-		        zeroRecords: "",
-		        emptyTable: ""
-		    },
-			scrollY: 600,
-		    paging: false,
-		    info: false,
-		    order: [[ 0, "desc" ]],
-		    ajax:{
-	        	url:'<c:url value="/hq/refund/list"/>',
-	        	type:"post",
-	        	dataSrc :"data"
-	        },
-	        columns:[
-	        	{data:"pa_num"},
-	        	{data:"pa_me_id"},
-	        	{data:"pa_me_email"},
-	        	{data:"pa_dateStr"},
-	        	{data:"pa_price"},
-	        	{data:"pa_pt_name"},
-	        	{data:"pa_startStr"},
-	        	{data:"pa_endStr"},
-	        	{
-	        		data: null,
-		        	defaultContent : '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal">환불</button>'
-        		}
-	        ],
-	        columnDefs: [
-		        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"},
-		    ]
-		});
-
-		$(document).on("click", ".btn-refund-modal", function(){
-			price = $(this).parent().prev().prev().prev().prev().text();
-			pa_num = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
-			$('#re_pa_num').val(pa_num);
-		});
+		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
+		let regexNum = /^[0-9]{1,}$/;
+		
 		$(document).on("keyup", "#re_price", function(){
 			$('.error').children().remove();
 			if($('#re_price').val() == ''){
 				$('.error-price').append(msgRequired);
+			}else if(!regexNum.test($('#re_price').val())){
+				$('.error-price').append(msgNum);
+			}else if($('#re_price').val() == '0'){
+				$('.error-price').append(msgNum);
 			}else if($('#re_price').val() > price || $('#re_price').val().length > price.length){
 				$('.error-price').append(msgPrice);
+			}else{
+				$('.error-price').children().remove();	
 			}
 		});
 		
@@ -175,6 +141,14 @@
 			$('.error').children().remove();
 			if($('#re_price').val() == ''){
 				$('.error-price').append(msgRequired);
+				$('#re_price').focus();
+				flag = false;
+			}else if(!regexNum.test($('#re_price').val())){
+				$('.error-price').append(msgNum);
+				$('#re_price').focus();
+				flag = false;
+			}else if($('#re_price').val() == '0'){
+				$('.error-price').append(msgNum);
 				$('#re_price').focus();
 				flag = false;
 			}else if($('#re_price').val() > price || $('#re_price').val().length > price.length){
@@ -244,6 +218,52 @@
 					});
 				}
 			}
+		});
+	</script>
+	
+	<script type="text/javascript">
+		var price = "";
+		var pa_num = "";
+		var table = $('#table').DataTable({
+			language: {
+				search: "",
+				searchPlaceholder: "검색",
+		        zeroRecords: "",
+		        emptyTable: ""
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    order: [[ 0, "desc" ]],
+		    ajax:{
+	        	url:'<c:url value="/hq/refund/list"/>',
+	        	type:"post",
+	        	dataSrc :"data"
+	        },
+	        columns:[
+	        	{data:"pa_num"},
+	        	{data:"pa_me_id"},
+	        	{data:"pa_me_email"},
+	        	{data:"pa_dateStr"},
+	        	{data:"pa_price"},
+	        	{data:"pa_pt_name"},
+	        	{data:"pa_startStr"},
+	        	{data:"pa_endStr"},
+	        	{
+	        		data: null,
+		        	defaultContent : '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal">환불</button>'
+        		}
+	        ],
+	        columnDefs: [
+		        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"},
+		    ]
+		});
+
+		$(document).on("click", ".btn-refund-modal", function(){
+			price = $(this).parent().prev().prev().prev().prev().text();
+			pa_num = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+			$('#re_pa_num').val(pa_num);
 		});
 		
 		$('.btn-close').click(function(){

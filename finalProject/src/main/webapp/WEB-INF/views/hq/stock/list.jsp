@@ -127,8 +127,7 @@
 	
 	<script type="text/javascript">
 		let msgRequired = `<span>필수항목입니다.</span>`;
-		let msgAmount = `<span>0보다 적은 개수로 입고할 수 없습니다.</span>`;
-		let msgNum = `<span>숫자가 아닙니다.</span>`;
+		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
 		let regexNum = /^[0-9]{1,}$/;
 
 		$('#be_amount').keyup(function(){
@@ -136,9 +135,9 @@
 			
 			if($('#be_amount').val() == ''){
 				$('.error-amount').append(msgRequired);
-			}else if($('#be_amount').val() <= 0){
-				$('.error-amount').append(msgAmount);
 			}else if(!regexNum.test($('#be_amount').val())){
+				$('.error-amount').append(msgNum);
+			}else if($('#be_amount').val() == '0'){
 				$('.error-amount').append(msgNum);
 			}else{
 				$('.error-amount').children().remove();	
@@ -153,11 +152,11 @@
 				$('.error-amount').append(msgRequired);
 				$('#be_amount').focus();
 				flag = false;
-			}else if($('#be_amount').val() <= 0){
-				$('.error-amount').append(msgAmount);
+			}else if(!regexNum.test($('#be_amount').val())){
+				$('.error-amount').append(msgNum);
 				$('#be_amount').focus();
 				flag = false;
-			}else if(!regexNum.test($('#be_amount').val())){
+			}else if($('#be_amount').val() == '0'){
 				$('.error-amount').append(msgNum);
 				$('#be_amount').focus();
 				flag = false;
