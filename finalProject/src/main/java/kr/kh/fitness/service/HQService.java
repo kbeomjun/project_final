@@ -10,10 +10,13 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -42,7 +45,7 @@ public interface HQService {
 	
 	String deleteEmployee(EmployeeVO employee);
 
-	List<SportsEquipmentVO> getSportsEquipmentList();
+	List<SportsEquipmentVO> getSportsEquipmentList(String search);
 
 	String insertSportsEquipment(SportsEquipmentVO se, MultipartFile file);
 
@@ -52,7 +55,7 @@ public interface HQService {
 
 	List<BranchEquipmentStockVO> getBranchEquipmentStockList();
 
-	List<BranchStockDTO> getBranchStockList();
+	List<BranchStockDTO> getBranchStockList(String search);
 
 	String insertBranchEquipmentStock(BranchEquipmentStockVO be);
 
@@ -87,4 +90,14 @@ public interface HQService {
 	MemberInquiryVO getMemberInquiry(MemberInquiryVO mi);
 
 	String updateMemberInquiry(MemberInquiryVO mi);
+
+	List<InquiryTypeVO> getInquiryTypeList();
+
+	String insertFAQ(MemberInquiryVO mi);
+
+	String updateFAQ(MemberInquiryVO mi);
+
+	List<PaymentVO> getPaymentList();
+
+	String insertRefund(RefundVO re);
 }

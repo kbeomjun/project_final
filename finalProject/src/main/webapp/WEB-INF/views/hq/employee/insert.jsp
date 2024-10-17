@@ -21,11 +21,6 @@
 			<div class="form-group">
 				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
 				    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
-				    <div class="card-img-overlay d-flex flex-wrap align-items-center">
-					    <div class="mx-auto">
-					      	<label for="file" class="btn">사진등록</label>
-					    </div>
-				    </div>
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
@@ -104,15 +99,22 @@
 		function displayFileList(file){
 			console.log(file);
 			$('.card').children().remove();
-			let fReader = new FileReader();
-		    fReader.readAsDataURL(file[0]);
-		    fReader.onloadend = function(event){
-		    	let path = event.target.result;
-		        img = `
-		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
-		        `;
-		        $('.card').append(img);
-		    }
+			if(file.length > 0){
+				let fReader = new FileReader();
+			    fReader.readAsDataURL(file[0]);
+			    fReader.onloadend = function(event){
+			    	let path = event.target.result;
+			        img = `
+			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
+			        `;
+			        $('.card').append(img);
+			    }
+			}else{
+				let img = `
+					<img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
+				`;
+				$('.card').append(img);
+			}
 		}
 		
 		$(document).on("change", "#file", function(){

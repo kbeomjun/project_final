@@ -9,6 +9,8 @@
 	<style type="text/css">
 		#thead th{text-align: center;}
     	#tbody td{text-align: left;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 	</style>
 </head>
 <body>
@@ -42,6 +44,12 @@
 		        	</li>
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
 		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
@@ -124,19 +132,17 @@
 	<script type="text/javascript">
 		var table = $('.table-wait').DataTable({
 			language: {
-		        search: "검색:",
+				search: "",
+		        searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: "등록된 내역이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 2, "asc" ]],
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [5, 6], 
-		        	orderable: false
-	        	}
+		        { targets: [5, 6], orderable: false }
 		    ]
 		});
 		
@@ -153,37 +159,33 @@
 			if(name == 'wait'){
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+				        searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 2, "asc" ]],
+				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}else{
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+				        searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 2, "desc" ]],
+				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}
