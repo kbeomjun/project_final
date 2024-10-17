@@ -58,7 +58,7 @@ public interface HQDAO {
 	
 	boolean deleteEmployee(@Param("em") EmployeeVO employee);
 
-	List<SportsEquipmentVO> selectSportsEquipmentList();
+	List<SportsEquipmentVO> selectSportsEquipmentList(@Param("search") String search);
 
 	boolean insertSportsEquipment(@Param("se") SportsEquipmentVO se);
 
@@ -70,7 +70,7 @@ public interface HQDAO {
 
 	List<BranchEquipmentStockVO> selectBranchEquipmentStockList(@Param("bo") BranchOrderVO bo, @Param("be_type") String be_type);
 
-	List<BranchStockDTO> selectBranchStockList();
+	List<BranchStockDTO> selectBranchStockList(@Param("search") String search);
 
 	boolean insertBranchEquipmentStock(@Param("be") BranchEquipmentStockVO be);
 

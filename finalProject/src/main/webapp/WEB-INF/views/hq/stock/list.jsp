@@ -7,7 +7,7 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-    	.img-container{height: 800px; overflow-y: auto;}
+    	.img-container{max-height: 800px; overflow-y: auto; padding-bottom: 20px;}
     	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
@@ -86,7 +86,10 @@
 					</table>
 				</div>
 				<div class="mt-3 box box-img" style="display: none;">
-					<div class="img-container d-flex flex-wrap">
+					<div class="form-group">
+						<input type="text" class="form-control" id="search" name="search" placeholder="검색">
+					</div>
+					<div class="img-container d-flex flex-wrap mt-3">
 						
 					</div>
 				</div>
@@ -153,15 +156,20 @@
 	        ]
 		});
 	
+		var search = "";
 		$(document).ready(function(){
-			displayList();
+			displayList(search);
 		});
-	
-		function displayList(){
+	    $('#search').keyup(function(){
+	    	search = $('#search').val();
+	    	displayList(search);
+	    });
+		function displayList(search){
 			$.ajax({
 				async : true,
 				url : '<c:url value="/hq/stock/list2"/>', 
 				type : 'post', 
+				data : {search : search}, 
 				dataType : "json",
 				success : function (data){
 					let stList = data.stList;
@@ -169,7 +177,7 @@
 					for(var st of stList){
 						str += `
 							<div class="card img-box">
-					        	<img class="card-img-top" style="width:100%; height:100%;" src="<c:url value="/uploads"/>\${st.be_se_fi_name}"></img>
+					        	<img class="card-img-top" style="width:100%; height:100%;" src="<c:url value="/uploads\${st.be_se_fi_name}"/>"></img>
 						    	<div class="img-name d-flex align-content-center">
 						      		<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
 						    	</div>
@@ -264,7 +272,7 @@
 					if(!msg == ""){
 						alert(msg);
 					}
-					displayList();
+					displayList(search);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);

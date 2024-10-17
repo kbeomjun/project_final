@@ -235,7 +235,10 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<SportsEquipmentVO> getSportsEquipmentList() {return hqDao.selectSportsEquipmentList();}
+	public List<SportsEquipmentVO> getSportsEquipmentList(String search) {
+		if(search == null) {search = "";}
+		return hqDao.selectSportsEquipmentList(search);
+	}
 
 	@Override
 	public String insertSportsEquipment(SportsEquipmentVO se, MultipartFile file) {
@@ -303,7 +306,10 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}
+	public List<BranchStockDTO> getBranchStockList(String search) {
+		if(search == null) {search = "";}
+		return hqDao.selectBranchStockList(search);
+	}
 
 	@Override
 	public String insertBranchEquipmentStock(BranchEquipmentStockVO be) {

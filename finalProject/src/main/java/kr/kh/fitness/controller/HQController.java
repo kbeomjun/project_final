@@ -138,10 +138,16 @@ public class HQController {
 	}
 	
 	@GetMapping("/equipment/list")
-	public String equipmentList(Model model) {
-		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
-		model.addAttribute("seList", seList);
+	public String equipmentList() {
 	    return "/hq/equipment/list";
+	}
+	@ResponseBody
+	@PostMapping("/equipment/list")
+	public Map<String, Object> equipmentListPost(@RequestParam String search) {
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("seList", seList);
+		return map;
 	}
 	@PostMapping("/equipment/insert")
 	public String equipmentInsertPost(Model model, SportsEquipmentVO se, MultipartFile file) {
@@ -169,7 +175,7 @@ public class HQController {
 	
 	@GetMapping("/stock/list")
 	public String stockList(Model model) {
-		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList("");
 		model.addAttribute("seList", seList);
 	    return "/hq/stock/list";
 	}
@@ -183,8 +189,8 @@ public class HQController {
 	}
 	@ResponseBody
 	@PostMapping("/stock/list2")
-	public Map<String, Object> stockListPost2() {
-		List<BranchStockDTO> stList = hqService.getBranchStockList();
+	public Map<String, Object> stockListPost2(@RequestParam String search) {
+		List<BranchStockDTO> stList = hqService.getBranchStockList(search);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("stList", stList);
 	    return map;

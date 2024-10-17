@@ -118,7 +118,7 @@
 	</delete>
 	
 	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
-		select * from sports_equipment;
+		select * from sports_equipment where se_name like concat("%", #{search}, "%");
 	</select>
 	
 	<insert id="insertSportsEquipment">
@@ -153,7 +153,7 @@
 	<select id="selectBranchStockList" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본점" 
+		where be_br_name = "본점" and be_se_name like concat("%", #{search}, "%")
 		group by be_se_name;
 	</select>
 	

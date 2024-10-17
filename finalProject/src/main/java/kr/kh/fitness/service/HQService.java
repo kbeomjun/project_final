@@ -45,7 +45,7 @@ public interface HQService {
 	
 	String deleteEmployee(EmployeeVO employee);
 
-	List<SportsEquipmentVO> getSportsEquipmentList();
+	List<SportsEquipmentVO> getSportsEquipmentList(String search);
 
 	String insertSportsEquipment(SportsEquipmentVO se, MultipartFile file);
 
@@ -55,7 +55,7 @@ public interface HQService {
 
 	List<BranchEquipmentStockVO> getBranchEquipmentStockList();
 
-	List<BranchStockDTO> getBranchStockList();
+	List<BranchStockDTO> getBranchStockList(String search);
 
 	String insertBranchEquipmentStock(BranchEquipmentStockVO be);
 

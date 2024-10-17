@@ -7,7 +7,7 @@
 <head>
 <title>본사관리페이지</title>
 	<style type="text/css">
-		.img-container{height: 800px; overflow-y: auto;}
+		.img-container{max-height: 800px; overflow-y: auto; padding-bottom: 20px;}
     	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
@@ -64,19 +64,11 @@
 			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
 			    </div>
 			    <hr>
-		    	<div class="img-container d-flex flex-wrap">
-		    		<c:forEach items="${seList}" var="se">
-						<div class="card img-box">
-				        	<img class="card-img-top" src="<c:url value="/uploads${se.se_fi_name}"/>" style="width:100%; height:100%;">
-					        	<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-name="${se.se_name}">
-									<i class="fi fi-br-edit"></i>
-								</button>
-							</img>
-					    	<div class="img-name d-flex align-content-center">
-					      		<p class="img-text mx-auto">${se.se_name}</p>
-					    	</div>
-						</div>
-		    		</c:forEach>
+			    <div class="form-group">
+					<input type="text" class="form-control" id="search" name="search" placeholder="검색">
+				</div>
+		    	<div class="img-container d-flex flex-wrap mt-3">
+		    		
 				</div>
 				<div class="modal fade" id="myModal">
 			    	<div class="modal-dialog modal-dialog-centered">
@@ -256,7 +248,7 @@
     </script>
     
     <script>
-	    $('.btn-update').click(function(){
+	    $(document).on('click', '.btn-update', function(){
 			var se_name = $(this).data("name");
 			
 			$.ajax({
@@ -285,6 +277,49 @@
 	    $('.btn-close').click(function(){
 	    	$('.error').children().remove();
 	    });
+	    
+	    var search = "";
+	    $('#search').keyup(function(){
+	    	search = $('#search').val();
+	    	displayList(search);
+	    });
+	    $(document).ready(function(){
+	    	displayList(search);
+	    });
+	    function displayList(search){
+	    	$.ajax({
+				async : true,
+				url : '<c:url value="/hq/equipment/list"/>', 
+				type : 'post', 
+				data : {search : search}, 
+				dataType : "json",
+				success : function (data){
+					let seList = data.seList;
+					
+					var str = ``;
+					for(se of seList){
+						let url = "/uploads" + "\${se.se_fi_name}";
+						str += `
+							<div class="card img-box">
+					        	<img class="card-img-top" src="<c:url value="/uploads\${se.se_fi_name}"/>" style="width:100%; height:100%;">
+						        	<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-name="\${se.se_name}">
+										<i class="fi fi-br-edit"></i>
+									</button>
+								</img>
+						    	<div class="img-name d-flex align-content-center">
+						      		<p class="img-text mx-auto">\${se.se_name}</p>
+						    	</div>
+							</div>
+						`;
+					}
+					
+					$('.img-container').html(str);
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+	    }
     </script>
 </body>
 </html>
