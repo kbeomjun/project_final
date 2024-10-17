@@ -82,11 +82,6 @@
 									<label for="file" class="card card-insert mx-auto" style="width:250px; cursor:pointer">
 									    <img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
 									    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
-									    <div class="card-img-overlay d-flex flex-wrap align-items-center">
-										    <div class="mx-auto">
-										      	<label for="file" class="btn">사진등록</label>
-										    </div>
-									    </div>
 									</label>
 									<input type="file" class="form-control" id="file" name="file" accept="image/*">
 								</div>
