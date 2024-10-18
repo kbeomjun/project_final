@@ -51,10 +51,17 @@ public class PaymentController {
 
 	    // 사용자의 회원권 정보를 가져오는 로직
 	    if (user != null) {
+	    	
 	        PaymentVO existingPayment = paymentService.getPayment(user.getMe_id());
-	        hasMembership = existingPayment != null && existingPayment.getPa_end() != null;
+	        
+		    // 기존 결제 정보를 가져옴
+		    PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
+		    
+	        hasMembership = existingPayment != null && existingPayment.getPa_end() != null && paymentDetails.getFirstStartDate() != null;
+	        System.out.println("리스트의 멤버십 : " + hasMembership);
 	    }
-
+	    
+	    
 	    // 모델에 회원권 유무 추가
 	    model.addAttribute("hasMembership", hasMembership);
 		
