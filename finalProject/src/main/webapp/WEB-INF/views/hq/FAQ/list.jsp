@@ -177,27 +177,18 @@
 				$('.error-title').children().remove();	
 			}
 		});
-		$('#mi_content').keyup(function(){
-			$('.error-content').children().remove();
-			
-			if($('#mi_content').val() == ''){
-				$('.error-content').append(msgRequired);
-			}else{
-				$('.error-content').children().remove();	
-			}
-		});
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
+			let code = $('#mi_content').summernote("code");
 			
 			if($('#mi_title').val() == ''){
 				$('.error-title').append(msgRequired);
 				$('#mi_title').focus();
 				flag = false;
 			}
-			if($('#mi_content').val() == ''){
+			if(code == '<p><br></p>' || code == '<br>' || code == ''){
 				$('.error-content').append(msgRequired);
-				$('#mi_content').focus();
 				flag = false;
 			}
 			
@@ -213,27 +204,18 @@
 				$('.error-title2').children().remove();	
 			}
 		});
-		$('#mi_content2').keyup(function(){
-			$('.error-content2').children().remove();
-			
-			if($('#mi_content2').val() == ''){
-				$('.error-content2').append(msgRequired);
-			}else{
-				$('.error-content2').children().remove();	
-			}
-		});
 		$('#form2').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
+			let code = $('#mi_content2').summernote("code");
 			
 			if($('#mi_title2').val() == ''){
 				$('.error-title2').append(msgRequired);
 				$('#mi_title2').focus();
 				flag = false;
 			}
-			if($('#mi_content2').val() == ''){
+			if(code == '<p><br></p>' || code == '<br>' || code == ''){
 				$('.error-content2').append(msgRequired);
-				$('#mi_content2').focus();
 				flag = false;
 			}
 			
@@ -271,7 +253,7 @@
 					let mi = data.mi;
 					
 					$('#mi_title2').val(mi.mi_title);
-					$('#mi_content2').val(mi.mi_content);
+					$('#mi_content2').summernote('code', mi.mi_content);
 					$('#mi_num2').val(mi.mi_num);
 					$("select[name=mi_it_name]").val(mi.mi_it_name).prop("selected", true);
 				},
@@ -284,7 +266,43 @@
 		$('.btn-close').click(function(){
 			$('.error').children().remove();
 			$('#mi_title').val("");
-			$('#mi_content').val("");
+			$('#mi_content').summernote('reset');
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$('#mi_content').summernote({
+			tabsize: 2,
+			height: 350,
+			callbacks: {
+				onKeyup: function(e) {
+					$('.error-content').children().remove();
+					
+					let code = $('#mi_content').summernote("code");
+					if(code == '<p><br></p>' || code == '<br>' || code == ''){
+						$('.error-content').append(msgRequired);
+					}else{
+						$('.error-content').children().remove();
+					}
+				}
+			}
+		});
+		
+		$('#mi_content2').summernote({
+			tabsize: 2,
+			height: 350,
+			callbacks: {
+				onKeyup: function(e) {
+					$('.error-content2').children().remove();
+					
+					let code = $('#mi_content2').summernote("code");
+					if(code == '<p><br></p>' || code == '<br>' || code == ''){
+						$('.error-content2').append(msgRequired);
+					}else{
+						$('.error-content2').children().remove();
+					}
+				}
+			}
 		});
 	</script>
 </body>
