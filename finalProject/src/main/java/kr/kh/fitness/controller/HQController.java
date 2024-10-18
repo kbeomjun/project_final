@@ -45,7 +45,9 @@ public class HQController {
 	    return "/hq/branch/list";
 	}
 	@GetMapping("/branch/insert")
-	public String branchInsert() {
+	public String branchInsert(Model model) {
+		BranchVO hq = hqService.getBranch(new BranchVO("본점"));
+		model.addAttribute("hq", hq);
 	    return "/hq/branch/insert";
 	}
 	@PostMapping("/branch/insert")
