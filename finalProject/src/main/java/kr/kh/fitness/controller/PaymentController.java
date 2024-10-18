@@ -129,6 +129,8 @@ public class PaymentController {
 	        PaymentVO existingPayment = paymentService.getLastPaymentByUserId(userId, paymentType.getPt_num());
 	        System.out.println("결제 타입 번호 : " + paymentType.getPt_num());
 	
+	        boolean isNewPayment = (existingPayment == null);
+	
 	        // 새로운 결제 또는 기존 결제 정보에 따라 처리
 	        LocalDateTime startDateTime = handleStartDate(payment, existingPayment, response);
 	
@@ -151,8 +153,7 @@ public class PaymentController {
 	        }
 	
 	        // 결제 처리
-	        PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
-	        boolean res = processPayment(payment, paymentType, history, formattedDateTime, user, response, paymentDetails);
+	        boolean res = processMembershipPayment(payment, paymentType, history, formattedDateTime, user, response, isNewPayment);
 	
 	        if (res) {
 	            response.put("url", "/payment/paymentList");
@@ -431,7 +432,7 @@ public class PaymentController {
 	 * @return 계산된 만료일 (LocalDateTime)
 	 */
 	private LocalDateTime calculateExpirationDate(LocalDateTime startDateTime, int period) {
-	    LocalDateTime expirationDateTime = startDateTime.plusMonths(period / 30); // 월 단위로 더함
+	    LocalDateTime expirationDateTime = startDateTime.plusMonths(period); // 월 단위로 더함
 
 	    // 해당 월의 마지막 날 계산
 	    YearMonth yearMonth = YearMonth.from(expirationDateTime);
@@ -459,7 +460,7 @@ public class PaymentController {
 	
 	
 	/**
-	 * 회원권 결제 :: 기존 결제 또는 새로운 결제 시작 날짜를 처리하는 메소드
+	 * 기존 결제 또는 새로운 결제 시작 날짜를 처리하는 메소드
 	 * 
 	 * @param payment 결제 정보 객체
 	 * @param existingPayment 기존 결제 정보 객체
@@ -502,9 +503,52 @@ public class PaymentController {
 	}
 	
 	
+	/**
+	 * 회원권 :: 주어진 결제 정보와 사용자 정보를 바탕으로 회원권 결제 처리 및 결과를 반환하는 메소드.
+	 * 결제가 성공했는지 여부에 따라 적절한 메시지를 response에 담아 응답.
+	 * 
+	 * @param payment 결제 정보 (PaymentVO)
+	 * @param paymentType 결제 타입 정보 (PaymentTypeVO)
+	 * @param history 결제 이력 정보 (PaymentHistoryVO)
+	 * @param formattedDateTime 계산된 만료일을 포함한 포맷된 날짜 문자열 (String)
+	 * @param user 결제하는 사용자 정보 (MemberVO)
+	 * @param response 클라이언트로 반환할 응답 데이터 (Map<String, Object>)
+	 * @return 결제가 성공했는지 여부 (boolean)
+	 */
+	private boolean processMembershipPayment(PaymentVO payment, PaymentTypeVO paymentType, PaymentHistoryVO history, String formattedDateTime, MemberVO user, Map<String, Object> response, boolean isNewPayment) {
+	    boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
+
+	    if (res) {
+	        if (isNewPayment) {
+	            // 새 결제인 경우
+	            response.put("success", true);
+	            response.put("message", "결제가 완료되었습니다.");
+	            response.put("url", "/payment/paymentList");
+	        } else {
+	            // 재결제인 경우
+	            response.put("success", true);
+	            response.put("message", "결제가 완료되었습니다. 만료일이 연장되었습니다.");
+	            response.put("url", "/payment/paymentList");
+	        }
+	    } else {
+	        if (isNewPayment) {
+	            response.put("success", false);
+	            response.put("message", "결제가 실패하였습니다.");
+	            response.put("url", "/payment/paymentInsert");
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "결제 업데이트에 실패했습니다.");
+	        }
+	    }
+
+	    return res;
+	}
+
+	
+	
 	
 	/**
-	 * PT 결제 :: 주어진 결제 정보와 사용자 정보를 바탕으로 결제 처리 및 결과를 반환하는 메소드.
+	 * PT :: 주어진 결제 정보와 사용자 정보를 바탕으로 결제 처리 및 결과를 반환하는 메소드.
 	 * 결제가 성공했는지 여부에 따라 적절한 메시지를 response에 담아 응답.
 	 * 
 	 * @param payment 결제 정보 (PaymentVO)
