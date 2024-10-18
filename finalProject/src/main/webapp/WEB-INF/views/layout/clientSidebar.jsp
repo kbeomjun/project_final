@@ -88,6 +88,7 @@
                 '/client/mypage/review/',
                 '/client/mypage/inquiry/',
                 '/client/mypage/pwcheck/',
+                '/client/mypage/info/',
                 '/client/mypage/pwchange/'
             ];
 
