@@ -4,7 +4,7 @@ use fitness;
 delete from fitness.branch;
 insert into fitness.branch(br_name, br_phone, br_postcode, br_address, br_detailAddress, br_extraAddress, br_detail)
 values
-	("본점", "021111111", "06234", "서울특별시 강남구 테헤란로 130", "6층", "(역삼동)", null),
+	("본점", "021111111", "06234", "서울특별시 강남구 테헤란로 130", "6층", "(역삼동)", '<h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">평일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">6:00 ~ 23:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">주말/공휴일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">9:00 ~ 18:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">정기휴일</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">매월 첫째, 셋째 일요일</span></h6><div><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></div></div><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">프로그램</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">PT, 요가, 필라테스, 스피닝, 크로스핏</span></h6></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">주차안내</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">무료주차 3시간 가능</span></h6>'),
 	("역삼점", "021112222", "06231", "서울 강남구 도곡로 205", "지하 1층", "(역삼동)", '<h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">평일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">6:00 ~ 23:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">주말/공휴일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">9:00 ~ 18:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">정기휴일</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">매월 첫째, 셋째 일요일</span></h6><div><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></div></div><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">프로그램</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">PT, 요가, 필라테스, 스피닝, 크로스핏</span></h6></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">주차안내</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">무료주차 3시간 가능</span></h6>'),
 	("강남점", "021113333", "06242", "서울 강남구 강남대로78길 8", "지하 2층", "(역삼동)", '<h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">평일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">6:00 ~ 23:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">주말/공휴일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">9:00 ~ 18:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">정기휴일</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">매월 첫째, 셋째 일요일</span></h6><div><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></div></div><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">프로그램</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">PT, 요가, 필라테스, 스피닝</span></h6></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">주차안내</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">무료주차 3시간 가능</span></h6>'),
     ("논현점", "021114444", "06110", "서울 강남구 학동로4길 15", "지하 1층", "(논현동)", '<h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">평일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">6:00 ~ 23:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">주말/공휴일</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">9:00 ~ 18:00</span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">정기휴일</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">매월 첫째, 셋째 일요일</span></h6><div><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);"><br></span></div></div><div style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px;"><div class="info-tit" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" letter-spacing:="" -1px;"="" style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; vertical-align: top; display: inline-block; width: 126px; color: rgb(0, 0, 0);">프로그램</div><div class="info-cont" noto="" sans="" kr",="" sans-serif;="" font-size:="" 20.4px;="" font-style:="" normal;="" font-variant-ligatures:="" font-variant-caps:="" font-weight:="" 300;="" letter-spacing:="" -1px;"="" style="line-height: 1.4; letter-spacing: -0.35px; padding-right: 0.5rem; padding-left: 0.5rem; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; display: inline-block; width: calc(100% - 150px); color: rgb(136, 136, 136);"><br></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">PT, 요가, 필라테스, 크로스핏</span></h6></div><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 600; font-size: 14px; color: rgb(0, 0, 0);">주차안내</span><br></h6><h6 style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal;"><span style="letter-spacing: -0.35px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-size: 14px; color: rgb(136, 136, 136);">무료주차 3시간 가능</span></h6>'),
@@ -60,129 +60,129 @@ values
 delete from fitness.branch_equipment_stock;
 insert into fitness.branch_equipment_stock(be_amount, be_record, be_birth, be_type, be_br_name, be_se_name)
 values
-	(50, "2000-01-01", "2000-01-01", "입고", "본점", "런닝머신 JX-650W"),			(50, "2000-01-01", "2000-01-01", "입고", "본점", "입식 자전거 JX-170U"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "스피닝 자전거 JX-7907"),		(50, "2000-01-01", "2000-01-01", "입고", "본점", "좌식 자전거 JX-2018"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "다기능 운동기구 JX-185F"),		(50, "2000-01-01", "2000-01-01", "입고", "본점", "스미스 머신 JX-C324"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "웨이트 벤치 JX-CB-204B"),		(50, "2000-01-01", "2000-01-01", "입고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(50, "2000-01-01", "2000-01-01", "입고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "케이블 크로스오버 JX-C322"),		(50, "2000-01-01", "2000-01-01", "입고", "본점", "레그프레스 JX-C325"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "체스트 프레스 머신 J400-01"),	(50, "2000-01-01", "2000-01-01", "입고", "본점", "레그 컬 J400-11"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "버터 플라이 머신 J400-15"),		(50, "2000-01-01", "2000-01-01", "입고", "본점", "렛 풀 다운 머신 J400-03"),
-    (50, "2000-01-01", "2000-01-01", "입고", "본점", "친업 딥 스테이션 J400-16"),		(50, "2000-01-01", "2000-01-01", "입고", "본점", "숄더 프레스 머신 J400-04"),
+	(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "런닝머신 JX-650W"),			(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "입식 자전거 JX-170U"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "스피닝 자전거 JX-7907"),		(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "좌식 자전거 JX-2018"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "다기능 운동기구 JX-185F"),		(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "스미스 머신 JX-C324"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "웨이트 벤치 JX-CB-204B"),		(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "케이블 크로스오버 JX-C322"),		(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "레그프레스 JX-C325"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "체스트 프레스 머신 J400-01"),	(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "레그 컬 J400-11"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "버터 플라이 머신 J400-15"),		(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "렛 풀 다운 머신 J400-03"),
+    (50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "친업 딥 스테이션 J400-16"),		(50, "2000-01-01 10:00:00", "2000-01-01", "입고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(50, "2000-02-02", "2000-02-02", "입고", "본점", "런닝머신 JX-650W"),			(50, "2001-02-11", "2001-01-11", "입고", "본점", "입식 자전거 JX-170U"),
-    (50, "2000-03-03", "2000-03-03", "입고", "본점", "스피닝 자전거 JX-7907"),		(50, "2001-03-12", "2001-01-12", "입고", "본점", "좌식 자전거 JX-2018"),
-    (50, "2000-04-04", "2000-04-04", "입고", "본점", "다기능 운동기구 JX-185F"),		(50, "2001-04-13", "2001-01-13", "입고", "본점", "스미스 머신 JX-C324"),
-    (50, "2000-05-05", "2000-05-05", "입고", "본점", "웨이트 벤치 JX-CB-204B"),		(50, "2001-05-14", "2001-01-14", "입고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (50, "2000-06-06", "2000-06-06", "입고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(50, "2001-06-15", "2001-01-15", "입고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (50, "2000-07-07", "2000-07-07", "입고", "본점", "케이블 크로스오버 JX-C322"),		(50, "2001-07-16", "2001-01-16", "입고", "본점", "레그프레스 JX-C325"),
-    (50, "2000-08-08", "2000-08-08", "입고", "본점", "체스트 프레스 머신 J400-01"),	(50, "2001-08-17", "2001-01-17", "입고", "본점", "레그 컬 J400-11"),
-    (50, "2000-09-09", "2000-09-09", "입고", "본점", "버터 플라이 머신 J400-15"),		(50, "2001-09-18", "2001-01-18", "입고", "본점", "렛 풀 다운 머신 J400-03"),
-    (50, "2000-10-10", "2000-10-10", "입고", "본점", "친업 딥 스테이션 J400-16"),		(50, "2001-10-19", "2001-01-19", "입고", "본점", "숄더 프레스 머신 J400-04"),
+	(50, "2000-02-02 10:00:00", "2000-02-02", "입고", "본점", "런닝머신 JX-650W"),			(50, "2001-02-11 10:00:00", "2001-01-11", "입고", "본점", "입식 자전거 JX-170U"),
+    (50, "2000-03-03 10:00:00", "2000-03-03", "입고", "본점", "스피닝 자전거 JX-7907"),		(50, "2001-03-12 10:00:00", "2001-01-12", "입고", "본점", "좌식 자전거 JX-2018"),
+    (50, "2000-04-04 10:00:00", "2000-04-04", "입고", "본점", "다기능 운동기구 JX-185F"),		(50, "2001-04-13 10:00:00", "2001-01-13", "입고", "본점", "스미스 머신 JX-C324"),
+    (50, "2000-05-05 10:00:00", "2000-05-05", "입고", "본점", "웨이트 벤치 JX-CB-204B"),		(50, "2001-05-14 10:00:00", "2001-01-14", "입고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (50, "2000-06-06 10:00:00", "2000-06-06", "입고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(50, "2001-06-15 10:00:00", "2001-01-15", "입고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (50, "2000-07-07 10:00:00", "2000-07-07", "입고", "본점", "케이블 크로스오버 JX-C322"),		(50, "2001-07-16 10:00:00", "2001-01-16", "입고", "본점", "레그프레스 JX-C325"),
+    (50, "2000-08-08 10:00:00", "2000-08-08", "입고", "본점", "체스트 프레스 머신 J400-01"),	(50, "2001-08-17 10:00:00", "2001-01-17", "입고", "본점", "레그 컬 J400-11"),
+    (50, "2000-09-09 10:00:00", "2000-09-09", "입고", "본점", "버터 플라이 머신 J400-15"),		(50, "2001-09-18 10:00:00", "2001-01-18", "입고", "본점", "렛 풀 다운 머신 J400-03"),
+    (50, "2000-10-10 10:00:00", "2000-10-10", "입고", "본점", "친업 딥 스테이션 J400-16"),		(50, "2001-10-19 10:00:00", "2001-01-19", "입고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(-5, "2001-02-03", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-5, "2001-02-02", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
-    (-6, "2001-02-04", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-6, "2001-02-02", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
-    (-7, "2001-02-05", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2001-02-02", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
-    (-8, "2001-02-06", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-8, "2001-02-02", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (-9, "2001-02-07", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-9, "2001-02-02", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (-8, "2001-02-08", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-8, "2001-02-02", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
-    (-7, "2001-02-09", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2001-02-02", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
-    (-6, "2001-02-08", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-6, "2001-02-02", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
-    (-5, "2001-02-07", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-5, "2001-02-02", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
+	(-5, "2001-02-03 10:00:00", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-5, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
+    (-6, "2001-02-04 10:00:00", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-6, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
+    (-7, "2001-02-05 10:00:00", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
+    (-8, "2001-02-06 10:00:00", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-8, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (-9, "2001-02-07 10:00:00", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-9, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (-8, "2001-02-08 10:00:00", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-8, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
+    (-7, "2001-02-09 10:00:00", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
+    (-6, "2001-02-08 10:00:00", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-6, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
+    (-5, "2001-02-07 10:00:00", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-5, "2001-02-02 10:00:00", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(5, "2001-02-03", "2000-01-01", "입고", "역삼점", "런닝머신 JX-650W"),			(5, "2001-02-02", "2000-01-01", "입고", "역삼점", "입식 자전거 JX-170U"),
-    (6, "2001-02-04", "2000-01-01", "입고", "역삼점", "스피닝 자전거 JX-7907"),		(6, "2001-02-02", "2000-01-01", "입고", "역삼점", "좌식 자전거 JX-2018"),
-    (7, "2001-02-05", "2000-01-01", "입고", "역삼점", "다기능 운동기구 JX-185F"),		(7, "2001-02-02", "2000-01-01", "입고", "역삼점", "스미스 머신 JX-C324"),
-    (8, "2001-02-06", "2000-01-01", "입고", "역삼점", "웨이트 벤치 JX-CB-204B"),		(8, "2001-02-02", "2000-01-01", "입고", "역삼점", "올림픽 플랫 벤치 JX-C329"),
-    (9, "2001-02-07", "2000-01-01", "입고", "역삼점", "올림픽 인클라인 벤치 JX-C330"),	(9, "2001-02-02", "2000-01-01", "입고", "역삼점", "올림픽 디클라인 벤치 JX-C331"),
-    (8, "2001-02-08", "2000-01-01", "입고", "역삼점", "케이블 크로스오버 JX-C322"),		(8, "2001-02-02", "2000-01-01", "입고", "역삼점", "레그프레스 JX-C325"),
-    (7, "2001-02-09", "2000-01-01", "입고", "역삼점", "체스트 프레스 머신 J400-01"),	(7, "2001-02-02", "2000-01-01", "입고", "역삼점", "레그 컬 J400-11"),
-    (6, "2001-02-08", "2000-01-01", "입고", "역삼점", "버터 플라이 머신 J400-15"),		(6, "2001-02-02", "2000-01-01", "입고", "역삼점", "렛 풀 다운 머신 J400-03"),
-    (5, "2001-02-07", "2000-01-01", "입고", "역삼점", "친업 딥 스테이션 J400-16"),		(5, "2001-02-02", "2000-01-01", "입고", "역삼점", "숄더 프레스 머신 J400-04"),
+	(5, "2001-02-03 10:00:00", "2000-01-01", "입고", "역삼점", "런닝머신 JX-650W"),			(5, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "입식 자전거 JX-170U"),
+    (6, "2001-02-04 10:00:00", "2000-01-01", "입고", "역삼점", "스피닝 자전거 JX-7907"),		(6, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "좌식 자전거 JX-2018"),
+    (7, "2001-02-05 10:00:00", "2000-01-01", "입고", "역삼점", "다기능 운동기구 JX-185F"),		(7, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "스미스 머신 JX-C324"),
+    (8, "2001-02-06 10:00:00", "2000-01-01", "입고", "역삼점", "웨이트 벤치 JX-CB-204B"),		(8, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "올림픽 플랫 벤치 JX-C329"),
+    (9, "2001-02-07 10:00:00", "2000-01-01", "입고", "역삼점", "올림픽 인클라인 벤치 JX-C330"),	(9, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "올림픽 디클라인 벤치 JX-C331"),
+    (8, "2001-02-08 10:00:00", "2000-01-01", "입고", "역삼점", "케이블 크로스오버 JX-C322"),		(8, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "레그프레스 JX-C325"),
+    (7, "2001-02-09 10:00:00", "2000-01-01", "입고", "역삼점", "체스트 프레스 머신 J400-01"),	(7, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "레그 컬 J400-11"),
+    (6, "2001-02-08 10:00:00", "2000-01-01", "입고", "역삼점", "버터 플라이 머신 J400-15"),		(6, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "렛 풀 다운 머신 J400-03"),
+    (5, "2001-02-07 10:00:00", "2000-01-01", "입고", "역삼점", "친업 딥 스테이션 J400-16"),		(5, "2001-02-02 10:00:00", "2000-01-01", "입고", "역삼점", "숄더 프레스 머신 J400-04"),
     
-	(-9, "2002-03-04", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-9, "2002-03-03", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
-    (-8, "2002-03-05", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-8, "2002-03-03", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
-    (-7, "2002-03-06", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2002-03-03", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
-    (-6, "2002-03-07", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-6, "2002-03-03", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (-5, "2002-03-08", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-5, "2002-03-03", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (-6, "2002-03-09", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-6, "2002-03-03", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
-    (-7, "2002-03-08", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2002-03-03", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
-    (-8, "2002-03-07", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-8, "2002-03-03", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
-    (-9, "2002-03-06", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-9, "2002-03-03", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
+	(-9, "2002-03-04 10:00:00", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-9, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
+    (-8, "2002-03-05 10:00:00", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-8, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
+    (-7, "2002-03-06 10:00:00", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
+    (-6, "2002-03-07 10:00:00", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-6, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (-5, "2002-03-08 10:00:00", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-5, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (-6, "2002-03-09 10:00:00", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-6, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
+    (-7, "2002-03-08 10:00:00", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
+    (-8, "2002-03-07 10:00:00", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-8, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
+    (-9, "2002-03-06 10:00:00", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-9, "2002-03-03 10:00:00", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(9, "2002-03-04", "2000-01-01", "입고", "강남점", "런닝머신 JX-650W"),			(9, "2002-03-03", "2000-01-01", "입고", "강남점", "입식 자전거 JX-170U"),
-    (8, "2002-03-05", "2000-01-01", "입고", "강남점", "스피닝 자전거 JX-7907"),		(8, "2002-03-03", "2000-01-01", "입고", "강남점", "좌식 자전거 JX-2018"),
-    (7, "2002-03-06", "2000-01-01", "입고", "강남점", "다기능 운동기구 JX-185F"),		(7, "2002-03-03", "2000-01-01", "입고", "강남점", "스미스 머신 JX-C324"),
-    (6, "2002-03-07", "2000-01-01", "입고", "강남점", "웨이트 벤치 JX-CB-204B"),		(6, "2002-03-03", "2000-01-01", "입고", "강남점", "올림픽 플랫 벤치 JX-C329"),
-    (5, "2002-03-08", "2000-01-01", "입고", "강남점", "올림픽 인클라인 벤치 JX-C330"),	(5, "2002-03-03", "2000-01-01", "입고", "강남점", "올림픽 디클라인 벤치 JX-C331"),
-    (6, "2002-03-09", "2000-01-01", "입고", "강남점", "케이블 크로스오버 JX-C322"),		(6, "2002-03-03", "2000-01-01", "입고", "강남점", "레그프레스 JX-C325"),
-    (7, "2002-03-08", "2000-01-01", "입고", "강남점", "체스트 프레스 머신 J400-01"),	(7, "2002-03-03", "2000-01-01", "입고", "강남점", "레그 컬 J400-11"),
-    (8, "2002-03-07", "2000-01-01", "입고", "강남점", "버터 플라이 머신 J400-15"),		(8, "2002-03-03", "2000-01-01", "입고", "강남점", "렛 풀 다운 머신 J400-03"),
-    (9, "2002-03-06", "2000-01-01", "입고", "강남점", "친업 딥 스테이션 J400-16"),		(9, "2002-03-03", "2000-01-01", "입고", "강남점", "숄더 프레스 머신 J400-04"),
+	(9, "2002-03-04 10:00:00", "2000-01-01", "입고", "강남점", "런닝머신 JX-650W"),			(9, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "입식 자전거 JX-170U"),
+    (8, "2002-03-05 10:00:00", "2000-01-01", "입고", "강남점", "스피닝 자전거 JX-7907"),		(8, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "좌식 자전거 JX-2018"),
+    (7, "2002-03-06 10:00:00", "2000-01-01", "입고", "강남점", "다기능 운동기구 JX-185F"),		(7, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "스미스 머신 JX-C324"),
+    (6, "2002-03-07 10:00:00", "2000-01-01", "입고", "강남점", "웨이트 벤치 JX-CB-204B"),		(6, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "올림픽 플랫 벤치 JX-C329"),
+    (5, "2002-03-08 10:00:00", "2000-01-01", "입고", "강남점", "올림픽 인클라인 벤치 JX-C330"),	(5, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "올림픽 디클라인 벤치 JX-C331"),
+    (6, "2002-03-09 10:00:00", "2000-01-01", "입고", "강남점", "케이블 크로스오버 JX-C322"),		(6, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "레그프레스 JX-C325"),
+    (7, "2002-03-08 10:00:00", "2000-01-01", "입고", "강남점", "체스트 프레스 머신 J400-01"),	(7, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "레그 컬 J400-11"),
+    (8, "2002-03-07 10:00:00", "2000-01-01", "입고", "강남점", "버터 플라이 머신 J400-15"),		(8, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "렛 풀 다운 머신 J400-03"),
+    (9, "2002-03-06 10:00:00", "2000-01-01", "입고", "강남점", "친업 딥 스테이션 J400-16"),		(9, "2002-03-03 10:00:00", "2000-01-01", "입고", "강남점", "숄더 프레스 머신 J400-04"),
     
-	(-5, "2003-04-05", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-5, "2003-04-04", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
-    (-6, "2003-04-06", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-6, "2003-04-04", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
-    (-7, "2003-04-07", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2003-04-04", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
-    (-8, "2003-04-08", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-8, "2003-04-04", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (-9, "2003-04-09", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-9, "2003-04-04", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (-8, "2003-04-08", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-8, "2003-04-04", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
-    (-7, "2003-04-07", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2003-04-04", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
-    (-6, "2003-04-06", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-6, "2003-04-04", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
-    (-5, "2003-04-05", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-5, "2003-04-04", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
+	(-5, "2003-04-05 10:00:00", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-5, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
+    (-6, "2003-04-06 10:00:00", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-6, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
+    (-7, "2003-04-07 10:00:00", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
+    (-8, "2003-04-08 10:00:00", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-8, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (-9, "2003-04-09 10:00:00", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-9, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (-8, "2003-04-08 10:00:00", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-8, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
+    (-7, "2003-04-07 10:00:00", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
+    (-6, "2003-04-06 10:00:00", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-6, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
+    (-5, "2003-04-05 10:00:00", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-5, "2003-04-04 10:00:00", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(5, "2003-04-05", "2000-01-01", "입고", "논현점", "런닝머신 JX-650W"),			(5, "2003-04-04", "2000-01-01", "입고", "논현점", "입식 자전거 JX-170U"),
-    (6, "2003-04-06", "2000-01-01", "입고", "논현점", "스피닝 자전거 JX-7907"),		(6, "2003-04-04", "2000-01-01", "입고", "논현점", "좌식 자전거 JX-2018"),
-    (7, "2003-04-07", "2000-01-01", "입고", "논현점", "다기능 운동기구 JX-185F"),		(7, "2003-04-04", "2000-01-01", "입고", "논현점", "스미스 머신 JX-C324"),
-    (8, "2003-04-08", "2000-01-01", "입고", "논현점", "웨이트 벤치 JX-CB-204B"),		(8, "2003-04-04", "2000-01-01", "입고", "논현점", "올림픽 플랫 벤치 JX-C329"),
-    (9, "2003-04-09", "2000-01-01", "입고", "논현점", "올림픽 인클라인 벤치 JX-C330"),	(9, "2003-04-04", "2000-01-01", "입고", "논현점", "올림픽 디클라인 벤치 JX-C331"),
-    (8, "2003-04-08", "2000-01-01", "입고", "논현점", "케이블 크로스오버 JX-C322"),		(8, "2003-04-04", "2000-01-01", "입고", "논현점", "레그프레스 JX-C325"),
-    (7, "2003-04-07", "2000-01-01", "입고", "논현점", "체스트 프레스 머신 J400-01"),	(7, "2003-04-04", "2000-01-01", "입고", "논현점", "레그 컬 J400-11"),
-    (6, "2003-04-06", "2000-01-01", "입고", "논현점", "버터 플라이 머신 J400-15"),		(6, "2003-04-04", "2000-01-01", "입고", "논현점", "렛 풀 다운 머신 J400-03"),
-    (5, "2003-04-05", "2000-01-01", "입고", "논현점", "친업 딥 스테이션 J400-16"),		(5, "2003-04-04", "2000-01-01", "입고", "논현점", "숄더 프레스 머신 J400-04"),
+	(5, "2003-04-05 10:00:00", "2000-01-01", "입고", "논현점", "런닝머신 JX-650W"),			(5, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "입식 자전거 JX-170U"),
+    (6, "2003-04-06 10:00:00", "2000-01-01", "입고", "논현점", "스피닝 자전거 JX-7907"),		(6, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "좌식 자전거 JX-2018"),
+    (7, "2003-04-07 10:00:00", "2000-01-01", "입고", "논현점", "다기능 운동기구 JX-185F"),		(7, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "스미스 머신 JX-C324"),
+    (8, "2003-04-08 10:00:00", "2000-01-01", "입고", "논현점", "웨이트 벤치 JX-CB-204B"),		(8, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "올림픽 플랫 벤치 JX-C329"),
+    (9, "2003-04-09 10:00:00", "2000-01-01", "입고", "논현점", "올림픽 인클라인 벤치 JX-C330"),	(9, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "올림픽 디클라인 벤치 JX-C331"),
+    (8, "2003-04-08 10:00:00", "2000-01-01", "입고", "논현점", "케이블 크로스오버 JX-C322"),		(8, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "레그프레스 JX-C325"),
+    (7, "2003-04-07 10:00:00", "2000-01-01", "입고", "논현점", "체스트 프레스 머신 J400-01"),	(7, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "레그 컬 J400-11"),
+    (6, "2003-04-06 10:00:00", "2000-01-01", "입고", "논현점", "버터 플라이 머신 J400-15"),		(6, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "렛 풀 다운 머신 J400-03"),
+    (5, "2003-04-05 10:00:00", "2000-01-01", "입고", "논현점", "친업 딥 스테이션 J400-16"),		(5, "2003-04-04 10:00:00", "2000-01-01", "입고", "논현점", "숄더 프레스 머신 J400-04"),
     
-	(-9, "2004-05-06", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-9, "2004-05-05", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
-    (-8, "2004-05-07", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-8, "2004-05-05", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
-    (-7, "2004-05-08", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2004-05-05", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
-    (-6, "2004-05-09", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-6, "2004-05-05", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (-5, "2004-05-08", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-5, "2004-05-05", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (-6, "2004-05-07", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-6, "2004-05-05", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
-    (-7, "2004-05-06", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),		(-7, "2004-05-05", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
-    (-8, "2004-05-05", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-8, "2004-05-05", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
-    (-9, "2004-05-04", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-9, "2004-05-05", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
+	(-9, "2004-05-06 10:00:00", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-9, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
+    (-8, "2004-05-07 10:00:00", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-8, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
+    (-7, "2004-05-08 10:00:00", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
+    (-6, "2004-05-09 10:00:00", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-6, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (-5, "2004-05-08 10:00:00", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-5, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (-6, "2004-05-07 10:00:00", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-6, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
+    (-7, "2004-05-06 10:00:00", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),		(-7, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
+    (-8, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-8, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
+    (-9, "2004-05-04 10:00:00", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-9, "2004-05-05 10:00:00", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(9, "2004-05-06", "2000-01-01", "입고", "대치동점", "런닝머신 JX-650W"),			(9, "2004-05-05", "2000-01-01", "입고", "대치동점", "입식 자전거 JX-170U"),
-    (8, "2004-05-07", "2000-01-01", "입고", "대치동점", "스피닝 자전거 JX-7907"),		(8, "2004-05-05", "2000-01-01", "입고", "대치동점", "좌식 자전거 JX-2018"),
-    (7, "2004-05-08", "2000-01-01", "입고", "대치동점", "다기능 운동기구 JX-185F"),		(7, "2004-05-05", "2000-01-01", "입고", "대치동점", "스미스 머신 JX-C324"),
-    (6, "2004-05-09", "2000-01-01", "입고", "대치동점", "웨이트 벤치 JX-CB-204B"),	(6, "2004-05-05", "2000-01-01", "입고", "대치동점", "올림픽 플랫 벤치 JX-C329"),
-    (5, "2004-05-08", "2000-01-01", "입고", "대치동점", "올림픽 인클라인 벤치 JX-C330"),	(5, "2004-05-05", "2000-01-01", "입고", "대치동점", "올림픽 디클라인 벤치 JX-C331"),
-    (6, "2004-05-07", "2000-01-01", "입고", "대치동점", "케이블 크로스오버 JX-C322"),	(6, "2004-05-05", "2000-01-01", "입고", "대치동점", "레그프레스 JX-C325"),
-    (7, "2004-05-06", "2000-01-01", "입고", "대치동점", "체스트 프레스 머신 J400-01"),	(7, "2004-05-05", "2000-01-01", "입고", "대치동점", "레그 컬 J400-11"),
-    (8, "2004-05-05", "2000-01-01", "입고", "대치동점", "버터 플라이 머신 J400-15"),	(8, "2004-05-05", "2000-01-01", "입고", "대치동점", "렛 풀 다운 머신 J400-03"),
-    (9, "2004-05-04", "2000-01-01", "입고", "대치동점", "친업 딥 스테이션 J400-16"),	(9, "2004-05-05", "2000-01-01", "입고", "대치동점", "숄더 프레스 머신 J400-04"),
+	(9, "2004-05-06 10:00:00", "2000-01-01", "입고", "대치동점", "런닝머신 JX-650W"),			(9, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "입식 자전거 JX-170U"),
+    (8, "2004-05-07 10:00:00", "2000-01-01", "입고", "대치동점", "스피닝 자전거 JX-7907"),		(8, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "좌식 자전거 JX-2018"),
+    (7, "2004-05-08 10:00:00", "2000-01-01", "입고", "대치동점", "다기능 운동기구 JX-185F"),		(7, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "스미스 머신 JX-C324"),
+    (6, "2004-05-09 10:00:00", "2000-01-01", "입고", "대치동점", "웨이트 벤치 JX-CB-204B"),	(6, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "올림픽 플랫 벤치 JX-C329"),
+    (5, "2004-05-08 10:00:00", "2000-01-01", "입고", "대치동점", "올림픽 인클라인 벤치 JX-C330"),	(5, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "올림픽 디클라인 벤치 JX-C331"),
+    (6, "2004-05-07 10:00:00", "2000-01-01", "입고", "대치동점", "케이블 크로스오버 JX-C322"),	(6, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "레그프레스 JX-C325"),
+    (7, "2004-05-06 10:00:00", "2000-01-01", "입고", "대치동점", "체스트 프레스 머신 J400-01"),	(7, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "레그 컬 J400-11"),
+    (8, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "버터 플라이 머신 J400-15"),	(8, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "렛 풀 다운 머신 J400-03"),
+    (9, "2004-05-04 10:00:00", "2000-01-01", "입고", "대치동점", "친업 딥 스테이션 J400-16"),	(9, "2004-05-05 10:00:00", "2000-01-01", "입고", "대치동점", "숄더 프레스 머신 J400-04"),
 
-	(-9, "2005-06-07", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-9, "2005-06-06", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
-    (-8, "2005-06-08", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-8, "2005-06-06", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
-    (-7, "2005-06-09", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2005-06-06", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
-    (-6, "2005-06-08", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-6, "2005-06-06", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
-    (-5, "2005-06-07", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-5, "2005-06-06", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
-    (-6, "2005-06-06", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-6, "2005-06-06", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
-    (-7, "2005-06-05", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2005-06-06", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
-    (-8, "2005-06-04", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-8, "2005-06-06", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
-    (-9, "2005-06-03", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-9, "2005-06-06", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
+	(-9, "2005-06-07 10:00:00", "2000-01-01", "출고", "본점", "런닝머신 JX-650W"),			(-9, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "입식 자전거 JX-170U"),
+    (-8, "2005-06-08 10:00:00", "2000-01-01", "출고", "본점", "스피닝 자전거 JX-7907"),		(-8, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "좌식 자전거 JX-2018"),
+    (-7, "2005-06-09 10:00:00", "2000-01-01", "출고", "본점", "다기능 운동기구 JX-185F"),		(-7, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "스미스 머신 JX-C324"),
+    (-6, "2005-06-08 10:00:00", "2000-01-01", "출고", "본점", "웨이트 벤치 JX-CB-204B"),		(-6, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "올림픽 플랫 벤치 JX-C329"),
+    (-5, "2005-06-07 10:00:00", "2000-01-01", "출고", "본점", "올림픽 인클라인 벤치 JX-C330"),	(-5, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "올림픽 디클라인 벤치 JX-C331"),
+    (-6, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "케이블 크로스오버 JX-C322"),		(-6, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "레그프레스 JX-C325"),
+    (-7, "2005-06-05 10:00:00", "2000-01-01", "출고", "본점", "체스트 프레스 머신 J400-01"),	(-7, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "레그 컬 J400-11"),
+    (-8, "2005-06-04 10:00:00", "2000-01-01", "출고", "본점", "버터 플라이 머신 J400-15"),		(-8, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "렛 풀 다운 머신 J400-03"),
+    (-9, "2005-06-03 10:00:00", "2000-01-01", "출고", "본점", "친업 딥 스테이션 J400-16"),		(-9, "2005-06-06 10:00:00", "2000-01-01", "출고", "본점", "숄더 프레스 머신 J400-04"),
     
-	(9, "2005-06-07", "2000-01-01", "입고", "선릉점", "런닝머신 JX-650W"),			(9, "2005-06-06", "2000-01-01", "입고", "선릉점", "입식 자전거 JX-170U"),
-    (8, "2005-06-08", "2000-01-01", "입고", "선릉점", "스피닝 자전거 JX-7907"),		(8, "2005-06-06", "2000-01-01", "입고", "선릉점", "좌식 자전거 JX-2018"),
-    (7, "2005-06-09", "2000-01-01", "입고", "선릉점", "다기능 운동기구 JX-185F"),		(7, "2005-06-06", "2000-01-01", "입고", "선릉점", "스미스 머신 JX-C324"),
-    (6, "2005-06-08", "2000-01-01", "입고", "선릉점", "웨이트 벤치 JX-CB-204B"),		(6, "2005-06-06", "2000-01-01", "입고", "선릉점", "올림픽 플랫 벤치 JX-C329"),
-    (5, "2005-06-07", "2000-01-01", "입고", "선릉점", "올림픽 인클라인 벤치 JX-C330"),	(5, "2005-06-06", "2000-01-01", "입고", "선릉점", "올림픽 디클라인 벤치 JX-C331"),
-    (6, "2005-06-06", "2000-01-01", "입고", "선릉점", "케이블 크로스오버 JX-C322"),		(6, "2005-06-06", "2000-01-01", "입고", "선릉점", "레그프레스 JX-C325"),
-    (7, "2005-06-05", "2000-01-01", "입고", "선릉점", "체스트 프레스 머신 J400-01"),	(7, "2005-06-06", "2000-01-01", "입고", "선릉점", "레그 컬 J400-11"),
-    (8, "2005-06-04", "2000-01-01", "입고", "선릉점", "버터 플라이 머신 J400-15"),		(8, "2005-06-06", "2000-01-01", "입고", "선릉점", "렛 풀 다운 머신 J400-03"),
-    (9, "2005-06-03", "2000-01-01", "입고", "선릉점", "친업 딥 스테이션 J400-16"),		(9, "2005-06-06", "2000-01-01", "입고", "선릉점", "숄더 프레스 머신 J400-04"),
+	(9, "2005-06-07 10:00:00", "2000-01-01", "입고", "선릉점", "런닝머신 JX-650W"),			(9, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "입식 자전거 JX-170U"),
+    (8, "2005-06-08 10:00:00", "2000-01-01", "입고", "선릉점", "스피닝 자전거 JX-7907"),		(8, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "좌식 자전거 JX-2018"),
+    (7, "2005-06-09 10:00:00", "2000-01-01", "입고", "선릉점", "다기능 운동기구 JX-185F"),		(7, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "스미스 머신 JX-C324"),
+    (6, "2005-06-08 10:00:00", "2000-01-01", "입고", "선릉점", "웨이트 벤치 JX-CB-204B"),		(6, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "올림픽 플랫 벤치 JX-C329"),
+    (5, "2005-06-07 10:00:00", "2000-01-01", "입고", "선릉점", "올림픽 인클라인 벤치 JX-C330"),	(5, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "올림픽 디클라인 벤치 JX-C331"),
+    (6, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "케이블 크로스오버 JX-C322"),		(6, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "레그프레스 JX-C325"),
+    (7, "2005-06-05 10:00:00", "2000-01-01", "입고", "선릉점", "체스트 프레스 머신 J400-01"),	(7, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "레그 컬 J400-11"),
+    (8, "2005-06-04 10:00:00", "2000-01-01", "입고", "선릉점", "버터 플라이 머신 J400-15"),		(8, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "렛 풀 다운 머신 J400-03"),
+    (9, "2005-06-03 10:00:00", "2000-01-01", "입고", "선릉점", "친업 딥 스테이션 J400-16"),		(9, "2005-06-06 10:00:00", "2000-01-01", "입고", "선릉점", "숄더 프레스 머신 J400-04"),
     
-	(-1, "2020-03-11", "2000-01-01", "고장", "역삼점", "런닝머신 JX-650W"),			(-1, "2021-07-15", "2000-01-01", "고장", "역삼점", "입식 자전거 JX-170U"),
-    (-1, "2023-04-05", "2000-01-01", "고장", "역삼점", "스피닝 자전거 JX-7907"),		(-2, "2023-08-24", "2000-01-01", "고장", "역삼점", "좌식 자전거 JX-2018"),
-    (-2, "2024-06-05", "2000-01-01", "고장", "역삼점", "다기능 운동기구 JX-185F"),		(-3, "2024-07-09", "2000-01-01", "고장", "역삼점", "스미스 머신 JX-C324");
+	(-1, "2020-03-11 10:00:00", "2000-01-01", "고장", "역삼점", "런닝머신 JX-650W"),			(-1, "2021-07-15 10:00:00", "2000-01-01", "고장", "역삼점", "입식 자전거 JX-170U"),
+    (-1, "2023-04-05 10:00:00", "2000-01-01", "고장", "역삼점", "스피닝 자전거 JX-7907"),		(-2, "2023-08-24 10:00:00", "2000-01-01", "고장", "역삼점", "좌식 자전거 JX-2018"),
+    (-2, "2024-06-05 10:00:00", "2000-01-01", "고장", "역삼점", "다기능 운동기구 JX-185F"),		(-3, "2024-07-09 10:00:00", "2000-01-01", "고장", "역삼점", "스미스 머신 JX-C324");
 
 
 # 지점 파일(지점파일명, 지점명)
@@ -225,19 +225,19 @@ values
 delete from fitness.branch_order;
 insert into fitness.branch_order(bo_amount, bo_state, bo_date, bo_br_name, bo_se_name)
 values
-	(5, "입고완료", "2001-02-03", "역삼점", "런닝머신 JX-650W"),			(5, "입고완료", "2001-02-02", "역삼점", "입식 자전거 JX-170U"),
-    (6, "입고완료", "2001-02-04", "역삼점", "스피닝 자전거 JX-7907"),		(6, "입고완료", "2001-02-02", "역삼점", "좌식 자전거 JX-2018"),
-    (7, "입고완료", "2001-02-05", "역삼점", "다기능 운동기구 JX-185F"),		(7, "입고완료", "2001-02-02", "역삼점", "스미스 머신 JX-C324"),
-    (8, "입고완료", "2001-02-06", "역삼점", "웨이트 벤치 JX-CB-204B"),		(8, "입고완료", "2001-02-02", "역삼점", "올림픽 플랫 벤치 JX-C329"),
-    (9, "입고완료", "2001-02-07", "역삼점", "올림픽 인클라인 벤치 JX-C330"),	(9, "입고완료", "2001-02-02", "역삼점", "올림픽 디클라인 벤치 JX-C331"),
-    (8, "입고완료", "2001-02-08", "역삼점", "케이블 크로스오버 JX-C322"),		(8, "입고완료", "2001-02-02", "역삼점", "레그프레스 JX-C325"),
-    (7, "입고완료", "2001-02-09", "역삼점", "체스트 프레스 머신 J400-01"),	(7, "입고완료", "2001-02-02", "역삼점", "레그 컬 J400-11"),
-    (6, "입고완료", "2001-02-08", "역삼점", "버터 플라이 머신 J400-15"),		(6, "입고완료", "2001-02-02", "역삼점", "렛 풀 다운 머신 J400-03"),
-    (5, "입고완료", "2001-02-07", "역삼점", "친업 딥 스테이션 J400-16"),		(5, "입고완료", "2001-02-02", "역삼점", "숄더 프레스 머신 J400-04"),
+	(5, "입고완료", "2001-02-03 10:00:00", "역삼점", "런닝머신 JX-650W"),			(5, "입고완료", "2001-02-02 10:00:00", "역삼점", "입식 자전거 JX-170U"),
+    (6, "입고완료", "2001-02-04 10:00:00", "역삼점", "스피닝 자전거 JX-7907"),		(6, "입고완료", "2001-02-02 10:00:00", "역삼점", "좌식 자전거 JX-2018"),
+    (7, "입고완료", "2001-02-05 10:00:00", "역삼점", "다기능 운동기구 JX-185F"),		(7, "입고완료", "2001-02-02 10:00:00", "역삼점", "스미스 머신 JX-C324"),
+    (8, "입고완료", "2001-02-06 10:00:00", "역삼점", "웨이트 벤치 JX-CB-204B"),		(8, "입고완료", "2001-02-02 10:00:00", "역삼점", "올림픽 플랫 벤치 JX-C329"),
+    (9, "입고완료", "2001-02-07 10:00:00", "역삼점", "올림픽 인클라인 벤치 JX-C330"),	(9, "입고완료", "2001-02-02 10:00:00", "역삼점", "올림픽 디클라인 벤치 JX-C331"),
+    (8, "입고완료", "2001-02-08 10:00:00", "역삼점", "케이블 크로스오버 JX-C322"),		(8, "입고완료", "2001-02-02 10:00:00", "역삼점", "레그프레스 JX-C325"),
+    (7, "입고완료", "2001-02-09 10:00:00", "역삼점", "체스트 프레스 머신 J400-01"),	(7, "입고완료", "2001-02-02 10:00:00", "역삼점", "레그 컬 J400-11"),
+    (6, "입고완료", "2001-02-08 10:00:00", "역삼점", "버터 플라이 머신 J400-15"),		(6, "입고완료", "2001-02-02 10:00:00", "역삼점", "렛 풀 다운 머신 J400-03"),
+    (5, "입고완료", "2001-02-07 10:00:00", "역삼점", "친업 딥 스테이션 J400-16"),		(5, "입고완료", "2001-02-02 10:00:00", "역삼점", "숄더 프레스 머신 J400-04"),
     
-    (1, "승인거절", "2020-03-15", "역삼점", "런닝머신 JX-650W"),			(1, "승인거절", "2021-08-02", "역삼점", "입식 자전거 JX-170U"),
-    (1, "승인거절", "2023-04-06", "역삼점", "스피닝 자전거 JX-7907"),		(2, "승인거절", "2023-11-11", "역삼점", "좌식 자전거 JX-2018"),
-    (2, "승인거절", "2024-06-15", "역삼점", "다기능 운동기구 JX-185F"),		(3, "승인거절", "2024-07-27", "역삼점", "스미스 머신 JX-C324"),
+    (1, "승인거절", "2020-03-15 10:00:00", "역삼점", "런닝머신 JX-650W"),			(1, "승인거절", "2021-08-02 10:00:00", "역삼점", "입식 자전거 JX-170U"),
+    (1, "승인거절", "2023-04-06 10:00:00", "역삼점", "스피닝 자전거 JX-7907"),		(2, "승인거절", "2023-11-11 10:00:00", "역삼점", "좌식 자전거 JX-2018"),
+    (2, "승인거절", "2024-06-15 10:00:00", "역삼점", "다기능 운동기구 JX-185F"),		(3, "승인거절", "2024-07-27 10:00:00", "역삼점", "스미스 머신 JX-C324"),
     
 	(1, "승인대기", NOW(), "역삼점", "다기능 운동기구 JX-185F"),				(2, "승인대기", NOW(), "역삼점", "런닝머신 JX-650W"),
     (3, "승인대기", NOW(), "역삼점", "좌식 자전거 JX-2018"),				(1, "승인대기", NOW(), "강남점", "런닝머신 JX-650W"),
@@ -355,13 +355,13 @@ values
 delete from `payment_type`;
 insert into `payment_type` (pt_name, pt_type, pt_date, pt_count, pt_price) 
 values
-	('헬스장 1개월 이용권', '이용권', 30, 1, 300000),
-	('헬스장 3개월 이용권', '이용권', 90, 1, 900000),
-	('헬스장 6개월 이용권', '이용권', 180, 1, 1200000),
+	('헬스장 1개월 이용권', '이용권', 1, 1, 300000),
+	('헬스장 3개월 이용권', '이용권', 3, 1, 900000),
+	('헬스장 6개월 이용권', '이용권', 6, 1, 1200000),
 #PT 이용권 추가(결제 유형, 기간(30일), 횟수(30일 내 10회 수강), 가격)
-	('PT 10회', 'PT', 30, 10, 600000),
-	('PT 20회', 'PT', 60, 20, 1200000),
-	('PT 30회', 'PT', 90, 30, 1800000);
+	('PT 10회', 'PT', 1, 10, 600000),
+	('PT 20회', 'PT', 2, 20, 1200000),
+	('PT 30회', 'PT', 3, 30, 1800000);
 
 
 # 결제 유형(결제 고유 ID, 결제 가맹점 ID, 결제 포맷 금액, 결제 총 금액, 결제 상태, 결제 완료 시간, 결제 카드 이름, 결제 카드 번호, 결제 카드 할부 개월 수, 결제 종류 번호, 결제 아이디)
@@ -375,20 +375,20 @@ values("imp_490884848424", "merchant_1728536884548", 300000, "paid", 1728536902,
 delete from `payment`;
 insert into `payment` (pa_date, pa_price, pa_start, pa_end, pa_me_id, pa_pt_num, pa_review, pa_state)
 values
-	('2024-07-26', 300000, '2024-07-27', '2024-08-26', 'user1', '1', 'Y', '결제완료'), ('2024-08-26', 300000, '2024-08-27', '2024-09-26', 'user1', '1', 'Y', '결제완료'), 
-    ('2024-09-26', 300000, '2024-09-27', '2024-10-26', 'user1', '1', 'N', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user1', '1', 'N', '결제완료'),
-    ('2024-09-10', 600000, '2024-09-16', '2024-10-15', 'user1', '4', 'Y', '결제완료'), ('2024-10-10', 600000, '2024-10-16', '2024-11-15', 'user1', '4', 'N', '결제완료'),
+	('2024-07-26 12:00:00', 300000, '2024-07-27', '2024-08-26', 'user1', '1', 'Y', '결제완료'), ('2024-08-26 13:30:12', 300000, '2024-08-27', '2024-09-26', 'user1', '1', 'Y', '결제완료'), 
+    ('2024-09-26 18:12:22', 300000, '2024-09-27', '2024-10-26', 'user1', '1', 'N', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user1', '1', 'N', '결제완료'),
+    ('2024-09-10 20:52:10', 600000, '2024-09-16', '2024-10-15', 'user1', '4', 'Y', '결제완료'), ('2024-10-10 10:11:11', 600000, '2024-10-16', '2024-11-15', 'user1', '4', 'N', '결제완료'),
     
-    ('2024-07-05', 900000, '2024-07-11', '2024-10-10', 'user2', '2', 'Y', '결제완료'), ('2024-10-05', 900000, '2024-10-11', '2025-01-10', 'user2', '2', 'N', '결제완료'),
-    ('2024-09-26', 300000, '2024-09-27', '2024-10-26', 'user3', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user3', '1', 'N', '결제완료'),
-    ('2024-09-26', 300000, '2024-09-27', '2024-10-26', 'user4', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user4', '1', 'N', '결제완료'),
-    ('2024-09-26', 300000, '2024-09-27', '2024-10-26', 'user5', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user5', '1', 'N', '결제완료'),
-    ('2024-09-26', 300000, '2024-09-27', '2024-10-26', 'user6', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user6', '1', 'N', '결제완료');
+    ('2024-07-05 09:22:11', 900000, '2024-07-11', '2024-10-10', 'user2', '2', 'Y', '결제완료'), ('2024-10-05 11:22:33', 900000, '2024-10-11', '2025-01-10', 'user2', '2', 'N', '결제완료'),
+    ('2024-09-26 06:06:06', 300000, '2024-09-27', '2024-10-26', 'user3', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user3', '1', 'N', '결제완료'),
+    ('2024-09-26 02:04:05', 300000, '2024-09-27', '2024-10-26', 'user4', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user4', '1', 'N', '결제완료'),
+    ('2024-09-26 15:20:30', 300000, '2024-09-27', '2024-10-26', 'user5', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user5', '1', 'N', '결제완료'),
+    ('2024-09-26 16:44:44', 300000, '2024-09-27', '2024-10-26', 'user6', '1', 'Y', '결제완료'), (NOW(), 300000, '2024-10-27', '2024-11-26', 'user6', '1', 'N', '결제완료');
 # 환불 확인용 결제내역
 insert into `payment` (pa_date, pa_price, pa_start, pa_end, pa_me_id, pa_pt_num, pa_review, pa_state)
 values
-	('2024-05-15', 600000, '2024-05-16', '2024-08-15', 'user1', '2', 'N', '환불완료'), ('2024-06-15', 600000, '2024-06-16', '2024-07-15', 'user1', '4', 'N', '환불완료'), 
-    ('2024-08-14', 600000, '2024-08-15', '2024-09-14', 'user1', '4', 'N', '환불완료'), ('2024-05-25', 600000, '2024-05-30', '2024-06-29', 'user2', '4', 'N', '환불완료');
+	('2024-05-15 11:11:11', 600000, '2024-05-16', '2024-08-15', 'user1', '2', 'N', '환불완료'), ('2024-06-15 13:13:13', 600000, '2024-06-16', '2024-07-15', 'user1', '4', 'N', '환불완료'), 
+    ('2024-08-14 16:23:21', 600000, '2024-08-15', '2024-09-14', 'user1', '4', 'N', '환불완료'), ('2024-05-25 05:30:58', 600000, '2024-05-30', '2024-06-29', 'user2', '4', 'N', '환불완료');
 
 
 # 환불 내역(환불비율, 환불금액, 결제내역번호)
@@ -396,50 +396,50 @@ values
 delete from `refund`;
 insert into `refund` (re_date, re_percent, re_price, re_reason, re_pa_num)
 values
-	('2024-06-30', '50', '300000', '중도 해지', 17), ('2024-06-10', '100', '600000', '시작 전 계약 취소', 18),
-	('2024-09-01', '30', '180000', 'PT트레이너 불만', 19), ('2024-06-13', '50', '300000', '서비스 불만', 20);
+	('2024-06-30 11:00:00', '50', '300000', '중도 해지', 17), ('2024-06-10 10:00:00', '100', '600000', '시작 전 계약 취소', 18),
+	('2024-09-01 10:00:00', '30', '180000', 'PT트레이너 불만', 19), ('2024-06-13 10:00:00', '50', '300000', '서비스 불만', 20);
 
 
 # 프로그램 예약(예약날짜, 아이디, 일정번호)
 delete from `program_reservation`;
 insert into `program_reservation` (pr_date, pr_me_id, pr_bs_num)
 values
-	('2024-09-16', 'user1', 1), ('2024-09-16', 'user1', 2), ('2024-09-16', 'user1', 3), ('2024-10-10', 'user1', 4), ('2024-10-10', 'user1', 5), ('2024-10-10', 'user1', 6), ('2024-10-10', 'user1', 7), ('2024-10-10', 'user1', 8),
-    ('2024-09-27', 'user1', 9), ('2024-09-27', 'user1', 10), ('2024-09-27', 'user1', 11), ('2024-09-27', 'user1', 12), ('2024-10-27', 'user1', 13), ('2024-10-27', 'user1', 14), ('2024-10-27', 'user1', 15), ('2024-10-27', 'user1', 16),
-    ('2024-09-20', 'user1', 17), ('2024-09-20', 'user1', 18), ('2024-09-20', 'user1', 19), ('2024-09-20', 'user1', 20), ('2024-10-20', 'user1', 21), ('2024-10-20', 'user1', 22), ('2024-10-20', 'user1', 23), ('2024-10-20', 'user1', 24), 
-    ('2024-09-27', 'user1', 25), ('2024-09-27', 'user1', 26), ('2024-09-27', 'user1', 27), ('2024-09-27', 'user1', 28), ('2024-10-27', 'user1', 29), ('2024-10-27', 'user1', 30), ('2024-10-27', 'user1', 31), ('2024-10-27', 'user1', 32),
-    ('2024-09-20', 'user1', 33), ('2024-09-20', 'user1', 34), ('2024-09-20', 'user1', 35), ('2024-09-20', 'user1', 36), ('2024-10-20', 'user1', 37), ('2024-10-20', 'user1', 38), ('2024-10-20', 'user1', 39), ('2024-10-20', 'user1', 40), 
-    ('2024-10-20', 'user1', 41), ('2024-10-20', 'user1', 42), ('2024-10-20', 'user1', 43), ('2024-10-20', 'user1', 44), ('2024-10-20', 'user1', 45), ('2024-10-20', 'user1', 46), ('2024-10-20', 'user1', 47), ('2024-10-20', 'user1', 48), 
+	('2024-09-16 10:00:00', 'user1', 1), ('2024-09-16 10:00:00', 'user1', 2), ('2024-09-16 10:00:00', 'user1', 3), ('2024-10-10 10:00:00', 'user1', 4), ('2024-10-10 10:00:00', 'user1', 5), ('2024-10-10 10:00:00', 'user1', 6), ('2024-10-10 10:00:00', 'user1', 7), ('2024-10-10 10:00:00', 'user1', 8),
+    ('2024-09-27 10:00:00', 'user1', 9), ('2024-09-27 10:00:00', 'user1', 10), ('2024-09-27 10:00:00', 'user1', 11), ('2024-09-27 10:00:00', 'user1', 12), ('2024-10-27 10:00:00', 'user1', 13), ('2024-10-27 10:00:00', 'user1', 14), ('2024-10-27 10:00:00', 'user1', 15), ('2024-10-27 10:00:00', 'user1', 16),
+    ('2024-09-20 10:00:00', 'user1', 17), ('2024-09-20 10:00:00', 'user1', 18), ('2024-09-20 10:00:00', 'user1', 19), ('2024-09-20 10:00:00', 'user1', 20), ('2024-10-20 10:00:00', 'user1', 21), ('2024-10-20 10:00:00', 'user1', 22), ('2024-10-20 10:00:00', 'user1', 23), ('2024-10-20 10:00:00', 'user1', 24), 
+    ('2024-09-27 10:00:00', 'user1', 25), ('2024-09-27 10:00:00', 'user1', 26), ('2024-09-27 10:00:00', 'user1', 27), ('2024-09-27 10:00:00', 'user1', 28), ('2024-10-27 10:00:00', 'user1', 29), ('2024-10-27 10:00:00', 'user1', 30), ('2024-10-27 10:00:00', 'user1', 31), ('2024-10-27 10:00:00', 'user1', 32),
+    ('2024-09-20 10:00:00', 'user1', 33), ('2024-09-20 10:00:00', 'user1', 34), ('2024-09-20 10:00:00', 'user1', 35), ('2024-09-20 10:00:00', 'user1', 36), ('2024-10-20 10:00:00', 'user1', 37), ('2024-10-20 10:00:00', 'user1', 38), ('2024-10-20 10:00:00', 'user1', 39), ('2024-10-20 10:00:00', 'user1', 40), 
+    ('2024-10-20 10:00:00', 'user1', 41), ('2024-10-20 10:00:00', 'user1', 42), ('2024-10-20 10:00:00', 'user1', 43), ('2024-10-20 10:00:00', 'user1', 44), ('2024-10-20 10:00:00', 'user1', 45), ('2024-10-20 10:00:00', 'user1', 46), ('2024-10-20 10:00:00', 'user1', 47), ('2024-10-20 10:00:00', 'user1', 48), 
     
-	('2024-09-27', 'user2', 9), ('2024-09-27', 'user2', 10), ('2024-09-27', 'user2', 11), ('2024-09-27', 'user2', 12), ('2024-10-27', 'user2', 13), ('2024-10-27', 'user2', 14), ('2024-10-27', 'user2', 15), ('2024-10-27', 'user2', 16),
-    ('2024-09-20', 'user2', 17), ('2024-09-20', 'user2', 18), ('2024-09-20', 'user2', 19), ('2024-09-20', 'user2', 20), ('2024-10-20', 'user2', 21), ('2024-10-20', 'user2', 22), ('2024-10-20', 'user2', 23), ('2024-10-20', 'user2', 24), 
-    ('2024-09-27', 'user2', 25), ('2024-09-27', 'user2', 26), ('2024-09-27', 'user2', 27), ('2024-09-27', 'user2', 28), ('2024-10-27', 'user2', 29), ('2024-10-27', 'user2', 30), ('2024-10-27', 'user2', 31), ('2024-10-27', 'user2', 32),
-    ('2024-09-20', 'user2', 33), ('2024-09-20', 'user2', 34), ('2024-09-20', 'user2', 35), ('2024-09-20', 'user2', 36), ('2024-10-20', 'user2', 37), ('2024-10-20', 'user2', 38), ('2024-10-20', 'user2', 39), ('2024-10-20', 'user2', 40), 
-    ('2024-10-20', 'user2', 41), ('2024-10-20', 'user2', 42), ('2024-10-20', 'user2', 43), ('2024-10-20', 'user2', 44), ('2024-10-20', 'user2', 45), ('2024-10-20', 'user2', 46), ('2024-10-20', 'user2', 47), ('2024-10-20', 'user2', 48), 
+	('2024-09-27 10:00:00', 'user2', 9), ('2024-09-27 10:00:00', 'user2', 10), ('2024-09-27 10:00:00', 'user2', 11), ('2024-09-27 10:00:00', 'user2', 12), ('2024-10-27 10:00:00', 'user2', 13), ('2024-10-27 10:00:00', 'user2', 14), ('2024-10-27 10:00:00', 'user2', 15), ('2024-10-27 10:00:00', 'user2', 16),
+    ('2024-09-20 10:00:00', 'user2', 17), ('2024-09-20 10:00:00', 'user2', 18), ('2024-09-20 10:00:00', 'user2', 19), ('2024-09-20 10:00:00', 'user2', 20), ('2024-10-20 10:00:00', 'user2', 21), ('2024-10-20 10:00:00', 'user2', 22), ('2024-10-20 10:00:00', 'user2', 23), ('2024-10-20 10:00:00', 'user2', 24), 
+    ('2024-09-27 10:00:00', 'user2', 25), ('2024-09-27 10:00:00', 'user2', 26), ('2024-09-27 10:00:00', 'user2', 27), ('2024-09-27 10:00:00', 'user2', 28), ('2024-10-27 10:00:00', 'user2', 29), ('2024-10-27 10:00:00', 'user2', 30), ('2024-10-27 10:00:00', 'user2', 31), ('2024-10-27 10:00:00', 'user2', 32),
+    ('2024-09-20 10:00:00', 'user2', 33), ('2024-09-20 10:00:00', 'user2', 34), ('2024-09-20 10:00:00', 'user2', 35), ('2024-09-20 10:00:00', 'user2', 36), ('2024-10-20 10:00:00', 'user2', 37), ('2024-10-20 10:00:00', 'user2', 38), ('2024-10-20 10:00:00', 'user2', 39), ('2024-10-20 10:00:00', 'user2', 40), 
+    ('2024-10-20 10:00:00', 'user2', 41), ('2024-10-20 10:00:00', 'user2', 42), ('2024-10-20 10:00:00', 'user2', 43), ('2024-10-20 10:00:00', 'user2', 44), ('2024-10-20 10:00:00', 'user2', 45), ('2024-10-20 10:00:00', 'user2', 46), ('2024-10-20 10:00:00', 'user2', 47), ('2024-10-20 10:00:00', 'user2', 48), 
 
-	('2024-09-27', 'user3', 9), ('2024-09-27', 'user3', 10), ('2024-09-27', 'user3', 11), ('2024-09-27', 'user3', 12), ('2024-10-27', 'user3', 13), ('2024-10-27', 'user3', 14), ('2024-10-27', 'user3', 15), ('2024-10-27', 'user3', 16),
-    ('2024-09-20', 'user3', 17), ('2024-09-20', 'user3', 18), ('2024-09-20', 'user3', 19), ('2024-09-20', 'user3', 20), ('2024-10-20', 'user3', 21), ('2024-10-20', 'user3', 22), ('2024-10-20', 'user3', 23), ('2024-10-20', 'user3', 24), 
-    ('2024-09-27', 'user3', 25), ('2024-09-27', 'user3', 26), ('2024-09-27', 'user3', 27), ('2024-09-27', 'user3', 28), ('2024-10-27', 'user3', 29), ('2024-10-27', 'user3', 30), ('2024-10-27', 'user3', 31), ('2024-10-27', 'user3', 32),
-    ('2024-09-20', 'user3', 33), ('2024-09-20', 'user3', 34), ('2024-09-20', 'user3', 35), ('2024-09-20', 'user3', 36), ('2024-10-20', 'user3', 37), ('2024-10-20', 'user3', 38), ('2024-10-20', 'user3', 39), ('2024-10-20', 'user3', 40), 
-    ('2024-10-20', 'user3', 41), ('2024-10-20', 'user3', 42), ('2024-10-20', 'user3', 43), ('2024-10-20', 'user3', 44), ('2024-10-20', 'user3', 45), ('2024-10-20', 'user3', 46), ('2024-10-20', 'user3', 47), ('2024-10-20', 'user3', 48), 
+	('2024-09-27 10:00:00', 'user3', 9), ('2024-09-27 10:00:00', 'user3', 10), ('2024-09-27 10:00:00', 'user3', 11), ('2024-09-27 10:00:00', 'user3', 12), ('2024-10-27 10:00:00', 'user3', 13), ('2024-10-27 10:00:00', 'user3', 14), ('2024-10-27 10:00:00', 'user3', 15), ('2024-10-27 10:00:00', 'user3', 16),
+    ('2024-09-20 10:00:00', 'user3', 17), ('2024-09-20 10:00:00', 'user3', 18), ('2024-09-20 10:00:00', 'user3', 19), ('2024-09-20 10:00:00', 'user3', 20), ('2024-10-20 10:00:00', 'user3', 21), ('2024-10-20 10:00:00', 'user3', 22), ('2024-10-20 10:00:00', 'user3', 23), ('2024-10-20 10:00:00', 'user3', 24), 
+    ('2024-09-27 10:00:00', 'user3', 25), ('2024-09-27 10:00:00', 'user3', 26), ('2024-09-27 10:00:00', 'user3', 27), ('2024-09-27 10:00:00', 'user3', 28), ('2024-10-27 10:00:00', 'user3', 29), ('2024-10-27 10:00:00', 'user3', 30), ('2024-10-27 10:00:00', 'user3', 31), ('2024-10-27 10:00:00', 'user3', 32),
+    ('2024-09-20 10:00:00', 'user3', 33), ('2024-09-20 10:00:00', 'user3', 34), ('2024-09-20 10:00:00', 'user3', 35), ('2024-09-20 10:00:00', 'user3', 36), ('2024-10-20 10:00:00', 'user3', 37), ('2024-10-20 10:00:00', 'user3', 38), ('2024-10-20 10:00:00', 'user3', 39), ('2024-10-20 10:00:00', 'user3', 40), 
+    ('2024-10-20 10:00:00', 'user3', 41), ('2024-10-20 10:00:00', 'user3', 42), ('2024-10-20 10:00:00', 'user3', 43), ('2024-10-20 10:00:00', 'user3', 44), ('2024-10-20 10:00:00', 'user3', 45), ('2024-10-20 10:00:00', 'user3', 46), ('2024-10-20 10:00:00', 'user3', 47), ('2024-10-20 10:00:00', 'user3', 48), 
     
-    ('2024-09-27', 'user4', 9), ('2024-09-27', 'user4', 10), ('2024-09-27', 'user4', 11), ('2024-09-27', 'user4', 12), ('2024-10-27', 'user4', 13), ('2024-10-27', 'user4', 14), ('2024-10-27', 'user4', 15), ('2024-10-27', 'user4', 16),
-    ('2024-09-20', 'user4', 17), ('2024-09-20', 'user4', 18), ('2024-09-20', 'user4', 19), ('2024-09-20', 'user4', 20), ('2024-10-20', 'user4', 21), ('2024-10-20', 'user4', 22), ('2024-10-20', 'user4', 23), ('2024-10-20', 'user4', 24), 
-    ('2024-09-27', 'user4', 25), ('2024-09-27', 'user4', 26), ('2024-09-27', 'user4', 27), ('2024-09-27', 'user4', 28), ('2024-10-27', 'user4', 29), ('2024-10-27', 'user4', 30), ('2024-10-27', 'user4', 31), ('2024-10-27', 'user4', 32),
-    ('2024-09-20', 'user4', 33), ('2024-09-20', 'user4', 34), ('2024-09-20', 'user4', 35), ('2024-09-20', 'user4', 36), ('2024-10-20', 'user4', 37), ('2024-10-20', 'user4', 38), ('2024-10-20', 'user4', 39), ('2024-10-20', 'user4', 40), 
-    ('2024-10-20', 'user4', 41), ('2024-10-20', 'user4', 42), ('2024-10-20', 'user4', 43), ('2024-10-20', 'user4', 44), ('2024-10-20', 'user4', 45), ('2024-10-20', 'user4', 46), ('2024-10-20', 'user4', 47), ('2024-10-20', 'user4', 48), 
+    ('2024-09-27 10:00:00', 'user4', 9), ('2024-09-27 10:00:00', 'user4', 10), ('2024-09-27 10:00:00', 'user4', 11), ('2024-09-27 10:00:00', 'user4', 12), ('2024-10-27 10:00:00', 'user4', 13), ('2024-10-27 10:00:00', 'user4', 14), ('2024-10-27 10:00:00', 'user4', 15), ('2024-10-27 10:00:00', 'user4', 16),
+    ('2024-09-20 10:00:00', 'user4', 17), ('2024-09-20 10:00:00', 'user4', 18), ('2024-09-20 10:00:00', 'user4', 19), ('2024-09-20 10:00:00', 'user4', 20), ('2024-10-20 10:00:00', 'user4', 21), ('2024-10-20 10:00:00', 'user4', 22), ('2024-10-20 10:00:00', 'user4', 23), ('2024-10-20 10:00:00', 'user4', 24), 
+    ('2024-09-27 10:00:00', 'user4', 25), ('2024-09-27 10:00:00', 'user4', 26), ('2024-09-27 10:00:00', 'user4', 27), ('2024-09-27 10:00:00', 'user4', 28), ('2024-10-27 10:00:00', 'user4', 29), ('2024-10-27 10:00:00', 'user4', 30), ('2024-10-27 10:00:00', 'user4', 31), ('2024-10-27 10:00:00', 'user4', 32),
+    ('2024-09-20 10:00:00', 'user4', 33), ('2024-09-20 10:00:00', 'user4', 34), ('2024-09-20 10:00:00', 'user4', 35), ('2024-09-20 10:00:00', 'user4', 36), ('2024-10-20 10:00:00', 'user4', 37), ('2024-10-20 10:00:00', 'user4', 38), ('2024-10-20 10:00:00', 'user4', 39), ('2024-10-20 10:00:00', 'user4', 40), 
+    ('2024-10-20 10:00:00', 'user4', 41), ('2024-10-20 10:00:00', 'user4', 42), ('2024-10-20 10:00:00', 'user4', 43), ('2024-10-20 10:00:00', 'user4', 44), ('2024-10-20 10:00:00', 'user4', 45), ('2024-10-20 10:00:00', 'user4', 46), ('2024-10-20 10:00:00', 'user4', 47), ('2024-10-20 10:00:00', 'user4', 48), 
     
-    ('2024-09-27', 'user5', 9), ('2024-09-27', 'user5', 10), ('2024-09-27', 'user5', 11), ('2024-09-27', 'user5', 12), ('2024-10-27', 'user5', 13), ('2024-10-27', 'user5', 14), ('2024-10-27', 'user5', 15), ('2024-10-27', 'user5', 16),
-    ('2024-09-20', 'user5', 17), ('2024-09-20', 'user5', 18), ('2024-09-20', 'user5', 19), ('2024-09-20', 'user5', 20), ('2024-10-20', 'user5', 21), ('2024-10-20', 'user5', 22), ('2024-10-20', 'user5', 23), ('2024-10-20', 'user5', 24), 
-    ('2024-09-27', 'user5', 25), ('2024-09-27', 'user5', 26), ('2024-09-27', 'user5', 27), ('2024-09-27', 'user5', 28), ('2024-10-27', 'user5', 29), ('2024-10-27', 'user5', 30), ('2024-10-27', 'user5', 31), ('2024-10-27', 'user5', 32),
-    ('2024-09-20', 'user5', 33), ('2024-09-20', 'user5', 34), ('2024-09-20', 'user5', 35), ('2024-09-20', 'user5', 36), ('2024-10-20', 'user5', 37), ('2024-10-20', 'user5', 38), ('2024-10-20', 'user5', 39), ('2024-10-20', 'user5', 40), 
-    ('2024-10-20', 'user5', 41), ('2024-10-20', 'user5', 42), ('2024-10-20', 'user5', 43), ('2024-10-20', 'user5', 44), ('2024-10-20', 'user5', 45), ('2024-10-20', 'user5', 46), ('2024-10-20', 'user5', 47), ('2024-10-20', 'user5', 48), 
+    ('2024-09-27 10:00:00', 'user5', 9), ('2024-09-27 10:00:00', 'user5', 10), ('2024-09-27 10:00:00', 'user5', 11), ('2024-09-27 10:00:00', 'user5', 12), ('2024-10-27 10:00:00', 'user5', 13), ('2024-10-27 10:00:00', 'user5', 14), ('2024-10-27 10:00:00', 'user5', 15), ('2024-10-27 10:00:00', 'user5', 16),
+    ('2024-09-20 10:00:00', 'user5', 17), ('2024-09-20 10:00:00', 'user5', 18), ('2024-09-20 10:00:00', 'user5', 19), ('2024-09-20 10:00:00', 'user5', 20), ('2024-10-20 10:00:00', 'user5', 21), ('2024-10-20 10:00:00', 'user5', 22), ('2024-10-20 10:00:00', 'user5', 23), ('2024-10-20 10:00:00', 'user5', 24), 
+    ('2024-09-27 10:00:00', 'user5', 25), ('2024-09-27 10:00:00', 'user5', 26), ('2024-09-27 10:00:00', 'user5', 27), ('2024-09-27 10:00:00', 'user5', 28), ('2024-10-27 10:00:00', 'user5', 29), ('2024-10-27 10:00:00', 'user5', 30), ('2024-10-27 10:00:00', 'user5', 31), ('2024-10-27 10:00:00', 'user5', 32),
+    ('2024-09-20 10:00:00', 'user5', 33), ('2024-09-20 10:00:00', 'user5', 34), ('2024-09-20 10:00:00', 'user5', 35), ('2024-09-20 10:00:00', 'user5', 36), ('2024-10-20 10:00:00', 'user5', 37), ('2024-10-20 10:00:00', 'user5', 38), ('2024-10-20 10:00:00', 'user5', 39), ('2024-10-20 10:00:00', 'user5', 40), 
+    ('2024-10-20 10:00:00', 'user5', 41), ('2024-10-20 10:00:00', 'user5', 42), ('2024-10-20 10:00:00', 'user5', 43), ('2024-10-20 10:00:00', 'user5', 44), ('2024-10-20 10:00:00', 'user5', 45), ('2024-10-20 10:00:00', 'user5', 46), ('2024-10-20 10:00:00', 'user5', 47), ('2024-10-20 10:00:00', 'user5', 48), 
     
-    ('2024-09-27', 'user6', 9), ('2024-09-27', 'user6', 10), ('2024-09-27', 'user6', 11), ('2024-09-27', 'user6', 12), ('2024-10-27', 'user6', 13), ('2024-10-27', 'user6', 14), ('2024-10-27', 'user6', 15), ('2024-10-27', 'user6', 16),
-    ('2024-09-20', 'user6', 17), ('2024-09-20', 'user6', 18), ('2024-09-20', 'user6', 19), ('2024-09-20', 'user6', 20), ('2024-10-20', 'user6', 21), ('2024-10-20', 'user6', 22), ('2024-10-20', 'user6', 23), ('2024-10-20', 'user6', 24), 
-    ('2024-09-27', 'user6', 25), ('2024-09-27', 'user6', 26), ('2024-09-27', 'user6', 27), ('2024-09-27', 'user6', 28), ('2024-10-27', 'user6', 29), ('2024-10-27', 'user6', 30), ('2024-10-27', 'user6', 31), ('2024-10-27', 'user6', 32),
-    ('2024-09-20', 'user6', 33), ('2024-09-20', 'user6', 34), ('2024-09-20', 'user6', 35), ('2024-09-20', 'user6', 36), ('2024-10-20', 'user6', 37), ('2024-10-20', 'user6', 38), ('2024-10-20', 'user6', 39), ('2024-10-20', 'user6', 40),
-    ('2024-10-20', 'user6', 41), ('2024-10-20', 'user6', 42), ('2024-10-20', 'user6', 43), ('2024-10-20', 'user6', 44), ('2024-10-20', 'user6', 45), ('2024-10-20', 'user6', 46), ('2024-10-20', 'user6', 47), ('2024-10-20', 'user6', 48);
+    ('2024-09-27 10:00:00', 'user6', 9), ('2024-09-27 10:00:00', 'user6', 10), ('2024-09-27 10:00:00', 'user6', 11), ('2024-09-27 10:00:00', 'user6', 12), ('2024-10-27 10:00:00', 'user6', 13), ('2024-10-27 10:00:00', 'user6', 14), ('2024-10-27 10:00:00', 'user6', 15), ('2024-10-27 10:00:00', 'user6', 16),
+    ('2024-09-20 10:00:00', 'user6', 17), ('2024-09-20 10:00:00', 'user6', 18), ('2024-09-20 10:00:00', 'user6', 19), ('2024-09-20 10:00:00', 'user6', 20), ('2024-10-20 10:00:00', 'user6', 21), ('2024-10-20 10:00:00', 'user6', 22), ('2024-10-20 10:00:00', 'user6', 23), ('2024-10-20 10:00:00', 'user6', 24), 
+    ('2024-09-27 10:00:00', 'user6', 25), ('2024-09-27 10:00:00', 'user6', 26), ('2024-09-27 10:00:00', 'user6', 27), ('2024-09-27 10:00:00', 'user6', 28), ('2024-10-27 10:00:00', 'user6', 29), ('2024-10-27 10:00:00', 'user6', 30), ('2024-10-27 10:00:00', 'user6', 31), ('2024-10-27 10:00:00', 'user6', 32),
+    ('2024-09-20 10:00:00', 'user6', 33), ('2024-09-20 10:00:00', 'user6', 34), ('2024-09-20 10:00:00', 'user6', 35), ('2024-09-20 10:00:00', 'user6', 36), ('2024-10-20 10:00:00', 'user6', 37), ('2024-10-20 10:00:00', 'user6', 38), ('2024-10-20 10:00:00', 'user6', 39), ('2024-10-20 10:00:00', 'user6', 40),
+    ('2024-10-20 10:00:00', 'user6', 41), ('2024-10-20 10:00:00', 'user6', 42), ('2024-10-20 10:00:00', 'user6', 43), ('2024-10-20 10:00:00', 'user6', 44), ('2024-10-20 10:00:00', 'user6', 45), ('2024-10-20 10:00:00', 'user6', 46), ('2024-10-20 10:00:00', 'user6', 47), ('2024-10-20 10:00:00', 'user6', 48);
         
 
 # 문의 유형(문의유형명)
@@ -455,17 +455,17 @@ values
 delete from fitness.member_inquiry;
 insert into fitness.member_inquiry(mi_title, mi_content, mi_state, mi_email, mi_date, mi_br_name, mi_it_name)
 values
-	("PT문의", "강남점 김피티 선생님한테 체험 받고 싶어요", "답변대기", "user1@naver.com", "2024-06-10", "강남점", "PT문의"),
-    ("환불되나요?", "개인사정이 생겨 당분간 못나갈 것 같아요. 환불부탁드립니다.", "답변대기", "user1@naver.com", "2024-06-25", "본점", "환불문의"),
-    ("궁금해요", "광복절에 운영하나요?", "답변대기", "user1@naver.com", "2024-08-10", "역삼점", "이용문의"),
-    ("기구가 필요해요", "아령 개수가 부족해요 추가해주세요", "답변대기", "user1@naver.com", "2024-09-15", "역삼점", "건의사항"),
-    ("청소해주세요.", "화장실에서 냄새가 많이나요.", "답변대기", "user1@naver.com", "2024-09-18", "역삼점", "청결관리"),
-    ("피티선생님 문의", "PT트레이너분은 더 채용 안하나요?", "답변대기", "user1@naver.com", "2024-10-02", "역삼점", "기타"), 
-    ("서비스 문의 드립니다.", "요즘 역삼점 서비스가 엉망이에요!", "답변대기", "user2@naver.com", "2024-07-11", "역삼점", "서비스 불만"),
-	("기구 문의 드립니다", "기구가 엉망입니다!", "답변대기", "user2@naver.com", "2024-08-16", "논현점", "시설문의"),
+	("PT문의", "강남점 김피티 선생님한테 체험 받고 싶어요", "답변대기", "user1@naver.com", "2024-06-10 10:00:00", "강남점", "PT문의"),
+    ("환불되나요?", "개인사정이 생겨 당분간 못나갈 것 같아요. 환불부탁드립니다.", "답변대기", "user1@naver.com", "2024-06-25 10:00:00", "본점", "환불문의"),
+    ("궁금해요", "광복절에 운영하나요?", "답변대기", "user1@naver.com", "2024-08-10 10:00:00", "역삼점", "이용문의"),
+    ("기구가 필요해요", "아령 개수가 부족해요 추가해주세요", "답변대기", "user1@naver.com", "2024-09-15 10:00:00", "역삼점", "건의사항"),
+    ("청소해주세요.", "화장실에서 냄새가 많이나요.", "답변대기", "user1@naver.com", "2024-09-18 10:00:00", "역삼점", "청결관리"),
+    ("피티선생님 문의", "PT트레이너분은 더 채용 안하나요?", "답변대기", "user1@naver.com", "2024-10-02 10:00:00", "역삼점", "기타"), 
+    ("서비스 문의 드립니다.", "요즘 역삼점 서비스가 엉망이에요!", "답변대기", "user2@naver.com", "2024-07-11 10:00:00", "역삼점", "서비스 불만"),
+	("기구 문의 드립니다", "기구가 엉망입니다!", "답변대기", "user2@naver.com", "2024-08-16 10:00:00", "논현점", "시설문의"),
 # 비회원 문의
-	("이용문의드려요", "샤워시설에는 어떤 물품이 있나요?", "답변대기", "guest1@naver.com", "2024-09-05", "역삼점", "이용문의"),
-    ("PT문의 드려요", "역삼점에서 가장 엄격하게 가르치는분이 누군가요?", "답변대기", "guest2@naver.com", "2024-10-01", "역삼점", "PT문의");
+	("이용문의드려요", "샤워시설에는 어떤 물품이 있나요?", "답변대기", "guest1@naver.com", "2024-09-05 10:00:00", "역삼점", "이용문의"),
+    ("PT문의 드려요", "역삼점에서 가장 엄격하게 가르치는분이 누군가요?", "답변대기", "guest2@naver.com", "2024-10-01 10:00:00", "역삼점", "PT문의");
 
 
 # 리뷰 게시글(게시글제목, 게시글내용, 작성날짜, 지점명, 내역번호)
@@ -473,14 +473,14 @@ values
 delete from `review_post`;
 insert into `review_post` (rp_title, rp_content, rp_date, rp_br_name, rp_pa_num)
 values
-	('칭찬합니다.', 'PT이용 문의에 대한 답변을 너무 친절하게 잘 해주세요.', '2024-07-30', '본점', 1),
-    ('역삼점이 가장 좋은것 같아요', '기구가 다양하고 직원들이 친절해요', '2024-08-14', '역삼점', 7),
-    ('서비스가 아쉽네요', '선릉점은 넓은데 생각보다 이용할 기구가 없어요', '2024-09-30', '선릉점', 9),
-    ('최고에요', '제가 다녀본 헬스장 중에 여기가 가장 깔끔하고 좋은 것 같아요. 앞으로 계속 이용할 것 같습니다.', '2024-09-05', '역삼점', 2),
-    ('역삼점 추천합니다.', '프로그램이 다양해서 좋은 것 같아요.', '2024-10-01', '역삼점', 11),
-    ('조금 아쉬워요', '대치동점은 제가 원하는 프로그램이 없어서 멀리 다른 지점으로 가야해서 아쉽워요.', '2024-10-03', '대치동점', 13),
-    ('김피티님 너무 좋습니다.', '역삼점 김피티님 너무 잘 알려주세요.', '2024-10-11', '역삼점', 5),
-    ('강남점 추천드려요', '역삼점만 다니다가 강남점으로 와봤는데 여기도 시설이 깔끔하고 너무 좋네요 추천드려요', '2024-10-15', '강남점', 15);
+	('칭찬합니다.', 'PT이용 문의에 대한 답변을 너무 친절하게 잘 해주세요.', '2024-07-30 10:00:00', '본점', 1),
+    ('역삼점이 가장 좋은것 같아요', '기구가 다양하고 직원들이 친절해요', '2024-08-14 10:00:00', '역삼점', 7),
+    ('서비스가 아쉽네요', '선릉점은 넓은데 생각보다 이용할 기구가 없어요', '2024-09-30 10:00:00', '선릉점', 9),
+    ('최고에요', '제가 다녀본 헬스장 중에 여기가 가장 깔끔하고 좋은 것 같아요. 앞으로 계속 이용할 것 같습니다.', '2024-09-05 10:00:00', '역삼점', 2),
+    ('역삼점 추천합니다.', '프로그램이 다양해서 좋은 것 같아요.', '2024-10-01 10:00:00', '역삼점', 11),
+    ('조금 아쉬워요', '대치동점은 제가 원하는 프로그램이 없어서 멀리 다른 지점으로 가야해서 아쉽워요.', '2024-10-03 10:00:00', '대치동점', 13),
+    ('김피티님 너무 좋습니다.', '역삼점 김피티님 너무 잘 알려주세요.', '2024-10-11 10:00:00', '역삼점', 5),
+    ('강남점 추천드려요', '역삼점만 다니다가 강남점으로 와봤는데 여기도 시설이 깔끔하고 너무 좋네요 추천드려요', '2024-10-15 10:00:00', '강남점', 15);
         
         
 # 프로그램 파일(파일 번호, 파일명, 프로그램 명)
@@ -494,3 +494,4 @@ insert into `program_file` (pf_name, pf_sp_name)
         ('/프로그램/5ceb0beb-25ed-4dc5-b87e-e6b362d98fe3_크로스핏.jpg', '크로스핏'),
         ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_PT.jpg', 'PT'),
         ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa9c949fc_PT.jpg', 'PT');
+
