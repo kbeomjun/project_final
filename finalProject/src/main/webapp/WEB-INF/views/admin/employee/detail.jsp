@@ -122,9 +122,7 @@
 							</div>
 							<div class="error error-address"></div>			
 				
-							<div class="text-right mb-3">
-								<button type="submit" class="btn btn-outline-success">직원정보 수정</button>
-							</div>
+							<button type="submit" class="btn btn-outline-info col-12">직원정보 수정</button>
 						</form>
 						<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
 						<hr/>
