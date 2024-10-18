@@ -17,7 +17,22 @@
   	SELECT * from member WHERE me_cookie = #{me_cookie} AND me_limit > now()
   </select>
   <update id="updateMemberCookie">
-  	update member set me_cookie = #{user.me_cookie}, me_limit = #{user.me_limit}
-		where me_id = #{user.me_id}
+  	UPDATE member
+    SET me_cookie = #{user.me_cookie}, me_limit = #{user.me_limit}
+    WHERE me_id = #{user.me_id}
   </update>
+  <update id="updateMember">
+	UPDATE member
+	SET	me_pw = #{user.me_pw},me_email = #{user.me_email}
+	WHERE me_id = #{user.me_id}
+  </update>
+  <update id="updateMemberCookieDelete">
+  	UPDATE member 
+    SET	me_cookie = NULL, me_limit = NULL 
+    WHERE me_id = #{me_id}
+  </update>
+  <select id="selectMemberByNameAndEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
+    SELECT * FROM member
+    WHERE me_name = #{name} AND me_email = #{email}
+    </select>
 </mapper>

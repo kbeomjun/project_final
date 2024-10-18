@@ -13,4 +13,10 @@ public interface MemberDAO {
 	MemberVO selectMemberByCookie(@Param("me_cookie") String id);
 
 	void updateMemberCookie(@Param("user") MemberVO user);
+
+	boolean updateMember(@Param("user") MemberVO user);
+
+	void updateMemberCookieDelete(@Param("me_id") String me_id);
+
+	MemberVO selectMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
 }

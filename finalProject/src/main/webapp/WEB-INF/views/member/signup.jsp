@@ -70,19 +70,22 @@
                 <div id="pw2Error" class="error" style="display: none;">필수 입력 사항입니다</div>
             </div>
            <div class="form-group">
-			    <label for="email">이메일:</label>
-			    <div style="display: flex; align-items: center;">
-			        <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
-			        <span style="margin-right: 10px;">@</span>
-			        <select class="form-control" id="me_emailDomain" name="me_emailDomain" required style="flex: 4;">
-			            <option value="">선택</option>
-			            <option value="naver.com">naver.com</option>
-			            <option value="daum.net">daum.net</option>
-			            <option value="google.com">google.com</option>
-			            <option value="yahoo.com">yahoo.com</option>
-			        </select>
-			    </div>
-			</div>
+                <label for="email">이메일:</label>
+                <div style="display: flex; align-items: center;">
+                    <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
+                    <span style="margin-right: 10px;">@</span>
+                    <select class="form-control" id="me_emailDomain" name="me_emailDomain" style="flex: 4; margin-right: 10px;">
+                        <option value="">선택</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="google.com">google.com</option>
+                        <option value="yahoo.com">yahoo.com</option>
+                        <option value="custom">직접 입력</option>
+                    </select>
+                    <input type="text" class="form-control" id="me_customEmailDomain" name="me_customEmailDomain" placeholder="도메인 직접 입력" style="display: none; flex: 4;">
+                </div>
+                <p id="check-email" class="error"></p>
+            </div>
             <div class="form-group">
                 <label for="gender">성별:</label>
                 <select class="form-control" id="gender" name="me_gender">
@@ -241,6 +244,7 @@
 	        }
 	    }
 	</script>
+	
 	<script type="text/javascript">
 	    // 전화번호를 하나의 필드로 결합하여 전송
 	    function setPhoneNumber(){
@@ -262,39 +266,38 @@
 	
 	        return true; // 유효성 검사가 통과하면 제출
 	    }
-	    /*document.getElementById('form').onsubmit = function() {
-	        var phone1 = document.getElementById('phone1').value;
-	        var phone2 = document.getElementById('phone2').value;
-	        var phone3 = document.getElementById('phone3').value;
-	        
-	        // 전화번호 조합
-	        var fullPhoneNumber = phone1 + phone2 + phone3;
-	        document.getElementById('me_phone').value = fullPhoneNumber; // 결합된 전화번호를 hidden input에 설정
-	
-	        // 추가 유효성 검사 (필요할 경우)
-	        if (!phone1 || !phone2 || !phone3) {
-	            document.getElementById('phoneError').style.display = 'block';
-	            return false; // 폼 제출 방지
-	        } else {
-	            document.getElementById('phoneError').style.display = 'none';
-	        }
-	
-	        return true; // 유효성 검사가 통과하면 제출
-	    };*/
 	</script>
-	<script>
-	    function combineEmail() {
-	        const emailId = document.getElementById("me_emailId").value;
-	        const emailDomain = document.getElementById("me_emailDomain").value;
-	        const emailField = document.createElement("input");
-	        emailField.setAttribute("type", "hidden");
-	        emailField.setAttribute("name", "me_email");
-	        emailField.setAttribute("value", emailId + "@" + emailDomain);
-	        document.getElementById("form").appendChild(emailField);
-	    }
-	    
-	    document.getElementById("form").onsubmit = combineEmail;
-	</script>
+	
+	<script type="text/javascript">
+        // 이메일 도메인 선택 변경 시 처리
+       document.getElementById('me_emailDomain').addEventListener('change', function() {
+           var customDomainInput = document.getElementById('me_customEmailDomain');
+           if (this.value === 'custom') {
+               customDomainInput.style.display = 'block';
+               customDomainInput.required = true;
+           } else {
+               customDomainInput.style.display = 'none';
+               customDomainInput.value = '';
+               customDomainInput.required = false;
+           }
+       });
+
+       // 폼 제출 시 이메일을 하나의 필드로 결합하여 숨겨진 필드에 저장
+       function combineEmail() {
+           const emailId = document.getElementById("me_emailId").value;
+           const emailDomain = document.getElementById("me_emailDomain").value === 'custom' ? 
+                               document.getElementById("me_customEmailDomain").value : 
+                               document.getElementById("me_emailDomain").value;
+           console.log(document.getElementById("me_emailDomain").value === 'custom')                    
+           const emailField = document.createElement("input");
+           emailField.setAttribute("type", "hidden");
+           emailField.setAttribute("name", "me_email");
+           emailField.setAttribute("value", emailId + "@" + emailDomain);
+           document.getElementById("form").appendChild(emailField);
+       }
+
+       document.getElementById("form").onsubmit = combineEmail;
+    </script>
 	
 	<script>
     function addressPostcode() {
