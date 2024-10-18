@@ -75,11 +75,12 @@
 					    <label for="pa_start">PT 시작 날짜:</label>
 					    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${firstStartDate}" max="${lastEndDate}" required>
 					</c:if>
-					
-					<p>시작일 : ${firstStartDate} / 만료일 : ${lastEndDate} / 오늘 날짜 : ${currentDate}</p>
-					
-					<p>PT 시작일 : ${ptFirstStartDate} / PT 만료일 : ${ptLastEndDate} / 오늘 날짜 : ${currentDate}</p>
                 </div>
+				<div class="my-3">
+					<p>오늘 날짜 : ${currentDate}</p>
+					<p>회원권 시작일 : ${firstStartDate} / 회원권 만료일 : ${lastEndDate}</p>
+					<p>PT 시작일 : ${ptFirstStartDate} / PT 만료일 : ${ptLastEndDate}</p>
+				</div>
             </div>
         </div>
         
@@ -136,7 +137,10 @@
 	        $('#pa_start').on('change', function() {
 	            const selectedDate = new Date($(this).val());
 	            const startDate = new Date('${firstStartDate}'); // JSP에서 시작일을 가져옴
-	            const expirationDate = new Date('${lastEndDate}'); // JSP에서 만료일을 가져옴
+	            const expirationDate = new Date('${lastEndDate}'); // JSP에서 회원권 만료일을 가져옴
+	            const selectedDateStr = $(this).val(); // 선택한 날짜 문자열 가져오기
+                // 현재 사용자가 선택한 날짜와 비교하는 기존 로직 유지
+                const selectedStartDate = new Date(pa_start); // 사용자가 선택한 날짜
 
 	            // 선택된 날짜가 회원권 기간 내에 있는지 확인
 	            if (selectedDate < startDate || selectedDate > expirationDate) {
@@ -147,7 +151,7 @@
 	            }
 	            
 	            // 선택한 PT의 시작 날짜가 회원권 만료일보다 이전인지 확인
-	            if (selectedStartDate < membershipEndDate) {
+	            if (selectedStartDate < expirationDate) {
 	                alert("선택한 PT 이용권의 시작 날짜가 회원권 만료일(${lastEndDate})보다 이전입니다. 회원권을 먼저 결제하세요.");
 	                $(this).val(''); // 시작 날짜 필드 초기화
 	            }
