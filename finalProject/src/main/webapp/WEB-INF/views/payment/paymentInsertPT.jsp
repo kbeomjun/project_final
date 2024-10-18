@@ -396,7 +396,8 @@
 		            
 		            // 아이엠포트 결제 요청
 		            IMP.request_pay({
-		                pg: 'kakaopay', // 결제 PG
+		                pg: 'kakaopay', // 결제 - 카카오페이 PG
+		                // pg: 'html5_inicis', // 결제 - KG이니시스 : 실제 결제 되므로 결제 하면 안됨.
 		                pay_method: 'card', // 결제 방법
 		                merchant_uid: 'merchant_' + new Date().getTime(), // 가맹점 주문 ID
 		                name: '카카오페이결제', // 결제 이름
