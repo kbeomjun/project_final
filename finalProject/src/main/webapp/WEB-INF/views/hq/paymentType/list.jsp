@@ -68,7 +68,7 @@
 				      		<tr>
 				      			<th>회원권</th>
 				        		<th>유형</th>
-				        		<th>기한(일)</th>
+				        		<th>기한(달)</th>
 				        		<th>PT횟수(회)</th>
 				        		<th>가격(원)</th>
 				        		<th></th>
@@ -112,7 +112,7 @@
 								</div>
 								<div class="error error-type"></div>
 								<div class="form-group">
-									<label for="pt_date">기한(일):</label>
+									<label for="pt_date">기한(달):</label>
 									<input type="text" class="form-control" id="pt_date" name="pt_date">
 								</div>
 								<div class="error error-date"></div>
@@ -156,7 +156,7 @@
 								</div>
 								<div class="error error-type2"></div>
 								<div class="form-group">
-									<label for="pt_date">기한(일):</label>
+									<label for="pt_date">기한(달):</label>
 									<input type="text" class="form-control" id="pt_date2" name="pt_date">
 								</div>
 								<div class="error error-date2"></div>

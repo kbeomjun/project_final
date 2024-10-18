@@ -45,6 +45,10 @@ public class HQServiceImp implements HQService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	private SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+	private SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
+	private DecimalFormat dfFormat = new DecimalFormat("###,###");
+	
 	@Override
 	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
 
@@ -293,8 +297,6 @@ public class HQServiceImp implements HQService {
 	@Override
 	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {
 		List<BranchEquipmentStockVO> beList = hqDao.selectBranchEquipmentStockList(null, null);
-		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
-		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
 		for(int i = 0; i < beList.size(); i++) {
 			String be_recordStr = dtFormat1.format(beList.get(i).getBe_record());
 			String be_birthStr = dtFormat2.format(beList.get(i).getBe_birth());
@@ -411,7 +413,6 @@ public class HQServiceImp implements HQService {
 	@Override
 	public List<PaymentTypeVO> getPaymentTypeList() {
 		List<PaymentTypeVO> ptList = hqDao.selectPaymentTypeList();
-		DecimalFormat dfFormat = new DecimalFormat("###,###");
 		for(int i = 0; i < ptList.size(); i++) {
 			String formattedPrice = dfFormat.format(ptList.get(i).getPt_price());
 			ptList.get(i).setFormattedPrice(formattedPrice);
@@ -449,7 +450,6 @@ public class HQServiceImp implements HQService {
 		if(fileList == null) {msg = "사진 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		
 		try {
 			if(!hqDao.insertSportsProgram(sp)) {msg = "프로그램을 등록하지 못했습니다.";}
 		}catch (Exception e){
@@ -457,6 +457,7 @@ public class HQServiceImp implements HQService {
 			msg = "프로그램명 중복으로 등록하지 못했습니다.";
 		}
 		if(!msg.equals("")) {return msg;}
+		
 		for(MultipartFile file : fileList) {
 			if(file.getSize() != 0) {uploadSportsProgramFile(file, sp.getSp_name());}
 		}
@@ -489,6 +490,7 @@ public class HQServiceImp implements HQService {
 		
 		if(!hqDao.updateSportsProgram(sp, sp_ori_name)) {msg = "프로그램을 수정하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
+		
 		if(numList != null) {
 			for(int i = 0; i < numList.length; i++) {
 				int pf_num = Integer.parseInt(numList[i]);
@@ -528,8 +530,7 @@ public class HQServiceImp implements HQService {
 		if(!msg.equals("")) {return msg;}
 		
 		MemberVO me = hqDao.selectMemberByEmail(mi.getMi_email());
-		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
-		String date = dtFormat.format(mi.getMi_date());
+		String date = dtFormat2.format(mi.getMi_date());
 		boolean isSend = false;
 		if(me == null) {
 			isSend = mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내",
@@ -592,10 +593,6 @@ public class HQServiceImp implements HQService {
 	@Override
 	public List<PaymentVO> getPaymentList() {
 		List<PaymentVO> paList = hqDao.selectPaymentList();
-		
-		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
-		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
-		DecimalFormat dfFormat = new DecimalFormat("###,###");
 		for(int i = 0; i < paList.size(); i++) {
 			String pa_dateStr = dtFormat1.format(paList.get(i).getPa_date());
 		    String pa_startStr = dtFormat2.format(paList.get(i).getPa_start());
