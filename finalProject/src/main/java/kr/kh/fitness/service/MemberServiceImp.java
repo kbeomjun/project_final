@@ -91,6 +91,11 @@ public class MemberServiceImp implements MemberService {
 	}
 	
 	@Override
+	public void clearLoginCookie(String me_id) {
+		memberDao.updateMemberCookieDelete(me_id);
+	}
+	
+	@Override
 	public MemberVO getMemberID(String sid) {
 		return memberDao.selectMemberByCookie(sid);
 	}
@@ -207,4 +212,12 @@ public class MemberServiceImp implements MemberService {
 		}
 		return pw;
 	}
+
+	@Override
+	public String findId(String name, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

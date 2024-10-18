@@ -27,5 +27,12 @@
 			me_email = #{user.me_email}
 		where
 			me_id = #{user.me_id}
-	</update>
+  </update>
+  <update id="updateMemberCookieDelete">
+  		UPDATE member 
+        SET 
+        	me_cookie = NULL, me_limit = NULL 
+        WHERE 
+        	me_id = #{me_id}
+  </update>
 </mapper>

@@ -71,6 +71,16 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session, HttpServletResponse response) {
+        // 세션에서 사용자 정보 가져오기 (로그인된 사용자가 있는지 확인)
+        MemberVO user = (MemberVO) session.getAttribute("user");
+        
+        if (user != null) {
+            // DB에서 me_cookie와 me_limit 값을 null로 업데이트
+            memberService.clearLoginCookie(user.getMe_id());
+            // 세션에서 사용자 정보 제거 (로그아웃 처리)
+            session.removeAttribute("user");
+        }
+    
         session.removeAttribute("user");
         //로그아웃 시 쿠키 삭제
         Cookie cookie = new Cookie("me_cookie", null);
@@ -151,6 +161,18 @@ public class UserController {
 		boolean res = memberService.checkId(id);
 		return res;
 	}
+    
+    @GetMapping("/find/id")
+	public String findID() {
+		return "/member/findId";
+	}
+    
+    @ResponseBody
+    @PostMapping("/find/id")
+    public String findIdPost(@RequestParam String name, @RequestParam String email) {
+        String userId = memberService.findId(name, email);
+        return userId != null ? userId : "fail";
+    }
     
     //비밀번호 찾기
     @GetMapping("/find/pw")

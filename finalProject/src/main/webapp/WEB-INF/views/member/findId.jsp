@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>비밀번호 찾기</title>
+    <title>아이디 찾기</title>
 
     <!-- Bootstrap CSS 추가 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -45,16 +45,20 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg">
-                    <div class="card-header bg-success text-white text-center">
-                        <h2>비밀번호 찾기</h2>
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2>아이디 찾기</h2>
                     </div>
-                    <div class="card-body box-find-pw">
+                    <div class="card-body box-find-id">
                         <div class="form-group mb-3">
-                            <label for="id" class="form-label">아이디</label>
-                            <input type="text" class="form-control" id="id" name="me_id" placeholder="아이디를 입력하세요">
+                            <label for="name" class="form-label">이름</label>
+                            <input type="text" class="form-control" id="name" name="user_name" placeholder="이름을 입력하세요">
                         </div>
-                        <button type="button" class="btn btn-outline-success w-100 btn-find-pw mb-3">비밀번호 찾기</button>
-                        <button type="button" class="btn btn-outline-success w-100 btn-go-login" >로그인 페이지로</button>
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">이메일</label>
+                            <input type="email" class="form-control" id="email" name="user_email" placeholder="이메일을 입력하세요">
+                        </div>
+                        <button type="button" class="btn btn-outline-primary w-100 btn-find-id mb-3">아이디 찾기</button>
+                        <button type="button" class="btn btn-outline-success w-100 btn-go-login">로그인 페이지로</button>
                     </div>
                 </div>
             </div>
@@ -63,10 +67,11 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.btn-find-pw').click(function () {
-                var id = $('#id').val();
-                if (id === '') {
-                    alert('아이디를 입력하세요.');
+            $('.btn-find-id').click(function () {
+                var name = $('#name').val();
+                var email = $('#email').val();
+                if (name === '' || email === '') {
+                    alert('이름과 이메일을 모두 입력하세요.');
                     return;
                 }
 
@@ -87,9 +92,9 @@
                 setTimeout(() => {
                     $.ajax({
                         async: false,
-                        url: '<c:url value="/find/pw"/>',
+                        url: '<c:url value="/find/id"/>',
                         type: 'post',
-                        data: { id: id },
+                        data: { name: name, email: email },
                         success: function (data) {
                             res = data;
                         },
@@ -100,9 +105,9 @@
 
                     $('.modal-container').remove();
                     if (res) {
-                        alert("비밀번호가 전송됐습니다.");
+                        alert("아이디가 전송됐습니다.");
                     } else {
-                        alert("비밀번호 찾기에 실패했습니다.");
+                        alert("아이디 찾기에 실패했습니다.");
                     }
                 }, 100);
             });

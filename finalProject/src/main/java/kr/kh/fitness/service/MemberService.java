@@ -24,4 +24,8 @@ public interface MemberService {
 
 	boolean findPw(String id);
 
+	String findId(String name, String email);
+
+	void clearLoginCookie(String me_id);
+
 }

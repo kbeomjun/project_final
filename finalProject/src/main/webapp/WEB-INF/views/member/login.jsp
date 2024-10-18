@@ -64,7 +64,6 @@
 							</div>
 							<button type="submit" class="btn btn-success w-100">로그인</button>
 							
-							<!-- 카카오 로그인과 회원가입 버튼을 나란히 배치 -->
 							<div class="d-flex justify-content-between">
 							    <a id="kakao-login-btn" href="javascript:loginWithKakao()" class="kakao-login-btn btn">카카오 로그인</a>
 							    <a href="/kakaoRegister" class="kakao-register-btn btn">카카오 회원가입</a>
