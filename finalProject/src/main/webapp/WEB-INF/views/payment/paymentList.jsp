@@ -20,8 +20,8 @@
 			<thead>
 				<tr>
 					<th scope="col">이용권 종류</th>
-					<th scope="col">기간(일)</th>
-					<th scope="col">횟수</th>
+					<th scope="col">기간(개월)</th>
+					<th scope="col">횟수(회)</th>
 					<th scope="col">가격</th>
 				</tr>
 			</thead>
