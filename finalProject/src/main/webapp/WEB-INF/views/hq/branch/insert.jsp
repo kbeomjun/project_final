@@ -44,7 +44,7 @@
 			<div class="error error-address"></div>
 			<div class="form-group">
 				<label for="br_detail">지점설명:</label>
-				<textarea class="form-control" id="br_detail" name="br_detail"></textarea>
+				<textarea class="form-control" id="br_detail" name="br_detail">${hq.br_detail}</textarea>
 			</div>
 			<div class="form-group" style="margin-top: 10px;">
 				<label for="me_id">관리자 아이디:</label>
