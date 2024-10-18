@@ -435,7 +435,7 @@ public class PaymentController {
 	 * 1월 31일의 경우 3월 1일로 넘어가도록 처리하며, 2월의 경우도 적절히 보완.
 	 * 
 	 * @param startDateTime 결제 시작일 (LocalDateTime)
-	 * @param period 결제 기간 (일 단위, 예: 30, 60, 90일 등)
+	 * @param period 결제 기간 (월 단위, 예: 1개월, 2개월 등)
 	 * @return 계산된 만료일 (LocalDateTime)
 	 */
 	private LocalDateTime calculateExpirationDate(LocalDateTime startDateTime, int period) {
@@ -450,8 +450,11 @@ public class PaymentController {
 	        if (expirationDateTime.getMonth() == Month.FEBRUARY) {
 	            expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1); // 3월 1일로 설정
 	        }
+	    } else if (startDateTime.getMonth() == Month.FEBRUARY && startDateTime.getDayOfMonth() == 1) {
+	        // 2월 1일인 경우, 1개월 후는 3월 1일로 설정
+	        expirationDateTime = expirationDateTime.withDayOfMonth(1);
 	    } else if (startDateTime.getMonth() == Month.FEBRUARY && (startDateTime.getDayOfMonth() == 28 || startDateTime.getDayOfMonth() == 29)) {
-	        expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1);
+	        expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1); // 2월 말일이면 3월 1일로 설정
 	    } else {
 	        // 현재 날짜에서 하루 전으로 설정하되, 첫째 날일 경우 말일로 설정
 	        int newDayOfMonth = startDateTime.getDayOfMonth() == 1 ? lastDayOfMonth : startDateTime.getDayOfMonth() - 1;
@@ -463,6 +466,7 @@ public class PaymentController {
 
 	    return expirationDateTime;
 	}
+
 	
 	
 	
