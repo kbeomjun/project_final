@@ -58,7 +58,6 @@
 	        </props>
 	    </property>
 	</bean>
-
 	<mybatis-spring:scan
 		base-package="kr.kh.fitness.dao" />
 

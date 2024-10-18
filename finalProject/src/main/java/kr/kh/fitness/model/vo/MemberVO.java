@@ -31,5 +31,10 @@ public class MemberVO {
     private int me_noshow;			// 노쇼 경고 횟수
     private Date me_cancel;			// 예약 제한 시간
     boolean autoLogin;
+
+    public MemberVO(String id, String email) {
+		this.me_id = id;
+		this.me_email = email;
+	}
 }
 
