@@ -33,12 +33,13 @@
 					<table class="table text-center">
 						<thead>
 							<tr>
+								<th>연도</th>
 								<th>지점명</th>
 								<th>프로그램명</th>
 								<th>트레이너명</th>
 								<th>[예약인원 / 총인원]</th>
-								<th>프로그램 날짜</th>
-								<th>프로그램 시간</th>
+								<th>프로그램 예정 시간</th>
+								<th>신청 날짜</th>
 								<c:if test="${view eq 'present'}">
 									<th>예약취소</th>
 								</c:if>
@@ -47,6 +48,9 @@
 						<tbody>
 							<c:forEach items="${reservationList}" var="list">
 								<tr>
+									<td>
+										<fmt:formatDate value="${list.bs_start}" pattern="yyyy"/>
+									</td>
 									<td>
 										<c:url var="url" value="/client/mypage/schedule/${me_id}">
 											<c:param name="view" value="${view}"/>
@@ -73,10 +77,10 @@
 									</td>
 									<td>${list.bs_current} / ${list.bp_total}</td>
 									<td>
-										<fmt:formatDate value="${list.bs_start}" pattern="yyyy-MM-dd"/>
+										<fmt:formatDate value="${list.bs_start}" pattern="MM/dd HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
 									</td>
 									<td>
-										<fmt:formatDate value="${list.bs_start}" pattern="HH"/>-<fmt:formatDate value="${list.bs_end}" pattern="HH시"/>
+										<fmt:formatDate value="${list.pr_date}" pattern="MM/dd HH:mm"/>
 									</td>
 									<c:if test="${view eq 'present'}">
 										<td>

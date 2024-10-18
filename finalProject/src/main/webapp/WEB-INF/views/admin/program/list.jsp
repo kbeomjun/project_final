@@ -68,10 +68,10 @@
 							<c:forEach items="${programList}" var="list">
 								<tr>
 									<td>${list.bp_sp_name}</td>
-									<td>${list.employee.em_name}</td>
+									<td>${list.em_name}</td>
 									<td>${list.bp_total}</td>
 									<td>
-										<c:if test="${list.program.sp_type == '그룹'}">
+										<c:if test="${list.sp_type == '그룹'}">
 											<a href="<c:url value="/admin/program/update/${list.bp_num}"/>" class="btn btn-outline-warning btn-sm">수정</a>
 										</c:if>
 										<a href="<c:url value="/admin/program/delete/${list.bp_num}"/>" class="btn btn-outline-danger btn-sm" onclick="return confirm('삭제하시겠습니까?');">삭제</a>

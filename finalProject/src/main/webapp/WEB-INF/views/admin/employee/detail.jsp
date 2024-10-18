@@ -62,11 +62,11 @@
 							<input type="hidden" name="em_br_name" value="${em.em_br_name}">
 							<div class="form-group">
 								<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-								    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%">
+								    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%; height:100%;">
 								</label>
 								<input type="file" class="form-control" id="file" name="file" accept="image/*">
 							</div>
-							<div class="error error-file"></div>
+							<div class="error error-file d-flex justify-content-center"></div>
 							<div class="form-group">
 								<label for="em_name">이름:</label>
 								<input type="text" class="form-control" id="em_name" name="em_name" value="${em.em_name}">
@@ -126,7 +126,8 @@
 								<button type="submit" class="btn btn-outline-success">직원정보 수정</button>
 							</div>
 						</form>
-						<hr>
+						<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
+						<hr/>
 						<div class="text-right mb-3">
 							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger">취소</a>
 						</div>
@@ -136,7 +137,14 @@
 	        </main>
 	    </div>
 	</div>	
-
+	
+	<script type="text/javascript">
+		$('.btn-delete').click(function(e){
+			if(!confirm("정말 삭제하시겠습니까?\n삭제하시면 복구할 수 없습니다.")){
+				e.preventDefault();
+			}
+		});
+	</script>
 
 	<script>
 		// 사진 파일
@@ -152,15 +160,23 @@
 				$('#file').after(str);
 				del++;
 			}
-			let fReader = new FileReader();
-		    fReader.readAsDataURL(file[0]);
-		    fReader.onloadend = function(event){
-		    	let path = event.target.result;
-		        img = `
-		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
-		        `;
-		        $('.card').append(img);
-		    }
+			var count = $('#file')[0].files.length - del;
+			if(count == 0){
+				let fReader = new FileReader();
+			    fReader.readAsDataURL(file[0]);
+			    fReader.onloadend = function(event){
+			    	let path = event.target.result;
+			        img = `
+			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
+			        `;
+			        $('.card').append(img);
+			    }
+			}else{
+				let img = `
+					<img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
+				`;
+				$('.card').append(img);
+			}
 		}
 		
 		$(document).on("change", "#file", function(){
@@ -179,7 +195,7 @@
 		$("#file").change(function(){
 			$('.error-file').children().remove();
 			
-			var count = $('#file')[0].files.length;
+			var count = $('#file')[0].files.length - del;
 			if(count == 0){
 				$('.error-file').append(imgRequired);
 			}else{
@@ -234,9 +250,10 @@
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
+			var count = $('#file')[0].files.length - del;
 			
-			if($('#file')[0].files.length == 0){
-				$('.error-file').append(imgRequired);
+			if(count < 0){
+				$('.error-file').append(msgRequired);
 				flag = false;
 			}
 			

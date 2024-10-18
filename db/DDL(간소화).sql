@@ -160,19 +160,19 @@ CREATE TABLE `payment_type` (
 	`pt_price`		int				not NULL
 );
 
-DROP TABLE IF EXISTS `payment_category`;
-CREATE TABLE `payment_category` (
-	`pc_num`			int 			primary key auto_increment NOT NULL,
-	`pc_imp_uid`		varchar(30)		NOT NULL,
-	`pc_merchant_uid`	varchar(50)		NOT NULL,
-	`pc_amount`			int				NOT NULL,
-	`pc_status`			varchar(10)		NOT NULL,
-	`pc_paid_at`		bigint			NOT NULL,
-	`pc_card_name`		varchar(30)		NULL,
-	`pc_card_number`	bigint			NOT NULL,
-	`pc_card_quota`		varchar(5)		NOT NULL,
-	`pc_pt_num`			int				NOT NULL,
-	`pc_me_id`			varchar(100)	NOT NULL
+DROP TABLE IF EXISTS `payment_history`;
+CREATE TABLE `payment_history` (
+    `ph_num`            INT 			PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `ph_imp_uid`       	VARCHAR(30) 	NOT NULL,
+    `ph_merchant_uid`   VARCHAR(50) 	NOT NULL,
+    `ph_amount`         INT 			NOT NULL,
+    `ph_status`         VARCHAR(10) 	NOT NULL,
+    `ph_paid_at`       	BIGINT 			NOT NULL,
+    `ph_card_name`      VARCHAR(30) 	NULL,
+    `ph_card_number`    BIGINT 			NOT NULL,
+    `ph_card_quota`     VARCHAR(5) 		NOT NULL,
+    `ph_pt_num`         INT 			NOT NULL,
+    `ph_me_id`         	VARCHAR(100) 	NOT NULL
 );
 
 
@@ -271,16 +271,16 @@ ADD CONSTRAINT `FK_payment_member`
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
-ALTER TABLE `payment_category`
+ALTER TABLE `payment_history`
 ADD CONSTRAINT `FK_payment_category_payment_type`
-  FOREIGN KEY (`pc_pt_num`)
+  FOREIGN KEY (`ph_pt_num`)
   REFERENCES `payment_type` (`pt_num`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
-ALTER TABLE `payment_category`
+ALTER TABLE `payment_history`
 ADD CONSTRAINT `FK_payment_category_member`
-  FOREIGN KEY (`pc_me_id`)
+  FOREIGN KEY (`ph_me_id`)
   REFERENCES `member` (`me_id`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
