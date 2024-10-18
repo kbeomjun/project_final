@@ -253,13 +253,13 @@
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
 		select * from member_inquiry 
 		<if test="str == 'wait'">
-			where mi_state in("답변대기") and mi_br_name = "본점" order by mi_date;
+			where mi_state in("답변대기") and mi_br_name = "본점" order by mi_num;
 		</if>
 		<if test="str == 'done'">
-			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_date desc;
+			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_num desc;
 		</if>
 		<if test="str == 'FAQ'">
-			where mi_state in("FAQ") and mi_br_name = "본점" order by mi_date;
+			where mi_state in("FAQ") and mi_br_name = "본점" order by mi_num;
 		</if>
 	</select>
 	
@@ -296,8 +296,8 @@
 		select payment.*, pt_name as pa_pt_name, me_email as pa_me_email from payment 
 			join member on me_id = pa_me_id
 		    join payment_type on pt_num = pa_pt_num
-		where pa_end > current_timestamp() and pa_state in("결제완료")
-		order by pa_start;
+		where pa_end > current_date() and pa_state in("결제완료")
+		order by pa_num desc;
 	</select>
 	
 	<select id="selectPayment" resultType="PaymentVO">
