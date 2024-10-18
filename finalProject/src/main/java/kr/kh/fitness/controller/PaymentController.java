@@ -3,6 +3,8 @@ package kr.kh.fitness.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -118,114 +120,45 @@ public class PaymentController {
 	    PaymentHistoryVO history = request.getPaymentHistory();
 	    
 	    Map<String, Object> response = new HashMap<String, Object>();
-	    
+	
 	    try {
 	        MemberVO user = (MemberVO) session.getAttribute("user");
 	        String userId = user.getMe_id(); // 사용자 ID를 가져옴
-	
-	        System.out.println("유저 정보 : " + user);
-	        System.out.println("결제 정보 : " + payment);
-	        System.out.println("결제 타입 : " + paymentType);
-	        System.out.println("결제 유형 : " + history);
 	
 	        // 기존 결제 정보를 조회
 	        PaymentVO existingPayment = paymentService.getLastPaymentByUserId(userId, paymentType.getPt_num());
 	        System.out.println("결제 타입 번호 : " + paymentType.getPt_num());
 	
-	        if (existingPayment != null) {
-	            // Ajax로 전달된 새로운 결제 시작일을 가져와서 설정
-	            Date newStartDate = payment.getPa_start(); // Ajax로 전달된 시작일 가져오기
-	            
-	            // 기존 결제의 시작일을 초기 시작일로 저장
-	            Date initialStartDate = existingPayment.getPa_start(); // 기존 시작일
-	            response.put("initialStartDate", initialStartDate); // 화면에 보여줄 데이터로 추가
-
-	            if (newStartDate != null) {
-	                LocalDateTime startDateTime = newStartDate.toInstant()
-	                    .atZone(ZoneId.systemDefault())
-	                    .toLocalDate()
-	                    .atStartOfDay(); // 시작일의 00:00:00으로 설정
-	                existingPayment.setPa_start(Timestamp.valueOf(startDateTime)); // 새로운 시작일로 설정
-	                System.out.println("새로운 결제 시작 날짜: " + startDateTime);
-	            }
-	            
-	            LocalDateTime startDateTime = payment.getPa_start().toInstant()
-	                .atZone(ZoneId.systemDefault())
-	                .toLocalDate()
-	                .atStartOfDay(); // 시작일의 00:00:00으로 설정
-	            payment.setPa_start(Timestamp.valueOf(startDateTime)); // Timestamp로 변환하여 설정
-	            
-	            // 만료일 계산 (기존 결제의 만료일에서 기간 추가)
-	            int period = paymentType.getPt_date(); // 예: 30, 60, 90일
-	            LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
-	            String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	            System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
+	        // 새로운 결제 또는 기존 결제 정보에 따라 처리
+	        LocalDateTime startDateTime = handleStartDate(payment, existingPayment, response);
 	
-	            System.out.println("실제 들어간 만료일 계산값 : " + existingPayment.getPa_end());
+	        // 만료일 계산
+	        LocalDateTime expirationDateTime = calculateExpirationDate(startDateTime, paymentType.getPt_date());
+	        String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	        System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
 	
-	            // 걸제 기록(결제 히스토리) 삽입 (히스토리 객체는 DTO에서 가져옴)
-	            boolean historyInserted = paymentService.insertPaymentHistory(paymentType, history, user);
-	            if (!historyInserted) {
-	                response.put("success", false);
-	                response.put("message", "결제 기록 추가에 실패했습니다.");
-	                return response; // 결제 기록 추ㅏㄱ 실패 시 응답
-	            }
-	            
-	            // 결제 상태 처리
-	            String paymentStatus = history.getPh_status();
-	            StatusName(payment, paymentStatus);
-	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
-
-	            // 결제 업데이트 - 하지만 결제 관리 때문에 update가 아닌 insert임
-	            boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
-	            if (res) {
-	                response.put("success", true);
-	                response.put("message", "결제가 완료되었습니다. 만료일이 연장되었습니다.");
-	                response.put("url", "/payment/paymentList");
-	            } else {
-	                response.put("success", false);
-	                response.put("message", "결제 업데이트에 실패했습니다.");
-	            }
+	        // 결제 상태 처리
+	        String paymentStatus = history.getPh_status();
+	        StatusName(payment, paymentStatus);
+	        System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
+	
+	        // 결제 기록 삽입
+	        boolean historyInserted = paymentService.insertPaymentHistory(paymentType, history, user);
+	        if (!historyInserted) {
+	            response.put("success", false);
+	            response.put("message", "결제 기록 추가에 실패했습니다.");
+	            return response; // 결제 기록 추가 실패 시 응답
+	        }
+	
+	        // 결제 처리
+	        PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
+	        boolean res = processPayment(payment, paymentType, history, formattedDateTime, user, response, paymentDetails);
+	
+	        if (res) {
+	            response.put("url", "/payment/paymentList");
 	        } else {
-	            // 새로운 결제인 경우 - 사용자가 선택한 시작 날짜를 사용
-	            if (payment.getPa_start() == null) {
-	                response.put("success", false);
-	                response.put("message", "시작 날짜를 선택해주세요.");
-	                return response;
-	            }
-	            
-	            // 새로운 결제 처리
-	            LocalDateTime startDateTime = payment.getPa_start().toInstant()
-	                .atZone(ZoneId.systemDefault())
-	                .toLocalDate()
-	                .atStartOfDay(); // 시작일의 00:00:00으로 설정
-	            payment.setPa_start(Timestamp.valueOf(startDateTime)); // Timestamp로 변환하여 설정
-	
-	            System.out.println("사용자가 선택한 이용권 시작 날짜(시간은 자동으로 00:00:00으로 들어옴) : " + startDateTime);
-	
-	            // 만료일 계산
-	            int period = paymentType.getPt_date(); // 예: 30, 60, 90일
-	            LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
-	            String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-	            System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
-
-	            // 결제 상태 처리
-	            String paymentStatus = history.getPh_status();
-	            StatusName(payment, paymentStatus);
-	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
-	            
-	            // 결제 처리
-	            boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
-	
-	            if (res) {
-	                response.put("success", true);
-	                response.put("message", "결제가 완료되었습니다.");
-	                response.put("url", "/payment/paymentList");
-	            } else {
-	                response.put("success", false);
-	                response.put("message", "결제가 실패하였습니다.");
-	                response.put("url", "/payment/paymentInsert");
-	            }
+	            response.put("success", false);
+	            response.put("message", "결제 업데이트에 실패했습니다.");
 	        }
 	    } catch (Exception e) {
 	        response.put("success", false);
@@ -383,13 +316,12 @@ public class PaymentController {
 	                .atStartOfDay(); // 시작일의 00:00:00으로 설정
 	            payment.setPa_start(Timestamp.valueOf(startDateTime)); // Timestamp로 변환하여 설정
 	            
-	            // 만료일 계산 (기존 결제의 만료일에서 기간 추가)
-	            int period = paymentType.getPt_date(); // 예: 30, 60, 90일
-	            LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
+	            // 만료일 계산
+	            LocalDateTime expirationDateTime = calculateExpirationDate(startDateTime, paymentType.getPt_date());
+
+	            // 형식 지정
 	            String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	            System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
-	
-	            System.out.println("실제 들어간 만료일 계산값 : " + existingPayment.getPa_end());
 	
 	            // 걸제 기록(결제 히스토리) 삽입 (히스토리 객체는 DTO에서 가져옴)
 	            boolean historyInserted = paymentService.insertPaymentHistory(paymentType, history, user);
@@ -404,16 +336,12 @@ public class PaymentController {
 	            StatusName(payment, paymentStatus);
 	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
 
-	            // 결제 업데이트 - 하지만 결제 관리 때문에 update가 아닌 insert임
-	            boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
-	            if (res) {
-	                response.put("success", true);
-	                response.put("message", "결제가 완료되었습니다. 만료일이 연장되었습니다.");
-	                response.put("url", "/payment/paymentList");
-	            } else {
-	                response.put("success", false);
-	                response.put("message", "결제 업데이트에 실패했습니다.");
-	            }
+	    	    // 기존 결제 정보를 가져옴
+	    	    PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
+	    	    
+	            // 결제 처리
+	            processPayment(payment, paymentType, history, formattedDateTime, user, response, paymentDetails);
+	            
 	        } else {
 	            // 새로운 결제인 경우 - 사용자가 선택한 시작 날짜를 사용
 	            if (payment.getPa_start() == null) {
@@ -430,10 +358,11 @@ public class PaymentController {
 	            payment.setPa_start(Timestamp.valueOf(startDateTime)); // Timestamp로 변환하여 설정
 	
 	            System.out.println("사용자가 선택한 이용권 시작 날짜(시간은 자동으로 00:00:00으로 들어옴) : " + startDateTime);
-	
-	            // 만료일 계산
-	            int period = paymentType.getPt_date(); // 예: 30, 60, 90일
-	            LocalDateTime expirationDateTime = startDateTime.plusDays(period); // 기간을 더함
+		            
+		        // 만료일 계산
+	            LocalDateTime expirationDateTime = calculateExpirationDate(startDateTime, paymentType.getPt_date());
+
+	            // 형식 지정
 	            String formattedDateTime = expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	            System.out.println("계산된 만료일 및 시간: " + formattedDateTime);
 
@@ -442,18 +371,11 @@ public class PaymentController {
 	            StatusName(payment, paymentStatus);
 	            System.out.println("결제 기록 저장용 텍스트 값 : " + payment.getPa_state());
 	            
+	            // 기존 결제 정보를 가져옴
+	            PaymentDetailsDTO paymentDetails = paymentService.getPaymentDetails(user.getMe_id());
+
 	            // 결제 처리
-	            boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
-	
-	            if (res) {
-	                response.put("success", true);
-	                response.put("message", "결제가 완료되었습니다.");
-	                response.put("url", "/payment/paymentList");
-	            } else {
-	                response.put("success", false);
-	                response.put("message", "결제가 실패하였습니다.");
-	                response.put("url", "/payment/paymentInsertPT");
-	            }
+	            processPayment(payment, paymentType, history, formattedDateTime, user, response, paymentDetails);
 	        }
 	    } catch (Exception e) {
 	        response.put("success", false);
@@ -497,5 +419,125 @@ public class PaymentController {
 	    }
 		return paymentStatus;
 	}
+	
+	
+	
+	/**
+	 * 주어진 시작일(startDateTime)로부터 기간(period)만큼의 만료일을 계산하는 메소드.
+	 * 1월 31일의 경우 3월 1일로 넘어가도록 처리하며, 2월의 경우도 적절히 보완.
+	 * 
+	 * @param startDateTime 결제 시작일 (LocalDateTime)
+	 * @param period 결제 기간 (일 단위, 예: 30, 60, 90일 등)
+	 * @return 계산된 만료일 (LocalDateTime)
+	 */
+	private LocalDateTime calculateExpirationDate(LocalDateTime startDateTime, int period) {
+	    LocalDateTime expirationDateTime = startDateTime.plusMonths(period / 30); // 월 단위로 더함
+
+	    // 해당 월의 마지막 날 계산
+	    YearMonth yearMonth = YearMonth.from(expirationDateTime);
+	    int lastDayOfMonth = yearMonth.lengthOfMonth(); // 해당 월의 마지막 날짜 계산
+
+	    // 2월 28일 또는 29일인 경우, 3월 1일로 설정하는 처리
+	    if (startDateTime.getMonth() == Month.JANUARY && startDateTime.getDayOfMonth() == 31) {
+	        if (expirationDateTime.getMonth() == Month.FEBRUARY) {
+	            expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1); // 3월 1일로 설정
+	        }
+	    } else if (startDateTime.getMonth() == Month.FEBRUARY && (startDateTime.getDayOfMonth() == 28 || startDateTime.getDayOfMonth() == 29)) {
+	        expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1);
+	    } else {
+	        // 현재 날짜에서 하루 전으로 설정하되, 첫째 날일 경우 말일로 설정
+	        int newDayOfMonth = startDateTime.getDayOfMonth() == 1 ? lastDayOfMonth : startDateTime.getDayOfMonth() - 1;
+	        newDayOfMonth = Math.min(newDayOfMonth, lastDayOfMonth); // 새로운 날짜가 말일을 넘지 않도록 설정
+
+	        // 새로운 날짜 설정
+	        expirationDateTime = expirationDateTime.withDayOfMonth(newDayOfMonth);
+	    }
+
+	    return expirationDateTime;
+	}
+	
+	
+	
+	/**
+	 * 회원권 결제 :: 기존 결제 또는 새로운 결제 시작 날짜를 처리하는 메소드
+	 * 
+	 * @param payment 결제 정보 객체
+	 * @param existingPayment 기존 결제 정보 객체
+	 * @param response 응답 객체
+	 * @return LocalDateTime으로 변환된 시작 날짜
+	 */
+	private LocalDateTime handleStartDate(PaymentVO payment, PaymentVO existingPayment, Map<String, Object> response) {
+	    LocalDateTime startDateTime;
+	    
+	    if (existingPayment != null) {
+	        // 기존 결제의 시작일을 초기 시작일로 저장
+	        Date initialStartDate = existingPayment.getPa_start();
+	        response.put("initialStartDate", initialStartDate); // 화면에 보여줄 데이터로 추가
+	
+	        Date newStartDate = payment.getPa_start(); // Ajax로 전달된 새로운 결제 시작일
+	        if (newStartDate != null) {
+	            startDateTime = newStartDate.toInstant()
+	                .atZone(ZoneId.systemDefault())
+	                .toLocalDate()
+	                .atStartOfDay(); // 시작일의 00:00:00으로 설정
+	            existingPayment.setPa_start(Timestamp.valueOf(startDateTime)); // 새로운 시작일로 설정
+	            System.out.println("새로운 결제 시작 날짜: " + startDateTime);
+	        } else {
+	            startDateTime = existingPayment.getPa_start().toInstant()
+	                .atZone(ZoneId.systemDefault())
+	                .toLocalDate()
+	                .atStartOfDay(); // 기존 시작일을 그대로 사용
+	        }
+	    } else {
+	        // 새로운 결제인 경우
+	        startDateTime = payment.getPa_start().toInstant()
+	            .atZone(ZoneId.systemDefault())
+	            .toLocalDate()
+	            .atStartOfDay(); // 시작일의 00:00:00으로 설정
+	        payment.setPa_start(Timestamp.valueOf(startDateTime)); // Timestamp로 변환하여 설정
+	        System.out.println("사용자가 선택한 이용권 시작 날짜 : " + startDateTime);
+	    }
+	
+	    return startDateTime;
+	}
+	
+	
+	
+	/**
+	 * PT 결제 :: 주어진 결제 정보와 사용자 정보를 바탕으로 결제 처리 및 결과를 반환하는 메소드.
+	 * 결제가 성공했는지 여부에 따라 적절한 메시지를 response에 담아 응답.
+	 * 
+	 * @param payment 결제 정보 (PaymentVO)
+	 * @param paymentType 결제 타입 정보 (PaymentTypeVO)
+	 * @param history 결제 이력 정보 (PaymentHistoryVO)
+	 * @param formattedDateTime 계산된 만료일을 포함한 포맷된 날짜 문자열 (String)
+	 * @param user 결제하는 사용자 정보 (MemberVO)
+	 * @param response 클라이언트로 반환할 응답 데이터 (Map<String, Object>)
+	 * @param paymentDetails 사용자의 결제 상태 정보 (PaymentDetailsDTO)
+	 * @return 결제가 성공했는지 여부 (boolean)
+	 */
+	private boolean processPayment(PaymentVO payment, PaymentTypeVO paymentType, PaymentHistoryVO history, String formattedDateTime, MemberVO user, Map<String, Object> response, PaymentDetailsDTO paymentDetails) {
+	    boolean res = paymentService.insertPayment(payment, paymentType, history, formattedDateTime, user);
+
+	    if (res) {
+	        if (paymentDetails.isRePaymentForPT()) {
+	            // 재결제인 경우
+	            response.put("success", true);
+	            response.put("message", "PT 재결제가 완료되었습니다. 만료일이 연장되었습니다.");
+	        } else {
+	            // 첫 결제인 경우
+	            response.put("success", true);
+	            response.put("message", "첫 PT 결제가 완료되었습니다.");
+	        }
+	        response.put("url", "/payment/paymentList");
+	    } else {
+	        response.put("success", false);
+	        response.put("message", "결제 업데이트에 실패했습니다.");
+	    }
+
+	    return res;
+	}
+	
+	
 	
 }
