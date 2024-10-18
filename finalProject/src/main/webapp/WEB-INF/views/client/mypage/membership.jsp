@@ -95,7 +95,7 @@
 						<tbody>
 							<c:forEach items="${paymentList}" var="list">
 								<tr>
-									<td>${list.pt_type}</td>
+									<td>${list.pt_name}</td>
 									<td>
 										<fmt:formatDate value="${list.pa_date}" pattern="yyyy-MM-dd"/>
 									</td>

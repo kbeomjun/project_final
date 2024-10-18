@@ -26,9 +26,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${paymentList}" var="ptList">
+				<c:forEach items="${membershipList}" var="ptList">
 		            <tr>
-		                <td>${ptList.pt_type}</td>
+		                <td>${ptList.pt_name}</td>
 		                <td>${ptList.pt_date}</td>
 		                <td>${ptList.pt_count}</td>
 		                <td>${ptList.formattedPrice}원</td> <!-- 포맷된 가격 사용 -->
@@ -38,6 +38,9 @@
 		</table>
 		<div class="text-right">
 			<a href="<c:url value="/payment/paymentInsert" />" class="btn btn-primary js-btn-insert">회원권 결제</a>
+			<c:if test="${hasMembership}">
+			    <a href="<c:url value="/payment/paymentInsertPT" />" class="btn btn-info js-btn-insert">PT 결제</a>
+			</c:if>
 		</div>
 	
 		<script type="text/javascript">
