@@ -61,7 +61,7 @@
 						</div>
 						<div class="form-group">
 							<label>트레이너:</label>
-							<input class="form-control" value="${branchProgram.employee.em_name}" readonly/>
+							<input class="form-control" value="${branchProgram.em_name}" readonly/>
 						</div>
 						<div class="form-group">
 							<label>총 인원수:</label>

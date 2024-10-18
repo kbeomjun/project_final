@@ -4,36 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.AdminDAO">
 
-    <resultMap id="BranchProgramMap" type="BranchProgramVO">
-        <id property="bp_num" column="bp_num" />
-        <result property="bp_total" column="bp_total" />
-        <result property="bp_br_name" column="bp_br_name" />
-        <result property="bp_sp_name" column="bp_sp_name" />
-        <result property="bp_em_num" column="bp_em_num" />
-
-        <collection property="employee" javaType="kr.kh.fitness.model.vo.EmployeeVO">
-            <id property="em_num" column="em_num" />
-            <result property="em_name" column="em_name" />
-            <result property="em_phone" column="em_phone" />
-            <result property="em_email" column="em_email" />
-            <result property="em_gender" column="em_gender" />
-            <result property="em_join" column="em_join" />
-            <result property="em_address" column="em_address" />
-            <result property="em_fi_name" column="em_fi_name" />
-            <result property="em_br_name" column="em_br_name" />
-        </collection>
-        
-        <collection property="program" javaType="kr.kh.fitness.model.vo.SportsProgramVO">
-        	<id property="sp_name" column="sp_name" />
-            <result property="sp_detail" column="sp_detail" />
-            <result property="sp_type" column="sp_type" />
-        </collection>  
-
-    </resultMap>
-
-	<select id="selectBranchProgramList" resultMap="BranchProgramMap">
+	<select id="selectBranchProgramList" resultType="BranchProgramDTO">
 		select 
-			* 
+			branch_program.*, em_name, sp_type
 		from 
 			branch_program 
 		join 
@@ -61,9 +34,9 @@
 		value(#{bp_total}, #{bp_br_name}, #{bp_sp_name}, #{bp_em_num})
 	</insert>
 	
-	<select id="selectBranchProgramByNum" resultMap="BranchProgramMap">
+	<select id="selectBranchProgramByNum" resultType="BranchProgramDTO">
 		select 
-			* 
+			branch_program.*, em_name
 		from 
 			branch_program 
 		join 
@@ -307,6 +280,10 @@
 			em_fi_name = #{em_fi_name}
 		where em_num = #{em_num};
 	</update>	
+	
+	<delete id="deleteEmployee">
+		delete from employee where em_num = #{em_num};
+	</delete>
 	
 	<select id="selectMember" resultType="MemberVO">
 		select * from member where me_id = #{me_id}

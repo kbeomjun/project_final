@@ -118,8 +118,8 @@
 							<label>프로그램:</label>
 							<select class="form-control" name="bs_bp_num" id="programSelect">
 								<c:forEach items="${programList}" var="list">
-									<option value="${list.bp_num}" data-sp-type="${list.program.sp_type}">
-										${list.bp_sp_name}(${list.employee.em_name}, ${list.bp_total}인)
+									<option value="${list.bp_num}" data-sp-type="${list.sp_type}">
+										${list.bp_sp_name}(${list.em_name}, ${list.bp_total}인)
 									</option>
 								</c:forEach>		
 								<option value="" disabled selected></option>

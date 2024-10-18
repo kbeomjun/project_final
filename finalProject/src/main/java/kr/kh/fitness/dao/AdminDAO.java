@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.fitness.model.dto.BranchProgramDTO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
@@ -22,7 +23,7 @@ import kr.kh.fitness.pagination.Criteria;
 
 public interface AdminDAO {
 
-	List<BranchProgramVO> selectBranchProgramList(String br_name);
+	List<BranchProgramDTO> selectBranchProgramList(String br_name);
 
 	List<SportsProgramVO> selectProgramList();
 
@@ -30,7 +31,7 @@ public interface AdminDAO {
 
 	BranchProgramVO selectBranchProgram(BranchProgramVO branchProgram);
 
-	BranchProgramVO selectBranchProgramByNum(int bp_num);
+	BranchProgramDTO selectBranchProgramByNum(int bp_num);
 
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
@@ -87,6 +88,8 @@ public interface AdminDAO {
 	String selectEmployeeFileName(EmployeeVO employee);
 
 	boolean updateEmployee(EmployeeVO employee);
+	
+	boolean deleteEmployee(EmployeeVO employee);
 	
 	MemberVO selectMember(String me_id);
 	
