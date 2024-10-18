@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.kh.fitness.model.dto.BranchProgramDTO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
-import kr.kh.fitness.model.dto.MessageDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
 import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
@@ -57,7 +57,7 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			br_name = user.getMe_name();
 			
-			List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
+			List<BranchProgramDTO> programList = adminService.getBranchProgramList(br_name);
 			model.addAttribute("programList", programList);
 			model.addAttribute("br_name", br_name);
 			return "/admin/program/list";
@@ -102,7 +102,7 @@ public class AdminController {
 	@GetMapping("/program/update/{bp_num}")
 	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
-		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
+		BranchProgramDTO branchProgram = adminService.getBranchProgram(bp_num);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
@@ -133,7 +133,7 @@ public class AdminController {
 	@GetMapping("/program/delete/{bp_num}")
 	public String programDelete(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
-		BranchProgramVO branchProgram = adminService.getBranchProgram(bp_num);
+		BranchProgramDTO branchProgram = adminService.getBranchProgram(bp_num);
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(!user.getMe_name().equals(branchProgram.getBp_br_name())) {
 	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램입니다.");
@@ -165,7 +165,7 @@ public class AdminController {
 			model.addAttribute("scheduleList", scheduleList);
 			model.addAttribute("view", view);
 			model.addAttribute("pm", pm);
-			return "/admin/scheduleList";
+			return "/admin/schedule/list";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,8 +175,8 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 상세 -> 예약한 회원 목록(이름+전화번호+생년월일+성별+노쇼경고횟수)
-	@GetMapping("/schedule/detail")
-	public String scheduleDetail(Model model, Integer bs_num, String view, BranchCriteria cri) {
+	@GetMapping("/schedule/member")
+	public String scheduleMember(Model model, Integer bs_num, String view, BranchCriteria cri) {
 		
 		List<MemberVO> memberList = adminService.getScheduleMemberList(bs_num);
 		
@@ -184,20 +184,20 @@ public class AdminController {
 		model.addAttribute("cri", cri);
 		model.addAttribute("view", view);
 		
-		return "/admin/scheduleDetail";
+		return "/admin/schedule/member";
 	}
 	
 	//지점 프로그램 일정 추가 get
-	@GetMapping("/schedule/insert/{br_name}")
+	@GetMapping("/schedule/regist/{br_name}")
 	public String scheduleInsert(Model model, @PathVariable("br_name")String br_name) {
 		
-		List<BranchProgramVO> programList = adminService.getBranchProgramList(br_name);
+		List<BranchProgramDTO> programList = adminService.getBranchProgramList(br_name);
 		List<MemberVO> memberList = adminService.getMemberList();
 		model.addAttribute("programList", programList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("branchName", br_name);
 		
-		return "/admin/scheduleInsert";
+		return "/admin/schedule/regist";
 	}
 //	
 //	//지점 프로그램 일정 추가 post
@@ -237,7 +237,7 @@ public class AdminController {
 //	}
 	
 	//지점 프로그램 일정 추가 post
-	@PostMapping("/schedule/insert")
+	@PostMapping("/schedule/regist")
 	public String scheduleInsertPost(Model model, HttpServletRequest request, @ModelAttribute ProgramInsertFormDTO pif) {
 		
 		// System.out.println(pif);
@@ -249,9 +249,20 @@ public class AdminController {
 		}else {
 			rm = adminService.insertBranchProgramScheduleList(pif);
 		}
+		if(rm.isResult()) {
+			model.addAttribute("msg", "등록 성공\\n" + rm.getMessage());
+		}
+		else {
+			model.addAttribute("msg", "등록 실패\\n" + rm.getMessage());
+		}
 		
-		model.addAttribute("msg", rm.getMessage());
-		model.addAttribute("url", "/admin/schedule/list");
+		String prevUrl = request.getHeader("Referer");
+		if (prevUrl != null) {
+			model.addAttribute("url", prevUrl);
+		}
+		else {
+			model.addAttribute("url", "/admin/schedule/list");
+		}
 		return "/main/message";
  
 	}
@@ -266,7 +277,7 @@ public class AdminController {
 		model.addAttribute("view", view);
 		model.addAttribute("cri", cri);
 		
-		return "/admin/scheduleUpdate";
+		return "/admin/schedule/update";
 	}
 	
 	//지점 프로그램 일정 수정 post
@@ -449,6 +460,19 @@ public class AdminController {
 		return "/main/message";
 	}	
 	
+	//지점 직원 삭제
+	@GetMapping("/employee/delete/{em_num}")
+	public String employeeDelete(Model model, @PathVariable("em_num") int em_num, EmployeeVO employee) {
+		String msg = adminService.deleteEmployee(employee);
+		if(msg.equals("")) {
+			model.addAttribute("url", "/hq/employee/list");
+		}else {
+			model.addAttribute("url", "/hq/employee/detail/" + em_num);
+		}
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
 	//전체 회원목록
 	@GetMapping("/member/list")
 	public String memberList(Model model, Criteria cri) {
@@ -588,8 +612,8 @@ public class AdminController {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "답변대기");
-			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "답변완료");
+			List<MemberInquiryVO> miWaitList = adminService.getMemberInquiryList(br_name, "wait");
+			List<MemberInquiryVO> miDoneList = adminService.getMemberInquiryList(br_name, "done");
 			
 			model.addAttribute("miWaitList", miWaitList);
 			model.addAttribute("miDoneList", miDoneList);

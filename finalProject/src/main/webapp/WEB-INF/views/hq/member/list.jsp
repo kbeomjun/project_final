@@ -13,6 +13,8 @@
     	.address-input{margin-bottom: 10px;}
     	#thead th{text-align: center;}
     	#tbody td{text-align: left;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
     </style>
 </head>
 <body>
@@ -47,6 +49,12 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
@@ -59,8 +67,8 @@
 				        		<th>생년월일</th>
 				        		<th>성별</th>
 				        		<th>전화번호</th>
+				        		<th>계정</th>
 				        		<th>이메일</th>
-				        		<th>아이디</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
@@ -73,8 +81,8 @@
 				        			</td>
 					        		<td class="align-content-center">${me.me_gender}</td>
 					        		<td class="align-content-center">${me.me_phone}</td>
-					        		<td class="align-content-center">${me.me_email}</td>
 					        		<td class="align-content-center">${me.me_id}</td>
+					        		<td class="align-content-center">${me.me_email}</td>
 					        		<td class="align-content-center">
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 					        		</td>
@@ -198,18 +206,17 @@
 		// 테이블 api
 		$('#table').DataTable({
 			language: {
-		        search: "검색:",
+		        search: "",
+		        searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: "등록된 회원이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
 		    info: false,
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [6], 
-		        	orderable: false
-	        	}
+		        { targets: [6], orderable: false }
 		    ]
 		});
 	</script>

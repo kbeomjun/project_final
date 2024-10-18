@@ -195,19 +195,19 @@
 									<td>
 										<c:set var="currentTime" value="<%= new java.util.Date() %>" />
 										
-										<!-- 정원 초과가 아니고 현재 시간보다 이전 프로그램이 아니라면 예약 가능 -->
 										<c:choose>
-											<c:when test="${ps.bs_current ne ps.bp_total && currentTime.before(ps.bs_start)}">
-												<form action="<c:url value="/program/reservation" />" method="post">
-													<input type="hidden" name="bs_num" value="${ps.bs_num}">
-													<button class="btn btn-outline-primary btn-program-reservation1" 
-													data-program="${ps.bp_sp_name}/${ps.bp_br_name}/${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})/<fmt:formatDate value="${ps.bs_start}" pattern="HH:mm"/>~<fmt:formatDate value="${ps.bs_end}" pattern="HH:mm" />"
-													data-num="${ps.bs_num}" type="submit" >예약</button>
-												</form>
-											</c:when>
-											<c:otherwise>
-												<span class="btn btn-program-reservation2">마감</span>
-											</c:otherwise>
+										<c:when test="${ps.bs_current ne ps.bp_total && currentTime.before(ps.bs_start)}">
+										<!-- 정원 초과가 아니고 현재 시간보다 이전 프로그램이 아니라면 예약 가능 -->
+											<form action="<c:url value="/program/reservation" />" method="post">
+												<input type="hidden" name="bs_num" value="${ps.bs_num}">
+												<button class="btn btn-outline-primary btn-program-reservation1" 
+												data-program="${ps.bp_sp_name}/${ps.bp_br_name}/${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})/<fmt:formatDate value="${ps.bs_start}" pattern="HH:mm"/>~<fmt:formatDate value="${ps.bs_end}" pattern="HH:mm" />"
+												data-num="${ps.bs_num}" type="submit" >예약</button>
+											</form>
+										</c:when>
+										<c:otherwise>
+											<span class="btn btn-program-reservation2">마감</span>
+										</c:otherwise>
 										</c:choose>
 									</td>
 								</tr>

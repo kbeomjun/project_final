@@ -24,7 +24,7 @@
 				</label>
 				<input type="file" class="form-control" id="file" name="file" accept="image/*">
 			</div>
-			<div class="error error-file"></div>
+			<div class="error error-file d-flex justify-content-center"></div>
 			<div class="form-group">
 				<label for="em_name">이름:</label>
 				<input type="text" class="form-control" id="em_name" name="em_name" value="${em.em_name}">
@@ -117,15 +117,23 @@
 				$('#file').after(str);
 				del++;
 			}
-			let fReader = new FileReader();
-		    fReader.readAsDataURL(file[0]);
-		    fReader.onloadend = function(event){
-		    	let path = event.target.result;
-		        img = `
-		        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
-		        `;
-		        $('.card').append(img);
-		    }
+			var count = $('#file')[0].files.length - del;
+			if(count == 0){
+				let fReader = new FileReader();
+			    fReader.readAsDataURL(file[0]);
+			    fReader.onloadend = function(event){
+			    	let path = event.target.result;
+			        img = `
+			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
+			        `;
+			        $('.card').append(img);
+			    }
+			}else{
+				let img = `
+					<img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
+				`;
+				$('.card').append(img);
+			}
 		}
 		
 		$(document).on("change", "#file", function(){
@@ -144,8 +152,8 @@
 		$("#file").change(function(){
 			$('.error-file').children().remove();
 			
-			var count = $('#file')[0].files.length;
-			if(count == 0){
+			var count = $('#file')[0].files.length - del;
+			if(count < 0){
 				$('.error-file').append(imgRequired);
 			}else{
 				$('.error-file').children().remove();
@@ -199,6 +207,12 @@
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
+			var count = $('#file')[0].files.length - del;
+			
+			if(count < 0){
+				$('.error-file').append(msgRequired);
+				flag = false;
+			}
 			
 			if($('#em_name').val() == ''){
 				$('.error-name').append(msgRequired);

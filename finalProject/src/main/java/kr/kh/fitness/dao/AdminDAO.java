@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.fitness.model.dto.BranchProgramDTO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.vo.BranchEquipmentStockVO;
 import kr.kh.fitness.model.vo.BranchFileVO;
@@ -15,13 +16,14 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
 import kr.kh.fitness.pagination.Criteria;
 
 public interface AdminDAO {
 
-	List<BranchProgramVO> selectBranchProgramList(String br_name);
+	List<BranchProgramDTO> selectBranchProgramList(String br_name);
 
 	List<SportsProgramVO> selectProgramList();
 
@@ -29,7 +31,7 @@ public interface AdminDAO {
 
 	BranchProgramVO selectBranchProgram(BranchProgramVO branchProgram);
 
-	BranchProgramVO selectBranchProgramByNum(int bp_num);
+	BranchProgramDTO selectBranchProgramByNum(int bp_num);
 
 	boolean insertBranchProgram(BranchProgramVO branchProgram);
 
@@ -87,6 +89,8 @@ public interface AdminDAO {
 
 	boolean updateEmployee(EmployeeVO employee);
 	
+	boolean deleteEmployee(EmployeeVO employee);
+	
 	MemberVO selectMember(String me_id);
 	
 	void updateMemberNoShow(@Param("me_id")String me_id, @Param("me_noshow")int me_noshow, @Param("me_cancel")String me_cancel);
@@ -130,5 +134,9 @@ public interface AdminDAO {
 	boolean updateMemberInquiry(MemberInquiryVO mi);
 
 	MemberVO selectMemberByEmail(String me_email);
+
+	ProgramReservationVO selectProgramReservation(@Param("me_id")String me_id, @Param("date")Date date);
+
+	void insertProgramReservation(@Param("me_id")String me_id, @Param("date")Date date, @Param("bs_num")int bs_num);
 
 }

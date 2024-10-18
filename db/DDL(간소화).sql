@@ -99,7 +99,6 @@ CREATE TABLE `review_post` (
 	`rp_view`		int				not NULL default 0,
     `rp_br_name`	varchar(100)	NOT NULL,
 	`rp_pa_num`		int				NOT NULL
-    
 );
 
 drop table if exists `member_inquiry`;
@@ -143,8 +142,8 @@ CREATE TABLE `payment` (
 	`pa_num`		int 			primary key auto_increment,
 	`pa_date`		datetime		not NULL default current_timestamp,
 	`pa_price`		int				not NULL,
-	`pa_start`		datetime		not NULL,
-	`pa_end`		datetime		not NULL,
+	`pa_start`		date			not NULL,
+	`pa_end`		date			not NULL,
 	`pa_review`		char(1)			not NULL default 'N',
     `pa_state`		varchar(10)		not NULL,
 	`pa_me_id`		varchar(100)	NULL,

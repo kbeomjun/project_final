@@ -91,6 +91,10 @@
 	<delete id="deleteReviewPost">
 		delete from review_post where rp_num = #{rp_num}
 	</delete>
+
+	<select id="selectFaqList" resultType="MemberInquiryVO">
+		select * from member_inquiry where mi_state = 'FAQ' order by mi_it_name
+	</select>
 	
 	<select id="selectInquiryTypeList" resultType="InquiryTypeVO">
 		select * from inquiry_type
@@ -216,6 +220,53 @@
 			payment_type on pt_num = pa_pt_num
 		where
 			pa_me_id = #{me_id}
+	</select>
+	
+	<select id="selectCurrentMembership" resultType="MembershipDTO">
+		select 
+			min(pa_start) as pa_start, max(pa_end) as pa_end 
+		from 
+			payment 
+		join 
+			payment_type on pa_pt_num = pt_num 
+		where 
+			pa_me_id = #{me_id} and
+			pa_end >= now() and
+			pt_type = '이용권' and
+			pa_state = '결제완료'
+	</select>
+	
+	<select id="selectCurrentPT" resultType="MembershipDTO">
+		select 
+			pa_start, pa_end, pt_count as total_count
+		from 
+			payment 
+		join 
+			payment_type on pa_pt_num = pt_num 
+		where 
+			pa_me_id = #{me_id} and
+			now() >= pa_start and
+			pa_end >= now() and
+			pt_type = 'PT' and
+			pa_state = '결제완료'
+	</select>
+	
+	<select id="selectScheduledPT" resultType="int">
+		select 
+			count(*) 
+		from 
+			program_reservation 
+		join 
+			branch_program_schedule on pr_bs_num = bs_num
+		join 
+			branch_program on bs_bp_num = bp_num
+		join 
+			sports_program on bp_sp_name = sp_name
+		where
+			pr_me_id = #{me_id} and
+			bs_start >= #{pa_start} and
+			#{pa_end} >= bs_end and
+			sp_type = '단일'
 	</select>
 	
 	<select id="selectPayment" resultType="PaymentVO">

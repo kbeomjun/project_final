@@ -12,29 +12,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <div class="sidebar-sticky">
-	                <h4 class="sidebar-heading mt-3">마이페이지 메뉴</h4>
-	                <ul class="nav flex-column">
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${me_id}"/>">프로그램 일정</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/inquiry/list/${me_id}"/>">문의내역</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/client/mypage/pwcheck/${me_id}"/>">개인정보수정</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/pwchange/${me_id}"/>">비밀번호 변경</a>
-	                    </li>
-	                </ul>
-	            </div>
+	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->

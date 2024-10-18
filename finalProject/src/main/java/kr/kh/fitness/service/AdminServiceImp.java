@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.AdminDAO;
+import kr.kh.fitness.model.dto.BranchProgramDTO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
 import kr.kh.fitness.model.dto.ResultMessage;
@@ -48,7 +49,7 @@ public class AdminServiceImp implements AdminService{
 	private JavaMailSender mailSender;
 	
 	@Override
-	public List<BranchProgramVO> getBranchProgramList(String br_name) {
+	public List<BranchProgramDTO> getBranchProgramList(String br_name) {
 		
 		if(br_name == null) {
 			return null;
@@ -86,7 +87,7 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public BranchProgramVO getBranchProgram(int bp_num) {
+	public BranchProgramDTO getBranchProgram(int bp_num) {
 		return adminDao.selectBranchProgramByNum(bp_num);
 	}
 	
@@ -338,6 +339,23 @@ public class AdminServiceImp implements AdminService{
 	}
 	
 	@Override
+	public String deleteEmployee(EmployeeVO employee) {
+		String msg = "";
+		if(employee == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		EmployeeVO employeeVo = adminDao.selectEmployee(employee.getEm_num());
+		if(employeeVo == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!adminDao.deleteEmployee(employeeVo)) {msg = "직원을 삭제하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		UploadFileUtils.delteFile(uploadPath, employeeVo.getEm_fi_name());
+		return msg;
+	}
+
+	@Override
 	public MemberVO getMember(String me_id) {
 		return adminDao.selectMember(me_id);
 	}
@@ -494,14 +512,19 @@ public class AdminServiceImp implements AdminService{
 		BranchProgramScheduleVO bps = newBranchProgramSchedule(pif.getSelectDate(), hour, pif.getBs_bp_num(), 1);
 		
 		if(bps == null) {
-			return new ResultMessage(false, "스케쥴을 생성하는데 실패하였습니다. \\\\n(같은 시간에 이미 등록된 스케쥴이 있을 수 있습니다.)");
+			return new ResultMessage(false, "같은 시간에 이미 등록된 스케쥴이 있을 수 있습니다.");
+		}
+		
+		if (adminDao.selectProgramReservation(pif.getMe_id(),bps.getBs_start()) != null) {
+			return new ResultMessage(false, "사용자가 같은 시간에 예약한 프로그램이 이미 존재합니다.");
 		}
 		
 		boolean res = adminDao.insertBranchProgramSchedule(bps);
-		if(res) {
+		if(res && bps.getBs_num() != 0) {
+			adminDao.insertProgramReservation(pif.getMe_id(),bps.getBs_start(),bps.getBs_num());
 			return new ResultMessage(true,"스케쥴이 정상적으로 등록되었습니다.");
 		}
-		return new ResultMessage(false,"DB에 등록하는데 실패하였습니다.(관리자 문의!)");
+		return new ResultMessage(false,"DB 등록 실패(관리자 문의!)");
 	}
 
 	private BranchProgramScheduleVO newBranchProgramSchedule(Date selectDate, int hour, int bp_num, int current) {
@@ -575,7 +598,6 @@ public class AdminServiceImp implements AdminService{
             			bps_list.add(bps);
             		}
             	}
-            	
             	// 다음 주 같은 요일 = 요일의 시작 날짜에서 7일을 더해준 값
             	weekcalendar.add(Calendar.DATE, 7); 
                 weekDate = weekcalendar.getTime();
@@ -592,7 +614,7 @@ public class AdminServiceImp implements AdminService{
 			return new ResultMessage(true,"입력한 스케쥴이 모두 등록되었습니다.");
 		}
 		
-		return new ResultMessage(false,"DB에 등록하는데 실패하였습니다.(관리자 문의!)");
+		return new ResultMessage(false,"DB 등록 실패(관리자 문의!)");
 	}
 
 	public List<MemberInquiryVO> getMemberInquiryList(String br_name, String mi_state) {

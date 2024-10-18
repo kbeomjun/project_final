@@ -118,7 +118,7 @@
 	</delete>
 	
 	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
-		select * from sports_equipment;
+		select * from sports_equipment where se_name like concat("%", #{search}, "%");
 	</select>
 	
 	<insert id="insertSportsEquipment">
@@ -153,7 +153,7 @@
 	<select id="selectBranchStockList" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본점" 
+		where be_br_name = "본점" and be_se_name like concat("%", #{search}, "%")
 		group by be_se_name;
 	</select>
 	
@@ -192,8 +192,8 @@
 	</select>
 	
 	<insert id="insertPaymentType">
-		insert into payment_type(pt_type, pt_date, pt_count, pt_price)
-		values(#{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
+		insert into payment_type(pt_name, pt_type, pt_date, pt_count, pt_price)
+		values(#{pt.pt_name}, #{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
 	</insert>
 	
 	<select id="selectPaymentType" resultType="PaymentTypeVO">
@@ -202,6 +202,7 @@
 	
 	<update id="updatePaymentType">
 		update payment_type set
+			pt_name = #{pt.pt_name},
 			pt_type = #{pt.pt_type},
 			pt_date = #{pt.pt_date},
 			pt_count = #{pt.pt_count},
@@ -257,6 +258,9 @@
 		<if test="str == 'done'">
 			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_date desc;
 		</if>
+		<if test="str == 'FAQ'">
+			where mi_state in("FAQ") and mi_br_name = "본점" order by mi_date;
+		</if>
 	</select>
 	
 	<select id="selectMemberInquiry" resultType="MemberInquiryVO">
@@ -265,7 +269,11 @@
 	
 	<update id="updateMemberInquiry">
 		update member_inquiry set
+			mi_title = #{mi.mi_title},
+			mi_content = #{mi.mi_content},
 			mi_state = #{mi.mi_state},
+			mi_email = #{mi.mi_email},
+			mi_it_name = #{mi.mi_it_name},
 			mi_answer = #{mi.mi_answer}
 		where mi_num = #{mi.mi_num};
 	</update>
@@ -273,4 +281,37 @@
 	<select id="selectMemberByEmail" resultType="MemberVO">
 		select * from member where me_email = #{me_email};
 	</select>
+	
+	<select id="selectInquiryTypeList" resultType="InquiryTypeVO">
+		select * from inquiry_type;
+	</select>
+	
+	<insert id="insertMemberInquiry">
+		insert into member_inquiry(mi_title, mi_content, mi_state, mi_email, mi_date, mi_br_name, mi_it_name)
+		values(#{mi.mi_title}, #{mi.mi_content}, #{mi.mi_state}, #{mi.mi_email}, 
+				current_timestamp(), #{mi.mi_br_name}, #{mi.mi_it_name});
+	</insert>
+	
+	<select id="selectPaymentList" resultType="PaymentVO">
+		select payment.*, pt_name as pa_pt_name, me_email as pa_me_email from payment 
+			join member on me_id = pa_me_id
+		    join payment_type on pt_num = pa_pt_num
+		where pa_end > current_timestamp() and pa_state in("결제완료")
+		order by pa_start;
+	</select>
+	
+	<select id="selectPayment" resultType="PaymentVO">
+		select * from payment where pa_num = #{pa_num};
+	</select>
+	
+	<update id="updatePayment">
+		update payment set
+			pa_state = #{pa.pa_state}
+		where pa_num = #{pa.pa_num};
+	</update>
+	
+	<insert id="insertRefund">
+		insert into refund(re_date, re_percent, re_price, re_reason, re_pa_num)
+		values(current_timestamp(), #{re.re_percent}, #{re.re_price}, #{re.re_reason}, #{re.re_pa_num});
+	</insert>
 </mapper>
