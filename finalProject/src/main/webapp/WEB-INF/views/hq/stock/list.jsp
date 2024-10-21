@@ -333,6 +333,11 @@
 			        	{data:"be_type"}
 			        ]
 				});
+				$('#search').val("");
+				search = "";
+				$(document).ready(function(){
+					displayList(search);
+				});
 			}
 		});
 	</script>
