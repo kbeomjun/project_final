@@ -132,9 +132,22 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<MemberInquiryVO> getFaqList() {
-		return clientDao.selectFaqList();
+	public List<MemberInquiryVO> getFaqList(String category, Criteria cri) {
+		if(category == null || cri == null) {
+			return null;
+		}
+		return clientDao.selectFaqList(category, cri);
 	}
+	
+	@Override
+	public PageMaker getPageMakerInFaq(String category, Criteria cri) {
+		if(category == null || cri == null) {
+			return null;
+		}
+		int totalCount = clientDao.selectFaqTotalCount(category, cri);
+		return new PageMaker(3, cri, totalCount);
+	}
+
 
 	@Override
 	public List<InquiryTypeVO> getInquiryTypeList() {

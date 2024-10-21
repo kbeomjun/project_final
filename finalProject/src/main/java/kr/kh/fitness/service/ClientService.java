@@ -39,9 +39,11 @@ public interface ClientService {
 
 	PageMaker getPageMakerInReview(Criteria cri);
 
-	List<MemberInquiryVO> getFaqList();
-
 	List<InquiryTypeVO> getInquiryTypeList();
+	
+	List<MemberInquiryVO> getFaqList(String category, Criteria cri);
+	
+	PageMaker getPageMakerInFaq(String category, Criteria cri);
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);
 

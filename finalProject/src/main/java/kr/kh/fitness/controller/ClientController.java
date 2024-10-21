@@ -172,11 +172,19 @@ public class ClientController {
 	
 	//자주묻는질문
 	@GetMapping("/inquiry/faq")
-	public String inquiryFaq(Model model) {
+	public String inquiryFaq(Model model, @RequestParam(value = "category", defaultValue = "all")String category, Criteria cri) {
+
+		cri.setPerPageNum(5);
 		
-		List<MemberInquiryVO> faqList = clientService.getFaqList();
+		List<InquiryTypeVO> typeList = clientService.getInquiryTypeList();
+		List<MemberInquiryVO> faqList = clientService.getFaqList(category, cri);
+		PageMaker pm = clientService.getPageMakerInFaq(category, cri);
+		
 		
 		model.addAttribute("faqList", faqList);
+		model.addAttribute("typeList", typeList);
+		model.addAttribute("pm", pm);
+		model.addAttribute("category", category);
 		
 		return "/client/inquiry/faq";
 	}

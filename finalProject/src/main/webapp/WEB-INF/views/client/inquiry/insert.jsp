@@ -55,7 +55,14 @@
 						<div class="error error-content"></div>
 						<div class="form-group">
 							<label for="mi_email">이메일:</label>
-							<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>
+							<c:choose>
+								<c:when test="${user eq null}">
+									<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>	
+								</c:when>
+								<c:when test="${user ne null}">
+									<span>답변은 마이페이지에서 확인하실 수 있습니다.</span>
+								</c:when>
+							</c:choose>
 							<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}" <c:if test="${user ne null}">readonly</c:if> >
 						</div>
 						<div class="error error-email"></div>
