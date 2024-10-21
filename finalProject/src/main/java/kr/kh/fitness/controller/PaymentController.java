@@ -432,40 +432,37 @@ public class PaymentController {
 	
 	/**
 	 * 주어진 시작일(startDateTime)로부터 기간(period)만큼의 만료일을 계산하는 메소드.
-	 * 1월 31일의 경우 3월 1일로 넘어가도록 처리하며, 2월의 경우도 적절히 보완.
-	 * 
+	 * 1월 31일의 경우 2월 말일(28일 또는 29일)로 설정되며, 그 외의 경우에도 적절하게 처리합니다.
+	 * 또한, 첫 번째 날이 아닌 경우에는 날짜에서 하루를 뺀 값을 사용합니다.
+	 *
 	 * @param startDateTime 결제 시작일 (LocalDateTime)
 	 * @param period 결제 기간 (월 단위, 예: 1개월, 2개월 등)
 	 * @return 계산된 만료일 (LocalDateTime)
 	 */
 	private LocalDateTime calculateExpirationDate(LocalDateTime startDateTime, int period) {
-	    LocalDateTime expirationDateTime = startDateTime.plusMonths(period); // 월 단위로 더함
+	    // 월 단위로 더함
+	    LocalDateTime expirationDateTime = startDateTime.plusMonths(period);
 
-	    // 해당 월의 마지막 날 계산
+	    // 현재 월의 마지막 날 계산
 	    YearMonth yearMonth = YearMonth.from(expirationDateTime);
-	    int lastDayOfMonth = yearMonth.lengthOfMonth(); // 해당 월의 마지막 날짜 계산
+	    int lastDayOfMonth = yearMonth.lengthOfMonth(); // 해당 월의 마지막 날짜
 
-	    // 2월 28일 또는 29일인 경우, 3월 1일로 설정하는 처리
+	    // 1월 31일인 경우 2월 말일로 설정
 	    if (startDateTime.getMonth() == Month.JANUARY && startDateTime.getDayOfMonth() == 31) {
 	        if (expirationDateTime.getMonth() == Month.FEBRUARY) {
-	            expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1); // 3월 1일로 설정
+	            expirationDateTime = expirationDateTime.withDayOfMonth(YearMonth.of(expirationDateTime.getYear(), Month.FEBRUARY).lengthOfMonth());
 	        }
-	    } else if (startDateTime.getMonth() == Month.FEBRUARY && startDateTime.getDayOfMonth() == 1) {
-	        // 2월 1일인 경우, 1개월 후는 3월 1일로 설정
-	        expirationDateTime = expirationDateTime.withDayOfMonth(1);
-	    } else if (startDateTime.getMonth() == Month.FEBRUARY && (startDateTime.getDayOfMonth() == 28 || startDateTime.getDayOfMonth() == 29)) {
-	        expirationDateTime = expirationDateTime.plusMonths(1).withDayOfMonth(1); // 2월 말일이면 3월 1일로 설정
+	    } else if (startDateTime.getDayOfMonth() > lastDayOfMonth) {
+	        // 만약 시작일이 현재 월의 말일을 넘는 경우 마지막 날로 설정
+	        expirationDateTime = expirationDateTime.withDayOfMonth(lastDayOfMonth);
 	    } else {
-	        // 현재 날짜에서 하루 전으로 설정하되, 첫째 날일 경우 말일로 설정
-	        int newDayOfMonth = startDateTime.getDayOfMonth() == 1 ? lastDayOfMonth : startDateTime.getDayOfMonth() - 1;
-	        newDayOfMonth = Math.min(newDayOfMonth, lastDayOfMonth); // 새로운 날짜가 말일을 넘지 않도록 설정
-
-	        // 새로운 날짜 설정
-	        expirationDateTime = expirationDateTime.withDayOfMonth(newDayOfMonth);
+	        // day-1 처리, 첫 번째 날이 아니면 하루를 뺀 날짜로 설정
+	        expirationDateTime = expirationDateTime.withDayOfMonth(startDateTime.getDayOfMonth() - 1);
 	    }
 
 	    return expirationDateTime;
 	}
+
 
 	
 	

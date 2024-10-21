@@ -15,6 +15,8 @@
     
     <!-- 기존 회원권 정보 표시 -->
     <c:set var="isRePayment" value="${not empty firstStartDate}" />
+    <c:set var="isRePaymentForPT" value="${not empty ptFirstStartDate}" />
+
 
     <c:if test="${firstStartDate != null && firstStartDate != ''}">
         <div class="membership-info my-10">
@@ -115,10 +117,7 @@
 	<!-- 아이엠포트 SDK :: CDN -->
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
-		function parseDate(dateStr) {
-		    const parts = dateStr.split('-');
-		    return new Date(parts[0], parts[1] - 1, parts[2]); // 월은 0부터 시작하므로 -1
-		}
+    	console.log("isRePaymentForPT: ${isRePaymentForPT}");
 	
 		$(document).ready(function () {
 		    var IMP = window.IMP; // 생략 가능, 아이엠포트 객체 초기화
@@ -236,98 +235,68 @@
 		        console.log(count);
 		        console.log(formattedPrice);
 		        
-
-				// 선택된 날짜가 회원권 시작일과 만료일 사이인지 확인
-				// 시작 날짜가 변경될 때마다 만료일을 계산
-				/*
-		        $('#pa_start').on('change', function() {
-		            const startDate = $(this).val(); // 사용자가 선택한 시작일
-		            const period = parseInt($('#pt_num option:selected').data('date'), 10); // 선택된 기간(개월 수)
-		
-		            if (startDate && period) {
-		                const expirationDate = calculateExpirationDate(startDate, period); // 만료일 계산
-		                console.log("계산된 만료일:", expirationDate); // 콘솔에 출력
-		
-		                // 계산된 만료일을 화면에 표시
-		                $('#calculatedExpirationDate').text(expirationDate);
-		            }
-		        });
-		        */
-		   
-		        // 시작 날짜가 있으면, 개월 수를 더해 만료일 계산
-			    // 만료일 계산 로직
-			    /* let ptEndDate;
-			    if (isRePaymentForPT) {
-			        // 재결제일 경우: 서버에서 전달된 마지막 만료일 +1일 후 개월 수 더하기
-			        const lastPTEndDateStr = '${ptLastEndDate}';
-			        const lastPTEndDate = parseDate(lastPTEndDateStr); // 마지막 만료일 Date 객체로 변환
-
-			        if (lastPTEndDate) {
-			            ptEndDate = new Date(lastPTEndDate);
-			            ptEndDate.setDate(ptEndDate.getDate() + 1); // 마지막 만료일 +1일
-			            ptEndDate.setMonth(ptEndDate.getMonth() + ptPeriod); // 개월 수 더하기
-			        }
-			    } else {
-			        // 첫 결제일 경우: 사용자가 선택한 PT 시작일을 기준으로 개월 수 더하기
-			        const ptStartDate = parseDate(ptStartDateStr); // 사용자가 선택한 시작일
-
-			        if (ptStartDate) {
-			            ptEndDate = new Date(ptStartDate);
-			            ptEndDate.setMonth(ptEndDate.getMonth() + ptPeriod); // 개월 수 더하기
-			        }
-			    } */
-			    
-			    
 			    const ptStartDateStr = $('#pa_start').val(); // PT 시작일 가져오기
 			    const ptPeriod = parseInt(selectedOption.data('date'), 10); // PT 기간 가져오기 (1개월, 2개월)
 			    let ptEndDate;
-
-			    // 재결제일 경우에만 +1일
-			    if (${isRePaymentForPT}) {
-			        const lastPTEndDateStr = '${ptLastEndDate}'; // 마지막 PT 만료일 가져오기
-			        if (lastPTEndDateStr) {
-			            ptEndDate = new Date(lastPTEndDateStr); // 서버에서 받은 값을 그대로 사용
-			            ptEndDate.setDate(ptEndDate.getDate() + 1); // 마지막 만료일 +1일
-			            ptEndDate = calculateExpirationDate(ptEndDate, ptPeriod); // 개월 수 더하기
+			    
+			    if (!${isRePaymentForPT}) {
+			        // 첫 결제 로직
+			        const ptStartDate = ptStartDateStr; // 문자열 그대로 사용
+			        console.log("ptStartDate의 문자열 그대로 사용 : ", ptStartDate);
+			        if (ptStartDate) {
+			            ptEndDate = calculateExpirationDate(ptStartDate, ptPeriod); // 'YYYY-MM-DD' 반환
+			            console.log("첫결제 로직의 ptEndDate: ", ptEndDate);
 			        }
 			    } else {
-			        // 첫 결제일 경우는 +1일 없이 그냥 계산
-			        const ptStartDate = new Date(ptStartDateStr); // 사용자가 선택한 시작일 그대로 사용
-			        if (ptStartDate) {
-			            ptEndDate = new Date(ptStartDate);
-			            ptEndDate = calculateExpirationDate(ptEndDate, ptPeriod); // 개월 수 더하기
+			        // 재결제 로직
+			        const lastPTEndDateStr = '${ptLastEndDate}'; // 문자열 그대로 사용
+			        if (lastPTEndDateStr) {
+			            ptEndDate = calculateExpirationDate(lastPTEndDateStr, ptPeriod); // 'YYYY-MM-DD' 반환
+			            console.log("재결제 로직의 ptEndDate: ",ptEndDate);
 			        }
 			    }
 
+			    console.log("결제 로직을 탄 후 계산된 만료일 : ", ptEndDate);
+
+
 			    if (ptEndDate) {
-			        const formattedPtEndDate = ptEndDate.toISOString().split('T')[0]; // 그대로 ISO 문자열로 포맷팅
-			        console.log("계산된 PT 만료일: ", formattedPtEndDate);
+			        // ptEndDate가 Date 객체인지 확인하고, 아니면 Date 객체로 변환
+			        if (!(ptEndDate instanceof Date)) {
+			            ptEndDate = new Date(ptEndDate);
+			        }
 
-			        // 서버에서 전달된 회원권 만료일을 그대로 사용 (Date 객체로 변환하지 않음)
-			        const membershipEndDateStr = '${lastEndDate}'; // 서버에서 전달받은 회원권 만료일
+			        // 유효한 Date 객체인지 확인 후 포맷팅
+			        if (!isNaN(ptEndDate)) {
+			            const formattedPtEndDate = ptEndDate.toISOString().split('T')[0]; // ISO 문자열로 포맷팅
+			            console.log("계산된 PT 만료일: ", formattedPtEndDate);
 
-			        console.log("서버에서 전달받은 회원권 만료일 : ", membershipEndDateStr);
+			            // 서버에서 전달된 회원권 만료일을 그대로 사용 (Date 객체로 변환하지 않음)
+			            const membershipEndDateStr = '${lastEndDate}'; // 서버에서 전달받은 회원권 만료일
 
-			        // 날짜 문자열 비교를 위한 조건문 추가
-			        if (formattedPtEndDate > membershipEndDateStr) {
-			            alert("PT 만료일이 회원권 만료일보다 큽니다. 회원권을 결제해야 합니다.\n" +
-			                  "회원님의 회원권 만료일 : " + membershipEndDateStr + "\n" +
-			                  "선택한 PT의 만료일 : " + formattedPtEndDate);
+			            console.log("서버에서 전달받은 회원권 만료일 : ", membershipEndDateStr);
 
-			            const confirmPayment = confirm("회원권을 결제하시겠습니까?");
-			            if (confirmPayment) {
-			                window.location.href = "<c:url value='/payment/paymentInsert'/>"; // 회원권 결제 URL로 이동
+			            // 날짜 문자열 비교를 위한 조건문 추가
+			            if (formattedPtEndDate > membershipEndDateStr) {
+			                alert("PT 만료일이 회원권 만료일보다 큽니다. 회원권을 결제해야 합니다.\n" +
+			                      "회원님의 회원권 만료일 : " + membershipEndDateStr + "\n" +
+			                      "선택한 PT의 만료일 : " + formattedPtEndDate);
+
+			                const confirmPayment = confirm("회원권을 결제하시겠습니까?");
+			                if (confirmPayment) {
+			                    window.location.href = "/fitness/payment/paymentInsert"; // 회원권 결제 URL로 이동
+			                }
+			                return;
+			            } else {
+			                $('#confirmModal').modal('show'); // 결제 확인 모달을 띄움
 			            }
-			            return;
 			        } else {
-			            $('#confirmModal').modal('show'); // 결제 확인 모달을 띄움
+			            console.error("유효하지 않은 만료일입니다.");
+			            alert("만료일을 계산할 수 없습니다.");
 			        }
 			    } else {
 			        console.error("만료일을 계산할 수 없습니다.");
 			        alert("만료일을 계산할 수 없습니다.");
 			    }
-			    
-			    
 		        
 		        // 팝업 내용 설정
 		        const modalContent = `
@@ -475,31 +444,69 @@
 		}); // document ready
 		
 		
-		
+		function calculateExpirationDate(dateString) {
+		    // "yyyy-mm-dd" 형식의 문자열을 분리
+		    let [year, month, day] = dateString.split('-').map(Number);
 
-		// 만료일 계산 함수 (컨트롤러와 동일한 로직)
-		function calculateExpirationDate(startDate, period) {
-		    const expirationDate = new Date(startDate); // 시작일을 복사하여 새로운 Date 객체 생성
-		    expirationDate.setMonth(expirationDate.getMonth() + period); // 개월 수 더하기
+		    console.log("입력된 날짜 - 일:", day);
+		    
+		    // 현재 월의 마지막 날을 구함
+		    let lastDayOfCurrentMonth = new Date(year, month, 0).getDate();
 
-		    // 윤년을 고려한 2월 말일 처리
-		    if (expirationDate.getMonth() === 1 && expirationDate.getDate() < startDate.getDate()) {
-		        // 2월 말일일 때, 2월에 존재하지 않는 날은 3월 1일로 처리
-		        expirationDate.setMonth(2); // 3월로 넘어감
-		        expirationDate.setDate(1);  // 3월 1일로 설정
+		    // 월을 증가시킴
+		    month += 1;
+
+		    // 월이 12월을 넘으면 년도를 증가시키고 월을 1로 설정
+		    if (month > 12) {
+		        month = 1;
+		        year += 1;
 		    }
 
-		    // 1월 31일에서 1개월 후는 2월 말일로, 그 외는 정상적으로 계산
-		    if (startDate.getDate() > expirationDate.getDate()) {
-		        expirationDate.setDate(0); // 해당 월의 마지막 날로 설정
+		    // 다음 달의 마지막 날을 구함
+		    let lastDayOfNextMonth = new Date(year, month, 0).getDate();
+
+		    // 만약 입력된 날짜가 월의 말일이면 다음 달의 말일로 설정
+		    if (day === lastDayOfCurrentMonth) {
+		        day = lastDayOfNextMonth;
+		        // console.log("만약 입력된 날짜가 월의 말일이면 다음 달의 말일로 설정 : ", day);
+		    } else if (day > lastDayOfNextMonth) {
+		        // 입력된 날짜가 다음 달의 마지막 날보다 크면 마지막 날로 설정
+		        day = lastDayOfNextMonth;
+		        // console.log("입력된 날짜가 다음 달의 마지막 날보다 크면 마지막 날로 설정 : ", day);
+		    } else {
+		        // dd-1 처리
+		        day -= 1;
 		    }
 
-		    return expirationDate;
+		    // 새로운 날짜 객체 생성 (UTC 기반으로 생성하여 타임존 문제 방지)
+		    const resultDate = new Date(Date.UTC(year, month - 1, day));
+		    
+		    // console.log("새로운 날짜 객체 생성 : ", resultDate);
+
+		    // 결과를 yyyy-mm-dd 형식으로 반환
+		    const formattedDate = resultDate.toISOString().split('T')[0];
+		    // console.log("결과를 yyyy-mm-dd 형식으로 반환 : ", formattedDate);
+		    
+		    return formattedDate;
 		}
 
+		// 테스트용..ㅠㅠ
+		let result = calculateExpirationDate("2024-10-01");
+		console.log("계산된 만료일:", result); // "2024-11-01"로 예상
 
+		result = calculateExpirationDate("2024-10-17");
+		console.log("계산된 만료일:", result); // "2024-11-16"로 예상
 
+		result = calculateExpirationDate("2024-10-21");
+		console.log("계산된 만료일:", result); // "2024-11-20"로 예상
 
+		result = calculateExpirationDate("2024-10-31");
+		console.log("계산된 만료일:", result); // "2024-11-30"로 예상
+
+		result = calculateExpirationDate("2025-01-31");
+		console.log("계산된 만료일:", result); // "2025-02-28"로 예상
+
+		
 	</script>
 
 	    
