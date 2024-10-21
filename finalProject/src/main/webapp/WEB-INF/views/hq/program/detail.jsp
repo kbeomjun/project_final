@@ -34,11 +34,12 @@
 			</div>
 			<div class="form-group" style="margin-top: 10px;">
 				<label for="sp_type">유형:</label>
-				<select name="sp_type" class="custom-select mb-3 form-control">
+				<select name="sp_type" class="custom-select form-control">
 					<option value="그룹" <c:if test="${sp.sp_type == '그룹'}">selected</c:if>>그룹</option>
 					<option value="단일" <c:if test="${sp.sp_type == '단일'}">selected</c:if>>단일</option>
 			    </select>
 			</div>
+			<div class="error error-type"></div>
 			<div class="form-group">
 				<label>
 					등록된 사진:
