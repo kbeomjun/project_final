@@ -137,7 +137,7 @@
 	        console.log('paEnd:', paEnd);
 	        console.log('currentDate:', currentDate);
 		
-		    // user 정보가 없는 경우 결제 버튼 숨기기 및 경고 메시지 표시
+			// user 정보가 없는 경우 결제 버튼 숨기기 및 경고 메시지 표시
 		    if (!me_id) {
 		        alert("로그인 정보가 없습니다. 결제를 진행할 수 없습니다.");
 		        location.href = '<%=request.getContextPath()%>/payment/paymentList'; // paymentList 페이지로 이동
@@ -500,7 +500,7 @@
 		result = calculateExpirationDate("2024-10-21", 1);
 		console.log("계산된 만료일:", result); // "2024-11-20"로 예상
 
-		result = calculateExpirationDate("2024-10-31", 1);
+		result = calculateExpirationDate("2024-10-31", 3);
 		console.log("계산된 만료일:", result); // "2024-11-30"로 예상
 
 		result = calculateExpirationDate("2025-01-31", 3);
