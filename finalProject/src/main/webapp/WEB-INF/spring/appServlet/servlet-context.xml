@@ -58,6 +58,7 @@
 	<beans:bean id="autoLoginInterceptor" class="kr.kh.fitness.interceptor.AutoLoginInterceptor"/>
 	<beans:bean id="brAdminInterceptor" class="kr.kh.fitness.interceptor.BrAdminInterceptor"/>
 	<beans:bean id="clientInterceptor" class="kr.kh.fitness.interceptor.ClientInterceptor"/>
+	<beans:bean id="hqAdminInterceptor" class="kr.kh.fitness.interceptor.HqAdminInterceptor"/>
 
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
@@ -91,7 +92,11 @@
 		<interceptor>
 			<mapping path="/client/mypage/**"/>
 			<beans:ref bean="clientInterceptor"/>
-		</interceptor>		
+		</interceptor>
+		<interceptor>
+			<mapping path="/hq/**"/>
+			<beans:ref bean="hqAdminInterceptor"/>
+		</interceptor>	
 	</interceptors>
 
 </beans:beans>
