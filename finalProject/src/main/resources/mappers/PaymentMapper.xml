@@ -65,14 +65,18 @@
 	    FROM payment pa
 	    JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
 	    WHERE pa.pa_me_id = #{me_id}
-	    AND pt_type IN ('이용권', 'PT');
+	    AND pt_type IN ('이용권', 'PT')
+	    AND pa_state = '결제완료';
 	</select>
 
 	<select id="selectPaymentsByType" parameterType="map" resultType="PaymentVO">
 	    SELECT *
 	    FROM payment pa
 	    JOIN payment_type pt ON pa.pa_pt_num = pt.pt_num
-	    WHERE pa.pa_me_id = #{me_id} AND pt.pt_type = #{pt_type}
+	    WHERE 
+	    	pa.pa_me_id = #{me_id}
+		    AND pt.pt_type = #{pt_type}
+			AND pa.pa_state = '결제완료'
 	    ORDER BY pa.pa_start ASC;
 	</select>
 	
