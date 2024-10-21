@@ -33,11 +33,12 @@
 			</div>
 			<div class="form-group" style="margin-top: 10px;">
 				<label for="sp_type">유형:</label>
-				<select name="sp_type" class="custom-select mb-3 form-control">
+				<select name="sp_type" class="custom-select form-control">
 					<option value="그룹">그룹</option>
 					<option value="단일">단일</option>
 			    </select>
 			</div>
+			<div class="error error-type"></div>
 			<div class="form-group">
 				<label>
 					사진:

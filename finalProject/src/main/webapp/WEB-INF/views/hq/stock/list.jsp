@@ -103,7 +103,7 @@
 				        	<div class="modal-body">
 				          		<div class="form-group">
 									<label for="be_se_name">기구명:</label>
-									<select name="be_se_name" class="custom-select mb-3 form-control">
+									<select name="be_se_name" class="custom-select form-control">
 										
 								    </select>
 								</div>

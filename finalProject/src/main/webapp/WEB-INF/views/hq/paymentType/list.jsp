@@ -105,7 +105,7 @@
 								<div class="error error-name"></div>
 				        		<div class="form-group">
 									<label for="pt_type">회원권 유형:</label>
-									<select name="pt_type" class="custom-select mb-3 form-control">
+									<select name="pt_type" class="custom-select form-control">
 										<option value="이용권">이용권</option>
 										<option value="PT">PT</option>
 								    </select>
@@ -149,7 +149,7 @@
 								<div class="error error-name"></div>
 				        		<div class="form-group">
 									<label for="pt_type2">회원권 유형:</label>
-									<select id="pt_type2" name="pt_type" class="custom-select mb-3 form-control">
+									<select id="pt_type2" name="pt_type" class="custom-select form-control">
 										<option value="이용권">이용권</option>
 										<option value="PT">PT</option>
 								    </select>

@@ -93,7 +93,7 @@
 								<div class="error error-price"></div>
 								<div class="form-group">
 									<label for="re_reason">사유:</label>
-									<select id="re_reason" name="re_reason" class="custom-select mb-3 form-control">
+									<select id="re_reason" name="re_reason" class="custom-select form-control">
 										<option value="중도 해지">중도 해지</option>
 										<option value="시작전 계약 취소">시작전 계약 취소</option>
 										<option value="PT트레이너 불만">PT트레이너 불만</option>
@@ -174,6 +174,7 @@
 								alert(msg);
 							}
 							$('#myModal').modal("hide");
+							$('#re_price').val("");
 							
 							table.destroy();
 							table = $('#table').DataTable({

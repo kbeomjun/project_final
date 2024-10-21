@@ -104,7 +104,7 @@
 								<div class="error error-title"></div>
 								<div class="form-group">
 									<label for="mi_it_name">유형:</label>
-									<select name="mi_it_name" class="custom-select mb-3 form-control">
+									<select name="mi_it_name" class="custom-select form-control">
 										<c:forEach items="${itList}" var="it">
 											<option value="${it.it_name}">${it.it_name}</option>
 										</c:forEach>
@@ -139,7 +139,7 @@
 								<div class="error error-title2"></div>
 								<div class="form-group">
 									<label for="mi_it_name">유형:</label>
-									<select id="mi_it_name2" name="mi_it_name" class="custom-select mb-3 form-control">
+									<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
 										<c:forEach items="${itList}" var="it">
 											<option value="${it.it_name}">${it.it_name}</option>
 										</c:forEach>

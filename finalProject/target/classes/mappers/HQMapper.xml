@@ -301,7 +301,9 @@
 	</select>
 	
 	<select id="selectPayment" resultType="PaymentVO">
-		select * from payment where pa_num = #{pa_num};
+		select payment.*, pt_type as pt_type from payment
+			join payment_type on pt_num = pa_pt_num 
+		where pa_num = #{pa_num};
 	</select>
 	
 	<update id="updatePayment">
@@ -314,4 +316,11 @@
 		insert into refund(re_date, re_percent, re_price, re_reason, re_pa_num)
 		values(current_timestamp(), #{re.re_percent}, #{re.re_price}, #{re.re_reason}, #{re.re_pa_num});
 	</insert>
+	
+	<select id="selectLastPayment" resultType="PaymentVO">
+		select payment.* from payment
+			join payment_type on pt_num = pa_pt_num 
+		where pa_end > current_date() and pa_state in("결제완료") and pa_me_id = #{pa.pa_me_id} and pt_type = #{pt_type}
+		order by pa_num desc limit 0, 1;
+	</select>
 </mapper>
