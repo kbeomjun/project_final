@@ -444,17 +444,17 @@
 		}); // document ready
 		
 		
-		function calculateExpirationDate(dateString) {
+		function calculateExpirationDate(ptStartDate, ptPeriod) {
 		    // "yyyy-mm-dd" 형식의 문자열을 분리
-		    let [year, month, day] = dateString.split('-').map(Number);
+		    let [year, month, day] = ptStartDate.split('-').map(Number);
 
 		    console.log("입력된 날짜 - 일:", day);
 		    
 		    // 현재 월의 마지막 날을 구함
 		    let lastDayOfCurrentMonth = new Date(year, month, 0).getDate();
 
-		    // 월을 증가시킴
-		    month += 1;
+		    // ptPeriod 값을 사용하여 월을 증가시킴 (1, 2, 3 값이 그대로 들어옴)
+		    month += ptPeriod;
 
 		    // 월이 12월을 넘으면 년도를 증가시키고 월을 1로 설정
 		    if (month > 12) {
@@ -491,20 +491,20 @@
 		}
 
 		// 테스트용..ㅠㅠ
-		let result = calculateExpirationDate("2024-10-01");
+		let result = calculateExpirationDate("2024-10-01", 1);
 		console.log("계산된 만료일:", result); // "2024-11-01"로 예상
 
-		result = calculateExpirationDate("2024-10-17");
+		result = calculateExpirationDate("2024-10-17", 1);
 		console.log("계산된 만료일:", result); // "2024-11-16"로 예상
 
-		result = calculateExpirationDate("2024-10-21");
+		result = calculateExpirationDate("2024-10-21", 1);
 		console.log("계산된 만료일:", result); // "2024-11-20"로 예상
 
-		result = calculateExpirationDate("2024-10-31");
+		result = calculateExpirationDate("2024-10-31", 1);
 		console.log("계산된 만료일:", result); // "2024-11-30"로 예상
 
-		result = calculateExpirationDate("2025-01-31");
-		console.log("계산된 만료일:", result); // "2025-02-28"로 예상
+		result = calculateExpirationDate("2025-01-31", 3);
+		console.log("계산된 만료일:", result); // 3달 뒤 "2025-04-30"로 예상
 
 		
 	</script>
