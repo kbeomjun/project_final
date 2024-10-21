@@ -174,6 +174,7 @@
 								alert(msg);
 							}
 							$('#myModal').modal("hide");
+							$('#re_price').val("");
 							
 							table.destroy();
 							table = $('#table').DataTable({
