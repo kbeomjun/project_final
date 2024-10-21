@@ -8,20 +8,20 @@
 <title>본사관리페이지</title>
 	<style type="text/css">
     	.img-container{max-height: 800px; overflow-y: auto; padding-bottom: 20px;}
-    	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
+    	.img-box{width:20%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">

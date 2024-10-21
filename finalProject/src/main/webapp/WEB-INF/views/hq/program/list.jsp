@@ -14,7 +14,7 @@
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
