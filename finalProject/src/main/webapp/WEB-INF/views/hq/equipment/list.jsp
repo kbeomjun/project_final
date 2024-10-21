@@ -302,9 +302,30 @@
 		});
 	    
 	    $('.btn-close').click(function(){
+	    	if($('#file')[0].files.length > 0){
+		    	deleteFile($('#file')[0].files.length);
+	    		let img = `
+		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
+		    	`;
+		    	$('.card-insert').children().remove();
+		        $('.card-insert').append(img);
+	    	}
+	    	
 	    	$('.error').children().remove();
 	    	$('#se_name').val("");
+	    	
 	    });
+	    const deleteFile = (length) => {
+		    const dataTransfer = new DataTransfer();
+		    let files = $('#file')[0].files;
+		    
+		    let fileArray = Array.from(files);
+		    fileArray.splice(0, length);
+		    
+		    fileArray.forEach(file => { dataTransfer.items.add(file); });
+		    $('#file')[0].files = dataTransfer.files;
+		}
 	    
 	    var search = "";
 	    $('#search').keyup(function(){
