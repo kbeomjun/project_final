@@ -21,10 +21,13 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.HQService;
@@ -42,7 +45,9 @@ public class HQController {
 	    return "/hq/branch/list";
 	}
 	@GetMapping("/branch/insert")
-	public String branchInsert() {
+	public String branchInsert(Model model) {
+		BranchVO hq = hqService.getBranch(new BranchVO("본사"));
+		model.addAttribute("hq", hq);
 	    return "/hq/branch/insert";
 	}
 	@PostMapping("/branch/insert")
@@ -135,10 +140,16 @@ public class HQController {
 	}
 	
 	@GetMapping("/equipment/list")
-	public String equipmentList(Model model) {
-		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
-		model.addAttribute("seList", seList);
+	public String equipmentList() {
 	    return "/hq/equipment/list";
+	}
+	@ResponseBody
+	@PostMapping("/equipment/list")
+	public Map<String, Object> equipmentListPost(@RequestParam String search) {
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("seList", seList);
+		return map;
 	}
 	@PostMapping("/equipment/insert")
 	public String equipmentInsertPost(Model model, SportsEquipmentVO se, MultipartFile file) {
@@ -165,24 +176,25 @@ public class HQController {
 	}
 	
 	@GetMapping("/stock/list")
-	public String stockList(Model model) {
-		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList();
-		model.addAttribute("seList", seList);
+	public String stockList() {
 	    return "/hq/stock/list";
 	}
 	@ResponseBody
-	@PostMapping("/stock/list1")
-	public List<BranchEquipmentStockVO> stockListPost1(Model model) {
+	@PostMapping("/stock/list")
+	public Map<String, Object> stockListPost() {
 		List<BranchEquipmentStockVO> beList = hqService.getBranchEquipmentStockList();
-		model.addAttribute("beList", beList);
-		return beList;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", beList);
+	    return map;
 	}
 	@ResponseBody
-	@PostMapping("/stock/list2")
-	public Map<String, Object> stockListPost2() {
-		List<BranchStockDTO> stList = hqService.getBranchStockList();
+	@GetMapping("/stock/list/items")
+	public Map<String, Object> stockListImg(@RequestParam String search) {
+		List<BranchStockDTO> stList = hqService.getBranchStockList(search);
+		List<SportsEquipmentVO> seList = hqService.getSportsEquipmentList(search);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("stList", stList);
+		map.put("seList", seList);
 	    return map;
 	}
 	@ResponseBody
@@ -325,5 +337,58 @@ public class HQController {
 	    model.addAttribute("url", "/hq/inquiry/list");
 	    model.addAttribute("msg", msg);
 		return "/main/message";
+	}
+	
+	@GetMapping("/FAQ/list")
+	public String FAQList(Model model) {
+		List<MemberInquiryVO> FAQList = hqService.getMemberInquiryList("FAQ");
+		List<InquiryTypeVO> itList = hqService.getInquiryTypeList();
+		model.addAttribute("FAQList", FAQList);
+		model.addAttribute("itList", itList);
+	    return "/hq/FAQ/list";
+	}
+	@PostMapping("/FAQ/insert")
+	public String FAQinsertPost(Model model, MemberInquiryVO mi) {
+		String msg = hqService.insertFAQ(mi);
+		model.addAttribute("url", "/hq/FAQ/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	@ResponseBody
+	@GetMapping("/FAQ/detail")
+	public Map<String, Object> FAQDetail(@RequestParam int mi_num, MemberInquiryVO miVo) {
+		MemberInquiryVO mi = hqService.getMemberInquiry(miVo);
+		Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("mi", mi);
+		return map;
+	}
+	@PostMapping("/FAQ/update")
+	public String FAQupdatePost(Model model, MemberInquiryVO mi) {
+		String msg = hqService.updateFAQ(mi);
+		model.addAttribute("url", "/hq/FAQ/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
+	
+	@GetMapping("/refund/list")
+	public String refundList() {
+	    return "/hq/refund/list";
+	}
+	@ResponseBody
+	@PostMapping("/refund/list")
+	public Map<String, Object> refundListPost() {
+	    List<PaymentVO> paList = hqService.getPaymentList();
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("data", paList);
+		return map;
+	}
+	@ResponseBody
+	@GetMapping("/refund/insert")
+	public Map<String, Object> refundInsert(@RequestParam int re_price, @RequestParam String re_reason, 
+											@RequestParam int re_pa_num, RefundVO re) {
+		String msg = hqService.insertRefund(re);
+		Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("msg", msg);
+		return map;
 	}
 }

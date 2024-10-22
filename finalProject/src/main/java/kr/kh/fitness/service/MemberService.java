@@ -20,4 +20,16 @@ public interface MemberService {
 
 	boolean updateUserSocialAccount(String social_type, MemberVO socialUser);
 
+	boolean idCheck(String sns, String id);
+
+	boolean signupSns(String sns, String id, String email);
+
+	MemberVO loginSns(String sns, String id);
+
+	boolean findPw(String id);
+
+	String findId(String name, String email);
+
+	void clearLoginCookie(String me_id);
+
 }

@@ -7,41 +7,78 @@
 <html>
 <head>
 <title>마이페이지</title>
+<style>
+    .info-box {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 5px;
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-box h5 {
+        margin-bottom: 10px;
+    }
+
+    .info-box .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .info-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 <body>
 	<div class="container-fluid">
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <div class="sidebar-sticky">
-	                <h4 class="sidebar-heading mt-3">마이페이지 메뉴</h4>
-	                <ul class="nav flex-column">
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${me_id}"/>">프로그램 일정</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/client/mypage/membership/${me_id}"/>">회원권</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/review/list/${me_id}"/>">나의 작성글</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/inquiry/list/${me_id}"/>">문의내역</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/pwcheck/${me_id}"/>">개인정보수정</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/mypage/pwchange/${me_id}"/>">비밀번호 변경</a>
-	                    </li>
-	                </ul>
-	            </div>
+	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 	                <h2>나의 결제내역</h2>
+	                
+	                <div class="info-container">
+	                    <!-- 현재 이용권 정보 박스 -->
+	                    <div class="info-box">
+	                        <h5>헬스장 이용권</h5>
+	                        <div class="content">
+		                        <c:if test="${not empty currentMembership}">
+		                            <p>기간 : <fmt:formatDate value="${currentMembership.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentMembership.pa_end}" pattern="yyyy-MM-dd"/></p>
+		                        </c:if>
+		                        <c:if test="${empty currentMembership}">
+		                            <p>현재 이용 중인 회원권이 없습니다.</p>
+		                        </c:if>
+	                        </div>
+	                    </div>
+
+	                    <!-- 진행 중인 PT 정보 박스 -->
+	                    <div class="info-box">
+	                        <h5>진행 중인 PT</h5>
+	                        <div class="content">
+		                        <c:if test="${not empty currentPT}">
+		                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
+		                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
+		                        </c:if>
+		                        <c:if test="${empty currentPT}">
+		                            <p>현재 진행 중인 PT가 없습니다.</p>
+		                        </c:if>
+	                        </div>
+	                    </div>
+	                </div>
+	                
 					<table class="table text-center">
 						<thead>
 							<tr>
@@ -58,7 +95,7 @@
 						<tbody>
 							<c:forEach items="${paymentList}" var="list">
 								<tr>
-									<td>${list.pt_type}</td>
+									<td>${list.pt_name}</td>
 									<td>
 										<fmt:formatDate value="${list.pa_date}" pattern="yyyy-MM-dd"/>
 									</td>

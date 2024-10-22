@@ -23,10 +23,13 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.utils.UploadFileUtils;
@@ -41,6 +44,10 @@ public class HQServiceImp implements HQService {
 	BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	private SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+	private SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
+	private DecimalFormat dfFormat = new DecimalFormat("###,###");
 	
 	@Override
 	public List<BranchVO> getBranchList() {return hqDao.selectBranchList();}
@@ -232,7 +239,10 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<SportsEquipmentVO> getSportsEquipmentList() {return hqDao.selectSportsEquipmentList();}
+	public List<SportsEquipmentVO> getSportsEquipmentList(String search) {
+		if(search == null) {search = "";}
+		return hqDao.selectSportsEquipmentList(search);
+	}
 
 	@Override
 	public String insertSportsEquipment(SportsEquipmentVO se, MultipartFile file) {
@@ -287,8 +297,6 @@ public class HQServiceImp implements HQService {
 	@Override
 	public List<BranchEquipmentStockVO> getBranchEquipmentStockList() {
 		List<BranchEquipmentStockVO> beList = hqDao.selectBranchEquipmentStockList(null, null);
-		SimpleDateFormat dtFormat1 = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
-		SimpleDateFormat dtFormat2 = new SimpleDateFormat("yyyy.MM.dd");
 		for(int i = 0; i < beList.size(); i++) {
 			String be_recordStr = dtFormat1.format(beList.get(i).getBe_record());
 			String be_birthStr = dtFormat2.format(beList.get(i).getBe_birth());
@@ -300,7 +308,10 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<BranchStockDTO> getBranchStockList() {return hqDao.selectBranchStockList();}
+	public List<BranchStockDTO> getBranchStockList(String search) {
+		if(search == null) {search = "";}
+		return hqDao.selectBranchStockList(search);
+	}
 
 	@Override
 	public String insertBranchEquipmentStock(BranchEquipmentStockVO be) {
@@ -310,7 +321,7 @@ public class HQServiceImp implements HQService {
 		
 		be.setBe_birth(new Date());
 		be.setBe_type("입고");
-		be.setBe_br_name("본점");
+		be.setBe_br_name("본사");
 		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
 		return msg;
 	}
@@ -369,7 +380,7 @@ public class HQServiceImp implements HQService {
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
-													"출고", "본점", bo.getBo_se_name()));
+													"출고", "본사", bo.getBo_se_name()));
 				amount2 -= beStockList.get(i).getBe_amount();
 			}else {
 				hqDao.insertBranchEquipmentStock(
@@ -377,7 +388,7 @@ public class HQServiceImp implements HQService {
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-amount2, beStockList.get(i).getBe_birth(), 
-													"출고", "본점", bo.getBo_se_name()));
+													"출고", "본사", bo.getBo_se_name()));
 				amount2 = 0;
 			}
 		}
@@ -403,8 +414,7 @@ public class HQServiceImp implements HQService {
 	public List<PaymentTypeVO> getPaymentTypeList() {
 		List<PaymentTypeVO> ptList = hqDao.selectPaymentTypeList();
 		for(int i = 0; i < ptList.size(); i++) {
-			DecimalFormat df = new DecimalFormat("###,###");
-			String formattedPrice = df.format(ptList.get(i).getPt_price());
+			String formattedPrice = dfFormat.format(ptList.get(i).getPt_price());
 			ptList.get(i).setFormattedPrice(formattedPrice);
 		}
 		return ptList;
@@ -440,7 +450,6 @@ public class HQServiceImp implements HQService {
 		if(fileList == null) {msg = "사진 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		
 		try {
 			if(!hqDao.insertSportsProgram(sp)) {msg = "프로그램을 등록하지 못했습니다.";}
 		}catch (Exception e){
@@ -448,6 +457,7 @@ public class HQServiceImp implements HQService {
 			msg = "프로그램명 중복으로 등록하지 못했습니다.";
 		}
 		if(!msg.equals("")) {return msg;}
+		
 		for(MultipartFile file : fileList) {
 			if(file.getSize() != 0) {uploadSportsProgramFile(file, sp.getSp_name());}
 		}
@@ -480,6 +490,7 @@ public class HQServiceImp implements HQService {
 		
 		if(!hqDao.updateSportsProgram(sp, sp_ori_name)) {msg = "프로그램을 수정하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
+		
 		if(numList != null) {
 			for(int i = 0; i < numList.length; i++) {
 				int pf_num = Integer.parseInt(numList[i]);
@@ -519,8 +530,7 @@ public class HQServiceImp implements HQService {
 		if(!msg.equals("")) {return msg;}
 		
 		MemberVO me = hqDao.selectMemberByEmail(mi.getMi_email());
-		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
-		String date = dtFormat.format(mi.getMi_date());
+		String date = dtFormat2.format(mi.getMi_date());
 		boolean isSend = false;
 		if(me == null) {
 			isSend = mailSend(mi.getMi_email(), "KH피트니스 1:1문의 답변완료 안내",
@@ -549,5 +559,80 @@ public class HQServiceImp implements HQService {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	
+	@Override
+	public List<InquiryTypeVO> getInquiryTypeList() {return hqDao.selectInquiryTypeList();}
+
+	@Override
+	public String insertFAQ(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "FAQ 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("FAQ");
+		mi.setMi_email("hq_admin@naver.com");
+		mi.setMi_br_name("본사");
+		if(!hqDao.insertMemberInquiry(mi)) {msg = "FAQ를 등록하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public String updateFAQ(MemberInquiryVO mi) {
+		String msg = "";
+		if(mi == null) {msg = "FAQ 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		mi.setMi_state("FAQ");
+		mi.setMi_email("hq_admin@naver.com");
+		mi.setMi_br_name("본사");
+		if(!hqDao.updateMemberInquiry(mi)) {msg = "FAQ를 수정하지 못했습니다.";}
+		return msg;
+	}
+
+	@Override
+	public List<PaymentVO> getPaymentList() {
+		List<PaymentVO> paList = hqDao.selectPaymentList();
+		for(int i = 0; i < paList.size(); i++) {
+			String pa_dateStr = dtFormat1.format(paList.get(i).getPa_date());
+		    String pa_startStr = dtFormat2.format(paList.get(i).getPa_start());
+		    String pa_endStr = dtFormat2.format(paList.get(i).getPa_end());
+		    String pa_formattedPrice = dfFormat.format(paList.get(i).getPa_price());
+		    
+		    paList.get(i).setPa_dateStr(pa_dateStr);
+		    paList.get(i).setPa_startStr(pa_startStr);
+		    paList.get(i).setPa_endStr(pa_endStr);
+		    paList.get(i).setPa_formattedPrice(pa_formattedPrice);
+		}
+		return paList;
+	}
+
+	@Override
+	public String insertRefund(RefundVO re) {
+		String msg = "";
+		if(re == null) {msg = "환불 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		PaymentVO pa = hqDao.selectPayment(re.getRe_pa_num());
+		
+		PaymentVO pa1 = hqDao.selectLastPayment(pa, "이용권");
+		PaymentVO pa2 = hqDao.selectLastPayment(pa, "PT");
+		if(pa.getPt_type().equals("이용권") && pa.getPa_num() != pa1.getPa_num()) {msg = "헬스장 이용권 시작날짜가 마지막인 것만 환불 가능합니다.";}
+		if(pa.getPt_type().equals("PT") && pa.getPa_num() != pa2.getPa_num()) {msg = "PT 이용권 시작날짜가 마지막인 것만 환불 가능합니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(pa.getPt_type().equals("이용권") && pa2 != null && pa.getPa_start().compareTo(pa2.getPa_end()) <= 0) {
+			msg = "이용날짜가 겹친 PT 이용권이 존재하여 환불할 수 없습니다.";
+		}
+		if(!msg.equals("")) {return msg;}
+		
+		pa.setPa_state("환불완료");
+		if(!hqDao.updatePayment(pa)) {msg = "결제 정보를 수정하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		double re_percentDouble = ((double)re.getRe_price() / pa.getPa_price() * 100);
+		re.setRe_percent((int)Math.round(re_percentDouble));
+		if(!hqDao.insertRefund(re)) {msg = "환불 정보를 등록하지 못했습니다.";}
+		return msg;
 	}
 }

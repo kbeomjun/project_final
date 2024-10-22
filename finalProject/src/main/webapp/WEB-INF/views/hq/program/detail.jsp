@@ -13,6 +13,7 @@
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	.file-input{border: 1px solid gray; border-radius: 5px;}
     	.img-container{min-height: 400px;}
+    	.img-container2{min-height: 200px;}
     	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 10px 6px;}
     	.btn-delete-img, .btn-delete-img2{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
     	.img-box, .img-box2{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
@@ -33,11 +34,12 @@
 			</div>
 			<div class="form-group" style="margin-top: 10px;">
 				<label for="sp_type">유형:</label>
-				<select name="sp_type" class="custom-select mb-3 form-control">
+				<select name="sp_type" class="custom-select form-control">
 					<option value="그룹" <c:if test="${sp.sp_type == '그룹'}">selected</c:if>>그룹</option>
 					<option value="단일" <c:if test="${sp.sp_type == '단일'}">selected</c:if>>단일</option>
 			    </select>
 			</div>
+			<div class="error error-type"></div>
 			<div class="form-group">
 				<label>
 					등록된 사진:
@@ -79,7 +81,7 @@
 				<input type="file" class="form-control" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
 			</div>
 			<div class="error error-file"></div>
-			<button class="btn btn-outline-info col-12">지점 수정</button>
+			<button class="btn btn-outline-info col-12">프로그램 수정</button>
 		</form>
 		<hr/>
 		<a href="<c:url value="/hq/program/list"/>" class="btn btn-outline-danger col-12">취소</a>

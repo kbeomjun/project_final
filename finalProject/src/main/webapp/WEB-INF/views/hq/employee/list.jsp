@@ -6,9 +6,15 @@
 <html>
 <head>
 <title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+		.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
+	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -39,6 +45,12 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
@@ -49,31 +61,31 @@
 		    	<hr>
 		    	<div class="mt-3">
 			    	<table class="table table-hover" id="table">
-				    	<thead>
+				    	<thead id="thead">
 				      		<tr>
-				        		<th class="text-center">직원번호</th>
-				        		<th class="text-center">이름</th>
-				        		<th class="text-center">전화번호</th>
-				        		<th class="text-center">이메일</th>
-				        		<th class="text-center">입사일</th>
-				        		<th class="text-center">소속</th>
-				        		<th class="text-center">직책</th>
-				        		<th class="text-center"></th>
+				        		<th>직원번호</th>
+				        		<th>이름</th>
+				        		<th>전화번호</th>
+				        		<th>이메일</th>
+				        		<th>입사일</th>
+				        		<th>소속</th>
+				        		<th>직책</th>
+				        		<th></th>
 				      		</tr>
 				    	</thead>
-				    	<tbody>
+				    	<tbody id="tbody">
 				    		<c:forEach items="${emList}" var="em">
 						      	<tr>
-						        	<td class="align-content-center text-left">${em.em_num}</td>
-							        <td class="align-content-center text-left">${em.em_name} </td>
-							        <td class="align-content-center text-left">${em.em_phone}</td>
-							        <td class="align-content-center text-left">${em.em_email}</td>
-							        <td class="align-content-center text-left">
+						        	<td>${em.em_num}</td>
+							        <td>${em.em_name} </td>
+							        <td>${em.em_phone}</td>
+							        <td>${em.em_email}</td>
+							        <td>
 							        	<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
 							        </td>
-							        <td class="align-content-center text-left">${em.em_br_name}</td>
-							        <td class="align-content-center text-left">${em.em_position}</td>
-						        	<td class="align-content-center text-left">
+							        <td>${em.em_br_name}</td>
+							        <td>${em.em_position}</td>
+						        	<td>
 						        		<a class="btn btn-outline-info" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
 						        	</td>
 						      	</tr>
@@ -89,18 +101,17 @@
 		// 테이블 api
 		$('#table').DataTable({
 			language: {
-		        search: "검색:",
+				search: "",
+		        searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: "등록된 직원이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
 		    info: false,
 		    columnDefs: [
-		        {
-		        	targets: [7], 
-		        	orderable: false
-	        	}
+		        { targets: [7], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
 		    ]
 		});
 	</script>

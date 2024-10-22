@@ -12,11 +12,13 @@
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
     	#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
     </style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -47,6 +49,12 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link active" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
@@ -62,8 +70,8 @@
 				      		<tr>
 				        		<th>문의번호</th>
 				        		<th>제목</th>
-				        		<th>작성자</th>
-				        		<th>날짜</th>
+				        		<th>작성자이메일</th>
+				        		<th>작성날짜</th>
 				        		<th>유형</th>
 				        		<th>상태</th>
 				        		<th></th>
@@ -104,15 +112,15 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${miDoneList}" var="mi">
 				    			<tr>
-					        		<td class="align-content-center">${mi.mi_num}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">${mi.mi_email}</td>
-					        		<td class="align-content-center">
+					        		<td>${mi.mi_num}</td>
+					        		<td>${mi.mi_title}</td>
+					        		<td>${mi.mi_email}</td>
+					        		<td>
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">${mi.mi_it_name}</td>
-					        		<td class="align-content-center">${mi.mi_state}</td>
-					        		<td class="align-content-center">
+					        		<td>${mi.mi_it_name}</td>
+					        		<td>${mi.mi_state}</td>
+					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -245,21 +253,21 @@
     </script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('.table-wait').DataTable({
 			language: {
-		        search: "검색:",
+				search: "",
+				searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: "등록된 내역이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 3, "asc" ]],
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [5, 6], 
-		        	orderable: false
-	        	}
+		        { targets: [5, 6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 		    ]
 		});
 	
@@ -276,37 +284,35 @@
 			if(name == 'wait'){
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 3, "asc" ]],
+				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}else{
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 3, "desc" ]],
+				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}
@@ -336,7 +342,7 @@
 					$('#mi_date').val(mi_date);
 					$('#mi_it_name').val(mi.mi_it_name);
 					$('#mi_content').val(mi.mi_content);
-					$('#mi_num').val(mi_num);
+					$('#mi_num').val(mi.mi_num);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
@@ -344,6 +350,7 @@
 			});
 		});
 		$('.btn-close').click(function(){
+			$('.error').children().remove();
 			$('#mi_answer').val("");
 		});
 		

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.HQDAO">
 	<select id="selectBranchList" resultType="BranchVO">
-		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본점") order by br_name;
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본사") order by br_name;
 	</select>
 	
 	<insert id="insertBranch">
@@ -118,7 +118,7 @@
 	</delete>
 	
 	<select id="selectSportsEquipmentList" resultType="SportsEquipmentVO">
-		select * from sports_equipment;
+		select * from sports_equipment where se_name like concat("%", #{search}, "%");
 	</select>
 	
 	<insert id="insertSportsEquipment">
@@ -143,17 +143,17 @@
 	<select id="selectBranchEquipmentStockList" resultType="BranchEquipmentStockVO">
 		select * from branch_equipment_stock 
 		<if test="bo == null">
-			where be_br_name = "본점" order by be_num desc;
+			where be_br_name = "본사" order by be_num desc;
 		</if>
 		<if test="bo != null">
-			where be_br_name = "본점" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
+			where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
 		</if> 
 	</select>
 	
 	<select id="selectBranchStockList" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본점" 
+		where be_br_name = "본사" and be_se_name like concat("%", #{search}, "%")
 		group by be_se_name;
 	</select>
 	
@@ -179,7 +179,7 @@
 	<select id="selectBranchStock" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본점" and be_se_name = #{bo.bo_se_name} 
+		where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} 
 		group by be_se_name; 
 	</select>
 	
@@ -192,8 +192,8 @@
 	</select>
 	
 	<insert id="insertPaymentType">
-		insert into payment_type(pt_type, pt_date, pt_count, pt_price)
-		values(#{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
+		insert into payment_type(pt_name, pt_type, pt_date, pt_count, pt_price)
+		values(#{pt.pt_name}, #{pt.pt_type}, #{pt.pt_date}, #{pt.pt_count}, #{pt.pt_price});
 	</insert>
 	
 	<select id="selectPaymentType" resultType="PaymentTypeVO">
@@ -202,6 +202,7 @@
 	
 	<update id="updatePaymentType">
 		update payment_type set
+			pt_name = #{pt.pt_name},
 			pt_type = #{pt.pt_type},
 			pt_date = #{pt.pt_date},
 			pt_count = #{pt.pt_count},
@@ -242,7 +243,7 @@
 	</delete>
 	
 	<select id="selectMemberList" resultType="MemberVO">
-		select * from member where me_authority = "USER";
+		select * from member where me_authority in("USER", "REMOVED");
 	</select>
 	
 	<select id="selectMember" resultType="MemberVO">
@@ -252,10 +253,13 @@
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
 		select * from member_inquiry 
 		<if test="str == 'wait'">
-			where mi_state in("답변대기") and mi_br_name = "본점" order by mi_date;
+			where mi_state in("답변대기") and mi_br_name = "본사" order by mi_num;
 		</if>
 		<if test="str == 'done'">
-			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_date desc;
+			where mi_state in("답변완료") and mi_br_name = "본사" order by mi_num desc;
+		</if>
+		<if test="str == 'FAQ'">
+			where mi_state in("FAQ") and mi_br_name = "본사" order by mi_num;
 		</if>
 	</select>
 	
@@ -265,12 +269,58 @@
 	
 	<update id="updateMemberInquiry">
 		update member_inquiry set
+			mi_title = #{mi.mi_title},
+			mi_content = #{mi.mi_content},
 			mi_state = #{mi.mi_state},
+			mi_email = #{mi.mi_email},
+			mi_it_name = #{mi.mi_it_name},
 			mi_answer = #{mi.mi_answer}
 		where mi_num = #{mi.mi_num};
 	</update>
 	
 	<select id="selectMemberByEmail" resultType="MemberVO">
 		select * from member where me_email = #{me_email};
+	</select>
+	
+	<select id="selectInquiryTypeList" resultType="InquiryTypeVO">
+		select * from inquiry_type;
+	</select>
+	
+	<insert id="insertMemberInquiry">
+		insert into member_inquiry(mi_title, mi_content, mi_state, mi_email, mi_date, mi_br_name, mi_it_name)
+		values(#{mi.mi_title}, #{mi.mi_content}, #{mi.mi_state}, #{mi.mi_email}, 
+				current_timestamp(), #{mi.mi_br_name}, #{mi.mi_it_name});
+	</insert>
+	
+	<select id="selectPaymentList" resultType="PaymentVO">
+		select payment.*, pt_name as pa_pt_name, me_email as pa_me_email from payment 
+			join member on me_id = pa_me_id
+		    join payment_type on pt_num = pa_pt_num
+		where pa_end > current_date() and pa_state in("결제완료")
+		order by pa_num desc;
+	</select>
+	
+	<select id="selectPayment" resultType="PaymentVO">
+		select payment.*, pt_type as pt_type from payment
+			join payment_type on pt_num = pa_pt_num 
+		where pa_num = #{pa_num};
+	</select>
+	
+	<update id="updatePayment">
+		update payment set
+			pa_state = #{pa.pa_state}
+		where pa_num = #{pa.pa_num};
+	</update>
+	
+	<insert id="insertRefund">
+		insert into refund(re_date, re_percent, re_price, re_reason, re_pa_num)
+		values(current_timestamp(), #{re.re_percent}, #{re.re_price}, #{re.re_reason}, #{re.re_pa_num});
+	</insert>
+	
+	<select id="selectLastPayment" resultType="PaymentVO">
+		select payment.* from payment
+			join payment_type on pt_num = pa_pt_num 
+		where pa_end > current_date() and pa_state in("결제완료") and pa_me_id = #{pa.pa_me_id} and pt_type = #{pt_type}
+		order by pa_num desc limit 0, 1;
 	</select>
 </mapper>

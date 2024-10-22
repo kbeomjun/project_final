@@ -11,6 +11,8 @@
 	.form-group{margin: 0;}
 	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
 	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
+	#thead th{text-align: center;}
+	#tbody td{text-align: left;}
 </style>
 </head>
 <body>
@@ -58,12 +60,13 @@
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${br_name} 문의내역</h2>
 			    	<div>
-				    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">답변대기</button>
-				    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">답변완료</button>
+				    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">대기</button>
+				    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">완료</button>
 				    </div>
-			    	<div class="mt-3">
+				    <hr>
+			    	<div class="mt-3 box box-wait">
 			    		<table class="table table-hover table-wait">
-					    	<thead>
+					    	<thead id="thead">
 					      		<tr>
 					        		<th>문의번호</th>
 					        		<th>제목</th>
@@ -74,7 +77,7 @@
 					        		<th></th>
 					      		</tr>
 					    	</thead>
-					    	<tbody>
+					    	<tbody id="tbody">
 					    		<c:forEach items="${miWaitList}" var="mi">
 					    			<tr>
 						        		<td class="align-content-center">${mi.mi_num}</td>
@@ -90,15 +93,12 @@
 						        		</td>
 						      		</tr>
 					    		</c:forEach>
-					    		<c:if test="${miWaitList.size() == 0}">
-					    			<tr>
-						        		<th class="text-center" colspan="7">등록된 문의내역이 없습니다.</th>
-						      		</tr>
-					    		</c:if>
 					    	</tbody>
 						</table>
-						<table class="table table-hover table-done" style="display: none;">
-					    	<thead>
+					</div>
+					<div class="mt-3 box box-done" style="display: none;">
+						<table class="table table-hover table-done">
+					    	<thead id="thead">
 					      		<tr>
 					        		<th>문의번호</th>
 					        		<th>제목</th>
@@ -109,7 +109,7 @@
 					        		<th></th>
 					      		</tr>
 					    	</thead>
-					    	<tbody>
+					    	<tbody id="tbody">
 					    		<c:forEach items="${miDoneList}" var="mi">
 					    			<tr>
 						        		<td class="align-content-center">${mi.mi_num}</td>
@@ -125,60 +125,59 @@
 						        		</td>
 						      		</tr>
 					    		</c:forEach>
-					    		<c:if test="${miDoneList.size() == 0}">
-					    			<tr>
-						        		<th class="text-center" colspan="7">완료된 문의내역이 없습니다.</th>
-						      		</tr>
-					    		</c:if>
 					    	</tbody>
 						</table>
-						<div class="modal fade" id="myModal">
-					    	<div class="modal-dialog modal-dialog-centered">
-					    		<form action="<c:url value="/admin/inquiry/update"/>" method="post" id="form" class="modal-content">
-						        	<div class="modal-header">
-						          		<h4 class="modal-title">정보</h4>
-						          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-						        	</div>
-						        	<div class="modal-body">
-						          		<div class="form-group">
-											<label for="mi_title">제목:</label>
-											<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
-										</div>
-										<div class="error"></div>
-										<div class="form-group">
-											<label for="mi_email">이메일:</label>
-											<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
-										</div>
-										<div class="error"></div>
-										<div class="form-group">
-											<label for="mi_date">날짜:</label>
-											<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
-										</div>
-										<div class="error"></div>
-										<div class="form-group">
-											<label for="mi_it_name">유형:</label>
-											<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
-										</div>
-										<div class="error"></div>
-										<div class="form-group">
-											<label for="mi_content">내용:</label>
-											<textarea class="form-control" id="mi_content" name="mi_content" readonly></textarea>
-										</div>
-										<div class="error"></div>
-										<div class="form-group">
-											<label for="mi_answer">답변:</label>
-											<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
-										</div>
-										<div class="error error-answer"></div>
-										<button class="btn btn-outline-info col-12">답변 등록</button>
-						        	</div>
-						        	<div class="modal-footer">
-						          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
-						        	</div>
-					      		</form>
-					    	</div>
-				  		</div>
-				  		<div class="modal fade" id="myModal2">
+					</div>
+						
+					<div class="modal fade" id="myModal">
+				    	<div class="modal-dialog modal-dialog-centered">
+				    		<form action="<c:url value="/admin/inquiry/update"/>" method="post" id="form" class="modal-content">
+					        	<div class="modal-header">
+					          		<h4 class="modal-title">정보</h4>
+					          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+					        	</div>
+					        	<div class="modal-body">
+					          		<div class="form-group">
+										<label for="mi_title">제목:</label>
+										<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
+									</div>
+									<div class="error"></div>
+									<div class="form-group">
+										<label for="mi_email">이메일:</label>
+										<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
+									</div>
+									<div class="error"></div>
+									<div class="form-group">
+										<label for="mi_date">날짜:</label>
+										<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
+									</div>
+									<div class="error"></div>
+									<div class="form-group">
+										<label for="mi_it_name">유형:</label>
+										<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
+									</div>
+									<div class="error"></div>
+									<div class="form-group">
+										<label for="mi_content">내용:</label>
+										<textarea class="form-control" id="mi_content" name="mi_content" readonly></textarea>
+									</div>
+									<div class="error"></div>
+									<div class="form-group">
+										<label for="mi_answer">답변:</label>
+										<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
+									</div>
+									<div class="error error-answer"></div>
+									<input type="hidden" id="mi_num" name="mi_num">
+									<button class="btn btn-outline-info col-12">답변 등록</button>
+					        	</div>
+					        	<div class="modal-footer">
+					          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+					        	</div>
+				      		</form>
+				    	</div>
+			  		</div>
+			  		
+			  		<div class="modal fade" id="myModal2">
 					    	<div class="modal-dialog modal-dialog-centered">
 					    		<div class="modal-content">
 						        	<div class="modal-header">
@@ -223,22 +222,107 @@
 					      		</div>
 					    	</div>
 				  		</div>
-					</div>	
-					   
+					
 	            </div>
 	        </main>
 	    </div>
 	</div>
 	
+	
 	<script type="text/javascript">
+    	// 필수항목 체크
+		let msgRequired = `<span>필수항목입니다.</span>`;
+		
+		$('#mi_answer').keyup(function(){
+			$('.error-answer').children().remove();
+			
+			if($('#mi_answer').val() == ''){
+				$('.error-answer').append(msgRequired);
+			}else{
+				$('.error-answer').children().remove();	
+			}
+		});
+		
+		$('#form').submit(function(){
+			$('.error').children().remove();
+			let flag = true;
+			
+			if($('#mi_answer').val() == ''){
+				$('.error-answer').append(msgRequired);
+				$('#mi_answer').focus();
+				flag = false;
+			}
+			
+			return flag;
+		});
+    </script>
+	
+	<script type="text/javascript">
+		var table = $('.table-wait').DataTable({
+			language: {
+		        search: "검색:",
+		        zeroRecords: "",
+		        emptyTable: "등록된 내역이 없습니다."
+		    },
+			scrollY: 600,
+		    paging: false,
+		    info: false,
+		    order: [[ 3, "asc" ]],
+		    columnDefs: [
+		        {
+		        	targets: [5, 6], 
+		        	orderable: false
+	        	}
+		    ]
+		});
+	
 		$('.btn-menu').click(function(){
 			var name = $(this).data("name");
 			
 			$('.btn-menu').removeClass("active");
 			$('.btn-'+name).addClass("active");
 			
-			$('.table').css("display", "none");
-			$('.table-'+name).css("display", "block");
+			$('.box').css("display", "none");
+			$('.box-'+name).css("display", "block");
+			
+			table.destroy();
+			if(name == 'wait'){
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 3, "asc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}else{
+				table = $('.table-'+name).DataTable({
+					language: {
+				        search: "검색:",
+				        zeroRecords: "",
+				        emptyTable: "등록된 내역이 없습니다."
+				    },
+					scrollY: 600,
+				    paging: false,
+				    info: false,
+				    order: [[ 3, "desc" ]],
+				    columnDefs: [
+				        {
+				        	targets: [5, 6], 
+				        	orderable: false
+			        	}
+				    ]
+				});
+			}
 		});
 	
 		$('.btn-detail').click(function(){
@@ -259,16 +343,13 @@
 						})
 						.replace(/\./g, '')
 						.replace(/\s/g, '.')
-					var str = `
-						<input type="hidden" name="mi_num" value="\${mi.mi_num}">
-					`;
 					
 					$('#mi_title').val(mi.mi_title);
 					$('#mi_email').val(mi.mi_email);
 					$('#mi_date').val(mi_date);
 					$('#mi_it_name').val(mi.mi_it_name);
 					$('#mi_content').val(mi.mi_content);
-					$('#form').append(str);					
+					$('#mi_num').val(mi.mi_num);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);

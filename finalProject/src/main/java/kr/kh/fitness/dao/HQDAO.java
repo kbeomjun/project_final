@@ -10,10 +10,13 @@ import kr.kh.fitness.model.vo.BranchFileVO;
 import kr.kh.fitness.model.vo.BranchOrderVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
+import kr.kh.fitness.model.vo.InquiryTypeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.PaymentTypeVO;
+import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramFileVO;
+import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.SportsEquipmentVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 
@@ -55,7 +58,7 @@ public interface HQDAO {
 	
 	boolean deleteEmployee(@Param("em") EmployeeVO employee);
 
-	List<SportsEquipmentVO> selectSportsEquipmentList();
+	List<SportsEquipmentVO> selectSportsEquipmentList(@Param("search") String search);
 
 	boolean insertSportsEquipment(@Param("se") SportsEquipmentVO se);
 
@@ -67,7 +70,7 @@ public interface HQDAO {
 
 	List<BranchEquipmentStockVO> selectBranchEquipmentStockList(@Param("bo") BranchOrderVO bo, @Param("be_type") String be_type);
 
-	List<BranchStockDTO> selectBranchStockList();
+	List<BranchStockDTO> selectBranchStockList(@Param("search") String search);
 
 	boolean insertBranchEquipmentStock(@Param("be") BranchEquipmentStockVO be);
 
@@ -112,4 +115,18 @@ public interface HQDAO {
 	boolean updateMemberInquiry(@Param("mi") MemberInquiryVO mi);
 
 	MemberVO selectMemberByEmail(@Param("me_email") String me_email);
+
+	List<InquiryTypeVO> selectInquiryTypeList();
+
+	boolean insertMemberInquiry(@Param("mi") MemberInquiryVO mi);
+
+	List<PaymentVO> selectPaymentList();
+
+	PaymentVO selectPayment(@Param("pa_num") int pa_num);
+
+	boolean updatePayment(@Param("pa") PaymentVO pa);
+
+	boolean insertRefund(@Param("re") RefundVO re);
+
+	PaymentVO selectLastPayment(@Param("pa") PaymentVO pa, @Param("pt_type") String pt_type);
 }

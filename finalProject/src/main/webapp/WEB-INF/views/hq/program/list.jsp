@@ -9,10 +9,12 @@
 	<style type="text/css">
 		#thead th{text-align: center;}
     	#tbody td{text-align: center;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -43,6 +45,12 @@
 		        	<li class="nav-item">
 		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
 		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+		        	</li>
+		        	<li class="nav-item">
+		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
+		        	</li>
 		      	</ul>
 		      	<hr class="d-sm-none">
 	    	</div>
@@ -55,7 +63,7 @@
 		    		<table class="table table-hover" id="table">
 				    	<thead id="thead">
 				      		<tr>
-				        		<th>프로그램명</th>
+				        		<th>프로그램</th>
 				        		<th>유형</th>
 				        		<th></th>
 				      		</tr>
@@ -63,10 +71,10 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${spList}" var="sp">
 				    			<tr>
-					        		<td class="align-content-center">${sp.sp_name}</td>
-					        		<td class="align-content-center">${sp.sp_type}</td>
-					        		<td class="align-content-center">
-					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">상세</a>
+					        		<td>${sp.sp_name}</td>
+					        		<td>${sp.sp_type}</td>
+					        		<td>
+					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">조회</a>
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
@@ -78,21 +86,21 @@
 	</div>
 	
 	<script type="text/javascript">
-		// 테이블 api
+		// 데이터테이블
 		$('#table').DataTable({
 			language: {
-		        search: "검색:",
+				search: "",
+		        searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: "등록된 프로그램이 없습니다."
+		        emptyTable: ""
 		    },
 			scrollY: 600,
 		    paging: false,
 		    info: false,
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [2], 
-		        	orderable: false
-	        	}
+		        { targets: [2], orderable: false },
+		        { targets: [0, 1, 2], className: "align-content-center"}
 		    ]
 		});
 	</script>

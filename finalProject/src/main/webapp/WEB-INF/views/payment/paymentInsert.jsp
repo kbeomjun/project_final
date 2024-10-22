@@ -14,12 +14,14 @@
     <h2 class="mb10">회원권 결제</h2>
     
     <!-- 기존 회원권 정보 표시 -->
-	<c:if test="${paStart != null && paStart != ''}">
-	    <div class="membership-info my-10">
-	        <p class="mb-0">현재 회원권 시작일: <strong class="text-success">${paStart}</strong></p>
-	        <p>현재 회원권 만료일: <strong class="text-primary">${paEnd}</strong></p>
-	    </div>
-	</c:if>
+    <c:set var="isRePayment" value="${not empty firstStartDate}" />
+
+    <c:if test="${firstStartDate != null && firstStartDate != ''}">
+        <div class="membership-info my-10">
+            <p class="mb-0">회원님의 회원권 시작일: <strong class="text-success">${firstStartDate}</strong></p>
+            <p>회원님의 회원권 만료일: <strong class="text-primary">${lastEndDate}</strong></p>
+        </div>
+    </c:if>
     
     <form id="paymentForm" action="<c:url value='/payment/paymentInsert'/>" method="post">
     	<input type="hidden" name="pt_type" id="pt_type" value="${pt_type}" />
@@ -28,7 +30,7 @@
                 <label for="pt_num">이용권 종류를 선택하세요</label>
                 <select name="pt_num" id="pt_num" class="form-control">
                 	<c:forEach items="${paymentList}" var="pt">
-					    <option value="${pt.pt_num}" data-type="${pt.pt_type}" data-date="${pt.pt_date}" data-count="${pt.pt_count}" data-price="${pt.pt_price}" <c:if test="${pt.pt_num == 1}">selected</c:if>>${pt.pt_type}</option>
+					    <option value="${pt.pt_num}" data-name="${pt.pt_name}" data-type="${pt.pt_type}" data-date="${pt.pt_date}" data-count="${pt.pt_count}" data-price="${pt.pt_price}" <c:if test="${pt.pt_num == 1}">selected</c:if>>${pt.pt_name}</option>
 					</c:forEach>
 				</select>
             </div>
@@ -50,11 +52,17 @@
                         <option value="300000">300,000원</option>
                     </select>
                     
-                    <!-- 날짜 선택 -->
-				    <label for="pa_start">회원권 시작 날짜:</label>
-				    <%-- value는 하단의 script로 값을 가져오고 있음. --%>
-				    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
-				    <p>시작일 : ${paStart} / 만료일 : ${paEnd} / 오늘 날짜 : ${currentDate}</p>
+                    <c:if test="${isRePayment}">
+	                    <!-- 재결제인 경우 시작일 필드 숨김 -->
+	                    <p>회원님의 이용권 재시작일: <strong class="text-success">${newStartDate}</strong></p>
+	                    <input type="hidden" name="pa_start" value="${newStartDate}" />
+	                </c:if>
+	
+	                <c:if test="${!isRePayment}">
+	                    <!-- 첫 결제인 경우 시작일 입력 필드 표시 -->
+	                    <label for="pa_start">회원권 시작 날짜:</label>
+	                    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
+	                </c:if>
                 </div>
             </div>
         </div>
@@ -96,33 +104,36 @@
 		    var me_id = "${user.me_id}"; // 세션에서 가져온 사용자 ID
 		    var me_email = "${user.me_email}"; // 세션에서 가져온 사용자 이메일
 		    var contextPath = '<%=request.getContextPath()%>'; // 현재 경로를 가져옴
-		    console.log("Context Path:", contextPath); // 확인용 출력
 		    
+            // isRePayment 변수 설정
+            var isRePayment = ${isRePayment ? 'true' : 'false'};
+            console.log("isRePayment:", isRePayment);
 		    
-			// 페이지 로드 시 서버에서 넘긴 paStart 값 설정 및 min 속성 설정
-	        var paStart = '${paStart}';  // 서버에서 넘긴 paStart 값
+			// 페이지 로드 시 서버에서 넘긴 paEnd 값 설정 및 min 속성 설정
+	        var paEnd = '${lastEndDate}';  // 서버에서 넘긴 paEnd 값
 	        var currentDate = new Date().toISOString().split('T')[0];  // 현재 날짜 yyyy-MM-dd
 
 	        $('#pa_start').attr('min', currentDate);  // 최소 선택 가능한 날짜는 현재 날짜
 
-	        console.log('paStart:', paStart);
+	        console.log('paEnd:', paEnd);
 	        console.log('currentDate:', currentDate);
 	        
 	        // 페이지 로드 시 입력 요소의 값 설정
-	        if (paStart < currentDate) {
-	            $('#pa_start').val(currentDate); // paStart가 현재 날짜보다 이전이면 현재 날짜로 설정
+	        if (paEnd < currentDate) {
+	            $('#pa_start').val(currentDate); // paEnd가 현재 날짜보다 이전이면 현재 날짜로 설정
 	        } else {
-	            $('#pa_start').val(paStart); // 그렇지 않으면 paStart 값을 설정
+	            $('#pa_start').val(paEnd); // 그렇지 않으면 paEnd 값을 설정
 	        }
 
-			// 선택된 날짜가 기존 시작일 이전일 경우 경고 및 수정
+			// 선택된 날짜가 기존 만료일보다 이전일 경우 경고 및 수정
 	        $('#pa_start').on('change', function() {
-	            const selectedDate = $(this).val(); // 사용자가 선택한 날짜
-	            
-	            // 선택된 날짜가 기존 시작일보다 이전이면 경고 및 기존 시작일로 설정
-	            if (selectedDate < paStart) {
-	                alert("시작 날짜는 기존 회원권 시작일(" + paStart + ") 이후여야 합니다.");
-	                $(this).val(paStart);  // 기존 시작일로 다시 설정
+	            const selectedDate = new Date($(this).val());
+	            const expirationDate = new Date('${lastEndDate}'); // JSP에서 만료일을 가져옴
+
+	            // 선택된 날짜가 만료일보다 이전이면 경고 및 기존 만료일로 설정
+	            if (selectedDate < expirationDate) {
+	                alert("시작 날짜는 이용권 만료일(" + '${lastEndDate}' + ") 이후여야 합니다.");
+	                $(this).val('${lastEndDate}'); // 기존 만료일로 다시 설정
 	            }
 	        });
 		
@@ -141,7 +152,7 @@
 		
 		    // 초기 상태로 하위 Select 값을 설정
 		    $('#pt_num').trigger('change');
-		
+		    
 		    // 하위 Select 업데이트를 위한 함수
 		    function updateSubSelectOptions() {
 		        const pt_date = $('#pt_date'); // 기간 Select
@@ -170,7 +181,6 @@
 		        const data = {
 		            pt_num: $('#pt_num').val(), // 선택된 이용권 번호
 		        };
-				
 		        
 		    	const requestUrl = `${contextPath}/payment/checkValidity`;
 		    	console.log('AJAX request URL:', requestUrl);
@@ -205,11 +215,12 @@
 		            console.error("선택된 옵션이 없습니다."); // 오류 메시지 출력
 		            return;
 		        }
-		
+
 		        // 선택된 옵션의 데이터 가져오기
+		        const name = selectedOption.data('name'); // 이름
 		        const type = selectedOption.data('type'); // 종류
 		        const date = selectedOption.data('date'); // 날짜
-		        const start = $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
+		        const start = isRePayment ? '${newStartDate}' : $('#pa_start').val(); // 결제 시작 날짜 값 가져오기
 		        const count = selectedOption.data('count'); // 횟수
 		        const price = selectedOption.data('price'); // 가격
 		        const formattedPrice = Number(price).toLocaleString(); // 가격 포맷팅
@@ -217,15 +228,17 @@
 		        $('#pt_type').val(type);
 		        
 		        // 확인용
+		        console.log(name);
 		        console.log(type);
 		        console.log(date);
 		        console.log("사용자가 선택한 최종 시작 날짜:", start);
 		        console.log(count);
 		        console.log(formattedPrice);
 		
-		        // 팝업 내용 설정
+				// 팝업 내용 설정
 		        const modalContent = `
 		            <p>결제하시겠습니까?</p>
+		            <p>이용권: \${name}</p>
 		            <p>이용권 종류: \${type}</p>
 		            <p>기간(일): \${date}</p>
 		            <p>회원권 시작일: \${start}</p>
@@ -240,17 +253,25 @@
 		        // 결제하기 버튼 클릭 시 결제 요청
 		        $('#confirmPayment').off('click').on('click', function() {
 		            // 시작 날짜가 비어있으면 경고 메시지 표시 및 제출 방지
-		            const pa_start = $('#pa_start').val(); // 시작 날짜 값 가져오기
-		            if (!pa_start) {
-		                console.log("시작 날짜 선택 안함"); // 선택하지 않은 경우 메시지 출력
-		                alert("시작 날짜를 선택해주세요."); // 경고 메시지
-		                event.preventDefault(); // 폼 제출 방지
-		                return;
-		            }
-		            console.log(pa_start);
+				    let pa_start;
+				    if (isRePayment) {
+				        // 재결제인 경우 hidden input에서 값 가져오기
+				        pa_start = $('input[name="pa_start"]').val();
+				    } else {
+				        // 첫 결제인 경우 사용자가 선택한 날짜 가져오기
+				        pa_start = $('#pa_start').val();
+				    }
+				
+				    if (!pa_start) {
+				        console.log("시작 날짜 선택 안함"); // 선택하지 않은 경우 메시지 출력
+				        alert("시작 날짜를 선택해주세요."); // 경고 메시지
+				        event.preventDefault(); // 폼 제출 방지
+				        return;
+				    }
+				    console.log(pa_start);
 		            
 		            // 현재 사용자의 시작 날짜 (예시: 2024-10-15)
-		            const currentStartDate = new Date('2024-10-15T00:00:00'); // DB에서 가져와야 함
+		            const currentStartDate = new Date('${currentDate}'); // DB에서 가져와야 함
 		            const selectedStartDate = new Date(pa_start); // 사용자가 선택한 날짜
 		
 		            // 사용자가 선택한 시작 날짜가 현재 시작 날짜보다 이전인지 확인
@@ -284,27 +305,28 @@
 		                    // 서버에서 결제 정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 		                    const paymentData = {
 		                        payment: {
-		                            pa_start: $('#pa_start').val() // 회원권 시작 시간 추가
+		                        	pa_start: isRePayment ? '${newStartDate}' : $('#pa_start').val() // 재결제인 경우 newStartDate 사용
 		                        },
 		                        paymentType: {
 		                            pt_num: $('#pt_num').val(), // 이용권 번호
-		                            pt_type: $('#pt_type').val(), // 이용권 종류
-		                            pt_date: $('#pt_date').val(), // 기간
-		                            pt_count: $('#pt_count').val(), // 횟수
-		                            pt_price: $('#pt_price').val(), // 가격
+		                            pt_name: name, // 이용권
+		                            pt_type: type, // 이용권 종류
+		                            pt_date: date, // 기간
+		                            pt_count: count, // 횟수
+		                            pt_price: price, // 가격
 		                        },
-		                        paymentCategory: {
-		                            pc_imp_uid: rsp.imp_uid, // 결제 고유 ID
-		                            pc_merchant_uid: rsp.merchant_uid, // 가맹점에서 설정한 주문 ID
-		                            pc_pg_tid: rsp.pg_tid, // 결제 거래 ID
-		                            pc_status: rsp.status, // 결제 상태
-		                            pc_amount: amount, // 실제 결제 금액
-		                            pc_paid_at: rsp.paid_at, // 결제 완료 시간
-		                            pc_card_name: rsp.card_name, // 결제된 카드 이름
-		                            pc_card_number: rsp.card_number, // 결제된 카드 번호
-		                            pc_card_quota: rsp.card_quota, // 결제된 카드 할부 개월 수
-		                            pc_me_id: rsp.custom_data.buyer_me_id, // custom_data에서 me_id 값
-		                            pc_me_email: rsp.buyer_email, // 사용자 이메일
+		                        paymentHistory: {
+		                            ph_imp_uid: rsp.imp_uid, // 결제 고유 ID
+		                            ph_merchant_uid: rsp.merchant_uid, // 가맹점에서 설정한 주문 ID
+		                            ph_pg_tid: rsp.pg_tid, // 결제 거래 ID
+		                            ph_status: rsp.status, // 결제 상태
+		                            ph_amount: amount, // 실제 결제 금액
+		                            ph_paid_at: rsp.paid_at, // 결제 완료 시간
+		                            ph_card_name: rsp.card_name, // 결제된 카드 이름
+		                            ph_card_number: rsp.card_number, // 결제된 카드 번호
+		                            ph_card_quota: rsp.card_quota, // 결제된 카드 할부 개월 수
+		                            ph_me_id: rsp.custom_data.buyer_me_id, // custom_data에서 me_id 값
+		                            ph_me_email: rsp.buyer_email, // 사용자 이메일
 		                        }
 		                    };
 		

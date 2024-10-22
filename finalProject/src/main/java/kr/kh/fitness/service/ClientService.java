@@ -2,6 +2,7 @@ package kr.kh.fitness.service;
 
 import java.util.List;
 
+import kr.kh.fitness.model.dto.MembershipDTO;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.InquiryTypeVO;
@@ -38,6 +39,8 @@ public interface ClientService {
 
 	PageMaker getPageMakerInReview(Criteria cri);
 
+	List<MemberInquiryVO> getFaqList();
+
 	List<InquiryTypeVO> getInquiryTypeList();
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);
@@ -55,7 +58,11 @@ public interface ClientService {
 	List<PaymentVO> getPaymentList(String me_id, Criteria cri);
 
 	PageMaker getPageMakerInMemberShip(String me_id, Criteria cri);
-	
+
+	MembershipDTO getCurrentMembership(String me_id);
+
+	MembershipDTO getCurrentPT(String me_id);
+
 	PaymentVO getpayment(int pa_num);
 
 	RefundVO getRefund(int pa_num);

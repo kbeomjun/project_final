@@ -19,22 +19,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <div class="sidebar-sticky">
-	                <h4 class="sidebar-heading mt-3">고객센터 메뉴</h4>
-	                <ul class="nav flex-column">
-	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/client/review/list"/>">리뷰게시판</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/client/inquiry/insert"/>">1:1문의</a>
-	                    </li>
-	                    <c:if test="${user ne null && user.me_authority eq 'USER'}">
-		                    <li class="nav-item">
-		                        <a class="nav-link" href="<c:url value="/client/mypage/schedule/${user.me_id}"/>">마이페이지</a>
-		                    </li>
-	                    </c:if>
-	                </ul>
-	            </div>
+				<%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>	
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->

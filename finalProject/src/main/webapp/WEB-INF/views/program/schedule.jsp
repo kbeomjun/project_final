@@ -195,9 +195,9 @@
 									<td>
 										<c:set var="currentTime" value="<%= new java.util.Date() %>" />
 										
-										<!-- 정원 초과가 아니고 현재 시간보다 이전 프로그램이 아니라면 예약 가능 -->
 										<c:choose>
 										<c:when test="${ps.bs_current ne ps.bp_total && currentTime.before(ps.bs_start)}">
+										<!-- 정원 초과가 아니고 현재 시간보다 이전 프로그램이 아니라면 예약 가능 -->
 											<form action="<c:url value="/program/reservation" />" method="post">
 												<input type="hidden" name="bs_num" value="${ps.bs_num}">
 												<button class="btn btn-outline-primary btn-program-reservation1" 

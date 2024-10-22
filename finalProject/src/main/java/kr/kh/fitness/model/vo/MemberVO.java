@@ -34,5 +34,10 @@ public class MemberVO {
     
     private String me_kakaoUserId;
     private String me_naverUserId;
+
+    public MemberVO(String id, String email) {
+		this.me_id = id;
+		this.me_email = email;
+	}
 }
 

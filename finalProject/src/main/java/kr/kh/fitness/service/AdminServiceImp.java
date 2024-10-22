@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.fitness.dao.AdminDAO;
+import kr.kh.fitness.model.dto.BranchProgramDTO;
 import kr.kh.fitness.model.dto.BranchStockDTO;
 import kr.kh.fitness.model.dto.ProgramInsertFormDTO;
 import kr.kh.fitness.model.dto.ResultMessage;
@@ -31,7 +32,6 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.pagination.BranchCriteria;
 import kr.kh.fitness.pagination.Criteria;
@@ -49,7 +49,7 @@ public class AdminServiceImp implements AdminService{
 	private JavaMailSender mailSender;
 	
 	@Override
-	public List<BranchProgramVO> getBranchProgramList(String br_name) {
+	public List<BranchProgramDTO> getBranchProgramList(String br_name) {
 		
 		if(br_name == null) {
 			return null;
@@ -87,7 +87,7 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public BranchProgramVO getBranchProgram(int bp_num) {
+	public BranchProgramDTO getBranchProgram(int bp_num) {
 		return adminDao.selectBranchProgramByNum(bp_num);
 	}
 	
@@ -338,6 +338,23 @@ public class AdminServiceImp implements AdminService{
 		return msg;
 	}
 	
+	@Override
+	public String deleteEmployee(EmployeeVO employee) {
+		String msg = "";
+		if(employee == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		EmployeeVO employeeVo = adminDao.selectEmployee(employee.getEm_num());
+		if(employeeVo == null) {msg = "직원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!adminDao.deleteEmployee(employeeVo)) {msg = "직원을 삭제하지 못했습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		UploadFileUtils.delteFile(uploadPath, employeeVo.getEm_fi_name());
+		return msg;
+	}
+
 	@Override
 	public MemberVO getMember(String me_id) {
 		return adminDao.selectMember(me_id);
