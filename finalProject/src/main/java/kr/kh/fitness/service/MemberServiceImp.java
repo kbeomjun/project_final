@@ -49,7 +49,6 @@ public class MemberServiceImp implements MemberService {
         if (member == null) {
             return false; // 회원 정보가 null인 경우 회원가입 실패
         }
-        System.out.println();
         
         // 정규 표현식
         String usernameRegex = "^[A-Za-z0-9]{4,10}$"; // 아이디: 4~10자 영문자 및 숫자
@@ -70,9 +69,9 @@ public class MemberServiceImp implements MemberService {
         // 비밀번호 암호화
         String encPw = passwordEncoder.encode(member.getMe_pw());
         member.setMe_pw(encPw); // 암호화된 비밀번호로 회원 정보를 수정
+        
         try {
         	System.out.println(member);
-        	System.out.println("gender : "+ member.getMe_gender());
             // 회원 정보 데이터베이스에 저장 (아이디나 이메일이 중복될 경우 예외 발생)
             return memberDao.insertMember(member);
         } catch (Exception e) {
