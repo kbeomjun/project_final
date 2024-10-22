@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -64,14 +66,6 @@ public class UserController {
 			Model model, HttpSession session, HttpServletResponse response) {
 		 logger.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
 
-<<<<<<< Updated upstream
-		try {
-			MemberVO user = memberService.login(member, response);
-			if (user != null) {
-				// 자동 로그인 플래그 설정: 체크박스가 선택되었으면 "true"로 전송됨
-				boolean isAutoLogin = "true".equals(autologin);
-				user.setAutoLogin(isAutoLogin);
-=======
 	        try {
 	            // 로그인 서비스 호출
 	            MemberVO user = memberService.login(member, response);
@@ -83,7 +77,6 @@ public class UserController {
 	                } else {
 	                    logger.warn("로그인 실패: 비밀번호 불일치 - 사용자 ID: " + member.getMe_id());
 	                }
->>>>>>> Stashed changes
 
 	                model.addAttribute("msg", "없는 아이디거나 잘못 입력하셨습니다");
 	                model.addAttribute("url", "/login");
@@ -225,14 +218,6 @@ public class UserController {
 		return "/main/message";
 	}
 
-	@ResponseBody
-	@GetMapping("/check/id")
-	public boolean checkId(@RequestParam("id") String id) {
-
-		boolean res = memberService.checkId(id);
-		return res;
-	}
-	
 	@GetMapping("/oauth/kakao")
     public String kakaoLogin(Model model, HttpSession session, @RequestParam("code") String code) {// Data를 리턴해주는 컨트롤러 함수, 쿼리스트링에 있는 code값을 받을 수 있음
 		// POST 방식으로 key=value 데이터를 요청 (카카오톡으로)
@@ -426,4 +411,59 @@ public class UserController {
 		model.addAttribute("url","/");
 	    return "/main/message";
 	}
+    
+    // 아이디 중복 체크
+    @ResponseBody
+    @GetMapping("/check/id")
+    public boolean checkId(@RequestParam("id") String id) {
+        logger.info("아이디 중복 체크 시도: " + id);
+        boolean res = memberService.checkId(id);
+        logger.info("아이디 중복 체크 결과: " + id + " - " + (res ? "사용 가능" : "사용 불가"));
+        return res;
+    }
+    
+    // 아이디 찾기 페이지로 이동
+    @GetMapping("/find/id")
+    public String findID() {
+        logger.info("아이디 찾기 페이지로 이동");
+        return "/member/findId";
+    }
+    
+    // 아이디 찾기 처리
+    @ResponseBody
+    @PostMapping("/find/id")
+    public Map<String, Object> findIdPost(@RequestParam String name, @RequestParam String email) {
+        logger.info("아이디 찾기 시도: 이름 - " + name + ", 이메일 - " + email);
+        
+        Map<String, Object> response = new HashMap<>();
+        String userId = memberService.findId(name, email);
+        
+        if (userId != null) {
+            response.put("success", true);
+            response.put("username", userId);
+            logger.info("아이디 찾기 결과: " + userId);
+        } else {
+            response.put("success", false);
+            logger.info("아이디 찾기 결과: 찾기 실패");
+        }
+        
+        return response; // JSON 형식의 응답 반환
+    }
+    
+    // 비밀번호 찾기 페이지로 이동
+    @GetMapping("/find/pw")
+    public String findPw() {
+        logger.info("비밀번호 찾기 페이지로 이동");
+        return "/member/findPw";
+    }
+    
+    // 비밀번호 찾기 처리
+    @ResponseBody
+    @PostMapping("/find/pw")
+    public boolean findPwPost(@RequestParam String id) {
+        logger.info("비밀번호 찾기 시도: 사용자 ID - " + id);
+        boolean res = memberService.findPw(id);
+        logger.info("비밀번호 찾기 결과: 사용자 ID - " + id + " - " + (res ? "성공" : "실패"));
+        return res;
+    }
 }
