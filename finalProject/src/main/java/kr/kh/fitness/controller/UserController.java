@@ -67,7 +67,10 @@ public class UserController {
 
 		try {
 			MemberVO user = memberService.login(member, response);
-			if (user != null) {
+			if(user != null && user.getMe_authority().equals("REMOVED")) {
+				model.addAttribute("msg", "탈퇴한 회원입니다.");
+				model.addAttribute("url", "/login");				
+			} else if (user != null) {
 				// 자동 로그인 플래그 설정: 체크박스가 선택되었으면 "true"로 전송됨
 				boolean isAutoLogin = "true".equals(autologin);
 				user.setAutoLogin(isAutoLogin);
