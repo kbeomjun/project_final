@@ -56,7 +56,7 @@
 			<div class="error error-gender"></div>
 			<div class="form-group">
 				<label for="em_position">직책:</label>
-				<select name="em_position" class="custom-select mb-3 form-control">
+				<select name="em_position" class="custom-select form-control">
 			      	<c:forEach items="${programList}" var="program">
 						<c:choose>
 							<c:when test="${program.sp_type == '단일'}">
@@ -81,7 +81,7 @@
 			<div class="error error-address"></div>
 			<div class="form-group">
 				<label for="em_br_name">소속:</label>
-				<select name="em_br_name" class="custom-select mb-3 form-control">
+				<select name="em_br_name" class="custom-select form-control">
 			      	<c:forEach items="${brList}" var="br">
 				      	<option value="${br.br_name}" <c:if test='${em.em_br_name == br.br_name}'>selected</c:if>>${br.br_name}</option>
 			      	</c:forEach>

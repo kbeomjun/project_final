@@ -12,13 +12,13 @@
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
     	#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
     </style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -76,12 +76,12 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${FAQList}" var="mi" varStatus="status">
 				    			<tr>
-					        		<td class="align-content-center">${status.count}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">
+					        		<td>${status.count}</td>
+					        		<td>${mi.mi_title}</td>
+					        		<td>
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">
+					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -104,7 +104,7 @@
 								<div class="error error-title"></div>
 								<div class="form-group">
 									<label for="mi_it_name">유형:</label>
-									<select name="mi_it_name" class="custom-select mb-3 form-control">
+									<select name="mi_it_name" class="custom-select form-control">
 										<c:forEach items="${itList}" var="it">
 											<option value="${it.it_name}">${it.it_name}</option>
 										</c:forEach>
@@ -139,7 +139,7 @@
 								<div class="error error-title2"></div>
 								<div class="form-group">
 									<label for="mi_it_name">유형:</label>
-									<select id="mi_it_name2" name="mi_it_name" class="custom-select mb-3 form-control">
+									<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
 										<c:forEach items="${itList}" var="it">
 											<option value="${it.it_name}">${it.it_name}</option>
 										</c:forEach>
@@ -224,6 +224,7 @@
     </script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('#table').DataTable({
 			language: {
 				search: "",
@@ -236,7 +237,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [3], orderable: false }
+		        { targets: [3], orderable: false },
+		        { targets: [0, 1, 2, 3], className: "align-content-center"}
 		    ]
 		});
 	
@@ -271,6 +273,7 @@
 	</script>
 	
 	<script type="text/javascript">
+		// 썸머노트
 		$('#mi_content').summernote({
 			tabsize: 2,
 			height: 350,

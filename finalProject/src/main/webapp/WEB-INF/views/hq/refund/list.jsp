@@ -11,13 +11,13 @@
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
     </style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -93,7 +93,7 @@
 								<div class="error error-price"></div>
 								<div class="form-group">
 									<label for="re_reason">사유:</label>
-									<select id="re_reason" name="re_reason" class="custom-select mb-3 form-control">
+									<select id="re_reason" name="re_reason" class="custom-select form-control">
 										<option value="중도 해지">중도 해지</option>
 										<option value="시작전 계약 취소">시작전 계약 취소</option>
 										<option value="PT트레이너 불만">PT트레이너 불만</option>
@@ -115,6 +115,7 @@
 	</div>
 	
 	<script type="text/javascript">
+		// 필수항목 체크
 		let msgPrice = `<span>결제금액을 초과합니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
@@ -174,6 +175,7 @@
 								alert(msg);
 							}
 							$('#myModal').modal("hide");
+							$('#re_price').val("");
 							
 							table.destroy();
 							table = $('#table').DataTable({
@@ -197,18 +199,19 @@
 						        	{data:"pa_me_id"},
 						        	{data:"pa_me_email"},
 						        	{data:"pa_dateStr"},
-						        	{data:"pa_price"},
+						        	{data:"pa_formattedPrice"},
 						        	{data:"pa_pt_name"},
 						        	{data:"pa_startStr"},
 						        	{data:"pa_endStr"},
-						        	{
-						        		data: null,
-							        	defaultContent : '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal">환불</button>'
-					        		}
+						        	{data : "",
+							    		render: function(data,type,row){
+							    			return '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal" data-price="'+row.pa_price+'" data-num="'+row.pa_num+'">환불</button>';
+							    		}
+							    	}
 						        ],
 						        columnDefs: [
 							        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
-							        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"},
+							        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
 							    ]
 							});
 						},
@@ -222,6 +225,7 @@
 	</script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var price = "";
 		var pa_num = "";
 		var table = $('#table').DataTable({
@@ -245,24 +249,25 @@
 	        	{data:"pa_me_id"},
 	        	{data:"pa_me_email"},
 	        	{data:"pa_dateStr"},
-	        	{data:"pa_price"},
+	        	{data:"pa_formattedPrice"},
 	        	{data:"pa_pt_name"},
 	        	{data:"pa_startStr"},
 	        	{data:"pa_endStr"},
-	        	{
-	        		data: null,
-		        	defaultContent : '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal">환불</button>'
-        		}
+	        	{data : "",
+		    		render: function(data,type,row){
+		    			return '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal" data-price="'+row.pa_price+'" data-num="'+row.pa_num+'">환불</button>';
+		    		}
+		    	}
 	        ],
 	        columnDefs: [
 		        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"},
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
 		    ]
 		});
 
 		$(document).on("click", ".btn-refund-modal", function(){
-			price = $(this).parent().prev().prev().prev().prev().text();
-			pa_num = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+			price = $(this).data("price");
+			pa_num = $(this).data("num");
 			$('#re_pa_num').val(pa_num);
 		});
 		

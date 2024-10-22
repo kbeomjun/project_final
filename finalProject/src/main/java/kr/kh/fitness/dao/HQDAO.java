@@ -127,4 +127,6 @@ public interface HQDAO {
 	boolean updatePayment(@Param("pa") PaymentVO pa);
 
 	boolean insertRefund(@Param("re") RefundVO re);
+
+	PaymentVO selectLastPayment(@Param("pa") PaymentVO pa, @Param("pt_type") String pt_type);
 }

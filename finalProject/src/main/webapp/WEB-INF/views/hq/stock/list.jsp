@@ -8,20 +8,20 @@
 <title>본사관리페이지</title>
 	<style type="text/css">
     	.img-container{max-height: 800px; overflow-y: auto; padding-bottom: 20px;}
-    	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
+    	.img-box{width:20%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.error{color:red; margin-bottom: 10px;}
     	.form-group{margin: 0;}
     	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -103,7 +103,7 @@
 				        	<div class="modal-body">
 				          		<div class="form-group">
 									<label for="be_se_name">기구명:</label>
-									<select name="be_se_name" class="custom-select mb-3 form-control">
+									<select name="be_se_name" class="custom-select form-control">
 										
 								    </select>
 								</div>
@@ -126,6 +126,7 @@
 	</div>
 	
 	<script type="text/javascript">
+		// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
 		let regexNum = /^[0-9]{1,}$/;
@@ -272,6 +273,7 @@
 	</script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('#table').DataTable({
 			language: {
 				search: "",
@@ -332,6 +334,11 @@
 			        	{data:"be_amount"},
 			        	{data:"be_type"}
 			        ]
+				});
+				$('#search').val("");
+				search = "";
+				$(document).ready(function(){
+					displayList(search);
 				});
 			}
 		});

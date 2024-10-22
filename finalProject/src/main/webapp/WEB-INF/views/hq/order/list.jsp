@@ -8,13 +8,13 @@
 <title>본사관리페이지</title>
 	<style type="text/css">
 		#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -76,15 +76,15 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${boWaitList}" var="bo">
 				    			<tr>
-					        		<td class="align-content-center">${bo.bo_num}</td>
-					        		<td class="align-content-center">${bo.bo_br_name}</td>
-					        		<td class="align-content-center">
+					        		<td>${bo.bo_num}</td>
+					        		<td>${bo.bo_br_name}</td>
+					        		<td>
 					        			<fmt:formatDate value="${bo.bo_date}" pattern="yyyy.MM.dd hh:mm:ss"/>
 				        			</td>
-					        		<td class="align-content-center">${bo.bo_se_name}</td>
-					        		<td class="align-content-center">${bo.bo_amount}</td>
-					        		<td class="align-content-center">${bo.bo_state}</td>
-					        		<td class="align-content-center">
+					        		<td>${bo.bo_se_name}</td>
+					        		<td>${bo.bo_amount}</td>
+					        		<td>${bo.bo_state}</td>
+					        		<td>
 					        			<a href="<c:url value="/hq/order/accept/${bo.bo_num}"/>" class="btn btn-outline-success">승인</a>
 					        			<a href="<c:url value="/hq/order/deny/${bo.bo_num}"/>" class="btn btn-outline-danger">거부</a>
 					        		</td>
@@ -130,6 +130,7 @@
 	</div>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('.table-wait').DataTable({
 			language: {
 				search: "",
@@ -142,7 +143,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [5, 6], orderable: false }
+		        { targets: [5, 6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 		    ]
 		});
 		
@@ -169,7 +171,8 @@
 				    info: false,
 				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false }
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}else{
@@ -185,7 +188,8 @@
 				    info: false,
 				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false }
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}

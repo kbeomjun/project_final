@@ -14,7 +14,7 @@
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -71,9 +71,9 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${spList}" var="sp">
 				    			<tr>
-					        		<td class="align-content-center">${sp.sp_name}</td>
-					        		<td class="align-content-center">${sp.sp_type}</td>
-					        		<td class="align-content-center">
+					        		<td>${sp.sp_name}</td>
+					        		<td>${sp.sp_type}</td>
+					        		<td>
 					        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn-outline-info">조회</a>
 					        		</td>
 					      		</tr>
@@ -86,7 +86,7 @@
 	</div>
 	
 	<script type="text/javascript">
-		// 테이블 api
+		// 데이터테이블
 		$('#table').DataTable({
 			language: {
 				search: "",
@@ -99,7 +99,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [2], orderable: false }
+		        { targets: [2], orderable: false },
+		        { targets: [0, 1, 2], className: "align-content-center"}
 		    ]
 		});
 	</script>

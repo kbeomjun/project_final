@@ -321,7 +321,7 @@ public class HQServiceImp implements HQService {
 		
 		be.setBe_birth(new Date());
 		be.setBe_type("입고");
-		be.setBe_br_name("본점");
+		be.setBe_br_name("본사");
 		if(!hqDao.insertBranchEquipmentStock(be)) {msg = "재고를 등록하지 못했습니다.";}
 		return msg;
 	}
@@ -380,7 +380,7 @@ public class HQServiceImp implements HQService {
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-beStockList.get(i).getBe_amount(), beStockList.get(i).getBe_birth(), 
-													"출고", "본점", bo.getBo_se_name()));
+													"출고", "본사", bo.getBo_se_name()));
 				amount2 -= beStockList.get(i).getBe_amount();
 			}else {
 				hqDao.insertBranchEquipmentStock(
@@ -388,7 +388,7 @@ public class HQServiceImp implements HQService {
 													"입고", bo.getBo_br_name(), bo.getBo_se_name()));
 				hqDao.insertBranchEquipmentStock(
 						new BranchEquipmentStockVO(-amount2, beStockList.get(i).getBe_birth(), 
-													"출고", "본점", bo.getBo_se_name()));
+													"출고", "본사", bo.getBo_se_name()));
 				amount2 = 0;
 			}
 		}
@@ -572,7 +572,7 @@ public class HQServiceImp implements HQService {
 		
 		mi.setMi_state("FAQ");
 		mi.setMi_email("hq_admin@naver.com");
-		mi.setMi_br_name("본점");
+		mi.setMi_br_name("본사");
 		if(!hqDao.insertMemberInquiry(mi)) {msg = "FAQ를 등록하지 못했습니다.";}
 		return msg;
 	}
@@ -585,7 +585,7 @@ public class HQServiceImp implements HQService {
 		
 		mi.setMi_state("FAQ");
 		mi.setMi_email("hq_admin@naver.com");
-		mi.setMi_br_name("본점");
+		mi.setMi_br_name("본사");
 		if(!hqDao.updateMemberInquiry(mi)) {msg = "FAQ를 수정하지 못했습니다.";}
 		return msg;
 	}
@@ -614,13 +614,25 @@ public class HQServiceImp implements HQService {
 		if(!msg.equals("")) {return msg;}
 		
 		PaymentVO pa = hqDao.selectPayment(re.getRe_pa_num());
+		
+		PaymentVO pa1 = hqDao.selectLastPayment(pa, "이용권");
+		PaymentVO pa2 = hqDao.selectLastPayment(pa, "PT");
+		if(pa.getPt_type().equals("이용권") && pa.getPa_num() != pa1.getPa_num()) {msg = "헬스장 이용권 시작날짜가 마지막인 것만 환불 가능합니다.";}
+		if(pa.getPt_type().equals("PT") && pa.getPa_num() != pa2.getPa_num()) {msg = "PT 이용권 시작날짜가 마지막인 것만 환불 가능합니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(pa.getPt_type().equals("이용권") && pa2 != null && pa.getPa_start().compareTo(pa2.getPa_end()) <= 0) {
+			msg = "이용날짜가 겹친 PT 이용권이 존재하여 환불할 수 없습니다.";
+		}
+		if(!msg.equals("")) {return msg;}
+		
 		pa.setPa_state("환불완료");
 		if(!hqDao.updatePayment(pa)) {msg = "결제 정보를 수정하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
 		double re_percentDouble = ((double)re.getRe_price() / pa.getPa_price() * 100);
 		re.setRe_percent((int)Math.round(re_percentDouble));
-		if(!hqDao.insertRefund(re)) {msg = "환불을 등록하지 못했습니다.";}
+		if(!hqDao.insertRefund(re)) {msg = "환불 정보를 등록하지 못했습니다.";}
 		return msg;
 	}
 }
