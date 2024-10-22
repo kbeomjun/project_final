@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+
+/* Noto Sans KR :: https://fonts.google.com/noto/specimen/Noto+Sans+KR?query=Noto+Sans+KR+ */
 @font-face {
 	font-family: "notosans";
 	font-style: "normal";
@@ -20,4 +22,43 @@
 	font-weight: 600;
 	src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"),
 				url("../fonts/NotoSans-Bold.ttf") format("truetype");
+}
+
+
+
+/* Zen Kaku Gothic Antique ::  https://fonts.google.com/specimen/Zen+Kaku+Gothic+Antique */
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Light"), local("ZenKakuGothicAntique-Light"),
+				url("../fonts/ZenKakuGothicAntique-Light.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Medium"), local("ZenKakuGothicAntique-Medium"),
+				url("../fonts/ZenKakuGothicAntique-Medium.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Regular"), local("ZenKakuGothicAntique-Regular"),
+				url("../fonts/ZenKakuGothicAntique-Regular.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Bold"), local("ZenKakuGothicAntique-Bold"),
+				url("../fonts/ZenKakuGothicAntique-Bold.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Black"), local("ZenKakuGothicAntique-Black"),
+				url("../fonts/ZenKakuGothicAntique-Black.ttf") format("truetype");
 }
