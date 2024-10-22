@@ -132,34 +132,12 @@
 			pr_bs_num = #{bs_num} 
 	</select>
 	
-	<select id="selectMemberList" resultType="MemberVO">
+	<select id="selectMemberListInUser" resultType="MemberVO">
 		select * from member where me_authority = 'user'
 	</select>
 	
-	<select id="selectMemberListWithPagination" resultType="MemberVO">
-		select 
-			* 
-		from 
-			member 
-		where 
-			me_authority in('user', 'removed')
-		and
-			me_name like concat('%', #{search},'%')
-		order by
-			me_name
-		limit
-			#{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectMemberTotalCount" resultType="int">
-		select 
-			count(*) 
-		from 
-			member 
-		where 
-			me_authority = 'user'
-		and
-			me_name like concat('%', #{search},'%')
+	<select id="selectMemberList" resultType="MemberVO">
+		select * from member where me_authority in('user', 'removed')
 	</select>
 	
 	<select id="selectSchedule" resultType="BranchProgramScheduleVO">

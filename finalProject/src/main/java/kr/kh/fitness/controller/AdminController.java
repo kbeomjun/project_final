@@ -192,7 +192,7 @@ public class AdminController {
 	public String scheduleInsert(Model model, @PathVariable("br_name")String br_name) {
 		
 		List<BranchProgramDTO> programList = adminService.getBranchProgramList(br_name);
-		List<MemberVO> memberList = adminService.getMemberList();
+		List<MemberVO> memberList = adminService.getMemberListInUser();
 		model.addAttribute("programList", programList);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("branchName", br_name);
@@ -475,15 +475,11 @@ public class AdminController {
 	
 	//전체 회원목록
 	@GetMapping("/member/list")
-	public String memberList(Model model, Criteria cri) {
+	public String memberList(Model model) {
 		
-		cri.setPerPageNum(5);
-		
-		List<MemberVO> memberList = adminService.getMemberListWithPagination(cri);
-		PageMaker pm = adminService.getPageMakerInMember(cri);
+		List<MemberVO> memberList = adminService.getMemberList();
 		
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("pm", pm);
 		return "/admin/member/list";
 	}
 	

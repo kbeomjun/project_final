@@ -53,11 +53,9 @@ public interface AdminDAO {
 	
 	void updateScheduleByPTReservation(int bs_num);
 	
+	List<MemberVO> selectMemberListInUser();
+
 	List<MemberVO> selectMemberList();
-
-	List<MemberVO> selectMemberListWithPagination(Criteria cri);
-
-	int selectMemberTotalCount(Criteria cri);
 	
 	BranchProgramScheduleVO selectScheduleByNum(int bs_num);
 

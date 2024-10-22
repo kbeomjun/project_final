@@ -42,11 +42,9 @@ public interface AdminService {
 
 	List<MemberVO> getScheduleMemberList(int bs_num);
 	
-	List<MemberVO> getMemberList();
+	List<MemberVO> getMemberListInUser();
 
-	List<MemberVO> getMemberListWithPagination(Criteria cri);
-	
-	PageMaker getPageMakerInMember(Criteria cri);
+	List<MemberVO> getMemberList();
 	
 	String insertSchedule(BranchProgramScheduleVO schedule, String me_id);
 	

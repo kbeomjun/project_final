@@ -132,25 +132,13 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<MemberVO> getMemberList() {
-		return adminDao.selectMemberList();
+	public List<MemberVO> getMemberListInUser() {
+		return adminDao.selectMemberListInUser();
 	}
 	
 	@Override
-	public List<MemberVO> getMemberListWithPagination(Criteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		return adminDao.selectMemberListWithPagination(cri);
-	}
-
-	@Override
-	public PageMaker getPageMakerInMember(Criteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectMemberTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
+	public List<MemberVO> getMemberList() {
+		return adminDao.selectMemberList();
 	}
 
 	@Override
