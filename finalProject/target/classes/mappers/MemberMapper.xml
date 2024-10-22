@@ -8,50 +8,52 @@
   </select>
   <insert id="insertMember">
     INSERT INTO member(me_id, me_pw, me_email, me_name
-    	<if test="m.me_phone != null">
-            , me_phone
-        </if>
-        <if test="m.me_postcode != null">
-            , me_postcode
-        </if>
-        <if test="m.me_address != null">
-            , me_address
-        </if>
-        <if test="m.me_detailAddress != null">
-            , me_detailAddress
-        </if>
-        <if test="m.me_extraAddress != null">
-            , me_extraAddress
-        </if>
-        <if test="m.me_birth != null">
-            , me_birth
-        </if>
-        <if test="m.me_gender != null">
-            , me_gender
-        </if>
-    ) VALUES (#{m.me_id}, #{m.me_pw}, #{m.me_email}, #{m.me_name}
-        <if test="m.me_phone != null">
-            , #{m.me_phone}
-        </if>
-        <if test="m.me_postcode != null">
-            , #{m.me_postcode}
-        </if>
-        <if test="m.me_address != null">
-            , #{m.me_address}
-        </if>
-        <if test="m.me_detailAddress != null">
-            , #{m.me_detailAddress}
-        </if>
-        <if test="m.me_extraAddress != null">
-            , #{m.me_extraAddress}
-        </if>
-        <if test="m.me_birth != null">
-            , #{m.me_birth}
-        </if>
-        <if test="m.me_gender != null">
-            , #{m.me_gender}
-        </if>
-    )</insert>
+   	<if test="m.me_phone != null and m.me_phone != ''">
+    	, me_phone
+	</if>
+	<if test="m.me_postcode != null and m.me_postcode != ''">
+	    , me_postcode
+	</if>
+	<if test="m.me_address != null and m.me_address != ''">
+	    , me_address
+	</if>
+	<if test="m.me_detailAddress != null and m.me_detailAddress != ''">
+	    , me_detailAddress
+	</if>
+	<if test="m.me_extraAddress != null and m.me_extraAddress != ''">
+	    , me_extraAddress
+	</if>
+	<if test="m.me_birth != null and m.me_birth != ''">
+	    , me_birth
+	</if>
+	<if test="m.me_gender != null and !m.me_gender.equals('null')">
+	    , me_gender
+	</if>
+	) VALUES (#{m.me_id}, #{m.me_pw}, #{m.me_email}, #{m.me_name}
+	    <if test="m.me_phone != null and m.me_phone != ''">
+	        , #{m.me_phone}
+	    </if>
+	    <if test="m.me_postcode != null and m.me_postcode != ''">
+	        , #{m.me_postcode}
+	    </if>
+	    <if test="m.me_address != null and m.me_address != ''">
+	        , #{m.me_address}
+	    </if>
+	    <if test="m.me_detailAddress != null and m.me_detailAddress != ''">
+	        , #{m.me_detailAddress}
+	    </if>
+	    <if test="m.me_extraAddress != null and m.me_extraAddress != ''">
+	        , #{m.me_extraAddress}
+	    </if>
+	    <if test="m.me_birth != null and m.me_birth != ''">
+	        , #{m.me_birth}
+	    </if>
+	    <if test="m.me_gender != null and !m.me_gender.equals('null')">
+	        , #{m.me_gender}
+	    </if>
+	)
+   </insert>
+   
   <select id="searchUser" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>

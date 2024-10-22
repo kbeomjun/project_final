@@ -8,8 +8,7 @@
 <title>로그인</title>
 <!-- Bootstrap CSS 추가 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
-    <style>
+   <style>
         .body {
             padding-top: 150px; /* 헤더와의 간격 */
             padding-bottom: 150px; /* 푸터와의 간격 */
@@ -45,42 +44,51 @@
 						<h2>로그인</h2>
 					</div>
 					<div class="card-body">
-						<form action="<c:url value='/login'/>" method="post" id="loginfrom">
+						<form action="<c:url value='/login'/>" method="post"
+							id="loginfrom">
 							<div class="mb-3">
-								<label for="id" class="form-label">아이디</label>
-								<input type="text" class="form-control" id="id" name="me_id" required/>
+								<label for="id" class="form-label">아이디</label> <input
+									type="text" class="form-control" id="id" name="me_id" required />
 							</div>
 							<div class="mb-3">
-								<label for="pw" class="form-label">비밀번호</label>
-								<input type="password" class="form-control" id="pw" name="me_pw" required/>
+								<label for="pw" class="form-label">비밀번호</label> <input
+									type="password" class="form-control" id="pw" name="me_pw"
+									required />
 							</div>
 							<div class="mb-3 form-check">
-								<input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
-								<label class="form-check-label" for="autologin">자동 로그인</label>
+								<input type="checkbox" class="form-check-input" id="autologin"
+									name="autologin" value="true" /> <label
+									class="form-check-label" for="autologin">자동 로그인</label>
 							</div>
 							<div class="d-flex justify-content-end mb-3">
-							    <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
-							    <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
+								<a href="<c:url value='/find/id' />"
+									class="text-decoration-none me-3">아이디 찾기</a> <a
+									href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호
+									찾기</a>
 							</div>
 							<button type="submit" class="btn btn-success w-100">로그인</button>
-							
+
 						</form>
 					</div>
 					<div class="card-footer text-center">
 						<a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
 					</div>
-					
 
+					<!-- kakao button -->
+					<div class="col-lg-12 text-center mt-3">
+						<a href=#> <img alt="카카오로그인"
+							src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>"
+							onclick="loginWithKakao()">
+						</a>
+					</div>
 
-
-<!-- kakao button -->
-<div class="col-lg-12 text-center mt-3">
-    <a href=#>
-    	<img alt="카카오로그인" src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>" onclick="loginWithKakao()">
-    </a>
-</div>
-
+				</div>
+			</div>
+		</div>
+	</div>
 <!-- 카카오 로그인 -->
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+ 
 <script type="text/javascript">
     $(document).ready(function(){
         Kakao.init('${kakaoApiKey}');
@@ -95,13 +103,10 @@
     }
     
 </script>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 
 <script>
+/* 삭제 예정.
   // 카카오 SDK 초기화
   Kakao.init('9c8609073560662bd995a54cb43bbe28'); // 발급받은 실제 JavaScript 앱 키를 사용
   console.log(Kakao.isInitialized()); // 초기화 여부 확인 (true/false 출력)
@@ -201,6 +206,6 @@
         console.error(jqXHR, textStatus, errorThrown);
       }
     });
-  }
+  } */
 </script>
 </html>

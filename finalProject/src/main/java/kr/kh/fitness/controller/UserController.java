@@ -3,10 +3,6 @@ package kr.kh.fitness.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -211,8 +207,9 @@ public class UserController {
         	} // email 정보는 있으나, kakaoId가 등록되지 않는 경우.
         	else if(user.getMe_kakaoUserId() == null || user.getMe_kakaoUserId().trim().length() ==0) {
         		try {
-                    String encodedGender = URLEncoder.encode(loginUser.getMe_gender(), "UTF-8");
-                    String encodedName = URLEncoder.encode(loginUser.getMe_name(), "UTF-8");
+        			// 한글 값들을 URL 인코딩하여 전달
+            		String encodedGender = (loginUser.getMe_gender()!=null)?URLEncoder.encode(loginUser.getMe_gender(), "UTF-8"):null;
+                    String encodedName = (loginUser.getMe_name()!=null)?URLEncoder.encode(loginUser.getMe_name(), "UTF-8"):null;
 
                     return "redirect:/sso/matchRedirect?socialType=KAKAO&id=" + loginUser.getMe_kakaoUserId()
                             + "&gender=" + encodedGender + "&phone=" + loginUser.getMe_phone() + "&name=" + encodedName + "&me_id=" + user.getMe_id();
@@ -228,8 +225,8 @@ public class UserController {
         else{
             try {
                 // 한글 값들을 URL 인코딩하여 전달
-                String encodedGender = URLEncoder.encode(loginUser.getMe_gender(), "UTF-8");
-                String encodedName = URLEncoder.encode(loginUser.getMe_name(), "UTF-8");
+        		String encodedGender = (loginUser.getMe_gender()!=null)?URLEncoder.encode(loginUser.getMe_gender(), "UTF-8"):null;
+                String encodedName = (loginUser.getMe_name()!=null)?URLEncoder.encode(loginUser.getMe_name(), "UTF-8"):null;
 
                 return "redirect:/sso/joinRedirect?socialType=KAKAO&email=" + loginUser.getMe_email() + "&id=" + loginUser.getMe_kakaoUserId()
                         + "&gender=" + encodedGender + "&phone=" + loginUser.getMe_phone() + "&name=" + encodedName;
