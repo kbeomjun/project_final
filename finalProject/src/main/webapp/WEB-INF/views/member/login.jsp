@@ -72,7 +72,9 @@
         Kakao.Auth.authorize({ 
         redirectUri: '${redirectUri}' 
         }); // 등록한 리다이렉트uri 입력
+        
     }
+    
 </script>
 				</div>
 			</div>

@@ -13,13 +13,15 @@ CREATE TABLE `member` (
    `me_address`			varchar(255)	NULL,
    `me_detailAddress`	varchar(255)	NULL,
    `me_extraAddress`	varchar(255)	NULL,
-   `me_birth`   		date   			not NULL,
+   `me_birth`   		date   			NULL,
    `me_gender`   		char(2)   		NULL,
    `me_authority`   	varchar(10)   	not NULL default 'USER',
    `me_cookie`   		varchar(255)   	NULL,
    `me_limit`   		datetime   		NULL,
    `me_noshow`   		int   			not null default 0,
-   `me_cancel`   		datetime   		NULL
+   `me_cancel`   		datetime   		NULL,
+   `me_kakaoUserId`		varchar(20)		NULL unique,
+   `me_naverUserId`		varchar(20)		NULL unique
 );
 
 drop table if exists `branch`;

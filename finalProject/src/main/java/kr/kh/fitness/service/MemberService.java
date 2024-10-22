@@ -16,4 +16,8 @@ public interface MemberService {
 
 	void updateMemberCookie(MemberVO user);
 
+	boolean joinSocialMember(String social_type, MemberVO socialUser);
+
+	boolean updateUserSocialAccount(String social_type, MemberVO socialUser);
+
 }

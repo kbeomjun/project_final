@@ -146,7 +146,7 @@
 				},
 				me_email : {
 					required : true,
-					email : true
+					regex : /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/
 				}
 			},
 			messages : {

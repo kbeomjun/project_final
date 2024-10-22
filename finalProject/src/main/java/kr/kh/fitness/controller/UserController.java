@@ -1,6 +1,7 @@
 package kr.kh.fitness.controller;
 
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -164,85 +166,195 @@ public class UserController {
 	}
 	
 	@GetMapping("/oauth/kakao")
-    public String kakaoLogin(Model model, @RequestParam("code") String code) {// Data를 리턴해주는 컨트롤러 함수, 쿼리스트링에 있는 code값을 받을 수 있음
+    public String kakaoLogin(Model model, HttpSession session, @RequestParam("code") String code) {// Data를 리턴해주는 컨트롤러 함수, 쿼리스트링에 있는 code값을 받을 수 있음
 		// POST 방식으로 key=value 데이터를 요청 (카카오톡으로)
 		/*
-		 * Retrofit2 OkHttp HttpsURLConnection RestTemplate (우린 이걸로 할거다)
+		 * Retrofit2 OkHttp HttpsURLConnection RestTemplate
 		 */
-		System.out.println("code:: " + code);
+		log.info("/oauth/kakao");
+		//System.out.println("code:: " + code);
 		
-		// 접속토큰 get
+		// 카카오에서 준 code를 통해서 accessToken을 받아 온다.
         String kakaoToken = kakaoService.getReturnAccessToken(code);
-        System.out.println("kakaoToken:: " + kakaoToken);
+        //System.out.println("kakaoToken:: " + kakaoToken);
 		
-        // 접속자 정보 get
-        Map<String, Object> result = kakaoService.getUserInfo(kakaoToken);
-        log.info("result:: " + result);
-        String snsId = (String) result.get("id");
-        String userName = (String) result.get("nickname");
-        String email = (String) result.get("email");
-        String userpw = snsId;
+        // accessToken을 통해서 소셜 로그인 정보를 가져온다.
+        MemberVO loginUser = kakaoService.getUserInfo(kakaoToken);
         
-		return "";
+        if(loginUser == null) {
+        	model.addAttribute("msg", "로그인에 실패했습니다. \\n(카카오 계정 정보를 가져올 수 없습니다.)");
+			model.addAttribute("url", "/login");	
+			return "/main/message";
+        }
+        
+        // email로 user 정보를 가져온다.
+        MemberVO user = kakaoService.getMemberInfoFromEmail(loginUser);
+        
+        if(user != null) {
+        	// 로그인 성공, session에 추가.
+        	if(user.getMe_kakaoUserId() != null && loginUser.getMe_kakaoUserId().equals(user.getMe_kakaoUserId())) {
+        		session.setAttribute("user", user);
+        		session.setAttribute("socialType", "KAKAO");
+        		model.addAttribute("msg", user.getMe_id()+"님 환영합니다 \\n(카카오 계정으로 로그인 했습니다.)");
+				model.addAttribute("url", "/");
+        	}// user 정보와 이메일이 일치하나 kakaoId가 일치하지 않는 경우.
+        	else if(user.getMe_kakaoUserId() != null && user.getMe_kakaoUserId().trim().length() != 0 && !loginUser.getMe_kakaoUserId().equals(user.getMe_kakaoUserId()) ) {
+        		model.addAttribute("msg", "등록된 카카오톡 계정과 일치하지 않습니다 \\n(기존 계정으로 로그인 해주세요.)");
+				model.addAttribute("url", "/login");
+        	} // email 정보는 있으나, kakaoId가 등록되지 않는 경우.
+        	else if(user.getMe_kakaoUserId() == null || user.getMe_kakaoUserId().trim().length() ==0) {
+        		try {
+                    String encodedGender = URLEncoder.encode(loginUser.getMe_gender(), "UTF-8");
+                    String encodedName = URLEncoder.encode(loginUser.getMe_name(), "UTF-8");
+
+                    return "redirect:/sso/matchRedirect?socialType=KAKAO&id=" + loginUser.getMe_kakaoUserId()
+                            + "&gender=" + encodedGender + "&phone=" + loginUser.getMe_phone() + "&name=" + encodedName + "&me_id=" + user.getMe_id();
+                    
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    model.addAttribute("msg", "인코딩 오류가 발생했습니다. \\n(관리자 문의!!)");
+                    model.addAttribute("url", "/login");
+                    return "/main/message";
+                }
+    		}
+        }
+        else{
+            try {
+                // 한글 값들을 URL 인코딩하여 전달
+                String encodedGender = URLEncoder.encode(loginUser.getMe_gender(), "UTF-8");
+                String encodedName = URLEncoder.encode(loginUser.getMe_name(), "UTF-8");
+
+                return "redirect:/sso/joinRedirect?socialType=KAKAO&email=" + loginUser.getMe_email() + "&id=" + loginUser.getMe_kakaoUserId()
+                        + "&gender=" + encodedGender + "&phone=" + loginUser.getMe_phone() + "&name=" + encodedName;
+                
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                model.addAttribute("msg", "인코딩 오류가 발생했습니다. \\n(관리자 문의!!)");
+                model.addAttribute("url", "/login");
+                return "/main/message";
+            }
+        }
+        return "/main/message";
+     
+	}
+	
+	@GetMapping("/sso/joinRedirect")
+	public String socialJoinRedirect(
+            @RequestParam(value = "socialType") String socialType,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "gender") String gender,
+            @RequestParam(value = "phone") String phone,
+            @RequestParam(value = "name") String name,
+            Model model) {
+        log.info("/sso/join/redirect");
+        
+        // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
+        model.addAttribute("socialType", socialType);
+        model.addAttribute("email", email);
+        model.addAttribute("id", id);
+        model.addAttribute("gender", gender);
+        model.addAttribute("phone", phone);
+        model.addAttribute("name", name);
+
+	    return "/sso/joinRedirect";
+	}
+	
+	@PostMapping("/sso/joinRedirect")
+	public String socialJoinRedirectPost(
+	        @RequestParam("socialType") String socialType,
+	        @ModelAttribute MemberVO socialUser,
+	        Model model) {
+		
+		log.info("/sso/joinRedirect - post");
+		
+	    // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
+	    model.addAttribute("socialType", socialType);
+	    model.addAttribute("socialUser", socialUser);
+
+	    // 뷰 페이지 리턴 (예: join.jsp)
+	    return "/sso/join";
+	    
+	}
+
+	@PostMapping("/sso/join")
+	public String socialJoinPost(
+			Model model, 
+			@ModelAttribute MemberVO socialUser, 
+			@RequestParam("social_type") String social_type) {
+		log.info("/sso/join - POST");
+		 // token을 통해서 소셜 로그인 정보를 가져온다.
+		System.out.println(socialUser);
+		System.out.println("email : " + socialUser.getMe_email());
+		
+		boolean res = memberService.joinSocialMember(social_type, socialUser);
+		
+		if(res) {
+			model.addAttribute("msg","간편 가입이 완료되었습니다. \\n 로그인을 다시 해주세요.");
+		}
+		else {
+			model.addAttribute("msg","간편 가입이 실패하였습니다.");
+		}
+		model.addAttribute("url","/");
+	    return "/main/message";
+	}
+	
+	@GetMapping("/sso/matchRedirect")
+	public String socialMatchRedirect(
+            @RequestParam(value = "socialType") String socialType, 
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "gender") String gender,
+            @RequestParam(value = "phone") String phone,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "me_id") String me_id,
+            Model model) {
+        log.info("/sso/match/redirect");
+        
+        // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
+        model.addAttribute("socialType", socialType);
+        model.addAttribute("id", id);
+        model.addAttribute("gender", gender);
+        model.addAttribute("phone", phone);
+        model.addAttribute("name", name);
+        model.addAttribute("me_id", me_id);
+
+	    return "/sso/matchRedirect";
+	}
+	
+	@PostMapping("/sso/matchRedirect")
+	public String socialMatchRedirectPost(
+	        @RequestParam("socialType") String socialType,
+	        @ModelAttribute MemberVO user,
+	        Model model) {
+		
+		log.info("/sso/matchRedirect - post");
+		
+	    // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
+	    model.addAttribute("socialType", socialType);
+	    model.addAttribute("user", user);
+
+	    return "/sso/match";
+	    
+	}
+	
+	@PostMapping("/sso/match")
+	public String socialMatchPost(
+			Model model, 
+			@ModelAttribute MemberVO socialUser, 
+			@RequestParam("social_type") String social_type) {
+		log.info("/sso/match - POST");
+		 // token을 통해서 소셜 로그인 정보를 가져온다.
+		System.out.println(socialUser);
+		
+		boolean res= memberService.updateUserSocialAccount(social_type, socialUser);
+		
+		if(res) {
+			model.addAttribute("msg","기존 계정과 연동이 완료되었습니다. \\n 로그인을 다시 해주세요.");
+		}
+		else {
+			model.addAttribute("msg","계정 연동에 실패하였습니다.");
+		}
+		model.addAttribute("url","/");
+	    return "/main/message";
 	}
 }
-
-/*
-RestTemplate rt = new RestTemplate();
-
-		// HttpHeader 오브젝트 생성
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 내가 지금 전송할 body data 가
-																						// key=velue 형임을 명시
-
-		// HttpBody 오브젝트 생성
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("grant_type", "authorization_code");
-		params.add("client_id", "b9d1d15c7c76c5b18e989b19383acaf0");
-		params.add("redirect_uri", "http://localhost:8001/auth/kakao/callback");
-		params.add("code", code);
-
-		// HttpHeader 와 HttpBody를 하나의 오브젝트에 담기
-		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = 
-				new HttpEntity<>(params, headers); // header 와 body 값을 가지고 있는 entity 값이 된다.
-
-		// Http 요청하기 - Post 방식으로 - 그리고 Response 변수의 응답 받음.
-		ResponseEntity<String> response = rt.exchange(
-				"https://kauth.kakao.com/oauth/token", 
-				HttpMethod.POST,
-				kakaoTokenRequest, 
-				String.class // String 타입으로 응답 데이터를 받겠다.
-		);
-
-		// Gson, Json, Simple, ObjectMapper라이브러리를 사용하여 자바객체로 만들 수 있다.
-		ObjectMapper objectMapper = new ObjectMapper();
-		OAuthToken oauthToken = null;
-		try {
-			oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("카카오 액세스 토큰 : " + oauthToken.getAccess_token());
-
-		RestTemplate rt2 = new RestTemplate();
-
-		// HttpHeader 오브젝트 생성
-		HttpHeaders headers2 = new HttpHeaders();
-		headers2.add("Authorization", "Bearer " + oauthToken.getAccess_token());
-		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 내가 지금 전송할 body data 가
-																							// key=velue 형임을 명시
-
-		// HttpHeader 와 HttpBody를 하나의 오브젝트에 담기
-		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers2);
-
-		// Http 요청하기 - Post 방식으로 - 그리고 Response 변수의 응답 받음.
-		ResponseEntity<String> response2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
-				kakaoProfileRequest, String.class // String 타입으로 응답 데이터를 받겠다.
-		);
-		
-		System.out.println("유저정보 : " + response2.getBody());
-		 
-*/
