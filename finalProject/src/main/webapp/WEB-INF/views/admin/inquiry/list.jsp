@@ -12,7 +12,9 @@
 	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
 	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
 	#thead th{text-align: center;}
-	#tbody td{text-align: left;}
+	#tbody td{text-align: center;}
+	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+   	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 </style>
 </head>
 <body>
@@ -70,7 +72,7 @@
 					      		<tr>
 					        		<th>문의번호</th>
 					        		<th>제목</th>
-					        		<th>작성자</th>
+					        		<th>작성자이메일</th>
 					        		<th>날짜</th>
 					        		<th>유형</th>
 					        		<th>상태</th>
@@ -260,19 +262,18 @@
 	<script type="text/javascript">
 		var table = $('.table-wait').DataTable({
 			language: {
-		        search: "검색:",
-		        zeroRecords: "",
-		        emptyTable: "등록된 내역이 없습니다."
-		    },
+			    search: "",
+			    searchPlaceholder: "검색",
+			    zeroRecords: "",
+			    emptyTable: ""
+			},
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 3, "asc" ]],
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [5, 6], 
-		        	orderable: false
-	        	}
+		        { targets: [5, 6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 		    ]
 		});
 	
@@ -289,37 +290,35 @@
 			if(name == 'wait'){
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 3, "asc" ]],
+				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}else{
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 3, "desc" ]],
+				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}
@@ -357,6 +356,7 @@
 			});
 		});
 		$('.btn-close').click(function(){
+			$('.error').children().remove();
 			$('#mi_answer').val("");
 		});
 		
