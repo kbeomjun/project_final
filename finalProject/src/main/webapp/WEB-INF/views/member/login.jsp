@@ -54,16 +54,16 @@
 								<label for="pw" class="form-label">비밀번호</label>
 								<input type="password" class="form-control" id="pw" name="me_pw" required/>
 							</div>
-							<div class="mb-3 form-check">
-								<input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
-								<label class="form-check-label" for="autologin">자동 로그인</label>
+							<div class="d-flex justify-content-between align-items-center mb-3">
+							    <div class="form-check">
+							        <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
+							        <label class="form-check-label" for="autologin">자동 로그인</label>
+							    </div>
+							    <div>
+							        <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
+							        <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
+							    </div>
 							</div>
-							<div class="d-flex justify-content-end mb-3">
-							    <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
-							    <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
-							</div>
-							<button type="submit" class="btn btn-success w-100">로그인</button>
-							
 							<div class="d-flex justify-content-between">
 							    <a id="kakao-login-btn" href="javascript:loginWithKakao()" class="kakao-login-btn btn">카카오 로그인</a>
 							    <a href="/kakaoRegister" class="kakao-register-btn btn">카카오 회원가입</a>

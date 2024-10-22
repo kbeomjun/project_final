@@ -2,6 +2,8 @@ package kr.kh.fitness.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -224,11 +226,22 @@ public class UserController {
     // 아이디 찾기 처리
     @ResponseBody
     @PostMapping("/find/id")
-    public String findIdPost(@RequestParam String name, @RequestParam String email) {
+    public Map<String, Object> findIdPost(@RequestParam String name, @RequestParam String email) {
         logger.info("아이디 찾기 시도: 이름 - " + name + ", 이메일 - " + email);
+        
+        Map<String, Object> response = new HashMap<>();
         String userId = memberService.findId(name, email);
-        logger.info("아이디 찾기 결과: " + (userId != null ? userId : "찾기 실패"));
-        return userId != null ? userId : "fail";
+        
+        if (userId != null) {
+            response.put("success", true);
+            response.put("username", userId);
+            logger.info("아이디 찾기 결과: " + userId);
+        } else {
+            response.put("success", false);
+            logger.info("아이디 찾기 결과: 찾기 실패");
+        }
+        
+        return response; // JSON 형식의 응답 반환
     }
     
     // 비밀번호 찾기 페이지로 이동
