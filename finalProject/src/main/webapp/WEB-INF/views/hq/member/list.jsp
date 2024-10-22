@@ -69,6 +69,7 @@
 				        		<th>전화번호</th>
 				        		<th>계정</th>
 				        		<th>이메일</th>
+				        		<th>상태</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
@@ -83,6 +84,10 @@
 					        		<td>${me.me_phone}</td>
 					        		<td>${me.me_id}</td>
 					        		<td>${me.me_email}</td>
+					        		<td>
+					        			<c:if test="${me.me_authority == 'USER'}">사용중</c:if>
+					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
+					        		</td>
 					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 					        		</td>
@@ -216,8 +221,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [6], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+		        { targets: [7], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
 		    ]
 		});
 	</script>
