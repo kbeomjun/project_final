@@ -142,7 +142,7 @@
 		from 
 			member 
 		where 
-			me_authority = 'user'
+			me_authority in('user', 'removed')
 		and
 			me_name like concat('%', #{search},'%')
 		order by
