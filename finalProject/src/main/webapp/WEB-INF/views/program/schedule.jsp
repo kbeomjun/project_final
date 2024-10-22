@@ -31,7 +31,7 @@
 					<c:set var="outline" value="outline-" />
 				</c:otherwise>
 			</c:choose>
-			<c:if test="${br.br_name ne '본점'}">
+			<c:if test="${br.br_name ne '본사'}">
 			<a class="btn btn-${outline}info"
 				href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br.br_name}/${pr_name != null ? pr_name : 'null'}"/>">
 				${br.br_name } </a>

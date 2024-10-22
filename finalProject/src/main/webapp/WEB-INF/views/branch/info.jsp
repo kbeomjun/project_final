@@ -40,7 +40,7 @@
 				class="btn btn-outline-secondary btn-branch mb-1 ${active}"
 				href=<c:url value="/branch/info"/>>전지점보기</a></li>
 			<c:forEach items="${br_list}" var="br">
-				<c:if test="${br.br_name ne '본점'}">
+				<c:if test="${br.br_name ne '본사'}">
 				<c:choose>
 					<c:when test="${br.br_name eq select}">
 						<c:set var="active" value="active" />
@@ -525,7 +525,7 @@ function MarkerTracker(map, target) {
 <script type="text/javascript">
 
 	<c:forEach var="branch" items="${br_list}">
-		<c:if test="${branch.br_name == '본점'}">
+		<c:if test="${branch.br_name == '본사'}">
 		    var address = '${branch.br_address}';
 		</c:if>
 	</c:forEach>
@@ -537,7 +537,7 @@ function MarkerTracker(map, target) {
 		var mapContainer = document.getElementById('map-total'), // 지도를 표시할 div  
 	    mapOption = { 
 	        level: 3, // 지도의 확대 레벨
-	        center: new kakao.maps.LatLng(coord.lat, coord.lng), // 지도의 중심좌표 (본점)
+	        center: new kakao.maps.LatLng(coord.lat, coord.lng), // 지도의 중심좌표 (본사)
 	    };
 	
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -572,7 +572,7 @@ function MarkerTracker(map, target) {
 						
 				 	content = '<div class="customoverlay">'
 			 		content += '<a href="<c:url value="/branch/detail/'+ branch.title +'/1" />"'
-				 	if(branch.title == '본점'){
+				 	if(branch.title == '본사'){
 					 	content += 'onclick="return false;"'
 				 	}
 			 		content += '>'
@@ -630,7 +630,7 @@ function MarkerTracker(map, target) {
 	    console.error('오류:', error);
 	});
 	
-/* 	// 지도의 중심을 '본점' 위치로 설정
+/* 	// 지도의 중심을 '본사' 위치로 설정
     map.setCenter(mapOption.center); */
 	</script>
 </c:when>
