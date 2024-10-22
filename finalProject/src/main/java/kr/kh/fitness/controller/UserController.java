@@ -2,6 +2,9 @@ package kr.kh.fitness.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -59,50 +62,115 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(MemberVO member, @RequestParam(value = "autologin", required = false) String autologin,
 			Model model, HttpSession session, HttpServletResponse response) {
-		logger.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
+		 logger.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
 
+<<<<<<< Updated upstream
 		try {
 			MemberVO user = memberService.login(member, response);
 			if (user != null) {
 				// 자동 로그인 플래그 설정: 체크박스가 선택되었으면 "true"로 전송됨
 				boolean isAutoLogin = "true".equals(autologin);
 				user.setAutoLogin(isAutoLogin);
+=======
+	        try {
+	            // 로그인 서비스 호출
+	            MemberVO user = memberService.login(member, response);
+	            if (user == null) {
+	                // 로그인 실패 원인에 대한 상세 로그 추가
+	                MemberVO dbUser = memberService.getMemberID(member.getMe_id());
+	                if (dbUser == null) {
+	                    logger.warn("로그인 실패: 존재하지 않는 사용자 ID - " + member.getMe_id());
+	                } else {
+	                    logger.warn("로그인 실패: 비밀번호 불일치 - 사용자 ID: " + member.getMe_id());
+	                }
+>>>>>>> Stashed changes
 
-				session.setAttribute("user", user);
-				model.addAttribute("msg", "로그인을 성공했습니다");
-				model.addAttribute("url", "/");
-				logger.info("로그인 성공: " + user.getMe_id() + " (자동 로그인: " + isAutoLogin + ")");
-			} else {
-				model.addAttribute("msg", "없는 아이디거나 잘못 입력하셨습니다");
-				model.addAttribute("url", "/login");
-				logger.warn("로그인 실패: 없는 아이디 또는 비밀번호 불일치");
-			}
-			model.addAttribute("user", user);
-		} catch (Exception e) {
-			logger.error("로그인 처리 중 오류 발생", e);
-			model.addAttribute("msg", "로그인 처리 중 오류가 발생했습니다");
-			model.addAttribute("url", "/login");
-		}
+	                model.addAttribute("msg", "없는 아이디거나 잘못 입력하셨습니다");
+	                model.addAttribute("url", "/login");
+	                return "/main/message";
+	            }
 
-		return "/main/message";
+	            logger.info("로그인 성공: 사용자 ID - " + user.getMe_id());
+
+	            // 자동 로그인 플래그 설정
+	            boolean isAutoLogin = "true".equals(autologin);
+	            user.setAutoLogin(isAutoLogin);
+
+	            // 세션에 사용자 정보 저장
+	            session.setAttribute("user", user);
+	            logger.info("세션에 사용자 정보 저장: " + user);
+
+	            // 자동 로그인 선택 시 쿠키 설정
+	            if (isAutoLogin) {
+	                // 고유한 토큰 생성 (UUID 사용)
+	                String autoLoginToken = UUID.randomUUID().toString();
+	                logger.info("생성된 자동 로그인 토큰: " + autoLoginToken);
+
+	                // 자동 로그인 유효 시간 설정 (현재 시간에서 7일 뒤로 설정)
+	                Calendar calendar = Calendar.getInstance();
+	                calendar.add(Calendar.DAY_OF_MONTH, 7);
+	                Date limitDate = calendar.getTime();
+	                user.setMe_limit(limitDate);
+	                logger.info("자동 로그인 유효 시간 설정: " + limitDate);
+
+	                // 사용자 정보에 토큰 설정하고 DB 업데이트
+	                user.setMe_cookie(autoLoginToken);
+	                try {
+	                    memberService.updateMemberCookie(user);
+	                    logger.info("DB에 자동 로그인 토큰과 유효 시간 업데이트 완료: 사용자 ID: " + user.getMe_id());
+	                } catch (Exception e) {
+	                    logger.error("DB 업데이트 중 오류 발생: ", e);
+	                }
+
+	                // 쿠키 생성 및 설정 (7일 동안 유지)
+	                Cookie cookie = new Cookie("me_cookie", autoLoginToken);
+	                cookie.setMaxAge(7 * 24 * 60 * 60); // 7일 동안 유지
+	                cookie.setPath("/");
+	                response.addCookie(cookie);
+	                logger.info("자동 로그인 쿠키 설정 완료: 쿠키 이름 - me_cookie, 쿠키 값 - " + autoLoginToken);
+	            }
+
+	            model.addAttribute("msg", "로그인을 성공했습니다");
+	            model.addAttribute("url", "/");
+	            logger.info("로그인 성공: " + user.getMe_id() + " (자동 로그인: " + isAutoLogin + ")");
+	        } catch (Exception e) {
+	            logger.error("로그인 처리 중 오류 발생", e);
+	            model.addAttribute("msg", "로그인 처리 중 오류가 발생했습니다");
+	            model.addAttribute("url", "/login");
+	        }
+	        return "/main/message";
 	}
 
 	@GetMapping("/logout")
 	public String logout(Model model, HttpSession session, HttpServletResponse response) {
-		session.removeAttribute("user");
-		// 로그아웃 시 쿠키 삭제
-		Cookie cookie = new Cookie("me_cookie", null);
-		cookie.setMaxAge(0); // 즉시 삭제
-		cookie.setPath("/");
-		response.addCookie(cookie);
+		// 세션에서 사용자 정보 가져오기 (로그인된 사용자가 있는지 확인)
+        MemberVO user = (MemberVO) session.getAttribute("user");
 
-		model.addAttribute("msg", "로그아웃 했습니다");
-		model.addAttribute("url", "/");
-		return "/main/message";
+        if (user != null) {
+            logger.info("로그아웃 시도: 사용자 ID - " + user.getMe_id());
+            // DB에서 me_cookie와 me_limit 값을 null로 업데이트
+            memberService.clearLoginCookie(user.getMe_id());
+            logger.info("DB에서 자동 로그인 정보 삭제 완료: 사용자 ID - " + user.getMe_id());
+            // 세션에서 사용자 정보 제거 (로그아웃 처리)
+            session.removeAttribute("user");
+            logger.info("세션에서 사용자 정보 제거 완료");
+        }
+
+        // 로그아웃 시 쿠키 삭제
+        Cookie cookie = new Cookie("me_cookie", null);
+        cookie.setMaxAge(0); // 즉시 삭제
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        logger.info("자동 로그인 쿠키 삭제 완료");
+
+        model.addAttribute("msg", "로그아웃 했습니다");
+        model.addAttribute("url", "/");
+        return "/main/message";
 	}
 
 	@GetMapping("/terms")
 	public String termsPage() {
+		logger.info("약관 페이지로 이동");
 		return "/member/terms";
 	}
 
