@@ -12,7 +12,9 @@
 	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
 	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
 	#thead th{text-align: center;}
-	#tbody td{text-align: left;}
+	#tbody td{text-align: center;}
+	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+   	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
 </style>
 </head>
 <body>
@@ -21,38 +23,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <div class="sidebar-sticky">
-	                <h4 class="sidebar-heading mt-3">지점관리자 메뉴</h4>
-	                <ul class="nav flex-column">
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/program/list"/>">프로그램관리</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/schedule/list"/>">프로그램일정관리</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/order/list"/>">운동기구 발주목록</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/employee/list"/>">직원관리</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/member/list"/>">회원관리</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/branch/detail"/>">지점 상세보기</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/equipment/list"/>">운동기구 보유목록</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/admin/inquiry/list"/>">문의내역</a>
-	                    </li>	                    	                    	                    	                    	                    	                    
-	                </ul>
-	            </div>
+				<%@ include file="/WEB-INF/views/layout/brAdminSidebar.jsp" %>	
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -70,7 +41,7 @@
 					      		<tr>
 					        		<th>문의번호</th>
 					        		<th>제목</th>
-					        		<th>작성자</th>
+					        		<th>작성자이메일</th>
 					        		<th>날짜</th>
 					        		<th>유형</th>
 					        		<th>상태</th>
@@ -260,19 +231,18 @@
 	<script type="text/javascript">
 		var table = $('.table-wait').DataTable({
 			language: {
-		        search: "검색:",
-		        zeroRecords: "",
-		        emptyTable: "등록된 내역이 없습니다."
-		    },
+			    search: "",
+			    searchPlaceholder: "검색",
+			    zeroRecords: "",
+			    emptyTable: ""
+			},
 			scrollY: 600,
 		    paging: false,
 		    info: false,
-		    order: [[ 3, "asc" ]],
+		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        {
-		        	targets: [5, 6], 
-		        	orderable: false
-	        	}
+		        { targets: [5, 6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 		    ]
 		});
 	
@@ -289,37 +259,35 @@
 			if(name == 'wait'){
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 3, "asc" ]],
+				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}else{
 				table = $('.table-'+name).DataTable({
 					language: {
-				        search: "검색:",
+						search: "",
+						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: "등록된 내역이 없습니다."
+				        emptyTable: ""
 				    },
 					scrollY: 600,
 				    paging: false,
 				    info: false,
-				    order: [[ 3, "desc" ]],
+				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        {
-				        	targets: [5, 6], 
-				        	orderable: false
-			        	}
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}
@@ -357,6 +325,7 @@
 			});
 		});
 		$('.btn-close').click(function(){
+			$('.error').children().remove();
 			$('#mi_answer').val("");
 		});
 		
