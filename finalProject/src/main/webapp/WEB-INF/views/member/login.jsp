@@ -64,10 +64,7 @@
 							        <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
 							        <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
 							    </div>
-							</div>
-							<div class="d-flex justify-content-between">
-							    <a id="kakao-login-btn" href="javascript:loginWithKakao()" class="kakao-login-btn btn">카카오 로그인</a>
-							    <a href="/kakaoRegister" class="kakao-register-btn btn">카카오 회원가입</a>
+							    <button type="submit" class="btn btn-success w-100">로그인</button>
 							</div>
 						</form>
 					</div>
