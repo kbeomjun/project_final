@@ -15,6 +15,8 @@
     
     <!-- 기존 회원권 정보 표시 -->
     <c:set var="isRePayment" value="${not empty firstStartDate}" />
+    <c:set var="isRePaymentForPT" value="${not empty ptFirstStartDate}" />
+
 
     <c:if test="${firstStartDate != null && firstStartDate != ''}">
         <div class="membership-info my-10">
@@ -75,11 +77,12 @@
 					    <label for="pa_start">PT 시작 날짜:</label>
 					    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${firstStartDate}" max="${lastEndDate}" required>
 					</c:if>
-					
-					<p>시작일 : ${firstStartDate} / 만료일 : ${lastEndDate} / 오늘 날짜 : ${currentDate}</p>
-					
-					<p>PT 시작일 : ${ptFirstStartDate} / PT 만료일 : ${ptLastEndDate} / 오늘 날짜 : ${currentDate}</p>
                 </div>
+				<div class="my-3">
+					<p>오늘 날짜 : ${currentDate}</p>
+					<p>회원권 시작일 : ${firstStartDate} / 회원권 만료일 : ${lastEndDate}</p>
+					<p>PT 시작일 : ${ptFirstStartDate} / PT 만료일 : ${ptLastEndDate}</p>
+				</div>
             </div>
         </div>
         
@@ -114,6 +117,8 @@
 	<!-- 아이엠포트 SDK :: CDN -->
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
+    	console.log("isRePaymentForPT: ${isRePaymentForPT}");
+	
 		$(document).ready(function () {
 		    var IMP = window.IMP; // 생략 가능, 아이엠포트 객체 초기화
 		    IMP.init('imp56284313'); // 실제 가맹점 식별 코드 - I'mport에서 가져와야 함
@@ -131,29 +136,8 @@
 
 	        console.log('paEnd:', paEnd);
 	        console.log('currentDate:', currentDate);
-
-			// 선택된 날짜가 회원권 시작일과 만료일 사이인지 확인
-	        $('#pa_start').on('change', function() {
-	            const selectedDate = new Date($(this).val());
-	            const startDate = new Date('${firstStartDate}'); // JSP에서 시작일을 가져옴
-	            const expirationDate = new Date('${lastEndDate}'); // JSP에서 만료일을 가져옴
-
-	            // 선택된 날짜가 회원권 기간 내에 있는지 확인
-	            if (selectedDate < startDate || selectedDate > expirationDate) {
-	                alert("PT 시작 날짜는 회원권 기간 내에 있어야 합니다.\n" + 
-	                      "시작일: " + '${firstStartDate}' + "\n" + 
-	                      "만료일: " + '${lastEndDate}' + "를 참고하세요.");
-	                $(this).val(''); // 잘못된 날짜를 선택했을 경우 입력 필드 비우기
-	            }
-	            
-	            // 선택한 PT의 시작 날짜가 회원권 만료일보다 이전인지 확인
-	            if (selectedStartDate < membershipEndDate) {
-	                alert("선택한 PT 이용권의 시작 날짜가 회원권 만료일(${lastEndDate})보다 이전입니다. 회원권을 먼저 결제하세요.");
-	                $(this).val(''); // 시작 날짜 필드 초기화
-	            }
-	        });
 		
-		    // user 정보가 없는 경우 결제 버튼 숨기기 및 경고 메시지 표시
+			// user 정보가 없는 경우 결제 버튼 숨기기 및 경고 메시지 표시
 		    if (!me_id) {
 		        alert("로그인 정보가 없습니다. 결제를 진행할 수 없습니다.");
 		        location.href = '<%=request.getContextPath()%>/payment/paymentList'; // paymentList 페이지로 이동
@@ -251,51 +235,68 @@
 		        console.log(count);
 		        console.log(formattedPrice);
 		        
-		     	// 선택된 옵션의 데이터 가져오기
-		        const ptPeriod = parseInt(selectedOption.data('date'), 10); // PT 기간 가져오기 (예: 30일)
-		        let ptEndDate;
-		        
-		        if (${isRePaymentForPT}) {
-		            const ptLastEndDateStr = '${ptLastEndDate}'; // 서버에서 전달받은 PT 마지막 만료일
-		            ptEndDate = new Date(ptLastEndDateStr); // PT 마지막 만료일을 Date 객체로 변환
-		            ptEndDate.setDate(ptEndDate.getDate() + 1); // 재결제는 마지막 만료일 + 1일로 설정
-		        } else {
-		            const startDate = $('#pa_start').val(); // 사용자가 선택한 시작 날짜
-		            if (startDate) {
-		                ptEndDate = new Date(startDate);
-		            } else {
-		                alert("시작 날짜를 선택해야 합니다."); // 시작 날짜가 없으면 경고
-		                return;
-		            }
-		        }
+			    const ptStartDateStr = $('#pa_start').val(); // PT 시작일 가져오기
+			    const ptPeriod = parseInt(selectedOption.data('date'), 10); // PT 기간 가져오기 (1개월, 2개월)
+			    let ptEndDate;
+			    
+			    if (!${isRePaymentForPT}) {
+			        // 첫 결제 로직
+			        const ptStartDate = ptStartDateStr; // 문자열 그대로 사용
+			        console.log("ptStartDate의 문자열 그대로 사용 : ", ptStartDate);
+			        if (ptStartDate) {
+			            ptEndDate = calculateExpirationDate(ptStartDate, ptPeriod); // 'YYYY-MM-DD' 반환
+			            console.log("첫결제 로직의 ptEndDate: ", ptEndDate);
+			        }
+			    } else {
+			        // 재결제 로직
+			        const lastPTEndDateStr = '${ptLastEndDate}'; // 문자열 그대로 사용
+			        if (lastPTEndDateStr) {
+			            ptEndDate = calculateExpirationDate(lastPTEndDateStr, ptPeriod); // 'YYYY-MM-DD' 반환
+			            console.log("재결제 로직의 ptEndDate: ",ptEndDate);
+			        }
+			    }
 
-		        ptEndDate.setDate(ptEndDate.getDate() + ptPeriod); // PT 만료일 계산
+			    console.log("결제 로직을 탄 후 계산된 만료일 : ", ptEndDate);
 
-				// 회원권 만료일 비교
-		        const membershipEndDateStr = '${lastEndDate}'; // 서버에서 전달받은 회원권 만료일
-		        const membershipEndDate = new Date(membershipEndDateStr);
 
-		        if (ptEndDate > membershipEndDate) {
-		            // PT 시작일 계산
-		            const ptStartDate = ${isRePaymentForPT} ? ptEndDate : new Date($('#pa_start').val()); // 시작일 설정
-		            const formattedPtEndDate = ptEndDate.toISOString().split('T')[0]; // 만료일 형식 지정
+			    if (ptEndDate) {
+			        // ptEndDate가 Date 객체인지 확인하고, 아니면 Date 객체로 변환
+			        if (!(ptEndDate instanceof Date)) {
+			            ptEndDate = new Date(ptEndDate);
+			        }
 
-		            alert("PT 만료일이 회원권 만료일보다 큽니다. 회원권을 결제해야 합니다.\n" +
-		            	  "회원님의 회원권 만료일 : " + membershipEndDateStr + "\n" +
-		                  "선택한 PT의 만료일 : " + formattedPtEndDate);
-		            
-					// 추가 알림을 띄우기
-		            const confirmPayment = confirm("회원권을 결제하시겠습니까?");
-		            if (confirmPayment) {
-		                // 회원권 결제 페이지로 리다이렉트
-		                window.location.href = "<c:url value='/payment/paymentInsert'/>"; // 회원권 결제 URL로 변경
-		            }
-		            
-		            return; // 결제 모달을 열지 않도록 종료
-		        } else {
-		            // 결제 모달을 표시하는 코드
-		            $('#confirmModal').modal('show'); // 결제 확인 모달을 띄움
-		        }
+			        // 유효한 Date 객체인지 확인 후 포맷팅
+			        if (!isNaN(ptEndDate)) {
+			            const formattedPtEndDate = ptEndDate.toISOString().split('T')[0]; // ISO 문자열로 포맷팅
+			            console.log("계산된 PT 만료일: ", formattedPtEndDate);
+
+			            // 서버에서 전달된 회원권 만료일을 그대로 사용 (Date 객체로 변환하지 않음)
+			            const membershipEndDateStr = '${lastEndDate}'; // 서버에서 전달받은 회원권 만료일
+
+			            console.log("서버에서 전달받은 회원권 만료일 : ", membershipEndDateStr);
+
+			            // 날짜 문자열 비교를 위한 조건문 추가
+			            if (formattedPtEndDate > membershipEndDateStr) {
+			                alert("PT 만료일이 회원권 만료일보다 큽니다. 회원권을 결제해야 합니다.\n" +
+			                      "회원님의 회원권 만료일 : " + membershipEndDateStr + "\n" +
+			                      "선택한 PT의 만료일 : " + formattedPtEndDate);
+
+			                const confirmPayment = confirm("회원권을 결제하시겠습니까?");
+			                if (confirmPayment) {
+			                    window.location.href = "/fitness/payment/paymentInsert"; // 회원권 결제 URL로 이동
+			                }
+			                return;
+			            } else {
+			                $('#confirmModal').modal('show'); // 결제 확인 모달을 띄움
+			            }
+			        } else {
+			            console.error("유효하지 않은 만료일입니다.");
+			            alert("만료일을 계산할 수 없습니다.");
+			        }
+			    } else {
+			        console.error("만료일을 계산할 수 없습니다.");
+			        alert("만료일을 계산할 수 없습니다.");
+			    }
 		        
 		        // 팝업 내용 설정
 		        const modalContent = `
@@ -364,7 +365,8 @@
 		            
 		            // 아이엠포트 결제 요청
 		            IMP.request_pay({
-		                pg: 'kakaopay', // 결제 PG
+		                pg: 'kakaopay', // 결제 - 카카오페이 PG
+		                // pg: 'html5_inicis', // 결제 - KG이니시스 : 실제 결제 되므로 결제 하면 안됨.
 		                pay_method: 'card', // 결제 방법
 		                merchant_uid: 'merchant_' + new Date().getTime(), // 가맹점 주문 ID
 		                name: '카카오페이결제', // 결제 이름
@@ -440,6 +442,71 @@
 		    }); // js-btn-insert click
 			
 		}); // document ready
+		
+		
+		function calculateExpirationDate(ptStartDate, ptPeriod) {
+		    // "yyyy-mm-dd" 형식의 문자열을 분리
+		    let [year, month, day] = ptStartDate.split('-').map(Number);
+
+		    console.log("입력된 날짜 - 일:", day);
+		    
+		    // 현재 월의 마지막 날을 구함
+		    let lastDayOfCurrentMonth = new Date(year, month, 0).getDate();
+
+		    // ptPeriod 값을 사용하여 월을 증가시킴 (1, 2, 3 값이 그대로 들어옴)
+		    month += ptPeriod;
+
+		    // 월이 12월을 넘으면 년도를 증가시키고 월을 1로 설정
+		    if (month > 12) {
+		        month = 1;
+		        year += 1;
+		    }
+
+		    // 다음 달의 마지막 날을 구함
+		    let lastDayOfNextMonth = new Date(year, month, 0).getDate();
+
+		    // 만약 입력된 날짜가 월의 말일이면 다음 달의 말일로 설정
+		    if (day === lastDayOfCurrentMonth) {
+		        day = lastDayOfNextMonth;
+		        // console.log("만약 입력된 날짜가 월의 말일이면 다음 달의 말일로 설정 : ", day);
+		    } else if (day > lastDayOfNextMonth) {
+		        // 입력된 날짜가 다음 달의 마지막 날보다 크면 마지막 날로 설정
+		        day = lastDayOfNextMonth;
+		        // console.log("입력된 날짜가 다음 달의 마지막 날보다 크면 마지막 날로 설정 : ", day);
+		    } else {
+		        // dd-1 처리
+		        day -= 1;
+		    }
+
+		    // 새로운 날짜 객체 생성 (UTC 기반으로 생성하여 타임존 문제 방지)
+		    const resultDate = new Date(Date.UTC(year, month - 1, day));
+		    
+		    // console.log("새로운 날짜 객체 생성 : ", resultDate);
+
+		    // 결과를 yyyy-mm-dd 형식으로 반환
+		    const formattedDate = resultDate.toISOString().split('T')[0];
+		    // console.log("결과를 yyyy-mm-dd 형식으로 반환 : ", formattedDate);
+		    
+		    return formattedDate;
+		}
+
+		// 테스트용..ㅠㅠ
+		let result = calculateExpirationDate("2024-10-01", 1);
+		console.log("계산된 만료일:", result); // "2024-11-01"로 예상
+
+		result = calculateExpirationDate("2024-10-17", 1);
+		console.log("계산된 만료일:", result); // "2024-11-16"로 예상
+
+		result = calculateExpirationDate("2024-10-21", 1);
+		console.log("계산된 만료일:", result); // "2024-11-20"로 예상
+
+		result = calculateExpirationDate("2024-10-31", 3);
+		console.log("계산된 만료일:", result); // "2024-11-30"로 예상
+
+		result = calculateExpirationDate("2025-01-31", 3);
+		console.log("계산된 만료일:", result); // 3달 뒤 "2025-04-30"로 예상
+
+		
 	</script>
 
 	    
