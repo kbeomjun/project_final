@@ -101,7 +101,7 @@
 	</div>
 </body>
 
-<script>
+<!-- <script>
   // 카카오 SDK 초기화
   Kakao.init('9c8609073560662bd995a54cb43bbe28'); // 발급받은 실제 JavaScript 앱 키를 사용
   console.log(Kakao.isInitialized()); // 초기화 여부 확인 (true/false 출력)
@@ -202,5 +202,5 @@
       }
     });
   }
-</script>
+</script> -->
 </html>
