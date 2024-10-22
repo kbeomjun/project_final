@@ -98,20 +98,25 @@
 	</div>
 
 	<script type="text/javascript">
+		let emailCheckPassed = true;
+		
 		//이메일 중복 체크
 	    $('#me_email').on('keyup', function() {
 	        var email = $(this).val();
+	        var id = '${member.me_id}';
 	        let regexEmail = /^\w{4,13}@\w{4,8}\.[a-z]{2,3}$/;
 	        
 	        // 이메일이 비어있는 경우 체크하지 않음
 	        if (email == '') {
 	            $('#emailCheckResult').html('');
+	            emailCheckPassed = false;
 	            return;
 	        }
 	        
 	        // 이메일 형식 체크
 	        if (!regexEmail.test(email)) {
 	            $('#emailCheckResult').html('<span style="color: red;">이메일 형식이 올바르지 않습니다.</span>');
+	            emailCheckPassed = false;
 	            return;
 	        } else {
 	            $('#emailCheckResult').html('<span style="color: green;">올바른 이메일 형식입니다. 중복 확인 중...</span>');
@@ -120,13 +125,18 @@
 		        	async : true,
 		        	url : '<c:url value="/client/mypage/checkEmail"/>', 
 		        	type : 'post', 
-		        	data : {email : email},
+		        	data : {
+		        		id : id,
+		        		email : email
+		        		},
 		        	dataType : "json",
 		        	success : function (data){
 		                if (data) {
 		                    $('#emailCheckResult').html('<span style="color: red;">이미 사용 중인 이메일입니다.</span>');
+		                    emailCheckPassed = false;
 		                } else {
 		                    $('#emailCheckResult').html('<span style="color: green;">사용 가능한 이메일입니다.</span>');
+		                    emailCheckPassed = true;
 		                }
 		        	}, 
 		        	error : function(jqXHR, textStatus, errorThrown){
@@ -135,21 +145,20 @@
 		        });
 	        }
 	    });
+		
+		$('#me_phone').on('input', function () {
+		    // 입력값에서 숫자만 남기고 모두 제거
+		    let inputVal = $(this).val().replace(/[^0-9]/g, '');
+		    $(this).val(inputVal);
+		});
 	</script>
 
    <script type="text/javascript">
     	// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
-		
-		$('#me_name').keyup(function(){
-			$('.error-name').children().remove();
-			
-			if($('#me_name').val() == ''){
-				$('.error-name').append(msgRequired);
-			}else{
-				$('.error-name').children().remove();	
-			}
-		});
+		let msgEmailCheck = `<span>이메일 중복 확인을 해주세요.</span>`;
+		let msgRegexPhone = `<span>올바른 전화번호 형식을 입력하세요.</span>`;
+		let regexPhone = /^01[016789]\d{3,4}\d{4}$/;
 		
 		$('#me_email').keyup(function(){
 			$('.error-email').children().remove();
@@ -161,13 +170,27 @@
 			}
 		});
 		
+		$('#me_name').keyup(function(){
+			$('.error-name').children().remove();
+			
+			if($('#me_name').val() == ''){
+				$('.error-name').append(msgRequired);
+			}else{
+				$('.error-name').children().remove();	
+			}
+		});
+		
 		$('#me_phone').keyup(function(){
 			$('.error-phone').children().remove();
 			
 			if($('#me_phone').val() == ''){
 				$('.error-phone').append(msgRequired);
 			}else{
-				$('.error-phone').children().remove();	
+				if(!regexPhone.test($('#me_phone').val())){
+					$('.error-phone').append(msgRegexPhone);
+				}else{
+					$('.error-phone').children().remove();	
+				}
 			}
 		});
 		
@@ -185,6 +208,12 @@
 			$('.error').children().remove();
 			let flag = true;
 			
+		    if (!emailCheckPassed) {
+				$('.error-email').append(msgEmailCheck);
+				$('#me_email').focus();
+		        flag = false;
+		    }
+		    
 			if($('#me_name').val() == ''){
 				$('.error-name').append(msgRequired);
 				$('#me_name').focus();
@@ -193,6 +222,10 @@
 			
 			if($('#me_phone').val() == ''){
 				$('.error-phone').append(msgRequired);
+				$('#me_phone').focus();
+				flag = false;
+			} else if(!regexPhone.test($('#me_phone').val())){
+				$('.error-phone').append(msgRegexPhone);
 				$('#me_phone').focus();
 				flag = false;
 			}
@@ -208,7 +241,7 @@
 				$('#me_detailAddress').focus();
 				flag = false;
 			}
-
+			
 			return flag;
 		});
     </script>

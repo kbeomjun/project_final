@@ -518,8 +518,11 @@ public class ClientController {
 	//마이페이지 개인정보수정 email중복체크
 	@ResponseBody
     @PostMapping("/mypage/checkEmail")
-    public boolean mypageCheckEmail(@RequestParam("email") String email) {
-    	
+    public boolean mypageCheckEmail(@RequestParam("email") String email, @RequestParam("id") String me_id) {
+    	MemberVO member = clientService.getMember(me_id);
+    	if(email.equals(member.getMe_email())) {
+    		return false;
+    	}
     	return clientService.isEmailDuplicate(email);
     }
 	
