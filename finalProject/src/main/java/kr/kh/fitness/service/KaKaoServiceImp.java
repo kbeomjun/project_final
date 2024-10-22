@@ -113,7 +113,7 @@ public class KaKaoServiceImp implements KakaoService {
 				result.append(br_line); // StringBuilder 사용
 			}
 			
-			System.out.println("response: " + result.toString());
+			//System.out.println("response: " + result.toString());
 
 			// Gson을 사용하여 JSON 문자열을 JsonObject로 변환
 			Gson gson = new Gson();
