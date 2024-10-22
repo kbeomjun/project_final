@@ -72,7 +72,7 @@ function validateForm() {
 
     // 비밀번호 검증
     if (!passwordPattern.test(me_pw)) {
-        alert("비밀번호는 4~15자 길이로, 영어, 숫자, 특수문자(!@#$)만 포함할 수 있습니다.");
+        alert("비밀번호는 8~15자 길이로, 영어, 숫자, 특수문자(!@#$)만 포함할 수 있습니다.");
         return false; // 검증 실패 시 전송 방지
     }
 
@@ -131,7 +131,7 @@ function validatePassword() {
     const pwValidationMessage = document.getElementById("pwValidationMessage");
 
     if (!passwordPattern.test(me_pw)) {
-        pwValidationMessage.textContent = "비밀번호는 4~15자 길이로, 영어, 숫자, 특수문자(!@#$)만 포함할 수 있습니다.";
+        pwValidationMessage.textContent = "비밀번호는 8~15자 길이로, 영어, 숫자, 특수문자(!@#$)만 포함할 수 있습니다.";
     } else {
         pwValidationMessage.textContent = ""; // 메시지 초기화
     }
