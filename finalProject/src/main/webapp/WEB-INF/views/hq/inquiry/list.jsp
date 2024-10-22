@@ -112,15 +112,15 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${miDoneList}" var="mi">
 				    			<tr>
-					        		<td class="align-content-center">${mi.mi_num}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">${mi.mi_email}</td>
-					        		<td class="align-content-center">
+					        		<td>${mi.mi_num}</td>
+					        		<td>${mi.mi_title}</td>
+					        		<td>${mi.mi_email}</td>
+					        		<td>
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">${mi.mi_it_name}</td>
-					        		<td class="align-content-center">${mi.mi_state}</td>
-					        		<td class="align-content-center">
+					        		<td>${mi.mi_it_name}</td>
+					        		<td>${mi.mi_state}</td>
+					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -253,6 +253,7 @@
     </script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('.table-wait').DataTable({
 			language: {
 				search: "",
@@ -265,7 +266,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [5, 6], orderable: false }
+		        { targets: [5, 6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 		    ]
 		});
 	
@@ -292,7 +294,8 @@
 				    info: false,
 				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false }
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}else{
@@ -308,7 +311,8 @@
 				    info: false,
 				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false }
+				        { targets: [5, 6], orderable: false },
+				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 				    ]
 				});
 			}

@@ -75,15 +75,15 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${meList}" var="me">
 				    			<tr>
-					        		<td class="align-content-center">${me.me_name}</td>
-					        		<td class="align-content-center">
+					        		<td>${me.me_name}</td>
+					        		<td>
 					        			<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">${me.me_gender}</td>
-					        		<td class="align-content-center">${me.me_phone}</td>
-					        		<td class="align-content-center">${me.me_id}</td>
-					        		<td class="align-content-center">${me.me_email}</td>
-					        		<td class="align-content-center">
+					        		<td>${me.me_gender}</td>
+					        		<td>${me.me_phone}</td>
+					        		<td>${me.me_id}</td>
+					        		<td>${me.me_email}</td>
+					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 					        		</td>
 					      		</tr>
@@ -203,7 +203,7 @@
 	</script>
 	
 	<script type="text/javascript">
-		// 테이블 api
+		// 데이터테이블
 		$('#table').DataTable({
 			language: {
 		        search: "",
@@ -216,7 +216,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [6], orderable: false }
+		        { targets: [6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
 		    ]
 		});
 	</script>

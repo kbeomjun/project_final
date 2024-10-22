@@ -126,6 +126,7 @@
 	</div>
 	
 	<script type="text/javascript">
+		// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
 		let regexNum = /^[0-9]{1,}$/;
@@ -272,6 +273,7 @@
 	</script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('#table').DataTable({
 			language: {
 				search: "",

@@ -77,12 +77,12 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${ptList}" var="pt">
 				    			<tr>
-				    				<td class="align-content-center">${pt.pt_name}</td>
-					        		<td class="align-content-center">${pt.pt_type}</td>
-					        		<td class="align-content-center">${pt.pt_date}</td>
-					        		<td class="align-content-center">${pt.pt_count}</td>
-					        		<td class="align-content-center">${pt.formattedPrice}</td>
-					        		<td class="align-content-center">
+				    				<td>${pt.pt_name}</td>
+					        		<td>${pt.pt_type}</td>
+					        		<td>${pt.pt_date}</td>
+					        		<td>${pt.pt_count}</td>
+					        		<td>${pt.formattedPrice}</td>
+					        		<td>
 					        			<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
 					        		</td>
 					      		</tr>
@@ -184,6 +184,7 @@
 	</div>
 	
 	<script type="text/javascript">
+		// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let msgNum = `<span>정상적인 숫자가 아닙니다.</span>`;
 		let regexNum = /^[0-9]{1,}$/;
@@ -367,7 +368,7 @@
     </script>
     
     <script type="text/javascript">
-		// 테이블 api
+		// 데이터테이블
 		$('#table').DataTable({
 			language: {
 				search: "",
@@ -380,7 +381,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [5], orderable: false }
+		        { targets: [5], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5], className: "align-content-center"}
 		    ]
 		});
 	</script>

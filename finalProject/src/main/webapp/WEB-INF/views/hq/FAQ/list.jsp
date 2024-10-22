@@ -76,12 +76,12 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${FAQList}" var="mi" varStatus="status">
 				    			<tr>
-					        		<td class="align-content-center">${status.count}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">
+					        		<td>${status.count}</td>
+					        		<td>${mi.mi_title}</td>
+					        		<td>
 					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 				        			</td>
-					        		<td class="align-content-center">
+					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 					        		</td>
 					      		</tr>
@@ -224,6 +224,7 @@
     </script>
 	
 	<script type="text/javascript">
+		// 데이터테이블
 		var table = $('#table').DataTable({
 			language: {
 				search: "",
@@ -236,7 +237,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [3], orderable: false }
+		        { targets: [3], orderable: false },
+		        { targets: [0, 1, 2, 3], className: "align-content-center"}
 		    ]
 		});
 	
@@ -271,6 +273,7 @@
 	</script>
 	
 	<script type="text/javascript">
+		// 썸머노트
 		$('#mi_content').summernote({
 			tabsize: 2,
 			height: 350,

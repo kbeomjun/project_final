@@ -72,11 +72,11 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${brList}" var="br">
 						      	<tr>
-						        	<td class="align-content-center">${br.br_name}</td>
-							        <td class="align-content-center">${br.br_phone}</td>
-							        <td class="align-content-center">${br.br_address}(${br.br_detailAddress})</td>
-						        	<td class="align-content-center">${br.br_admin}</td>
-						        	<td class="align-content-center">
+						        	<td>${br.br_name}</td>
+							        <td>${br.br_phone}</td>
+							        <td>${br.br_address}(${br.br_detailAddress})</td>
+						        	<td>${br.br_admin}</td>
+						        	<td>
 						        		<a class="btn btn-outline-info" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
 						        	</td>
 						      	</tr>
@@ -101,7 +101,8 @@
 		    paging: false,
 		    info: false,
 		    columnDefs: [
-		        { targets: [4], orderable: false }
+		        { targets: [4], orderable: false },
+		        { targets: [0, 1, 2, 3, 4], className: "align-content-center"}
 		    ]
 		});
 	</script>

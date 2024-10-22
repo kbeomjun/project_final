@@ -76,16 +76,16 @@
 				    	<tbody id="tbody">
 				    		<c:forEach items="${emList}" var="em">
 						      	<tr>
-						        	<td class="align-content-center">${em.em_num}</td>
-							        <td class="align-content-center">${em.em_name} </td>
-							        <td class="align-content-center">${em.em_phone}</td>
-							        <td class="align-content-center">${em.em_email}</td>
-							        <td class="align-content-center">
+						        	<td>${em.em_num}</td>
+							        <td>${em.em_name} </td>
+							        <td>${em.em_phone}</td>
+							        <td>${em.em_email}</td>
+							        <td>
 							        	<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
 							        </td>
-							        <td class="align-content-center">${em.em_br_name}</td>
-							        <td class="align-content-center">${em.em_position}</td>
-						        	<td class="align-content-center">
+							        <td>${em.em_br_name}</td>
+							        <td>${em.em_position}</td>
+						        	<td>
 						        		<a class="btn btn-outline-info" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
 						        	</td>
 						      	</tr>
@@ -110,7 +110,8 @@
 		    paging: false,
 		    info: false,
 		    columnDefs: [
-		        { targets: [7], orderable: false }
+		        { targets: [7], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
 		    ]
 		});
 	</script>
