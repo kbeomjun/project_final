@@ -550,4 +550,3 @@ insert into `program_file` (pf_name, pf_sp_name)
         ('/프로그램/5ceb0beb-25ed-4dc5-b87e-e6b362d98fe3_크로스핏.jpg', '크로스핏'),
         ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_PT.jpg', 'PT'),
         ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa9c949fc_PT.jpg', 'PT');
-
