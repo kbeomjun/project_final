@@ -291,12 +291,9 @@ public class ClientServiceImp implements ClientService{
 		
 		MemberVO checkMember = clientDao.selectMember(member.getMe_id());
 		
-		//비번 암호화
-		String encPw = passwordEncoder.encode(member.getMe_pw());
-		//비번과 암호화된 비번이 같은 비번인지 알려줌
-		boolean res = passwordEncoder.matches(encPw, checkMember.getMe_pw());
+		boolean res = passwordEncoder.matches(member.getMe_pw(), checkMember.getMe_pw());
 		
-		if(res) {
+		if(!res) {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 		

@@ -19,7 +19,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -27,7 +27,7 @@
 	            <div class="pt-3 pb-2 mb-3">
 	                <h2>개인정보수정</h2>
 	                
-					<form action="<c:url value='/client/mypage/info/update'/>" method="post" id="form">
+					<form action="<c:url value='/mypage/info/update'/>" method="post" id="form">
 				        <div class="form-group">
 				            <label for="me_id">아이디:</label>
 				            <input type="text" class="form-control" name="me_id" value="${member.me_id}" readonly>
@@ -123,7 +123,7 @@
 			
 		        $.ajax({
 		        	async : true,
-		        	url : '<c:url value="/client/mypage/checkEmail"/>', 
+		        	url : '<c:url value="/mypage/checkEmail"/>', 
 		        	type : 'post', 
 		        	data : {
 		        		id : id,

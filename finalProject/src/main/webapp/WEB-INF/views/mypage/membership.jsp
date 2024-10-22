@@ -42,7 +42,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -112,7 +112,7 @@
 										<c:choose>
 											<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
 											<c:otherwise>
-												<a href="<c:url value="/client/mypage/review/insert/${list.pa_num}/${pm.cri.page}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
+												<a href="<c:url value="/mypage/review/insert/${list.pa_num}/${pm.cri.page}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
 											</c:otherwise>
 										</c:choose>
 									</td>
@@ -135,7 +135,7 @@
 					<c:if test="${pm.totalCount ne 0}">
 						<ul class="pagination justify-content-center">
 							<c:if test="${pm.prev}">
-								<c:url var="url" value="/client/mypage/membership/${me_id}">
+								<c:url var="url" value="/mypage/membership">
 									<c:param name="page" value="${pm.startPage - 1}"/>
 								</c:url>
 								<li class="page-item">
@@ -143,7 +143,7 @@
 								</li>
 							</c:if>
 							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<c:url var="url" value="/client/mypage/membership/${me_id}">
+								<c:url var="url" value="/mypage/membership">
 									<c:param name="page" value="${i}"/>
 								</c:url>
 								<c:choose>
@@ -159,7 +159,7 @@
 								</li>
 							</c:forEach>
 							<c:if test="${pm.next}">
-								<c:url var="url" value="/client/mypage/membership/${me_id}">
+								<c:url var="url" value="/mypage/membership">
 									<c:param name="page" value="${pm.endPage + 1}"/>
 								</c:url>
 								<li class="page-item">
@@ -180,7 +180,7 @@
 	    function loadRefundDetail(pa_num) {
 	        $.ajax({
 	        	async: true,
-	            url: '<c:url value="/client/mypage/refundDetail"/>',  // 환불 내역을 가져올 URL
+	            url: '<c:url value="/mypage/refundDetail"/>',  // 환불 내역을 가져올 URL
 	            type: 'GET',
 	            data: { pa_num: pa_num },  // 서버에 전달할 파라미터
 	            dataType : "json",

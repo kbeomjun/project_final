@@ -19,14 +19,14 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 	                <h2 class="mb-3">내 예약내역</h2>
-			   		<form action="<c:url value="/client/mypage/schedule/${me_id}"/>" method="get">
+			   		<form action="<c:url value="/mypage/schedule"/>" method="get">
 					    <button type="submit" name="view" value="present" class="btn btn<c:if test="${view ne 'present'}">-outline</c:if>-info mb-3">현재예약현황</button>
 					    <button type="submit" name="view" value="past" class="btn btn<c:if test="${view ne 'past'}">-outline</c:if>-info mb-3">이전예약내역</button>
 					</form>
@@ -52,7 +52,7 @@
 										<fmt:formatDate value="${list.bs_start}" pattern="yyyy"/>
 									</td>
 									<td>
-										<c:url var="url" value="/client/mypage/schedule/${me_id}">
+										<c:url var="url" value="/mypage/schedule">
 											<c:param name="view" value="${view}"/>
 											<c:param name="type" value="branch"/>
 											<c:param name="search" value="${list.bp_br_name}"/>
@@ -60,7 +60,7 @@
 										<a href="${url}">${list.bp_br_name}</a>
 									</td>
 									<td>
-										<c:url var="url" value="/client/mypage/schedule/${me_id}">
+										<c:url var="url" value="/mypage/schedule">
 											<c:param name="view" value="${view}"/>
 											<c:param name="type" value="program"/>
 											<c:param name="search" value="${list.bp_sp_name}"/>
@@ -68,7 +68,7 @@
 										<a href="${url}">${list.bp_sp_name}</a>
 									</td>
 									<td>
-										<c:url var="url" value="/client/mypage/schedule/${me_id}">
+										<c:url var="url" value="/mypage/schedule">
 											<c:param name="view" value="${view}"/>
 											<c:param name="type" value="trainer"/>
 											<c:param name="search" value="${list.em_name}"/>
@@ -84,7 +84,7 @@
 									</td>
 									<c:if test="${view eq 'present'}">
 										<td>
-											<a href="<c:url value="/client/mypage/schedule/cancel/${list.pr_num}/${list.bs_num}"/>" 
+											<a href="<c:url value="/mypage/schedule/cancel/${list.pr_num}/${list.bs_num}"/>" 
 															class="btn btn-outline-danger btn-sm"
 															onclick="return confirm('취소하시겠습니까?');">취소</a>
 										</td>
@@ -107,7 +107,7 @@
 					<c:if test="${pm.totalCount ne 0}">
 						<ul class="pagination justify-content-center">
 							<c:if test="${pm.prev}">
-								<c:url var="url" value="/client/mypage/schedule/${me_id}">
+								<c:url var="url" value="/mypage/schedule">
 									<c:param name="view" value="${view}"/>
 									<c:param name="page" value="${pm.startPage - 1}"/>
 									<c:param name="type" value="${pm.cri.type}"/>
@@ -118,7 +118,7 @@
 								</li>
 							</c:if>
 							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<c:url var="url" value="/client/mypage/schedule/${me_id}">
+								<c:url var="url" value="/mypage/schedule">
 									<c:param name="view" value="${view}"/>
 									<c:param name="page" value="${i}"/>
 									<c:param name="type" value="${pm.cri.type}"/>
@@ -137,7 +137,7 @@
 								</li>
 							</c:forEach>
 							<c:if test="${pm.next}">
-								<c:url var="url" value="/client/mypage/schedule/${me_id}">
+								<c:url var="url" value="/mypage/schedule">
 									<c:param name="view" value="${view}"/>
 									<c:param name="page" value="${pm.endPage + 1}"/>
 									<c:param name="type" value="${pm.cri.type}"/>
@@ -149,7 +149,7 @@
 							</c:if>
 						</ul>
 					</c:if>
-					<form action="<c:url value="/client/mypage/schedule/${me_id}"/>">
+					<form action="<c:url value="/mypage/schedule"/>">
 						<input type="hidden" name="view" value="${view}">
 						<div class="input-group mb-3 mt-3">
 							<select class="form-control col-md-1" name="type">
