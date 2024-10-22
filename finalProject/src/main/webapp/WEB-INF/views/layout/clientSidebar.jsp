@@ -67,6 +67,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<c:url value='/client/mypage/pwchange/${user.me_id}'/>">비밀번호 변경</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<c:url value='/client/mypage/unregister/${user.me_id}'/>">회원탈퇴</a>
+                        </li>
                     </ul>
                 </li>
             </c:if>
@@ -89,7 +92,8 @@
                 '/client/mypage/inquiry/',
                 '/client/mypage/pwcheck/',
                 '/client/mypage/info/',
-                '/client/mypage/pwchange/'
+                '/client/mypage/pwchange/',
+                '/client/mypage/unregister/'
             ];
 
             // 마이페이지 경로라면 서브메뉴를 자동으로 펼침

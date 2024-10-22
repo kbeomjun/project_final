@@ -85,4 +85,6 @@ public interface ClientDAO {
 
 	boolean updateMemberPw(MemberVO member);
 
+	boolean updateMemberStatusToRemoved(MemberVO member);
+
 }

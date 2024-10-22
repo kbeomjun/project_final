@@ -83,4 +83,6 @@ public interface ClientService {
 
 	String updateMemberPw(MemberVO member, String currentPw, String newPw);
 
+	String removedMember(MemberVO member, String me_pw);
+
 }

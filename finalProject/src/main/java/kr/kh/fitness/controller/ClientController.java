@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -569,7 +570,7 @@ public class ClientController {
 	
 	//마이페이지 비밀번호 변경 post
 	@PostMapping("/mypage/pwchange/update")
-	public String updatePassword(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id, HttpSession session) {
+	public String mypagePwChangePost(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id, HttpSession session) {
 
 		MemberVO member = clientService.getMember(me_id);
 	    
@@ -586,4 +587,54 @@ public class ClientController {
 	    return "/main/message";
 	}
 	
+	//마이페이지 회원탈퇴 get
+	@GetMapping("/mypage/unregister/{me_id}")
+	public String mypageUnregister(Model model, @PathVariable("me_id")String me_id, HttpSession session, HttpServletRequest request) {
+		
+		MemberVO user = (MemberVO) session.getAttribute("user");
+
+		MembershipDTO currentMembership = clientService.getCurrentMembership(me_id);
+		MembershipDTO currentPT = clientService.getCurrentPT(me_id);	
+		String prevUrl = request.getHeader("Referer");
+	    if (prevUrl == null || prevUrl.isEmpty()) {
+	        prevUrl = "/";
+	    }
+
+		if (user == null || !user.getMe_id().equals(me_id)) {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", prevUrl);
+	    } else if(currentMembership != null || currentPT != null) {
+	    	model.addAttribute("msg", "현재 센터이용고객은 탈퇴할 수 없습니다.");
+	    	model.addAttribute("url", prevUrl);
+	    } else {
+	    	model.addAttribute("me_id", me_id);
+	    	return "/client/mypage/unregister";
+	    }
+	    
+		return "/main/message";
+	}
+	
+	@PostMapping("/mypage/unregister")
+	public String mypageUnregisterPost(Model model, String me_id, String me_pw, HttpSession session, HttpServletRequest request) {
+		
+		MemberVO member = clientService.getMember(me_id);
+	    
+		String msg = clientService.removedMember(member, me_pw);
+		
+		String prevUrl = request.getHeader("Referer");
+	    if (prevUrl == null || prevUrl.isEmpty()) {
+	        prevUrl = "/";
+	    }
+		
+		if(msg == "") {
+			session.removeAttribute("user");
+			model.addAttribute("msg", "회원탈퇴가 완료되었습니다. 그동안 이용해주셔서 감사합니다.");
+			model.addAttribute("url", "/");
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", prevUrl);
+		}
+		
+		return "/main/message";
+	}
 }

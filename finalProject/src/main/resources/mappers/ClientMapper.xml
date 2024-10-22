@@ -369,4 +369,14 @@
 		update member set me_pw = #{me_pw} where me_id = #{me_id}
 	</update>
 	
+	<update id="updateMemberStatusToRemoved">
+		update 
+			member 
+		set 
+			me_authority = 'REMOVED',
+			me_dataPeriod = DATE_ADD(NOW(), INTERVAL 6 MONTH)
+		where
+			me_id = #{me_id}
+	</update>
+	
 </mapper>

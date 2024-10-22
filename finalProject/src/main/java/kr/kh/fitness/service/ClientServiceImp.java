@@ -345,23 +345,46 @@ public class ClientServiceImp implements ClientService{
 			return "회원 정보가 없습니다.";
 		}
 		
-		//비번 암호화
-		String encPw = passwordEncoder.encode(currentPw);
-		//비번과 암호화된 비번이 같은 비번인지 알려줌
-		boolean res = passwordEncoder.matches(encPw, member.getMe_pw());
+		boolean res = passwordEncoder.matches(currentPw, member.getMe_pw());
 		
-		if(res) {
+		if(!res) {
 			return "현재 비밀번호가 일치하지 않습니다.";
 		}
 		if(currentPw.equals(newPw)) {
 			return "새 비밀번호는 현재 비밀번호와 같을 수 없습니다.";
 		}
 		
-		encPw = passwordEncoder.encode(newPw);
+	    String encPw = passwordEncoder.encode(newPw);
 		
 		member.setMe_pw(encPw);
 		if(!clientDao.updateMemberPw(member)) {
 			return "비밀번호 변경에 실패했습니다.";
+		}
+		
+		return "";
+	}
+
+	@Override
+	public String removedMember(MemberVO member, String me_pw) {
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		
+		boolean res = passwordEncoder.matches(me_pw, member.getMe_pw());
+		
+		if(!res) {
+			return "현재 비밀번호가 일치하지 않습니다.";
+		}
+		
+		MembershipDTO membership = clientDao.selectCurrentMembership(member.getMe_id());
+		MembershipDTO pt = clientDao.selectCurrentPT(member.getMe_id());
+		
+		if(membership != null || pt != null) {
+			return "현재 센터이용고객은 탈퇴할 수 없습니다.";
+		}
+		
+		if(!clientDao.updateMemberStatusToRemoved(member)) {
+			return "회원탈퇴에 실패했습니다. 관리자에게 문의하세요.";
 		}
 		
 		return "";

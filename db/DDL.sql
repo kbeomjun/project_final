@@ -19,7 +19,8 @@ CREATE TABLE `member` (
    `me_cookie`   		varchar(255)   	NULL,
    `me_limit`   		datetime   		NULL,
    `me_noshow`   		int   			not null default 0,
-   `me_cancel`   		datetime   		NULL
+   `me_cancel`   		datetime   		NULL,
+   `me_dataPeriod`		datetime		Null
 );
 
 drop table if exists `branch`;
