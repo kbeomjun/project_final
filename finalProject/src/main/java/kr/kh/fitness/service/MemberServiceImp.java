@@ -71,6 +71,8 @@ public class MemberServiceImp implements MemberService {
         String encPw = passwordEncoder.encode(member.getMe_pw());
         member.setMe_pw(encPw); // 암호화된 비밀번호로 회원 정보를 수정
         try {
+        	System.out.println(member);
+        	System.out.println("gender : "+ member.getMe_gender());
             // 회원 정보 데이터베이스에 저장 (아이디나 이메일이 중복될 경우 예외 발생)
             return memberDao.insertMember(member);
         } catch (Exception e) {
@@ -123,10 +125,18 @@ public class MemberServiceImp implements MemberService {
 		}
 		
 		// 기본 정보 DB에 등록.
+		if(socialUser.getMe_gender() !=null && socialUser.getMe_gender().equals("null")){
+			socialUser.setMe_gender(null);
+		}
+		if(socialUser.getMe_phone() != null && socialUser.getMe_phone().equals("null")){
+			socialUser.setMe_phone(null);
+		}
+		
 		if(!signup(socialUser)) {
 			return false;
 		}
 		
+
 		// social에서 받은 정보 추가 등록
 		// socialUserID, gender, phone, name
 		try {
@@ -144,6 +154,13 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean updateUserSocialAccount(String social_type, MemberVO socialUser) {
 		System.out.println(social_type);
+		// 기본 정보 DB에 등록.
+		if(socialUser.getMe_gender() !=null && socialUser.getMe_gender().equals("null")){
+			socialUser.setMe_gender(null);
+		}
+		if(socialUser.getMe_phone() != null && socialUser.getMe_phone().equals("null")){
+			socialUser.setMe_phone(null);
+		}
 		return memberDao.updateSocialUser(social_type, socialUser)==0?false:true;
 	}
 	// SNS 로그인 시 ID 생성 방식 적용 (숫자일 경우 두 배, 문자일 경우 SNS 이름과 결합)
