@@ -191,12 +191,14 @@ public class UserController {
 			// 전화번호 로그
 			logger.info("전화번호 (me_phone): " + member.getMe_phone()); // 추가된 로그
 
-			// 비밀번호 암호화
-			String encPw = passwordEncoder.encode(member.getMe_pw());
-			member.setMe_pw(encPw);
+//			// 비밀번호 암호화
+//			String encPw = passwordEncoder.encode(member.getMe_pw());
+//			member.setMe_pw(encPw);
 
+			
 			// 회원가입 시도
-			boolean res = memberDao.insertMember(member);
+			//boolean res = memberDao.insertMember(member);
+			boolean res = memberService.signup(member);
 			if (res) {
 				model.addAttribute("msg", "회원 가입을 했습니다.");
 				model.addAttribute("url", "/");
@@ -244,6 +246,13 @@ public class UserController {
         MemberVO user = kakaoService.getMemberInfoFromEmail(loginUser);
         
         if(user != null) {
+        	
+        	if(user.getMe_authority().equals("REMOVED")) {
+				model.addAttribute("msg", "탈퇴한 회원입니다.");
+				model.addAttribute("url", "/login");
+				return "/main/message";
+			} 
+        	
         	// 로그인 성공, session에 추가.
         	if(user.getMe_kakaoUserId() != null && loginUser.getMe_kakaoUserId().equals(user.getMe_kakaoUserId())) {
         		session.setAttribute("user", user);
