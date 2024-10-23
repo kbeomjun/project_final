@@ -71,6 +71,7 @@
 				        		<th>이메일</th>
 				        		<th>SNS</th>
 				        		<th>상태</th>
+				        		<th>탈퇴기한</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
@@ -107,11 +108,20 @@
 					        		<td>
 					        			<c:if test="${me.me_kakaoUserId == null && me.me_naverUserId == null}">-</c:if>
 					        			<c:if test="${me.me_kakaoUserId != null}">카카오</c:if>
+					        			<c:if test="${me.me_kakaoUserId != null && me.me_naverUserId != null}">/</c:if>
 					        			<c:if test="${me.me_naverUserId != null}">네이버</c:if>
 					        		</td>
 					        		<td>
 					        			<c:if test="${me.me_authority == 'USER'}">사용중</c:if>
 					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
+					        		</td>
+					        		<td>
+					        			<c:if test="${me.me_authority == 'USER'}">
+					        				-
+				        				</c:if>
+					        			<c:if test="${me.me_authority == 'REMOVED'}">
+					        				${me.me_dataPeriod}
+					        			</c:if>
 					        		</td>
 					        		<td>
 					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
@@ -246,8 +256,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [8], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
+		        { targets: [9], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], className: "align-content-center"}
 		    ]
 		});
 	</script>
