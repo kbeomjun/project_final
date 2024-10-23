@@ -215,7 +215,31 @@ dl, ol, ul{
 }
 .main_banner_wrap .swiper-button-next,
 .main_banner_wrap .swiper-button-prev{
-  background-color: transparent;
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-image: url("../image/icon/ic_bn_right.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: .5s;
+}
+.main_banner_wrap .swiper-button-next{
+  right: 0px;
+  transform: translate(-20px, -50%);
+}
+.main_banner_wrap .swiper-button-prev{
+  left: 0px;
+  transform: translate(20px, -50%);
+  background-image: url("../image/icon/ic_bn_left.svg");
+}
+.main_banner_wrap .swiper-button-next:hover{
+  transform: translate(-5px, -50%);
+}
+.main_banner_wrap .swiper-button-prev:hover{
+  transform: translate(5px, -50%);
 }
 .main_banner_wrap .swiper-button-next:after, .swiper-button-prev:after{
   display: none;
@@ -358,8 +382,8 @@ dl, ol, ul{
 }
 .gnb_side__logo{
   display: inline-block;
-  width: 170px;
-  height: 95px;
+  width: 150px;
+  height: 75px;
   background-image: url("../image/main/KF_logo_white.svg");
   background-repeat: no-repeat;
   background-size: cover;
