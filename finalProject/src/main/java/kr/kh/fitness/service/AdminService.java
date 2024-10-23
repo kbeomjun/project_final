@@ -50,9 +50,7 @@ public interface AdminService {
 	
 	BranchProgramScheduleVO getSchedule(int bs_num);
 
-	List<BranchOrderVO> getBranchOrderList(BranchCriteria cri);
-
-	PageMaker getPageMakerInOrder(BranchCriteria cri);
+	List<BranchOrderVO> getBranchOrderList(String br_name);
 	
 	String updateSchedule(BranchProgramScheduleVO schedule);
 

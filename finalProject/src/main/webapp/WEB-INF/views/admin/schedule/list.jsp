@@ -167,7 +167,7 @@
 					scrollY: 500,
 				    pageLength: 10,
 				    info: false,
-				    order: [[ 3, "asc" ]],
+				    order: [[ 3, "desc" ]],
 				    columnDefs: [
 				        { targets: [5], orderable: false },
 				        { targets: [0, 1, 2, 3, 4, 5], className: "align-content-center"}

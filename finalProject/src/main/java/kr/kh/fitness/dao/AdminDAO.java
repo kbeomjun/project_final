@@ -63,9 +63,7 @@ public interface AdminDAO {
 
 	void deleteSchedule(int bs_num);
 	
-	List<BranchOrderVO> selectBranchOrderList(BranchCriteria cri);
-
-	int selectOrderTotalCount(BranchCriteria cri);
+	List<BranchOrderVO> selectBranchOrderList(String br_name);
 	
 	List<BranchStockDTO> selectEquipmentListInHQ();
 

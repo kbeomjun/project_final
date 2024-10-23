@@ -312,19 +312,15 @@ public class AdminController {
 	
 	//지점 발주 신청목록
 	@GetMapping("/order/list")
-	public String orderList(Model model, HttpSession session, BranchCriteria cri) {
+	public String orderList(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			cri.setPerPageNum(5);
-			cri.setBr_name(br_name);
-			
-			List<BranchOrderVO> orderList = adminService.getBranchOrderList(cri);
-			PageMaker pm = adminService.getPageMakerInOrder(cri);
+			List<BranchOrderVO> orderList = adminService.getBranchOrderList(br_name);
 			
 			model.addAttribute("orderList", orderList);
-			model.addAttribute("pm", pm);
+			model.addAttribute("br_name", br_name);
 			return "/admin/order/list";
 			
 		} catch (Exception e) {
@@ -369,8 +365,8 @@ public class AdminController {
 	}
 	
 	//지점 발주 신청취소
-	@GetMapping("/order/delete")
-	public String orderDelete(Model model, int bo_num) {
+	@GetMapping("/order/delete/{bo_num}")
+	public String orderDelete(Model model, @PathVariable("bo_num")int bo_num) {
 		
 		if(adminService.deleteOrder(bo_num)) {
 			model.addAttribute("msg", "취소에 성공했습니다.");

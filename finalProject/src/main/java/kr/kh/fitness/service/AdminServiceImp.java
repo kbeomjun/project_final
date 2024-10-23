@@ -163,25 +163,12 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchOrderVO> getBranchOrderList(BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchOrderVO> getBranchOrderList(String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectBranchOrderList(cri);
+		return adminDao.selectBranchOrderList(br_name);
 	}
-
-	@Override
-	public PageMaker getPageMakerInOrder(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectOrderTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
 
 	@Override
 	public String updateSchedule(BranchProgramScheduleVO schedule) {

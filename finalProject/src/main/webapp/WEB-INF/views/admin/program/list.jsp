@@ -59,11 +59,6 @@
 									</td>
 								</tr>
 							</c:forEach>
-							<c:if test="${programList.size() eq 0}">
-								<tr>
-									<th class="text-center" colspan="5">등록된 프로그램이 없습니다.</th>
-								</tr>
-							</c:if>				
 						</tbody>
 					</table>
 					<div class="text-right mb-3">	

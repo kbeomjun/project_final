@@ -74,14 +74,6 @@
 			<if test="view == 'past'">
 				and now() > bs_end
 			</if>
-		<if test="view == 'present'">
-			order by
-				bs_start
-		</if>
-		<if test="view == 'past'">
-			order by
-				bs_end desc
-		</if>
 	</select>
 	
 	<select id="selectScheduleMemberList" resultType="MemberVO">
@@ -149,11 +141,7 @@
 	</delete>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc limit #{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectOrderTotalCount" resultType="int">
-		select count(*) from branch_order where bo_br_name = #{br_name}
+		select * from branch_order where bo_br_name = #{br_name}
 	</select>
 	
 	<select id="selectEquipmentListInHQ" resultType="BranchStockDTO">
