@@ -49,7 +49,6 @@ public class MemberServiceImp implements MemberService {
         if (member == null) {
             return false; // 회원 정보가 null인 경우 회원가입 실패
         }
-        System.out.println();
         
         // 정규 표현식
         String usernameRegex = "^[A-Za-z0-9]{4,10}$"; // 아이디: 4~10자 영문자 및 숫자
@@ -70,9 +69,9 @@ public class MemberServiceImp implements MemberService {
         // 비밀번호 암호화
         String encPw = passwordEncoder.encode(member.getMe_pw());
         member.setMe_pw(encPw); // 암호화된 비밀번호로 회원 정보를 수정
+        
         try {
         	System.out.println(member);
-        	System.out.println("gender : "+ member.getMe_gender());
             // 회원 정보 데이터베이스에 저장 (아이디나 이메일이 중복될 경우 예외 발생)
             return memberDao.insertMember(member);
         } catch (Exception e) {
@@ -111,9 +110,10 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean joinSocialMember(String social_type, MemberVO socialUser) {
 		
-		KakaoService kakaoService = new KaKaoServiceImp();
+		SingleSignOnService singleSignOnService = new SingleSignOnServiceImp();
+		
 		// 등록된 social이 아니라면
-		if(!kakaoService.isValidSocialName(social_type)) {
+		if(!singleSignOnService.isValidSocialName(social_type)) {
 			return false;
 		}
 		
@@ -136,7 +136,9 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 		
-
+		System.out.println("디버깅\n"+socialUser);
+		System.out.println("디버깅\n"+social_type);
+		System.out.println("디버깅\n"+socialUser);
 		// social에서 받은 정보 추가 등록
 		// socialUserID, gender, phone, name
 		try {
@@ -216,7 +218,7 @@ public class MemberServiceImp implements MemberService {
 			return false; // 사용자가 존재하지 않으면 실패 반환
 		}
 		
-		mailsend(
+		pwMailsend(
 				user.getMe_email(),
 				"임시 비밀번호를 발급했습니다",
 				"임시 비밀번호는 <b>" +  newPW + " 입니다"); // 임시 비밀번호 이메일 발송
@@ -227,7 +229,7 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	// 이메일 전송 메서드
-	public boolean mailsend(String to, String title, String content) {
+	public boolean pwMailsend(String to, String title, String content) {
 		String setfrom = "sujifi@naver.com";
 		   try{
 		        MimeMessage message = mailSender.createMimeMessage();
@@ -269,15 +271,45 @@ public class MemberServiceImp implements MemberService {
 		}
 		return pw;
 	}
-
 	// 아이디 찾기 메서드
-    @Override
-    public String findId(String name, String email) {
-        if (name == null || email == null) {
-            return null; // 이름 또는 이메일이 null인 경우 아이디 찾기 실패
-        }
-        // DAO를 통해 이름과 이메일에 해당하는 사용자 정보 조회
-        MemberVO user = memberDao.selectMemberByNameAndEmail(name, email);
-        return user != null ? user.getMe_id() : null; // 사용자 정보가 있으면 아이디 반환, 없으면 null 반환
-    }
+	@Override
+	public String findId(String name, String email) {
+	    if (name == null || email == null) {
+	        return null; // 이름 또는 이메일이 null인 경우 아이디 찾기 실패
+	    }
+	    // DAO를 통해 이름과 이메일에 해당하는 사용자 정보 조회
+	    MemberVO user = memberDao.selectMemberByNameAndEmail(name, email);
+	    
+	    if (user != null) {
+	        // 사용자 정보가 있으면 이메일로 아이디 전송
+	        idMailsend(
+	            user.getMe_email(),
+	            "아이디 찾기 결과입니다",
+	            "회원님의 아이디는 <b>" + user.getMe_id() + "</b> 입니다."
+	        );
+	        return user.getMe_id(); // 아이디 반환
+	    } else {
+	        return null; // 사용자 정보가 없으면 null 반환
+	    }
+	}
+
+	// 이메일 전송 메서드
+	public boolean idMailsend(String to, String title, String content) {
+	    String setfrom = "sujifi@naver.com";
+	    try {
+	        MimeMessage message = mailSender.createMimeMessage();
+	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+	        messageHelper.setFrom(setfrom); // 보내는 사람 설정
+	        messageHelper.setTo(to); // 받는 사람 설정
+	        messageHelper.setSubject(title); // 메일 제목 설정
+	        messageHelper.setText(content, true); // 메일 내용 설정
+
+	        mailSender.send(message); // 메일 전송
+	        return true;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false; // 메일 전송 실패 시 false 반환
+	    }
+	}
 }

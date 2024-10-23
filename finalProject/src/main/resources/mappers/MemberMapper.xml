@@ -23,7 +23,7 @@
 	<if test="m.me_extraAddress != null and m.me_extraAddress != ''">
 	    , me_extraAddress
 	</if>
-	<if test="m.me_birth != null and m.me_birth != ''">
+	<if test="m.me_birth != null">
 	    , me_birth
 	</if>
 	<if test="m.me_gender != null and !m.me_gender.equals('null')">
@@ -45,7 +45,7 @@
 	    <if test="m.me_extraAddress != null and m.me_extraAddress != ''">
 	        , #{m.me_extraAddress}
 	    </if>
-	    <if test="m.me_birth != null and m.me_birth != ''">
+	    <if test="m.me_birth != null">
 	        , #{m.me_birth}
 	    </if>
 	    <if test="m.me_gender != null and !m.me_gender.equals('null')">

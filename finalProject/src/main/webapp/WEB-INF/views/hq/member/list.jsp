@@ -71,6 +71,7 @@
 				        		<th>이메일</th>
 				        		<th>SNS</th>
 				        		<th>상태</th>
+				        		<th>탈퇴기한</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
@@ -107,6 +108,7 @@
 					        		<td>
 					        			<c:if test="${me.me_kakaoUserId == null && me.me_naverUserId == null}">-</c:if>
 					        			<c:if test="${me.me_kakaoUserId != null}">카카오</c:if>
+					        			<c:if test="${me.me_kakaoUserId != null && me.me_naverUserId != null}">/</c:if>
 					        			<c:if test="${me.me_naverUserId != null}">네이버</c:if>
 					        		</td>
 					        		<td>
@@ -114,7 +116,20 @@
 					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
 					        		</td>
 					        		<td>
-					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        			<c:if test="${me.me_authority == 'USER'}">
+					        				-
+				        				</c:if>
+					        			<c:if test="${me.me_authority == 'REMOVED'}">
+					        				<fmt:formatDate value="${me.me_dataPeriod}" pattern="yyyy.MM.dd"/>
+					        			</c:if>
+					        		</td>
+					        		<td>
+					        			<c:if test="${!me.me_canDelete}">
+						        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        			</c:if>
+					        			<c:if test="${me.me_canDelete}">
+						        			<a href="<c:url value="/hq/member/delete/${me.me_id}"/>" class="btn btn-outline-danger btn-delete">삭제</a>
+					        			</c:if>
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
@@ -230,6 +245,12 @@
 				}
 			});
 		});
+		
+		$('.btn-delete').click(function(e){
+			if(!confirm("정말 삭제하시겠습니까?\n삭제하면 복구할 수 없습니다.")){
+				e.preventDefault();
+			}
+		});
 	</script>
 	
 	<script type="text/javascript">
@@ -246,8 +267,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [8], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
+		        { targets: [9], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], className: "align-content-center"}
 		    ]
 		});
 	</script>

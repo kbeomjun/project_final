@@ -314,6 +314,13 @@ public class HQController {
 		map.put("me", me);
 		return map;
 	}
+	@GetMapping("/member/delete/{me_id}")
+	public String memberDelete(Model model, @PathVariable("me_id") String me_id, MemberVO me) {
+		String msg = hqService.deleteMember(me);
+		model.addAttribute("url", "/hq/member/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
+	}
 	
 	@GetMapping("/inquiry/list")
 	public String inquiryList(Model model) {
