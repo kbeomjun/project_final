@@ -131,7 +131,7 @@ drop table if exists `program_reservation`;
 CREATE TABLE `program_reservation` (
 	`pr_num`		int 			primary key auto_increment,
 	`pr_date`		datetime		not null default current_timestamp,
-	`pr_me_id`		varchar(100)	NOT NULL,
+	`pr_me_id`		varchar(100)	NULL,
 	`pr_bs_num`		int				NULL
 );
 
@@ -175,7 +175,7 @@ CREATE TABLE `payment_history` (
     `ph_card_number`    BIGINT 			NOT NULL,
     `ph_card_quota`     VARCHAR(5) 		NOT NULL,
     `ph_pt_num`         INT 			NOT NULL,
-    `ph_me_id`         	VARCHAR(100) 	NOT NULL
+    `ph_me_id`         	VARCHAR(100) 	NULL
 );
 
 
@@ -209,105 +209,131 @@ ALTER TABLE `program_file`
 ADD CONSTRAINT `FK_program_file_sports_program`
   FOREIGN KEY (`pf_sp_name`)
   REFERENCES `sports_program` (`sp_name`)
-  ON DELETE CASCADE
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `employee` 
 ADD CONSTRAINT `FK_employee_branch`
   FOREIGN KEY (`em_br_name`)
-  REFERENCES `branch` (`br_name`);
+  REFERENCES `branch` (`br_name`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
 
 ALTER TABLE `branch_file` 
 ADD CONSTRAINT `FK_branch_file_branch`
   FOREIGN KEY (`bf_br_name`)
   REFERENCES `branch` (`br_name`)
-  ON DELETE CASCADE
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `branch_equipment_stock` 
 ADD CONSTRAINT `FK_equipment_stock_branch`
   FOREIGN KEY (`be_br_name`)
   REFERENCES `branch` (`br_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `branch_equipment_stock` 
 ADD CONSTRAINT `FK_equipment_stock_sport`
   FOREIGN KEY (`be_se_name`)
   REFERENCES `sports_equipment` (`se_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `branch_program` 
 ADD CONSTRAINT `FK_branch_program_branch`
   FOREIGN KEY (`bp_br_name`)
   REFERENCES `branch` (`br_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `branch_program` 
 ADD CONSTRAINT `FK_branch_program_sport`
   FOREIGN KEY (`bp_sp_name`)
   REFERENCES `sports_program` (`sp_name`)
-  ON DELETE CASCADE
-  ON UPDATE RESTRICT;
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
 
 ALTER TABLE `branch_program` 
 ADD CONSTRAINT `FK_branch_program_employee`
   FOREIGN KEY (`bp_em_num`)
   REFERENCES `employee` (`em_num`)
-  ON DELETE CASCADE;
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 ALTER TABLE `branch_program_schedule` 
 ADD CONSTRAINT `FK_program_schedule_branch_program`
   FOREIGN KEY (`bs_bp_num`)
   REFERENCES `branch_program` (`bp_num`)
-  ON DELETE CASCADE;
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 ALTER TABLE `program_reservation` 
 ADD CONSTRAINT `FK_program_reservation_schedule`
   FOREIGN KEY (`pr_bs_num`)
   REFERENCES `branch_program_schedule` (`bs_num`)
-  ON DELETE CASCADE;
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+  
+ALTER TABLE `program_reservation` 
+ADD CONSTRAINT `FK_program_reservation_member`
+  FOREIGN KEY (`pr_me_id`)
+  REFERENCES `member` (`me_id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
 
 ALTER TABLE `payment` 
 ADD CONSTRAINT `FK_payment_member`
   FOREIGN KEY (`pa_me_id`)
   REFERENCES `member` (`me_id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+  
+ALTER TABLE `payment` 
+ADD CONSTRAINT `FK_payment_type`
+  FOREIGN KEY (`pa_pt_num`)
+  REFERENCES `payment_type` (`pt_num`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `payment_history`
-ADD CONSTRAINT `FK_payment_category_payment_type`
+ADD CONSTRAINT `FK_payment_history_payment_type`
   FOREIGN KEY (`ph_pt_num`)
   REFERENCES `payment_type` (`pt_num`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `payment_history`
-ADD CONSTRAINT `FK_payment_category_member`
+ADD CONSTRAINT `FK_payment_history_member`
   FOREIGN KEY (`ph_me_id`)
   REFERENCES `member` (`me_id`)
-  ON DELETE RESTRICT
+  ON DELETE SET NULL
   ON UPDATE CASCADE;
 
 ALTER TABLE `review_post` 
 ADD CONSTRAINT `FK_review_post_branch`
   FOREIGN KEY (`rp_br_name`)
   REFERENCES `branch` (`br_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `member_inquiry` 
 ADD CONSTRAINT `FK_member_inquiry_branch`
   FOREIGN KEY (`mi_br_name`)
   REFERENCES `branch` (`br_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `member_inquiry` 
 ADD CONSTRAINT `FK_member_inquiry_type`
   FOREIGN KEY (`mi_it_name`)
   REFERENCES `inquiry_type` (`it_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;
 
 ALTER TABLE `branch_order` 
 ADD CONSTRAINT `FK_branch_order_branch`
   FOREIGN KEY (`bo_br_name`)
   REFERENCES `branch` (`br_name`)
+  ON DELETE RESTRICT
   ON UPDATE CASCADE;

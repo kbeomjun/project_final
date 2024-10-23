@@ -32,7 +32,8 @@ values
 
 insert into fitness.member(me_id, me_pw, me_email, me_name, me_phone, me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_gender, me_authority, me_dataPeriod)
 values
-    ("user7", "$2a$10$M0oZj5O.d6GxOqJbYspPC.ioDNGb3rPnW3n1Xrnk6wfgJr3DJp6XG", "user7@naver.com", "남유저", "01077772345", "06052", "서울 강남구 논현로 132길 9", "1층", "(논현동)", "20001212", "여자", "REMOVED", "2024-10-22 20:00:00");
+    ("user7", "$2a$10$M0oZj5O.d6GxOqJbYspPC.ioDNGb3rPnW3n1Xrnk6wfgJr3DJp6XG", "user7@naver.com", "남유저", "01077772345", "06052", "서울 강남구 논현로 132길 9", "1층", "(논현동)", "20001212", "여자", "REMOVED", "2024-10-22 20:00:00"),
+    ("user8", "$2a$10$M0oZj5O.d6GxOqJbYspPC.ioDNGb3rPnW3n1Xrnk6wfgJr3DJp6XG", "user8@naver.com", "주유저", "01088882345", "06052", "서울 강남구 논현로 132길 9", "1층", "(논현동)", "20001111", "남자", "REMOVED", "2024-10-24 20:00:00");
 
 #운동기구(운동기구명, 운동기구파일명)
 delete from `sports_equipment`;
