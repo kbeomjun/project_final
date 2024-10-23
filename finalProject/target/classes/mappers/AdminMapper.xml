@@ -166,14 +166,6 @@
 		delete from branch_order where bo_num = #{bo_num}
 	</delete>
 	
-	<select id="selectEmployeeListByBranchWithPagination" resultType="EmployeeVO">
-		select * from Employee where em_br_name = #{br_name} order by em_num limit #{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectEmployeeByBranchTotalCount" resultType="int">
-		select count(*) from Employee where em_br_name = #{br_name}
-	</select>
-	
 	<select id="selectEmployeeList" resultType="EmployeeVO">
 		select * from employee order by em_num
 	</select>
@@ -290,29 +282,7 @@
 	</select>
 	
 	<select id="selectEquipmentChangeInBranch" resultType="BranchEquipmentStockVO">
-		select
-			* 
-		from 
-			branch_equipment_stock 
-		where 
-			be_br_name = #{br_name} 
-		and
-			be_se_name like concat('%', #{search}, '%')
-		order by 
-			be_record desc 
-		limit 
-			#{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectEquipmentChangeTotalCount" resultType="int">
-		select
-			count(*)
-		from 
-			branch_equipment_stock 
-		where 
-			be_br_name = #{br_name} 
-		and
-			be_se_name like concat('%', #{search}, '%')
+		select * from branch_equipment_stock where be_br_name = #{br_name} 
 	</select>
 	
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">

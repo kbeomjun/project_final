@@ -70,10 +70,6 @@ public interface AdminDAO {
 	boolean insertOrder(BranchOrderVO order);
 
 	boolean deleteOrder(int bo_num);
-
-	List<EmployeeVO> selectEmployeeListByBranchWithPagination(BranchCriteria cri);
-
-	int selectEmployeeByBranchTotalCount(BranchCriteria cri);
 	
 	List<EmployeeVO> selectEmployeeList();
 
@@ -109,9 +105,7 @@ public interface AdminDAO {
 	
 	List<BranchStockDTO> selectEquipmentListInBranch(@Param("view")String view, @Param("br_name")String br_name);
 
-	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(BranchCriteria cri);
-	
-	int selectEquipmentChangeTotalCount(BranchCriteria cri);
+	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(String br_name);
 
 	BranchProgramScheduleVO selectBranchSchedule(@Param("bp_num")int bs_bp_num, @Param("start")Date startDate);
 

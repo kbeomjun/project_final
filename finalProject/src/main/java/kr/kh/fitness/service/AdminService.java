@@ -61,10 +61,6 @@ public interface AdminService {
 	String insertOrder(BranchOrderVO order);
 
 	boolean deleteOrder(int bo_num);
-
-	List<EmployeeVO> getEmployeeListByBranchWithPagination(BranchCriteria cri);
-	
-	PageMaker getPageMakerInEmployee(BranchCriteria cri);
 	
 	String insertEmployee(EmployeeVO employee, MultipartFile file);
 
@@ -88,9 +84,7 @@ public interface AdminService {
 	
 	List<BranchStockDTO> getEquipmentListInBranch(String view, String br_name);
 
-	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(BranchCriteria cri);
-	
-	PageMaker getPageMakerInEquipmentChange(BranchCriteria cri);
+	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
 
 	ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif);
 

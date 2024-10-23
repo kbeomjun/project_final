@@ -212,26 +212,6 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<EmployeeVO> getEmployeeListByBranchWithPagination(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectEmployeeListByBranchWithPagination(cri);
-	}
-
-	@Override
-	public PageMaker getPageMakerInEmployee(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectEmployeeByBranchTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
-	@Override
 	public String insertEmployee(EmployeeVO employee, MultipartFile file) {
 		String msg = "";
 		if(employee == null) {msg = "직원 정보가 없습니다.";}
@@ -425,25 +405,13 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchEquipmentStockVO> getEquipmentChangeInBranch(BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectEquipmentChangeInBranch(cri);
+		return adminDao.selectEquipmentChangeInBranch(br_name);
 	}
 	
-	@Override
-	public PageMaker getPageMakerInEquipmentChange(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectEquipmentChangeTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
 	@Override
 	public ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif) {
 		

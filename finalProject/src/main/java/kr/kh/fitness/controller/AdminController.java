@@ -379,19 +379,15 @@ public class AdminController {
 	
 	//직원 목록 조회
 	@GetMapping("/employee/list")
-	public String employeeList(Model model, HttpSession session, BranchCriteria cri) {
+	public String employeeList(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			cri.setPerPageNum(5);
-			cri.setBr_name(br_name);
-			
-			List<EmployeeVO> employeeList = adminService.getEmployeeListByBranchWithPagination(cri);
-			PageMaker pm = adminService.getPageMakerInEmployee(cri);
+			List<EmployeeVO> employeeList = adminService.getEmployeeListByBranch(br_name);
 			
 			model.addAttribute("employeeList", employeeList);
-			model.addAttribute("pm", pm);
+			model.addAttribute("br_name", br_name);
 			return "/admin/employee/list";
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -566,19 +562,15 @@ public class AdminController {
 	
 	//지점 운동기구 재고 변동내역
 	@GetMapping("/equipment/change")
-	public String equipmentChange(Model model, HttpSession session, BranchCriteria cri) {
+	public String equipmentChange(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			cri.setPerPageNum(5);
-			cri.setBr_name(br_name);
-			
-			List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(cri);
-			PageMaker pm = adminService.getPageMakerInEquipmentChange(cri);
+			List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(br_name);
 			
 			model.addAttribute("equipmentChange", equipmentChange);
-			model.addAttribute("pm", pm);
+			model.addAttribute("br_name", br_name);
 			
 			return "/admin/equipment/change";
 		} catch (Exception e) {

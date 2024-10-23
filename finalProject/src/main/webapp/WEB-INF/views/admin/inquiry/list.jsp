@@ -60,7 +60,7 @@
 						        		<td class="align-content-center">${mi.mi_it_name}</td>
 						        		<td class="align-content-center">${mi.mi_state}</td>
 						        		<td class="align-content-center">
-						        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
+						        			<button type="button" class="btn btn-outline-info btn-sm btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
 						        		</td>
 						      		</tr>
 					    		</c:forEach>
@@ -92,7 +92,7 @@
 						        		<td class="align-content-center">${mi.mi_it_name}</td>
 						        		<td class="align-content-center">${mi.mi_state}</td>
 						        		<td class="align-content-center">
-						        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+						        			<button type="button" class="btn btn-outline-info btn-sm btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 						        		</td>
 						      		</tr>
 					    		</c:forEach>
@@ -234,10 +234,11 @@
 			    search: "",
 			    searchPlaceholder: "검색",
 			    zeroRecords: "",
-			    emptyTable: ""
+			    emptyTable: "",
+			    lengthMenu: ""
 			},
-			scrollY: 600,
-		    paging: false,
+			scrollY: 500,
+		    pageLength: 10,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
@@ -262,10 +263,11 @@
 						search: "",
 						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: ""
+				        emptyTable: "",
+				        lengthMenu: ""
 				    },
-					scrollY: 600,
-				    paging: false,
+					scrollY: 500,
+				    pageLength: 10,
 				    info: false,
 				    order: [[ 0, "asc" ]],
 				    columnDefs: [
@@ -279,10 +281,11 @@
 						search: "",
 						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: ""
+				        emptyTable: "",
+				        lengthMenu: ""
 				    },
-					scrollY: 600,
-				    paging: false,
+					scrollY: 500,
+				    pageLength: 10,				        
 				    info: false,
 				    order: [[ 0, "desc" ]],
 				    columnDefs: [

@@ -25,7 +25,7 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-					<h2 class="mt-3 mb-3">${pm.cri.br_name} 직원 목록</h2>
+					<h2 class="mt-3 mb-3">${br_name} 직원 목록</h2>
 					<div>
 						<a href="<c:url value="/admin/employee/insert"/>" class="btn btn-outline-success btn-sm">직원등록</a>
 					</div>					
