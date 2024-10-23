@@ -97,7 +97,7 @@
 						<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
 						<hr/>
 						<div class="text-right mb-3">
-							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger">취소</a>
+							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
 						</div>
 					</div>
 	                

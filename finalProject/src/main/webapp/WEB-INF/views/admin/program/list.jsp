@@ -97,7 +97,6 @@
 										<label>총 인원수:</label>
 										<input class="form-control" id="bp_total" name="bp_total" placeholder="숫자를 입력하세요."/>
 									</div>
-									<div class="error error-date"></div>
 									<button type="submit" class="btn btn-outline-success col-12">프로그램 등록</button>
 					        	</div>
 					        	<div class="modal-footer">

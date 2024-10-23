@@ -80,7 +80,7 @@
 						<hr>
 						
 						<div class="text-right mb-3">
-							<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger">뒤로가기</a>
+							<a href="<c:url value="/admin/member/list"/>" class="btn btn-outline-danger col-12">뒤로</a>
 						</div>
 					</div>
 	                
