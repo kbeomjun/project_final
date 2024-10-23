@@ -26,7 +26,7 @@
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">예약회원 목록</h2>
-					<a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-info btn-sm">목록</a>
+					<a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-danger btn-sm">뒤로</a>
 					<table class="table" id="table">
 						<thead id="thead">
 							<tr>

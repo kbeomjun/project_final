@@ -6,6 +6,13 @@
 <html>
 <head>
 <title>스케줄 수정</title>
+<style type="text/css">
+	.form-control{
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 10px;	
+	}
+</style>
 </head>
 <body>
 
@@ -35,24 +42,23 @@
 						</div>
 						<div class="form-group">
 							<label>수정날짜:</label>
-							<input type="date" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
+							<input class="form-control" type="date" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
 						</div>
 						
-						<div class="form-group">
-							<label>수정시작시간:</label>
-							<input type="time" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label>수정시작시간:</label>
+								<input class="form-control" type="time" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
+							</div>
+							<div class="col-md-6">
+								<label>수정마감시간:</label>
+								<input class="form-control" type="time" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
+							</div>
 						</div>
-						
-						<div class="form-group">
-							<label>수정마감시간:</label>
-							<input type="time" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
-						</div>
-						<div class="form-group d-flex justify-content-between">
-						    <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-info">목록</a>
-						
-						    <button type="submit" class="btn btn-outline-warning">수정</button>
-						</div>
+					    <button type="submit" class="btn btn-outline-success col-12">수정</button>
 					</form>
+					<hr>
+				    <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-danger col-12">취소</a>
 	                
 	            </div>
 	        </main>

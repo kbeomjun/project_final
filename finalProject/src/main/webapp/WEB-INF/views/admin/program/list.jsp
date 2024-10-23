@@ -129,7 +129,7 @@
 										<label>총 인원수:</label>
 										<input class="form-control" id="bp_total2" name="bp_total" placeholder="숫자를 입력하세요."/>
 									</div>
-									<button type="submit" class="btn btn-outline-warning col-12">회원권 수정</button>
+									<button type="submit" class="btn btn-outline-success col-12">프로그램 수정</button>
 					        	</div>
 					        	<div class="modal-footer">
 					          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
