@@ -18,10 +18,10 @@
 						</div>
 						<div class="textbox">
 							<h3 class="ft_info__title">Our socials</h3>
-							<div>
-								<a href="#" class="gnb_side__sns sns_instagram" title="인스타그램"></a>
-								<a href="#" class="gnb_side__sns sns_facebook" title="페이스북"></a>
-								<a href="#" class="gnb_side__sns sns_twitter" title="트위터"></a>
+							<div class="ft_sns_wrap">
+								<a href="#" class="ft_sns sns_instagram" title="인스타그램"></a>
+								<a href="#" class="ft_sns sns_facebook" title="페이스북"></a>
+								<a href="#" class="ft_sns sns_twitter" title="트위터"></a>
 							</div>
 						</div>
 					</div>
