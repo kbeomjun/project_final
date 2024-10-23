@@ -26,6 +26,9 @@
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">회원 목록</h2>
+					<div>
+						<a href="<c:url value="/terms"/>" class="btn btn-outline-success btn-sm">회원등록</a>
+					</div>					
 					<table class="table text-center" id="table">
 						<thead id="thead">
 							<tr>
@@ -80,22 +83,13 @@
 					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
 					        		</td>									
 									<td>
-										<a href="<c:url value="/admin/member/detail/${me.me_id}"/>">조회</a>
+										<a href="<c:url value="/admin/member/detail/${me.me_id}"/>" class="btn btn-outline-info btn-sm">조회</a>
 									</td>
 								</tr>
 							</c:forEach>
-							<c:if test="${memberList.size() eq 0}">
-								<tr>
-									<th class="text-center" colspan="9">등록된 회원이 없습니다.</th>
-								</tr>
-							</c:if>
 						</tbody>
 					</table>
 					
-					<div class="text-right mb-3">
-						<a href="<c:url value="/terms"/>" class="btn btn-outline-success btn-sm">회원등록</a>
-					</div>
-	                
 	            </div>
 	        </main>
 	    </div>
@@ -108,12 +102,11 @@
 		        search: "",
 		        searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: ""
+		        emptyTable: "",
+		        lengthMenu: ""
 		    },
-			scrollY: 200,
-		    paging: true,
-		    pageLength: 5,
-		    lengthChange: false,
+			scrollY: 500,
+		    pageLength: 10,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [

@@ -30,6 +30,9 @@
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${br_name} 프로그램 목록</h2>
+					<div>	
+						<a href="<c:url value="/admin/program/insert"/>" class="btn btn-outline-success btn-sm">프로그램 추가</a>
+					</div>
 					<table class="table text-center" id="table">
 						<thead id="thead">
 							<tr>
@@ -61,9 +64,6 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<div class="text-right mb-3">	
-						<a href="<c:url value="/admin/program/insert"/>" class="btn btn-outline-success btn-sm">프로그램 추가</a>
-					</div>
 	                
 	            </div>
 	        </main>
@@ -77,10 +77,11 @@
 		        search: "",
 		        searchPlaceholder: "검색",
 		        zeroRecords: "",
-		        emptyTable: ""
+		        emptyTable: "",
+		        lengthMenu: ""
 		    },
-			scrollY: 400,
-		    paging: false,
+			scrollY: 500,
+		    pageLength: 10,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
