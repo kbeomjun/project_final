@@ -6,26 +6,23 @@
 <html>
 <head>
 <title>마이페이지</title>
-<style type="text/css">
-	.error{color:red; margin-bottom: 10px;}
-	.form-group{margin: 0;}
-	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-</style>
 </head>
 <body>
 	<div class="container-fluid">
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-					<form action="<c:url value="/client/mypage/review/update"/>" method="post" id="form">
-						<input type="hidden" name="rp_num" value="${review.rp_num}">
-						<input type="hidden" name="me_id" value="${me_id}">
+	                <h2>나의 작성글</h2>
+					<form action="<c:url value="/mypage/review/insert"/>" method="post" id="form">
+						<input type="hidden" value="${pa_num}" name="rp_pa_num">
+						<input type="hidden" value="${me_id}" name="me_id">
+						<input type="hidden" value="${page}" name="page">
 						<div class="form-group">
 							<label for="rp_br_name">지점명:</label>
 							<select name="rp_br_name" class="custom-select mb-3 form-control">
@@ -37,22 +34,23 @@
 						
 						<div class="form-group">
 							<label for="rp_title">제목:</label>
-							<input type="text" class="form-control" id="rp_title" name="rp_title" placeholder="제목을 입력하세요." value="${review.rp_title}">
+							<input type="text" class="form-control" id="rp_title" name="rp_title" placeholder="제목을 입력하세요.">
 						</div>
 						<div class="error error-title"></div>
 						<div class="form-group">
 							<label for="rp_content">내용:</label>
-							<textarea class="form-control" id="rp_content" name="rp_content" style="min-height: 400px; height:auto" placeholder="내용을 입력하세요.">${review.rp_content }</textarea>
+							<textarea class="form-control" id="rp_content" name="rp_content" style="min-height: 400px; height:auto" placeholder="내용을 입력하세요."></textarea>
 						</div>
 						<div class="error error-content"></div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-outline-info col-12">글 수정</button>
+							<button type="submit" class="btn btn-outline-info col-12">글 등록</button>
 						</div>
 					</form>
 					<hr>
 					<div>
-						<a href="<c:url value="/client/mypage/review/detail/${review.rp_num}"/>" class="btn btn-outline-danger col-12">취소</a>
+						<a href="<c:url value="/mypage/membership?page=${page}"/>" class="btn btn-outline-danger col-12">취소</a>
 					</div>
+					
 	            </div>
 	        </main>
 	    </div>
@@ -103,8 +101,8 @@
 			return flag;
 		});
     </script>
-    	
-    <script>
+    
+	<script>
 		$('#rp_content').summernote({
 			placeholder: '내용을 작성하세요.',
 			tabsize: 2,

@@ -69,6 +69,7 @@
 				        		<th>전화번호</th>
 				        		<th>계정</th>
 				        		<th>이메일</th>
+				        		<th>SNS</th>
 				        		<th>상태</th>
 				        		<th></th>
 				      		</tr>
@@ -78,12 +79,36 @@
 				    			<tr>
 					        		<td>${me.me_name}</td>
 					        		<td>
-					        			<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
+					        			<c:if test="${me.me_birth != null}">
+					        				<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
+				        				</c:if>
+					        			<c:if test="${me.me_birth == null}">
+					        				-
+				        				</c:if>
 				        			</td>
-					        		<td>${me.me_gender}</td>
-					        		<td>${me.me_phone}</td>
+					        		<td>
+					        			<c:if test="${me.me_gender != null}">
+					        				${me.me_gender}
+				        				</c:if>
+					        			<c:if test="${me.me_gender == null}">
+					        				-
+				        				</c:if>
+				        			</td>
+					        		<td>
+					        			<c:if test="${me.me_phone != null}">
+					        				${me.me_phone}
+				        				</c:if>
+					        			<c:if test="${me.me_phone == null}">
+					        				-
+				        				</c:if>
+				        			</td>
 					        		<td>${me.me_id}</td>
 					        		<td>${me.me_email}</td>
+					        		<td>
+					        			<c:if test="${me.me_kakaoUserId == null && me.me_naverUserId == null}">-</c:if>
+					        			<c:if test="${me.me_kakaoUserId != null}">카카오</c:if>
+					        			<c:if test="${me.me_naverUserId != null}">네이버</c:if>
+					        		</td>
 					        		<td>
 					        			<c:if test="${me.me_authority == 'USER'}">사용중</c:if>
 					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
@@ -221,8 +246,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [7], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
+		        { targets: [8], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
 		    ]
 		});
 	</script>

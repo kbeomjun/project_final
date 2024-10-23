@@ -90,7 +90,7 @@
 			<beans:ref bean="brAdminInterceptor"/>
 		</interceptor>
 		<interceptor>
-			<mapping path="/client/mypage/**"/>
+			<mapping path="/mypage/**"/>
 			<beans:ref bean="clientInterceptor"/>
 		</interceptor>
 		<interceptor>

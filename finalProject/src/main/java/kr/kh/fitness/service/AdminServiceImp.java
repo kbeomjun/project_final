@@ -33,9 +33,6 @@ import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
-import kr.kh.fitness.pagination.BranchCriteria;
-import kr.kh.fitness.pagination.Criteria;
-import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.utils.UploadFileUtils;
 
 @Service
@@ -111,19 +108,27 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean deleteBranchProgram(int bp_num) {
-		return adminDao.deleteBranchProgram(bp_num);
+	public String deleteBranchProgram(int bp_num) {
+		if(adminDao.selectProgramReservationCount(bp_num) > 0) {
+			return "현재 예약인원이 있어 프로그램을 삭제할 수 없습니다.";
+		}
+		if(!adminDao.deleteBranchProgram(bp_num)) {
+			return "프로그램 삭제에 실패했습니다.";
+		}
+		return "";
 	}
 
 	@Override
-	public List<BranchProgramScheduleVO> getBranchScheduleList(String view, BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchProgramScheduleVO> getBranchScheduleList(String view, String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectBranchScheduleList(view, cri);
+		return adminDao.selectBranchScheduleList(view, br_name);
+	}
+
+	@Override
+	public BranchProgramVO getBranchProgramInSchedule(int bs_num) {
+		return adminDao.selectBranchProgramInSchedule(bs_num);
 	}
 
 	@Override
@@ -132,25 +137,13 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<MemberVO> getMemberList() {
-		return adminDao.selectMemberList();
+	public List<MemberVO> getMemberListInUser() {
+		return adminDao.selectMemberListInUser();
 	}
 	
 	@Override
-	public List<MemberVO> getMemberListWithPagination(Criteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		return adminDao.selectMemberListWithPagination(cri);
-	}
-
-	@Override
-	public PageMaker getPageMakerInMember(Criteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectMemberTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
+	public List<MemberVO> getMemberList() {
+		return adminDao.selectMemberList();
 	}
 
 	@Override
@@ -178,25 +171,12 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchOrderVO> getBranchOrderList(BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchOrderVO> getBranchOrderList(String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectBranchOrderList(cri);
+		return adminDao.selectBranchOrderList(br_name);
 	}
-
-	@Override
-	public PageMaker getPageMakerInOrder(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectOrderTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
 
 	@Override
 	public String updateSchedule(BranchProgramScheduleVO schedule) {
@@ -235,28 +215,13 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
+	public BranchOrderVO getBranchOrder(int bo_num) {
+		return adminDao.selectBranchOrder(bo_num);
+	}
+
+	@Override
 	public boolean deleteOrder(int bo_num) {
 		return adminDao.deleteOrder(bo_num);
-	}
-
-	@Override
-	public List<EmployeeVO> getEmployeeListByBranchWithPagination(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectEmployeeListByBranchWithPagination(cri);
-	}
-
-	@Override
-	public PageMaker getPageMakerInEmployee(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectEmployeeByBranchTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
 	}
 
 	@Override
@@ -445,54 +410,21 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchStockDTO> getEquipmentListInBranch(String view, BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchStockDTO> getEquipmentListInBranch(String view, String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
+		return adminDao.selectEquipmentListInBranch(view, br_name);
+	}
+
+	@Override
+	public List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		return adminDao.selectEquipmentListInBranch(view, cri);
+		return adminDao.selectEquipmentChangeInBranch(br_name);
 	}
 	
-	@Override
-	public PageMaker getPageMakerInEquipmentList(String view, BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectEquipmentListTotalCount(view, cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
-	@Override
-	public List<BranchEquipmentStockVO> getEquipmentChangeInBranch(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectEquipmentChangeInBranch(cri);
-	}
-	
-	@Override
-	public PageMaker getPageMakerInEquipmentChange(BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectEquipmentChangeTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
-	@Override
-	public PageMaker getPageMaker(String view, BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectScheduleTotalCount(view, cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
 	@Override
 	public ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif) {
 		
