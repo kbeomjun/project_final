@@ -120,7 +120,7 @@
 					        				-
 				        				</c:if>
 					        			<c:if test="${me.me_authority == 'REMOVED'}">
-					        				${me.me_dataPeriod}
+					        				<fmt:formatDate value="${me.me_dataPeriod}" pattern="yyyy.MM.dd"/>
 					        			</c:if>
 					        		</td>
 					        		<td>
