@@ -33,9 +33,6 @@ import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
-import kr.kh.fitness.pagination.BranchCriteria;
-import kr.kh.fitness.pagination.Criteria;
-import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.utils.UploadFileUtils;
 
 @Service
@@ -124,6 +121,11 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
+	public BranchProgramVO getBranchProgramInSchedule(int bs_num) {
+		return adminDao.selectBranchProgramInSchedule(bs_num);
+	}
+
+	@Override
 	public List<MemberVO> getScheduleMemberList(int bs_num) {
 		return adminDao.selectScheduleMemberList(bs_num);
 	}
@@ -204,6 +206,11 @@ public class AdminServiceImp implements AdminService{
 			return "발주 등록에 실패했습니다.";
 		}
 		return "";
+	}
+
+	@Override
+	public BranchOrderVO getBranchOrder(int bo_num) {
+		return adminDao.selectBranchOrder(bo_num);
 	}
 
 	@Override

@@ -15,6 +15,12 @@
 </head>
 <body>
 
+	<c:if test="${not empty msg}">
+	    <script type="text/javascript">
+	        alert("${msg}");
+	    </script>
+	</c:if>
+
 	<div class="container-fluid">
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->

@@ -15,6 +15,12 @@
 </head>
 <body>
 
+	<c:if test="${not empty msg}">
+	    <script type="text/javascript">
+	        alert("${msg}");
+	    </script>
+	</c:if>
+	
 	<div class="container-fluid">
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
@@ -29,7 +35,7 @@
 			    	<div>
 				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-present active" data-name="present">현재예약현황</button>
 				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-past" data-name="past">이전예약내역</button>
-				    	<a href="<c:url value="/admin/schedule/regist/${br_name}"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
+				    	<a href="<c:url value="/admin/schedule/regist"/>" class="btn btn-outline-success btn-sm">스케줄 추가</a>
 				    </div>
 				    
 				    <div class="mt-3 box box-present">

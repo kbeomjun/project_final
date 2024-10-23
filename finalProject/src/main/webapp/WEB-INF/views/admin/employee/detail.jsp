@@ -27,8 +27,9 @@
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${em.em_name} 직원 상세</h2>
 					<div class="container" style="margin-top:30px">
-						<form action="<c:url value="/admin/employee/update/${em.em_num}"/>" method="post" enctype="multipart/form-data" id="form">
+						<form action="<c:url value="/admin/employee/update"/>" method="post" enctype="multipart/form-data" id="form">
 							<input type="hidden" name="em_br_name" value="${em.em_br_name}">
+							<input type="hidden" name="em_num" value="${em.em_num}">
 							<div class="form-group">
 								<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
 								    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%; height:100%;">

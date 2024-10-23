@@ -18,9 +18,6 @@ import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
-import kr.kh.fitness.pagination.BranchCriteria;
-import kr.kh.fitness.pagination.Criteria;
-import kr.kh.fitness.pagination.PageMaker;
 
 public interface AdminService {
 
@@ -40,6 +37,8 @@ public interface AdminService {
 
 	List<BranchProgramScheduleVO> getBranchScheduleList(String view, String br_name);
 
+	BranchProgramVO getBranchProgramInSchedule(int bs_num);
+	
 	List<MemberVO> getScheduleMemberList(int bs_num);
 	
 	List<MemberVO> getMemberListInUser();
@@ -60,6 +59,8 @@ public interface AdminService {
 
 	String insertOrder(BranchOrderVO order);
 
+	BranchOrderVO getBranchOrder(int bo_num);
+	
 	boolean deleteOrder(int bo_num);
 	
 	String insertEmployee(EmployeeVO employee, MultipartFile file);

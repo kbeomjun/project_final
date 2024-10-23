@@ -18,8 +18,6 @@ import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
-import kr.kh.fitness.pagination.BranchCriteria;
-import kr.kh.fitness.pagination.Criteria;
 
 public interface AdminDAO {
 
@@ -43,6 +41,8 @@ public interface AdminDAO {
 
 	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("br_name")String br_name);
 
+	BranchProgramVO selectBranchProgramInSchedule(int bs_num);
+	
 	List<MemberVO> selectScheduleMemberList(int bs_num);
 	
 	BranchProgramScheduleVO selectSchedule(BranchProgramScheduleVO schedule);
@@ -69,6 +69,8 @@ public interface AdminDAO {
 
 	boolean insertOrder(BranchOrderVO order);
 
+	BranchOrderVO selectBranchOrder(int bo_num);
+	
 	boolean deleteOrder(int bo_num);
 	
 	List<EmployeeVO> selectEmployeeList();

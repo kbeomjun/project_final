@@ -76,6 +76,17 @@
 			</if>
 	</select>
 	
+	<select id="selectBranchProgramInSchedule" resultType="BranchProgramVO">
+		select
+			*
+		from
+			branch_program
+		join
+			branch_program_schedule on bs_bp_num = bp_num
+		where
+			bs_num = #{bs_num}
+	</select>
+	
 	<select id="selectScheduleMemberList" resultType="MemberVO">
 		select 
 			* 
@@ -150,7 +161,7 @@
 		from 
 			branch_equipment_stock 
 		where 
-			be_br_name = '본점' 
+			be_br_name = '본사' 
 		group by 
 			be_se_name 
 		having 
@@ -161,6 +172,10 @@
 		insert into branch_order(bo_amount, bo_br_name, bo_se_name)
 		values(#{bo_amount}, #{bo_br_name}, #{bo_se_name})
 	</insert>
+	
+	<select id="selectBranchOrder" resultType="BranchOrderVO">
+		select * from branch_order where bo_num = #{bo_num}
+	</select>
 	
 	<delete id="deleteOrder">
 		delete from branch_order where bo_num = #{bo_num}
