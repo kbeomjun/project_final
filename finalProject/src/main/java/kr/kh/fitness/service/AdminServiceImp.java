@@ -108,8 +108,14 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public boolean deleteBranchProgram(int bp_num) {
-		return adminDao.deleteBranchProgram(bp_num);
+	public String deleteBranchProgram(int bp_num) {
+		if(adminDao.selectProgramReservationCount(bp_num) > 0) {
+			return "현재 예약인원이 있어 프로그램을 삭제할 수 없습니다.";
+		}
+		if(!adminDao.deleteBranchProgram(bp_num)) {
+			return "프로그램 삭제에 실패했습니다.";
+		}
+		return "";
 	}
 
 	@Override

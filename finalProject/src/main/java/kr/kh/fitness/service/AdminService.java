@@ -33,7 +33,7 @@ public interface AdminService {
 
 	String updateBranchProgram(BranchProgramVO branchProgram);
 
-	boolean deleteBranchProgram(int bp_num);
+	String deleteBranchProgram(int bp_num);
 
 	List<BranchProgramScheduleVO> getBranchScheduleList(String view, String br_name);
 

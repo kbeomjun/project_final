@@ -36,6 +36,7 @@ import kr.kh.fitness.model.vo.BranchVO;
 import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
+import kr.kh.fitness.model.vo.PaymentTypeVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.AdminService;
 
@@ -53,25 +54,16 @@ public class AdminController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		br_name = user.getMe_name();
 		
-		List<BranchProgramDTO> programList = adminService.getBranchProgramList(br_name);
-		model.addAttribute("programList", programList);
-		model.addAttribute("br_name", br_name);
-		return "/admin/program/list";
-	}
-	
-	//지점 프로그램 등록 get
-	@GetMapping("/program/insert")
-	public String programInsert(Model model, HttpSession session) {
-		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		List<BranchProgramDTO> branchProgramList = adminService.getBranchProgramList(br_name);
 		List<SportsProgramVO> programList = adminService.getProgramList();
 		List<EmployeeVO> employeeList = adminService.getEmployeeListByBranch(user.getMe_name());
 		
+		model.addAttribute("branchProgramList", branchProgramList);
 		model.addAttribute("programList", programList);
 		model.addAttribute("employeeList", employeeList);
-		model.addAttribute("branchName", user.getMe_name());
+		model.addAttribute("br_name", br_name);
 		
-		return "/admin/program/insert";
+		return "/admin/program/list";
 	}
 	
 	//지점 프로그램 등록 post
@@ -80,42 +72,28 @@ public class AdminController {
 		
 		String msg = adminService.insertBranchProgram(branchProgram);
 		
-		if(msg == "") {
-			model.addAttribute("url", "/admin/program/list?br_name=" + branchProgram.getBp_br_name());
-		} else {
-			model.addAttribute("url", "/admin/program/insert");
-		}
+		model.addAttribute("url", "/admin/program/list");
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
-	
+
 	//지점 프로그램 수정 get
-	@GetMapping("/program/update/{bp_num}")
-	public String programUpdate(Model model, @PathVariable("bp_num")int bp_num, HttpSession session, RedirectAttributes redirectAttributes) {
+	@ResponseBody
+	@GetMapping("/program/update")
+	public Map<String, Object> programUpdate(@RequestParam int bp_num, PaymentTypeVO ptVo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		BranchProgramDTO branchProgram = adminService.getBranchProgram(bp_num);
-		
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		if(user.getMe_name().equals(branchProgram.getBp_br_name())) {
-			model.addAttribute("branchProgram", branchProgram);
-			return "/admin/program/update";
-		} else {
-	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램은 조회할 수 없습니다.");
-	        return "redirect:/admin/program/list";
-		}
-		
-	}
+		map.put("branchProgram", branchProgram);
+		return map;
+	}	
 	
 	//지점 프로그램 수정 post
 	@PostMapping("/program/update")
 	public String programUpdatePost(Model model, BranchProgramVO branchProgram) {
 		String msg = adminService.updateBranchProgram(branchProgram);
-		if(msg == "") {
-			model.addAttribute("url", "/admin/program/list");
-		} else {
-			model.addAttribute("url", "/admin/program/update/" + branchProgram.getBp_num());
-		}
+
+		model.addAttribute("url", "/admin/program/list");
 		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
@@ -130,12 +108,8 @@ public class AdminController {
 	        redirectAttributes.addFlashAttribute("msg", "다른 지점의 프로그램은 삭제할 수 없습니다.");
 	        return "redirect:/admin/program/list";
 		}
-		
-		if(adminService.deleteBranchProgram(bp_num)) {
-			model.addAttribute("msg", "삭제에 성공했습니다.");
-		} else {
-			model.addAttribute("msg", "삭제에 실패했습니다.");
-		}
+		String msg = adminService.deleteBranchProgram(bp_num); 
+		model.addAttribute("msg", msg);
 		model.addAttribute("url", "/admin/program/list");
 		return "/main/message";
 	}

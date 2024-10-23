@@ -52,6 +52,10 @@
 	<update id="updateBranchProgram">
 		update branch_program set bp_total = #{bp_total} where bp_num = #{bp_num}
 	</update>
+		
+	<select id="selectProgramReservationCount" resultType="int">
+		select count(*) from branch_program_schedule where bs_bp_num = #{bp_num} and bs_start > now() and bs_current > 0;
+	</select>
 
 	<delete id="deleteBranchProgram">
 		delete from branch_program where bp_num = #{bp_num}

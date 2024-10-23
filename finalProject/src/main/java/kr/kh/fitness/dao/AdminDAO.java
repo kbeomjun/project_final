@@ -37,6 +37,8 @@ public interface AdminDAO {
 	
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
+	int selectProgramReservationCount(int bp_num);
+	
 	boolean deleteBranchProgram(int bp_num);
 
 	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("br_name")String br_name);
