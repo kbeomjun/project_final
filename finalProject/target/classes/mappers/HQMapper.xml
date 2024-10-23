@@ -250,6 +250,10 @@
 		select * from member where me_id = #{me.me_id};
 	</select>
 	
+	<delete id="deleteMember">
+		delete from member where me_id = #{me.me_id};
+	</delete>
+	
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
 		select * from member_inquiry 
 		<if test="str == 'wait'">

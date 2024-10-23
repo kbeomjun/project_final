@@ -34,10 +34,12 @@ public class MemberVO {
     
     private String me_kakaoUserId;
     private String me_naverUserId;
+    private Date me_dataPeriod;
+    
+    private boolean me_canDelete = false;
 
     public MemberVO(String id, String email) {
 		this.me_id = id;
 		this.me_email = email;
 	}
 }
-

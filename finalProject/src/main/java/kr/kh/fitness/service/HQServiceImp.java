@@ -337,6 +337,9 @@ public class HQServiceImp implements HQService {
 		if(!msg.equals("")) {return msg;}
 		
 		BranchStockDTO st = hqDao.selectBranchStock(bo);
+		if(st == null) {msg = "재고가 없습니다. 입고를 먼저 해야합니다.";}
+		if(!msg.equals("")) {return msg;}
+		
 		if(st.getBe_se_total() < bo.getBo_amount()) {msg = "재고가 부족합니다.";}
 		if(!msg.equals("")) {return msg;}
 		
@@ -508,10 +511,34 @@ public class HQServiceImp implements HQService {
 	}
 
 	@Override
-	public List<MemberVO> getMemberList() {return hqDao.selectMemberList();}
+	public List<MemberVO> getMemberList() {
+		List<MemberVO> meList = hqDao.selectMemberList();
+		Date now = new Date();
+		for(int i = 0; i < meList.size(); i++) {
+			if(meList.get(i).getMe_dataPeriod() != null && meList.get(i).getMe_dataPeriod().compareTo(now) <= 0) {
+				meList.get(i).setMe_canDelete(true);
+			}
+		}
+		return meList;
+	}
 
 	@Override
 	public MemberVO getMember(MemberVO me) {return hqDao.selectMember(me);}
+	
+	@Override
+	public String deleteMember(MemberVO me) {
+		String msg = "";
+		if(me == null) {msg = "회원 정보가 없습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		MemberVO meVo = hqDao.selectMember(me);
+		Date now = new Date();
+		if(meVo.getMe_dataPeriod() == null || meVo.getMe_dataPeriod().compareTo(now) > 0) {msg = "탈퇴기한이 유효하지 않습니다.";}
+		if(!msg.equals("")) {return msg;}
+		
+		if(!hqDao.deleteMember(meVo)) {msg = "회원을 삭제하지 못했습니다.";}
+		return msg;
+	}
 
 	@Override
 	public List<MemberInquiryVO> getMemberInquiryList(String str) {return hqDao.selectMemberInquiryList(str);}

@@ -120,6 +120,13 @@ public class UserController {
 	                model.addAttribute("url", "/login");
 	                return "/main/message";
 	            }
+	            
+	            if(user.getMe_authority().equals("REMOVED")) {
+					model.addAttribute("msg", "탈퇴한 회원입니다.");
+					model.addAttribute("url", "/login");
+					
+					return "/main/message";
+				} 
 
 	            logger.info("로그인 성공: 사용자 ID - " + user.getMe_id());
 
