@@ -337,6 +337,9 @@ public class HQServiceImp implements HQService {
 		if(!msg.equals("")) {return msg;}
 		
 		BranchStockDTO st = hqDao.selectBranchStock(bo);
+		if(st == null) {msg = "재고가 없습니다. 입고를 먼저 해야합니다.";}
+		if(!msg.equals("")) {return msg;}
+		
 		if(st.getBe_se_total() < bo.getBo_amount()) {msg = "재고가 부족합니다.";}
 		if(!msg.equals("")) {return msg;}
 		
