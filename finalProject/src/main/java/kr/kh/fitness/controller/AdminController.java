@@ -545,20 +545,17 @@ public class AdminController {
 	
 	//지점 운동기구 재고 조회
 	@GetMapping("/equipment/list")
-	public String equipmentList(Model model, HttpSession session, @RequestParam(value = "view", defaultValue = "all")String view, BranchCriteria cri) {
+	public String equipmentList(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			cri.setPerPageNum(5);
-			cri.setBr_name(br_name);
+			List<BranchStockDTO> allEquipmentList = adminService.getEquipmentListInBranch("all", br_name);
+			List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch("equipment", br_name);
 			
-			List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch(view, cri);
-			PageMaker pm = adminService.getPageMakerInEquipmentList(view, cri);
-			
+			model.addAttribute("allList", allEquipmentList);
 			model.addAttribute("equipmentList", equipmentList);
-			model.addAttribute("view", view);
-			model.addAttribute("pm", pm);
+			model.addAttribute("br_name", br_name);
 			return "/admin/equipment/list";
 			
 		} catch (Exception e) {

@@ -86,13 +86,11 @@ public interface AdminService {
 
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
 	
-	List<BranchStockDTO> getEquipmentListInBranch(String view, BranchCriteria cri);
+	List<BranchStockDTO> getEquipmentListInBranch(String view, String br_name);
 
 	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(BranchCriteria cri);
 	
 	PageMaker getPageMakerInEquipmentChange(BranchCriteria cri);
-	
-	PageMaker getPageMakerInEquipmentList(String view, BranchCriteria cri);
 
 	ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif);
 

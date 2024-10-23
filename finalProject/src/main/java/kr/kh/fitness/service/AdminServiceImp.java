@@ -417,23 +417,11 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchStockDTO> getEquipmentListInBranch(String view, BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchStockDTO> getEquipmentListInBranch(String view, String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectEquipmentListInBranch(view, cri);
-	}
-	
-	@Override
-	public PageMaker getPageMakerInEquipmentList(String view, BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectEquipmentListTotalCount(view, cri);
-		return new PageMaker(3, cri, totalCount);
+		return adminDao.selectEquipmentListInBranch(view, br_name);
 	}
 
 	@Override

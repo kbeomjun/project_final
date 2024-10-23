@@ -107,9 +107,7 @@ public interface AdminDAO {
 
 	void insertBranchFile(BranchFileVO branchFile);
 	
-	List<BranchStockDTO> selectEquipmentListInBranch(@Param("view")String view, @Param("cri")BranchCriteria cri);
-	
-	int selectEquipmentListTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
+	List<BranchStockDTO> selectEquipmentListInBranch(@Param("view")String view, @Param("br_name")String br_name);
 
 	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(BranchCriteria cri);
 	
