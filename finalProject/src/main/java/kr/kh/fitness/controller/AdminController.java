@@ -151,20 +151,17 @@ public class AdminController {
 	
 	//지점 프로그램 일정 목록(프로그램명+트레이너명+[예약인원/총인원]+프로그램날짜+프로그램시간)
 	@GetMapping("/schedule/list")
-	public String programSchedule(Model model, HttpSession session, @RequestParam(value = "view", defaultValue = "present")String view, BranchCriteria cri) {
+	public String programSchedule(Model model, HttpSession session) {
 		try {
 			MemberVO user = (MemberVO)session.getAttribute("user");
 			String br_name = user.getMe_name();
 			
-			cri.setPerPageNum(5);
-			cri.setBr_name(br_name);
+			List<BranchProgramScheduleVO> presentList = adminService.getBranchScheduleList("present", br_name);
+			List<BranchProgramScheduleVO> pastList = adminService.getBranchScheduleList("past", br_name);
 			
-			List<BranchProgramScheduleVO> scheduleList = adminService.getBranchScheduleList(view, cri);
-			PageMaker pm = adminService.getPageMaker(view, cri);
-			
-			model.addAttribute("scheduleList", scheduleList);
-			model.addAttribute("view", view);
-			model.addAttribute("pm", pm);
+			model.addAttribute("presentList", presentList);
+			model.addAttribute("pastList", pastList);
+			model.addAttribute("br_name", br_name);
 			return "/admin/schedule/list";
 			
 		} catch (Exception e) {
@@ -175,14 +172,12 @@ public class AdminController {
 	}
 	
 	//지점 프로그램 일정 상세 -> 예약한 회원 목록(이름+전화번호+생년월일+성별+노쇼경고횟수)
-	@GetMapping("/schedule/member")
-	public String scheduleMember(Model model, Integer bs_num, String view, BranchCriteria cri) {
+	@GetMapping("/schedule/member/{bs_num}")
+	public String scheduleMember(Model model, @PathVariable("bs_num")int bs_num) {
 		
 		List<MemberVO> memberList = adminService.getScheduleMemberList(bs_num);
 		
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("cri", cri);
-		model.addAttribute("view", view);
 		
 		return "/admin/schedule/member";
 	}
@@ -269,13 +264,11 @@ public class AdminController {
 	
 	//지점 프로그램 일정 수정 get
 	@GetMapping("/schedule/update/{bs_num}")
-	public String scheduleUpdate(Model model, @PathVariable("bs_num")int bs_num, String view, BranchCriteria cri) {
+	public String scheduleUpdate(Model model, @PathVariable("bs_num")int bs_num) {
 		
 		BranchProgramScheduleVO schedule = adminService.getSchedule(bs_num);
 		
 		model.addAttribute("schedule", schedule);
-		model.addAttribute("view", view);
-		model.addAttribute("cri", cri);
 		
 		return "/admin/schedule/update";
 	}

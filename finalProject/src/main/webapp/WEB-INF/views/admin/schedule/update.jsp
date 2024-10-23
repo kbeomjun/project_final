@@ -48,13 +48,7 @@
 							<input type="time" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
 						</div>
 						<div class="form-group d-flex justify-content-between">
-						    <c:url var="url" value="/admin/schedule/list">
-						        <c:param name="view" value="${view}"/>
-						        <c:param name="page" value="${cri.page}"/>
-						        <c:param name="type" value="${cri.type}"/>
-						        <c:param name="search" value="${cri.search}"/>
-						    </c:url>
-						    <a href="${url}" class="btn btn-outline-info">목록</a>
+						    <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-info">목록</a>
 						
 						    <button type="submit" class="btn btn-outline-warning">수정</button>
 						</div>

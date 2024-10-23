@@ -41,7 +41,7 @@ public interface AdminDAO {
 
 	boolean deleteBranchProgram(int bp_num);
 
-	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("cri")BranchCriteria cri);
+	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("br_name")String br_name);
 
 	List<MemberVO> selectScheduleMemberList(int bs_num);
 	
@@ -116,8 +116,6 @@ public interface AdminDAO {
 	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(BranchCriteria cri);
 	
 	int selectEquipmentChangeTotalCount(BranchCriteria cri);
-
-	int selectScheduleTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
 
 	BranchProgramScheduleVO selectBranchSchedule(@Param("bp_num")int bs_bp_num, @Param("start")Date startDate);
 

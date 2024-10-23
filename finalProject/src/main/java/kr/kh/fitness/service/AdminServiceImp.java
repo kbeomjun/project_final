@@ -116,14 +116,11 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchProgramScheduleVO> getBranchScheduleList(String view, BranchCriteria cri) {
-		if(cri == null) {
+	public List<BranchProgramScheduleVO> getBranchScheduleList(String view, String br_name) {
+		if(br_name == null) {
 			return null;
 		}
-		if(cri.getBr_name() == null) {
-			return null;
-		}
-		return adminDao.selectBranchScheduleList(view, cri);
+		return adminDao.selectBranchScheduleList(view, br_name);
 	}
 
 	@Override
@@ -469,15 +466,6 @@ public class AdminServiceImp implements AdminService{
 			return null;
 		}
 		int totalCount = adminDao.selectEquipmentChangeTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
-	}
-
-	@Override
-	public PageMaker getPageMaker(String view, BranchCriteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = adminDao.selectScheduleTotalCount(view, cri);
 		return new PageMaker(3, cri, totalCount);
 	}
 

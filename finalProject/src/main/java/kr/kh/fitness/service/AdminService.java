@@ -38,7 +38,7 @@ public interface AdminService {
 
 	boolean deleteBranchProgram(int bp_num);
 
-	List<BranchProgramScheduleVO> getBranchScheduleList(String br_name, BranchCriteria cri);
+	List<BranchProgramScheduleVO> getBranchScheduleList(String view, String br_name);
 
 	List<MemberVO> getScheduleMemberList(int bs_num);
 	
@@ -95,8 +95,6 @@ public interface AdminService {
 	PageMaker getPageMakerInEquipmentChange(BranchCriteria cri);
 	
 	PageMaker getPageMakerInEquipmentList(String view, BranchCriteria cri);
-
-	PageMaker getPageMaker(String view, BranchCriteria cri);
 
 	ResultMessage insertBranchProgramSchedule(ProgramInsertFormDTO pif);
 
