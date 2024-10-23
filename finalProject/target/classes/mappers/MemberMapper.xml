@@ -106,5 +106,11 @@
   <select id="selectMemberByNameAndEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member
     WHERE me_name = #{name} AND me_email = #{email}
-    </select>
+  </select>
+  <select id="findMemberByIdEmailPhone" resultType="kr.kh.fitness.model.vo.MemberVO">
+    SELECT * FROM member
+    WHERE me_id = #{me_id}
+    AND me_email = #{me_email}
+    AND me_phone = #{me_phone}
+  </select>
 </mapper>

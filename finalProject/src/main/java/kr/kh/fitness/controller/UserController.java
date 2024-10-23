@@ -288,7 +288,6 @@ public class UserController {
         
         if (userId != null) {
             response.put("success", true);
-            response.put("username", userId);
             logger.info("아이디 찾기 결과: " + userId);
         } else {
             response.put("success", false);
@@ -308,9 +307,13 @@ public class UserController {
     // 비밀번호 찾기 처리
     @ResponseBody
     @PostMapping("/find/pw")
-    public boolean findPwPost(@RequestParam String id) {
-        logger.info("비밀번호 찾기 시도: 사용자 ID - " + id);
-        boolean res = memberService.findPw(id);
+    public boolean findPwPost(@RequestParam String id, @RequestParam String email, @RequestParam String phone) {
+        logger.info("비밀번호 찾기 시도: 사용자 ID - " + id + ", 이메일 - " + email + ", 전화번호 - " + phone);
+
+        // 서비스 호출하여 사용자가 입력한 ID, 이메일, 전화번호가 모두 일치하는지 확인
+        boolean res = memberService.findPwByDetails(id, email, phone);
+
+        // 결과 로그 출력
         logger.info("비밀번호 찾기 결과: 사용자 ID - " + id + " - " + (res ? "성공" : "실패"));
         return res;
     }
