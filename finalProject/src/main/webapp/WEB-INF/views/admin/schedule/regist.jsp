@@ -16,6 +16,10 @@
 		border-collapse: collapse;
 		margin-top: 10px;
 	}
+   	#thead th{text-align: center;}
+   	#tbody td{text-align: center;}
+   	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+   	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}	
 </style>
 <style>
 /* 체크박스 숨기기 */
@@ -111,80 +115,94 @@
 						</div>
 						
 						<div class="form-group" style="display: none;" id="weeks-program-table">  
-					    <label for="weeks">요일 선택:</label>	
-					    <c:forEach var="day" begin="1" end="7">
-					        <input type="checkbox" id="checkbox-${day}" class="checkbox-button form-control" value="${day}" name="weeks"/>
-					        <label for="checkbox-${day}" class="checkbox-label">
-					            <c:choose>
-					                <c:when test="${day == 1}">일요일</c:when>
-					                <c:when test="${day == 2}">월요일</c:when>
-					                <c:when test="${day == 3}">화요일</c:when>
-					                <c:when test="${day == 4}">수요일</c:when>
-					                <c:when test="${day == 5}">목요일</c:when>
-					                <c:when test="${day == 6}">금요일</c:when>
-					                <c:when test="${day == 7}">토요일</c:when>
-					            </c:choose>
-					        </label>
-					    </c:forEach>
+						    <label for="weeks">요일 선택:</label>	
+						    <c:forEach var="day" begin="1" end="7">
+						        <input type="checkbox" id="checkbox-${day}" class="checkbox-button form-control" value="${day}" name="weeks"/>
+						        <label for="checkbox-${day}" class="checkbox-label">
+						            <c:choose>
+						                <c:when test="${day == 1}">일요일</c:when>
+						                <c:when test="${day == 2}">월요일</c:when>
+						                <c:when test="${day == 3}">화요일</c:when>
+						                <c:when test="${day == 4}">수요일</c:when>
+						                <c:when test="${day == 5}">목요일</c:when>
+						                <c:when test="${day == 6}">금요일</c:when>
+						                <c:when test="${day == 7}">토요일</c:when>
+						            </c:choose>
+						        </label>
+						    </c:forEach>
 						</div>
 														
-				    <div class="form-group" id="program-time-table" style="display: none;">
-					    <label for="hours">시간 선택:</label>
-				        <c:forEach var="hour" begin="9" end="19">
-					        <input type="checkbox" id="checkbox-${hour}" class="checkbox-button form-control" value="${hour}" name="hours"/>
-					        <label for="checkbox-${hour}" class="checkbox-label">${hour}:00</label>
-					    </c:forEach>
-					</div>
+					    <div class="form-group" id="program-time-table" style="display: none;">
+						    <label for="hours">시간 선택:</label>
+					        <c:forEach var="hour" begin="9" end="19">
+						        <input type="checkbox" id="checkbox-${hour}" class="checkbox-button form-control" value="${hour}" name="hours"/>
+						        <label for="checkbox-${hour}" class="checkbox-label">${hour}:00</label>
+						    </c:forEach>
+						</div>
 					
-					<div class="form-group" id="pt-time-table" style="display: none;">
-					    <label for="hours">시간 선택:</label><br>
-					    <c:forEach var="hour" begin="9" end="19">
-					        <input type="radio" id="radio-${hour}" class="radio-button form-control" value="${hour}" name="hours"/>
-					        <label for="radio-${hour}" class="radio-label">${hour}:00</label>
-					    </c:forEach>
-					</div>
+						<div class="form-group" id="pt-time-table" style="display: none;">
+						    <label for="hours">시간 선택:</label><br>
+						    <c:forEach var="hour" begin="9" end="19">
+						        <input type="radio" id="radio-${hour}" class="radio-button form-control" value="${hour}" name="hours"/>
+						        <label for="radio-${hour}" class="radio-label">${hour}:00</label>
+						    </c:forEach>
+						</div>
 		
-					<!-- 회원 선택 테이블 -->
-					<div class="form-group" id="memberListTable" style="display: none;" id="pt-time-table">
-						<label>회원 선택:</label>
-						<table class="table text-center">
-							<thead>
-								<tr>
-									<th></th>
-									<th>회원 이름</th>
-									<th>번호</th>
-									<th>이메일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${memberList}" var="member">
+						<!-- 회원 선택 테이블 -->
+						<div class="form-group" id="memberListTable" style="display: none;" id="pt-time-table">
+							<label>회원 선택:</label>
+							<table class="table text-center" id="table">
+								<thead id="thead">
 									<tr>
-										<td>
-											<input type="radio" id="member-id" name="me_id" value="${member.me_id}"/>
-										</td>
-										<td>${member.me_name} (${member.me_gender})</td>
-										<td>${member.me_phone}</td>
-										<td>${member.me_email}</td>
+										<th>상태</th>
+										<th>회원 이름</th>
+										<th>번호</th>
+										<th>이메일</th>
 									</tr>
-								</c:forEach>
-								<c:if test="${memberList.size() eq 0}">
-									<tr>
-										<th class="text-center" colspan="4">등록된 회원이 없습니다.</th>
-									</tr>
-								</c:if>						
-							</tbody>
-						</table>
-					</div>	
-						
-					<div class="text-right mb-3">
-						<button type="submit" class="btn btn-outline-success">등록</button>
-					</div>
+								</thead>
+								<tbody id="tbody">
+									<c:forEach items="${memberList}" var="member">
+										<tr>
+											<td>
+												<input type="radio" id="member-id" name="me_id" value="${member.me_id}"/>
+											</td>
+											<td>${member.me_name} (${member.me_gender})</td>
+											<td>${member.me_phone}</td>
+											<td>${member.me_email}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>	
+						<hr>
+						<button type="submit" class="btn btn-outline-success col-12">등록</button>
 					</form>
 	                
 	            </div>
 	        </main>
 	    </div>
 	</div>
+
+	<script type="text/javascript">
+		// 데이터테이블
+		$('#table').DataTable({
+			language: {
+		        search: "",
+		        searchPlaceholder: "검색",
+		        zeroRecords: "",
+		        emptyTable: "",
+		    },
+			scrollY: 200,
+		    paging: false,
+		    info: false,
+		    order: [[ 1, "asc" ]],
+		    columnDefs: [
+		        { targets: [0], orderable: false },
+		        { targets: [0, 1, 2, 3], className: "align-content-center"}
+		    ],
+		    autoWidth: false
+		});
+	</script>
 
 <script type="text/javascript">
 	
