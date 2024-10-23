@@ -94,27 +94,27 @@
                 `;
                 $('body').append(str);
 
-                var res = false;
                 setTimeout(() => {
                     $.ajax({
-                        async: false,
                         url: '<c:url value="/find/pw"/>',
                         type: 'post',
                         data: { id: id, email: email, phone: phone },
                         success: function (data) {
-                            res = data;
+                            $('.modal-container').remove();
+                            if (data === 'not_found') {
+                                alert("등록된 사용자가 아닙니다.");
+                            } else if (data === 'error') {
+                                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                            } else {
+                                alert("비밀번호가 전송됐습니다.");
+                            }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                            $('.modal-container').remove();
                             console.error(jqXHR, textStatus, errorThrown);
+                            alert("오류가 발생했습니다. 다시 시도해 주세요.");
                         }
                     });
-
-                    $('.modal-container').remove();
-                    if (res) {
-                        alert("비밀번호가 전송됐습니다.");
-                    } else {
-                        alert("비밀번호 찾기에 실패했습니다.");
-                    }
                 }, 100);
             });
 
