@@ -81,6 +81,7 @@
 							src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>"
 							onclick="loginWithKakao()">
 						</a>
+						<a href="${naverApiUrl }"><img alt="네이버로그인" width ="180" height="45" src="<c:url value='/resources/image/naver/small_g_in.png'/>"/></a>
 					</div>
 
 				</div>
@@ -89,7 +90,7 @@
 	</div>
 <!-- 카카오 로그인 -->
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
- 
+
 <script type="text/javascript">
     $(document).ready(function(){
         Kakao.init('${kakaoApiKey}');
@@ -98,7 +99,7 @@
 
     function loginWithKakao() {
         Kakao.Auth.authorize({ 
-        redirectUri: '${redirectUri}' 
+        redirectUri: '${kakaoRedirectUri}' 
         }); // 등록한 리다이렉트uri 입력
         
     }

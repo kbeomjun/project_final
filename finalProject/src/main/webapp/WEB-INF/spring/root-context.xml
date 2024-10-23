@@ -57,6 +57,21 @@
         <constructor-arg value="${kakao.redirect_uri}" />
     </bean>
     
+    <!-- naver login을 위한 client ID -->
+    <bean id="naverClientId" class="java.lang.String">
+        <constructor-arg value="${naver.client.id}" />
+    </bean>
+    
+    <!-- naver login을 위한 client Secret -->
+    <bean id="naverClientSecret" class="java.lang.String">
+        <constructor-arg value="${naver.client.secret}" />
+    </bean>
+    
+    <!-- naver에 등록한 callback Url -->
+    <bean id="naverCallbackUrl" class="java.lang.String">
+        <constructor-arg value="${naver.callback.url}" />
+    </bean>
+    
     <!-- gmail -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />

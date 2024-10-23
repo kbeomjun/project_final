@@ -6,11 +6,9 @@
 <head>
 
 <style>
-.button_kakao {
+.button_kakao,
+.button_naver {
 	position: relative;
-    /*  
-    display: block;
-    */
     display: flex; /* 플렉스 박스 사용 */
     align-items: center; /* 수직 중앙 정렬 */
     justify-content: center; /* 수평 중앙 정렬 */
@@ -20,8 +18,6 @@
     height: 50px;
     /* background-color: #00c400; */
     border-radius: 8px;
-    background-color: #FEE500; /* 카카오톡 주황색 */
-    color: #3A1D0D; /* 카카오톡 텍스트 색상 */
     border: none; /* 테두리 제거 */
     padding: 10px 20px; /* 여백 */
     font-size: 16px; /* 폰트 크기 */
@@ -30,7 +26,15 @@
     transition: background-color 0.3s ease; /* 배경색 변화 애니메이션 */
 }
 
+.button_kakao {
+    background-color: #FEE500; /* 카카오톡 주황색 */
+    color: #3A1D0D; /* 카카오톡 텍스트 색상 */
+}
 
+.button_naver {
+    background-color: #03C75A; /* 네이버 녹색 */
+    color: #FFFFFF; /* 텍스트 흰색 */
+}
 
 /* 버튼 호버 효과 */
 .button_kakao:hover {
@@ -43,7 +47,8 @@
 }
 
 /* 아이콘 스타일 */
-.kakao-icon {
+.kakao-icon,
+.naver-icon {
     width: 30px; /* 아이콘 크기 조정 */
     height: 30px; /* 아이콘 크기 조정 */
     margin-right: 10px; /* 텍스트와 아이콘 간의 간격 */
@@ -105,19 +110,24 @@
 		<c:choose>
 			<c:when test="${ socialType eq 'KAKAO'}">
 				<input type="hidden" name="me_kakaoUserId" value="${user.me_kakaoUserId}" />
+				<button type="submit" id="btnMatchingSubmit" class="button_kakao">
+					<img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" />
+						카카오 계정 연결하기
+				</button>
 			</c:when>
 			<c:when test="${ socialType eq 'NAVER'}">
 				<input type="hidden" name="me_naverUserId" value="${user.me_naverUserId}" />
+				<button type="submit" id="btnMatchingSubmit" class="button_naver">
+					<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" />
+					네이버 계정 연결하기
+				</button>
 			</c:when>
 		</c:choose>
 		<input type="hidden" name="me_gender" value="${user.me_gender}" /> 
 		<input type="hidden" name="me_phone" value="${user.me_phone}" /> 
 		<input type="hidden" name="me_name" value="${user.me_name}" />
 		
-		<button type="submit" id="btnMatchingSubmit" class="button_kakao">
-		 <img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" />
-			카카오 계정 연결하기
-		</button>
+		
 	</form>
 </div>
 

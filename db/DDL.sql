@@ -21,7 +21,8 @@ CREATE TABLE `member` (
    `me_noshow`   		int   			not null default 0,
    `me_cancel`   		datetime   		NULL,
    `me_kakaoUserId`		varchar(20)		NULL unique,
-   `me_naverUserId`		varchar(20)		NULL unique
+   `me_naverUserId`		varchar(100)	NULL unique,
+   `me_dataPeriod`		datetime		Null
 );
 
 drop table if exists `branch`;
