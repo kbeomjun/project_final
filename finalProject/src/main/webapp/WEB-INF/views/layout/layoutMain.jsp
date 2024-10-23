@@ -16,11 +16,11 @@
 	
 </head>
 <body>
-    <tiles:insertAttribute name="header"/>
-        <main class="main_container" id="skipnav_target"> 
-				<tiles:insertAttribute name="body" />                                                 
-	    </main>
-    <tiles:insertAttribute name="footer" />
+	<tiles:insertAttribute name="header"/>
+		<main class="main_container" id="skipnav_target"> 
+			<tiles:insertAttribute name="body" />                                                 
+		</main>
+	<tiles:insertAttribute name="footer" />
     
     <script>
 		$(".js-gnb_side__link").on("click", function(){

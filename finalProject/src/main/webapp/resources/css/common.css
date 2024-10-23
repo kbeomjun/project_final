@@ -284,16 +284,16 @@ dl, ol, ul{
   width: calc(189px / 2);
   height: calc(105px / 2);
   margin-left: 62px;
-  background-image: url("../image/main/logo_whitex2.png");
+  background-image: url("../image/main/KF_logo_white.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 .logo-dark{
-  background-image: url("../image/main/logo_blackx2.png");
+  background-image: url("../image/main//KF_logo_black.svg");
 }
 .logo-white{
-  background-image: url("../image/main/logo_whitex2.png");
+  background-image: url("../image/main//KF_logo_white.svg");
 }
 .gnb_wrap{
   display: flex;
@@ -344,20 +344,32 @@ dl, ol, ul{
   width: 100%;
 }
 .gnb_side__sns{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
   margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   transition: .3s;
 }
-.gnb_side__sns_defualt{
-  transition: .3s;
+.gnb_side__sns.sns_instagram{
+  background-image: url("../image/icon/instagram.svg");
+}
+.gnb_side__sns.sns_facebook{
+  background-image: url("../image/icon/facebook.svg");
+}
+.gnb_side__sns.sns_twitter{
+  background-image: url("../image/icon/twitter.svg");
 }
 .gnb_side__sns:hover .gnb_side__sns_defualt, .gnb_side__sns:focus .gnb_side__sns_defualt{
   opacity: 0.5;
 }
 .gnb_side__logo{
   display: inline-block;
-  width: 130px;
-  height: 92px;
-  background-image: url("../image/main/Logo-light.png");
+  width: 170px;
+  height: 95px;
+  background-image: url("../image/main/KF_logo_white.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -380,7 +392,8 @@ dl, ol, ul{
   top: -10px;
   right: -550px;
   width: 500px;
-  height: calc(100vh - 10px);
+  height: 100%;
+  min-height: 899px;
   padding: 40px;
   background: #000;
   opacity: 0;
