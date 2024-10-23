@@ -11,10 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import kr.kh.fitness.dao.MemberDAO;
@@ -22,7 +30,7 @@ import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.MemberVO;
 
 @Service
-public class KaKaoServiceImp implements KakaoService {
+public class SingleSignOnServiceImp implements SingleSignOnService {
 	
 	private final List<String> social_list = new ArrayList<>(List.of("KAKAO", "NAVER"));
 
@@ -35,10 +43,10 @@ public class KaKaoServiceImp implements KakaoService {
 	@Autowired
 	private MemberDAO memberDao;
 	
-	private final String KAKAO_INITIAL = "KAKAO_";
+	// private final String KAKAO_INITIAL = "KAKAO_";
 	private final String KAKAO_PW = "KAKAO_SOCIAL_LOGIN";
 
-	public String getReturnAccessToken(String code) {
+	public String getReturnAccessTokenKakao(String code) {
 		String access_token = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 
@@ -88,7 +96,7 @@ public class KaKaoServiceImp implements KakaoService {
 		return access_token;
 	}
 
-	public MemberVO getUserInfo(String access_token) {
+	public MemberVO getUserInfoFromKakaoToken(String access_token) {
 		MemberVO user = new MemberVO();
 
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
@@ -119,12 +127,10 @@ public class KaKaoServiceImp implements KakaoService {
 			Gson gson = new Gson();
 			JsonObject element = gson.fromJson(result.toString(), JsonObject.class);
 
-			// 데이터 추출
 			String id = element.get("id").getAsString();
-			//JsonObject properties = element.getAsJsonObject("properties");
+			// 데이터 추출
 			JsonObject kakao_account = element.getAsJsonObject("kakao_account");
 
-			// String nickname = properties.get("nickname").getAsString();
 			String email = kakao_account.get("email").getAsString();
 			String name = kakao_account.get("name").getAsString();
 			
@@ -175,15 +181,15 @@ public class KaKaoServiceImp implements KakaoService {
 		return formattedNumber;
 	}
 
-	@Override
-	public ResultMessage loginSocialUser(MemberVO user) {
-		
-		ResultMessage rm = new ResultMessage();
-		// result "success", "fail", "join"
-		MemberVO tmpUser = memberDao.selectMember(user.getMe_email());
-		
-		return null;
-	}
+//	@Override
+//	public ResultMessage loginSocialUser(MemberVO user) {
+//		
+//		ResultMessage rm = new ResultMessage();
+//		// result "success", "fail", "join"
+//		MemberVO tmpUser = memberDao.selectMember(user.getMe_email());
+//		
+//		return null;
+//	}
 
 	@Override
 	public MemberVO getMemberInfoFromEmail(MemberVO loginUser) {
@@ -205,4 +211,105 @@ public class KaKaoServiceImp implements KakaoService {
 		
 		return false;
 	}
+
+	@Override
+	public String getAccessTokenFromNaver(String code, String state, String naverClientId, String naverClientSecret) {
+		String reqUrl = "https://nid.naver.com/oauth2.0/token";
+	    RestTemplate restTemplate = new RestTemplate();
+	    
+	    // HttpHeader Object
+	    HttpHeaders headers = new HttpHeaders();
+	    
+	    // HttpBody Object
+	    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+	    params.add("grant_type", "authorization_code");
+	    params.add("client_id", naverClientId);
+	    params.add("client_secret", naverClientSecret);
+	    params.add("code", code);
+	    params.add("state", state);
+	    
+	    // http body params 와 http headers 를 가진 엔티티
+	    HttpEntity<MultiValueMap<String, String>> naverTokenRequest = new HttpEntity<>(params, headers);
+	    
+	    // reqUrl로 Http 요청, POST 방식
+	    ResponseEntity<String> response = restTemplate.exchange(reqUrl,
+	                                              HttpMethod.POST,
+	                                              naverTokenRequest,
+	                                              String.class);
+	    
+	    String responseBody = response.getBody();
+	    JsonObject asJsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
+	    try {
+	    	return asJsonObject.get("access_token").getAsString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+
+	@Override
+	public MemberVO getUserInfoFromNaverToken(String token) {
+		
+		MemberVO user = new MemberVO();
+		
+		String header = "Bearer " + token; // Bearer 다음에 공백 추가
+		try {
+			String apiURL = "https://openapi.naver.com/v1/nid/me";
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Authorization", header);
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			if (responseCode == 200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else { // 에러 발생
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				response.append(inputLine);
+			}
+			br.close();
+			
+			// Gson을 사용하여 JSON 문자열을 JsonObject로 변환
+			Gson gson = new Gson();
+			JsonObject element = gson.fromJson(response.toString(), JsonObject.class);
+
+			// 토큰 값 저장
+			JsonObject naverProfile = element.getAsJsonObject("response");
+			
+			// 데이터 추출
+			String id = naverProfile.get("id").getAsString();
+			String email = naverProfile.get("email").getAsString();
+			String name = naverProfile.get("name").getAsString();
+
+			user.setMe_naverUserId(id);
+			user.setMe_email(email);
+			user.setMe_name(name);
+
+			if (naverProfile.get("gender") != null) {
+
+				if (naverProfile.get("gender").getAsString().equals("M")) {
+					user.setMe_gender("남자");
+				} else {
+					user.setMe_gender("여자");
+				}
+			}
+			if (naverProfile.get("mobile") != null) {
+				String phoneNumber = naverProfile.get("mobile").getAsString();
+				user.setMe_phone(formatPhoneNumber(phoneNumber));
+			}
+
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+
+	
 }

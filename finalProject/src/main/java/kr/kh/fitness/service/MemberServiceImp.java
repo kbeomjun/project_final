@@ -110,9 +110,10 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean joinSocialMember(String social_type, MemberVO socialUser) {
 		
-		KakaoService kakaoService = new KaKaoServiceImp();
+		SingleSignOnService singleSignOnService = new SingleSignOnServiceImp();
+		
 		// 등록된 social이 아니라면
-		if(!kakaoService.isValidSocialName(social_type)) {
+		if(!singleSignOnService.isValidSocialName(social_type)) {
 			return false;
 		}
 		
@@ -135,7 +136,9 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 		
-
+		System.out.println("디버깅\n"+socialUser);
+		System.out.println("디버깅\n"+social_type);
+		System.out.println("디버깅\n"+socialUser);
 		// social에서 받은 정보 추가 등록
 		// socialUserID, gender, phone, name
 		try {
