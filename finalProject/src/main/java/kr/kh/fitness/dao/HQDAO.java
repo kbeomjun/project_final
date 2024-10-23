@@ -107,6 +107,8 @@ public interface HQDAO {
 	List<MemberVO> selectMemberList();
 
 	MemberVO selectMember(@Param("me") MemberVO me);
+	
+	boolean deleteMember(@Param("me") MemberVO me);
 
 	List<MemberInquiryVO> selectMemberInquiryList(@Param("str") String str);
 

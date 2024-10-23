@@ -124,7 +124,12 @@
 					        			</c:if>
 					        		</td>
 					        		<td>
-					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        			<c:if test="${!me.me_canDelete}">
+						        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        			</c:if>
+					        			<c:if test="${me.me_canDelete}">
+						        			<a href="<c:url value="/hq/member/delete/${me.me_id}"/>" class="btn btn-outline-danger btn-delete">삭제</a>
+					        			</c:if>
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
@@ -239,6 +244,12 @@
 					console.log(jqXHR);
 				}
 			});
+		});
+		
+		$('.btn-delete').click(function(e){
+			if(!confirm("정말 삭제하시겠습니까?\n삭제하면 복구할 수 없습니다.")){
+				e.preventDefault();
+			}
 		});
 	</script>
 	
