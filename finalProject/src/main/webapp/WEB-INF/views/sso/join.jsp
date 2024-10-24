@@ -13,8 +13,6 @@
 </style>
 </head>
 <body>
-
-    
    
 	<div class="container mt-5">
     <h2 class="text-center">${socialType} 계정으로 가입/연동</h2>
@@ -59,7 +57,7 @@
 
         <button type="submit" class="btn btn-primary btn-block">가입하기</button>
     </form>
-login 기능 만들기 기능 보고 구현까지
+
     <!-- 기존 계정 연동 폼 -->
     <form id="linkForm" action='<c:url value="/sso/match/login" />' method="post" class="mt-4" style="display: none;">
         <input type="hidden" name="social_type" value="${socialType}"> 

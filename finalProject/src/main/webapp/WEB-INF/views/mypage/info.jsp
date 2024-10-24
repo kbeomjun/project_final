@@ -42,27 +42,29 @@
 				            <label for="me_id">아이디:</label>
 				            <input type="text" class="form-control" name="me_id" value="${member.me_id}" readonly>
 				        </div>		
-				        <div class="form-group sns">
-						    <label for="me_social">연동된 SNS:</label>
-						    <div class="sns-accounts">
-						    	<c:if test="${member.me_naverUserId ne null}">
-							        <div class="sns-account">
-										<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" width="30"/>
-							            <a class="btn btn-sns-unlink" data-type="NAVER">
-							                <span>해제</span>
-							            </a>
-							        </div>
-						    	</c:if>
-						    	<c:if test="${member.me_kakaoUserId ne null}">
-							        <div class="sns-account">
-							            <img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" width="30"/>
-							            <a class="btn btn-sns-unlink" data-type="KAKAO">
-							                <span>해제</span>
-							            </a>
-							        </div>
-						        </c:if>
-						    </div>
-						</div>
+			        	<c:if test="${member.me_naverUserId ne null && member.me_kakaoUserId ne null}">
+					        <div class="form-group sns">
+							    <label for="me_social">연동된 SNS:</label>
+							    <div class="sns-accounts">
+							    	<c:if test="${member.me_naverUserId ne null}">
+								        <div class="sns-account">
+											<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" width="30"/>
+								            <a class="btn btn-sns-unlink" data-type="NAVER">
+								                <span>해제</span>
+								            </a>
+								        </div>
+							    	</c:if>
+							    	<c:if test="${member.me_kakaoUserId ne null}">
+								        <div class="sns-account">
+								            <img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" width="30"/>
+								            <a class="btn btn-sns-unlink" data-type="KAKAO">
+								                <span>해제</span>
+								            </a>
+								        </div>
+							        </c:if>
+							    </div>
+							</div>
+						</c:if>
 						<div class="form-group">
 							<label for="me_email">이메일:</label>
 							<input type="email" class="form-control" id="me_email" name="me_email" value="${member.me_email}">
@@ -344,6 +346,10 @@
                     if (response) {
                         alert('SNS 계정이 성공적으로 해제되었습니다.');
                         $('.btn-sns-unlink[data-type="' + socialType + '"]').closest('.sns-account').remove();
+                     	// 연동된 계정이 없으면 전체 섹션 숨기기
+                        if ($('.sns-account').length === 0) {
+                            $('.form-group.sns').remove();
+                        }
                     } else {
                         alert('SNS 계정 해제에 실패했습니다.');
                     }

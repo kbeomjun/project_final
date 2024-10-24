@@ -325,7 +325,7 @@ public class UserController {
             @RequestParam(value = "phone") String phone,
             @RequestParam(value = "name") String name,
             Model model) {
-        log.info("/sso/join/redirect" + id);
+        log.info("/sso/join/redirect");
         
         // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
         model.addAttribute("socialType", socialType);

@@ -478,7 +478,7 @@ public class MypageController {
             if (result) {
             	MemberVO updateUser = clientService.getMember(user.getMe_id());
             	String currentSocial = (String) session.getAttribute("socialType");
-            	if(currentSocial.equals(social_type)) {
+            	if(currentSocial != null && currentSocial.equals(social_type)) {
             		session.removeAttribute("socialType");
             	}
             	session.removeAttribute("user");
