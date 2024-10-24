@@ -35,14 +35,6 @@
         .form-group {
             margin-bottom: 20px;
         }
-        .age-group {
-            display: flex;
-            align-items: center;
-        }
-        #age {
-            width: 80px;
-            margin-left: 10px;
-        }
     </style>
 </head>
 <body>
@@ -121,7 +113,8 @@
 		    </div>
 	        <div class="form-group birth-group">
 			    <label for="birth">생년월일:</label>
-			    <input type="date" class="form-control" id="birth" name="me_birth" required>
+			    <input type="date" class="form-control" id="birth" name="me_birth" required
+			    	max="<%= java.time.LocalDate.now().minusYears(12) %>" min="<%= java.time.LocalDate.now().minusYears(100) %>">
 			</div>
             <button type="submit" class="btn btn-outline-success col-12">회원가입</button>
         </form>
