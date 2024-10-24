@@ -35,7 +35,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Controller
-public class UserController {
+public class MemberController {
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 
