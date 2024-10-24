@@ -21,6 +21,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -304,19 +306,29 @@ public class UserController {
         return "/member/findPw";
     }
     
-    // 비밀번호 찾기 처리
     @ResponseBody
     @PostMapping("/find/pw")
-    public boolean findPwPost(@RequestParam String id, @RequestParam String email, @RequestParam String phone) {
+    public ResponseEntity<String> findPwPost(@RequestParam String id, @RequestParam String email, @RequestParam String phone) {
         logger.info("비밀번호 찾기 시도: 사용자 ID - " + id + ", 이메일 - " + email + ", 전화번호 - " + phone);
 
-        // 서비스 호출하여 사용자가 입력한 ID, 이메일, 전화번호가 모두 일치하는지 확인
-        boolean res = memberService.findPwByDetails(id, email, phone);
+        try {
+            // 서비스 호출하여 사용자가 입력한 ID, 이메일, 전화번호가 모두 일치하는지 확인
+            boolean res = memberService.findPwByDetails(id, email, phone);
 
-        // 결과 로그 출력
-        logger.info("비밀번호 찾기 결과: 사용자 ID - " + id + " - " + (res ? "성공" : "실패"));
-        return res;
+            if (res) {
+                // 비밀번호 찾기 성공 시
+                return ResponseEntity.ok("비밀번호가 전송됐습니다.");
+            } else {
+                // 등록된 사용자 정보가 없을 때
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("등록된 사용자가 없습니다.");
+            }
+        } catch (Exception e) {
+            logger.error("비밀번호 찾기 처리 중 오류 발생: " + e.getMessage(), e);
+            // 오류 발생 시
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류가 발생했습니다. 다시 시도해 주세요.");
+        }
     }
+
 	
 	@GetMapping("/sso/joinRedirect")
 	public String socialJoinRedirect(

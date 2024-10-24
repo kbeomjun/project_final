@@ -111,8 +111,12 @@
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             $('.modal-container').remove();
+                            if (jqXHR.status === 404) {
+                                alert("등록된 사용자가 없습니다.");
+                            } else {
+                                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                            }
                             console.error(jqXHR, textStatus, errorThrown);
-                            alert("오류가 발생했습니다. 다시 시도해 주세요.");
                         }
                     });
                 }, 100);
