@@ -379,7 +379,7 @@ public class AdminController {
 		if(msg.equals("")) {
 			model.addAttribute("url", "/admin/employee/list");
 		}else {
-			model.addAttribute("url", "/admin/employee/insert/"+employee.getEm_br_name());
+			model.addAttribute("url", "/admin/employee/insert");
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
@@ -425,9 +425,9 @@ public class AdminController {
 		
 		String msg = adminService.deleteEmployee(employee);
 		if(msg.equals("")) {
-			model.addAttribute("url", "/hq/employee/list");
+			model.addAttribute("url", "/admin/employee/list");
 		}else {
-			model.addAttribute("url", "/hq/employee/detail/" + em_num);
+			model.addAttribute("url", "/admin/employee/detail/" + em_num);
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
@@ -513,12 +513,9 @@ public class AdminController {
 	@PostMapping("/branch/update")
 	public String branchUpdate(Model model, BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList) {
 		String msg = adminService.updateBranch(branch, fileList, admin, numList);
-		if(msg.equals("")) {
-			model.addAttribute("url", "/admin/branch/detail");
-		}else {
-			model.addAttribute("url", "/admin/branch/detail");
-		}
-			model.addAttribute("msg", msg);
+
+		model.addAttribute("url", "/admin/branch/detail");
+		model.addAttribute("msg", msg);
 		return "/main/message";
 	}
 	
@@ -575,7 +572,6 @@ public class AdminController {
 		map.put("mi", mi);
 		return map;
 	}
-	
 	
 	//지점 문의내역 답변(수정)
 	@PostMapping("/inquiry/update")
