@@ -1,11 +1,7 @@
 package kr.kh.fitness.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.Calendar;
@@ -32,8 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.dao.MemberDAO;
 import kr.kh.fitness.model.vo.MemberVO;
-import kr.kh.fitness.service.SingleSignOnService;
 import kr.kh.fitness.service.MemberService;
+import kr.kh.fitness.service.SingleSignOnService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -103,7 +99,7 @@ public class UserController {
 	public String login(MemberVO member, @RequestParam(value = "autologin", required = false) String autologin,
 			Model model, HttpSession session, HttpServletResponse response) {
 		 logger.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
-//네이버 하고 정보변경 페이지에 연동
+		 //네이버 하고 정보변경 페이지에 연동
 	        try {
 	            // 로그인 서비스 호출
 	            MemberVO user = memberService.login(member);
@@ -464,7 +460,7 @@ public class UserController {
 				model.addAttribute("msg","계정 연동에 실패하였습니다. \\n 연동 과정에서 오류가 발생했습니다 \\n 관리자 문의");
 			}
 		}
-		model.addAttribute("url","/");
+		model.addAttribute("url","/login");
 		return "/main/message";
 	}
 	
