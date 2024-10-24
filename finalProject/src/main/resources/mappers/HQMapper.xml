@@ -64,7 +64,6 @@
 	<update id="updateAdmin">
 		update member set
 			me_id = #{me.me_id},      
-			me_pw = #{me.me_pw}, 
 			me_email = #{me.me_email}, 
 			me_name = #{me.me_name},
 			me_phone = #{me.me_phone}, 

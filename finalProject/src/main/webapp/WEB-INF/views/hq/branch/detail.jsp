@@ -54,16 +54,6 @@
 			</div>
 			<div class="error error-id"></div>
 			<div class="form-group">
-				<label for="me_pw">관리자 비밀번호:</label>
-				<input type="password" class="form-control" id="me_pw" name="me_pw">
-			</div>
-			<div class="error error-pw"></div>
-			<div class="form-group">
-				<label for="me_pw2">비밀번호 확인:</label>
-				<input type="password" class="form-control" id="me_pw2" name="me_pw2">
-			</div>
-			<div class="error error-pw2"></div>
-			<div class="form-group">
 				<label for="me_email">관리자 이메일:</label>
 				<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}">
 			</div>
@@ -273,26 +263,6 @@
 			}
 		});
 		
-		$('#me_pw').keyup(function(){
-			$('.error-pw').children().remove();
-			
-			if($('#me_pw').val() == ''){
-				$('.error-pw').append(msgRequired);
-			}else{
-				$('.error-pw').children().remove();	
-			}
-		});
-		
-		$('#me_pw2').keyup(function(){
-			$('.error-pw2').children().remove();
-			
-			if($('#me_pw').val() != $('#me_pw2').val()){
-				$('.error-pw2').append(msgPw2);
-			}else{
-				$('.error-pw2').children().remove();	
-			}
-		});
-		
 		$('#me_email').keyup(function(){
 			$('.error-email').children().remove();
 			
@@ -344,18 +314,6 @@
 			if($('#me_id').val() == ''){
 				$('.error-id').append(msgRequired);
 				$('#me_id').focus();
-				flag = false;
-			}
-			
-			if($('#me_pw').val() == ''){
-				$('.error-pw').append(msgRequired);
-				$('#me_pw').focus();
-				flag = false;
-			}
-			
-			if($('#me_pw').val() != $('#me_pw2').val()){
-				$('.error-pw2').append(msgPw2);
-				$('#me_pw2').focus();
 				flag = false;
 			}
 			
