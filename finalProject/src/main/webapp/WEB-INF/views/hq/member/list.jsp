@@ -12,13 +12,13 @@
     	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	.address-input{margin-bottom: 10px;}
     	#thead th{text-align: center;}
-    	#tbody td{text-align: left;}
+    	#tbody td{text-align: center;}
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
     </style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -69,22 +69,67 @@
 				        		<th>전화번호</th>
 				        		<th>계정</th>
 				        		<th>이메일</th>
+				        		<th>SNS</th>
+				        		<th>상태</th>
+				        		<th>탈퇴기한</th>
 				        		<th></th>
 				      		</tr>
 				    	</thead>
 				    	<tbody id="tbody">
 				    		<c:forEach items="${meList}" var="me">
 				    			<tr>
-					        		<td class="align-content-center">${me.me_name}</td>
-					        		<td class="align-content-center">
-					        			<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
+					        		<td>${me.me_name}</td>
+					        		<td>
+					        			<c:if test="${me.me_birth != null}">
+					        				<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
+				        				</c:if>
+					        			<c:if test="${me.me_birth == null}">
+					        				-
+				        				</c:if>
 				        			</td>
-					        		<td class="align-content-center">${me.me_gender}</td>
-					        		<td class="align-content-center">${me.me_phone}</td>
-					        		<td class="align-content-center">${me.me_id}</td>
-					        		<td class="align-content-center">${me.me_email}</td>
-					        		<td class="align-content-center">
-					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        		<td>
+					        			<c:if test="${me.me_gender != null}">
+					        				${me.me_gender}
+				        				</c:if>
+					        			<c:if test="${me.me_gender == null}">
+					        				-
+				        				</c:if>
+				        			</td>
+					        		<td>
+					        			<c:if test="${me.me_phone != null}">
+					        				${me.me_phone}
+				        				</c:if>
+					        			<c:if test="${me.me_phone == null}">
+					        				-
+				        				</c:if>
+				        			</td>
+					        		<td>${me.me_id}</td>
+					        		<td>${me.me_email}</td>
+					        		<td>
+					        			<c:if test="${me.me_kakaoUserId == null && me.me_naverUserId == null}">-</c:if>
+					        			<c:if test="${me.me_kakaoUserId != null}">카카오</c:if>
+					        			<c:if test="${me.me_kakaoUserId != null && me.me_naverUserId != null}">/</c:if>
+					        			<c:if test="${me.me_naverUserId != null}">네이버</c:if>
+					        		</td>
+					        		<td>
+					        			<c:if test="${me.me_authority == 'USER'}">사용중</c:if>
+					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
+					        		</td>
+					        		<td>
+					        			<c:if test="${me.me_authority == 'USER'}">
+					        				-
+				        				</c:if>
+					        			<c:if test="${me.me_authority == 'REMOVED'}">
+					        				<fmt:formatDate value="${me.me_dataPeriod}" pattern="yyyy.MM.dd"/>
+					        			</c:if>
+					        		</td>
+					        		<td>
+					        			<c:if test="${!me.me_canDelete}">
+						        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        			</c:if>
+					        			<c:if test="${me.me_canDelete}">
+						        			<a href="<c:url value="/hq/member/delete/${me.me_id}"/>" class="btn btn-outline-danger btn-delete">삭제</a>
+					        			</c:if>
 					        		</td>
 					      		</tr>
 				    		</c:forEach>
@@ -200,10 +245,16 @@
 				}
 			});
 		});
+		
+		$('.btn-delete').click(function(e){
+			if(!confirm("정말 삭제하시겠습니까?\n삭제하면 복구할 수 없습니다.")){
+				e.preventDefault();
+			}
+		});
 	</script>
 	
 	<script type="text/javascript">
-		// 테이블 api
+		// 데이터테이블
 		$('#table').DataTable({
 			language: {
 		        search: "",
@@ -216,7 +267,8 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [6], orderable: false }
+		        { targets: [9], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], className: "align-content-center"}
 		    ]
 		});
 	</script>

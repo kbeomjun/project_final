@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.fitness.dao.HQDAO">
 	<select id="selectBranchList" resultType="BranchVO">
-		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본점") order by br_name;
+		select branch.*, me_id as 'br_admin' from branch join member on me_name = br_name where br_name not in("본사") order by br_name;
 	</select>
 	
 	<insert id="insertBranch">
@@ -73,7 +73,7 @@
 	</update>
 	
 	<select id="selectEmployeeList" resultType="EmployeeVO">
-		select * from employee order by em_num;
+		select * from employee where em_br_name not in("본사") order by em_num;
 	</select>
 	
 	<select id="selectSportsProgramList" resultType="SportsProgramVO">
@@ -82,11 +82,13 @@
 	
 	<insert id="insertEmployee">
 		insert into employee
-			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 
-				em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+			(em_num, em_name, em_phone, em_email, em_gender, em_position, 
+				em_join, em_postcode, em_address, em_detailAddress, em_extraAddress, 
+				em_fi_name, em_br_name, em_detail)
 		values
-			(#{em.em_num}, #{em.em_name}, #{em.em_phone}, #{em.em_email}, #{em.em_gender}, #{em.em_position}, current_timestamp(),
-				#{em.em_postcode}, #{em.em_address}, #{em.em_detailAddress}, #{em.em_extraAddress}, #{em.em_fi_name}, #{em.em_br_name})
+			(#{em.em_num}, #{em.em_name}, #{em.em_phone}, #{em.em_email}, #{em.em_gender}, #{em.em_position}, 
+				current_timestamp(), #{em.em_postcode}, #{em.em_address}, #{em.em_detailAddress}, #{em.em_extraAddress}, 
+				#{em.em_fi_name}, #{em.em_br_name}, #{em.em_detail})
 	</insert>
 	
 	<select id="selectEmployee" resultType="EmployeeVO">
@@ -109,7 +111,8 @@
 			em_detailAddress = #{em.em_detailAddress},
 			em_extraAddress = #{em.em_extraAddress},
 			em_fi_name = #{em.em_fi_name},
-			em_br_name = #{em.em_br_name}
+			em_br_name = #{em.em_br_name},
+			em_detail = #{em.em_detail}
 		where em_num = #{em.em_num};
 	</update>
 	
@@ -143,17 +146,17 @@
 	<select id="selectBranchEquipmentStockList" resultType="BranchEquipmentStockVO">
 		select * from branch_equipment_stock 
 		<if test="bo == null">
-			where be_br_name = "본점" order by be_num desc;
+			where be_br_name = "본사" order by be_num desc;
 		</if>
 		<if test="bo != null">
-			where be_br_name = "본점" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
+			where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} and be_type = #{be_type} order by be_num;
 		</if> 
 	</select>
 	
 	<select id="selectBranchStockList" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본점" and be_se_name like concat("%", #{search}, "%")
+		where be_br_name = "본사" and be_se_name like concat("%", #{search}, "%")
 		group by be_se_name;
 	</select>
 	
@@ -179,7 +182,7 @@
 	<select id="selectBranchStock" resultType="BranchStockDTO">
 		select be_se_name, sum(be_amount) as be_se_total, se_fi_name as be_se_fi_name
 		from branch_equipment_stock right join sports_equipment on se_name = be_se_name
-		where be_br_name = "본점" and be_se_name = #{bo.bo_se_name} 
+		where be_br_name = "본사" and be_se_name = #{bo.bo_se_name} 
 		group by be_se_name; 
 	</select>
 	
@@ -243,23 +246,27 @@
 	</delete>
 	
 	<select id="selectMemberList" resultType="MemberVO">
-		select * from member where me_authority = "USER";
+		select * from member where me_authority in("USER", "REMOVED");
 	</select>
 	
 	<select id="selectMember" resultType="MemberVO">
 		select * from member where me_id = #{me.me_id};
 	</select>
 	
+	<delete id="deleteMember">
+		delete from member where me_id = #{me.me_id};
+	</delete>
+	
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">
 		select * from member_inquiry 
 		<if test="str == 'wait'">
-			where mi_state in("답변대기") and mi_br_name = "본점" order by mi_num;
+			where mi_state in("답변대기") and mi_br_name = "본사" order by mi_num;
 		</if>
 		<if test="str == 'done'">
-			where mi_state in("답변완료") and mi_br_name = "본점" order by mi_num desc;
+			where mi_state in("답변완료") and mi_br_name = "본사" order by mi_num desc;
 		</if>
 		<if test="str == 'FAQ'">
-			where mi_state in("FAQ") and mi_br_name = "본점" order by mi_num;
+			where mi_state in("FAQ") and mi_br_name = "본사" order by mi_num;
 		</if>
 	</select>
 	

@@ -31,10 +31,15 @@ public class MemberVO {
     private int me_noshow;			// 노쇼 경고 횟수
     private Date me_cancel;			// 예약 제한 시간
     boolean autoLogin;
+    
+    private String me_kakaoUserId;
+    private String me_naverUserId;
+    private Date me_dataPeriod;
+    
+    private boolean me_canDelete = false;
 
     public MemberVO(String id, String email) {
 		this.me_id = id;
 		this.me_email = email;
 	}
 }
-

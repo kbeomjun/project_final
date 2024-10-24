@@ -84,6 +84,8 @@ public interface HQService {
 	List<MemberVO> getMemberList();
 
 	MemberVO getMember(MemberVO me);
+	
+	String deleteMember(MemberVO me);
 
 	List<MemberInquiryVO> getMemberInquiryList(String mi_state);
 

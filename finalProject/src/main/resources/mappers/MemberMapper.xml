@@ -7,9 +7,53 @@
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>
   <insert id="insertMember">
-    INSERT INTO member(me_id, me_pw, me_email, me_name, me_phone, me_postcode, me_address, me_detailAddress, me_extraAddress, me_birth, me_gender)
-    VALUES (#{m.me_id}, #{m.me_pw}, #{m.me_email}, #{m.me_name}, #{m.me_phone}, #{m.me_postcode}, #{m.me_address}, #{m.me_detailAddress}, #{m.me_extraAddress}, #{m.me_birth}, #{m.me_gender})
-  </insert>
+    INSERT INTO member(me_id, me_pw, me_email, me_name
+   	<if test="m.me_phone != null and m.me_phone != ''">
+    	, me_phone
+	</if>
+	<if test="m.me_postcode != null and m.me_postcode != ''">
+	    , me_postcode
+	</if>
+	<if test="m.me_address != null and m.me_address != ''">
+	    , me_address
+	</if>
+	<if test="m.me_detailAddress != null and m.me_detailAddress != ''">
+	    , me_detailAddress
+	</if>
+	<if test="m.me_extraAddress != null and m.me_extraAddress != ''">
+	    , me_extraAddress
+	</if>
+	<if test="m.me_birth != null">
+	    , me_birth
+	</if>
+	<if test="m.me_gender != null and !m.me_gender.equals('null')">
+	    , me_gender
+	</if>
+	) VALUES (#{m.me_id}, #{m.me_pw}, #{m.me_email}, #{m.me_name}
+	    <if test="m.me_phone != null and m.me_phone != ''">
+	        , #{m.me_phone}
+	    </if>
+	    <if test="m.me_postcode != null and m.me_postcode != ''">
+	        , #{m.me_postcode}
+	    </if>
+	    <if test="m.me_address != null and m.me_address != ''">
+	        , #{m.me_address}
+	    </if>
+	    <if test="m.me_detailAddress != null and m.me_detailAddress != ''">
+	        , #{m.me_detailAddress}
+	    </if>
+	    <if test="m.me_extraAddress != null and m.me_extraAddress != ''">
+	        , #{m.me_extraAddress}
+	    </if>
+	    <if test="m.me_birth != null">
+	        , #{m.me_birth}
+	    </if>
+	    <if test="m.me_gender != null and !m.me_gender.equals('null')">
+	        , #{m.me_gender}
+	    </if>
+	)
+   </insert>
+   
   <select id="searchUser" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>
@@ -21,6 +65,42 @@
     SET me_cookie = #{user.me_cookie}, me_limit = #{user.me_limit}
     WHERE me_id = #{user.me_id}
   </update>
+  
+  <select id="selectMemberFromSocial" resultType="MemberVO">
+  	select * from member 
+  	where 
+  		me_email = #{user.me_email} or 
+  		<if test="social == 'KAKAO' || social == 'kakao'">
+        	me_kakaoUserId = #{user.me_kakaoUserId}
+	    </if>
+	    <if test="social == 'NAVER' || social == 'naver'">
+	        me_naverUserId = #{user.me_naverUserId}
+	    </if>
+  </select>
+  
+  <update id="updateSocialUser">
+  	update member
+  	set
+	<if test="social == 'KAKAO' || social == 'kakao'">
+        me_kakaoUserId = #{user.me_kakaoUserId},
+    </if>
+    <if test="social == 'NAVER' || social == 'naver'">
+        me_naverUserId = #{user.me_naverUserId},
+    </if>
+    <if test="user.me_gender != null">
+        me_gender = #{user.me_gender},
+    </if>
+    <if test="user.me_phone != null">
+        me_phone = #{user.me_phone},
+    </if>
+    me_name = #{user.me_name}
+    where me_email = #{user.me_email} or me_id = #{user.me_id} 
+  </update>
+  
+  <delete id="deleteUser">
+	  delete from member
+	  where me_email = #{user.me_email}
+  </delete>
   <update id="updateMember">
 	UPDATE member
 	SET	me_pw = #{user.me_pw},me_email = #{user.me_email}

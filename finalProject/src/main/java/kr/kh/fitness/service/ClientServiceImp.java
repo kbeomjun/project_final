@@ -132,9 +132,22 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<MemberInquiryVO> getFaqList() {
-		return clientDao.selectFaqList();
+	public List<MemberInquiryVO> getFaqList(String category, Criteria cri) {
+		if(category == null || cri == null) {
+			return null;
+		}
+		return clientDao.selectFaqList(category, cri);
 	}
+	
+	@Override
+	public PageMaker getPageMakerInFaq(String category, Criteria cri) {
+		if(category == null || cri == null) {
+			return null;
+		}
+		int totalCount = clientDao.selectFaqTotalCount(category, cri);
+		return new PageMaker(3, cri, totalCount);
+	}
+
 
 	@Override
 	public List<InquiryTypeVO> getInquiryTypeList() {
@@ -278,12 +291,9 @@ public class ClientServiceImp implements ClientService{
 		
 		MemberVO checkMember = clientDao.selectMember(member.getMe_id());
 		
-		//비번 암호화
-		String encPw = passwordEncoder.encode(member.getMe_pw());
-		//비번과 암호화된 비번이 같은 비번인지 알려줌
-		boolean res = passwordEncoder.matches(encPw, checkMember.getMe_pw());
+		boolean res = passwordEncoder.matches(member.getMe_pw(), checkMember.getMe_pw());
 		
-		if(res) {
+		if(!res) {
 			return "비밀번호가 일치하지 않습니다.";
 		}
 		
@@ -332,19 +342,16 @@ public class ClientServiceImp implements ClientService{
 			return "회원 정보가 없습니다.";
 		}
 		
-		//비번 암호화
-		String encPw = passwordEncoder.encode(currentPw);
-		//비번과 암호화된 비번이 같은 비번인지 알려줌
-		boolean res = passwordEncoder.matches(encPw, member.getMe_pw());
+		boolean res = passwordEncoder.matches(currentPw, member.getMe_pw());
 		
-		if(res) {
+		if(!res) {
 			return "현재 비밀번호가 일치하지 않습니다.";
 		}
 		if(currentPw.equals(newPw)) {
 			return "새 비밀번호는 현재 비밀번호와 같을 수 없습니다.";
 		}
 		
-		encPw = passwordEncoder.encode(newPw);
+	    String encPw = passwordEncoder.encode(newPw);
 		
 		member.setMe_pw(encPw);
 		if(!clientDao.updateMemberPw(member)) {
@@ -352,6 +359,78 @@ public class ClientServiceImp implements ClientService{
 		}
 		
 		return "";
+	}
+
+	@Override
+	public String removedMember(MemberVO member, String me_pw) {
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		
+		boolean res = passwordEncoder.matches(me_pw, member.getMe_pw());
+		
+		if(!res) {
+			return "현재 비밀번호가 일치하지 않습니다.";
+		}
+		
+		MembershipDTO membership = clientDao.selectCurrentMembership(member.getMe_id());
+		MembershipDTO pt = clientDao.selectCurrentPT(member.getMe_id());
+		
+		if(membership != null || pt != null) {
+			return "현재 센터이용고객은 탈퇴할 수 없습니다.";
+		}
+		
+		if(!clientDao.updateMemberStatusToRemoved(member)) {
+			return "회원탈퇴에 실패했습니다. 관리자에게 문의하세요.";
+		}
+		
+		return "";
+	}
+
+	@Override
+	public String getSocial_id(MemberVO user, String social_type) {
+		try {
+			return clientDao.selectSocialId(user.getMe_id(), social_type);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String checkSocial(MemberVO member, String social_type) {
+		
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		if(member.getMe_id() == null || member.getMe_id().trim().length() == 0) {
+			return "아이디가 존재하지 않습니다.";
+		}
+		if(social_type == null || social_type.trim().length() == 0) {
+			return "SNS 타입이 입력되지 않았습니다.";
+		}
+		MemberVO checkMember = clientDao.selectMemberFromSocial(member, social_type);
+		if(checkMember == null) {
+			return "연동된 SNS 계정이 존재하지 않습니다.";
+		}
+		
+//		if(checkMember.getMe_authority().equals("REMOVED")) {
+//			return "탈퇴한 계정에 접근하였습니다.";
+//		}
+		
+		return "";
+	}
+
+	@Override
+	public boolean unlinkSocialAccount(MemberVO user, String social_type) {
+
+		if(user == null) {
+			return false;
+		}
+		if(social_type == null || social_type.trim().length() ==0) {
+			return false;
+		}
+		return clientDao.updateSocialIdSetNull(user,social_type)==1?true:false;
 	}
 
 }

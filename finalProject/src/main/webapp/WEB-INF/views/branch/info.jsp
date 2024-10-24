@@ -40,7 +40,7 @@
 				class="btn btn-outline-secondary btn-branch mb-1 ${active}"
 				href=<c:url value="/branch/info"/>>전지점보기</a></li>
 			<c:forEach items="${br_list}" var="br">
-				<c:if test="${br.br_name ne '본점'}">
+				<c:if test="${br.br_name ne '본사'}">
 				<c:choose>
 					<c:when test="${br.br_name eq select}">
 						<c:set var="active" value="active" />
@@ -149,14 +149,15 @@
 							</c:forEach>
 						</c:if>
 					</div></div>
-					
 
 			</c:when>
 			<c:otherwise>
 				<h3>전지점보기</h3>
 				<hr>
 				<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;"></div>
+				<button id="original-location-btn">원래 위치</button>
 			</c:otherwise>
+			
 		</c:choose>
 		<button id="scrollToTopBtn" style="display: none;">맨 위로</button>
 	</div>
@@ -524,7 +525,7 @@ function MarkerTracker(map, target) {
 <script type="text/javascript">
 
 	<c:forEach var="branch" items="${br_list}">
-		<c:if test="${branch.br_name == '본점'}">
+		<c:if test="${branch.br_name == '본사'}">
 		    var address = '${branch.br_address}';
 		</c:if>
 	</c:forEach>
@@ -536,10 +537,13 @@ function MarkerTracker(map, target) {
 		var mapContainer = document.getElementById('map-total'), // 지도를 표시할 div  
 	    mapOption = { 
 	        level: 3, // 지도의 확대 레벨
-	        center: new kakao.maps.LatLng(coord.lat, coord.lng), // 지도의 중심좌표 (본점)
+	        center: new kakao.maps.LatLng(coord.lat, coord.lng), // 지도의 중심좌표 (본사)
 	    };
 	
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		// 원래 위치 좌표 저장
+	    var originalPosition = new kakao.maps.LatLng(coord.lat, coord.lng);
 		
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
@@ -571,7 +575,7 @@ function MarkerTracker(map, target) {
 						
 				 	content = '<div class="customoverlay">'
 			 		content += '<a href="<c:url value="/branch/detail/'+ branch.title +'/1" />"'
-				 	if(branch.title == '본점'){
+				 	if(branch.title == '본사'){
 					 	content += 'onclick="return false;"'
 				 	}
 			 		content += '>'
@@ -618,11 +622,18 @@ function MarkerTracker(map, target) {
 		for (var i = 0; i < branchList.length; i++) {
 		    setMarkerByAddress(branchList[i]);
 		}
+		
+		// 원래 위치 버튼 클릭 이벤트
+	    document.getElementById('original-location-btn').addEventListener('click', function() {
+	        map.setCenter(originalPosition); // 원래 위치로 지도 중심 설정
+	        map.setLevel(3); // 필요한 경우 줌 레벨도 설정
+	    });
 	
 	}).catch(error => {
 	    console.error('오류:', error);
 	});
-/* 	// 지도의 중심을 '본점' 위치로 설정
+	
+/* 	// 지도의 중심을 '본사' 위치로 설정
     map.setCenter(mapOption.center); */
 	</script>
 </c:when>
@@ -657,7 +668,7 @@ function MarkerTracker(map, target) {
 				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
 				var imageSrc = '<c:url value="/resources/image/icon/sample_fitness_icon.svg"/>', // 마커이미지의 주소입니다    
-				imageSize = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+				imageSize = new kakao.maps.Size(48, 48), // 마커이미지의 크기입니다
 				imageOption = {
 					offset : new kakao.maps.Point(22, 60)
 				}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.

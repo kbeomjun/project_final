@@ -41,7 +41,9 @@ public interface ClientDAO {
 
 	int selectReviewPostTotalCount(Criteria cri);
 
-	List<MemberInquiryVO> selectFaqList();
+	List<MemberInquiryVO> selectFaqList(@Param("ca")String category, @Param("cri")Criteria cri);
+	
+	int selectFaqTotalCount(@Param("ca")String category, @Param("cri")Criteria cri);
 
 	List<InquiryTypeVO> selectInquiryTypeList();
 	
@@ -82,5 +84,14 @@ public interface ClientDAO {
 	boolean updateMemberInfo(MemberVO member);
 
 	boolean updateMemberPw(MemberVO member);
+
+	boolean updateMemberStatusToRemoved(MemberVO member);
+
+	MemberVO selectMemberFromSocial(@Param("user")MemberVO member, @Param("social_type")String social_type);
+
+	String selectSocialId(@Param("me_id")String me_id, @Param("social_type")String social_type);
+
+	int updateSocialIdSetNull(@Param("user")MemberVO user, @Param("social_type")String social_type);
+
 
 }

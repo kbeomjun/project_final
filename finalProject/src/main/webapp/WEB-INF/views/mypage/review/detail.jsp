@@ -12,7 +12,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -48,7 +48,7 @@
 						</div>
 						
 						<div class="d-flex justify-content-between">
-							<c:url var="url" value="/client/mypage/review/list/${me_id}">
+							<c:url var="url" value="/mypage/review/list">
 								<c:param name="page" value="${cri.page}"/>
 								<c:param name="type" value="${cri.type}"/>
 								<c:param name="search" value="${cri.search}"/>
@@ -57,8 +57,8 @@
 							
 							<div>
 								<c:if test="${review.pa_me_id eq me_id }">
-									<a href="<c:url value="/client/mypage/review/update/${review.rp_num}"/>" class="btn btn-outline-warning ml-2">수정</a>
-									<a href="<c:url value="/client/review/delete/${review.rp_num}"/>" class="btn btn-outline-danger ml-2" 
+									<a href="<c:url value="/mypage/review/update/${review.rp_num}"/>" class="btn btn-outline-warning ml-2">수정</a>
+									<a href="<c:url value="/mypage/review/delete/${review.rp_num}"/>" class="btn btn-outline-danger ml-2" 
 												onclick="return confirm('삭제하면 해당 결제내역의 리뷰 게시글은 다시 작성할 수 없습니다. 삭제하시겠습니까?');">삭제</a>
 								</c:if>
 							</div>

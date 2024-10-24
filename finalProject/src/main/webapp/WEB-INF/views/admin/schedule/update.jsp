@@ -6,6 +6,13 @@
 <html>
 <head>
 <title>스케줄 수정</title>
+<style type="text/css">
+	.form-control{
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 10px;	
+	}
+</style>
 </head>
 <body>
 
@@ -13,38 +20,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <div class="sidebar-sticky">
-	                <h4 class="sidebar-heading mt-3">지점관리자 메뉴</h4>
-	                <ul class="nav flex-column">
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/program/list"/>">프로그램관리</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link active" href="<c:url value="/admin/schedule/list"/>">프로그램일정관리</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/order/list"/>">운동기구 발주목록</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/employee/list"/>">직원관리</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/member/list"/>">회원관리</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/branch/detail"/>">지점 상세보기</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/equipment/list"/>">운동기구 보유목록</a>
-	                    </li>
-						<li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/equipment/change"/>">운동기구 재고 변동내역</a>
-	                    </li>	 
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="<c:url value="/admin/inquiry/list"/>">문의내역</a>
-	                    </li>	                                       	                    	                    	                    	                    
-	                </ul>
-	            </div>
+				<%@ include file="/WEB-INF/views/layout/brAdminSidebar.jsp" %>	
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -66,30 +42,23 @@
 						</div>
 						<div class="form-group">
 							<label>수정날짜:</label>
-							<input type="date" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
+							<input class="form-control" type="date" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
 						</div>
 						
-						<div class="form-group">
-							<label>수정시작시간:</label>
-							<input type="time" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
+						<div class="form-group row">
+							<div class="col-md-6">
+								<label>수정시작시간:</label>
+								<input class="form-control" type="time" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
+							</div>
+							<div class="col-md-6">
+								<label>수정마감시간:</label>
+								<input class="form-control" type="time" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
+							</div>
 						</div>
-						
-						<div class="form-group">
-							<label>수정마감시간:</label>
-							<input type="time" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
-						</div>
-						<div class="form-group d-flex justify-content-between">
-						    <c:url var="url" value="/admin/schedule/list">
-						        <c:param name="view" value="${view}"/>
-						        <c:param name="page" value="${cri.page}"/>
-						        <c:param name="type" value="${cri.type}"/>
-						        <c:param name="search" value="${cri.search}"/>
-						    </c:url>
-						    <a href="${url}" class="btn btn-outline-info">목록</a>
-						
-						    <button type="submit" class="btn btn-outline-warning">수정</button>
-						</div>
+					    <button type="submit" class="btn btn-outline-success col-12">수정</button>
 					</form>
+					<hr>
+				    <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-danger col-12">취소</a>
 	                
 	            </div>
 	        </main>

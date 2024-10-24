@@ -46,7 +46,7 @@ public class HQController {
 	}
 	@GetMapping("/branch/insert")
 	public String branchInsert(Model model) {
-		BranchVO hq = hqService.getBranch(new BranchVO("본점"));
+		BranchVO hq = hqService.getBranch(new BranchVO("본사"));
 		model.addAttribute("hq", hq);
 	    return "/hq/branch/insert";
 	}
@@ -94,8 +94,10 @@ public class HQController {
 	public String employeeInsert(Model model) {
 		List<BranchVO> brList = hqService.getBranchList();
 		List<SportsProgramVO> programList = hqService.getSportsProgramList();
+		EmployeeVO em = hqService.getEmployee(new EmployeeVO(20000001));
 		model.addAttribute("brList", brList);
 		model.addAttribute("programList", programList);
+		model.addAttribute("em", em);
 	    return "/hq/employee/insert";
 	}
 	@PostMapping("/employee/insert")
@@ -313,6 +315,13 @@ public class HQController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("me", me);
 		return map;
+	}
+	@GetMapping("/member/delete/{me_id}")
+	public String memberDelete(Model model, @PathVariable("me_id") String me_id, MemberVO me) {
+		String msg = hqService.deleteMember(me);
+		model.addAttribute("url", "/hq/member/list");
+		model.addAttribute("msg", msg);
+		return "/main/message";
 	}
 	
 	@GetMapping("/inquiry/list")

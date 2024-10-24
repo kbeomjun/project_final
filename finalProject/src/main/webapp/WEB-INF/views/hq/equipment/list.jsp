@@ -8,7 +8,7 @@
 <title>본사관리페이지</title>
 	<style type="text/css">
 		.img-container{max-height: 800px; overflow-y: auto; padding-bottom: 20px;}
-    	.img-box{width:33%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
+    	.img-box{width:20%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
     	.img-name{border: 1px solid gray;}
     	.img-text{margin-bottom: 0; padding: 5px;}
     	.btn-update{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
@@ -19,7 +19,7 @@
 	</style>
 </head>
 <body>
-	<div class="container" style="margin-top:30px">
+	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
 	    	<div class="col-sm-2">
 		    	<ul class="nav nav-pills flex-column">
@@ -302,9 +302,30 @@
 		});
 	    
 	    $('.btn-close').click(function(){
+	    	if($('#file')[0].files.length > 0){
+		    	deleteFile($('#file')[0].files.length);
+	    		let img = `
+		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
+		    	`;
+		    	$('.card-insert').children().remove();
+		        $('.card-insert').append(img);
+	    	}
+	    	
 	    	$('.error').children().remove();
 	    	$('#se_name').val("");
+	    	
 	    });
+	    const deleteFile = (length) => {
+		    const dataTransfer = new DataTransfer();
+		    let files = $('#file')[0].files;
+		    
+		    let fileArray = Array.from(files);
+		    fileArray.splice(0, length);
+		    
+		    fileArray.forEach(file => { dataTransfer.items.add(file); });
+		    $('#file')[0].files = dataTransfer.files;
+		}
 	    
 	    var search = "";
 	    $('#search').keyup(function(){

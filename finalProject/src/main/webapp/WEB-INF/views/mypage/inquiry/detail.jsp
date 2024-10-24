@@ -39,7 +39,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -89,7 +89,7 @@
 	                    </div>
 						
 						<div>
-							<a href="<c:url value="/client/mypage/inquiry/list/${me_id}?page=${page}"/>" class="btn btn-outline-info">목록</a>
+							<a href="<c:url value="/mypage/inquiry/list?page=${page}"/>" class="btn btn-outline-info">목록</a>
 						</div>
 					</div>
 	            </div>

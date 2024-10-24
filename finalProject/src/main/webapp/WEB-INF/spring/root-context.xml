@@ -18,8 +18,7 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<!-- MySQL 버전에 따라 driverClassName의 value값이 달라짐 아래 코드는 Mysql 8기준 -->
-		<property name="driverClassName"
-			value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
 		<!-- MySQL 버전이 6인 경우 아래 코드 반영 -->
 		<!-- <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> -->
 		<property name="url"
@@ -42,6 +41,37 @@
     <bean id="uploadPath" class="java.lang.String">
         <constructor-arg value="${file.upload-dir}" />
     </bean>
+    
+    <!-- kakao login을 위한 api key -->
+    <bean id="kakaoApiKey" class="java.lang.String">
+        <constructor-arg value="${kakao.api_key}" />
+    </bean>
+    
+    <!-- kakao login을 위한 api key -->
+    <bean id="kakaoRestKey" class="java.lang.String">
+        <constructor-arg value="${kakao.rest_key}" />
+    </bean>
+    
+    <!-- kakao dev에 등록한 uri -->
+    <bean id="kakaoRedirectUri" class="java.lang.String">
+        <constructor-arg value="${kakao.redirect_uri}" />
+    </bean>
+    
+    <!-- naver login을 위한 client ID -->
+    <bean id="naverClientId" class="java.lang.String">
+        <constructor-arg value="${naver.client.id}" />
+    </bean>
+    
+    <!-- naver login을 위한 client Secret -->
+    <bean id="naverClientSecret" class="java.lang.String">
+        <constructor-arg value="${naver.client.secret}" />
+    </bean>
+    
+    <!-- naver에 등록한 callback Url -->
+    <bean id="naverCallbackUrl" class="java.lang.String">
+        <constructor-arg value="${naver.callback.url}" />
+    </bean>
+    
     <!-- gmail -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />

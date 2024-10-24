@@ -12,6 +12,48 @@
 	.form-group{margin: 0;}
 	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
 	.address-input{margin-bottom: 10px;}
+	.sns-accounts {
+    display: flex;
+    gap: 15px; /* 요소 간의 간격 */
+    align-items: center; /* 수직 정렬 */
+}
+
+.sns-account {
+    display: flex;
+    align-items: center; /* 각 아이콘과 버튼의 수직 정렬 */
+}
+.btn-sns-unlink {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #bcbfc6;
+    color: gray;
+    background-color: #fafbf6;
+    background-image: linear-gradient(to bottom, #fff, #f1f1f1);
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    line-height: 29px; /* 텍스트가 중앙에 오도록 설정 */
+    font-size: 12px; /* 텍스트 크기 조정 */
+}
+
+.btn-sns-unlink:hover {
+    background-color: #f5f6f2;
+    background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
+    border-color: #a8b1b8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    color: #555;
+}
+
+.btn-sns-unlink:active {
+    background-color: #e8e9e5;
+    background-image: linear-gradient(to bottom, #f0f0f0, #e2e3de);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-color: #9ca3ab;
+    transform: translateY(1px);
+}
 </style>
 </head>
 <body>
@@ -19,7 +61,7 @@
 	    <div class="row">
 	        <!-- 왼쪽 사이드바 -->
 	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	        </nav>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
@@ -27,11 +69,34 @@
 	            <div class="pt-3 pb-2 mb-3">
 	                <h2>개인정보수정</h2>
 	                
-					<form action="<c:url value='/client/mypage/info/update'/>" method="post" id="form">
+					<form action="<c:url value='/mypage/info/update'/>" method="post" id="form">
 				        <div class="form-group">
 				            <label for="me_id">아이디:</label>
 				            <input type="text" class="form-control" name="me_id" value="${member.me_id}" readonly>
 				        </div>		
+			        	<c:if test="${member.me_naverUserId ne null || member.me_kakaoUserId ne null}">
+					        <div class="form-group sns">
+							    <label for="me_social">연동된 SNS:</label>
+							    <div class="sns-accounts">
+							    	<c:if test="${member.me_naverUserId ne null}">
+								        <div class="sns-account">
+											<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" width="30"/>
+								            <a class="btn btn-sns-unlink ml-1" data-type="NAVER">
+								                <span>해제</span>
+								            </a>
+								        </div>
+							    	</c:if>
+							    	<c:if test="${member.me_kakaoUserId ne null}">
+								        <div class="sns-account">
+								            <img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" width="30"/>
+								            <a class="btn btn-sns-unlink ml-1" data-type="KAKAO">
+								                <span>해제</span>
+								            </a>
+								        </div>
+							        </c:if>
+							    </div>
+							</div>
+						</c:if>
 						<div class="form-group">
 							<label for="me_email">이메일:</label>
 							<input type="email" class="form-control" id="me_email" name="me_email" value="${member.me_email}">
@@ -98,35 +163,45 @@
 	</div>
 
 	<script type="text/javascript">
+		let emailCheckPassed = true;
+		
 		//이메일 중복 체크
 	    $('#me_email').on('keyup', function() {
 	        var email = $(this).val();
+	        var id = '${member.me_id}';
 	        let regexEmail = /^\w{4,13}@\w{4,8}\.[a-z]{2,3}$/;
 	        
 	        // 이메일이 비어있는 경우 체크하지 않음
 	        if (email == '') {
 	            $('#emailCheckResult').html('');
+	            emailCheckPassed = false;
 	            return;
 	        }
 	        
 	        // 이메일 형식 체크
 	        if (!regexEmail.test(email)) {
 	            $('#emailCheckResult').html('<span style="color: red;">이메일 형식이 올바르지 않습니다.</span>');
+	            emailCheckPassed = false;
 	            return;
 	        } else {
 	            $('#emailCheckResult').html('<span style="color: green;">올바른 이메일 형식입니다. 중복 확인 중...</span>');
 			
 		        $.ajax({
 		        	async : true,
-		        	url : '<c:url value="/client/mypage/checkEmail"/>', 
+		        	url : '<c:url value="/mypage/checkEmail"/>', 
 		        	type : 'post', 
-		        	data : {email : email},
+		        	data : {
+		        		id : id,
+		        		email : email
+		        		},
 		        	dataType : "json",
 		        	success : function (data){
 		                if (data) {
 		                    $('#emailCheckResult').html('<span style="color: red;">이미 사용 중인 이메일입니다.</span>');
+		                    emailCheckPassed = false;
 		                } else {
 		                    $('#emailCheckResult').html('<span style="color: green;">사용 가능한 이메일입니다.</span>');
+		                    emailCheckPassed = true;
 		                }
 		        	}, 
 		        	error : function(jqXHR, textStatus, errorThrown){
@@ -135,21 +210,20 @@
 		        });
 	        }
 	    });
+		
+		$('#me_phone').on('input', function () {
+		    // 입력값에서 숫자만 남기고 모두 제거
+		    let inputVal = $(this).val().replace(/[^0-9]/g, '');
+		    $(this).val(inputVal);
+		});
 	</script>
 
    <script type="text/javascript">
     	// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
-		
-		$('#me_name').keyup(function(){
-			$('.error-name').children().remove();
-			
-			if($('#me_name').val() == ''){
-				$('.error-name').append(msgRequired);
-			}else{
-				$('.error-name').children().remove();	
-			}
-		});
+		let msgEmailCheck = `<span>이메일 중복 확인을 해주세요.</span>`;
+		let msgRegexPhone = `<span>올바른 전화번호 형식을 입력하세요.</span>`;
+		let regexPhone = /^01[016789]\d{3,4}\d{4}$/;
 		
 		$('#me_email').keyup(function(){
 			$('.error-email').children().remove();
@@ -161,13 +235,27 @@
 			}
 		});
 		
+		$('#me_name').keyup(function(){
+			$('.error-name').children().remove();
+			
+			if($('#me_name').val() == ''){
+				$('.error-name').append(msgRequired);
+			}else{
+				$('.error-name').children().remove();	
+			}
+		});
+		
 		$('#me_phone').keyup(function(){
 			$('.error-phone').children().remove();
 			
 			if($('#me_phone').val() == ''){
 				$('.error-phone').append(msgRequired);
 			}else{
-				$('.error-phone').children().remove();	
+				if(!regexPhone.test($('#me_phone').val())){
+					$('.error-phone').append(msgRegexPhone);
+				}else{
+					$('.error-phone').children().remove();	
+				}
 			}
 		});
 		
@@ -185,6 +273,12 @@
 			$('.error').children().remove();
 			let flag = true;
 			
+		    if (!emailCheckPassed) {
+				$('.error-email').append(msgEmailCheck);
+				$('#me_email').focus();
+		        flag = false;
+		    }
+		    
 			if($('#me_name').val() == ''){
 				$('.error-name').append(msgRequired);
 				$('#me_name').focus();
@@ -193,6 +287,10 @@
 			
 			if($('#me_phone').val() == ''){
 				$('.error-phone').append(msgRequired);
+				$('#me_phone').focus();
+				flag = false;
+			} else if(!regexPhone.test($('#me_phone').val())){
+				$('.error-phone').append(msgRegexPhone);
 				$('#me_phone').focus();
 				flag = false;
 			}
@@ -208,7 +306,7 @@
 				$('#me_detailAddress').focus();
 				flag = false;
 			}
-
+			
 			return flag;
 		});
     </script>
@@ -263,6 +361,37 @@
 	        }).open();
 	    }
     </script>
-	
+	<script>
+    $(document).ready(function() {
+        $('.btn-sns-unlink').on('click', function(event) {
+            event.preventDefault();
+            
+            var socialType = $(this).data('type');
+            
+            $.ajax({
+                url: '<c:url value="/mypage/unlinkSNS"/>', // 서버의 URL을 여기에 지정
+                type: 'POST',
+                data: {
+                    socialType: socialType
+                },
+                success: function(response) {
+                    if (response) {
+                        alert('SNS 계정이 성공적으로 해제되었습니다.');
+                        $('.btn-sns-unlink[data-type="' + socialType + '"]').closest('.sns-account').remove();
+                     	// 연동된 계정이 없으면 전체 섹션 숨기기
+                        if ($('.sns-account').length === 0) {
+                            $('.form-group.sns').remove();
+                        }
+                    } else {
+                        alert('SNS 계정 해제에 실패했습니다.');
+                    }
+                },
+                error: function() {
+                    alert('SNS 계정 해제 중 오류가 발생했습니다.');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

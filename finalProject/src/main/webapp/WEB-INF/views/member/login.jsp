@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta charset="UTF-8">
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<title>로그인</title>
 <!-- Bootstrap CSS 추가 -->
-    <style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <style>
         .body {
             padding-top: 150px; /* 헤더와의 간격 */
             padding-bottom: 150px; /* 푸터와의 간격 */
@@ -39,137 +40,179 @@
 						<h2>로그인</h2>
 					</div>
 					<div class="card-body">
-						<form action="<c:url value='/login'/>" method="post" id="loginfrom">
+						<form action="<c:url value='/login'/>" method="post"
+							id="loginfrom">
 							<div class="mb-3">
-								<label for="id" class="form-label">아이디</label>
-								<input type="text" class="form-control" id="id" name="me_id" required/>
+								<label for="id" class="form-label">아이디</label> <input
+									type="text" class="form-control" id="id" name="me_id" required />
 							</div>
 							<div class="mb-3">
-								<label for="pw" class="form-label">비밀번호</label>
-								<input type="password" class="form-control" id="pw" name="me_pw" required/>
+								<label for="pw" class="form-label">비밀번호</label> <input
+									type="password" class="form-control" id="pw" name="me_pw"
+									required />
 							</div>
-							<div class="mb-3 form-check">
-								<input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
-								<label class="form-check-label" for="autologin">자동 로그인</label>
-							</div>
-							<div class="d-flex justify-content-end mb-3">
-							    <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
-							    <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
-							</div>
-							<button type="submit" class="btn btn-success w-100">로그인</button>
-							
-							<div class="d-flex justify-content-between">
-							    <a id="kakao-login-btn" href="javascript:loginWithKakao()" class="kakao-login-btn btn">카카오 로그인</a>
-							    <a href="/kakaoRegister" class="kakao-register-btn btn">카카오 회원가입</a>
+							<div class="d-flex justify-content-between align-items-center mb-3">
+							    <div class="form-check">
+							        <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
+							        <label class="form-check-label" for="autologin">자동 로그인</label>
+							    </div>
+							    <div>
+							        <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
+							        <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
+							    </div>
+							    <button type="submit" class="btn btn-success w-100">로그인</button>
 							</div>
 						</form>
 					</div>
 					<div class="card-footer text-center">
 						<a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
 					</div>
+
+					<!-- kakao button -->
+					<div class="col-lg-12 text-center mt-3">
+						<a href=#> <img alt="카카오로그인"
+							src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>"
+							onclick="loginWithKakao()">
+						</a>
+						<a href="${naverApiUrl }"><img alt="네이버로그인" width ="180" height="45" src="<c:url value='/resources/image/naver/small_g_in.png'/>"/></a>
+					</div>
+
 				</div>
 			</div>
 		</div>
+	</div>
+<!-- 카카오 로그인 -->
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
 
-	<script>
-	  // 카카오 SDK 초기화
-	  Kakao.init('9c8609073560662bd995a54cb43bbe28'); // 발급받은 실제 JavaScript 앱 키를 사용
-	  console.log(Kakao.isInitialized()); // 초기화 여부 확인 (true/false 출력)
-	
-	  // 카카오 로그인 함수 정의
-	  function loginWithKakao() {
-	    Kakao.Auth.login({
-	      success: function (authObj) {
-	        // access_token을 저장
-	        Kakao.Auth.setAccessToken(authObj.access_token);
-	        // 회원 정보 가져오는 함수 호출
-	        getInfo();
-	      },
-	      fail: function (err) {
-	        console.error(err); // 로그인 실패 시 에러 출력
-	      }
-	    });
-	  }
-	
-	  // 카카오 사용자 정보 가져오기
-	  function getInfo() {
-	    Kakao.API.request({
-	      url: '/v2/user/me',
-	      success: function (res) {
-	        var id = res.id; // 카카오 계정 ID
-	        var email = res.kakao_account.email; // 카카오 계정 이메일
-	        var sns = "kakao"; // SNS 타입을 지정
-	        
-	        // 가입 여부 확인
-	        if (!checkMember(sns, id)) {
-	          // 회원이 아니면 가입 여부를 묻고 처리
-	          if (confirm("회원이 아닙니다. 가입하시겠습니까?")) {
-	            // SNS 계정으로 회원 가입
-	            signupSns(sns, id, email);
-	          } else {
-	            return;
-	          }
-	        }
-	        // 로그인 진행
-	        snsLogin(sns, id);
-	        // 로그인 성공 후 메인 페이지로 이동
-	        location.href = '/';
-	      },
-	      fail: function (error) {
-	        alert('카카오 로그인에 실패했습니다. 관리자에게 문의하세요. ' + JSON.stringify(error));
-	      }
-	    });
-	  }
-	
-	  //가입 여부 확인을 위한 AJAX
-	  function checkMember(sns, id) {
-	    var res;
-	    $.ajax({
-	      async: false,
-	      url: `/sns/${sns}/check/id`,  // 이 부분에서 sns 값이 제대로 설정되어 있는지 확인
-	      type: 'post',
-	      data: { id: id },  // 전송할 데이터
-	      success: function (data) {
-	        res = data;  // 성공 시 데이터 반환
-	      },
-	      error: function (jqXHR, textStatus, errorThrown) {
-	        console.error(jqXHR, textStatus, errorThrown);  // 에러 처리
-	      }
-	    });
-	    return res;
-	  }
-	
-	  // SNS 계정으로 회원 가입을 위한 AJAX
-	  function signupSns(sns, id, email) {
-	    $.ajax({
-	      async: false,
-	      url: `/sns/${sns}/signup`,
-	      type: 'post',
-	      data: { id: id, email: email },
-	      success: function (data) {
-	        console.log("가입 성공");
-	      },
-	      error: function (jqXHR, textStatus, errorThrown) {
-	        console.error(jqXHR, textStatus, errorThrown);
-	      }
-	    });
-	  }
-	
-	  // SNS 로그인 진행을 위한 AJAX
-	  function snsLogin(sns, id) {
-	    $.ajax({
-	      async: false,
-	      url: `/sns/${sns}/login`,
-	      type: 'post',
-	      data: { id: id },
-	      success: function (data) {
-	        if (data) {
-	          alert("로그인 되었습니다.");
-	        }
-	      },
-	      error: function (jqXHR, textStatus, errorThrown) {
-	        console.error(jqXHR, textStatus, errorThrown);
-	      }
-	    });
-	  }
-	</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        Kakao.init('${kakaoApiKey}');
+        Kakao.isInitialized();
+        
+        $('#autologin').change(function() {
+        	var isChecked = $(this).is(':checked') ? 1 : 0; 
+            
+            $.ajax({
+                url: '<c:url value="/oauth/autoLogin"/>',
+                type: 'POST',
+                data: {
+                	autoLogin: isChecked
+                }
+            });
+        });
+    });
+
+    function loginWithKakao() {
+        Kakao.Auth.authorize({ 
+        redirectUri: '${kakaoRedirectUri}' 
+        }); // 등록한 리다이렉트uri 입력
+        
+    }
+    
+</script>
+</body>
+
+<script>
+/* 삭제 예정.
+  // 카카오 SDK 초기화
+  Kakao.init('9c8609073560662bd995a54cb43bbe28'); // 발급받은 실제 JavaScript 앱 키를 사용
+  console.log(Kakao.isInitialized()); // 초기화 여부 확인 (true/false 출력)
+
+  // 카카오 로그인 함수 정의
+  function loginWithKakao() {
+    Kakao.Auth.login({
+      success: function (authObj) {
+        // access_token을 저장
+        Kakao.Auth.setAccessToken(authObj.access_token);
+        // 회원 정보 가져오는 함수 호출
+        getInfo();
+      },
+      fail: function (err) {
+        console.error(err); // 로그인 실패 시 에러 출력
+      }
+    });
+  }
+
+  // 카카오 사용자 정보 가져오기
+  function getInfo() {
+    Kakao.API.request({
+      url: '/v2/user/me',
+      success: function (res) {
+        var id = res.id; // 카카오 계정 ID
+        var email = res.kakao_account.email; // 카카오 계정 이메일
+        var sns = "kakao"; // SNS 타입을 지정
+        
+        // 가입 여부 확인
+        if (!checkMember(sns, id)) {
+          // 회원이 아니면 가입 여부를 묻고 처리
+          if (confirm("회원이 아닙니다. 가입하시겠습니까?")) {
+            // SNS 계정으로 회원 가입
+            signupSns(sns, id, email);
+          } else {
+            return;
+          }
+        }
+        // 로그인 진행
+        snsLogin(sns, id);
+        // 로그인 성공 후 메인 페이지로 이동
+        location.href = '/';
+      },
+      fail: function (error) {
+        alert('카카오 로그인에 실패했습니다. 관리자에게 문의하세요. ' + JSON.stringify(error));
+      }
+    });
+  }
+
+  //가입 여부 확인을 위한 AJAX
+  function checkMember(sns, id) {
+    var res;
+    $.ajax({
+      async: false,
+      url: `/sns/${sns}/check/id`,  // 이 부분에서 sns 값이 제대로 설정되어 있는지 확인
+      type: 'post',
+      data: { id: id },  // 전송할 데이터
+      success: function (data) {
+        res = data;  // 성공 시 데이터 반환
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(jqXHR, textStatus, errorThrown);  // 에러 처리
+      }
+    });
+    return res;
+  }
+
+  // SNS 계정으로 회원 가입을 위한 AJAX
+  function signupSns(sns, id, email) {
+    $.ajax({
+      async: false,
+      url: `/sns/${sns}/signup`,
+      type: 'post',
+      data: { id: id, email: email },
+      success: function (data) {
+        console.log("가입 성공");
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(jqXHR, textStatus, errorThrown);
+      }
+    });
+  }
+
+  // SNS 로그인 진행을 위한 AJAX
+  function snsLogin(sns, id) {
+    $.ajax({
+      async: false,
+      url: `/sns/${sns}/login`,
+      type: 'post',
+      data: { id: id },
+      success: function (data) {
+        if (data) {
+          alert("로그인 되었습니다.");
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(jqXHR, textStatus, errorThrown);
+      }
+    });
+  } */
+</script>
+</html>

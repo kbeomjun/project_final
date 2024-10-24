@@ -93,7 +93,53 @@
 	</delete>
 
 	<select id="selectFaqList" resultType="MemberInquiryVO">
-		select * from member_inquiry where mi_state = 'FAQ' order by mi_it_name
+		select 
+			* 
+		from 
+			member_inquiry 
+		where 
+			mi_state = 'FAQ'
+			<if test="ca != 'all'">
+				and mi_it_name = #{ca}
+			</if>
+			<choose>
+				<when test="cri.type == 'title'">
+					and mi_title like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'content'">
+					and mi_content like concat('%', #{cri.search},'%')
+				</when>
+				<otherwise>
+					and (mi_title like concat('%', #{cri.search},'%') or mi_content like concat('%', #{cri.search},'%'))
+				</otherwise>
+			</choose>
+		order by 
+			mi_it_name
+		limit
+			#{cri.pageStart}, #{cri.perPageNum}	
+	</select>
+	
+	<select id="selectFaqTotalCount" resultType="int">
+		select 
+			count(*)
+		from 
+			member_inquiry 
+		where 
+			mi_state = 'FAQ'
+			<if test="ca != 'all'">
+				and mi_it_name = #{ca}
+			</if>
+			<choose>
+				<when test="cri.type == 'title'">
+					and mi_title like concat('%', #{cri.search},'%')
+				</when>
+				<when test="cri.type == 'content'">
+					and mi_content like concat('%', #{cri.search},'%')
+				</when>
+				<otherwise>
+					and (mi_title like concat('%', #{cri.search},'%') or mi_content like concat('%', #{cri.search},'%'))
+				</otherwise>
+			</choose>		
 	</select>
 	
 	<select id="selectInquiryTypeList" resultType="InquiryTypeVO">
@@ -321,6 +367,51 @@
 	
 	<update id="updateMemberPw">
 		update member set me_pw = #{me_pw} where me_id = #{me_id}
+	</update>
+	
+	<update id="updateMemberStatusToRemoved">
+		update 
+			member 
+		set 
+			me_authority = 'REMOVED',
+			me_dataPeriod = DATE_ADD(NOW(), INTERVAL 6 MONTH)
+		where
+			me_id = #{me_id}
+	</update>
+	
+	<select id="selectSocialId" resultType="String">
+		select 
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	me_kakaoUserId
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        me_naverUserId
+	    </if>
+		from member 
+		where me_id = #{me_id}
+	</select>
+	
+	<select id="selectMemberFromSocial" resultType="MemberVO">
+		select * from member 
+		where me_id = #{user.me_id} 
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	and me_kakaoUserId = #{user.me_kakaoUserId}
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        and me_naverUserId = #{user.me_naverUserId}
+	    </if>
+	</select>
+	
+	<update id="updateSocialIdSetNull">
+		update member
+		set
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	me_kakaoUserId = null
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        me_naverUserId = null
+	    </if>
+	    where me_id = #{user.me_id}
 	</update>
 	
 </mapper>
