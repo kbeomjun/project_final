@@ -11,10 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>스케줄 등록</title>
 <style type="text/css">
+
 	table {
 		width: 100%;
 		border-collapse: collapse;
 		margin-top: 10px;
+    	table-layout: auto;
 	}
    	#thead th{text-align: center;}
    	#tbody td{text-align: center;}
@@ -227,6 +229,7 @@
         document.getElementById('endDate').value = startDateValue;
     });
 </script>
+
 <script>
 		
 	var table = null;	
@@ -289,6 +292,9 @@
 		
 		// 프로그램 변경 시 모든 입력 초기화.
 	    resetInputs();
+		
+		// 테이블 초기화 또는 크기 조정
+        initializeTable();
 		
 	});		
 	

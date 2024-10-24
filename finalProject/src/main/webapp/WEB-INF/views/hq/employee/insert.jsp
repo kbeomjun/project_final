@@ -88,6 +88,11 @@
 			    </select>
 			</div>
 			<div class="error error-branch"></div>
+			<div class="form-group">
+				<label for="em_detail">직원설명:</label>
+				<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
+			</div>
+			<div class="error"></div>
 			<button class="btn btn-outline-info col-12">직원 등록</button>
 		</form>
 		<hr/>
@@ -283,6 +288,14 @@
 	            }
 	        }).open();
 	    }
+    </script>
+    
+    <script type="text/javascript">
+    	// 썸머노트
+    	$('#em_detail').summernote({
+			  tabsize: 2,
+			  height: 350
+		});
     </script>
 </body>
 </html>

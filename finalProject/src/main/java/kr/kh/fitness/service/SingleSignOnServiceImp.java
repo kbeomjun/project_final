@@ -111,8 +111,15 @@ public class SingleSignOnServiceImp implements SingleSignOnService {
 
 			int responseCode = conn.getResponseCode();
 			//System.out.println("responseCode : " + responseCode);
-
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			
+		
+			if (responseCode == 200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else { // 에러 발생
+				br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+				throw new IOException();
+			}
 
 			StringBuilder result = new StringBuilder(); // StringBuilder로 변경
 			String br_line;
@@ -192,9 +199,14 @@ public class SingleSignOnServiceImp implements SingleSignOnService {
 //	}
 
 	@Override
-	public MemberVO getMemberInfoFromEmail(MemberVO loginUser) {
+	public MemberVO getMemberInfoFromSocial(String socialType, MemberVO loginUser) {
 		
-		return memberDao.selectMemberFromEmail(loginUser.getMe_email());
+		try {
+			return memberDao.selectMemberFromSocial(socialType, loginUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public boolean isValidSocialName(String social_type) {

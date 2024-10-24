@@ -21,7 +21,7 @@ CREATE TABLE `member` (
    `me_noshow`   		int   			not null default 0,
    `me_cancel`   		datetime   		NULL,
    `me_kakaoUserId`		varchar(20)		NULL unique,
-   `me_naverUserId`		varchar(100)		NULL unique,
+   `me_naverUserId`		varchar(100)	NULL unique,
    `me_dataPeriod`		datetime		Null
 );
 
@@ -50,7 +50,8 @@ CREATE TABLE `employee` (
     `em_detailAddress`	varchar(255)	not NULL,
     `em_extraAddress`	varchar(255)	not NULL,
 	`em_fi_name`		varchar(255)	NULL,
-	`em_br_name`		varchar(100)	NOT NULL
+	`em_br_name`		varchar(100)	NOT NULL,
+    `em_detail`			longtext		NULL
 );
 
 drop table if exists `branch_file`;

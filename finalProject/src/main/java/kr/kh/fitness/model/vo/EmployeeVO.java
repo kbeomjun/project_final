@@ -25,4 +25,9 @@ public class EmployeeVO {
     private String em_extraAddress;
     private String em_fi_name;        // 직원 사진 파일 이름
     private String em_br_name;        // 지점 이름
+    private String em_detail;
+    
+    public EmployeeVO(int em_num) {
+    	this.em_num = em_num;
+    }
 }

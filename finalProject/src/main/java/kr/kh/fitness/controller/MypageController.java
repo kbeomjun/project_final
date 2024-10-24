@@ -292,6 +292,12 @@ public class MypageController {
 	@GetMapping("/pwcheck")
 	public String mypagePwCheck(Model model, HttpSession session) {
 	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    String social_type = (String) session.getAttribute("socialType");
+	    if(social_type != null) {
+	    	String social_id = clientService.getSocial_id(user, social_type);
+	    	model.addAttribute("social_type", social_type);
+	    	model.addAttribute("social_id", social_id);
+	    }
 		model.addAttribute("me_id", user.getMe_id());
 		return "/mypage/pwCheck";
 	}
@@ -306,7 +312,25 @@ public class MypageController {
 			return "redirect:/mypage/info";
 		} else {
 			model.addAttribute("msg", msg);
-			model.addAttribute("url", "/mypage/pwCheck");
+			model.addAttribute("url", "/mypage/pwcheck");
+			return "/main/message";
+		}
+	}
+	
+	// 소셜 정보로 비밀번호 확인 대체 post 
+	@PostMapping("/socialcheck")
+	public String mypageSocialCheck(Model model, HttpSession session) {
+		
+		String social_type = (String) session.getAttribute("socialType");
+		MemberVO member = (MemberVO) session.getAttribute("user");
+		
+		String msg = clientService.checkSocial(member, social_type);
+		if(msg == "") {
+			session.setAttribute("pwVerified", true);
+			return "redirect:/mypage/info";
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/mypage/pwcheck");
 			return "/main/message";
 		}
 	}
@@ -442,4 +466,30 @@ public class MypageController {
 		
 		return "/main/message";
 	}
+	
+	@PostMapping("/unlinkSNS")
+    @ResponseBody
+    public boolean unlinkSNS(HttpSession session, @RequestParam("socialType") String social_type) {
+        try {
+            MemberVO user = (MemberVO) session.getAttribute("user");
+            
+            boolean result = clientService.unlinkSocialAccount(user, social_type);
+            
+            if (result) {
+            	MemberVO updateUser = clientService.getMember(user.getMe_id());
+            	String currentSocial = (String) session.getAttribute("socialType");
+            	if(currentSocial != null && currentSocial.equals(social_type)) {
+            		session.removeAttribute("socialType");
+            	}
+            	session.removeAttribute("user");
+            	session.setAttribute("user", updateUser);
+                return true; // 성공 시
+            } else {
+                return false; // 실패 시
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // 예외 발생 시
+        }
+    }
 }
