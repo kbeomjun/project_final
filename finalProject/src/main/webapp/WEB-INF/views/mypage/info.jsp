@@ -22,46 +22,37 @@
     display: flex;
     align-items: center; /* 각 아이콘과 버튼의 수직 정렬 */
 }
-
-.sns-account {
-    display: flex; /* Flexbox를 사용하여 수평 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-}
-
 .btn-sns-unlink {
-    background: url(//pics.gmarket.co.kr/pc/ko/net/myg/button/btn_gray_right.png) no-repeat right center;
-    background-size: 30px 22px; /* 가로폭 30px, 세로폭 22px 고정 */
-    height: 22px;
-    padding-right: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.btn-sns-unlink span {
-    background: url(//pics.gmarket.co.kr/pc/ko/net/myg/button/btn_gray_left.png) no-repeat left center; /* 왼쪽 이미지 */
-    height: 22px; /* Span의 높이 */
-    color: rgb(68, 68, 68);
-    line-height: 22px;
-    letter-spacing: -1px;
-    padding-left: 9px; /* 왼쪽 여백 */
-    padding-right: 11px; /* 오른쪽 여백 */
-    font-size: 11px;
-    display: inline-block;
+    width: 40px;
+    height: 30px;
+    border: 1px solid #bcbfc6;
+    color: gray;
+    background-color: #fafbf6;
+    background-image: linear-gradient(to bottom, #fff, #f1f1f1);
+    border-radius: 4px;
+    text-align: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    line-height: 29px; /* 텍스트가 중앙에 오도록 설정 */
+    font-size: 12px; /* 텍스트 크기 조정 */
 }
 
-/* 오른쪽 이미지를 절대 좌표로 이동 */
-.btn-sns-unlink::after {
-    content: ''; /* 빈 콘텐츠 생성 */
-    background: url(//pics.gmarket.co.kr/pc/ko/net/myg/button/btn_gray_right.png); /* 오른쪽 이미지 */
-    background-size: 30px 20px; /* 가로폭 30px, 세로폭 22px 고정 */
-    position: absolute; /* 절대 위치 설정 */
-    height: 22px; /* 높이 고정 */
-    width: 30px; /* 가로폭 고정 */
-    right: 5px; /* 오른쪽으로 절대좌표 이동 (조정 가능) */
-    top: 50%; /* 수직 중앙 정렬 */
-    transform: translateY(-50%); /* 수직 중앙 정렬을 위한 변환 */
+.btn-sns-unlink:hover {
+    background-color: #f5f6f2;
+    background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
+    border-color: #a8b1b8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    color: #555;
+}
+
+.btn-sns-unlink:active {
+    background-color: #e8e9e5;
+    background-image: linear-gradient(to bottom, #f0f0f0, #e2e3de);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-color: #9ca3ab;
+    transform: translateY(1px);
 }
 </style>
 </head>
@@ -83,14 +74,14 @@
 				            <label for="me_id">아이디:</label>
 				            <input type="text" class="form-control" name="me_id" value="${member.me_id}" readonly>
 				        </div>		
-			        	<c:if test="${member.me_naverUserId ne null && member.me_kakaoUserId ne null}">
+			        	<c:if test="${member.me_naverUserId ne null || member.me_kakaoUserId ne null}">
 					        <div class="form-group sns">
 							    <label for="me_social">연동된 SNS:</label>
 							    <div class="sns-accounts">
 							    	<c:if test="${member.me_naverUserId ne null}">
 								        <div class="sns-account">
 											<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" width="30"/>
-								            <a class="btn btn-sns-unlink" data-type="NAVER">
+								            <a class="btn btn-sns-unlink ml-1" data-type="NAVER">
 								                <span>해제</span>
 								            </a>
 								        </div>
@@ -98,7 +89,7 @@
 							    	<c:if test="${member.me_kakaoUserId ne null}">
 								        <div class="sns-account">
 								            <img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" width="30"/>
-								            <a class="btn btn-sns-unlink" data-type="KAKAO">
+								            <a class="btn btn-sns-unlink ml-1" data-type="KAKAO">
 								                <span>해제</span>
 								            </a>
 								        </div>
