@@ -6,6 +6,12 @@
 <html>
 <head>
 <title>예약회원 목록</title>
+	<style type="text/css">
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
+    </style>
 </head>
 <body>
 
@@ -20,8 +26,9 @@
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">예약회원 목록</h2>
-					<table class="table">
-						<thead>
+					<a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-danger btn-sm">뒤로</a>
+					<table class="table" id="table">
+						<thead id="thead">
 							<tr>
 								<th>회원명</th>
 								<th>전화번호</th>
@@ -30,7 +37,7 @@
 								<th>노쇼경고횟수</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach items="${memberList}" var="list">
 								<tr>
 									<td>${list.me_name}</td>
@@ -42,25 +49,32 @@
 									<td>${list.me_noshow}</td>
 								</tr>
 							</c:forEach>
-							<c:if test="${memberList.size() eq 0}">
-								<tr>
-									<th class="text-center" colspan="5">등록된 회원이 없습니다.</th>
-								</tr>
-							</c:if>
 						</tbody>
 					</table>
-					<c:url var="url" value="/admin/schedule/list">
-						<c:param name="view" value="${view}"/>
-						<c:param name="page" value="${cri.page}"/>
-						<c:param name="type" value="${cri.type}"/>
-						<c:param name="search" value="${cri.search}"/>
-					</c:url>
-					<a href="${url}" class="btn btn-outline-info">목록</a>
 	                
 	            </div>
 	        </main>
 	    </div>
 	</div>
+	
+	<script type="text/javascript">
+		// 데이터테이블
+		$('#table').DataTable({
+			language: {
+		        search: "",
+		        searchPlaceholder: "검색",
+		        zeroRecords: "",
+		        emptyTable: ""
+		    },
+			scrollY: 400,
+		    paging: false,
+		    info: false,
+		    order: [[ 0, "asc" ]],
+		    columnDefs: [
+		        { targets: [0, 1, 2, 3, 4], className: "align-content-center"}
+		    ]
+		});
+	</script>
 
 </body>
 </html>

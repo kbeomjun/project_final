@@ -6,6 +6,12 @@
 <html>
 <head>
 <title>직원 목록</title>
+	<style type="text/css">
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
+    </style>
 </head>
 <body>
 	
@@ -13,7 +19,7 @@
 	    <script type="text/javascript">
 	        alert("${msg}");
 	    </script>
-	</c:if>
+	</c:if>	
 	
 	<div class="container-fluid">
 	    <div class="row">
@@ -25,9 +31,12 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-					<h2 class="mt-3 mb-3">${pm.cri.br_name} 직원 목록</h2>
-					<table class="table text-center">
-						<thead>
+					<h2 class="mt-3 mb-3">${br_name} 직원 목록</h2>
+					<div>
+						<a href="<c:url value="/admin/employee/insert"/>" class="btn btn-outline-success btn-sm">직원등록</a>
+					</div>					
+					<table class="table text-center" id="table">
+						<thead id="thead">
 							<tr>
 								<th>직원번호</th>
 								<th>이름</th>
@@ -38,7 +47,7 @@
 								<th>상세</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach items="${employeeList}" var="em">
 								<tr>
 									<td>${em.em_num}</td>
@@ -50,63 +59,38 @@
 									</td>
 									<td>${em.em_position}</td>
 									<td>
-										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>">조회</a>
+										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn-outline-info btn-sm">조회</a>
 									</td>							
 								</tr>
 							</c:forEach>
-							<c:if test="${employeeList.size() eq 0}">
-								<tr>
-									<th class="text-center" colspan="7">등록된 직원이 없습니다.</th>
-								</tr>
-							</c:if>
 						</tbody>
 					</table>
 					
-					<c:if test="${pm.totalCount ne 0}">
-						<ul class="pagination justify-content-center">
-							<c:if test="${pm.prev}">
-								<c:url var="url" value="/admin/employee/list">
-									<c:param name="page" value="${pm.startPage - 1}"/>
-								</c:url>
-								<li class="page-item">
-									<a class="page-link" href="${url}">이전</a>
-								</li>
-							</c:if>
-							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<c:url var="url" value="/admin/employee/list">
-									<c:param name="page" value="${i}"/>
-								</c:url>
-								<c:choose>
-									<c:when test="${pm.cri.page eq i}">
-										<c:set var="active" value="active"/>
-									</c:when>
-									<c:otherwise>
-										<c:set var="active" value=""/>
-									</c:otherwise>
-								</c:choose>
-								<li class="page-item ${active}">
-									<a class="page-link" href="${url}">${i}</a>
-								</li>
-							</c:forEach>
-							<c:if test="${pm.next}">
-								<c:url var="url" value="/admin/employee/list">
-									<c:param name="page" value="${pm.endPage + 1}"/>
-								</c:url>
-								<li class="page-item">
-									<a class="page-link" href="${url}">다음</a>
-								</li>
-							</c:if>
-						</ul>
-					</c:if>
-					
-					<div class="text-right mb-3">
-						<a href="<c:url value="/admin/employee/insert"/>" class="btn btn-outline-success btn-sm">직원등록</a>
-					</div>
-	                
 	            </div>
 	        </main>
 	    </div>
 	</div>	
+
+	<script type="text/javascript">
+		// 데이터테이블
+		$('#table').DataTable({
+			language: {
+		        search: "",
+		        searchPlaceholder: "검색",
+		        zeroRecords: "",
+		        emptyTable: "",
+		        lengthMenu: ""
+		    },
+			scrollY: 500,
+		    pageLength: 10,
+		    info: false,
+		    order: [[ 0, "asc" ]],
+		    columnDefs: [
+		    	{ targets: [6], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+		    ]
+		});
+	</script>
 
 </body>
 </html>

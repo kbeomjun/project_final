@@ -52,6 +52,10 @@
 	<update id="updateBranchProgram">
 		update branch_program set bp_total = #{bp_total} where bp_num = #{bp_num}
 	</update>
+		
+	<select id="selectProgramReservationCount" resultType="int">
+		select count(*) from branch_program_schedule where bs_bp_num = #{bp_num} and bs_start > now() and bs_current > 0;
+	</select>
 
 	<delete id="deleteBranchProgram">
 		delete from branch_program where bp_num = #{bp_num}
@@ -67,58 +71,24 @@
 		join
 			employee on bp_em_num = em_num
 		where
-			bp_br_name = #{cri.br_name}
+			bp_br_name = #{br_name}
 			<if test="view == 'present'">
 				and bs_start > now()
 			</if>
 			<if test="view == 'past'">
 				and now() > bs_end
 			</if>
-			<choose>
-				<when test="cri.type == 'program'">
-					and bp_sp_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'trainer'">
-					and em_name like concat('%', #{cri.search},'%')
-				</when>
-			</choose>	
-		<if test="view == 'present'">
-			order by
-				bs_start
-		</if>
-		<if test="view == 'past'">
-			order by
-				bs_end desc
-		</if>
-		limit
-			#{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
-	<select id="selectScheduleTotalCount" resultType="int">
+	<select id="selectBranchProgramInSchedule" resultType="BranchProgramVO">
 		select
-			count(*)  
-		from 
-			branch_program_schedule
+			*
+		from
+			branch_program
 		join
-			branch_program on bp_num = bs_bp_num
-		join
-			employee on bp_em_num = em_num
+			branch_program_schedule on bs_bp_num = bp_num
 		where
-			bp_br_name = #{cri.br_name}
-			<if test="view == 'present'">
-				and bs_start > now()
-			</if>
-			<if test="view == 'past'">
-				and now() > bs_end
-			</if>
-			<choose>
-				<when test="cri.type == 'program'">
-				and bp_sp_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'trainer'">
-				and em_name like concat('%', #{cri.search},'%')
-				</when>
-			</choose>
+			bs_num = #{bs_num}
 	</select>
 	
 	<select id="selectScheduleMemberList" resultType="MemberVO">
@@ -132,34 +102,12 @@
 			pr_bs_num = #{bs_num} 
 	</select>
 	
-	<select id="selectMemberList" resultType="MemberVO">
+	<select id="selectMemberListInUser" resultType="MemberVO">
 		select * from member where me_authority = 'user'
 	</select>
 	
-	<select id="selectMemberListWithPagination" resultType="MemberVO">
-		select 
-			* 
-		from 
-			member 
-		where 
-			me_authority = 'user'
-		and
-			me_name like concat('%', #{search},'%')
-		order by
-			me_name
-		limit
-			#{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectMemberTotalCount" resultType="int">
-		select 
-			count(*) 
-		from 
-			member 
-		where 
-			me_authority = 'user'
-		and
-			me_name like concat('%', #{search},'%')
+	<select id="selectMemberList" resultType="MemberVO">
+		select * from member where me_authority in('user', 'removed')
 	</select>
 	
 	<select id="selectSchedule" resultType="BranchProgramScheduleVO">
@@ -208,11 +156,7 @@
 	</delete>
 	
 	<select id="selectBranchOrderList" resultType="BranchOrderVO">
-		select * from branch_order where bo_br_name = #{br_name} order by bo_date desc limit #{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectOrderTotalCount" resultType="int">
-		select count(*) from branch_order where bo_br_name = #{br_name}
+		select * from branch_order where bo_br_name = #{br_name}
 	</select>
 	
 	<select id="selectEquipmentListInHQ" resultType="BranchStockDTO">
@@ -221,7 +165,7 @@
 		from 
 			branch_equipment_stock 
 		where 
-			be_br_name = '본점' 
+			be_br_name = '본사' 
 		group by 
 			be_se_name 
 		having 
@@ -233,17 +177,13 @@
 		values(#{bo_amount}, #{bo_br_name}, #{bo_se_name})
 	</insert>
 	
+	<select id="selectBranchOrder" resultType="BranchOrderVO">
+		select * from branch_order where bo_num = #{bo_num}
+	</select>
+	
 	<delete id="deleteOrder">
 		delete from branch_order where bo_num = #{bo_num}
 	</delete>
-	
-	<select id="selectEmployeeListByBranchWithPagination" resultType="EmployeeVO">
-		select * from Employee where em_br_name = #{br_name} order by em_num limit #{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectEmployeeByBranchTotalCount" resultType="int">
-		select count(*) from Employee where em_br_name = #{br_name}
-	</select>
 	
 	<select id="selectEmployeeList" resultType="EmployeeVO">
 		select * from employee order by em_num
@@ -350,9 +290,7 @@
 		from 
 			branch_equipment_stock 
 		where 
-			be_br_name = #{cri.br_name}
-		and
-			be_se_name like concat('%', #{cri.search},'%')
+			be_br_name = #{br_name}
 		group by 
 			be_se_name
 			<if test="view == 'all'">
@@ -360,49 +298,10 @@
 			</if>
 		having 
 			be_se_total >= 0
-		<if test="view == 'all'">		
-			order by
-				be_birth
-		</if>
-		limit
-			#{cri.pageStart}, #{cri.perPageNum}
-	</select>
-	
-	<select id="selectEquipmentListTotalCount" resultType="int">
-		select 
-			count(distinct be_se_name)
-		from 
-			branch_equipment_stock 
-		where 
-			be_br_name = #{cri.br_name}
-		and
-			be_se_name like concat('%', #{cri.search},'%')	
 	</select>
 	
 	<select id="selectEquipmentChangeInBranch" resultType="BranchEquipmentStockVO">
-		select
-			* 
-		from 
-			branch_equipment_stock 
-		where 
-			be_br_name = #{br_name} 
-		and
-			be_se_name like concat('%', #{search}, '%')
-		order by 
-			be_record desc 
-		limit 
-			#{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectEquipmentChangeTotalCount" resultType="int">
-		select
-			count(*)
-		from 
-			branch_equipment_stock 
-		where 
-			be_br_name = #{br_name} 
-		and
-			be_se_name like concat('%', #{search}, '%')
+		select * from branch_equipment_stock where be_br_name = #{br_name} 
 	</select>
 	
 	<select id="selectMemberInquiryList" resultType="MemberInquiryVO">

@@ -31,8 +31,8 @@
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${br_name} 문의내역</h2>
 			    	<div>
-				    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">대기</button>
-				    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">완료</button>
+				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-wait active" data-name="wait">대기</button>
+				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-done" data-name="done">완료</button>
 				    </div>
 				    <hr>
 			    	<div class="mt-3 box box-wait">
@@ -60,7 +60,7 @@
 						        		<td class="align-content-center">${mi.mi_it_name}</td>
 						        		<td class="align-content-center">${mi.mi_state}</td>
 						        		<td class="align-content-center">
-						        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
+						        			<button type="button" class="btn btn-outline-info btn-sm btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
 						        		</td>
 						      		</tr>
 					    		</c:forEach>
@@ -92,7 +92,7 @@
 						        		<td class="align-content-center">${mi.mi_it_name}</td>
 						        		<td class="align-content-center">${mi.mi_state}</td>
 						        		<td class="align-content-center">
-						        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+						        			<button type="button" class="btn btn-outline-info btn-sm btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 						        		</td>
 						      		</tr>
 					    		</c:forEach>
@@ -234,10 +234,11 @@
 			    search: "",
 			    searchPlaceholder: "검색",
 			    zeroRecords: "",
-			    emptyTable: ""
+			    emptyTable: "",
+			    lengthMenu: ""
 			},
-			scrollY: 600,
-		    paging: false,
+			scrollY: 500,
+		    pageLength: 10,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
@@ -262,10 +263,11 @@
 						search: "",
 						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: ""
+				        emptyTable: "",
+				        lengthMenu: ""
 				    },
-					scrollY: 600,
-				    paging: false,
+					scrollY: 500,
+				    pageLength: 10,
 				    info: false,
 				    order: [[ 0, "asc" ]],
 				    columnDefs: [
@@ -279,10 +281,11 @@
 						search: "",
 						searchPlaceholder: "검색",
 				        zeroRecords: "",
-				        emptyTable: ""
+				        emptyTable: "",
+				        lengthMenu: ""
 				    },
-					scrollY: 600,
-				    paging: false,
+					scrollY: 500,
+				    pageLength: 10,				        
 				    info: false,
 				    order: [[ 0, "desc" ]],
 				    columnDefs: [
