@@ -191,6 +191,7 @@ public class UserController {
             logger.info("DB에서 자동 로그인 정보 삭제 완료: 사용자 ID - " + user.getMe_id());
             // 세션에서 사용자 정보 제거 (로그아웃 처리)
             session.removeAttribute("user");
+            session.removeAttribute("socialType");
             logger.info("세션에서 사용자 정보 제거 완료");
         }
 

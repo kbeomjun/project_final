@@ -27,6 +27,12 @@
 			            </div>
 			            <button type="submit" class="btn btn-primary">확인</button>
 			        </form>
+			        <c:if test="${social_type ne null}">
+				        <form action="<c:url value='/mypage/socialcheck'/>" method="post">
+				            <button type="submit" class="btn btn-info mt-3">${social_type} 계정으로 계속하기</button>
+				        </form>
+			         
+			        </c:if>
 					
 	            </div>
 	        </main>

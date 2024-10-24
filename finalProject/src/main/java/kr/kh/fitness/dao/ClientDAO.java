@@ -87,4 +87,8 @@ public interface ClientDAO {
 
 	boolean updateMemberStatusToRemoved(MemberVO member);
 
+	MemberVO selectMemberFromSocial(@Param("user")MemberVO member, @Param("social_type")String social_type);
+
+	String selectSocialId(@Param("me_id")String me_id, @Param("social_type")String social_type);
+
 }

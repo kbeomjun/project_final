@@ -292,6 +292,12 @@ public class MypageController {
 	@GetMapping("/pwcheck")
 	public String mypagePwCheck(Model model, HttpSession session) {
 	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    String social_type = (String) session.getAttribute("socialType");
+	    if(social_type != null) {
+	    	String social_id = clientService.getSocial_id(user, social_type);
+	    	model.addAttribute("social_type", social_type);
+	    	model.addAttribute("social_id", social_id);
+	    }
 		model.addAttribute("me_id", user.getMe_id());
 		return "/mypage/pwCheck";
 	}
@@ -301,6 +307,24 @@ public class MypageController {
 	public String mypagePwCheckPost(Model model, HttpSession session, MemberVO member) {
 		
 		String msg = clientService.checkPassword(member);
+		if(msg == "") {
+			session.setAttribute("pwVerified", true);
+			return "redirect:/mypage/info";
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/mypage/pwCheck");
+			return "/main/message";
+		}
+	}
+	
+	// 소셜 정보로 비밀번호 확인 대체 post 
+	@PostMapping("/socialcheck")
+	public String mypageSocialCheck(Model model, HttpSession session) {
+		
+		String social_type = (String) session.getAttribute("socialType");
+		MemberVO member = (MemberVO) session.getAttribute("user");
+		
+		String msg = clientService.checkSocial(member, social_type);
 		if(msg == "") {
 			session.setAttribute("pwVerified", true);
 			return "redirect:/mypage/info";
