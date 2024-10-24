@@ -31,12 +31,7 @@
 							<input type="hidden" name="em_br_name" value="${em_br_name}">
 							<div class="form-group">
 								<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-								    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
-								    <div class="card-img-overlay d-flex flex-wrap align-items-center">
-									    <div class="mx-auto">
-									      	<label for="file" class="btn">사진등록</label>
-									    </div>
-								    </div>
+								    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
 							    </label>			
 								<input type="file" class="form-control" id="file" name="file" accept="image/*">
 							</div>
@@ -94,7 +89,12 @@
 								<input type="text" class="address-input" id="em_detailAddress" name="em_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
 								<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;">
 							</div>
-							<div class="error error-address"></div>			
+							<div class="error error-address"></div>	
+							<div class="form-group">
+								<label for="em_detail">직원설명:</label>
+								<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
+							</div>
+							<div class="error"></div>							
 							<div class="text-right mb-3">
 								<button type="submit" class="btn btn-outline-success col-12">직원 등록</button>
 							</div>
@@ -110,7 +110,34 @@
 	    </div>
 	</div>	
 
+	<script>
+		// 사진 파일
+		function displayFileList(file){
+			console.log(file);
+			$('.card').children().remove();
+			if(file.length > 0){
+				let fReader = new FileReader();
+			    fReader.readAsDataURL(file[0]);
+			    fReader.onloadend = function(event){
+			    	let path = event.target.result;
+			        img = `
+			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
+			        `;
+			        $('.card').append(img);
+			    }
+			}else{
+				let img = `
+					<img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
+				`;
+				$('.card').append(img);
+			}
+		}
 		
+		$(document).on("change", "#file", function(){
+			displayFileList($("#file")[0].files);
+		});
+    </script>
+    		
     <script type="text/javascript">
     	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
@@ -272,6 +299,14 @@
 	        }).open();
 	    }
     </script>		
+
+    <script type="text/javascript">
+    	// 썸머노트
+    	$('#em_detail').summernote({
+			  tabsize: 2,
+			  height: 350
+		});
+    </script>
 	
 </body>
 </html>

@@ -366,9 +366,10 @@ public class AdminController {
 	public String employeeInsert(Model model, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<SportsProgramVO> programList = adminService.getProgramList();
-		
+		EmployeeVO em = adminService.getEmployee(20000001);
 		model.addAttribute("em_br_name", user.getMe_name());
 		model.addAttribute("programList", programList);
+		model.addAttribute("em", em);
 		return "/admin/employee/insert";
 	}
 	
