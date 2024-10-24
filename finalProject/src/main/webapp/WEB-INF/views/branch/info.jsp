@@ -542,6 +542,9 @@ function MarkerTracker(map, target) {
 	
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 		
+		// 원래 위치 좌표 저장
+	    var originalPosition = new kakao.maps.LatLng(coord.lat, coord.lng);
+		
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);

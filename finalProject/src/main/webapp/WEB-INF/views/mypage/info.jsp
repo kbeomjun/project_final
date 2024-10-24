@@ -22,6 +22,47 @@
     display: flex;
     align-items: center; /* 각 아이콘과 버튼의 수직 정렬 */
 }
+
+.sns-account {
+    display: flex; /* Flexbox를 사용하여 수평 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.btn-sns-unlink {
+    background: url(//pics.gmarket.co.kr/pc/ko/net/myg/button/btn_gray_right.png) no-repeat right center;
+    background-size: 30px 22px; /* 가로폭 30px, 세로폭 22px 고정 */
+    height: 22px;
+    padding-right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.btn-sns-unlink span {
+    background: url(//pics.gmarket.co.kr/pc/ko/net/myg/button/btn_gray_left.png) no-repeat left center; /* 왼쪽 이미지 */
+    height: 22px; /* Span의 높이 */
+    color: rgb(68, 68, 68);
+    line-height: 22px;
+    letter-spacing: -1px;
+    padding-left: 9px; /* 왼쪽 여백 */
+    padding-right: 11px; /* 오른쪽 여백 */
+    font-size: 11px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* 오른쪽 이미지를 절대 좌표로 이동 */
+.btn-sns-unlink::after {
+    content: ''; /* 빈 콘텐츠 생성 */
+    background: url(//pics.gmarket.co.kr/pc/ko/net/myg/button/btn_gray_right.png); /* 오른쪽 이미지 */
+    background-size: 30px 20px; /* 가로폭 30px, 세로폭 22px 고정 */
+    position: absolute; /* 절대 위치 설정 */
+    height: 22px; /* 높이 고정 */
+    width: 30px; /* 가로폭 고정 */
+    right: 5px; /* 오른쪽으로 절대좌표 이동 (조정 가능) */
+    top: 50%; /* 수직 중앙 정렬 */
+    transform: translateY(-50%); /* 수직 중앙 정렬을 위한 변환 */
+}
 </style>
 </head>
 <body>

@@ -12,7 +12,6 @@
     background-color: #1EC800; 
     color: white;
 }
-
 .btn-kakao {
     background-color: #FEE500; 
     color: black; 
