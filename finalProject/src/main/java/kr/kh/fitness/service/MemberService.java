@@ -32,4 +32,6 @@ public interface MemberService {
 
 	void clearLoginCookie(String me_id);
 
+	void setAutoLoginCookie(MemberVO user, HttpServletResponse response);
+
 }

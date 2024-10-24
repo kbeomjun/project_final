@@ -1,8 +1,12 @@
 package kr.kh.fitness.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.fitness.dao.MemberDAO;
 import kr.kh.fitness.model.vo.MemberVO;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Service
 public class MemberServiceImp implements MemberService {
     
@@ -312,4 +318,35 @@ public class MemberServiceImp implements MemberService {
 	        return false; // 메일 전송 실패 시 false 반환
 	    }
 	}
+	
+	public void setAutoLoginCookie(MemberVO user, HttpServletResponse response) {
+		
+		// 고유한 토큰 생성 (UUID 사용)
+        String autoLoginToken = UUID.randomUUID().toString();
+        log.info("생성된 자동 로그인 토큰: " + autoLoginToken);
+
+        // 자동 로그인 유효 시간 설정 (현재 시간에서 7일 뒤로 설정)
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        Date limitDate = calendar.getTime();
+        user.setMe_limit(limitDate);
+        log.info("자동 로그인 유효 시간 설정: " + limitDate);
+
+        // 사용자 정보에 토큰 설정하고 DB 업데이트
+        user.setMe_cookie(autoLoginToken);
+        try {
+            updateMemberCookie(user);
+            log.info("DB에 자동 로그인 토큰과 유효 시간 업데이트 완료: 사용자 ID: " + user.getMe_id());
+        } catch (Exception e) {
+            log.error("DB 업데이트 중 오류 발생: ", e);
+        }
+
+        // 쿠키 생성 및 설정 (7일 동안 유지)
+        Cookie cookie = new Cookie("me_cookie", autoLoginToken);
+        cookie.setMaxAge(7 * 24 * 60 * 60); // 7일 동안 유지
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        log.info("자동 로그인 쿠키 설정 완료: 쿠키 이름 - me_cookie, 쿠키 값 - " + autoLoginToken);
+	}
+
 }

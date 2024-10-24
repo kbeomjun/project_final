@@ -469,7 +469,7 @@ public class MypageController {
 	
 	@PostMapping("/unlinkSNS")
     @ResponseBody
-    public boolean unlinkSNS(HttpSession session, @RequestParam("socialType") String social_type, RedirectAttributes redirectAttributes) {
+    public boolean unlinkSNS(HttpSession session, @RequestParam("socialType") String social_type) {
         try {
             MemberVO user = (MemberVO) session.getAttribute("user");
             
