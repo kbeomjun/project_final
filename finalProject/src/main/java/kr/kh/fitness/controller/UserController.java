@@ -1,11 +1,7 @@
 package kr.kh.fitness.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.Calendar;
@@ -32,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.kh.fitness.dao.MemberDAO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.service.SingleSignOnService;
 import kr.kh.fitness.service.MemberService;
@@ -52,8 +47,10 @@ public class UserController {
 	
 	@Autowired
 	private String naverClientId;
+	
 	@Autowired
 	private String naverClientSecret;
+	
 	@Autowired
 	private String naverCallbackUrl;
 
@@ -62,9 +59,6 @@ public class UserController {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
-
-	@Autowired
-	private MemberDAO memberDao;
 
 	@Autowired
 	private MemberService memberService;

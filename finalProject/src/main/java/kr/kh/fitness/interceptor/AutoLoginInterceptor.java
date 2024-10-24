@@ -48,7 +48,6 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
             cookie.setPath("/");
             response.addCookie(cookie);
         }
-
         return true;
     }
 }
