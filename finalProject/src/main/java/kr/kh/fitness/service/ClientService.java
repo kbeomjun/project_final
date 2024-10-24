@@ -89,4 +89,6 @@ public interface ClientService {
 
 	String checkSocial(MemberVO member, String social_type);
 
+	boolean unlinkSocialAccount(MemberVO user, String social_type);
+
 }

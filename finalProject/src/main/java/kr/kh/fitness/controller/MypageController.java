@@ -312,7 +312,7 @@ public class MypageController {
 			return "redirect:/mypage/info";
 		} else {
 			model.addAttribute("msg", msg);
-			model.addAttribute("url", "/mypage/pwCheck");
+			model.addAttribute("url", "/mypage/pwcheck");
 			return "/main/message";
 		}
 	}
@@ -330,7 +330,7 @@ public class MypageController {
 			return "redirect:/mypage/info";
 		} else {
 			model.addAttribute("msg", msg);
-			model.addAttribute("url", "/mypage/pwCheck");
+			model.addAttribute("url", "/mypage/pwcheck");
 			return "/main/message";
 		}
 	}
@@ -466,4 +466,30 @@ public class MypageController {
 		
 		return "/main/message";
 	}
+	
+	@PostMapping("/unlinkSNS")
+    @ResponseBody
+    public boolean unlinkSNS(HttpSession session, @RequestParam("socialType") String social_type, RedirectAttributes redirectAttributes) {
+        try {
+            MemberVO user = (MemberVO) session.getAttribute("user");
+            
+            boolean result = clientService.unlinkSocialAccount(user, social_type);
+            
+            if (result) {
+            	MemberVO updateUser = clientService.getMember(user.getMe_id());
+            	String currentSocial = (String) session.getAttribute("socialType");
+            	if(currentSocial.equals(social_type)) {
+            		session.removeAttribute("socialType");
+            	}
+            	session.removeAttribute("user");
+            	session.setAttribute("user", updateUser);
+                return true; // 성공 시
+            } else {
+                return false; // 실패 시
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // 예외 발생 시
+        }
+    }
 }

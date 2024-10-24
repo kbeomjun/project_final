@@ -402,4 +402,16 @@
 	    </if>
 	</select>
 	
+	<update id="updateSocialIdSetNull">
+		update member
+		set
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	me_kakaoUserId = null
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        me_naverUserId = null
+	    </if>
+	    where me_id = #{user.me_id}
+	</update>
+	
 </mapper>

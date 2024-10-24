@@ -91,4 +91,7 @@ public interface ClientDAO {
 
 	String selectSocialId(@Param("me_id")String me_id, @Param("social_type")String social_type);
 
+	int updateSocialIdSetNull(@Param("user")MemberVO user, @Param("social_type")String social_type);
+
+
 }

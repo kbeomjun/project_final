@@ -421,4 +421,16 @@ public class ClientServiceImp implements ClientService{
 		return "";
 	}
 
+	@Override
+	public boolean unlinkSocialAccount(MemberVO user, String social_type) {
+
+		if(user == null) {
+			return false;
+		}
+		if(social_type == null || social_type.trim().length() ==0) {
+			return false;
+		}
+		return clientDao.updateSocialIdSetNull(user,social_type)==1?true:false;
+	}
+
 }
