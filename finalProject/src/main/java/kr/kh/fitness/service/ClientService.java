@@ -85,4 +85,10 @@ public interface ClientService {
 
 	String removedMember(MemberVO member, String me_pw);
 
+	String getSocial_id(MemberVO user, String social_type);
+
+	String checkSocial(MemberVO member, String social_type);
+
+	boolean unlinkSocialAccount(MemberVO user, String social_type);
+
 }

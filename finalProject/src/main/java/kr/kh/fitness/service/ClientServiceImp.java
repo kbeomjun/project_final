@@ -387,4 +387,50 @@ public class ClientServiceImp implements ClientService{
 		return "";
 	}
 
+	@Override
+	public String getSocial_id(MemberVO user, String social_type) {
+		try {
+			return clientDao.selectSocialId(user.getMe_id(), social_type);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String checkSocial(MemberVO member, String social_type) {
+		
+		if(member == null) {
+			return "회원 정보가 없습니다.";
+		}
+		if(member.getMe_id() == null || member.getMe_id().trim().length() == 0) {
+			return "아이디가 존재하지 않습니다.";
+		}
+		if(social_type == null || social_type.trim().length() == 0) {
+			return "SNS 타입이 입력되지 않았습니다.";
+		}
+		MemberVO checkMember = clientDao.selectMemberFromSocial(member, social_type);
+		if(checkMember == null) {
+			return "연동된 SNS 계정이 존재하지 않습니다.";
+		}
+		
+//		if(checkMember.getMe_authority().equals("REMOVED")) {
+//			return "탈퇴한 계정에 접근하였습니다.";
+//		}
+		
+		return "";
+	}
+
+	@Override
+	public boolean unlinkSocialAccount(MemberVO user, String social_type) {
+
+		if(user == null) {
+			return false;
+		}
+		if(social_type == null || social_type.trim().length() ==0) {
+			return false;
+		}
+		return clientDao.updateSocialIdSetNull(user,social_type)==1?true:false;
+	}
+
 }

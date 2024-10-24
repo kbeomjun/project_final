@@ -106,7 +106,7 @@ public class UserController {
 //네이버 하고 정보변경 페이지에 연동
 	        try {
 	            // 로그인 서비스 호출
-	            MemberVO user = memberService.login(member, response);
+	            MemberVO user = memberService.login(member);
 	            if (user == null) {
 	                // 로그인 실패 원인에 대한 상세 로그 추가
 	                MemberVO dbUser = memberService.getMemberID(member.getMe_id());
@@ -191,6 +191,7 @@ public class UserController {
             logger.info("DB에서 자동 로그인 정보 삭제 완료: 사용자 ID - " + user.getMe_id());
             // 세션에서 사용자 정보 제거 (로그아웃 처리)
             session.removeAttribute("user");
+            session.removeAttribute("socialType");
             logger.info("세션에서 사용자 정보 제거 완료");
         }
 
@@ -324,7 +325,7 @@ public class UserController {
             @RequestParam(value = "phone") String phone,
             @RequestParam(value = "name") String name,
             Model model) {
-        log.info("/sso/join/redirect" + id);
+        log.info("/sso/join/redirect");
         
         // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
         model.addAttribute("socialType", socialType);
@@ -344,7 +345,7 @@ public class UserController {
 	        Model model) {
 		
 		log.info("/sso/joinRedirect - post");
-		System.out.println(socialUser);
+		
 	    // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
 	    model.addAttribute("socialType", socialType);
 	    model.addAttribute("socialUser", socialUser);
@@ -420,7 +421,6 @@ public class UserController {
 			@RequestParam("social_type") String social_type) {
 		log.info("/sso/match - POST");
 		 // token을 통해서 소셜 로그인 정보를 가져온다.
-		System.out.println(socialUser);
 		
 		boolean res= memberService.updateUserSocialAccount(social_type, socialUser);
 		
@@ -432,6 +432,40 @@ public class UserController {
 		}
 		model.addAttribute("url","/");
 	    return "/main/message";
+	}
+	
+	
+	
+	@PostMapping("/sso/match/login")
+	public String socialMatchLoginPost(
+			Model model, 
+			@ModelAttribute MemberVO socialUser, 
+			@RequestParam("social_type") String social_type) {
+		log.info("/sso/match/login - POST");
+		 // token을 통해서 소셜 로그인 정보를 가져온다.
+		
+		MemberVO user = memberService.login(socialUser);
+		if(user == null) {
+			model.addAttribute("msg","계정 연동에 실패하였습니다.\\n 아이디/패스워드가 일치하지 않습니다.");
+		}
+		else if(user.getMe_authority().equals("REMOVED")) {
+			
+			model.addAttribute("msg", "탈퇴한 회원입니다.");
+		} 
+		else {	
+			boolean res= memberService.updateUserSocialAccount(social_type, socialUser);
+			
+			if(res) {
+				model.addAttribute("msg","기존 계정과 연동이 완료되었습니다. \\n 로그인을 다시 해주세요.");
+				model.addAttribute("url","/login");
+				return "/main/message";
+			}
+			else {
+				model.addAttribute("msg","계정 연동에 실패하였습니다. \\n 연동 과정에서 오류가 발생했습니다 \\n 관리자 문의");
+			}
+		}
+		model.addAttribute("url","/");
+		return "/main/message";
 	}
 	
 	@GetMapping("/oauth/kakao")
@@ -466,13 +500,13 @@ public class UserController {
 	    }
 
 	    // 이메일로 사용자 정보 가져오기
-	    MemberVO user = singleSignOnService.getMemberInfoFromEmail(loginUser);
+	    MemberVO user = singleSignOnService.getMemberInfoFromSocial(socialType, loginUser);
 	    String loginUserId = getUserIdBySocialType(loginUser, socialType);
 	    String userId = getUserIdBySocialType(user, socialType);
 
 	    if (user != null) {
 	        if ("REMOVED".equals(user.getMe_authority())) {
-	            model.addAttribute("msg", "탈퇴한 회원입니다.");
+	            model.addAttribute("msg", "이미 탈퇴한 계정입니다.");
 	            model.addAttribute("url", "/login");
 	            return "/main/message";
 	        }
@@ -540,6 +574,6 @@ public class UserController {
 		        return "/main/message";
 		    }
 	}
-       
+	
     
 }
