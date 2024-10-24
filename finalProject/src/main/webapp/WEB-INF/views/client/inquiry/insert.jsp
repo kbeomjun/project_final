@@ -54,20 +54,47 @@
 						</div>
 						<div class="error error-content"></div>
 						<div class="form-group">
-							<label for="mi_email">이메일:</label>
+			                <label for="mi_email">이메일:</label>
 							<c:choose>
-								<c:when test="${user eq null}">
-									<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>	
-								</c:when>
 								<c:when test="${user ne null}">
 									<span>답변은 마이페이지에서 확인하실 수 있습니다.</span>
+									<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}" <c:if test="${user ne null}">readonly</c:if> >
+								</c:when>
+								<c:when test="${user eq null}">
+									<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>	
+					                <div style="display: flex; align-items: center;">
+					                    <input type="text" class="form-control" id="mi_emailId" name="mi_emailId" placeholder="이메일 아이디" style="flex: 6; margin-right: 10px;">
+					                    <span style="margin-right: 10px;">@</span>
+					                    <select class="form-control" id="mi_emailDomain" name="mi_emailDomain" style="flex: 4; margin-right: 10px;">
+					                        <option value="">선택</option>
+					                        <option value="naver.com">naver.com</option>
+					                        <option value="daum.net">daum.net</option>
+					                        <option value="google.com">google.com</option>
+					                        <option value="yahoo.com">yahoo.com</option>
+					                        <option value="custom">직접 입력</option>
+					                    </select>
+					                    <input type="text" class="form-control" id="mi_customEmailDomain" name="mi_customEmailDomain" placeholder="도메인 직접 입력" style="display: none; flex: 4;">
+					                </div>
 								</c:when>
 							</c:choose>
-							<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}" <c:if test="${user ne null}">readonly</c:if> >
-						</div>
-						<div class="error error-email"></div>
+			            </div>
+		            	<div style="display: flex;">
+							<div class="error error-emailId" style="flex: 24;"></div>
+				            <div class="error error-emailDomain" style="flex: 5;"></div>
+				            <div class="error error-customEmailDomain" style="flex: 11;"></div>
+			            </div>
 						
 						<div class="form-group">
+						    <div style="background-color: #f8f9fa; padding: 20px;">
+						        <input type="checkbox" id="privacyConsent" name="privacyConsent">
+						        <label for="privacyConsent">
+						            개인정보 수집·이용 동의 (필수)
+						        </label>
+						        <p>문의하신 내용에 대한 원인 파악 및 원활한 상담을 위하여 이메일을 수집합니다. 수집된 개인정보는 3년간 보관 후 파기됩니다.</p>
+						    </div>
+						</div>						
+						
+						<div class="form-group mt-3">
 							<button type="submit" class="btn btn-outline-info col-12">문의 등록</button>
 						</div>
 					</form>
@@ -80,6 +107,10 @@
     <script type="text/javascript">
     	// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
+		let msgEmailId = `<span>아이디가 올바르지 않습니다.</span>`;
+		let msgEmailDomain = `<span>도메인이 올바르지 않습니다.</span>`;
+		let regexEmailId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*$/;
+		let regexEmailDomain = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 		
 		
 		$('#mi_title').keyup(function(){
@@ -102,16 +133,20 @@
 			}
 		});
 	    
-		$('#mi_email').keyup(function(){
-			$('.error-email').children().remove();
+		
+		$('#mi_emailId').keyup(function(){
+			$('.error-emailId').children().remove();
 			
-			if($('#mi_email').val() == ''){
-				$('.error-email').append(msgRequired);
+			if($('#mi_emailId').val() == ''){
+				$('.error-emailId').append(msgRequired);
 			}else{
-				$('.error-email').children().remove();	
+				if(!regexEmailId.test($('#mi_emailId').val())){
+					$('.error-emailId').append(msgEmailId);
+				}else{
+					$('.error-emailId').children().remove();	
+				}
 			}
 		});
-		
 		
 		$('#form').submit(function(){
 			$('.error').children().remove();
@@ -129,15 +164,92 @@
 				flag = false;
 			}
 			
-			if($('#mi_email').val() == ''){
-				$('.error-email').append(msgRequired);
-				$('#mi_email').focus();
+			if($('#mi_emailId').val() == ''){
+				$('.error-emailId').append(msgRequired);
+				$('#mi_emailId').focus();
+				flag = false;
+			} else if(!regexEmailId.test($('#mi_emailId').val())){
+				$('.error-emailId').append(msgEmailId);
+				$('#mi_emailId').focus();
 				flag = false;
 			}
 			
+			if($('#mi_emailDomain').val() == ''){
+				$('.error-emailDomain').append(msgRequired);
+				flag = false;
+			}
+			
+			if($('#mi_emailDomain').val() == 'custom'){
+				if($('#mi_customEmailDomain').val() == ''){
+					$('.error-customEmailDomain').append(msgRequired);
+					$('#mi_customEmailDomain').focus();
+					flag = false;
+				} else if(!regexEmailDomain.test($('#mi_customEmailDomain').val())){
+					$('.error-customEmailDomain').append(msgEmailDomain);
+					$('#mi_customEmailDomain').focus();
+					flag = false;
+				}			
+			}
+			
+		    if (!$('#privacyConsent').is(':checked')) {
+		        alert('개인정보 수집 및 이용에 동의해 주세요.');
+		        flag = false;
+		    }			
+			
+		    if (flag) {
+		        combineEmail();
+		    } else {
+		        event.preventDefault();
+		    }
+			
 			return flag;
 		});
+		
+        // 이메일 도메인 선택 변경 시 처리
+       document.getElementById('mi_emailDomain').addEventListener('change', function() {
+    	   $('.error-emailDomain').children().remove();
+    	   $('.error-customEmailDomain').children().remove();
+           var customDomainInput = document.getElementById('mi_customEmailDomain');
+           if (this.value === 'custom') {
+               customDomainInput.style.display = 'block';
+               customDomainInput.required = true;
+               
+	   			$('#mi_customEmailDomain').off('keyup').on('keyup', function(){
+					$('.error-customEmailDomain').children().remove();
+					
+					if($('#mi_customEmailDomain').val() == ''){
+						$('.error-customEmailDomain').append(msgRequired);
+					}else{
+						if(!regexEmailDomain.test($('#mi_customEmailDomain').val())){
+							$('.error-customEmailDomain').append(msgEmailDomain);
+						}else{
+							$('.error-customEmailDomain').children().remove();	
+						}
+					}
+				});               
+           } else {
+               customDomainInput.style.display = 'none';
+               customDomainInput.value = '';
+               customDomainInput.required = false;
+               $('#mi_customEmailDomain').off('keyup');               
+           }
+       });
+
+       // 폼 제출 시 이메일을 하나의 필드로 결합하여 숨겨진 필드에 저장
+       function combineEmail() {
+           const emailId = document.getElementById("mi_emailId").value;
+           const emailDomain = document.getElementById("mi_emailDomain").value === 'custom' ? 
+                               document.getElementById("mi_customEmailDomain").value : 
+                               document.getElementById("mi_emailDomain").value;
+           console.log(document.getElementById("mi_emailDomain").value === 'custom')                    
+           const emailField = document.createElement("input");
+           emailField.setAttribute("type", "hidden");
+           emailField.setAttribute("name", "mi_email");
+           emailField.setAttribute("value", emailId + "@" + emailDomain);
+           document.getElementById("form").appendChild(emailField);
+       }
+
     </script>
-    
+        
 </body>
 </html>

@@ -191,11 +191,13 @@
 	
 	<insert id="insertEmployee">
 		insert into employee
-			(em_num, em_name, em_phone, em_email, em_gender, em_position, em_join, 
-				em_postcode, em_address, em_detailAddress, em_extraAddress, em_fi_name, em_br_name)
+			(em_num, em_name, em_phone, em_email, em_gender, em_position, 
+				em_join, em_postcode, em_address, em_detailAddress, em_extraAddress, 
+				em_fi_name, em_br_name, em_detail)
 		values
-			(#{em_num}, #{em_name}, #{em_phone}, #{em_email}, #{em_gender}, #{em_position}, current_timestamp(),
-				#{em_postcode}, #{em_address}, #{em_detailAddress}, #{em_extraAddress}, #{em_fi_name}, #{em_br_name})	
+			(#{em_num}, #{em_name}, #{em_phone}, #{em_email}, #{em_gender}, #{em_position},
+				current_timestamp(), #{em_postcode}, #{em_address}, #{em_detailAddress}, #{em_extraAddress},
+				#{em_fi_name}, #{em_br_name}, #{em_detail})	
 	</insert>
 	
 	<select id="selectEmployee" resultType="EmployeeVO">
@@ -217,7 +219,8 @@
 			em_address = #{em_address},
 			em_detailAddress = #{em_detailAddress},
 			em_extraAddress = #{em_extraAddress},
-			em_fi_name = #{em_fi_name}
+			em_fi_name = #{em_fi_name},
+			em_detail = #{em_detail}
 		where em_num = #{em_num};
 	</update>	
 	
