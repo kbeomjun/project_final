@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 public class MemberServiceImp implements MemberService {
     
-    @Autowired
+	@Autowired
     private MemberDAO memberDao;
     
     @Autowired

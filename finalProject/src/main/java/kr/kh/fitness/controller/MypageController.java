@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.pagination.Criteria;
 import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.ClientService;
+import kr.kh.fitness.service.MemberService;
+import kr.kh.fitness.service.MemberServiceImp;
 
 @Controller
 @RequestMapping("/mypage")
@@ -39,6 +43,11 @@ public class MypageController {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	
+	@Autowired
+	private MemberService memberService;
+	 
 	
 	//마이페이지 회원권 내역
 	@GetMapping("/membership")
@@ -399,7 +408,7 @@ public class MypageController {
 	
 	//마이페이지 비밀번호 변경 post
 	@PostMapping("/pwchange/update")
-	public String mypagePwChangePost(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id, HttpSession session) {
+	public String mypagePwChangePost(Model model, @RequestParam("current_pw") String currentPw, @RequestParam("new_pw") String newPw, @RequestParam("me_id") String me_id, HttpSession session, HttpServletResponse response) {
 
 		MemberVO member = clientService.getMember(me_id);
 	    
@@ -407,7 +416,15 @@ public class MypageController {
 		
 		if(msg == "") {
 			model.addAttribute("msg", "비밀번호가 성공적으로 변경되었습니다. 다시 로그인하시기 바랍니다.");
-			session.removeAttribute("user");
+			
+			memberService.clearLoginCookie(me_id);
+			// 로그아웃 시 쿠키 삭제
+	        Cookie cookie = new Cookie("me_cookie", null);
+	        cookie.setMaxAge(0); // 즉시 삭제
+	        cookie.setPath("/");
+	        response.addCookie(cookie);
+
+	        session.removeAttribute("user");
 			model.addAttribute("url", "/login");
 		} else {
 			model.addAttribute("msg", msg);
@@ -483,6 +500,9 @@ public class MypageController {
             	}
             	session.removeAttribute("user");
             	session.setAttribute("user", updateUser);
+            	
+            	String token = (String)session.getAttribute("access_token");
+            	
                 return true; // 성공 시
             } else {
                 return false; // 실패 시

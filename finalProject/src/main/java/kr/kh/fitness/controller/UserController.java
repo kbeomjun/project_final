@@ -485,6 +485,7 @@ public class UserController {
 	            	memberService.setAutoLoginCookie(user, response);
 	        		session.removeAttribute("socialAutoLogin");
 	        	}
+	        	session.setAttribute("access_token", token);
 	            session.setAttribute("user", user);
 	            session.setAttribute("socialType", socialType);
 	            model.addAttribute("msg", user.getMe_id() + "님 환영합니다 \\n(" + socialType + " 계정으로 로그인 했습니다.)");
