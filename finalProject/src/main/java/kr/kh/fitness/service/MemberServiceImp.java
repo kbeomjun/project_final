@@ -28,7 +28,7 @@ public class MemberServiceImp implements MemberService {
 
     // 로그인 처리
     @Override
-    public MemberVO login(MemberVO member, HttpServletResponse response) {
+    public MemberVO login(MemberVO member) {
         if (member == null || member.getMe_id() == null || member.getMe_pw() == null) {
             return null; // 입력된 회원 정보가 없거나 아이디, 비밀번호가 null인 경우 로그인 실패
         }
@@ -155,7 +155,7 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public boolean updateUserSocialAccount(String social_type, MemberVO socialUser) {
-		System.out.println(social_type);
+
 		// 기본 정보 DB에 등록.
 		if(socialUser.getMe_gender() !=null && socialUser.getMe_gender().equals("null")){
 			socialUser.setMe_gender(null);

@@ -11,10 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>스케줄 등록</title>
 <style type="text/css">
+
 	table {
 		width: 100%;
 		border-collapse: collapse;
 		margin-top: 10px;
+    	table-layout: auto;
 	}
    	#thead th{text-align: center;}
    	#tbody td{text-align: center;}
@@ -183,16 +185,16 @@
 	    </div>
 	</div>
 
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 		// 데이터테이블
-		$('#table').DataTable({
+		var table = $('#table').DataTable({
 			language: {
 		        search: "",
 		        searchPlaceholder: "검색",
 		        zeroRecords: "",
 		        emptyTable: "",
 		    },
-			scrollY: 200,
+		    scrollY: 200,
 		    paging: false,
 		    info: false,
 		    order: [[ 1, "asc" ]],
@@ -202,8 +204,36 @@
 		    ],
 		    autoWidth: false
 		});
-	</script>
-
+	</script> -->
+	
+<script type="text/javascript">
+    // 데이터테이블 초기화
+    var table = null;
+    
+    function initializeTable() {
+        if (!$.fn.DataTable.isDataTable('#table')) {
+            table = $('#table').DataTable({
+                language: {
+                    search: "",
+                    searchPlaceholder: "검색",
+                    zeroRecords: "",
+                    emptyTable: "",
+                },
+                scrollY: 200,
+                paging: false,
+                info: false,
+                order: [[1, "asc"]],
+                columnDefs: [
+                    { targets: [0], orderable: false },
+                    { targets: [0, 1, 2, 3], className: "align-content-center" }
+                ]
+            });
+        } else {
+            // 이미 테이블이 초기화된 상태라면 크기 조정만
+            table.columns.adjust().draw();
+        }
+    }
+</script>
 <script type="text/javascript">
 	
 	// 현재 날짜 가져오기
@@ -248,6 +278,7 @@
         document.getElementById('endDate').value = startDateValue;
     });
 </script>
+
 <script>
 		
 	// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
@@ -286,6 +317,9 @@
 		
 		// 프로그램 변경 시 모든 입력 초기화.
 	    resetInputs();
+		
+		// 테이블 초기화 또는 크기 조정
+        initializeTable();
 		
 	});		
 	

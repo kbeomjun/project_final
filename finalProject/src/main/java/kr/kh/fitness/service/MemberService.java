@@ -6,7 +6,7 @@ import kr.kh.fitness.model.vo.MemberVO;
 
 public interface MemberService {
 
-	MemberVO login(MemberVO member, HttpServletResponse response);
+	MemberVO login(MemberVO member);
 
 	boolean signup(MemberVO member);
 

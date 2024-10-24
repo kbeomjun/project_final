@@ -13,10 +13,10 @@ public interface SingleSignOnService {
 
 	boolean isValidSocialName(String social_type);
 
-	MemberVO getMemberInfoFromEmail(MemberVO loginUser);
-
 	String getAccessTokenFromNaver(String code, String state, String naverClientId, String naverClientSecret);
 
 	MemberVO getUserInfoFromNaverToken(String token);
+
+	MemberVO getMemberInfoFromSocial(String socialType, MemberVO loginUser);
 	
 }
