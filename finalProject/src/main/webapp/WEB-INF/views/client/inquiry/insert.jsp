@@ -63,7 +63,7 @@
 								<c:when test="${user eq null}">
 									<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>	
 					                <div style="display: flex; align-items: center;">
-					                    <input type="text" class="form-control" id="mi_emailId" name="mi_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
+					                    <input type="text" class="form-control" id="mi_emailId" name="mi_emailId" placeholder="이메일 아이디" style="flex: 6; margin-right: 10px;">
 					                    <span style="margin-right: 10px;">@</span>
 					                    <select class="form-control" id="mi_emailDomain" name="mi_emailDomain" style="flex: 4; margin-right: 10px;">
 					                        <option value="">선택</option>
@@ -85,6 +85,16 @@
 			            </div>
 						
 						<div class="form-group">
+						    <div style="background-color: #f8f9fa; padding: 20px;">
+						        <input type="checkbox" id="privacyConsent" name="privacyConsent">
+						        <label for="privacyConsent">
+						            개인정보 수집·이용 동의 (필수)
+						        </label>
+						        <p>문의하신 내용에 대한 원인 파악 및 원활한 상담을 위하여 이메일을 수집합니다. 수집된 개인정보는 3년간 보관 후 파기됩니다.</p>
+						    </div>
+						</div>						
+						
+						<div class="form-group mt-3">
 							<button type="submit" class="btn btn-outline-info col-12">문의 등록</button>
 						</div>
 					</form>
@@ -180,6 +190,11 @@
 					flag = false;
 				}			
 			}
+			
+		    if (!$('#privacyConsent').is(':checked')) {
+		        alert('개인정보 수집 및 이용에 동의해 주세요.');
+		        flag = false;
+		    }			
 			
 		    if (flag) {
 		        combineEmail();
