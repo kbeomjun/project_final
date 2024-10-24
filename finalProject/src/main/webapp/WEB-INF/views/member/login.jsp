@@ -92,6 +92,18 @@
     $(document).ready(function(){
         Kakao.init('${kakaoApiKey}');
         Kakao.isInitialized();
+        
+        $('#autologin').change(function() {
+        	var isChecked = $(this).is(':checked') ? 1 : 0; 
+            
+            $.ajax({
+                url: '<c:url value="/oauth/autoLogin"/>',
+                type: 'POST',
+                data: {
+                	autoLogin: isChecked
+                }
+            });
+        });
     });
 
     function loginWithKakao() {
