@@ -53,35 +53,30 @@
 							<textarea class="form-control" id="mi_content" name="mi_content" style="min-height: 400px; height:auto" placeholder="내용을 입력하세요."></textarea>
 						</div>
 						<div class="error error-content"></div>
-						<!-- 
-						<div class="form-group">
-							<label for="mi_email">이메일:</label>
-							<c:choose>
-								<c:when test="${user eq null}">
-									<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>	
-								</c:when>
-								<c:when test="${user ne null}">
-									<span>답변은 마이페이지에서 확인하실 수 있습니다.</span>
-								</c:when>
-							</c:choose>
-							<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}" <c:if test="${user ne null}">readonly</c:if> >
-						</div>
-						 -->
 						<div class="form-group">
 			                <label for="mi_email">이메일:</label>
-			                <div style="display: flex; align-items: center;">
-			                    <input type="text" class="form-control" id="mi_emailId" name="mi_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
-			                    <span style="margin-right: 10px;">@</span>
-			                    <select class="form-control" id="mi_emailDomain" name="mi_emailDomain" style="flex: 4; margin-right: 10px;">
-			                        <option value="">선택</option>
-			                        <option value="naver.com">naver.com</option>
-			                        <option value="daum.net">daum.net</option>
-			                        <option value="google.com">google.com</option>
-			                        <option value="yahoo.com">yahoo.com</option>
-			                        <option value="custom">직접 입력</option>
-			                    </select>
-			                    <input type="text" class="form-control" id="mi_customEmailDomain" name="mi_customEmailDomain" placeholder="도메인 직접 입력" style="display: none; flex: 4;">
-			                </div>
+							<c:choose>
+								<c:when test="${user ne null}">
+									<span>답변은 마이페이지에서 확인하실 수 있습니다.</span>
+									<input type="email" class="form-control" id="mi_email" name="mi_email" placeholder="이메일을 입력하세요." value="${user.me_email}" <c:if test="${user ne null}">readonly</c:if> >
+								</c:when>
+								<c:when test="${user eq null}">
+									<span>답변은 이메일을 통해 받아보실 수 있습니다. </span>	
+					                <div style="display: flex; align-items: center;">
+					                    <input type="text" class="form-control" id="mi_emailId" name="mi_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
+					                    <span style="margin-right: 10px;">@</span>
+					                    <select class="form-control" id="mi_emailDomain" name="mi_emailDomain" style="flex: 4; margin-right: 10px;">
+					                        <option value="">선택</option>
+					                        <option value="naver.com">naver.com</option>
+					                        <option value="daum.net">daum.net</option>
+					                        <option value="google.com">google.com</option>
+					                        <option value="yahoo.com">yahoo.com</option>
+					                        <option value="custom">직접 입력</option>
+					                    </select>
+					                    <input type="text" class="form-control" id="mi_customEmailDomain" name="mi_customEmailDomain" placeholder="도메인 직접 입력" style="display: none; flex: 4;">
+					                </div>
+								</c:when>
+							</c:choose>
 			            </div>
 		            	<div style="display: flex;">
 							<div class="error error-emailId" style="flex: 24;"></div>
