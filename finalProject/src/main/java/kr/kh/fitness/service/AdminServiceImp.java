@@ -15,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,10 +41,12 @@ public class AdminServiceImp implements AdminService{
 	
 	@Autowired
 	private AdminDAO adminDao;
+	@Autowired
+	private JavaMailSender mailSender;
 	@Resource
 	String uploadPath;
 	@Autowired
-	private JavaMailSender mailSender;
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public List<BranchProgramDTO> getBranchProgramList(String br_name) {
@@ -388,7 +391,10 @@ public class AdminServiceImp implements AdminService{
 			uploadFile(file, branch.getBr_name());
 		}
 		
+		String encPw = passwordEncoder.encode(admin.getMe_pw());
+		
 		admin.setMe_phone(branch.getBr_phone());
+		admin.setMe_pw(encPw);
 		if(!adminDao.updateAdmin(admin)) {
 			msg = "관리자 정보를 수정하지 못했습니다.";
 		}

@@ -69,6 +69,8 @@
 			scrollY: 400,
 		    paging: false,
 		    info: false,
+		    stateSave: true,
+		    stateDuration: 300,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
 		        { targets: [0, 1, 2, 3, 4], className: "align-content-center"}

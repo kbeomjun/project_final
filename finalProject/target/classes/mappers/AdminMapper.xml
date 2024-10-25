@@ -251,7 +251,7 @@
 	</select>
 	
 	<select id="selectAdmin" resultType="MemberVO">
-		select * from member join branch on me_name = br_name where me_name = #{br_name}; 
+		select * from member join branch on me_name = br_name where me_name = #{br_name} and me_authority = "BRADMIN"; 
 	</select>
 	
 	<update id="updateBranch">

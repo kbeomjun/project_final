@@ -73,9 +73,19 @@
 		        emptyTable: "",
 		        lengthMenu: ""
 		    },
+		    createdRow: function(row, data, dataIndex) {
+		        if (data[2] < 0) {
+		        	$('td', row).eq(2).css('color', 'red');
+		        }
+		        if (data[2] > 0) {
+		        	$('td', row).eq(2).css('color', 'green');
+		        }
+		    },
 			scrollY: 500,
 		    pageLength: 10,
 		    info: false,
+		    stateSave: true,
+		    stateDuration: 300,
 		    order: [[ 3, "desc" ]],
 		    columnDefs: [
 		        { targets: [0, 1, 2, 3, 4], className: "align-content-center"}
