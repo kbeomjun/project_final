@@ -29,8 +29,6 @@ import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
-import kr.kh.fitness.pagination.Criteria;
-import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.ClientService;
 
 @Controller
@@ -42,21 +40,17 @@ public class MypageController {
 	
 	//마이페이지 회원권 내역
 	@GetMapping("/membership")
-	public String mypageMembership(Model model, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mypageMembership(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 
-		cri.setPerPageNum(5);
-		
-		List<PaymentVO> paymentList = clientService.getPaymentList(user.getMe_id(), cri);
-		PageMaker pm = clientService.getPageMakerInMemberShip(user.getMe_id(), cri);
+		List<PaymentVO> paymentList = clientService.getPaymentList(user.getMe_id());
 		
 		MembershipDTO currentMembership = clientService.getCurrentMembership(user.getMe_id());
 		MembershipDTO currentPT = clientService.getCurrentPT(user.getMe_id());
 		
 		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("paymentList", paymentList);
-		model.addAttribute("pm", pm);
 		model.addAttribute("currentMembership", currentMembership);
 		model.addAttribute("currentPT", currentPT);
 		
@@ -64,9 +58,8 @@ public class MypageController {
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 get
-	@GetMapping("/review/insert/{pa_num}/{page}")
-	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, @PathVariable("page")int page,
-										HttpSession session, RedirectAttributes redirectAttributes) {
+	@GetMapping("/review/insert/{pa_num}")
+	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    PaymentVO payment = clientService.getpayment(pa_num);
@@ -80,21 +73,20 @@ public class MypageController {
 		
 		model.addAttribute("pa_num", pa_num);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("page", page);
 		model.addAttribute("branchList", branchList);
 		return "/mypage/review/insert";
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 post
 	@PostMapping("/review/insert")
-	public String mypageReviewInsertPost(Model model, ReviewPostVO review, String me_id, int page) {
+	public String mypageReviewInsertPost(Model model, ReviewPostVO review, String me_id) {
 		
 		String msg = clientService.insertReviewPost(review);
 		
 		if(msg == "") {
-			model.addAttribute("url", "/mypage/membership?page=" + page);
+			model.addAttribute("url", "/mypage/membership");
 		} else {
-			model.addAttribute("url", "/mypage/review/insert/" + review.getRp_pa_num() + "/" + page);
+			model.addAttribute("url", "/mypage/review/insert/" + review.getRp_pa_num());
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";

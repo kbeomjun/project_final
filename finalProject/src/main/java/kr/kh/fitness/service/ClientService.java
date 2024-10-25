@@ -53,9 +53,7 @@ public interface ClientService {
 
 	void updateScheduleCurrent(int bs_num);
 
-	List<PaymentVO> getPaymentList(String me_id, Criteria cri);
-
-	PageMaker getPageMakerInMemberShip(String me_id, Criteria cri);
+	List<PaymentVO> getPaymentList(String me_id);
 
 	MembershipDTO getCurrentMembership(String me_id);
 

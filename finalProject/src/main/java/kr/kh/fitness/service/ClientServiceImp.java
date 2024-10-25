@@ -174,26 +174,11 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<PaymentVO> getPaymentList(String me_id, Criteria cri) {
+	public List<PaymentVO> getPaymentList(String me_id) {
 		if(me_id == null) {
 			return null;
 		}
-		if(cri == null) {
-			return null;
-		}
-		return clientDao.selectPaymentList(me_id, cri);
-	}
-
-	@Override
-	public PageMaker getPageMakerInMemberShip(String me_id, Criteria cri) {
-		if(me_id == null) {
-			return null;
-		}
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = clientDao.selectPaymentTotalCount(me_id);
-		return new PageMaker(3, cri, totalCount);
+		return clientDao.selectPaymentList(me_id);
 	}
 
 	@Override

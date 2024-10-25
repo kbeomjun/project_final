@@ -55,9 +55,7 @@ public interface ClientDAO {
 
 	void updateScheduleCurrent(int bs_num);
 
-	List<PaymentVO> selectPaymentList(@Param("me_id")String me_id, @Param("cri")Criteria cri);
-
-	int selectPaymentTotalCount(String me_id);
+	List<PaymentVO> selectPaymentList(String me_id);
 
 	MembershipDTO selectCurrentMembership(String me_id);
 
