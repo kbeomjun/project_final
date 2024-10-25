@@ -96,12 +96,12 @@
 							</div>
 							<div class="error error-address"></div>			
 							<div class="text-right mb-3">
-								<button type="submit" class="btn btn-outline-success">직원 등록</button>
+								<button type="submit" class="btn btn-outline-success col-12">직원 등록</button>
 							</div>
 						</form>
 						<hr>
 						<div class="text-right mb-3">
-							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger">취소</a>
+							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
 						</div>
 					</div>
 	                

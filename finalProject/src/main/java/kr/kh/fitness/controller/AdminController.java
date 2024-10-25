@@ -298,26 +298,15 @@ public class AdminController {
 		String br_name = user.getMe_name();
 		
 		List<BranchOrderVO> orderList = adminService.getBranchOrderList(br_name);
-		
-		model.addAttribute("orderList", orderList);
-		model.addAttribute("br_name", br_name);
-		return "/admin/order/list";
-	}
-	
-	//지점 발주 등록 get
-	@GetMapping("/order/insert")
-	public String orderInsert(Model model, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		String br_name = user.getMe_name();
-		
 		List<BranchStockDTO> equipmentList = adminService.getEquipmentListInHQ();
 		
+		model.addAttribute("orderList", orderList);
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
 		
-		return "/admin/order/insert";
+		return "/admin/order/list";
 	}
-	
+
 	//지점 발주 등록 post
 	@PostMapping("/order/insert")
 	public String orderInsertPost(Model model, BranchOrderVO order, String bo_other) {

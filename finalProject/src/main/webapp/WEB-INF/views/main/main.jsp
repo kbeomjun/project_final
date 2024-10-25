@@ -25,16 +25,8 @@
 						</div>
 					</div>
 					<div class="progress-box">
-						<div class="swiper-button-next">
-							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 39 71" height="56" width="28">
-								<polyline points="2,0.7 37.8,35.5 2,70.3 " style="fill:none; stroke:#FFFFFF; stroke-width: 2px; stroke-opacity: 1;"/>
-							</svg>
-						</div>
-						<div class="swiper-button-prev">
-							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 39 71" style="enable-background:new 0 0 39 71" height="56" width="28">
-								<polyline points="37.8,70.3 2,35.5 37.8,0.7 " style="fill:none; stroke:#FFFFFF; stroke-width: 2px; stroke-opacity: 1;"/>
-							</svg>
-						</div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
 						<div class="swiper-pagination"></div>
 						<div class="autoplay-progress">
 							<svg viewBox="0 0 100 10">

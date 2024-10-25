@@ -131,8 +131,6 @@ public class HQServiceImp implements HQService {
 			if(file.getSize() != 0) {uploadBranchFile(file, branch.getBr_name());}
 		}
 		
-		String encPw = passwordEncoder.encode(admin.getMe_pw());
-		admin.setMe_pw(encPw);
 		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		admin.setMe_address(branch.getBr_address());

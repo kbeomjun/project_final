@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <title>로그인</title>
 <!-- Bootstrap CSS 추가 -->
@@ -33,14 +30,13 @@
 		    cursor: pointer;
 		}
     </style>
-</head>
-<body class="bg-light">
-	<div class="container mt-5">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
+<title>로그인</title>
+
+		<div class="login_wrap">
+			<div class="">
 				<!-- Card를 사용하여 로그인 폼을 감쌈 -->
-				<div class="card shadow-lg">
-					<div class="card-header bg-success text-white text-center">
+				<div class="">
+					<div class="">
 						<h2>로그인</h2>
 					</div>
 					<div class="card-body">

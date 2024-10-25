@@ -503,7 +503,7 @@
 		result = calculateExpirationDate("2024-10-31", 3);
 		console.log("계산된 만료일:", result); // "2024-11-30"로 예상
 
-		result = calculateExpirationDate("2025-01-31", 3);
+		result = calculateExpirationDate("2025-03-31", 1);
 		console.log("계산된 만료일:", result); // 3달 뒤 "2025-04-30"로 예상
 
 		

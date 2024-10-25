@@ -156,7 +156,7 @@
 							<table class="table text-center" id="table">
 								<thead id="thead">
 									<tr>
-										<th>상태</th>
+										<th></th>
 										<th>회원 이름</th>
 										<th>번호</th>
 										<th>이메일</th>
@@ -176,64 +176,15 @@
 								</tbody>
 							</table>
 						</div>	
-						<hr>
 						<button type="submit" class="btn btn-outline-success col-12">등록</button>
 					</form>
-	                
+					<hr>
+	                <a href="<c:url value="/admin/schedule/list"/>" class="btn btn-outline-danger col-12">취소</a>
 	            </div>
 	        </main>
 	    </div>
 	</div>
 
-<!-- 	<script type="text/javascript">
-		// 데이터테이블
-		var table = $('#table').DataTable({
-			language: {
-		        search: "",
-		        searchPlaceholder: "검색",
-		        zeroRecords: "",
-		        emptyTable: "",
-		    },
-		    scrollY: 200,
-		    paging: false,
-		    info: false,
-		    order: [[ 1, "asc" ]],
-		    columnDefs: [
-		        { targets: [0], orderable: false },
-		        { targets: [0, 1, 2, 3], className: "align-content-center"}
-		    ],
-		    autoWidth: false
-		});
-	</script> -->
-	
-<script type="text/javascript">
-    // 데이터테이블 초기화
-    var table = null;
-    
-    function initializeTable() {
-        if (!$.fn.DataTable.isDataTable('#table')) {
-            table = $('#table').DataTable({
-                language: {
-                    search: "",
-                    searchPlaceholder: "검색",
-                    zeroRecords: "",
-                    emptyTable: "",
-                },
-                scrollY: 200,
-                paging: false,
-                info: false,
-                order: [[1, "asc"]],
-                columnDefs: [
-                    { targets: [0], orderable: false },
-                    { targets: [0, 1, 2, 3], className: "align-content-center" }
-                ]
-            });
-        } else {
-            // 이미 테이블이 초기화된 상태라면 크기 조정만
-            table.columns.adjust().draw();
-        }
-    }
-</script>
 <script type="text/javascript">
 	
 	// 현재 날짜 가져오기
@@ -281,6 +232,8 @@
 
 <script>
 		
+	var table = null;	
+
 	// 프로그램 선택 시 테이블 표시 및 hiddenMeId 값 설정
 	document.getElementById('programSelect').addEventListener('change', function() {
 		var selectedOption = this.options[this.selectedIndex];
@@ -299,10 +252,32 @@
 		// 현재 시간을 불러옴
 	    const currentHour = today.getHours();
 		
+	    // 기존 테이블이 초기화되어 있는지 확인하고 초기화된 경우 destroy() 호출
+	    if ($.fn.DataTable.isDataTable('#table')) {
+	        table.destroy(); // 테이블이 이미 초기화된 경우 파괴
+	    }		
+		
 		// 선택한 프로그램에 따른 UI 변경
 	    if (spType === '단일') {
 	        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], true);
 	        toggleVisibility(['start-date-form', 'end-date-form', 'program-time-table', 'weeks-program-table'], false);
+			
+	        table = $('#table').DataTable({
+				language: {
+			        search: "",
+			        searchPlaceholder: "검색",
+			        zeroRecords: "",
+			        emptyTable: "",
+			    },
+				scrollY: 200,
+			    paging: false,
+			    info: false,
+			    order: [[ 1, "asc" ]],
+			    columnDefs: [
+			        { targets: [0], orderable: false },
+			        { targets: [0, 1, 2, 3], className: "align-content-center"}
+			    ]
+			});
 	        
 	        if (document.getElementById('selectDate').value === currentDate) {
 	            toggleHourCheckboxes('radio', currentHour);
