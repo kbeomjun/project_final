@@ -273,10 +273,9 @@
 	<update id="updateAdmin">
 		update member set
 			me_pw = #{me_pw},
-			me_email = #{me_email},
 			me_phone = #{me_phone}
 		where 
-			me_name = #{me_name};
+			me_id = #{me_id};
 	</update>
 	
 	<insert id="insertBranchFile">

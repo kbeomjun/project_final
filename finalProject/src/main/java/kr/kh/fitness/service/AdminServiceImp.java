@@ -388,7 +388,6 @@ public class AdminServiceImp implements AdminService{
 			uploadFile(file, branch.getBr_name());
 		}
 		
-		admin.setMe_name(branch.getBr_name());
 		admin.setMe_phone(branch.getBr_phone());
 		if(!adminDao.updateAdmin(admin)) {
 			msg = "관리자 정보를 수정하지 못했습니다.";
