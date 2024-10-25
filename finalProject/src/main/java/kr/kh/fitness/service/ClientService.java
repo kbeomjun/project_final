@@ -45,9 +45,7 @@ public interface ClientService {
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);
 
-	List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri);
-
-	PageMaker getPageMakerInSchedule(String view, String me_id, Criteria cri);
+	List<BranchProgramScheduleVO> getReservationList(String view, String me_id);
 
 	ProgramReservationVO getReservation(int pr_num);
 	

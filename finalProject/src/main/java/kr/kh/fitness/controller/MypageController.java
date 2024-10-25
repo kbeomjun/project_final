@@ -115,19 +115,17 @@ public class MypageController {
 		
 	//마이페이지 스케줄 조회
 	@GetMapping("/schedule")
-	public String mypageSchedule(Model model, @RequestParam(value = "view", defaultValue = "present")String view, Criteria cri, HttpSession session) {
+	public String mypageSchedule(Model model, HttpSession session) {
 	    
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 
-		cri.setPerPageNum(5);
 		
-		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(view, user.getMe_id(), cri);
-		PageMaker pm = clientService.getPageMakerInSchedule(view, user.getMe_id(), cri);
+		List<BranchProgramScheduleVO> presentList = clientService.getReservationList("present", user.getMe_id());
+		List<BranchProgramScheduleVO> pastList = clientService.getReservationList("present", user.getMe_id());
 		
-		model.addAttribute("reservationList", reservationList);
-		model.addAttribute("view", view);
+		model.addAttribute("presentList", presentList);
+		model.addAttribute("pastList", pastList);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("pm", pm);
 		
 		return "/mypage/schedule";
 	}

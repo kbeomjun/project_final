@@ -135,59 +135,6 @@
 			<if test="view == 'past'">
 				and now() > bs_end
 			</if>
-			<choose>
-				<when test="cri.type == 'branch'">
-					and bp_br_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'program'">
-					and bp_sp_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'trainer'">
-					and em_name like concat('%', #{cri.search},'%')
-				</when>
-			</choose>	
-		<if test="view == 'present'">
-			order by
-				bs_start
-		</if>
-		<if test="view == 'past'">
-			order by
-				bs_end desc
-		</if>						
-		limit
-			#{cri.pageStart}, #{cri.perPageNum}			
-	</select>
-	
-	<select id="selectScheduleTotalCount" resultType="int">
-		select
-			count(*)
-		from 
-			branch_program_schedule
-		join
-			branch_program on bp_num = bs_bp_num
-		join
-			employee on bp_em_num = em_num
-		join
-			program_reservation on pr_bs_num = bs_num
-		where
-			pr_me_id = #{me_id}
-			<if test="view == 'present'">
-				and bs_start > now()
-			</if>
-			<if test="view == 'past'">
-				and now() > bs_end
-			</if>
-			<choose>
-				<when test="cri.type == 'branch'">
-					and bp_br_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'program'">
-					and bp_sp_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'trainer'">
-					and em_name like concat('%', #{cri.search},'%')
-				</when>
-			</choose>	
 	</select>
 	
 	<select id="selectReservation" resultType="ProgramReservationVO">
