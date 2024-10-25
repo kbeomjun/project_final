@@ -21,7 +21,7 @@ public interface ClientDAO {
 
 	MemberVO selectMember(String me_id);
 	
-	List<ReviewPostVO> selectReviewPostList(Criteria cri);
+	List<ReviewPostVO> selectReviewPostList();
 
 	void updateReviewPostView(int rp_num);
 
@@ -38,8 +38,6 @@ public interface ClientDAO {
 	boolean updateReviewPost(ReviewPostVO review);
 
 	boolean deleteReviewPost(int rp_num);
-
-	int selectReviewPostTotalCount(Criteria cri);
 
 	List<MemberInquiryVO> selectFaqList(@Param("ca")String category, @Param("cri")Criteria cri);
 	
@@ -73,9 +71,7 @@ public interface ClientDAO {
 
 	RefundVO selectRefund(int pa_num);
 
-	List<MemberInquiryVO> selectInquiryList(@Param("me_email")String me_email, @Param("cri")Criteria cri);
-
-	int selectInquiryTotalCount(String me_email);
+	List<MemberInquiryVO> selectInquiryList(String me_email);
 
 	MemberInquiryVO selectInquiry(int mi_num);
 
@@ -93,5 +89,6 @@ public interface ClientDAO {
 
 	int updateSocialIdSetNull(@Param("user")MemberVO user, @Param("social_type")String social_type);
 
+	List<ReviewPostVO> selectMypageReviewPostList(String me_id);
 
 }

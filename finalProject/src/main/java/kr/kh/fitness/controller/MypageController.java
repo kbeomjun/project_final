@@ -157,27 +157,21 @@ public class MypageController {
 
 	//마이페이지 리뷰게시글 내역 조회
 	@GetMapping("/review/list")
-	public String mypageReviewList(Model model, Criteria cri, HttpSession session) {
+	public String mypageReviewList(Model model, HttpSession session) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		cri.setPerPageNum(5);
-		cri.setType("id");
-		cri.setSearch(user.getMe_id());
-		
-		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
-		PageMaker pm = clientService.getPageMakerInReview(cri);
+		List<ReviewPostVO> reviewList = clientService.getMypageReviewPostList(user.getMe_id());
 		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("pm", pm);
 		
 		return "/mypage/review/list";
 	}
 	
 	//마이페이지 리뷰게시글 상세
 	@GetMapping("/review/detail/{rp_num}")
-	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    ReviewPostVO review = clientService.getReviewPost(rp_num);
@@ -191,7 +185,6 @@ public class MypageController {
 		
 		model.addAttribute("review", review);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("cri", cri);
 		
 		return "/mypage/review/detail";
 	}
@@ -253,25 +246,21 @@ public class MypageController {
 	
 	//마이페이지 문의내역 목록
 	@GetMapping("/inquiry/list")
-	public String mypageInquiryList(Model model, Criteria cri, HttpSession session) {
+	public String mypageInquiryList(Model model, HttpSession session) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
-		cri.setPerPageNum(3);
-		
-		List<MemberInquiryVO> inquiryList = clientService.getInquiryList(user.getMe_email(), cri);
-		PageMaker pm = clientService.getPageMakerInInquiry(user.getMe_email(), cri);
+		List<MemberInquiryVO> inquiryList = clientService.getInquiryList(user.getMe_email());
 		
 		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("inquiryList", inquiryList);
-		model.addAttribute("pm", pm);
 		
 		return "/mypage/inquiry/list";
 	}
 	
 	//마이페이지 문의내역 상세
 	@GetMapping("/inquiry/detail/{mi_num}")
-	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, int page, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		MemberInquiryVO inquiry = clientService.getInquiry(mi_num);
@@ -283,7 +272,6 @@ public class MypageController {
 		
 		model.addAttribute("inquiry", inquiry);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("page", page);
 		
 		return "/mypage/inquiry/detail";
 	}

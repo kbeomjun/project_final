@@ -19,7 +19,7 @@ public interface ClientService {
 	
 	MemberVO getMember(String me_id);
 
-	List<ReviewPostVO> getReviewPostList(Criteria cri);
+	List<ReviewPostVO> getReviewPostList();
 
 	void updateReviewPostView(int rp_num);
 
@@ -36,8 +36,6 @@ public interface ClientService {
 	String updateReviewPost(ReviewPostVO review);
 
 	String deleteReviewPost(int rp_num);
-
-	PageMaker getPageMakerInReview(Criteria cri);
 
 	List<InquiryTypeVO> getInquiryTypeList();
 	
@@ -69,9 +67,7 @@ public interface ClientService {
 
 	RefundVO getRefund(int pa_num);
 
-	List<MemberInquiryVO> getInquiryList(String me_email, Criteria cri);
-
-	PageMaker getPageMakerInInquiry(String me_email, Criteria cri);
+	List<MemberInquiryVO> getInquiryList(String me_email);
 
 	MemberInquiryVO getInquiry(int mi_num);
 
@@ -90,5 +86,7 @@ public interface ClientService {
 	String checkSocial(MemberVO member, String social_type);
 
 	boolean unlinkSocialAccount(MemberVO user, String social_type);
+
+	List<ReviewPostVO> getMypageReviewPostList(String me_id);
 
 }

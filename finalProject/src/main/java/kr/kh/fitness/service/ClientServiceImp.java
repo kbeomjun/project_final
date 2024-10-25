@@ -37,11 +37,8 @@ public class ClientServiceImp implements ClientService{
 	}
 	
 	@Override
-	public List<ReviewPostVO> getReviewPostList(Criteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		return clientDao.selectReviewPostList(cri);
+	public List<ReviewPostVO> getReviewPostList() {
+		return clientDao.selectReviewPostList();
 	}
 
 	@Override
@@ -120,15 +117,6 @@ public class ClientServiceImp implements ClientService{
 			return "삭제에 실패했습니다.";
 		}
 		return "";
-	}
-
-	@Override
-	public PageMaker getPageMakerInReview(Criteria cri) {
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = clientDao.selectReviewPostTotalCount(cri);
-		return new PageMaker(3, cri, totalCount);
 	}
 
 	@Override
@@ -250,26 +238,11 @@ public class ClientServiceImp implements ClientService{
 	}
 
 	@Override
-	public List<MemberInquiryVO> getInquiryList(String me_email, Criteria cri) {
+	public List<MemberInquiryVO> getInquiryList(String me_email) {
 		if(me_email == null) {
 			return null;
 		}
-		if(cri == null) {
-			return null;
-		}
-		return clientDao.selectInquiryList(me_email, cri);
-	}
-
-	@Override
-	public PageMaker getPageMakerInInquiry(String me_email, Criteria cri) {
-		if(me_email == null) {
-			return null;
-		}
-		if(cri == null) {
-			return null;
-		}
-		int totalCount = clientDao.selectInquiryTotalCount(me_email);
-		return new PageMaker(3, cri, totalCount);
+		return clientDao.selectInquiryList(me_email);
 	}
 
 	@Override
@@ -431,6 +404,14 @@ public class ClientServiceImp implements ClientService{
 			return false;
 		}
 		return clientDao.updateSocialIdSetNull(user,social_type)==1?true:false;
+	}
+
+	@Override
+	public List<ReviewPostVO> getMypageReviewPostList(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return clientDao.selectMypageReviewPostList(me_id);
 	}
 
 }
