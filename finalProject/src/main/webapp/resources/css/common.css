@@ -274,6 +274,18 @@ dl, ol, ul{
 }
 /* button end */
 
+/* icon */
+.btn_x::after{
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-image: url("../image/icon/ic_x.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+/* icon end */
 
 
 
@@ -456,7 +468,7 @@ dl, ol, ul{
   margin-right: 10px;
   font-size: 14px;
 }
-.gnb_side .btn_x svg polygon{
+.gnb_side .btn_x::after{
   stroke: #fff;
   -ms-transform-origin: center;
   transform-origin: center;
@@ -464,8 +476,8 @@ dl, ol, ul{
   -o-transition: .3s;
   transition: .3s;
 }
-.gnb_side .btn_x:hover svg polygon,
-.gnb_side .btn_x:focus svg polygon{
+.gnb_side .btn_x:hover::after,
+.gnb_side .btn_x:focus::after{
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
@@ -524,7 +536,7 @@ dl, ol, ul{
 
 /* main_container */
 .main_container, .sub_container{
-  min-height: calc(100vh);
+  min-height: calc(100vh - 425px);
 }
 .main_banner_wrap{
 
@@ -560,7 +572,7 @@ dl, ol, ul{
   justify-content: space-between;
   width: 1300px;
   margin: 0 auto;
-  padding: 100px 0 100px;
+  padding: 50px 0 50px;
 }
 .ft_info__title{
   margin-bottom: 25px;

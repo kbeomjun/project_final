@@ -45,10 +45,6 @@
 					<div class="gnb_side_wrap">
 						<a href="javascript:void(0)" class="btn_x js-btn_x">
 							<span>닫기</span>
-							<svg width="25" height="25" viewBox="0 0 23 23" style="enable-background:new 0 0 23 23;" xml:space="preserve">
-							<polygon points="22.5,21.7 12.7,11.9 12.2,11.4 12.2,11.4 12.2,11.4 12.7,10.9 22.5,1.2 21.8,0.5 11.5,10.8 1.2,0.5 
-								0.5,1.2 10.3,10.9 10.8,11.4 10.8,11.4 10.8,11.4 10.3,11.9 0.4,21.7 1.1,22.4 11.5,12.1 21.8,22.4 "></polygon>
-							</svg>
 						</a>
 						<div class="gnb_side__info_wrap">
 							<div class="gnb_side__info">
