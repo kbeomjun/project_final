@@ -83,7 +83,7 @@ public interface AdminService {
 
 	String updateBranch(BranchVO branch, MultipartFile[] fileList, MemberVO admin, String[] numList);
 	
-	List<BranchStockDTO> getEquipmentListInBranch(String view, String br_name);
+	List<BranchStockDTO> getEquipmentListInBranch(String view);
 
 	List<BranchEquipmentStockVO> getEquipmentChangeInBranch(String br_name);
 

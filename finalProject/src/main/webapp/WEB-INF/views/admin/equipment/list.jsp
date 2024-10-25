@@ -25,10 +25,10 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
-					<h2 class="mt-3 mb-3">${pm.cri.br_name} 보유 목록</h2>
+					<h2 class="mt-3 mb-3">${br_name} 보유 목록</h2>
 			    	<div>
-				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-all active" data-name="all">전체보기</button>
-				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-equipment" data-name="equipment">기구별보기</button>
+				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-all active" data-name="all">내역</button>
+				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-equipment" data-name="equipment">현황</button>
 				    </div>	
 				    			
 				    <div class="mt-3 box box-all">
@@ -37,17 +37,23 @@
 								<tr>
 									<th>운동기구명</th>
 									<th>제조년월일</th>
-									<th>총 갯수</th>
+									<th>수량</th>
+									<th>기록날짜</th>
+									<th>기록유형</th>
 								</tr>
 							</thead>
 							<tbody id="tbody">
-								<c:forEach items="${allList}" var="list">
+								<c:forEach items="${equipmentChange}" var="change">
 									<tr>
-										<td>${list.be_se_name}</td>
+										<td>${change.be_se_name}</td>
 										<td>
-											<fmt:formatDate value="${list.be_birth}" pattern="yyyy-MM-dd"/>
+											<fmt:formatDate value="${change.be_birth}" pattern="yyyy-MM-dd"/>
 										</td>
-										<td>${list.be_se_total}</td>
+										<td>${change.be_amount}</td>
+										<td>
+											<fmt:formatDate value="${change.be_record}" pattern="yyyy-MM-dd"/>
+										</td>
+										<td>${change.be_type}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -81,20 +87,28 @@
 	<script type="text/javascript">
 		var table = $('.table-all').DataTable({
 			language: {
-				search: "",
+		        search: "",
 		        searchPlaceholder: "검색",
 		        zeroRecords: "",
 		        emptyTable: "",
 		        lengthMenu: ""
+		    },
+		    createdRow: function(row, data, dataIndex) {
+		        if (data[2] < 0) {
+		        	$('td', row).eq(2).css('color', 'red');
+		        }
+		        if (data[2] > 0) {
+		        	$('td', row).eq(2).css('color', 'green');
+		        }
 		    },
 			scrollY: 500,
 		    pageLength: 10,
 		    info: false,
 		    stateSave: true,
 		    stateDuration: 300,
-		    order: [[ 0, "asc" ]],
+		    order: [[ 3, "desc" ]],
 		    columnDefs: [
-		        { targets: [0, 1, 2], className: "align-content-center"}
+		        { targets: [0, 1, 2, 3, 4], className: "align-content-center"}
 		    ]
 		});
 		
@@ -111,21 +125,29 @@
 			if(name == 'all'){
 				table = $('.table-'+name).DataTable({
 					language: {
-						search: "",
+				        search: "",
 				        searchPlaceholder: "검색",
 				        zeroRecords: "",
 				        emptyTable: "",
 				        lengthMenu: ""
+				    },
+				    createdRow: function(row, data, dataIndex) {
+				        if (data[2] < 0) {
+				        	$('td', row).eq(2).css('color', 'red');
+				        }
+				        if (data[2] > 0) {
+				        	$('td', row).eq(2).css('color', 'green');
+				        }
 				    },
 					scrollY: 500,
 				    pageLength: 10,
 				    info: false,
 				    stateSave: true,
 				    stateDuration: 300,
-				    order: [[ 0, "asc" ]],
+				    order: [[ 3, "desc" ]],
 				    columnDefs: [
-				        { targets: [0, 1, 2], className: "align-content-center"}
-				    ]					
+				        { targets: [0, 1, 2, 3, 4], className: "align-content-center"}
+				    ]				
 				});
 			}else{
 				table = $('.table-'+name).DataTable({

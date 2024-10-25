@@ -286,18 +286,12 @@
 	<select id="selectEquipmentListInBranch" resultType="BranchStockDTO">
 		select 
 			be_se_name, sum(be_amount) as be_se_total
-			<if test="view == 'all'">
-				, be_birth
-			</if>
 		from 
 			branch_equipment_stock 
 		where 
 			be_br_name = #{br_name}
 		group by 
 			be_se_name
-			<if test="view == 'all'">
-				, be_birth 
-			</if>
 		having 
 			be_se_total >= 0
 	</select>

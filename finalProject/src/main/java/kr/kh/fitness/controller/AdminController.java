@@ -526,27 +526,13 @@ public class AdminController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String br_name = user.getMe_name();
 		
-		List<BranchStockDTO> allEquipmentList = adminService.getEquipmentListInBranch("all", br_name);
-		List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch("equipment", br_name);
+		List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(br_name);
+		List<BranchStockDTO> equipmentList = adminService.getEquipmentListInBranch(br_name);
 		
-		model.addAttribute("allList", allEquipmentList);
+		model.addAttribute("equipmentChange", equipmentChange);
 		model.addAttribute("equipmentList", equipmentList);
 		model.addAttribute("br_name", br_name);
 		return "/admin/equipment/list";
-	}
-	
-	//지점 운동기구 재고 변동내역
-	@GetMapping("/equipment/change")
-	public String equipmentChange(Model model, HttpSession session) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		String br_name = user.getMe_name();
-		
-		List<BranchEquipmentStockVO> equipmentChange = adminService.getEquipmentChangeInBranch(br_name);
-		
-		model.addAttribute("equipmentChange", equipmentChange);
-		model.addAttribute("br_name", br_name);
-		
-		return "/admin/equipment/change";
 	}
 	
 	//지점 문의내역 목록 조회

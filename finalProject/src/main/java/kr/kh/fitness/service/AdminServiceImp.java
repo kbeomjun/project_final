@@ -415,11 +415,11 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public List<BranchStockDTO> getEquipmentListInBranch(String view, String br_name) {
+	public List<BranchStockDTO> getEquipmentListInBranch(String br_name) {
 		if(br_name == null) {
 			return null;
 		}
-		return adminDao.selectEquipmentListInBranch(view, br_name);
+		return adminDao.selectEquipmentListInBranch(br_name);
 	}
 
 	@Override
