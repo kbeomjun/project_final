@@ -36,6 +36,7 @@ import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.ClientService;
 import kr.kh.fitness.service.MemberService;
 import kr.kh.fitness.service.MemberServiceImp;
+import kr.kh.fitness.service.SingleSignOnService;
 
 @Controller
 @RequestMapping("/mypage")
@@ -44,9 +45,11 @@ public class MypageController {
 	@Autowired
 	private ClientService clientService;
 	
-	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired 
+	private SingleSignOnService singleSignOnService;
 	 
 	
 	//마이페이지 회원권 내역
@@ -494,14 +497,18 @@ public class MypageController {
             
             if (result) {
             	MemberVO updateUser = clientService.getMember(user.getMe_id());
-            	String currentSocial = (String) session.getAttribute("socialType");
-            	if(currentSocial != null && currentSocial.equals(social_type)) {
-            		session.removeAttribute("socialType");
-            	}
+
             	session.removeAttribute("user");
             	session.setAttribute("user", updateUser);
             	
             	String token = (String)session.getAttribute("access_token");
+                
+            	singleSignOnService.removeToken(token, social_type);
+            	session.removeAttribute("access_token");
+            	String currentSocial = (String) session.getAttribute("socialType");
+            	if(currentSocial != null && currentSocial.equals(social_type)) {
+            		session.removeAttribute("socialType");
+            	}
             	
                 return true; // 성공 시
             } else {

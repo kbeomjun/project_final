@@ -376,18 +376,18 @@
                 },
                 success: function(response) {
                     if (response) {
-                        alert('SNS 계정이 성공적으로 해제되었습니다.');
+                        alert(socialType+' 연동이 성공적으로 해제되었습니다.');
                         $('.btn-sns-unlink[data-type="' + socialType + '"]').closest('.sns-account').remove();
                      	// 연동된 계정이 없으면 전체 섹션 숨기기
                         if ($('.sns-account').length === 0) {
                             $('.form-group.sns').remove();
                         }
                     } else {
-                        alert('SNS 계정 해제에 실패했습니다.');
+                        alert(socialType+' 연동 해제에 실패했습니다.');
                     }
                 },
                 error: function() {
-                    alert('SNS 계정 해제 중 오류가 발생했습니다.');
+                    alert(socialType+' 연동 해제 중 오류가 발생했습니다.');
                 }
             });
         });
