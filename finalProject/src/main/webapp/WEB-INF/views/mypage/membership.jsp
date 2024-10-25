@@ -151,7 +151,7 @@
 		        lengthMenu: ""
 		    },
 			scrollY: 500,
-		    pageLength: 5,
+		    pageLength: 10,
 		    info: false,
 		    stateSave: true,
 		    searching: false,
