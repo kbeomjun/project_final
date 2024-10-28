@@ -5,8 +5,6 @@
     padding: 1.5em;
 } */
 
-.calendar-wrapper {width: 65%;}
-.list-wrapper {width: 30%;}
 
 .calendar-wrapper table td {width: 100px; height: 100px;}
 .calendar-wrapper table td .selected {font-weight: 900; text-decoration: underline;}
@@ -21,13 +19,20 @@
     align-items: center;
 }
 
+.account-book-container {
+	display: flex;
+	flex-direction: column;
+	gap: 3em;
+	flex-wrap: nowrap; 
+	width: 1000px;
+}
 
-@media all and (max-width: 1024px) {
-	.account-book-container {flex-direction: column; gap: 3em;}
-	.calendar-wrapper,
-	.list-wrapper {width: 100%;}
+.calendar-wrapper, .list-wrapper {
+	width: 100%;
+}
 
-	.calendar-wrapper {overflow-x: auto;}
+.calendar-wrapper {
+	overflow-x: auto;
 }
 
 .program-button {

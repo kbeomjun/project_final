@@ -12,9 +12,8 @@
 <body>
 	<!-- <h1>프로그램 안내</h1> -->
 	<div class="navbar">
-		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램
-			안내</a> <a class="btn " href="<c:url value="/program/schedule"/>">프로그램
-			일정</a>
+		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램 안내</a> 
+		<a class="btn " href="<c:url value="/program/schedule"/>">프로그램 일정</a>
 	</div>
 	<div class="main-container">
 		<div id="program-button-group" class="sidebar">

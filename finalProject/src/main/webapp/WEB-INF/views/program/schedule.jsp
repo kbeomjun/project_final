@@ -8,170 +8,246 @@
 <head>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/calendar.css"/>">
+
+
+<style type="text/css">
+.sidebar {
+	width: 200px;
+	padding: 20px;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar a {
+	width: 100%;
+	padding: 15px;
+	margin-bottom: 10px;
+	border: none;
+	background: #fff;
+	text-align: left;
+	cursor: pointer;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	transition: background 0.3s;
+	text-align: center;
+	letter-spacing: 10px;
+}
+
+.sidebar a:hover {
+	background: #ddd;
+}
+
+.main-container {
+	display: flex;
+	align-items: flex-start;
+}
+
+.selected {
+	color: #fff !important;
+	background: #000 !important;
+	position: relative;
+	box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5); /* 오른쪽과 아래쪽에 그림자 효과 */
+}
+
+.sidebar .selected {
+	width: 115%;
+	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
+}
+
+.main-container {
+	display: flex;
+	align-items: flex-start;
+}
+
+.navbar {
+	display: flex;
+	justify-content: center;
+	/* background: #eee; */
+	padding: 10px 0;
+}
+
+.navbar a {
+	margin: 0 15px;
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+.sub_navbar {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+</style>
 </head>
 <body>
 
 	<!-- <h1>프로그램 일정</h1> -->
-	<a class="btn btn-outline-dark br-3"
-		href="<c:url value="/program/info"/>">프로그램 안내</a>
-	<a class="btn btn-dark" href="<c:url value="/program/schedule"/>">프로그램
-		일정</a>
-
-	<hr>
-	<div class="mb-2">
-		<label>지점 조회</label> <a
-			class="btn btn-<c:if test="${br_name ne 'null'}">outline-</c:if>info"
-			href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false"/>">
-			전체 </a>
-		<c:forEach items="${branch_list}" var="br" varStatus="status">
-			<c:choose>
-				<c:when test="${br.br_name == br_name}">
-					<c:set var="outline" value="" />
-				</c:when>
-				<c:otherwise>
-					<c:set var="outline" value="outline-" />
-				</c:otherwise>
-			</c:choose>
-			<c:if test="${br.br_name ne '본사'}">
-				<a class="btn btn-${outline}info"
-					href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br.br_name}/${pr_name != null ? pr_name : 'null'}/false"/>">
-					${br.br_name } </a>
-			</c:if>
-		</c:forEach>
+	<div class="navbar mb-3">
+		<a class="btn br-3"
+			href="<c:url value="/program/info"/>">프로그램 안내</a>
+		<a class="btn selected" href="<c:url value="/program/schedule"/>">프로그램
+			일정</a>
 	</div>
-	<div>
+
+	<div class="main-container">
+		<div class="mb-2 sidebar">
+			<a class="btn 
+				<c:if test="${br_name eq 'null' || br_name == null}">selected</c:if>"
+				href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false"/>">
+				전체 </a>
+			<c:forEach items="${branch_list}" var="br" varStatus="status">
+				<c:if test="${br.br_name ne '본사'}">
+					<c:choose>
+						<c:when test="${br.br_name == br_name}">
+							<c:set var="select" value="selected" />
+						</c:when>
+						<c:otherwise>
+							<c:set var="select" value="" />
+						</c:otherwise>
+					</c:choose>
+					<a class="btn ${select}"
+						href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br.br_name}/${pr_name != null ? pr_name : 'null'}/false"/>">
+						${br.br_name } </a>
+				</c:if>
+			</c:forEach>
+		</div>
+		
 		<fmt:formatDate value="${nowDate}" pattern="yyyy-MM-dd" var="today" />
 		<fmt:formatDate value="${nowDate}" pattern="dd" var="todayDate" />
 		<fmt:formatDate value="${nowDate}" pattern="MM" var="todayMonth" />
 		<fmt:formatDate value="${nowDate}" pattern="yyyy" var="todayYear" />
-		<label>프로그램 조회</label> <a
-			class="btn btn-<c:if test="${pr_name ne 'null'}">outline-</c:if>info"
-			href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false"/>">
-			전체 </a>
-		<c:forEach items="${program_list}" var="pr" varStatus="status">
-			<c:if test="${pr.sp_name ne 'PT'}">
-				<c:choose>
-					<c:when test="${pr.sp_name == pr_name}">
-						<c:set var="outline" value="" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="outline" value="outline-" />
-					</c:otherwise>
-				</c:choose>
-				<a class="btn btn-${outline}info"
-					href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/${pr.sp_name}/false"/>">
-					${pr.sp_name } </a>
-			</c:if>
-		</c:forEach>
-	</div>
-	<div class="d-flex account-book-container">
-		<div class="calendar-wrapper">
-			<div class="mt-3 mb-3 p-3 d-flex justify-content-between">
-				<span> <c:if
-						test="${ cal.year ne todayYear || ((cal.month+1) ne todayMonth)}">
-						<a class="btn btn-outline-dark"
-							href="<c:url value="/program/schedule/${cal.year}/${cal.month-1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">이전달</a>
+		<div class="account-book-container">
+			<div class="sub_navbar">
+	
+	
+				<a class="btn btn-<c:if test="${pr_name ne 'null'}">outline-</c:if>info ml-2"
+					href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false"/>">
+					전체 
+				</a>
+				<c:forEach items="${program_list}" var="pr" varStatus="status">
+					<c:if test="${pr.sp_name ne 'PT'}">
+						<c:choose>
+							<c:when test="${pr.sp_name == pr_name}">
+								<c:set var="outline" value="" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="outline" value="outline-" />
+							</c:otherwise>
+						</c:choose>
+						<a class="btn btn-${outline}info ml-2"
+							href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/${pr.sp_name}/false"/>">
+							${pr.sp_name } </a>
 					</c:if>
-				</span> <span class="fw-bold fs-3">${cal.year}년 ${cal.month+1}월</span> <span>
-					<a class="btn btn-outline-dark"
-					href="<c:url value="/program/schedule/${cal.year}/${cal.month+1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">다음달</a>
-				</span>
-			</div>
-
-			<table class="table text-center table-bordered calendar">
-				<tr class="table-light text-center fs-5 tr-h">
-					<th class="text-danger">일</th>
-					<th>월</th>
-					<th>화</th>
-					<th>수</th>
-					<th>목</th>
-					<th>금</th>
-					<th class="text-primary">토</th>
-				</tr>
-
-				<c:forEach begin="1" end="${cal.tdCnt}" step="7" var="i">
-					<tr>
-						<c:forEach begin="${i }" end="${i + 6}" step="1" var="j">
-							<td><c:if test="${selected ne null }">
-									<c:choose>
-										<c:when
-											test="${selected.dayOfMonth == (j - cal.startBlankCnt)}">
-											<c:set var="cls" value="selected" />
-										</c:when>
-										<c:otherwise>
-											<c:set var="cls" value="" />
-										</c:otherwise>
-									</c:choose>
-								</c:if> <c:if
-									test="${(j > cal.startBlankCnt) && (j <= cal.startBlankCnt + cal.lastDate)}">
-									<c:set var="url"
-										value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true" />
-
-									<c:choose>
-										<c:when test="${cal.year > todayYear}">
-											<c:set var="disabled" value="" />
-										</c:when>
-										<c:when test="${(cal.month+1) > todayMonth}">
-											<c:set var="disabled" value="" />
-										</c:when>
-										<c:when
-											test="${((cal.month+1) eq todayMonth) && ((j - cal.startBlankCnt) >= todayDate)}">
-											<c:set var="disabled" value="" />
-										</c:when>
-										<c:otherwise>
-											<c:set var="disabled" value="disabled" />
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test="${j % 7 == 0 }">
-											<a href="<c:url value="${url}"/>" class="btn ${disabled}">
-												<span class="text-primary mb-3 ${cls}">${j - cal.startBlankCnt }</span>
-											</a>
-											<br>
-										</c:when>
-										<c:when test="${j % 7 == 1 }">
-											<a href="<c:url value="${url}"/>" class="btn ${disabled}">
-												<span class="text-danger mb-3 ${cls}">${j - cal.startBlankCnt }
-											</span>
-											</a>
-											<br>
-										</c:when>
-										<c:otherwise>
-											<a href="<c:url value="${url}"/>" class="btn ${disabled}">
-												<span class="mb-3 ${cls}"> ${j - cal.startBlankCnt }
-											</span>
-											</a>
-											<br>
-										</c:otherwise>
-									</c:choose>
-									<c:set var="sp_name_distinct" value="PT" />
-									<c:forEach items="${ps_list}" var="ps" varStatus="status">
-										<fmt:formatDate value='${ps.bs_start}' pattern='dd'
-											var="ps_day" />
-										<c:if test="${(j - cal.startBlankCnt) eq ps_day}">
-											<c:if
-												test="${fn:contains(sp_name_distinct, ps.bp_sp_name) == false}">
-												<a class="btn btn-success program-button ${disabled}"
-													href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${ps.bp_sp_name}/true"/>">
-													<span>${ps.bp_sp_name}</span>
-												</a>
-												<c:set var="sp_name_distinct"
-													value="${sp_name_distinct},${ps.bp_sp_name}" />
-											</c:if>
-										</c:if>
-									</c:forEach>
-								</c:if></td>
-						</c:forEach>
-					</tr>
 				</c:forEach>
+			</div>
+			<div class="calendar-wrapper ml-3">
+				<span class="fw-bold fs-5 ml-3" style="font-size: 1.5rem;">${cal.year}년 ${cal.month+1}월</span>
+				<div class="mt-3 mb-3 p-3 d-flex justify-content-between">
+					<span> <c:if
+							test="${ cal.year ne todayYear || ((cal.month+1) ne todayMonth)}">
+							<a class="btn btn-outline-dark"
+								href="<c:url value="/program/schedule/${cal.year}/${cal.month-1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">이전달</a>
+						</c:if>
+					</span>  <span>
+						<a class="btn btn-outline-dark"
+						href="<c:url value="/program/schedule/${cal.year}/${cal.month+1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">다음달</a>
+					</span>
+				</div>
 
-			</table>
+				<table class="table text-center table-bordered calendar">
+					<tr class="table-light text-center fs-5 tr-h">
+						<th class="text-danger">일</th>
+						<th>월</th>
+						<th>화</th>
+						<th>수</th>
+						<th>목</th>
+						<th>금</th>
+						<th class="text-primary">토</th>
+					</tr>
+
+					<c:forEach begin="1" end="${cal.tdCnt}" step="7" var="i">
+						<tr>
+							<c:forEach begin="${i }" end="${i + 6}" step="1" var="j">
+								<td><c:if test="${selected ne null }">
+										<c:choose>
+											<c:when
+												test="${selected.dayOfMonth == (j - cal.startBlankCnt)}">
+												<c:set var="cls" value="selected" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="cls" value="" />
+											</c:otherwise>
+										</c:choose>
+									</c:if> <c:if
+										test="${(j > cal.startBlankCnt) && (j <= cal.startBlankCnt + cal.lastDate)}">
+										<c:set var="url"
+											value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true" />
+
+										<c:choose>
+											<c:when test="${cal.year > todayYear}">
+												<c:set var="disabled" value="" />
+											</c:when>
+											<c:when test="${(cal.month+1) > todayMonth}">
+												<c:set var="disabled" value="" />
+											</c:when>
+											<c:when
+												test="${((cal.month+1) eq todayMonth) && ((j - cal.startBlankCnt) >= todayDate)}">
+												<c:set var="disabled" value="" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="disabled" value="disabled" />
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${j % 7 == 0 }">
+												<a href="<c:url value="${url}"/>" class="btn ${disabled}">
+													<span class="text-primary mb-3 ${cls}">${j - cal.startBlankCnt }</span>
+												</a>
+												<br>
+											</c:when>
+											<c:when test="${j % 7 == 1 }">
+												<a href="<c:url value="${url}"/>" class="btn ${disabled}">
+													<span class="text-danger mb-3 ${cls}">${j - cal.startBlankCnt }
+												</span>
+												</a>
+												<br>
+											</c:when>
+											<c:otherwise>
+												<a href="<c:url value="${url}"/>" class="btn ${disabled}">
+													<span class="mb-3 ${cls}"> ${j - cal.startBlankCnt }
+												</span>
+												</a>
+												<br>
+											</c:otherwise>
+										</c:choose>
+										<c:set var="sp_name_distinct" value="PT" />
+										<c:forEach items="${ps_list}" var="ps" varStatus="status">
+											<fmt:formatDate value='${ps.bs_start}' pattern='dd'
+												var="ps_day" />
+											<c:if test="${(j - cal.startBlankCnt) eq ps_day}">
+												<c:if
+													test="${fn:contains(sp_name_distinct, ps.bp_sp_name) == false}">
+													<a class="btn btn-success program-button ${disabled}"
+														href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${ps.bp_sp_name}/true"/>">
+														<span>${ps.bp_sp_name}</span>
+													</a>
+													<c:set var="sp_name_distinct"
+														value="${sp_name_distinct},${ps.bp_sp_name}" />
+												</c:if>
+											</c:if>
+										</c:forEach>
+									</c:if></td>
+							</c:forEach>
+						</tr>
+					</c:forEach>
+
+				</table>
+			</div>
 		</div>
 	</div>
-
 	<!-- Modal -->
 	<div class="modal fade" id="tableModal" tabindex="-1" role="dialog"
-		aria-labelledby="tableModalLabel" aria-hidden="true">
+		aria-labelledby="tableModalLabel" aria-hidden="true" data-bs-backdrop="static">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -206,7 +282,7 @@
 											<td><fmt:formatDate value="${ps.bs_start}"
 													pattern="HH:mm" /> <br />~<fmt:formatDate
 													value="${ps.bs_end}" pattern="HH:mm" /></td>
-											<td>${ps.bs_current}/ ${ps.bp_total }</td>
+											<td>${ps.bs_current}/${ps.bp_total }</td>
 											<td><c:set var="currentTime"
 													value="<%=new java.util.Date()%>" /> <c:choose>
 													<c:when

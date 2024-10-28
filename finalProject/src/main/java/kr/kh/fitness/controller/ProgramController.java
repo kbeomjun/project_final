@@ -165,7 +165,7 @@ public class ProgramController {
 		
 		model.addAttribute("branch_list", branch_list);
 		model.addAttribute("program_list", program_list);
-		
+		System.out.println("br_name : " + br_name);
 		model.addAttribute("br_name", br_name);
 		model.addAttribute("pr_name", pr_name);
 
