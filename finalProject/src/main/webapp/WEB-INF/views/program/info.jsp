@@ -10,29 +10,44 @@
 }</style>
 </head>
 <body>
+	<section class="sub_banner sub_banner_03"></section>
 	<!-- <h1>프로그램 안내</h1> -->
 	<div class="navbar">
 		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램 안내</a> 
 		<a class="btn " href="<c:url value="/program/schedule"/>">프로그램 일정</a>
 	</div>
-	<div class="main-container">
-		<div id="program-button-group" class="sidebar">
+	
+	<section class="sub_content">
+		<!-- lnb -->
+		<section class="lnb_wrap">
+		<div id="program-button-group" class="lnb-sidebar">
 			<c:forEach items="${list}" var="sp" varStatus="status">
 				<c:choose>
 					<c:when test="${status.index == 0}">
-						<c:set var="selected" value="" />
+						<c:set var="notSelected" value="" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="selected" value="selected" />
+						<c:set var="notSelected" value="bg_white" />
 					</c:otherwise>
 				</c:choose>
-				<button id="btn-sp-${status.index}" class="btn ${selected }"
-					data-detail="${sp.sp_detail}" data-num="${status.index}"
-					data-name="${sp.sp_name}" onclick="showDetail(this)">${sp.sp_name}</button>
+				<div class="btn_wrap">
+				<div class="btn_link_black ${notSelected }">
+					<button id="btn-sp-${status.index}" class="btn btn_black js-btn-insert"
+						data-detail="${sp.sp_detail}" data-num="${status.index}"
+						data-name="${sp.sp_name}" onclick="showDetail(this)">
+						<span>${sp.sp_name}<i class="ic_link_share"></i></span>
+					</button>
+					<div class="btn_black_top_line"></div>
+					<div class="btn_black_right_line"></div>
+					<div class="btn_black_bottom_line"></div>
+					<div class="btn_black_left_line"></div>
+				</div>
+				</div>
 			</c:forEach>
 		</div>
-
-
+		</section>
+		<section class="sub_content_group"> 
+		
 		<!-- Main Content -->
 		<div class="main-content">
 			<div id="program-image" class="mb-3">
@@ -52,9 +67,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<!-- 		<div id="program-penalty"></div> -->
-
+	</section>
+</section>
 	<script>
 	const mySwiper = new Swiper('.swiper-container', {
 		  	// 옵션 설정
@@ -111,11 +126,10 @@
 
         buttons.forEach((button) => {
 	        if (button === selectedButton) {
-	            // 클릭된 버튼에는 btn-primary 추가
-	            button.classList.add("selected");
+	            // 다른 버튼들은 bg_white로 설정
+	        	button.parentElement.classList.remove("bg_white");
 	        } else {
-	            // 다른 버튼들은 btn-outline-primary로 설정
-	            button.classList.remove("selected");
+	        	button.parentElement.classList.add("bg_white");
 	        }
         });
         var programName = selectedButton.getAttribute('data-name');

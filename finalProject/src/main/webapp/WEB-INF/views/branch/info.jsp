@@ -9,8 +9,8 @@
 <!-- CSS -->
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/swiper-bundle.min_branch.css"/>">
-<!-- JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- JS -->
 
 <!-- Swiper -->
 <link rel="stylesheet" href="<c:url value="/resources/css/swiper.css"/>">
@@ -31,136 +31,132 @@
 </style>
 </head>
 <body>
-	<div class="branch-navbar" >
-		<ul>
+	<section class="sub_banner sub_banner_01"></section>
+	<section class="sub_content">
+		<!-- lnb -->
+		<section class="lnb_wrap">
+			<ul class="lnb">
 			<c:if test="${select eq null}">
-				<c:set var="active" value="active" />
+				<c:set var="active" value="_active" />
 			</c:if>
-			<li><a
-				class="btn btn-outline-secondary btn-branch mb-1 ${active}"
+			<li class="lnb__item">
+			<a class="lnb__link ${active}"
 				href=<c:url value="/branch/info"/>>전지점보기</a></li>
 			<c:forEach items="${br_list}" var="br">
 				<c:if test="${br.br_name ne '본사'}">
 				<c:choose>
 					<c:when test="${br.br_name eq select}">
-						<c:set var="active" value="active" />
+						<c:set var="active" value="_active" />
 					</c:when>
 					<c:otherwise>
 						<c:set var="active" value="" />
 					</c:otherwise>
 				</c:choose>
-				<li><a
-					class="btn btn-outline-secondary btn-branch mb-1 ${active}"
+				<li class="lnb__item">
+				<a class="lnb__link ${active}"
 					href=<c:url value="/branch/detail/${br.br_name}/1"/>>${br.br_name}</a></li>
 				</c:if>
 			</c:forEach>
-		</ul>
-	</div>
-	<div class="branch-detail-container" >
+			</ul>
+		</section>
+		
+		<section class="sub_content_group"> 
 		<c:choose>
 			<c:when test="${select ne null}">
-				<h2>${branch.br_name}</h2>
-				<hr>
-<!-- 기능 제거 예정 (상단 navbar)-->				
-<!-- 				<div class="branch-detail mb-5">
-					<div class="branch-tab">
-						<ul>
-							<li><a class="btn" href="#mapinfo">지점안내</a></li>
-							<li><a class="btn" href="#branch">시설소개</a></li>
-							<li><a class="btn" href="#employee">직원소개</a></li>
-						</ul>
+				<div class="table_wrap">
+					<div class="branch-detail-container" >
+					<div class="sub_title_wrap">
+					<h2 class="sub_title">지점위치</h2>
 					</div>
-				</div> -->
-				<h3 class="mt-4">지점위치</h3>
-				<div class="branch-info-wrap">
-					<div class="branch-map-container" id="mapinfo">
-							<div class="mt-5" id="map" data-address="${branch.br_address}"
-								data-name="${branch.br_name }"
-								style="float:left; background-color: lightgray; margin: 0 auto;">
-							</div>
-					</div>
-					<div class="branch-content-container">
-						<strong class="title"
-							style="padding-top: 50px; font-size: 28px; background-size: 50px;">KH
-							피트니스 ${branch.br_name }</strong>
-						<p class="address">${branch.br_address},
-							${branch.br_detailAddress} ${branch.br_extraAddress}</p>
-						<hr style="border:0; height:1px; background: #000;">
-						<div>${branch.br_detail}</div><br> 
-						<span class="phone" style="font-size: 16px;"> 
-						<c:choose>
-							<c:when test="${fn:length(branch.br_phone) == 10}">
-								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
-							</c:when>
-							<c:when test="${fn:length(branch.br_phone) == 9}">
-								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
-							</c:when>
-						</c:choose>
-						</span>
-					</div>
-				</div>
-				<div class="branch-content mt-3" id="branch">
-					<h3>지점정보</h3>
-					<%-- <div class="content-box mb-5 mt-5"
-						style="text-align: center; display: flex; flex-wrap: wrap; align-items: center;">
-						<div class="swiper-container mr-5">
-							<c:if test="${branch_image_list.size() ne 0 }">
-								<div class="swiper-wrapper" id="swiper-wrapper">
-									<c:forEach items="${branch_image_list}" var="image">
-										<div class="swiper-slide">
-										<img src="<c:url value="/uploads${image.bf_name}" />"
-												style="width: 600px; height: 400px;"><br>
-										</div>
-									</c:forEach>
+					<div class="branch-info-wrap">
+						<div class="branch-map-container" id="mapinfo">
+								<div id="map" data-address="${branch.br_address}"
+									data-name="${branch.br_name }"
+									style="float:left; background-color: lightgray; margin: 0 auto;">
 								</div>
-								<div class="swiper-button-next">&gt;</div>
-								<div class="swiper-button-prev">&lt;</div>
-								<div class="swiper-pagination"></div>
-							</c:if>
 						</div>
-						
-					</div> --%>
-				<div class="branch-image-container mb-5 mt-5">
-					<c:forEach items="${branch_image_list}" var="image">
-					<a href="<c:url value="/uploads${image.bf_name}" />" data-fancybox="gallery">
-						<img src="<c:url value="/uploads${image.bf_name}" />"><br>
-							<!-- style="width: 600px; height: 400px;" -->
-					</a>
-					</c:forEach>
-				</div>	
-				</div>
-					<div class="em-container mb-5 mt-5" id="employee">
-						<h3>직원소개</h3>
-					<div class="mt-5" style="text-align: center; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-						<c:if test="${em_list.size() ne 0 }">
-							<c:forEach items="${em_list}" var="em">
-								<div class="card" style="width: 200px">
-									<img class="card-img-top"
-										src=<c:url value="/uploads${em.em_fi_name}" />
-										alt=" ${em.em_fi_name}" 
-										onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
-										style="width: 100%; height: 250px; object-fit: cover;">
-									<div class="card-body">
-										<h4 class="card-title">${em.em_name}(${fn:substring(em.em_gender, 0, 1)})</h4>
-										<p class="card-text">${em.em_position}</p>
-										<!-- <a href="#" class="btn btn-primary">뭘 둘까나~</a> -->
-									</div>
-								</div>
-							</c:forEach>
-						</c:if>
-					</div></div>
-
+						<div class="branch-content-container">
+							<strong class="title"
+								style="font-size: 28px; background-size: 50px;">KH
+								피트니스 ${branch.br_name }</strong>
+							<p class="address">${branch.br_address},
+								${branch.br_detailAddress} ${branch.br_extraAddress}</p>
+							<hr style="border:0; height:1px; background: #000;">
+							<div>${branch.br_detail}</div><br> 
+							<span class="phone" style="font-size: 16px;"> 
+							<c:choose>
+								<c:when test="${fn:length(branch.br_phone) == 10}">
+									☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
+								</c:when>
+								<c:when test="${fn:length(branch.br_phone) == 9}">
+									☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
+								</c:when>
+							</c:choose>
+							</span>
+						</div>
+					</div>
+					<div class="branch-content mt-5" id="branch">
+						<div class="sub_title_wrap">
+					<h2 class="sub_title">지점정보</h2>
+					</div>
+					<div class="branch-image-container mb-5 mt-5">
+						<c:forEach items="${branch_image_list}" var="image">
+						<a href="<c:url value="/uploads${image.bf_name}" />" data-fancybox="gallery">
+							<img src="<c:url value="/uploads${image.bf_name}" />"><br>
+								<!-- style="width: 600px; height: 400px;" -->
+						</a>
+						</c:forEach>
+					</div>	
+					</div>
+						<div class="em-container mb-5 mt-5" id="employee">
+							<div class="sub_title_wrap">
+								<h2 class="sub_title">직원소개</h2>
+							</div>
+						<div class="container">
+					    <div class="row">
+					        <c:if test="${em_list.size() ne 0 }">
+				            <c:forEach items="${em_list}" var="em">
+				                <div class="col-md-4 mb-4">
+				                    <div class="card" style="width: 100%">
+				                        <img class="card-img-top"
+				                            src="<c:url value='/uploads${em.em_fi_name}' />"
+				                            alt="${em.em_fi_name}" 
+				                            onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
+				                            style="width: 100%; height: 300px; object-fit: cover;">
+				                        <div class="card-body">
+				                            <h4 class="card-title">${em.em_name}(${fn:substring(em.em_gender, 0, 1)})</h4>
+				                            <p class="card-text">${em.em_position}</p>
+				                            <!-- <a href="#" class="btn btn-primary">뭘 둘까나~</a> -->
+				                        </div>
+				                    </div>
+				                </div>
+			            	</c:forEach>
+					        </c:if>
+					    </div>
+						</div>
+					</div>
+				</div></div>
 			</c:when>
 			<c:otherwise>
-				<h3>전지점보기</h3>
+			<div class="table_wrap">
+				<div class="sub_title_wrap">
+					<h2 class="sub_title">전지점보기</h2>
+				</div>
 				<hr>
 				<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;"></div>
 				<button id="original-location-btn">원래 위치</button>
+			</div>
 			</c:otherwise>
+		</c:choose>		
 			
-		</c:choose>
-		<button id="scrollToTopBtn" style="display: none;">맨 위로</button>
-	</div>
+		</section>
+	</section>
+		
+
+
+	
+		<!-- <button id="scrollToTopBtn" style="display: none;">맨 위로</button> -->
+	
 <script type="text/javascript">
 /**
  * AbstractOverlay를 상속받을 객체를 선언합니다.

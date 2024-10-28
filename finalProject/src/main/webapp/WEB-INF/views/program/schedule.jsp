@@ -80,7 +80,7 @@
 </style>
 </head>
 <body>
-
+	<section class="sub_banner sub_banner_03"></section>
 	<!-- <h1>프로그램 일정</h1> -->
 	<div class="navbar mb-3">
 		<a class="btn br-3"
@@ -89,29 +89,58 @@
 			일정</a>
 	</div>
 
-	<div class="main-container">
-		<div class="mb-2 sidebar">
-			<a class="btn 
-				<c:if test="${br_name eq 'null' || br_name == null}">selected</c:if>"
-				href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false"/>">
-				전체 </a>
+	<section class="sub_content">
+		
+		<!-- lnb -->
+		<section class="lnb_wrap">
+		<div class="main-container">
+			<div class="mb-2">
+			<div class="btn_wrap">
+				<div class="btn_link_black <c:if test="${br_name ne 'null' && br_name != null}">bg_white</c:if>">
+					<a class="btn btn_black js-btn-insert"
+						href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false"/>">
+						<span>전체<i class="ic_link_share"></i></span> 
+					</a>
+					<div class="btn_black_top_line"></div>
+					<div class="btn_black_right_line"></div>
+					<div class="btn_black_bottom_line"></div>
+					<div class="btn_black_left_line"></div>
+				</div>
+			</div>	
 			<c:forEach items="${branch_list}" var="br" varStatus="status">
-				<c:if test="${br.br_name ne '본사'}">
-					<c:choose>
-						<c:when test="${br.br_name == br_name}">
-							<c:set var="select" value="selected" />
-						</c:when>
-						<c:otherwise>
-							<c:set var="select" value="" />
-						</c:otherwise>
-					</c:choose>
-					<a class="btn ${select}"
+			<c:if test="${br.br_name ne '본사'}">
+			<c:choose>
+				<c:when test="${br.br_name == br_name}">
+					<c:set var="unSelected" value="" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="unSelected" value="bg_white" />
+				</c:otherwise>
+			</c:choose>
+			<div class="btn_wrap">
+				<div class="btn_link_black ${unSelected}">
+					<a
+						class="btn btn_black js-btn-insert"
 						href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br.br_name}/${pr_name != null ? pr_name : 'null'}/false"/>">
-						${br.br_name } </a>
-				</c:if>
+						<span>${br.br_name }<i class="ic_link_share"></i></span>
+					</a>
+					<div class="btn_black_top_line"></div>
+					<div class="btn_black_right_line"></div>
+					<div class="btn_black_bottom_line"></div>
+					<div class="btn_black_left_line"></div>
+				</div>
+			</div>
+			</c:if>
 			</c:forEach>
+			</div>
 		</div>
 		
+	</section>
+
+		<!-- 오른쪽 컨텐츠 영역 -->
+	<section class="sub_content_group"> 
+		
+	
 		<fmt:formatDate value="${nowDate}" pattern="yyyy-MM-dd" var="today" />
 		<fmt:formatDate value="${nowDate}" pattern="dd" var="todayDate" />
 		<fmt:formatDate value="${nowDate}" pattern="MM" var="todayMonth" />
@@ -245,6 +274,7 @@
 			</div>
 		</div>
 	</div>
+	</section></section>
 	<!-- Modal -->
 	<div class="modal fade" id="tableModal" tabindex="-1" role="dialog"
 		aria-labelledby="tableModalLabel" aria-hidden="true" data-bs-backdrop="static">
