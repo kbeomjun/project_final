@@ -69,25 +69,8 @@
 					
 					<div class="btn_wrap">
 						<div class="btn_right_wrap">
-							<div class="btn_link_black">
-								<button type="submit" class="btn btn_black js-btn-insert">
-									<span>글 수정<i class="ic_link_share"></i></span>
-								</button>
-								<div class="btn_black_top_line"></div>
-								<div class="btn_black_right_line"></div>
-								<div class="btn_black_bottom_line"></div>
-								<div class="btn_black_left_line"></div>
-							</div>
-							
-							<div class="btn_link_white">
-								<a href="<c:url value="/client/review/detail/${review.rp_num}"/>" class="btn btn_black js-btn-insert">
-									<span>취소<i class="ic_link_share"></i></span>
-								</a>
-								<div class="btn_black_top_line"></div>
-								<div class="btn_black_right_line"></div>
-								<div class="btn_black_bottom_line"></div>
-								<div class="btn_black_left_line"></div>
-							</div>
+							<button type="submit" class="btn btn_insert">수정</button>
+							<a href="<c:url value="/client/review/detail/${review.rp_num}"/>" class="btn btn_cancel">취소</a>
 						</div>
 					</div>					
 					

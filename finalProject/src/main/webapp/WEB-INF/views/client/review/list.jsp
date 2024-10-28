@@ -60,9 +60,19 @@
 				</div>
 				
 				<c:if test="${user ne null && user.me_authority eq 'USER'}">
-					<div class="text-right mb-3">
-						<a href="<c:url value="/client/review/insert"/>" class="btn btn-outline-info btn-sm">글쓰기</a>
-					</div>
+					<div class="btn_wrap">
+						<div class="btn_right_wrap">
+							<div class="btn_link_black">
+								<a href="<c:url value="/client/review/insert"/>" class="btn btn_black js-btn-insert">
+									<span>글쓰기<i class="ic_link_share"></i></span>
+								</a>
+								<div class="btn_black_top_line"></div>
+								<div class="btn_black_right_line"></div>
+								<div class="btn_black_bottom_line"></div>
+								<div class="btn_black_left_line"></div>
+							</div>
+						</div>
+					</div>				
 				</c:if>		
 						
 			</section>
@@ -80,7 +90,7 @@
 		        emptyTable: "",
 		        lengthMenu: ""
 		    },
-			scrollY: 500,
+			//scrollY: 500,
 		    pageLength: 10,
 		    info: false,
 		    stateSave: true,
