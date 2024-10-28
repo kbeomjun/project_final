@@ -936,7 +936,7 @@ ion-icon{
   padding: 20px;
   font-weight: 400;
   border-bottom: 1px solid #EBEBEB;
-  color: #666666;
+  color: #111;
   text-align: left !important;
 }
 .table tbody tr:first-child td{
@@ -963,6 +963,15 @@ ion-icon{
   justify-content: flex-end;
   width: 100%;
 }
+.table tbody td div,
+.table tbody td p,
+.table tbody td span{
+  color: #111;
+  font-weight: 300;
+}
+.table tbody td .text_min_height{
+  min-height: 140px;
+}
 /* table end */
 
 
@@ -982,6 +991,9 @@ ion-icon{
   color: #999;
   background-image: url("../image/icon/ic_select_down.svg");
   background-size: 24px 24px;
+}
+.form-control.custom-select option{
+  color: #111;
 }
 .custom-select.w100{
   width: 100%;
