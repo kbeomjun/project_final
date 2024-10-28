@@ -106,7 +106,7 @@ public class MypageController {
 		if(msg == "") {
 			model.addAttribute("url", "/mypage/membership?page=" + page);
 		} else {
-			model.addAttribute("url", "/mypage/review/insert/" + review.getRp_pa_num() + "/" + me_id + "/" + page);
+			model.addAttribute("url", "/mypage/review/insert/" + review.getRp_pa_num() + "/" + page);
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";

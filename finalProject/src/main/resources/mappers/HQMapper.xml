@@ -68,7 +68,7 @@
 			me_name = #{me.me_name},
 			me_phone = #{me.me_phone}, 
 			me_address = #{me.me_address}
-		where me_name = #{br_ori_name};
+		where me_name = #{br_ori_name} and me_authority = "BRADMIN";
 	</update>
 	
 	<select id="selectEmployeeList" resultType="EmployeeVO">

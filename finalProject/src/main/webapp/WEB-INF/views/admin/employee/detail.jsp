@@ -91,14 +91,18 @@
 								<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${em.em_extraAddress}">
 							</div>
 							<div class="error error-address"></div>			
-				
+							<div class="error error-branch"></div>
+							<div class="form-group">
+								<label for="em_detail">직원설명:</label>
+								<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
+							</div>
+							<div class="error"></div>
+											
 							<button type="submit" class="btn btn-outline-info col-12">직원정보 수정</button>
 						</form>
 						<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
 						<hr/>
-						<div class="text-right mb-3">
-							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
-						</div>
+						<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
 					</div>
 	                
 	            </div>
@@ -316,6 +320,13 @@
 	    }
     </script>		
 	
+    <script type="text/javascript">
+    	// 썸머노트
+    	$('#em_detail').summernote({
+			  tabsize: 2,
+			  height: 350
+		});
+    </script>
 
 </body>
 </html>
