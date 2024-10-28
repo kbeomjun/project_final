@@ -130,7 +130,7 @@
     <script type="text/javascript">
     	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
-		let regexEmail = /^\w{4,13}@\w{4,8}.[a-z]{2,3}$/;
+		let regexEmail = /^\w{2,16}@\w{4,8}.[a-z]{2,3}$/;
 		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let imgRequired = `<span>필수항목입니다.</span>`;

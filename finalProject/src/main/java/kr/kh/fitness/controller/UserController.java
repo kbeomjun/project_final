@@ -1,13 +1,19 @@
 package kr.kh.fitness.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -157,8 +163,12 @@ public class UserController {
             log.info("DB에서 자동 로그인 정보 삭제 완료: 사용자 ID - " + user.getMe_id());
             // 세션에서 사용자 정보 제거 (로그아웃 처리)
             session.removeAttribute("user");
-            session.removeAttribute("socialType");
             log.info("세션에서 사용자 정보 제거 완료");
+
+			session.removeAttribute("token");
+			session.removeAttribute("socialType");
+			log.info("세션에서 소셜 토큰 정보 제거 완료");
+
         }
 
         // 로그아웃 시 쿠키 삭제
@@ -485,6 +495,7 @@ public class UserController {
 	            	memberService.setAutoLoginCookie(user, response);
 	        		session.removeAttribute("socialAutoLogin");
 	        	}
+	        	session.setAttribute("access_token", token);
 	            session.setAttribute("user", user);
 	            session.setAttribute("socialType", socialType);
 	            model.addAttribute("msg", user.getMe_id() + "님 환영합니다 \\n(" + socialType + " 계정으로 로그인 했습니다.)");
@@ -556,7 +567,5 @@ public class UserController {
 		return autoLogin==1?true:false;
 		
     }
-
-	
     
 }
