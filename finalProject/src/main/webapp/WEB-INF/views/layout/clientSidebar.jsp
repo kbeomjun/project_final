@@ -38,10 +38,10 @@
 							<a id="reviewMenu" class="lnb__link" href="<c:url value='/client/review/list'/>">리뷰게시판</a>
 						</li>
 						<li class="lnb__item">
-							<a id="faqMenu" class="lnb__link" href="<c:url value='/client/inquiry/faq'/>">자주묻는질문</a>
+							<a id="faqMenu" class="lnb__link" href="<c:url value='/client/inquiry/faq'/>">자주 묻는 질문</a>
 						</li>
 						<li class="lnb__item">
-							<a id="inquiryMenu" class="lnb__link" href="<c:url value='/client/inquiry/insert'/>">1:1문의</a>
+							<a id="inquiryMenu" class="lnb__link" href="<c:url value='/client/inquiry/insert'/>">1:1 문의</a>
 						</li>
 					</ul>
 				</section>

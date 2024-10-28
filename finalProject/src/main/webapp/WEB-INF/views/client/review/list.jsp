@@ -6,13 +6,6 @@
 <html>
 <head>
 <title>리뷰게시글 목록</title>
-	<style type="text/css">
-		.error{color : red;}
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
 </head>
 <body>
 
@@ -32,7 +25,7 @@
 			<!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">
 				<div class="sub_title_wrap">
-					<h2 class="sub_title">리뷰게시글 목록</h2>
+					<h2 class="sub_title">리뷰게시판</h2>
 				</div>
 				
 				<div class="table_wrap">
