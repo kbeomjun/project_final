@@ -48,7 +48,7 @@
     background-image: url("../image/icon/ic_minus.svg");
 }
 
-.contentWarp {
+.content_wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
