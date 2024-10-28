@@ -75,7 +75,7 @@
 									<label for="rp_content">내용</label>
 								</th>
 								<td>
-									<div class="form-group" style="min-height: 300px; height:auto;">${review.rp_content}</div>
+									<div class="form-group">${review.rp_content}</div>
 								</td>
 							</tr>																											
 						</tbody>
@@ -87,8 +87,8 @@
 						
 						<div>
 							<c:if test="${review.pa_me_id eq user.me_id }">
-								<a href="<c:url value="/client/review/update/${review.rp_num}"/>" class="btn btn-outline-warning ml-2">수정</a>
-								<a href="<c:url value="/client/review/delete/${review.rp_num}"/>" class="btn btn-outline-danger ml-2" 
+								<a href="<c:url value="/client/review/update/${review.rp_num}"/>" class="btn btn_insert ml-2">수정</a>
+								<a href="<c:url value="/client/review/delete/${review.rp_num}"/>" class="btn btn_cancel ml-2" 
 											onclick="return confirm('삭제하면 해당 결제내역의 리뷰 게시글은 다시 작성할 수 없습니다. 삭제하시겠습니까?');">삭제</a>
 							</c:if>
 						</div>
