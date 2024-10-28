@@ -19,7 +19,7 @@ public interface ClientService {
 	
 	MemberVO getMember(String me_id);
 
-	List<ReviewPostVO> getReviewPostList(Criteria cri);
+	List<ReviewPostVO> getReviewPostList();
 
 	void updateReviewPostView(int rp_num);
 
@@ -37,8 +37,6 @@ public interface ClientService {
 
 	String deleteReviewPost(int rp_num);
 
-	PageMaker getPageMakerInReview(Criteria cri);
-
 	List<InquiryTypeVO> getInquiryTypeList();
 	
 	List<MemberInquiryVO> getFaqList(String category, Criteria cri);
@@ -47,9 +45,7 @@ public interface ClientService {
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);
 
-	List<BranchProgramScheduleVO> getReservationList(String view, String me_id, Criteria cri);
-
-	PageMaker getPageMakerInSchedule(String view, String me_id, Criteria cri);
+	List<BranchProgramScheduleVO> getReservationList(String view, String me_id);
 
 	ProgramReservationVO getReservation(int pr_num);
 	
@@ -57,9 +53,7 @@ public interface ClientService {
 
 	void updateScheduleCurrent(int bs_num);
 
-	List<PaymentVO> getPaymentList(String me_id, Criteria cri);
-
-	PageMaker getPageMakerInMemberShip(String me_id, Criteria cri);
+	List<PaymentVO> getPaymentList(String me_id);
 
 	MembershipDTO getCurrentMembership(String me_id);
 
@@ -69,9 +63,7 @@ public interface ClientService {
 
 	RefundVO getRefund(int pa_num);
 
-	List<MemberInquiryVO> getInquiryList(String me_email, Criteria cri);
-
-	PageMaker getPageMakerInInquiry(String me_email, Criteria cri);
+	List<MemberInquiryVO> getInquiryList(String me_email);
 
 	MemberInquiryVO getInquiry(int mi_num);
 
@@ -90,5 +82,7 @@ public interface ClientService {
 	String checkSocial(MemberVO member, String social_type);
 
 	boolean unlinkSocialAccount(MemberVO user, String social_type);
+
+	List<ReviewPostVO> getMypageReviewPostList(String me_id);
 
 }

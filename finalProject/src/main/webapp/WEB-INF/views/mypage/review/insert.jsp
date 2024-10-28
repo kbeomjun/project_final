@@ -22,7 +22,6 @@
 					<form action="<c:url value="/mypage/review/insert"/>" method="post" id="form">
 						<input type="hidden" value="${pa_num}" name="rp_pa_num">
 						<input type="hidden" value="${me_id}" name="me_id">
-						<input type="hidden" value="${page}" name="page">
 						<div class="form-group">
 							<label for="rp_br_name">지점명:</label>
 							<select name="rp_br_name" class="custom-select mb-3 form-control">
@@ -48,7 +47,7 @@
 					</form>
 					<hr>
 					<div>
-						<a href="<c:url value="/mypage/membership?page=${page}"/>" class="btn btn-outline-danger col-12">취소</a>
+						<a href="<c:url value="/mypage/membership"/>" class="btn btn-outline-danger col-12">취소</a>
 					</div>
 					
 	            </div>

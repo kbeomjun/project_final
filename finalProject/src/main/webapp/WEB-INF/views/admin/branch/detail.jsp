@@ -12,7 +12,6 @@
     	.form-group{margin: 0;}
     	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
     	.file-input{border: 1px solid gray; border-radius: 5px;}
-    	.address-input{margin-bottom: 10px;}
     	.img-container{min-height: 400px;}
     	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 8px;}
     	.btn-delete-img, .btn-delete-img2{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
@@ -34,9 +33,11 @@
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${br.br_name} 상세</h2>
 					<form action="<c:url value="/admin/branch/update"/>" method="post" enctype="multipart/form-data" id="form">
+						<input type="hidden" name="me_id" value="${me.me_id}">
+						<input type="hidden" name="br_name" value="${br.br_name}">
 						<div class="form-group">
 							<label for="br_name">지점명:</label>
-							<input type="text" class="form-control" id="br_name" name="br_name" value="${br.br_name}" readonly>
+							<span>${br.br_name}</span>
 						</div>
 						<div class="error error-name"></div>
 						<div class="form-group">
@@ -45,11 +46,8 @@
 						</div>
 						<div class="error error-phone"></div>
 						<div class="form-group">
-							<label for="br_address">주소:</label> <br/>
-							<input type="text" class="address-input" id="br_postcode" name="br_postcode" placeholder="우편번호" style="width:130px;" value="${br.br_postcode}" readonly>
-							<input type="text" class="address-input" id="br_address" name="br_address" placeholder="주소" style="width:100%;" value="${br.br_address}" readonly> <br/>
-							<input type="text" class="address-input" id="br_detailAddress" name="br_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${br.br_detailAddress}" readonly>
-							<input type="text" class="address-input" id="br_extraAddress" name="br_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${br.br_extraAddress}" readonly>
+							<label for="br_address">주소:</label>
+							<span>(${br.br_postcode}) ${br.br_address}${br.br_extraAddress} ${br.br_detailAddress}</span>
 						</div>
 						<div class="error error-address"></div>
 						<div class="form-group">
@@ -58,7 +56,7 @@
 						</div>
 						<div class="form-group">
 							<label for="me_id">관리자 아이디:</label>
-							<input type="text" class="form-control" id="me_id" name="me_id" value="${me.me_id}" readonly>
+							<span>${me.me_id}</span>
 						</div>
 						<div class="error error-id"></div>
 						<div class="form-group">
@@ -73,7 +71,7 @@
 						<div class="error error-pw2"></div>
 						<div class="form-group">
 							<label for="me_email">관리자 이메일:</label>
-							<input type="text" class="form-control" id="me_email" name="me_email" value="${me.me_email}">
+							<span>${me.me_email}</span>
 						</div>
 						<div class="error error-email"></div>
 						<div class="form-group">
@@ -238,20 +236,8 @@
     <script type="text/javascript">
 	 	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
-		let regexEmail = /^\w{6,13}@\w{4,8}.[a-z]{2,3}$/;
-		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let imgRequired = `<span>사진은 최소 1장 등록해야합니다.</span>`;
-		
-		$('#br_name').keyup(function(){
-			$('.error-name').children().remove();
-			
-			if($('#br_name').val() == ''){
-				$('.error-name').append(msgRequired);
-			}else{
-				$('.error-name').children().remove();	
-			}
-		});
 		
 		$('#br_phone').keyup(function(){
 			$('.error-phone').children().remove();
@@ -260,26 +246,6 @@
 				$('.error-phone').append(msgRequired);
 			}else{
 				$('.error-phone').children().remove();	
-			}
-		});
-		
-		$('#br_detailAddress').keyup(function(){
-			$('.error-address').children().remove();
-			
-			if($('#br_address').val() == '' || $('#br_detailAddress').val() == ''){
-				$('.error-address').append(msgRequired);
-			}else{
-				$('.error-address').children().remove();	
-			}
-		});
-		
-		$('#me_id').keyup(function(){
-			$('.error-id').children().remove();
-			
-			if($('#me_id').val() == ''){
-				$('.error-id').append(msgRequired);
-			}else{
-				$('.error-id').children().remove();	
 			}
 		});
 		
@@ -303,20 +269,6 @@
 			}
 		});
 		
-		$('#me_email').keyup(function(){
-			$('.error-email').children().remove();
-			
-			if($('#me_email').val() == ''){
-				$('.error-email').append(msgRequired);
-			}else{
-				if(!regexEmail.test($('#me_email').val())){
-					$('.error-email').append(msgEmail);
-				}else{
-					$('.error-email').children().remove();
-				}
-			}
-		});
-		
 		$("#fileList").change(function(){
 			$('.error-file').children().remove();
 			
@@ -333,27 +285,9 @@
 			let flag = true;
 			var count = $('#fileList')[0].files.length + ${bfList.size()} - del;
 			
-			if($('#br_name').val() == ''){
-				$('.error-name').append(msgRequired);
-				$('#br_name').focus();
-				flag = false;
-			}
-			
 			if($('#br_phone').val() == ''){
 				$('.error-phone').append(msgRequired);
 				$('#br_phone').focus();
-				flag = false;
-			}
-			
-			if($('#br_address').val() == '' || $('#br_detailAddress').val() == ''){
-				$('.error-address').append(msgRequired);
-				$('#br_detailAddress').focus();
-				flag = false;
-			}
-			
-			if($('#me_id').val() == ''){
-				$('.error-id').append(msgRequired);
-				$('#me_id').focus();
 				flag = false;
 			}
 			
@@ -369,18 +303,6 @@
 				flag = false;
 			}
 			
-			if($('#me_email').val() == ''){
-				$('.error-email').append(msgRequired);
-				$('#me_email').focus();
-				flag = false;
-			}else{
-				if(!regexEmail.test($('#me_email').val())){
-					$('.error-email').append(msgEmail);
-					$('#me_email').focus();
-					flag = false;
-				}
-			}
-			
 			if(count == 0){
 				$('.error-file').append(imgRequired);
 				flag = false;
@@ -391,55 +313,7 @@
     </script>
     
     <script type="text/javascript">
-    	// 주소 api, 썸머노트
-	    function addressPostcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	
-	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                if(data.userSelectedType === 'R'){
-	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("br_extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("br_extraAddress").value = '';
-	                }
-	
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('br_postcode').value = data.zonecode;
-	                document.getElementById("br_address").value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("br_detailAddress").focus();
-	            }
-	        }).open();
-	    }
-    	
+    	// 썸머노트
 	    $('#br_detail').summernote({
 			  tabsize: 2,
 			  height: 350

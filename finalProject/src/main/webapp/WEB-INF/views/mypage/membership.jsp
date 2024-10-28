@@ -7,35 +7,39 @@
 <html>
 <head>
 <title>마이페이지</title>
-<style>
-    .info-box {
-        border: 1px solid #ccc;
-        padding: 15px;
-        margin: 10px;
-        border-radius: 5px;
-        width: 45%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .info-box h5 {
-        margin-bottom: 10px;
-    }
-
-    .info-box .content {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .info-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        margin-bottom: 20px;
-    }
-</style>
+	<style>
+	    .info-box {
+	        border: 1px solid #ccc;
+	        padding: 15px;
+	        margin: 10px;
+	        border-radius: 5px;
+	        width: 45%;
+	        display: flex;
+	        flex-direction: column;
+	    }
+	
+	    .info-box h5 {
+	        margin-bottom: 10px;
+	    }
+	
+	    .info-box .content {
+	        flex-grow: 1;
+	        display: flex;
+	        flex-direction: column;
+	        justify-content: center;
+	    }
+	
+	    .info-container {
+	        display: flex;
+	        justify-content: space-between;
+	        align-items: stretch;
+	        margin-bottom: 20px;
+	    }
+	   	#thead th{text-align: center;}
+	   	#tbody td{text-align: center;}
+	   	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+	   	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}    
+	</style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -79,8 +83,8 @@
 	                    </div>
 	                </div>
 	                
-					<table class="table text-center">
-						<thead>
+					<table class="table text-center" id="table">
+						<thead id="thead">
 							<tr>
 								<th>결제유형</th>
 								<th>결제날짜</th>
@@ -92,7 +96,7 @@
 								<th>환불내역</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach items="${paymentList}" var="list">
 								<tr>
 									<td>${list.pt_name}</td>
@@ -112,7 +116,7 @@
 										<c:choose>
 											<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
 											<c:otherwise>
-												<a href="<c:url value="/mypage/review/insert/${list.pa_num}/${pm.cri.page}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
+												<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
 											</c:otherwise>
 										</c:choose>
 									</td>
@@ -121,53 +125,14 @@
 										<c:if test="${list.pa_state eq '환불완료'}">
 											<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn-outline-danger btn-sm">환불내역확인</a>
 										</c:if>
+										<c:if test="${list.pa_state ne '환불완료'}">
+											-
+										</c:if>										
 									</td>
 								</tr>
 							</c:forEach>
-							<c:if test="${paymentList.size() eq 0}">
-								<tr>
-									<th class="text-center" colspan="8">결제 내역이 없습니다.</th>							
-								</tr>
-							</c:if>
 						</tbody>
 					</table>
-					
-					<c:if test="${pm.totalCount ne 0}">
-						<ul class="pagination justify-content-center">
-							<c:if test="${pm.prev}">
-								<c:url var="url" value="/mypage/membership">
-									<c:param name="page" value="${pm.startPage - 1}"/>
-								</c:url>
-								<li class="page-item">
-									<a class="page-link" href="${url}">이전</a>
-								</li>
-							</c:if>
-							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<c:url var="url" value="/mypage/membership">
-									<c:param name="page" value="${i}"/>
-								</c:url>
-								<c:choose>
-									<c:when test="${pm.cri.page eq i}">
-										<c:set var="active" value="active"/>
-									</c:when>
-									<c:otherwise>
-										<c:set var="active" value=""/>
-									</c:otherwise>
-								</c:choose>
-								<li class="page-item ${active}">
-									<a class="page-link" href="${url}">${i}</a>
-								</li>
-							</c:forEach>
-							<c:if test="${pm.next}">
-								<c:url var="url" value="/mypage/membership">
-									<c:param name="page" value="${pm.endPage + 1}"/>
-								</c:url>
-								<li class="page-item">
-									<a class="page-link" href="${url}">다음</a>
-								</li>
-							</c:if>
-						</ul>
-					</c:if>
 					
 					<div id="refundDetail" class="mt-3"></div>
 					
@@ -175,8 +140,32 @@
 	        </main>
 	    </div>
 	</div>
+
+	<script type="text/javascript">
+		// 데이터테이블
+		$('#table').DataTable({
+			language: {
+				search: "",
+		        zeroRecords: "",
+		        emptyTable: "",
+		        lengthMenu: ""
+		    },
+			scrollY: 500,
+		    pageLength: 10,
+		    info: false,
+		    stateSave: true,
+		    searching: false,
+		    stateDuration: 300,
+		    order: [[ 1, "desc" ]],
+		    columnDefs: [
+		    	{ targets: [5, 6, 7], orderable: false },
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
+		    ]
+		});
+	</script>
 	
 	<script type="text/javascript">
+		//환불내역확인 불러오기 ajax
 	    function loadRefundDetail(pa_num) {
 	        $.ajax({
 	        	async: true,
@@ -215,9 +204,16 @@
 	        }
 
 	        html += '</tbody></table>';
+	        
+	        html += '<button type="button" onclick="closeRefundDetail()">닫기</button>';
 
 	        // refundDetail div에 HTML 추가
 	        $('#refundDetail').html(html);
+	        
+	    }
+	    
+	    function closeRefundDetail() {
+	        $('#refundDetail').html(''); // 환불 내역 숨기기
 	    }
 
 	</script>
