@@ -795,6 +795,84 @@ ion-icon{
   color: #666666;
 }
 
+/* tab */
+.sub_hd_wrap:has(.search_bar_wrap) .tab_list{
+  margin-bottom: 20px;
+}
+.tab_list{
+  display: flex;
+  margin-bottom: 40px;
+}
+.tab_item{
+  margin: 0px 5px;
+}
+.tab_item:first-child{
+  margin-left: 0px;
+}
+.tab_link{
+  min-width: 100px;
+  border: 1px solid #111;
+  border-radius: 56px;
+  padding: 6px;
+  color: #111;
+  background-color: #fff;
+}
+.tab_link._active{
+  background-color: #111;
+  color: #fff;
+}
+/* tab end */
+
+/* 검색 */
+.search_bar_wrap{
+  display: flex;
+  margin-bottom: 40px;
+}
+.search_bar_wrap select.form-control{
+  flex: 0 0 120px;
+  width: 120px;
+  height: initial;
+  min-height: 40px;
+  border: 1px solid #EBEBEB;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #999;
+  background-image: url("../image/icon/ic_select_down.svg");
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+}
+.search_bar{
+  position: relative;
+  flex: 1 1 auto;
+  margin-left: 10px;
+}
+.search_bar_wrap input.form-control{
+  height: initial;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #EBEBEB;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #111;
+}
+.btn_search{
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  flex: 0 0 40px;
+  min-width: 40px;
+  height: 40px;
+  border: none;
+  padding: 0px;
+  color: transparent;
+  background: url("../image/icon/ic_search.svg") no-repeat;
+  background-size: 25px;
+  background-position: center;
+}
+/* 검색 end */
+
 
 
 
@@ -812,7 +890,7 @@ ion-icon{
   color: #111111;
 }
 .table tbody tr:first-child th{
-  text-align: left;
+  text-align: left !important;
 }
 .table tbody th{
   text-align: left;
@@ -855,32 +933,6 @@ ion-icon{
   width: 100%;
 }
 /* table end */
-
-
-/* tab */
-.tab_list{
-  display: flex;
-  margin-bottom: 40px;
-}
-.tab_item{
-  margin: 0px 5px;
-}
-.tab_item:first-child{
-  margin-left: 0px;
-}
-.tab_link{
-  min-width: 100px;
-  border: 1px solid #111;
-  border-radius: 56px;
-  padding: 6px;
-  color: #111;
-  background-color: #fff;
-}
-.tab_link._active{
-  background-color: #111;
-  color: #fff;
-}
-/* tab end */
 
 
 

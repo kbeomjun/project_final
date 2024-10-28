@@ -143,17 +143,30 @@
 					<div class="sub_title_wrap">
 						<h2 class="sub_title">자주 묻는 질문</h2>
 					</div>
-					<ul class="tab_list">
-						<li class="tab_item"><button type="submit" name="category" value="all" class="tab_link _active">전체</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="PT문의" class="tab_link">PT문의</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="건의사항" class="tab_link">건의사항</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="기타" class="tab_link">기타</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="서비스 불만" class="tab_link">서비스 불만</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="시설문의" class="tab_link">시설문의</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="이용문의" class="tab_link">이용문의</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="청결관리" class="tab_link">청결관리</button></li>
-						<li class="tab_item"><button type="submit" name="category" value="환불문의" class="tab_link">환불문의</button></li>
-					</ul>
+					<div class="sub_hd_wrap">
+						<ul class="tab_list">
+							<li class="tab_item"><button type="submit" name="category" value="all" class="tab_link _active">전체</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="PT문의" class="tab_link">PT문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="건의사항" class="tab_link">건의사항</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="기타" class="tab_link">기타</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="서비스 불만" class="tab_link">서비스 불만</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="시설문의" class="tab_link">시설문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="이용문의" class="tab_link">이용문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="청결관리" class="tab_link">청결관리</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="환불문의" class="tab_link">환불문의</button></li>
+						</ul>
+						<div class="search_bar_wrap">
+							<select class="form-control custom-select" name="type">
+								<option value="all">전체</option>
+								<option value="title">제목</option>
+								<option value="content">내용</option>
+							</select>
+							<div class="search_bar">
+								<input type="text" class="form-control" placeholder="검색어" name="search" value="">
+								<button type="submit" class="btn btn_search"></button>
+							</div>
+						</div>
+					</div>
 					<div class="faqList">
 						<div class="faq-item">
 							<div class="faq-question">

@@ -63,48 +63,6 @@
     max-width: 70%; /* 탭의 최대 너비를 70%로 제한 */
 }
 
-.searchBoxWarp {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-grow: 1;
-    max-width: 30%; /* 검색 박스의 최대 너비를 30%로 설정 */
-   }
-
-.searchTextBox {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    max-width: 100%;
-}
-   
-.searchTextBox select {
-	height: auto;
-    width: 100px; /* 원하는 너비 값 설정 */
- max-width: 100%; /* 너비가 너무 커지지 않도록 제한 */
-}
-
-.searchTextBox input {
-    border: none;
-    padding: 10px;
-    outline: none;
-    flex-grow: 1;
-    width: 200px;
- max-width: 100%;
-}
-
-.searchTextBox button {
-    border: none;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    cursor: pointer;
-    white-space: nowrap;
-    height: auto;
-}
-
 .noList {
     text-align: center;
     background-color: #f8f9fa; /* 연한 배경색 */
