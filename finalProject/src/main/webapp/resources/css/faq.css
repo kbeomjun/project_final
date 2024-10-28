@@ -70,7 +70,7 @@
     background-image: url("../image/icon/ic_minus.svg");
 }
 
-.contentWarp {
+.content_wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -85,7 +85,7 @@
     max-width: 70%; /* 탭의 최대 너비를 70%로 제한 */
 }
 
-.searchBoxWarp {
+.searchBox_wrap {
     display: flex;
     align-items: center;
     justify-content: flex-end;
