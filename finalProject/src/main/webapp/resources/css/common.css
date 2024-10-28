@@ -26,6 +26,14 @@ button {
   cursor: pointer;
 }
 
+textarea{
+  resize: none;
+}
+
+p{
+  margin-bottom: 0px;
+}
+
 a:hover{
   text-decoration: none;
 }
@@ -94,6 +102,10 @@ dl, ol, ul{
 
 .textMiddle > *, .ulStyle.type02 li > * {
   vertical-align: middle;
+}
+
+label{
+  margin: 0px;
 }
 
 /* text 생략 */
@@ -178,6 +190,23 @@ dl, ol, ul{
   background-color: #fff;
 }
 
+/* color */
+.color_red{
+  color: #f00;
+}
+
+/* text */
+.text_small{
+  font-size: 11px;
+}
+
+/* 특수문자 */
+._asterisk::after{
+  content: "*";
+  font-size: 16px;
+  font-weight: 600;
+  color: #f00
+}
 
 /* 스크롤 */
 ::-webkit-scrollbar {
@@ -766,29 +795,47 @@ ion-icon{
   color: #666666;
 }
 
+
+
+
+
+
 /* table */
 .table{
   margin-bottom: 40px;
 }
-.table thead th{
+.table thead th, .table tbody tr:first-child th{
   border-top: 2px solid #111111;
   border-bottom: 1px solid #EBEBEB;
   text-align: center;
   font-weight: 600;
   color: #111111;
 }
+.table tbody tr:first-child th{
+  text-align: left;
+}
+.table tbody th{
+  text-align: left;
+  font-weight: 600;
+  color: #111;
+}
+.table tbody th, .table tbody td{
+  vertical-align: baseline;
+}
 .table td, .table th{
   font-size: 16px;
   padding: 20px;
   font-weight: 400;
-  border-top: 1px solid #EBEBEB;
+  border-bottom: 1px solid #EBEBEB;
   color: #666666;
 }
-.table tbody tr:last-child td{
+.table tbody tr:first-child td{
+  border-top: 2px solid #111111;
   border-bottom: 1px solid #EBEBEB;
 }
 .btn_wrap{
   display: flex;
+  margin-top: 40px;
 }
 .btn_wrap+.btn_wrap{
   margin-top: 30px;
@@ -803,6 +850,77 @@ ion-icon{
   justify-content: flex-end;
   width: 100%;
 }
+/* table end */
+
+
+/* bootstrap strain */
+.form-group{
+  margin-bottom: 0px;
+  height: initial;
+}
+.form-control.custom-select{
+  height: initial;
+  width: 200px;
+  border: 1px solid #EBEBEB;
+  border-radius: 5px;
+  padding: 13px 13px 13px 20px;
+  font-size: 16px;
+  color: #999;
+  background-image: url("../image/icon/ic_select_down.svg");
+  background-size: 24px 24px;
+}
+.custom-select.w100{
+  width: 100%;
+}
+.form-control{
+  height: initial;
+  width: 100%;
+  border: 1px solid #EBEBEB;
+  border-radius: 5px;
+  padding: 13px 13px 13px 20px;
+  font-size: 16px;
+  color: #111;
+}
+.form-control::placeholder{
+  color: #999;
+}
+textarea.form-control{
+  height: 180px;
+}
+.form-control.w_email{
+  width: 335px;
+}
+.form-control.w_email2{
+  flex: 1 1 auto;
+}
+.email_at{
+  margin: 0px 10px;
+}
+.email_at+.form-control.custom-select{
+  margin-right: 15px;
+}
+/* bootstrap strain end */
+
+
+/* 개인정보동의 */
+.privacy_consent_wrap{
+  width: 100%;
+  padding: 35px 32px;
+  background-color: #F5F5F5;
+}
+.privacy_consent_title{
+  font-size: 16px;
+  color: #111;
+}
+.privacy_consent_text{
+  margin-top: 14px;
+  font-size: 14px;
+  color: #666;
+}
+
+
+
+
 
 
 /* btn_black, btn_white */
