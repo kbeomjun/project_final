@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 				<style>
-					.nav-link.active {
+					.nav-link._active {
 					    font-weight: bold;
 					}			
 				</style>
@@ -23,14 +23,14 @@
 				            var href = $(this).attr('href');
 				            
 				            if(isReviewMenu == 'review'){
-				            	$('#reviewMenu').addClass('active');
+				            	$('#reviewMenu').addClass('_active');
 				            	return;
 				            }
 				            
 			               	if(href === currentPath){
-			            		$(this).addClass('active');				            		
+			            		$(this).addClass('_active');				            		
 			            	} else{
-				                $(this).removeClass('active');
+				                $(this).removeClass('_active');
 			            	}
 			               	
 				        });

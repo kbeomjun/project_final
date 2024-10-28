@@ -15,10 +15,10 @@
 						color: #333;
 						text-decoration: none;				        
 				    }
-					.nav-link.active {
+					.nav-link._active {
 					    font-weight: bold;
 					}		
-					.submenu .nav-link.active {
+					.submenu .nav-link._active {
 					    font-weight: bold;
 					}							    
 				</style>
@@ -33,9 +33,9 @@
 				        // 메뉴와 서브메뉴를 동적으로 열어주는 함수
 				        function activateMenu(mainMenuId, subMenuId) {
 				            $('#' + mainMenuId).next('.submenu').show();
-				            $('#' + mainMenuId).addClass('active');
+				            $('#' + mainMenuId).addClass('_active');
 				            if (subMenuId) {
-				                $('#' + subMenuId).addClass('active');
+				                $('#' + subMenuId).addClass('_active');
 				            }
 				        }
 	

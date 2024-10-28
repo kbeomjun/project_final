@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 				
 				<style>
-					.nav-link.active {
+					.nav-link._active {
 					    font-weight: bold;
 					}			
 				</style>			
@@ -25,7 +25,7 @@
 	
 				        // 메뉴 활성화 함수
 						function activateMenu(menuId) {
-						    $('#' + menuId).addClass('active');
+						    $('#' + menuId).addClass('_active');
 						}
 	
 				        // 조건에 따라 메뉴 및 서브 메뉴 활성화 설정
@@ -47,7 +47,7 @@
 				            $('.sidebar-sticky .nav-link').each(function() {
 				                var href = $(this).attr('href');
 				                if (href === currentPath) {
-				                    $(this).addClass('active');
+				                    $(this).addClass('_active');
 				                }
 				            });
 				        }
