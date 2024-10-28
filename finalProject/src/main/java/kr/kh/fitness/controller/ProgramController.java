@@ -77,13 +77,14 @@ public class ProgramController {
 		int month = today.getMonthValue() - 1;
 		int day = today.getDayOfMonth();
 
-		return programSchedule(model, year, month, day, "null", "null");
+		return programSchedule(model, year, month, day, "null", "null", false);
 	}
 
-	@GetMapping("/schedule/{year}/{month}/{day}/{br_name}/{pr_name}")
+	@GetMapping("/schedule/{year}/{month}/{day}/{br_name}/{pr_name}/{is_resrvation}")
 	public String programSchedule(Model model, @PathVariable("year") Integer inputYear,
 			@PathVariable("month") Integer inputMonth, @PathVariable("day") Integer inputDay,
-			@PathVariable("br_name") String br_name, @PathVariable("pr_name") String pr_name) {
+			@PathVariable("br_name") String br_name, @PathVariable("pr_name") String pr_name
+			,@PathVariable("is_resrvation") boolean showModal ) {
 		
 		log.info("/program/schedule : Arg");
 		
@@ -172,6 +173,7 @@ public class ProgramController {
 		
 		model.addAttribute("nowDate", nowDate);
 		
+		model.addAttribute("showModal", showModal);
 		return "/program/schedule";
 	}
 	
@@ -193,6 +195,7 @@ public class ProgramController {
 	
 		String prevUrl = request.getHeader("Referer");
 		if (prevUrl != null) {
+			prevUrl = prevUrl.replace("true", "false");
 			model.addAttribute("url", prevUrl);
 		}
 		else {
@@ -237,7 +240,9 @@ public class ProgramController {
 		
 		model.addAttribute("msg", "기한이 지난 프로그램입니다.");
 		String prevUrl = request.getHeader("Referer");
+		
 		if (prevUrl != null) {
+			prevUrl = prevUrl.replace("true", "false");
 			model.addAttribute("url", prevUrl);
 		}
 		else {

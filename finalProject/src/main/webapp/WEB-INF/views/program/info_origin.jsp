@@ -4,71 +4,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="<c:url value="/resources/css/program/info.css"/>">
-<style type="text/css">
+<!-- CSS -->
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<!-- JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-}</style>
+<!-- Swiper -->
+<link rel="stylesheet" href="<c:url value="/resources/css/swiper.css"/>">
+<style>
+#program-image {
+	text-align: center;
+}
+</style>
 </head>
 <body>
 	<!-- <h1>프로그램 안내</h1> -->
-	<div class="navbar">
-		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램
-			안내</a> <a class="btn " href="<c:url value="/program/schedule"/>">프로그램
-			일정</a>
+	<a class="btn btn-dark br-3" href="<c:url value="/program/info"/>">프로그램
+		안내</a>
+	<a class="btn btn-outline-dark"
+		href="<c:url value="/program/schedule"/>">프로그램 일정</a>
+	<div id="program-button-group" class="mt-3">
+		<c:forEach items="${list}" var="sp" varStatus="status">
+			<c:choose>
+				<c:when test="${status.index == 0}">
+					<c:set var="outline" value="" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="outline" value="outline-" />
+				</c:otherwise>
+			</c:choose>
+			<button id="btn-sp-${status.index}"
+				class="btn btn-${outline }primary" data-detail="${sp.sp_detail}"
+				data-num="${status.index}" data-name="${sp.sp_name}"
+				onclick="showDetail(this)">${sp.sp_name}</button>
+		</c:forEach>
 	</div>
-	<div class="main-container">
-		<div id="program-button-group" class="sidebar">
-			<c:forEach items="${list}" var="sp" varStatus="status">
-				<c:choose>
-					<c:when test="${status.index == 0}">
-						<c:set var="selected" value="" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="selected" value="selected" />
-					</c:otherwise>
-				</c:choose>
-				<button id="btn-sp-${status.index}" class="btn ${selected }"
-					data-detail="${sp.sp_detail}" data-num="${status.index}"
-					data-name="${sp.sp_name}" onclick="showDetail(this)">${sp.sp_name}</button>
-			</c:forEach>
-		</div>
-
-
-		<!-- Main Content -->
-		<div class="main-content">
-			<div id="program-image" class="mb-3">
-				<div class="swiper-container">
-					<div class="swiper-wrapper" id="swiper-wrapper">
-						<div class="swiper-slide"></div>
-						<div class="swiper-slide"></div>
-						<div class="swiper-slide"></div>
-					</div>
-					<div class="swiper-button-next">&gt;</div>
-					<div class="swiper-button-prev">&lt;</div>
-					<div class="swiper-pagination"></div>
-					<div class="content-text">
-						<h2 id="program-name"></h2>
-						<div id="program-detail"></div>
-					</div>
-				</div>
+	<hr>
+	<div id="program-image" class="mb-3">
+		<div class="swiper-container">
+			<div class="swiper-wrapper" id="swiper-wrapper">
+				<div class="swiper-slide"></div>
+				<div class="swiper-slide"></div>
+				<div class="swiper-slide"></div>
 			</div>
+			<div class="swiper-button-next">&gt;</div>
+			<div class="swiper-button-prev">&lt;</div>
+			<div class="swiper-pagination"></div>
 		</div>
 	</div>
-	<!-- 		<div id="program-penalty"></div> -->
+	<div id="program-detail"></div>
+	<br>
+	<div id="program-penalty"></div>
 
 	<script>
 	const mySwiper = new Swiper('.swiper-container', {
 		  	// 옵션 설정
-			effect : 'fade', 
-			fadeEffect: { 
-			crossFade: true 
-			},
+			effect : 'fade',
 			loop: true,
 			slidesPerView: 1,
 			watchOverflow: true,
 			spaceBetween: 1500,
-			observer: true,  
-			observeParents: true,
 			navigation: {
 			    nextEl: '.swiper-button-next',
 			    prevEl: '.swiper-button-prev',
@@ -113,10 +109,12 @@
         buttons.forEach((button) => {
 	        if (button === selectedButton) {
 	            // 클릭된 버튼에는 btn-primary 추가
-	            button.classList.add("selected");
+	            button.classList.remove("btn-outline-primary");
+	            button.classList.add("btn-primary");
 	        } else {
 	            // 다른 버튼들은 btn-outline-primary로 설정
-	            button.classList.remove("selected");
+	            button.classList.remove("btn-primary");
+	            button.classList.add("btn-outline-primary");
 	        }
         });
         var programName = selectedButton.getAttribute('data-name');
@@ -144,16 +142,14 @@
         
 		// 클릭된 버튼의 data-detail 속성 값을 가져와서 표시
         var detail = selectedButton.getAttribute('data-detail');
-        var name = selectedButton.getAttribute('data-name');
         // detail-container에 클릭된 sp_detail을 표시
-        document.getElementById("program-name").innerHTML = name;
         document.getElementById("program-detail").innerHTML = detail;
-/*         if(selectedButton.getAttribute('data-num') != 0) {
+        if(selectedButton.getAttribute('data-num') != 0) {
         	document.getElementById("program-penalty").innerHTML = "노쇼(no show)일 경우 패널티가 있다는 안내";
         }
         else {
         	document.getElementById("program-penalty").innerHTML = "";
-        } */
+        }
     }
     
 	function getProgramImageNameList(programName, callback) {
