@@ -126,6 +126,7 @@
 			scrollY: 500,
 		    pageLength: 10,
 		    info: false,
+		    stateSave: true,
 		    order: [[ 3, "asc" ]],
 		    columnDefs: [
 		        { targets: [5, 6], orderable: false },
@@ -155,6 +156,7 @@
 					scrollY: 500,
 				    pageLength: 10,
 				    info: false,
+				    stateSave: true,
 				    order: [[ 3, "asc" ]],
 				    columnDefs: [
 				        { targets: [5, 6], orderable: false },
@@ -173,6 +175,8 @@
 					scrollY: 500,
 				    pageLength: 10,
 				    info: false,
+				    stateSave: true,
+				    stateDuration: 300,
 				    order: [[ 3, "desc" ]],
 				    columnDefs: [
 				        { targets: [5], orderable: false },

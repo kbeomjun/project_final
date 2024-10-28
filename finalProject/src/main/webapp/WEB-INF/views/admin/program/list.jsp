@@ -5,7 +5,6 @@
 <html>
 <head>
 <title>프로그램 목록</title>
-</head>
 	<style type="text/css">
 		.error{color : red;}
     	#thead th{text-align: center;}
@@ -13,6 +12,7 @@
     	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
     	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
     </style>
+</head>
 <body>
 	<c:if test="${not empty msg}">
 	    <script type="text/javascript">
@@ -156,6 +156,8 @@
 			scrollY: 500,
 		    pageLength: 10,
 		    info: false,
+		    stateSave: true,
+		    stateDuration: 300,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
 		        { targets: [3, 4], orderable: false },

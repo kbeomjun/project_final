@@ -31,8 +31,6 @@ import kr.kh.fitness.model.vo.PaymentVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
-import kr.kh.fitness.pagination.Criteria;
-import kr.kh.fitness.pagination.PageMaker;
 import kr.kh.fitness.service.ClientService;
 import kr.kh.fitness.service.MemberService;
 import kr.kh.fitness.service.MemberServiceImp;
@@ -54,21 +52,17 @@ public class MypageController {
 	
 	//마이페이지 회원권 내역
 	@GetMapping("/membership")
-	public String mypageMembership(Model model, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mypageMembership(Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 
-		cri.setPerPageNum(5);
-		
-		List<PaymentVO> paymentList = clientService.getPaymentList(user.getMe_id(), cri);
-		PageMaker pm = clientService.getPageMakerInMemberShip(user.getMe_id(), cri);
+		List<PaymentVO> paymentList = clientService.getPaymentList(user.getMe_id());
 		
 		MembershipDTO currentMembership = clientService.getCurrentMembership(user.getMe_id());
 		MembershipDTO currentPT = clientService.getCurrentPT(user.getMe_id());
 		
 		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("paymentList", paymentList);
-		model.addAttribute("pm", pm);
 		model.addAttribute("currentMembership", currentMembership);
 		model.addAttribute("currentPT", currentPT);
 		
@@ -76,9 +70,8 @@ public class MypageController {
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 get
-	@GetMapping("/review/insert/{pa_num}/{page}")
-	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, @PathVariable("page")int page,
-										HttpSession session, RedirectAttributes redirectAttributes) {
+	@GetMapping("/review/insert/{pa_num}")
+	public String mypageReviewInsert(Model model, @PathVariable("pa_num")int pa_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    PaymentVO payment = clientService.getpayment(pa_num);
@@ -92,21 +85,20 @@ public class MypageController {
 		
 		model.addAttribute("pa_num", pa_num);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("page", page);
 		model.addAttribute("branchList", branchList);
 		return "/mypage/review/insert";
 	}
 	
 	//마이페이지 회원권 -> 리뷰 작성 post
 	@PostMapping("/review/insert")
-	public String mypageReviewInsertPost(Model model, ReviewPostVO review, String me_id, int page) {
+	public String mypageReviewInsertPost(Model model, ReviewPostVO review, String me_id) {
 		
 		String msg = clientService.insertReviewPost(review);
 		
 		if(msg == "") {
-			model.addAttribute("url", "/mypage/membership?page=" + page);
+			model.addAttribute("url", "/mypage/membership");
 		} else {
-			model.addAttribute("url", "/mypage/review/insert/" + review.getRp_pa_num() + "/" + page);
+			model.addAttribute("url", "/mypage/review/insert/" + review.getRp_pa_num());
 		}
 		model.addAttribute("msg", msg);
 		return "/main/message";
@@ -127,19 +119,17 @@ public class MypageController {
 		
 	//마이페이지 스케줄 조회
 	@GetMapping("/schedule")
-	public String mypageSchedule(Model model, @RequestParam(value = "view", defaultValue = "present")String view, Criteria cri, HttpSession session) {
+	public String mypageSchedule(Model model, HttpSession session) {
 	    
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 
-		cri.setPerPageNum(5);
 		
-		List<BranchProgramScheduleVO> reservationList = clientService.getReservationList(view, user.getMe_id(), cri);
-		PageMaker pm = clientService.getPageMakerInSchedule(view, user.getMe_id(), cri);
+		List<BranchProgramScheduleVO> presentList = clientService.getReservationList("present", user.getMe_id());
+		List<BranchProgramScheduleVO> pastList = clientService.getReservationList("present", user.getMe_id());
 		
-		model.addAttribute("reservationList", reservationList);
-		model.addAttribute("view", view);
+		model.addAttribute("presentList", presentList);
+		model.addAttribute("pastList", pastList);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("pm", pm);
 		
 		return "/mypage/schedule";
 	}
@@ -169,27 +159,21 @@ public class MypageController {
 
 	//마이페이지 리뷰게시글 내역 조회
 	@GetMapping("/review/list")
-	public String mypageReviewList(Model model, Criteria cri, HttpSession session) {
+	public String mypageReviewList(Model model, HttpSession session) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 		
-		cri.setPerPageNum(5);
-		cri.setType("id");
-		cri.setSearch(user.getMe_id());
-		
-		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
-		PageMaker pm = clientService.getPageMakerInReview(cri);
+		List<ReviewPostVO> reviewList = clientService.getMypageReviewPostList(user.getMe_id());
 		
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("pm", pm);
 		
 		return "/mypage/review/list";
 	}
 	
 	//마이페이지 리뷰게시글 상세
 	@GetMapping("/review/detail/{rp_num}")
-	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, Criteria cri, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mypageReviewDetail(Model model, @PathVariable("rp_num")int rp_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    ReviewPostVO review = clientService.getReviewPost(rp_num);
@@ -203,7 +187,6 @@ public class MypageController {
 		
 		model.addAttribute("review", review);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("cri", cri);
 		
 		return "/mypage/review/detail";
 	}
@@ -265,25 +248,21 @@ public class MypageController {
 	
 	//마이페이지 문의내역 목록
 	@GetMapping("/inquiry/list")
-	public String mypageInquiryList(Model model, Criteria cri, HttpSession session) {
+	public String mypageInquiryList(Model model, HttpSession session) {
 		
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
-		cri.setPerPageNum(3);
-		
-		List<MemberInquiryVO> inquiryList = clientService.getInquiryList(user.getMe_email(), cri);
-		PageMaker pm = clientService.getPageMakerInInquiry(user.getMe_email(), cri);
+		List<MemberInquiryVO> inquiryList = clientService.getInquiryList(user.getMe_email());
 		
 		model.addAttribute("me_id", user.getMe_id());
 		model.addAttribute("inquiryList", inquiryList);
-		model.addAttribute("pm", pm);
 		
 		return "/mypage/inquiry/list";
 	}
 	
 	//마이페이지 문의내역 상세
 	@GetMapping("/inquiry/detail/{mi_num}")
-	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, int page, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String mypageInquiryDetail(Model model, @PathVariable("mi_num")int mi_num, HttpSession session, RedirectAttributes redirectAttributes) {
 		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		MemberInquiryVO inquiry = clientService.getInquiry(mi_num);
@@ -295,7 +274,6 @@ public class MypageController {
 		
 		model.addAttribute("inquiry", inquiry);
 		model.addAttribute("me_id", user.getMe_id());
-		model.addAttribute("page", page);
 		
 		return "/mypage/inquiry/detail";
 	}

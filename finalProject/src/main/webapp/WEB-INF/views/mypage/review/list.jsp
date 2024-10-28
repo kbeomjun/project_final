@@ -6,6 +6,13 @@
 <html>
 <head>
 <title>마이페이지</title>
+	<style type="text/css">
+		.error{color : red;}
+    	#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
+    </style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -19,8 +26,8 @@
 	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 	            <div class="pt-3 pb-2 mb-3">
 	                <h2>나의 작성글</h2>
-					<table class="table text-center">
-						<thead>
+					<table class="table text-center" id="table">
+						<thead id="thead">
 							<tr>
 								<th>번호</th>
 								<th>지점</th>
@@ -30,18 +37,13 @@
 								<th>조회수</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tbody">
 							<c:forEach items="${reviewList}" var="list">
 								<tr>
 									<td>${list.rp_num}</td>
 									<td>${list.rp_br_name}</td>
 									<td>
-										<c:url var="url" value="/mypage/review/detail/${list.rp_num}">
-											<c:param name="page" value="${pm.cri.page}"/>
-											<c:param name="type" value="${pm.cri.type}"/>
-											<c:param name="search" value="${pm.cri.search}"/>
-										</c:url>
-										<a href="${url}">${list.rp_title}</a>
+										<a href="<c:url value="/mypage/review/detail/${list.rp_num}"/>">${list.rp_title}</a>
 									</td>
 									<td>${list.pa_me_id}</td>
 									<td>
@@ -50,59 +52,35 @@
 									<td>${list.rp_view}</td>
 								</tr>
 							</c:forEach>
-							<c:if test="${reviewList.size() eq 0}">
-								<tr>
-									<th class="text-center" colspan="6">등록된 리뷰가 없습니다.</th>							
-								</tr>
-							</c:if>
 						</tbody>
 					</table>
 					
-					<c:if test="${pm.totalCount ne 0}">
-						<ul class="pagination justify-content-center">
-							<c:if test="${pm.prev}">
-								<c:url var="url" value="/mypage/review/list">
-									<c:param name="page" value="${pm.startPage - 1}"/>
-									<c:param name="type" value="${pm.cri.type}"/>
-									<c:param name="search" value="${pm.cri.search}"/>
-								</c:url>
-								<li class="page-item">
-									<a class="page-link" href="${url}">이전</a>
-								</li>
-							</c:if>
-							<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-								<c:url var="url" value="/mypage/review/list">
-									<c:param name="page" value="${i}"/>
-									<c:param name="type" value="${pm.cri.type}"/>
-									<c:param name="search" value="${pm.cri.search}"/>
-								</c:url>
-								<c:choose>
-									<c:when test="${pm.cri.page eq i}">
-										<c:set var="active" value="active"/>
-									</c:when>
-									<c:otherwise>
-										<c:set var="active" value=""/>
-									</c:otherwise>
-								</c:choose>
-								<li class="page-item ${active}">
-									<a class="page-link" href="${url}">${i}</a>
-								</li>
-							</c:forEach>
-							<c:if test="${pm.next}">
-								<c:url var="url" value="/mypage/review/list">
-									<c:param name="page" value="${pm.endPage + 1}"/>
-									<c:param name="type" value="${pm.cri.type}"/>
-									<c:param name="search" value="${pm.cri.search}"/>
-								</c:url>
-								<li class="page-item">
-									<a class="page-link" href="${url}">다음</a>
-								</li>
-							</c:if>
-						</ul>
-					</c:if>
 	            </div>
 	        </main>
 	    </div>
 	</div>
+	
+	<script type="text/javascript">
+		// 데이터테이블
+		$('#table').DataTable({
+			language: {
+		        search: "",
+		        searchPlaceholder: "검색",
+		        zeroRecords: "",
+		        emptyTable: "",
+		        lengthMenu: ""
+		    },
+			scrollY: 500,
+		    pageLength: 10,
+		    info: false,
+		    stateSave: true,
+		    stateDuration: 300,
+		    order: [[ 0, "desc" ]],
+		    columnDefs: [
+		        { targets: [0, 1, 2, 3, 4, 5], className: "align-content-center"}
+		    ]
+		});
+	</script>
+	
 </body>
 </html>
