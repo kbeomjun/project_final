@@ -807,7 +807,7 @@ ion-icon{
 .table thead th, .table tbody tr:first-child th{
   border-top: 2px solid #111111;
   border-bottom: 1px solid #EBEBEB;
-  text-align: center;
+  text-align: center !important;
   font-weight: 600;
   color: #111111;
 }
@@ -828,10 +828,14 @@ ion-icon{
   font-weight: 400;
   border-bottom: 1px solid #EBEBEB;
   color: #666666;
+  text-align: left !important;
 }
 .table tbody tr:first-child td{
   border-top: 2px solid #111111;
   border-bottom: 1px solid #EBEBEB;
+}
+.table:has(thead) tbody tr:first-child td{
+  border-top: none;
 }
 .btn_wrap{
   display: flex;
@@ -851,6 +855,33 @@ ion-icon{
   width: 100%;
 }
 /* table end */
+
+
+/* tab */
+.tab_list{
+  display: flex;
+  margin-bottom: 40px;
+}
+.tab_item{
+  margin: 0px 5px;
+}
+.tab_item:first-child{
+  margin-left: 0px;
+}
+.tab_link{
+  min-width: 100px;
+  border: 1px solid #111;
+  border-radius: 56px;
+  padding: 6px;
+  color: #111;
+  background-color: #fff;
+}
+.tab_link._active{
+  background-color: #111;
+  color: #fff;
+}
+/* tab end */
+
 
 
 /* bootstrap strain */

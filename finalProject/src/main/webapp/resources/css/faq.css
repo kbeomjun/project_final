@@ -1,52 +1,30 @@
 @charset "utf-8";
 
-.faq-item {
-    margin-bottom: 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-}
-
 .faq-question {
     cursor: pointer;
-    padding: 15px;
+    padding: 30px 20px;
     margin: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
-    transition: background-color 0.3s ease;
-    
-    font-family: 'Noto Sans';
-	font-style: normal;
-	font-weight: 600;
-	font-size: 20px;
-	line-height: 27px;
-	
+    border-top: 1px solid #EBEBEB;
 	color: #111111;
 }
-
-.faq-question:hover {
-    background-color: #e0e0e0;
+.faq-title-label, .faq-title{
+    font-size: 20px;
+    font-weight: 600;
+}
+.faq-title-label{
+    margin-right: 5px;
 }
 
 .faq-answer {
     display: none;
-    padding: 15px;
-    background-color: #ffffff;
-    border-top: 1px solid #ddd;
-    
-    font-family: 'Noto Sans';
-	font-style: normal;
+    padding: 30px 20px;
+	color: #111111;
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 27px;
-	/* or 169% */
-
-	color: #111111;
-}
-
-.faq-question em {
-    margin-right: 10px;
 }
 
 .faq-question span {
