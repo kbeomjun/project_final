@@ -251,7 +251,7 @@
 	</select>
 	
 	<select id="selectAdmin" resultType="MemberVO">
-		select * from member join branch on me_name = br_name where me_name = #{br_name}; 
+		select * from member join branch on me_name = br_name where me_name = #{br_name} and me_authority = "BRADMIN"; 
 	</select>
 	
 	<update id="updateBranch">
@@ -273,10 +273,9 @@
 	<update id="updateAdmin">
 		update member set
 			me_pw = #{me_pw},
-			me_email = #{me_email},
 			me_phone = #{me_phone}
 		where 
-			me_name = #{me_name};
+			me_id = #{me_id};
 	</update>
 	
 	<insert id="insertBranchFile">
@@ -287,18 +286,12 @@
 	<select id="selectEquipmentListInBranch" resultType="BranchStockDTO">
 		select 
 			be_se_name, sum(be_amount) as be_se_total
-			<if test="view == 'all'">
-				, be_birth
-			</if>
 		from 
 			branch_equipment_stock 
 		where 
 			be_br_name = #{br_name}
 		group by 
 			be_se_name
-			<if test="view == 'all'">
-				, be_birth 
-			</if>
 		having 
 			be_se_total >= 0
 	</select>

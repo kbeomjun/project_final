@@ -50,12 +50,7 @@
 						</div>
 						
 						<div class="d-flex justify-content-between">
-							<c:url var="url" value="/client/review/list">
-								<c:param name="page" value="${cri.page}"/>
-								<c:param name="type" value="${cri.type}"/>
-								<c:param name="search" value="${cri.search}"/>
-							</c:url>		
-							<a href="${url}" class="btn btn-outline-info">목록</a>
+							<a href="<c:url value="/client/review/list"/>" class="btn btn-outline-info">목록</a>
 							
 							<div>
 								<c:if test="${review.pa_me_id eq user.me_id }">

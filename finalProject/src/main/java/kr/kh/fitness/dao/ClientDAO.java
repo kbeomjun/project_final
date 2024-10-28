@@ -21,7 +21,7 @@ public interface ClientDAO {
 
 	MemberVO selectMember(String me_id);
 	
-	List<ReviewPostVO> selectReviewPostList(Criteria cri);
+	List<ReviewPostVO> selectReviewPostList();
 
 	void updateReviewPostView(int rp_num);
 
@@ -39,8 +39,6 @@ public interface ClientDAO {
 
 	boolean deleteReviewPost(int rp_num);
 
-	int selectReviewPostTotalCount(Criteria cri);
-
 	List<MemberInquiryVO> selectFaqList(@Param("ca")String category, @Param("cri")Criteria cri);
 	
 	int selectFaqTotalCount(@Param("ca")String category, @Param("cri")Criteria cri);
@@ -49,9 +47,7 @@ public interface ClientDAO {
 	
 	boolean insertInquiry(MemberInquiryVO inquiry);
 
-	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
-
-	int selectScheduleTotalCount(@Param("view")String view, @Param("me_id")String me_id, @Param("cri")Criteria cri);
+	List<BranchProgramScheduleVO> selectReservationList(@Param("view")String view, @Param("me_id")String me_id);
 
 	ProgramReservationVO selectReservation(int pr_num);
 
@@ -59,9 +55,7 @@ public interface ClientDAO {
 
 	void updateScheduleCurrent(int bs_num);
 
-	List<PaymentVO> selectPaymentList(@Param("me_id")String me_id, @Param("cri")Criteria cri);
-
-	int selectPaymentTotalCount(String me_id);
+	List<PaymentVO> selectPaymentList(String me_id);
 
 	MembershipDTO selectCurrentMembership(String me_id);
 
@@ -73,9 +67,7 @@ public interface ClientDAO {
 
 	RefundVO selectRefund(int pa_num);
 
-	List<MemberInquiryVO> selectInquiryList(@Param("me_email")String me_email, @Param("cri")Criteria cri);
-
-	int selectInquiryTotalCount(String me_email);
+	List<MemberInquiryVO> selectInquiryList(String me_email);
 
 	MemberInquiryVO selectInquiry(int mi_num);
 
@@ -93,5 +85,6 @@ public interface ClientDAO {
 
 	int updateSocialIdSetNull(@Param("user")MemberVO user, @Param("social_type")String social_type);
 
+	List<ReviewPostVO> selectMypageReviewPostList(String me_id);
 
 }

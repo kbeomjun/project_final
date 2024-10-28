@@ -6,145 +6,15 @@
 <html>
 <head>
 <title>자주 묻는 질문</title>
-<style>
-    .faq-item {
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f8f9fa;
-    }
-
-    .faq-question {
-        cursor: pointer;
-        padding: 15px;
-        margin: 0;
-        font-weight: bold;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #ffffff;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .faq-question:hover {
-        background-color: #e0e0e0;
-    }
-
-    .faq-answer {
-        display: none;
-        padding: 15px;
-        background-color: #ffffff;
-        border-top: 1px solid #ddd;
-    }
-
-    .faq-question em {
-        font-style: normal;
-        color: #6c757d;
-        margin-right: 10px;
-    }
-
-    .faq-question span {
-        text-align: left;
-    }
-
-    .faq-icon {
-        font-size: 1.2rem;
-        transition: transform 0.3s ease;
-        margin-left: auto;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .faq-question.collapsed .faq-icon {
-        transform: rotate(180deg);
-    }
-
-    .contentWarp {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        flex-wrap: wrap; /* 요소가 한 줄에 들어가지 않으면 줄 바꿈을 하도록 설정 */
-    }
-
-    .faqTab {
-        display: flex;
-        flex-wrap: wrap;
-        flex-grow: 1;
-        max-width: 70%; /* 탭의 최대 너비를 70%로 제한 */
-    }
-
-    .searchBoxWarp {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex-grow: 1;
-        max-width: 30%; /* 검색 박스의 최대 너비를 30%로 설정 */
-    }
-
-    .searchTextBox {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        overflow: hidden;
-        max-width: 100%;
-    }
-    
-	.searchTextBox select {
-		height: auto;
-	    width: 100px; /* 원하는 너비 값 설정 */
-	    max-width: 100%; /* 너비가 너무 커지지 않도록 제한 */
-	}
-	
-    .searchTextBox input {
-        border: none;
-        padding: 10px;
-        outline: none;
-        flex-grow: 1;
-        width: 200px;
-	    max-width: 100%;
-    }
-
-    .searchTextBox button {
-        border: none;
-        background-color: #007bff;
-        color: white;
-        padding: 10px 15px;
-        cursor: pointer;
-        white-space: nowrap;
-        height: auto;
-    }
-	.noList {
-	    text-align: center;
-	    background-color: #f8f9fa; /* 연한 배경색 */
-	    padding: 20px;
-	    margin: 10px 0;
-	    border: 1px solid #ddd;
-	    border-radius: 5px;
-	    font-size: 1.1em;
-	    color: #666;
-	}
-	
-	.noList p {
-	    margin: 0;
-	    font-weight: bold;
-	    color: #555;
-	}    
-</style>
+<link rel="stylesheet" href="<c:url value='/resources/css/faq.css' />">
 </head>
 <body>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.faq-question').click(function () {
                 $(this).next(".faq-answer").slideToggle("fast");
-                $(this).toggleClass('collapsed'); // 아이콘 회전 토글
+                $(this).find(".faq-icon").toggleClass('icon-active');
             });
         });
     </script>
@@ -197,9 +67,9 @@
 					        <c:forEach items="${faqList}" var="faq">
 					            <div class="faq-item">
 					                <div class="faq-question">
-					                    <em>${faq.mi_it_name}</em>
+					                    <em>[${faq.mi_it_name}]</em>
 					                    <span>${faq.mi_title}</span>
-					                    <span class="faq-icon">▼</span>
+					                    <span class="faq-icon"></span>
 					                </div>
 					                <div class="faq-answer">
 					                    <p>${faq.mi_content}</p>

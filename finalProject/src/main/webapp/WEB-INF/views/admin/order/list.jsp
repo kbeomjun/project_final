@@ -122,6 +122,8 @@
 			scrollY: 500,
 		    pageLength: 10,
 		    info: false,
+		    stateSave: true,
+		    stateDuration: 300,
 		    order: [[ 2, "desc" ]],
 		    columnDefs: [
 		    	{ targets: [4], orderable: false },

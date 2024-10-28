@@ -42,28 +42,22 @@ public class ClientController {
 	
 	//리뷰 게시판 목록
 	@GetMapping("/review/list")
-	public String reviewList(Model model, Criteria cri) {
-		
-		cri.setPerPageNum(5);
-	
-		List<ReviewPostVO> reviewList = clientService.getReviewPostList(cri);
-		PageMaker pm = clientService.getPageMakerInReview(cri);
+	public String reviewList(Model model) {
+		List<ReviewPostVO> reviewList = clientService.getReviewPostList();
 		
 		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("pm", pm);
 		return "/client/review/list";
 	}
 	
 	//리뷰 게시글 상세
 	@GetMapping("/review/detail/{rp_num}")
-	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num, Criteria cri) {
+	public String reviewDetail(Model model, @PathVariable("rp_num")int rp_num) {
 		
 		clientService.updateReviewPostView(rp_num);
 		
 		ReviewPostVO review = clientService.getReviewPost(rp_num);
 		
 		model.addAttribute("review", review);
-		model.addAttribute("cri", cri);
 		return "/client/review/detail";
 	}
 
