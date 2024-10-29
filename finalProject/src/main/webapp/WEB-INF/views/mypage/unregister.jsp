@@ -6,41 +6,59 @@
 <html>
 <head>
 <title>마이페이지</title>
-<style type="text/css">
-	.error{color:red; margin-bottom: 10px;}
-	.form-group{margin: 0;}
-	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-</style>
 </head>
 <body>
-	<div class="container-fluid">
-	    <div class="row">
-	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
-	
-	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	            <div class="pt-3 pb-2 mb-3">
-	                <h2 class="mb-3">회원탈퇴</h2>
-					<form action="<c:url value='/mypage/unregister'/>" method="post" id="form">
-					    <input type="hidden" name="me_id" value="${me_id}">
+
+	<main class="sub_container" id="skipnav_target">
+		<section class="sub_banner sub_banner_04"></section>
+		<section class="sub_content">
+		
+			<!-- 왼쪽 사이드바 -->
+			<%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
+			
+			<!-- 오른쪽 컨텐츠 영역 -->
+			<section class="sub_content_group">
+				<div class="sub_title_wrap">
+					<h2 class="sub_title">회원탈퇴</h2>
+				</div>
+				
+	        	<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
+				<form action="<c:url value="/mypage/unregister"/>" method="post" id="form">
+					<input type="hidden" name="me_id" value="${me_id}">
+					<table class="table">
+						<colgroup>
+							<col style="width: 20%;">
+							<col style="width: 80%;">
+						</colgroup>
+						
+						<tbody>
+							<tr>
+								<th scope="row">
+									<label for="current_pw" class="_asterisk">현재 비밀번호</label>
+								</th>
+								<td>
+									<div class="form-group">
+										<input type="password" class="form-control" id="current_pw" name="current_pw" placeholder="현재 비밀번호를 입력하세요">
+									</div>
+									<div class="error error-current"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					
-					    <div class="form-group">
-					        <label for="current_pw">현재 비밀번호:</label>
-					        <input type="password" id="current_pw" name="me_pw" class="form-control" placeholder="현재 비밀번호를 입력하세요" required>
-					    </div>
-					    <div class="error error-current"></div>
+					<div class="btn_wrap">
+						<div class="btn_right_wrap">
+							<button type="submit" class="btn btn_insert">회원탈퇴</button>
+						</div>
+					</div>					
 					
-					    <button type="submit" class="btn btn-primary">회원탈퇴</button>
-					</form>
+				</form>				
 					
-	            </div>
-	        </main>
-	    </div>
-	</div>
-	
+			</section>
+		
+		</section>
+	</main>
+
     <script type="text/javascript">
     	let regexPw = /^[a-zA-Z0-9!@#$]{4,15}$/; 
     	let msgPw = `<span>비밀번호는 4자에서 15자의 영문자, 숫자, 특수문자(!@#$)만 사용할 수 있습니다.</span>`;
@@ -72,6 +90,10 @@
 				$('.error-current').append(msgRequired);
 				$('#current_pw').focus();
 				flag = false;
+			} else if(!regexPw.test($('#current_pw').val())){
+				$('.error-current').append(msgPw);
+				$('#current_pw').focus();
+				flag = false;				
 			}
 			
 		    if (flag) {
