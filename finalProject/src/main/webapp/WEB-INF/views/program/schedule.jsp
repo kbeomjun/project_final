@@ -6,77 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/calendar.css"/>">
-
+<link rel="stylesheet" href="<c:url value="/resources/css/program/schedule.css"/>">
 
 <style type="text/css">
-.sidebar {
-	width: 200px;
-	padding: 20px;
-	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
 
-.sidebar a {
-	width: 100%;
-	padding: 15px;
-	margin-bottom: 10px;
-	border: none;
-	background: #fff;
-	text-align: left;
-	cursor: pointer;
-	font-size: 16px;
-	border: 1px solid #ccc;
-	transition: background 0.3s;
-	text-align: center;
-	letter-spacing: 10px;
-}
-
-.sidebar a:hover {
-	background: #ddd;
-}
-
-.main-container {
-	display: flex;
-	align-items: flex-start;
-}
-
-.selected {
-	color: #fff !important;
-	background: #000 !important;
-	position: relative;
-	box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5); /* 오른쪽과 아래쪽에 그림자 효과 */
-}
-
-.sidebar .selected {
-	width: 115%;
-	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
-}
-
-.main-container {
-	display: flex;
-	align-items: flex-start;
-}
-
-.navbar {
-	display: flex;
-	justify-content: center;
-	/* background: #eee; */
-	padding: 10px 0;
-}
-
-.navbar a {
-	margin: 0 15px;
-	text-decoration: none;
-	color: #333;
-	font-weight: bold;
-}
-
-.sub_navbar {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-}
 </style>
 </head>
 <body>
@@ -85,7 +18,7 @@
 	<div class="navbar mb-3">
 		<a class="btn br-3"
 			href="<c:url value="/program/info"/>">프로그램 안내</a>
-		<a class="btn selected" href="<c:url value="/program/schedule"/>">프로그램
+		<a class="btn btn-selected" href="<c:url value="/program/schedule"/>">프로그램
 			일정</a>
 	</div>
 
@@ -96,7 +29,16 @@
 		<div class="main-container">
 			<div class="mb-2">
 			<div class="btn_wrap">
-				<div class="btn_link_black <c:if test="${br_name ne 'null' && br_name != null}">bg_white</c:if>">
+				<div class="btn_link_black 
+				<c:choose>
+					<c:when test="${br_name ne 'null' && br_name != null}">
+					bg_white
+					</c:when>
+					<c:otherwise>
+					btn-wide
+					</c:otherwise>
+				</c:choose>
+				">
 					<a class="btn btn_black js-btn-insert"
 						href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false"/>">
 						<span>전체<i class="ic_link_share"></i></span> 
@@ -111,7 +53,7 @@
 			<c:if test="${br.br_name ne '본사'}">
 			<c:choose>
 				<c:when test="${br.br_name == br_name}">
-					<c:set var="unSelected" value="" />
+					<c:set var="unSelected" value="btn-wide" />
 				</c:when>
 				<c:otherwise>
 					<c:set var="unSelected" value="bg_white" />
@@ -422,7 +364,25 @@
         });
     });
 </script>
+<script type="text/javascript">
+// 페이지가 로드될 때 첫 번째 버튼의 세부 정보를 표시
+window.onload = function() {
+    
+    // 페이지가 로드되면 저장된 스크롤 위치로 이동
+    const scrollPosition = localStorage.getItem("scrollPosition");
+    if (scrollPosition) {
+        window.scrollTo(0, scrollPosition);
+    }
+    
+    // 페이드 인 효과 활성화
+    document.body.classList.add("fade-in");
+};
 
+	// 스크롤할 때마다 현재 위치를 저장
+window.onscroll = function() {
+    localStorage.setItem("scrollPosition", window.scrollY);
+};
+</script>
 </body>
 
 </html>
