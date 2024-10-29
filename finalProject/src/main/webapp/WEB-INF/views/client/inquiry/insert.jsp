@@ -168,6 +168,7 @@
 				let msgEmailDomain = `<span>도메인이 올바르지 않습니다.</span>`;
 				let regexEmailId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*$/;
 				let regexEmailDomain = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+				const authority = '${user.me_authority}';
 				
 				
 				$('#mi_title').keyup(function(){
@@ -208,6 +209,11 @@
 				$('#form').submit(function(){
 					$('.error').children().remove();
 					let flag = true;
+					
+					if(authority == 'BRADMIN' || authority == 'HQADMIN'){
+						alert('관리자는 문의를 등록할 수 없습니다.');
+						return false;
+					}
 					
 					if($('#mi_it_name').val() == ''){
 						$('.error-typeName').append(msgRequired);
