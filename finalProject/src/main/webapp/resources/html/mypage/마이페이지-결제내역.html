@@ -30,7 +30,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 	
-	<title>회원권</title>
+	<title>결제 내역</title>
 </head>
 <body>
 	<!-- main_layout 최상위 class -->
@@ -115,94 +115,133 @@
 
 		<!-- sub container -->
 		<main class="sub_container" id="skipnav_target">
-			<section class="sub_banner sub_banner_02"></section>
+			<section class="sub_banner sub_banner_07"></section>
 			<section class="sub_content">
+				<!-- lnb -->
+				<section class="lnb_wrap">
+					<ul class="lnb">
+						<li class="lnb__item">
+							<a class="lnb__link _active" href="#">결제 내역</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">프로그램 일정</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">나의 작성글</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">문의 내역</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">개인 정보 수정</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">비밀번호 변경</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">회원 탈퇴</a>
+						</li>
+					</ul>
+				</section>
+				<!-- lnb -->
+
+				<!-- 오른쪽 컨텐츠 영역 -->
 				<section class="sub_content_group">
 					<div class="sub_title_wrap">
 						<h2 class="sub_title">회원권 결제</h2>
 						<p class="sub_title__txt">※ PT 이용권은 지정된 기간 내에 사용하지 않으면 소멸됩니다.</p>
 						<p class="sub_title__txt">※ 회원권 결제는 로그인 후 이용 가능 합니다.</p>
 					</div>
+					<div class="info_container">
+						<!-- 현재 이용권 정보 박스 -->
+						<div class="info_box info_box_fitness">
+							<div class="info_text_box">
+								<h5 class="info_content__title">헬스장 이용권</h5>
+								<div class="info_content__text">
+									<!-- <p>기간 : 2024-10-27 ~ 2024-11-26</p> -->
+									<p>현재 이용 중인 회원권이 없습니다.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- 진행 중인 PT 정보 박스 -->
+						<div class="info_box info_box_fitness_PT">
+							<div class="info_text_box">
+								<h5 class="info_content__title">PT 이용권</h5>
+								<div class="info_content__text">
+									<p>기간 : 2024-10-27 ~ 2024-11-26</p>
+									<p>PT 잔여 횟수 : 6 / 10</p>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="table_wrap">
-						<table class="table">
-							<caption class="blind">회원권의 이용권 종류와 기간, 횟수, 가격이 있는 테이블</caption>
+						<table class="table table_center">
+							<caption class="blind">결제 내역에 관한 테이블</caption>
 							<colgroup>
-								<col style="width: 25%;">
-								<col style="width: 25%;">
-								<col style="width: 25%;">
-								<col style="width: 25%;">
+								<col style="width: 20%;">
+								<col style="width: 11.5%;">
+								<col style="width: 11.5%;">
+								<col style="width: 11.5%;">
+								<col style="width: 11.5%;">
+								<col style="width: 11.5%;">
+								<col style="width: 11.5%;">
+								<col style="width: 11.5%;">
 							</colgroup>
 							<thead>
 								<tr>
-									<th scope="col">이용권 종류</th>
-									<th scope="col">기간(개월)</th>
-									<th scope="col">횟수(회)</th>
-									<th scope="col">가격</th>
+									<th scope="col">결제유형</th>
+									<th scope="col">결제날짜</th>
+									<th scope="col">결제금액</th>
+									<th scope="col">시작날짜</th>
+									<th scope="col">마감날짜</th>
+									<th scope="col">리뷰확인</th>
+									<th scope="col">결제상태</th>
+									<th scope="col">환불내역</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>헬스장 1개월 이용권</td>
-									<td>1</td>
-									<td>1</td>
-									<td>300,000원</td> <!-- 포맷된 가격 사용 -->
-								</tr>
-								<tr>
-									<td>헬스장 3개월 이용권</td>
-									<td>3</td>
-									<td>1</td>
-									<td>900,000원</td> <!-- 포맷된 가격 사용 -->
-								</tr>
-								<tr>
-									<td>헬스장 6개월 이용권</td>
-									<td>6</td>
-									<td>1</td>
-									<td>1,200,000원</td> <!-- 포맷된 가격 사용 -->
+									<td>2024-10-24</td>
+									<td>300,000</td>
+									<td>2024-10-27</td>
+									<td>2024-11-26</td>
+									<td>
+										<a href="#" class="btn btn_review btn_green">작성하기</a>
+									</td>
+									<td>결제완료</td>
+									<td>
+										<a href="javascript:void(0);" class="btn btn_refund btn_red">환불 내역 확인</a>
+									</td>
 								</tr>
 								<tr>
 									<td>PT 10회</td>
-									<td>1</td>
-									<td>10</td>
-									<td>600,000원</td> <!-- 포맷된 가격 사용 -->
+									<td>2024-09-10</td>
+									<td>600,000</td>
+									<td>2024-09-16</td>
+									<td>2024-10-15</td>
+									<td>작성완료</td>
+									<td>결제완료</td>
+									<td>-</td>
 								</tr>
 								<tr>
-									<td>PT 20회</td>
-									<td>2</td>
-									<td>20</td>
-									<td>1,200,000원</td> <!-- 포맷된 가격 사용 -->
-								</tr>
-								<tr>
-									<td>PT 30회</td>
-									<td>3</td>
-									<td>30</td>
-									<td>1,800,000원</td> <!-- 포맷된 가격 사용 -->
+									<td>PT 10회</td>
+									<td>2024-09-10</td>
+									<td>600,000</td>
+									<td>2024-09-16</td>
+									<td>2024-10-15</td>
+									<td>
+										<a href="#" class="btn btn_review btn_green">작성하기</a>
+									</td>
+									<td>결제완료</td>
+									<td>-</td>
 								</tr>
 							</tbody>
 						</table>
-						<div class="btn_wrap">
-							<div class="btn_right_wrap">
-								<div class="btn_link_black">
-									<a href="#" class="btn btn_black js-btn-insert">
-										<span>회원권 결제<i class="ic_link_share"></i></span>
-									</a>
-									<div class="btn_black_top_line"></div>
-									<div class="btn_black_right_line"></div>
-									<div class="btn_black_bottom_line"></div>
-									<div class="btn_black_left_line"></div>
-								</div>
-								<div class="btn_link_black bg_white">
-									<a href="#" class="btn btn_black js-btn-insert">
-										<span>PT 결제<i class="ic_link_share"></i></span>
-									</a>
-									<div class="btn_black_top_line"></div>
-									<div class="btn_black_right_line"></div>
-									<div class="btn_black_bottom_line"></div>
-									<div class="btn_black_left_line"></div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</section>
+				<!-- 오른쪽 컨텐츠 영역 -->
 			</section>
 		</main>
 		<!-- main container -->

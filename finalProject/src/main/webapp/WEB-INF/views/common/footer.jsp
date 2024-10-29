@@ -7,12 +7,7 @@
 			<section class="ft_info_wrap">
 				<div class="ft_info">
 					<div class="ft_info__item">
-						<div class="ft_loto_wrap">
-							<object data="/fitness/resources/image/main/KF_logo_white.svg" type="image/svg+xml">
-								
-								<img src="/fitness/resources/image/main/KF_logo_white.svg" />
-							</object>
-						</div>
+						<div class="ft_logo_wrap"><div class="ft_logo"></div></div>
 						<div class="ft_textbox">
 							<p>Powerlift is a champ in providing its users with absolutely everything a fitness or gym site needs.</p>
 						</div>

@@ -6,13 +6,6 @@
 <html>
 <head>
 <title>리뷰게시글 목록</title>
-	<style type="text/css">
-		.error{color : red;}
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
 </head>
 <body>
 
@@ -22,17 +15,20 @@
 	    </script>
 	</c:if>
 
-	<div class="container-fluid">
-	    <div class="row">
-	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-				<%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>	
-	        </nav>
-	
-	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	            <div class="pt-3 pb-2 mb-3">
-	                <h2>리뷰게시글 목록</h2>
+	<main class="sub_container" id="skipnav_target">
+		<section class="sub_banner sub_banner_04"></section>
+		<section class="sub_content">
+		
+			<!-- 왼쪽 사이드바 -->
+			<%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+			
+			<!-- 오른쪽 컨텐츠 영역 -->
+			<section class="sub_content_group">
+				<div class="sub_title_wrap">
+					<h2 class="sub_title">리뷰게시판</h2>
+				</div>
+				
+				<div class="table_wrap">
 					<table class="table text-center" id="table">
 						<thead id="thead">
 							<tr>
@@ -60,18 +56,29 @@
 								</tr>
 							</c:forEach>
 						</tbody>
-					</table>
-					
-					<c:if test="${user ne null && user.me_authority eq 'USER'}">
-						<div class="text-right mb-3">
-							<a href="<c:url value="/client/review/insert"/>" class="btn btn-outline-info btn-sm">글쓰기</a>
+					</table>				
+				</div>
+				
+				<c:if test="${user ne null && user.me_authority eq 'USER'}">
+					<div class="btn_wrap">
+						<div class="btn_right_wrap">
+							<div class="btn_link_black">
+								<a href="<c:url value="/client/review/insert"/>" class="btn btn_black js-btn-insert">
+									<span>글쓰기<i class="ic_link_share"></i></span>
+								</a>
+								<div class="btn_black_top_line"></div>
+								<div class="btn_black_right_line"></div>
+								<div class="btn_black_bottom_line"></div>
+								<div class="btn_black_left_line"></div>
+							</div>
 						</div>
-					</c:if>
-		                
-	            </div>
-	        </main>
-	    </div>
-	</div>
+					</div>				
+				</c:if>		
+						
+			</section>
+			
+		</section>
+	</main>
 
 	<script type="text/javascript">
 		// 데이터테이블
@@ -83,7 +90,7 @@
 		        emptyTable: "",
 		        lengthMenu: ""
 		    },
-			scrollY: 500,
+			//scrollY: 500,
 		    pageLength: 10,
 		    info: false,
 		    stateSave: true,
