@@ -12,9 +12,6 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <!-- JS -->
 
-<!-- Swiper -->
-<link rel="stylesheet" href="<c:url value="/resources/css/swiper.css"/>">
-
 <!-- branch 관련 css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/branch.css"/>">
 
@@ -70,7 +67,8 @@
 								<div class="branch-map-container" id="mapinfo">
 									<div id="map" data-address="${branch.br_address}"
 										data-name="${branch.br_name }"
-										style="float: left; background-color: lightgray; margin: 0 auto;">
+										style="float: left; background-color: lightgray; margin: 0 auto;position: relative;">
+						    			<button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
 									</div>
 								</div>
 								<div class="branch-content-container">
@@ -151,9 +149,9 @@
 							<h2 class="sub_title">전지점보기</h2>
 						</div>
 						<hr>
-						<div class="mt-5" id="map-total"
-							style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;"></div>
-						<button id="original-location-btn">원래 위치</button>
+						<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto; position: relative;">
+						    <button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
+						</div>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -641,9 +639,9 @@ function MarkerTracker(map, target) {
 /* 	// 지도의 중심을 '본사' 위치로 설정
     map.setCenter(mapOption.center); */
 	</script>
-		</c:when>
-		<c:otherwise>
-			<script type="text/javascript">
+	</c:when>
+	<c:otherwise>
+	<script type="text/javascript">
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		
 		mapOption = {
@@ -651,33 +649,33 @@ function MarkerTracker(map, target) {
 			level : 3
 		// 지도의 확대 레벨
 		};
-
+	
 		var address = mapContainer.getAttribute('data-address'); 
 		var brName = mapContainer.getAttribute('data-name'); 
 		
 		var map = new kakao.maps.Map(mapContainer, mapOption);
-
+	
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
+	
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
-
+	
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(address,function(result, status) {
-
+	
 			// 정상적으로 검색이 완료됐으면 
 			if (status === kakao.maps.services.Status.OK) {
-
+	
 				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+	
 				var imageSrc = '<c:url value="/resources/image/icon/sample_fitness_icon.svg"/>', // 마커이미지의 주소입니다    
 				imageSize = new kakao.maps.Size(48, 48), // 마커이미지의 크기입니다
 				imageOption = {
 					offset : new kakao.maps.Point(22, 60)
 				}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
+	
 				// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 				var markerImage = new kakao.maps.MarkerImage(
 						imageSrc, imageSize, imageOption), markerPosition = new kakao.maps.LatLng(
@@ -691,7 +689,7 @@ function MarkerTracker(map, target) {
 					image : markerImage
 				// 마커이미지 설정 
 				});
-
+	
 				var content = '<div class="customoverlay">'
 						+ '<a href="https://map.kakao.com/link/map/'
 						+	'KH Fitness ' + brName
@@ -700,7 +698,7 @@ function MarkerTracker(map, target) {
 						+ '<span class="title">'
 						+ 'KH Fitness ' + brName
 						+ '</span></a></div>';
-
+	
 				// 커스텀 오버레이를 생성합니다
 				var customOverlay = new kakao.maps.CustomOverlay(
 						{
@@ -709,7 +707,7 @@ function MarkerTracker(map, target) {
 							content : content,
 							yAnchor : 1
 						});
-
+	
 				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				map.setCenter(coords);
 				
@@ -719,8 +717,14 @@ function MarkerTracker(map, target) {
 	        	// marker의 추적을 시작합니다.
 	            markerTracker.run()
 			}
+			
+			// 원래 위치 버튼 클릭 이벤트
+		    document.getElementById('original-location-btn').addEventListener('click', function() {
+		        map.setCenter(coords); // 원래 위치로 지도 중심 설정
+		        map.setLevel(3); // 필요한 경우 줌 레벨도 설정
+		    });
 		});
-
+	
 		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 		// marker.setMap(null);
 	</script>
@@ -789,7 +793,7 @@ function MarkerTracker(map, target) {
 	    });
 	}); */
 
-	// 스크롤 이벤트 리스너 등록
+/* 	// 스크롤 이벤트 리스너 등록
 	window.addEventListener('scroll', function() {
 	    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 	    // 스크롤 위치가 300px 이상일 때 버튼 표시
@@ -806,7 +810,7 @@ function MarkerTracker(map, target) {
 	        top: 0,
 	        behavior: 'smooth'
 	    });
-	});
+	}); */
 </script>
 	<script type="text/javascript">
 Fancybox.bind('[data-fancybox="gallery"]', {
