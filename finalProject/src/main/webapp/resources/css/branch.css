@@ -165,7 +165,7 @@
 }
 
 .branch-content-container {
-	padding: 32px;
+	/* padding: 32px; */
     width: 30%;
 }
     
@@ -234,3 +234,18 @@
     -webkit-transform-origin: 50% 34px;
     transform-origin: 50% 34px;
 }
+
+.btn-map {
+	position: absolute;
+	top: 93%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+/* .map-total {
+	width: 800px;
+	background-color: lightgray;
+	height: 600px;
+	margin: 0 auto;
+	position: relative;
+} */

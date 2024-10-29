@@ -7,33 +7,49 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/program/info.css"/>">
 <style type="text/css">
 
-}</style>
+
+
+</style>
 </head>
 <body>
+	<section class="sub_banner sub_banner_03"></section>
 	<!-- <h1>프로그램 안내</h1> -->
 	<div class="navbar">
-		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램
-			안내</a> <a class="btn " href="<c:url value="/program/schedule"/>">프로그램
-			일정</a>
+		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램 안내</a> 
+		<a class="btn " href="<c:url value="/program/schedule"/>">프로그램 일정</a>
 	</div>
-	<div class="main-container">
-		<div id="program-button-group" class="sidebar">
+	
+	<section class="sub_content">
+		<!-- lnb -->
+		<section class="lnb_wrap">
+		<div id="program-button-group" class="lnb-sidebar">
 			<c:forEach items="${list}" var="sp" varStatus="status">
 				<c:choose>
 					<c:when test="${status.index == 0}">
-						<c:set var="selected" value="" />
+						<c:set var="notSelected" value="btn-wide" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="selected" value="selected" />
+						<c:set var="notSelected" value="bg_white" />
 					</c:otherwise>
 				</c:choose>
-				<button id="btn-sp-${status.index}" class="btn ${selected }"
-					data-detail="${sp.sp_detail}" data-num="${status.index}"
-					data-name="${sp.sp_name}" onclick="showDetail(this)">${sp.sp_name}</button>
+				<div class="btn_wrap">
+				<div class="btn_link_black ${notSelected }">
+					<button id="btn-sp-${status.index}" class="btn btn_black js-btn-insert"
+						data-detail="${sp.sp_detail}" data-num="${status.index}"
+						data-name="${sp.sp_name}" onclick="showDetail(this)">
+						<span>${sp.sp_name}<i class="ic_link_share"></i></span>
+					</button>
+					<div class="btn_black_top_line"></div>
+					<div class="btn_black_right_line"></div>
+					<div class="btn_black_bottom_line"></div>
+					<div class="btn_black_left_line"></div>
+				</div>
+				</div>
 			</c:forEach>
 		</div>
-
-
+		</section>
+		<section class="sub_content_group"> 
+		
 		<!-- Main Content -->
 		<div class="main-content">
 			<div id="program-image" class="mb-3">
@@ -53,9 +69,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<!-- 		<div id="program-penalty"></div> -->
-
+	</section>
+</section>
 	<script>
 	const mySwiper = new Swiper('.swiper-container', {
 		  	// 옵션 설정
@@ -103,6 +119,20 @@
         if (firstButton) {
             showDetail(firstButton); // 첫 번째 버튼 클릭
         }
+        
+        // 페이지가 로드되면 저장된 스크롤 위치로 이동
+        const scrollPosition = localStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+            window.scrollTo(0, scrollPosition);
+        }
+        
+     	// 페이드 인 효과 활성화
+        document.body.classList.add("fade-in");
+    };
+    
+ 	// 스크롤할 때마다 현재 위치를 저장
+    window.onscroll = function() {
+        localStorage.setItem("scrollPosition", window.scrollY);
     };
 	
     function showDetail(selectedButton) {
@@ -112,25 +142,25 @@
 
         buttons.forEach((button) => {
 	        if (button === selectedButton) {
-	            // 클릭된 버튼에는 btn-primary 추가
-	            button.classList.add("selected");
+	            // 다른 버튼들은 bg_white로 설정
+	        	button.parentElement.classList.remove("bg_white");
+	        	button.parentElement.classList.add("btn-wide");
 	        } else {
-	            // 다른 버튼들은 btn-outline-primary로 설정
-	            button.classList.remove("selected");
+	        	button.parentElement.classList.remove("btn-wide");
+	        	button.parentElement.classList.add("bg_white");
 	        }
         });
         var programName = selectedButton.getAttribute('data-name');
         
         // 프로그램 이름으로 저장된 이미지들을 가져와서 하나씩 출력        
         getProgramImageNameList(programName, function(imageNameList) {
-        	console.log(imageNameList);
             if (imageNameList) {
             	document.getElementById("swiper-wrapper").innerHTML = '';
                 // List<String>에서 값을 하나씩 꺼내서 사용
                 imageNameList.forEach(function(imageName) {
                     // 여기에서 각 이미지 이름에 대한 추가 작업을 할 수 있습니다.
                     var imgSrc = '<c:url value="/uploads' + imageName + '" />';
-                    console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
+                    // console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
                     document.getElementById("swiper-wrapper").innerHTML += 
                     	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:80%; height:80%"><br></div>';
                 });

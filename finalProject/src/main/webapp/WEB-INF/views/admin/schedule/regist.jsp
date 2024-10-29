@@ -223,10 +223,25 @@
 	document.getElementById('selectDate').max = maxYear + '-' + maxMonth + '-' + maxDay;
 	
     // startDate 값 변경 시 endDate의 min 값 변경
+    // endDate value는  StartDate보다 작을때만 변경
     document.getElementById('startDate').addEventListener('input', function() {
-        const startDateValue = this.value;
-        document.getElementById('endDate').min = startDateValue;
-        document.getElementById('endDate').value = startDateValue;
+    	const startDateValue = this.value;
+    	const endDateInput = document.getElementById('endDate');
+
+    	// 최소 선택 가능 날짜 설정
+    	endDateInput.min = startDateValue;
+
+    	// 현재 endDate의 값
+    	const endDateValue = endDateInput.value;
+
+    	// 날짜 객체로 변환
+    	const startDate = new Date(startDateValue);
+    	const endDate = new Date(endDateValue);
+
+    	// endDate가 startDate보다 이전인 경우에만 값을 업데이트
+    	if (endDate < startDate) {
+    	    endDateInput.value = startDateValue;
+    	}
     });
 </script>
 
@@ -314,6 +329,22 @@
     	    });
         }
 	});		
+	
+	// 시간 변경 시 hours 박스 조정
+	document.getElementById('startDate').addEventListener('change', function() {
+		const hourCheckboxes = document.querySelectorAll('input[type="checkbox"][name="hours"]');
+			hourCheckboxes.forEach(radio => {
+				radio.disabled = false; // 모든 체크박스 비활성화 해제
+			});
+			
+        if (document.getElementById('startDate').value === currentDate) {
+            toggleHourCheckboxes('radio', currentHour);
+            const hourRadioButtons = document.querySelectorAll('input[type="checkbox"][name="hours"]');
+    	    hourRadioButtons.forEach(radio => {
+    	        radio.checked = false; // 라디오 버튼 해제
+    	    });
+        }
+	});	
 	
 	// 시간 변경 시 hours 박스 조정
 	document.getElementById('endDate').addEventListener('change', function() {
