@@ -55,7 +55,7 @@
 <body>
 
 	<main class="sub_container" id="skipnav_target">
-		<section class="sub_banner sub_banner_04"></section>
+		<section class="sub_banner sub_banner_07"></section>
 		<section class="sub_content">
 		
 			<!-- 왼쪽 사이드바 -->
