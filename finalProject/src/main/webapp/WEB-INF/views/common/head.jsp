@@ -13,8 +13,8 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/normlize.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/sprite.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/swiper-bundle.min.css"/>">
-	<link rel="stylesheet" href="<c:url value="/resources/css/common.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/dataTables.min.css"/>">
+	<link rel="stylesheet" href="<c:url value="/resources/css/common.css"/>">
 
 	<!-- js -->
 	<script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
