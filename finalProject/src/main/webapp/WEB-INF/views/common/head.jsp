@@ -23,6 +23,8 @@
 	<script src="<c:url value="/resources/js/jquery.validate.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/additional-methods.min.js"/>"></script>
 	<script src="<c:url value="/resources/js/dataTables.min.js"/>"></script>
+	
+	<script src="<c:url value="/resources/js/uploadFileValidateForm.js"/>"></script>
 	<!-- swiper 알 수 없는 오류로 우선 cdn으로 대체 -->
 	<%-- <script src="<c:url value="/resources/js/swiper-bundle.min.js"/>"></script> --%>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
