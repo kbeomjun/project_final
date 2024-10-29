@@ -52,7 +52,7 @@
 				<nav class="lnb_wrap">
 					<ul class="lnb">
 						<li class="lnb-item">
-							<a id="membershipMenu" class="lnb__link" href="<c:url value='/mypage/membership'/>">회원권</a>
+							<a id="membershipMenu" class="lnb__link" href="<c:url value='/mypage/membership'/>">결제 내역</a>
 						</li>
 						<li class="lnb-item">
 							<a id="scheduleMenu" class="lnb__link" href="<c:url value='/mypage/schedule'/>">프로그램 일정</a>

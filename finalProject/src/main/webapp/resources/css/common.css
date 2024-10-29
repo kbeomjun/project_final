@@ -733,8 +733,8 @@ label{
 }
 .gnb_side__logo{
   display: inline-block;
-  width: 150px;
-  height: 75px;
+  width: calc(189px / 2);
+  height: calc(105px / 2);
   background-image: url("../image/main/KF_logo_white.svg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -1404,4 +1404,42 @@ table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td{
 }
 div.dt-container.dt-empty-footer tbody>tr:last-child>*{
   border-bottom: 1px solid #DDD;
+}
+
+
+/* data-table :: pagination */
+div.dt-container div.dt-layout-row{
+  justify-content: center;
+  margin: 40px 0px 0px;
+}
+div.dt-container div.dt-layout-row div.dt-layout-cell.dt-layout-end{
+  justify-content: center;
+  margin-left: initial;
+}
+div.dt-container .dt-paging .dt-paging-button{
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #111;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  transition: .3s;
+}
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:hover{
+  color: #fff !important;
+  text-decoration: none;
+  background: #111;
+  border-color: #111;
+}
+div.dt-container .dt-paging .dt-paging-button:hover, div.dt-container .dt-paging .dt-paging-button:focus{
+  z-index: 2;
+  color: #111 !important;
+  text-decoration: none;
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-paging .dt-paging-button.disabled:hover, div.dt-container .dt-paging .dt-paging-button.disabled:active{
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  color: #111 !important;
 }

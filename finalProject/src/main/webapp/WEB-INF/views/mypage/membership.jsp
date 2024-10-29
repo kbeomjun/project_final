@@ -45,7 +45,7 @@
 							<div class="info_content__text">
 								<c:if test="${not empty currentPT}">
 		                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
-		                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
+		                            <p>PT 잔여 횟수 : ${currentPT.remain_count} / ${currentPT.total_count}</p>
 		                        </c:if>
 		                        <c:if test="${empty currentPT}">
 		                            <p>현재 진행 중인 PT가 없습니다.</p>
