@@ -6,7 +6,7 @@ import kr.kh.fitness.model.vo.MemberVO;
 
 public interface MemberService {
 
-	MemberVO login(MemberVO member, HttpServletResponse response);
+	MemberVO login(MemberVO member);
 
 	boolean signup(MemberVO member);
 
@@ -31,5 +31,7 @@ public interface MemberService {
 	String findId(String name, String email);
 
 	void clearLoginCookie(String me_id);
+
+	void setAutoLoginCookie(MemberVO user, HttpServletResponse response);
 
 }

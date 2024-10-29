@@ -94,8 +94,10 @@ public class HQController {
 	public String employeeInsert(Model model) {
 		List<BranchVO> brList = hqService.getBranchList();
 		List<SportsProgramVO> programList = hqService.getSportsProgramList();
+		EmployeeVO em = hqService.getEmployee(new EmployeeVO(20000001));
 		model.addAttribute("brList", brList);
 		model.addAttribute("programList", programList);
+		model.addAttribute("em", em);
 	    return "/hq/employee/insert";
 	}
 	@PostMapping("/employee/insert")

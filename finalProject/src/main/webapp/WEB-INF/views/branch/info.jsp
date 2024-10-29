@@ -3,17 +3,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <head>
 <!-- CSS -->
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/swiper-bundle.min_branch.css"/>">
-<!-- JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!-- Swiper -->
-<link rel="stylesheet" href="<c:url value="/resources/css/swiper.css"/>">
+<!-- JS -->
 
 <!-- branch 관련 css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/branch.css"/>">
@@ -21,147 +18,153 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4dc87d628f2e532b0812b9e9aae7b2fa&libraries=services,clusterer,drawing"></script>
-	
-<!--  fancy box css -->	
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/fancybox.css"/>" />
+
+<!--  fancy box css -->
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/fancybox.css"/>" />
 <script src="<c:url value="/resources/js/fancybox.umd.js"/>"></script>
 
 <style type="text/css">
-
 </style>
 </head>
 <body>
-	<div class="branch-navbar" >
-		<ul>
-			<c:if test="${select eq null}">
-				<c:set var="active" value="active" />
-			</c:if>
-			<li><a
-				class="btn btn-outline-secondary btn-branch mb-1 ${active}"
-				href=<c:url value="/branch/info"/>>전지점보기</a></li>
-			<c:forEach items="${br_list}" var="br">
-				<c:if test="${br.br_name ne '본사'}">
-				<c:choose>
-					<c:when test="${br.br_name eq select}">
-						<c:set var="active" value="active" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="active" value="" />
-					</c:otherwise>
-				</c:choose>
-				<li><a
-					class="btn btn-outline-secondary btn-branch mb-1 ${active}"
-					href=<c:url value="/branch/detail/${br.br_name}/1"/>>${br.br_name}</a></li>
+	<section class="sub_banner sub_banner_01"></section>
+	<section class="sub_content">
+		<!-- lnb -->
+		<section class="lnb_wrap">
+			<ul class="lnb">
+				<c:if test="${select eq null}">
+					<c:set var="active" value="_active" />
 				</c:if>
-			</c:forEach>
-		</ul>
-	</div>
-	<div class="branch-detail-container" >
-		<c:choose>
-			<c:when test="${select ne null}">
-				<h2>${branch.br_name}</h2>
-				<hr>
-<!-- 기능 제거 예정 (상단 navbar)-->				
-<!-- 				<div class="branch-detail mb-5">
-					<div class="branch-tab">
-						<ul>
-							<li><a class="btn" href="#mapinfo">지점안내</a></li>
-							<li><a class="btn" href="#branch">시설소개</a></li>
-							<li><a class="btn" href="#employee">직원소개</a></li>
-						</ul>
-					</div>
-				</div> -->
-				<h3 class="mt-4">지점위치</h3>
-				<div class="branch-info-wrap">
-					<div class="branch-map-container" id="mapinfo">
-							<div class="mt-5" id="map" data-address="${branch.br_address}"
-								data-name="${branch.br_name }"
-								style="float:left; background-color: lightgray; margin: 0 auto;">
-							</div>
-					</div>
-					<div class="branch-content-container">
-						<strong class="title"
-							style="padding-top: 50px; font-size: 28px; background-size: 50px;">KH
-							피트니스 ${branch.br_name }</strong>
-						<p class="address">${branch.br_address},
-							${branch.br_detailAddress} ${branch.br_extraAddress}</p>
-						<hr style="border:0; height:1px; background: #000;">
-						<div>${branch.br_detail}</div><br> 
-						<span class="phone" style="font-size: 16px;"> 
+				<li class="lnb__item"><a class="lnb__link ${active}"
+					href=<c:url value="/branch/info"/>>전지점보기</a></li>
+				<c:forEach items="${br_list}" var="br">
+					<c:if test="${br.br_name ne '본사'}">
 						<c:choose>
-							<c:when test="${fn:length(branch.br_phone) == 10}">
-								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
+							<c:when test="${br.br_name eq select}">
+								<c:set var="active" value="_active" />
 							</c:when>
-							<c:when test="${fn:length(branch.br_phone) == 9}">
-								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
-							</c:when>
+							<c:otherwise>
+								<c:set var="active" value="" />
+							</c:otherwise>
 						</c:choose>
-						</span>
-					</div>
-				</div>
-				<div class="branch-content mt-3" id="branch">
-					<h3>지점정보</h3>
-					<%-- <div class="content-box mb-5 mt-5"
-						style="text-align: center; display: flex; flex-wrap: wrap; align-items: center;">
-						<div class="swiper-container mr-5">
-							<c:if test="${branch_image_list.size() ne 0 }">
-								<div class="swiper-wrapper" id="swiper-wrapper">
-									<c:forEach items="${branch_image_list}" var="image">
-										<div class="swiper-slide">
-										<img src="<c:url value="/uploads${image.bf_name}" />"
-												style="width: 600px; height: 400px;"><br>
-										</div>
-									</c:forEach>
-								</div>
-								<div class="swiper-button-next">&gt;</div>
-								<div class="swiper-button-prev">&lt;</div>
-								<div class="swiper-pagination"></div>
-							</c:if>
-						</div>
-						
-					</div> --%>
-				<div class="branch-image-container mb-5 mt-5">
-					<c:forEach items="${branch_image_list}" var="image">
-					<a href="<c:url value="/uploads${image.bf_name}" />" data-fancybox="gallery">
-						<img src="<c:url value="/uploads${image.bf_name}" />"><br>
-							<!-- style="width: 600px; height: 400px;" -->
-					</a>
-					</c:forEach>
-				</div>	
-				</div>
-					<div class="em-container mb-5 mt-5" id="employee">
-						<h3>직원소개</h3>
-					<div class="mt-5" style="text-align: center; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-						<c:if test="${em_list.size() ne 0 }">
-							<c:forEach items="${em_list}" var="em">
-								<div class="card" style="width: 200px">
-									<img class="card-img-top"
-										src=<c:url value="/uploads${em.em_fi_name}" />
-										alt=" ${em.em_fi_name}" 
-										onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
-										style="width: 100%; height: 250px; object-fit: cover;">
-									<div class="card-body">
-										<h4 class="card-title">${em.em_name}(${fn:substring(em.em_gender, 0, 1)})</h4>
-										<p class="card-text">${em.em_position}</p>
-										<!-- <a href="#" class="btn btn-primary">뭘 둘까나~</a> -->
+						<li class="lnb__item"><a class="lnb__link ${active}"
+							href=<c:url value="/branch/detail/${br.br_name}/1"/>>${br.br_name}</a></li>
+					</c:if>
+				</c:forEach>
+			</ul>
+		</section>
+
+		<section class="sub_content_group">
+			<c:choose>
+				<c:when test="${select ne null}">
+					<div class="table_wrap">
+						<div class="branch-detail-container">
+							<div class="sub_title_wrap">
+								<h2 class="sub_title">지점위치</h2>
+							</div>
+							<div class="branch-info-wrap">
+								<div class="branch-map-container" id="mapinfo">
+									<div id="map" data-address="${branch.br_address}"
+										data-name="${branch.br_name }"
+										style="float: left; background-color: lightgray; margin: 0 auto;position: relative;">
+						    			<button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
 									</div>
 								</div>
-							</c:forEach>
-						</c:if>
-					</div></div>
+								<div class="branch-content-container">
+									<strong class="title"
+										style="font-size: 28px; background-size: 50px;">KH
+										피트니스 ${branch.br_name }</strong>
+									<p class="address">${branch.br_address},
+										${branch.br_detailAddress} ${branch.br_extraAddress}</p>
+									<hr style="border: 0; height: 1px; background: #000;">
+									<div>${branch.br_detail}</div>
+									<br> <span class="phone" style="font-size: 16px;">
+										<c:choose>
+											<c:when test="${fn:length(branch.br_phone) == 10}">
+									☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
+								</c:when>
+											<c:when test="${fn:length(branch.br_phone) == 9}">
+									☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
+								</c:when>
+										</c:choose>
+									</span>
+								</div>
+							</div>
+							<div class="branch-content mt-5" id="branch">
+								<div class="sub_title_wrap">
+									<h2 class="sub_title">지점정보</h2>
+								</div>
+								<div class="branch-image-container mb-5 mt-5">
+									<c:forEach items="${branch_image_list}" var="image">
+										<a href="<c:url value="/uploads${image.bf_name}" />"
+											data-fancybox="gallery"> <img
+											src="<c:url value="/uploads${image.bf_name}" />"><br>
+											<!-- style="width: 600px; height: 400px;" -->
+										</a>
+									</c:forEach>
+								</div>
+							</div>
+							<div class="em-container mb-5 mt-5" id="employee">
+								<div class="sub_title_wrap">
+									<h2 class="sub_title">직원소개</h2>
+								</div>
+								<div class="container">
+									<div class="row">
+										<c:if test="${em_list.size() ne 0 }">
+											<c:forEach items="${em_list}" var="em">
+												<div class="col-md-3 mb-4" style="padding: 0;">
+													<div class="card" style="width: 100%; border: none;">
+														<img class="card-img-top"
+															src="<c:url value='/uploads${em.em_fi_name}' />"
+															alt="${em.em_fi_name}"
+															onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
+															style="width: 100%; height: 350px; object-fit: cover;">
+														 <%-- <div class="card-body">
+														 	<h4 class="card-title">${em.em_name}</h4>
+															<p class="card-text">${em.em_position}</p> 
+														</div>  --%>
+													</div>
+												</div>
+												<div class="col-md-3 mb-4" style="padding: 0;">
+													<div class="card" style="width: 100%; border: none;">
+														<div class="card-body" style="padding: 0.5rem 1.25rem;">
+															<h4 class="card-title">${em.em_name} <%-- (${fn:substring(em.em_gender, 0, 1)}) --%></h4>
+															<p class="card-text">${em.em_position}</p><br>
+															<p class="card-text">${em.em_detail }</p>
+														</div>
+													</div>
+												</div>
+											</c:forEach>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="table_wrap">
+						<div class="sub_title_wrap">
+							<h2 class="sub_title">전지점보기</h2>
+						</div>
+						<hr>
+						<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto; position: relative;">
+						    <button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 
-			</c:when>
-			<c:otherwise>
-				<h3>전지점보기</h3>
-				<hr>
-				<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto;"></div>
-				<button id="original-location-btn">원래 위치</button>
-			</c:otherwise>
-			
-		</c:choose>
-		<button id="scrollToTopBtn" style="display: none;">맨 위로</button>
-	</div>
-<script type="text/javascript">
+		</section>
+	</section>
+
+
+
+
+	<!-- <button id="scrollToTopBtn" style="display: none;">맨 위로</button> -->
+
+	<script type="text/javascript">
 /**
  * AbstractOverlay를 상속받을 객체를 선언합니다.
  */
@@ -501,7 +504,7 @@ function MarkerTracker(map, target) {
 </script>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 	//주소를 입력해서 좌표를 얻어오는 함수
 	function getCoordinates(address) {
@@ -520,9 +523,9 @@ function MarkerTracker(map, target) {
 	    });
 	}
 </script>
-<c:choose>
-<c:when test="${select eq null}">
-<script type="text/javascript">
+	<c:choose>
+		<c:when test="${select eq null}">
+			<script type="text/javascript">
 
 	<c:forEach var="branch" items="${br_list}">
 		<c:if test="${branch.br_name == '본사'}">
@@ -541,6 +544,9 @@ function MarkerTracker(map, target) {
 	    };
 	
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		// 원래 위치 좌표 저장
+	    var originalPosition = new kakao.maps.LatLng(coord.lat, coord.lng);
 		
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
@@ -633,8 +639,8 @@ function MarkerTracker(map, target) {
 /* 	// 지도의 중심을 '본사' 위치로 설정
     map.setCenter(mapOption.center); */
 	</script>
-</c:when>
-<c:otherwise>
+	</c:when>
+	<c:otherwise>
 	<script type="text/javascript">
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		
@@ -643,33 +649,33 @@ function MarkerTracker(map, target) {
 			level : 3
 		// 지도의 확대 레벨
 		};
-
+	
 		var address = mapContainer.getAttribute('data-address'); 
 		var brName = mapContainer.getAttribute('data-name'); 
 		
 		var map = new kakao.maps.Map(mapContainer, mapOption);
-
+	
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
+	
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
-
+	
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(address,function(result, status) {
-
+	
 			// 정상적으로 검색이 완료됐으면 
 			if (status === kakao.maps.services.Status.OK) {
-
+	
 				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+	
 				var imageSrc = '<c:url value="/resources/image/icon/sample_fitness_icon.svg"/>', // 마커이미지의 주소입니다    
 				imageSize = new kakao.maps.Size(48, 48), // 마커이미지의 크기입니다
 				imageOption = {
 					offset : new kakao.maps.Point(22, 60)
 				}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
+	
 				// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 				var markerImage = new kakao.maps.MarkerImage(
 						imageSrc, imageSize, imageOption), markerPosition = new kakao.maps.LatLng(
@@ -683,7 +689,7 @@ function MarkerTracker(map, target) {
 					image : markerImage
 				// 마커이미지 설정 
 				});
-
+	
 				var content = '<div class="customoverlay">'
 						+ '<a href="https://map.kakao.com/link/map/'
 						+	'KH Fitness ' + brName
@@ -692,7 +698,7 @@ function MarkerTracker(map, target) {
 						+ '<span class="title">'
 						+ 'KH Fitness ' + brName
 						+ '</span></a></div>';
-
+	
 				// 커스텀 오버레이를 생성합니다
 				var customOverlay = new kakao.maps.CustomOverlay(
 						{
@@ -701,7 +707,7 @@ function MarkerTracker(map, target) {
 							content : content,
 							yAnchor : 1
 						});
-
+	
 				// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				map.setCenter(coords);
 				
@@ -711,15 +717,21 @@ function MarkerTracker(map, target) {
 	        	// marker의 추적을 시작합니다.
 	            markerTracker.run()
 			}
+			
+			// 원래 위치 버튼 클릭 이벤트
+		    document.getElementById('original-location-btn').addEventListener('click', function() {
+		        map.setCenter(coords); // 원래 위치로 지도 중심 설정
+		        map.setLevel(3); // 필요한 경우 줌 레벨도 설정
+		    });
 		});
-
+	
 		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 		// marker.setMap(null);
 	</script>
-</c:otherwise>
-</c:choose>
-<!-- swiper 기능 제거 -->
-<!-- 	<script type="text/javascript">
+		</c:otherwise>
+	</c:choose>
+	<!-- swiper 기능 제거 -->
+	<!-- 	<script type="text/javascript">
 	window.onload = function() {
 		
 		const mySwiper = new Swiper('.swiper-container', {
@@ -765,7 +777,7 @@ function MarkerTracker(map, target) {
 		첫 번째 슬라이드로 이동 } }); */
 </script> -->
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 <!-- 기능 제거 예정 (상단 navbar)-->		
 /* 	// tab 클릭 시 아래로 이동하도록.
@@ -781,7 +793,7 @@ function MarkerTracker(map, target) {
 	    });
 	}); */
 
-	// 스크롤 이벤트 리스너 등록
+/* 	// 스크롤 이벤트 리스너 등록
 	window.addEventListener('scroll', function() {
 	    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 	    // 스크롤 위치가 300px 이상일 때 버튼 표시
@@ -798,9 +810,9 @@ function MarkerTracker(map, target) {
 	        top: 0,
 	        behavior: 'smooth'
 	    });
-	});
+	}); */
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 Fancybox.bind('[data-fancybox="gallery"]', {
 	  // Your custom options
 	 	

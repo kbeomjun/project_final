@@ -88,6 +88,11 @@
 			    </select>
 			</div>
 			<div class="error error-branch"></div>
+			<div class="form-group">
+				<label for="em_detail">직원설명:</label>
+				<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
+			</div>
+			<div class="error"></div>
 			<button class="btn btn-outline-info col-12">직원 수정</button>
 		</form>
 		<a href="<c:url value="/hq/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
@@ -144,7 +149,7 @@
     <script type="text/javascript">
     	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
-		let regexEmail = /^\w{4,13}@\w{4,8}.[a-z]{2,3}$/;
+		let regexEmail = /^\w{2,16}@\w{4,8}.[a-z]{2,3}$/;
 		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let imgRequired = `<span>필수항목입니다.</span>`;
@@ -303,6 +308,14 @@
 	            }
 	        }).open();
 	    }
+    </script>
+    
+    <script type="text/javascript">
+    	// 썸머노트
+    	$('#em_detail').summernote({
+			  tabsize: 2,
+			  height: 350
+		});
     </script>
 </body>
 </html>

@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+.calendar-wrapper table td {width: 100px; height: 100px;}
+.calendar-wrapper table td .selected {font-weight: 900; text-decoration: underline;}
+.calendar-wrapper table td a {color: inherit;}
+
+.calendar-wrapper table .btn-amount {
+	display: inline-flex;
+	justify-content: center; 
+    width: 100%;
+    height: 20px;
+    font-size: 10px;
+    align-items: center;
+}
+
+.account-book-container {
+	display: flex;
+	flex-direction: column;
+	gap: 3em;
+	flex-wrap: nowrap; 
+	width: 1000px;
+}
+
+.calendar-wrapper, .list-wrapper {
+	width: 100%;
+}
+
+.calendar-wrapper {
+	overflow-x: auto;
+}
+
+.program-button {
+    padding: .15rem .3rem;
+    font-size: .95rem;
+    line-height: 1;
+    border-radius: .25rem;
+}
+
+.btn-program-reservation1,
+.btn-program-reservation2 {
+    padding: .11rem .5rem;
+    line-height: 2;
+    border-radius: .25rem;
+}
+
+.btn-program-reservation2 {
+    cursor: unset !important;
+}
+
+a .disabled {
+    color: gray; /* 비활성화된 링크 스타일 */
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 페이드 인 애니메이션 */
+body {
+	opacity: 0;
+	transition: opacity 0.5s ease-in; /* 전환 시간을 조절하세요 (0.5s) */
+}
+
+/* 페이지가 로드된 후 페이드 인 완료 상태 */
+body.fade-in {
+	opacity: 1;
+}
+
+.sidebar {
+	width: 200px;
+	padding: 20px;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar a {
+	width: 100%;
+	padding: 15px;
+	margin-bottom: 10px;
+	border: none;
+	background: #fff;
+	text-align: left;
+	cursor: pointer;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	transition: background 0.3s;
+	text-align: center;
+	letter-spacing: 10px;
+}
+
+.sidebar a:hover {
+	background: #ddd;
+}
+
+.main-container {
+	display: flex;
+	align-items: flex-start;
+}
+
+.btn-selected {
+	color: #fff !important;
+	background: #000 !important;
+	position: relative;
+	box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5); /* 오른쪽과 아래쪽에 그림자 효과 */
+}
+
+.btn-wide a {
+	width: 250px;
+	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
+}
+
+.main-container {
+	display: flex;
+	align-items: flex-start;
+}
+
+.navbar {
+	display: flex;
+	justify-content: center;
+	/* background: #eee; */
+	padding: 10px 0;
+}
+
+.navbar a {
+	margin: 0 15px;
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+.sub_navbar {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}

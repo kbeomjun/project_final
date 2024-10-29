@@ -14,7 +14,7 @@ public interface MemberDAO {
 
 	void updateMemberCookie(@Param("user") MemberVO user);
 
-	MemberVO selectMemberFromEmail( @Param("email")String me_email);
+	MemberVO selectMemberFromSocial(@Param("social")String socialType, @Param("user")MemberVO loginUser);
 
 	int updateSocialUser(@Param("social")String social_type, @Param("user")MemberVO socialUser);
 

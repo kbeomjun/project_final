@@ -6,9 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -26,7 +29,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import kr.kh.fitness.dao.MemberDAO;
-import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.MemberVO;
 
 @Service
@@ -36,9 +38,15 @@ public class SingleSignOnServiceImp implements SingleSignOnService {
 
 	@Autowired
 	private String kakaoRestKey;
-
 	@Autowired
 	private String kakaoRedirectUri;
+	
+	@Autowired
+	private String naverClientId;
+	@Autowired
+	private String naverClientSecret;
+	@Autowired
+	private String naverCallbackUrl;
 	
 	@Autowired
 	private MemberDAO memberDao;
@@ -111,8 +119,15 @@ public class SingleSignOnServiceImp implements SingleSignOnService {
 
 			int responseCode = conn.getResponseCode();
 			//System.out.println("responseCode : " + responseCode);
-
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			
+		
+			if (responseCode == 200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			} else { // 에러 발생
+				br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+				throw new IOException();
+			}
 
 			StringBuilder result = new StringBuilder(); // StringBuilder로 변경
 			String br_line;
@@ -192,9 +207,14 @@ public class SingleSignOnServiceImp implements SingleSignOnService {
 //	}
 
 	@Override
-	public MemberVO getMemberInfoFromEmail(MemberVO loginUser) {
+	public MemberVO getMemberInfoFromSocial(String socialType, MemberVO loginUser) {
 		
-		return memberDao.selectMemberFromEmail(loginUser.getMe_email());
+		try {
+			return memberDao.selectMemberFromSocial(socialType, loginUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public boolean isValidSocialName(String social_type) {
@@ -308,6 +328,90 @@ public class SingleSignOnServiceImp implements SingleSignOnService {
 			e.printStackTrace();
 			return null;
 		}
+		
+	}
+
+	@Override
+	public boolean removeToken(String token, String social_type) {
+
+		if(social_type.equals("NAVER")) {
+			return removeTokenNaver(token);
+		}
+		else { // KAKAO
+			return requestRemoveTokenKakao(token);
+			
+		}
+	}
+	
+	public boolean removeTokenNaver(String token) {
+		System.out.println("/naver/remove");
+
+		String apiUrl = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=" + naverClientId
+				+ "&client_secret=" + naverClientSecret + "&access_token=" + token
+				+ "&service_provider=NAVER";
+
+		requestTokenRemoveNaver(apiUrl);
+
+		// session.invalidate();
+		return true;
+	}
+
+	private boolean requestTokenRemoveNaver(String apiUrl) {
+
+		URL url;
+		try {
+			url = new URL(apiUrl);
+
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+
+			int responseCode = con.getResponseCode();
+			
+			if (responseCode == 200) { 
+				// 정상 호출
+				return true;
+			} else { 
+				// 에러 발생
+				return false;
+			}
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} 
+	}
+	
+	private boolean requestRemoveTokenKakao(String access_token) {
+
+		String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+
+			// 요청에 필요한 Header에 포함될 내용
+			conn.setRequestProperty("Authorization", "Bearer " + access_token);
+
+			int responseCode = conn.getResponseCode();
+			
+			if (responseCode == 200) { 
+				// 정상 호출
+				return true;
+				
+			} else { 
+				// 에러 발생
+				return false;
+			}
+			
+		} catch (IOException | JsonSyntaxException e) {
+			e.printStackTrace(); // 예외 처리
+			return false;
+		}
+		
 		
 	}
 

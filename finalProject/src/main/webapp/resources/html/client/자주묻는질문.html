@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/reset.css">
+	<link rel="stylesheet" href="../../css/normlize.css">
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/font.css">
+	<link rel="stylesheet" href="../../css/sprite.css">
+	<link rel="stylesheet" href="../../css/calendar.css">
+	<link rel="stylesheet" href="../../css/branch.css">
+	<link rel="stylesheet" href="../../css/dataTables.min.css">
+	<link rel="stylesheet" href="../../css/fancybox.css">
+	<link rel="stylesheet" href="../../css/swiper-bundle.min.css">
+	<link rel="stylesheet" href="../../css/faq.css">
+	<link rel="stylesheet" href="../../css/common.css">
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/popper.min.js"></script>
+	<script src="../../js/bootstrap.bundle.min.js"></script>
+	<script src="../../js/jquery.validate.min.js"></script>
+	<script src="../../js/additional-methods.min.js"></script>
+	<script src="../../js/dataTables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	
+	<!-- 주소 api -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<!-- 썸머노트 -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+	
+	<title>자주묻는질문</title>
+</head>
+<body>
+	<!-- main_layout 최상위 class -->
+	<div class="main_layout">
+
+		<!-- skip nav -->
+		<div class="skip_nav">
+			<a href="#skipnav_target">본문 영역 바로가기</a>
+		</div>
+		<!-- skip nav -->
+		
+		<!-- main header -->
+		<header class="main_header">
+			<div class="logo_wrap">
+				<h1><a href="#" class="logo" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
+			</div>
+			<nav class="gnb_wrap">
+				<ul class="gnb">
+					<li class="gnb__item"><a href="#" class="gnb__link">지점 조회</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">회원권</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">프로그램</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">고객센터</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">지점관리</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">본사관리</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">로그인</a></li>
+				</ul>
+				<div class="gnb_side">
+					<a href="#" class="gnb_side__link js-gnb_side__link">
+						<span>정보</span>
+						<i class="ic_gnb_side_menu">
+							<svg width="50" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect x="5" y="18" width="40" height="2" fill="white"/>
+								<rect x="5" y="30" width="40" height="2" fill="white"/>
+							</svg>
+						</i>
+					</a>
+					<!-- gnb side -->
+					<div class="gnb_side_wrap">
+						<a href="javascript:void(0)" class="btn_x js-btn_x">
+							<span>닫기</span>
+							<svg width="25" height="25" viewBox="0 0 23 23" style="enable-background:new 0 0 23 23;" xml:space="preserve">
+							<polygon points="22.5,21.7 12.7,11.9 12.2,11.4 12.2,11.4 12.2,11.4 12.7,10.9 22.5,1.2 21.8,0.5 11.5,10.8 1.2,0.5 
+								0.5,1.2 10.3,10.9 10.8,11.4 10.8,11.4 10.8,11.4 10.3,11.9 0.4,21.7 1.1,22.4 11.5,12.1 21.8,22.4 "></polygon>
+							</svg>
+						</a>
+						<div class="gnb_side__info_wrap">
+							<div class="gnb_side__info">
+								<div>
+									<a href="#">
+										<img width="134" height="101" src="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/07/logo-side-area.png" class="image wp-image-2173  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" loading="eager">
+									</a>
+								</div>
+								<div class="textbox">
+									<p>Lorem ipsum dolor sit amet, consectetur<br>
+									adipiscing elit. Pellentesque vitae nunc ut<br>
+									dolor sagittis euismod eget sit amet erat.<br>
+									Mauris porta. Lorem ipsum dolor.</p>
+								</div>
+								<div class="textbox">
+									<h3 class="gnb_side__title">Working hours</h3>
+									<p>Monday - Friday:<br>07:00 - 21:00</p>
+									<p>Saturday:<br>07:00 - 16:00</p>
+									<p>Sunday Closed</p>
+								</div>
+								<div class="textbox mt-auto">
+									<h3 class="gnb_side__title">Our socials</h3>
+									<div>
+										<a href="#" class="ft_sns sns_instagram" title="인스타그램"></a>
+										<a href="#" class="ft_sns sns_facebook" title="페이스북"></a>
+										<a href="#" class="ft_sns sns_twitter" title="트위터"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- gnb side -->
+				</div>
+			</nav>
+		</header>
+		<!-- main header -->
+
+
+		<!-- sub container -->
+		<main class="sub_container" id="skipnav_target">
+			<section class="sub_banner sub_banner_04"></section>
+			<section class="sub_content">
+				<!-- lnb -->
+				<section class="lnb_wrap">
+					<ul class="lnb">
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">리뷰게시판</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link _active" href="#">자주묻는질문</a>
+							<ul class="nav_two _active">
+								<li class="nav_two__item"><a class=" nav_two__link" href="#">2dep</a></li>
+								<li class="nav_two__item"><a class=" nav_two__link _active" href="#">2dep</a></li>
+							</ul>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">1:1문의</a>
+						</li>
+					</ul>
+				</section>
+				<!-- lnb -->
+
+				<!-- 오른쪽 컨텐츠 영역 -->
+				<section class="sub_content_group">
+					<div class="sub_title_wrap">
+						<h2 class="sub_title">자주 묻는 질문</h2>
+					</div>
+					<div class="sub_hd_wrap">
+						<ul class="tab_list">
+							<li class="tab_item"><button type="submit" name="category" value="all" class="tab_link _active">전체</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="PT문의" class="tab_link">PT문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="건의사항" class="tab_link">건의사항</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="기타" class="tab_link">기타</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="서비스 불만" class="tab_link">서비스 불만</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="시설문의" class="tab_link">시설문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="이용문의" class="tab_link">이용문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="청결관리" class="tab_link">청결관리</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="환불문의" class="tab_link">환불문의</button></li>
+						</ul>
+						<div class="search_bar_wrap">
+							<select class="form-control custom-select" name="type">
+								<option value="all">전체</option>
+								<option value="title">제목</option>
+								<option value="content">내용</option>
+							</select>
+							<div class="search_bar">
+								<input type="text" class="form-control" placeholder="검색어" name="search" value="">
+								<button type="submit" class="btn search_btn"></button>
+							</div>
+						</div>
+					</div>
+					<div class="faqList">
+						<div class="faq-item">
+							<div class="faq-question">
+								<span class="faq-title-label">[PT문의]</span>
+								<h3 class="faq-title">퍼스널 트레이닝(P.T) 가격이 궁금합니다.</h3>
+								<span class="faq-icon"></span>
+							</div>
+							<div class="faq-answer">
+								<p>
+									저희 KH Fitness는 모든 트레이너의 금액을 동일하게 운영하고 있습니다. 자세한 내용은 회원권 결제 페이지에서 확인 가능합니다.
+								</p>
+								<p>
+									수업은 50분 기준으로 진행되며, 등록하는 세션에 따라 할인율이 달라질 수 있습니다.
+								</p>
+								<p>
+									회원님의 스케줄이나 운동 목표에 따라 프로그램이 달라지기 때문에 지점으로 직접 방문하시어 시설도 둘러보시고 전문적인 트레이너와 맞춤 상담받아보시기를 추천드립니다.
+								</p>
+							</div>
+						</div>
+					
+						<div class="faq-item">
+							<div class="faq-question">
+								<span class="faq-title-label">[PT문의]</span>
+								<h3 class="faq-title">P.T가 뭔가요?</h3>
+								<span class="faq-icon"></span>
+							</div>
+							<div class="faq-answer">
+								<p>
+									P.T는 퍼스널 트레이닝(Personal Training)의 약자로 회원님의 체형, 체력, 운동 경력, 질병 유무 등과 같은 신체 정보뿐만 아니라 다이어트, 체력 증진, 근력 강화,
+									재활운동 등의 운동 목적과 회원님께서 지닌 잘못된 생활 습관이나 고민, 심리적인 상태까지 고려하여 회원님만을 위한 운동프로그램과 운동 방향을 함께 설정하고 목표를 이루실 수 있도록 이끌어
+									드리는 과정입니다.
+								</p>
+								<p>
+									KH Fitness에서는 체계적인 교육을 받은 트레이너들이 정형화된 프로그램이 아닌 회원님의, 회원님에 의한, 회원님을 위한 맞춤 운동 프로그램을 처음부터 끝까지 제공해 드립니다.
+								</p>
+							</div>
+						</div>
+						<div class="faq-item">
+							<div class="faq-question">
+								<span class="faq-title-label">[PT문의]</span>
+								<h3 class="faq-title">O.T가 뭔가요?</h3>
+								<span class="faq-icon"></span>
+							</div>
+							<div class="faq-answer">
+								<p></p>
+								<p>신규 회원님들의 원활한 지점 이용을 위해 회원님의 운동 목적 파악 후 그에 맞는 운동 방법과 기구 사용법 등을 전문적인 트레이너가 지도해 드리는 서비스입니다.
+								</p>
+								<p>
+									O.T 수업을 받지 않고 운동을 시작하게 되시면, 잘못된 운동 방법으로 운동하실 수 있는 확률이 높아 운동 효과를 보지 못하시거나 부상을 당할 염려가 높습니다.
+									신규 등록 시 안내 데스크에서 O.T 신청서 작성해 주시면, 순차적으로 담당 트레이너 배정 후 O.T가 진행됩니다.
+								</p>
+							</div>
+						</div>
+						<div class="faq-item">
+							<div class="faq-question">
+								<span class="faq-title-label">[기타]</span>
+								<h3  class="faq-title">운동을 처음 해보는데, 어떻게 운동해야 하는지 모르겠어요.</h3>
+								<span class="faq-icon"></span>
+							</div>
+							<div class="faq-answer">
+								<p>걱정하지 않으셔도 됩니다!</p>
+								<p>
+									신규 회원 등록 시, 전문적인 트레이너의 1:1 운동 지도 1회를 제공해 드리고 있습니다.
+									뿐만 아니라, 센터 내에 상주하는 트레이너가 친절하게 도와드리고 있으니 부담 갖지 마시고 언제라도 편하게 트레이너 및 데스크에 문의해 주세요.
+								</p>
+							</div>
+						</div>
+						<div class="faq-item">
+							<div class="faq-question">
+								<span class="faq-title-label">[시설문의]</span>
+								<h3 class="faq-title">회원 가입 후 없어지는 헬스장이 많던데 KH는 믿을 수 있을까요?</h3>
+								<span class="faq-icon"></span>
+							</div>
+							<div class="faq-answer">
+								<p></p>
+								<p>저희 KH Fitness는 개인이 운영하는 소규모 헬스장이 아닌 전지점 본사 직영으로만 운영하는 국내 최대 피트니스 전문 기업입니다.</p>
+								<p>KH를 믿고 편하게 운동하세요!</p>
+							</div>
+						</div>
+					</div>
+					<ul class="pagination justify-content-center">
+						<li class="page-item active">
+							<a class="page-link" href="/fitness/client/inquiry/faq?page=1&amp;type=&amp;search=">1</a>
+						</li>
+						<li class="page-item ">
+							<a class="page-link" href="/fitness/client/inquiry/faq?page=2&amp;type=&amp;search=">2</a>
+						</li>
+						<li class="page-item ">
+							<a class="page-link" href="/fitness/client/inquiry/faq?page=3&amp;type=&amp;search=">3</a>
+						</li>
+					</ul>
+				</section>
+				<!-- 오른쪽 컨텐츠 영역 -->
+			</section>
+		</main>
+		<!-- main container -->
+
+
+		<!-- main footer -->
+		<footer class="main_footer">
+			<section class="ft_info_wrap">
+				<div class="ft_info">
+					<div class="ft_info__item">
+						<div class="ft_logo_wrap"><div class="ft_logo"></div></div>
+						<div class="ft_textbox">
+							<p>Powerlift is a champ in providing its users with absolutely everything a fitness or gym site needs.</p>
+						</div>
+						<div class="textbox">
+							<h3 class="ft_info__title">Our socials</h3>
+							<div class="ft_sns_wrap">
+								<a href="#" class="ft_sns sns_instagram" title="인스타그램"></a>
+								<a href="#" class="ft_sns sns_facebook" title="페이스북"></a>
+								<a href="#" class="ft_sns sns_twitter" title="트위터"></a>
+							</div>
+						</div>
+					</div>
+					<div class="ft_info__item">
+						<h3 class="ft_info__title">LOCATIONS</h3>
+						<img width="300" height="155" src="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/06/futer-map-img-300x155.png" class="image wp-image-598  attachment-medium size-medium" alt="a" style="max-width: 100%; height: auto;" srcset="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/06/futer-map-img-300x155.png 300w, https://powerlift.qodeinteractive.com/wp-content/uploads/2019/06/futer-map-img.png 304w" sizes="(max-width: 300px) 100vw, 300px" loading="eager">
+						<p class="mt10 mb-0">
+							<a href="#" class="ft_info__link" target="_blank" rel="nofollow noopener">251 Purple Sunset Avenue<br>Brooklyn, BXY 92101</a>
+						</p>
+					</div>
+					<div class="ft_info__item">
+						<div class="textbox">
+							<h3 class="ft_info__title">Working hours</h3>
+							<p>Monday - Friday:<br>07:00 - 21:00</p>
+							<p>Saturday:<br>07:00 - 16:00</p>
+							<p>Sunday Closed</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="ft_copyright_wrap">
+				<div class="ft_copyright">© 2024 KH ACADEMY, All Rights Reserved</div>
+			</section>
+		</footer>
+	</div>
+
+	
+    <script>
+        $(document).ready(function () {
+            $('.faq-question').click(function () {
+                $(this).next(".faq-answer").slideToggle("fast");
+                $(this).find(".faq-icon").toggleClass('icon-active');
+            });
+        });
+    </script>
+</body>
+</html>

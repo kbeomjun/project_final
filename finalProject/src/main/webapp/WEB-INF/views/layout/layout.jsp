@@ -17,11 +17,11 @@
 	
 </head>
 <body>
-    <tiles:insertAttribute name="header"/>
-        <main class="sub_container clearfix" id="skipnav_target"> 
+	<tiles:insertAttribute name="header"/>
+		<main class="sub_container clearfix" id="skipnav_target"> 
 			<tiles:insertAttribute name="body" />                                                 
-	    </main>
-    <tiles:insertAttribute name="footer" />
+		</main>
+	<tiles:insertAttribute name="footer" />
     
     <script>
 		$(".js-gnb_side__link").on("click", function(){

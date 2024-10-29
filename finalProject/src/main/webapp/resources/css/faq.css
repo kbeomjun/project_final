@@ -1,0 +1,88 @@
+@charset "utf-8";
+
+.faqList{
+    margin-bottom: 40px;
+}
+
+.faq-question {
+    cursor: pointer;
+    padding: 30px 20px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #DDD;
+	color: #111111;
+}
+.faq-title-label, .faq-title{
+    font-size: 20px;
+    font-weight: 600;
+}
+.faq-title-label{
+    margin-right: 5px;
+}
+
+.faq-answer {
+    display: none;
+    padding: 20px 20px 30px;
+	color: #111111;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 27px;
+}
+
+.faq-question span {
+    text-align: left;
+}
+
+.faq-icon {
+    transition: transform 0.3s ease;
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../image/icon/ic_plus.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-active {
+    background-image: url("../image/icon/ic_minus.svg");
+}
+
+.content_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* 요소가 한 줄에 들어가지 않으면 줄 바꿈을 하도록 설정 */
+}
+
+.faqTab {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    max-width: 70%; /* 탭의 최대 너비를 70%로 제한 */
+}
+
+.noList {
+    text-align: center;
+    background-color: #f8f9fa; /* 연한 배경색 */
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.noList p {
+    margin: 0;
+    font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 27px;
+	
+	color: #111111;
+}

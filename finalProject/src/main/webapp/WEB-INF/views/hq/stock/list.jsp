@@ -233,32 +233,7 @@
 					}
 					$('.custom-select').html(str);
 					
-					table.destroy();
-					table = $('#table').DataTable({
-						language: {
-							search: "",
-					        searchPlaceholder: "검색",
-					        zeroRecords: "",
-					        emptyTable: ""
-					    },
-						scrollY: 600,
-					    paging: false,
-					    info: false,
-					    order: [[ 0, "desc" ]],
-					    ajax:{
-				        	url:'<c:url value="/hq/stock/list"/>',
-				        	type:"post",
-				        	dataSrc :"data"
-				        },
-				        columns:[
-				        	{data:"be_num"},
-				        	{data:"be_recordStr"},
-				        	{data:"be_se_name"},
-				        	{data:"be_birthStr"},
-				        	{data:"be_amount"},
-				        	{data:"be_type"}
-				        ]
-					});
+					restartTable();
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
@@ -298,7 +273,36 @@
 	        	{data:"be_amount"},
 	        	{data:"be_type"}
 	        ]
-		});	
+		});
+		
+		function restartTable(){
+			table.destroy();
+			table = $('#table').DataTable({
+				language: {
+					search: "",
+			        searchPlaceholder: "검색",
+			        zeroRecords: "",
+			        emptyTable: ""
+			    },
+				scrollY: 600,
+			    paging: false,
+			    info: false,
+			    order: [[ 0, "desc" ]],
+			    ajax:{
+		        	url:'<c:url value="/hq/stock/list"/>',
+		        	type:"post",
+		        	dataSrc :"data"
+		        },
+		        columns:[
+		        	{data:"be_num"},
+		        	{data:"be_recordStr"},
+		        	{data:"be_se_name"},
+		        	{data:"be_birthStr"},
+		        	{data:"be_amount"},
+		        	{data:"be_type"}
+		        ]
+			});
+		}
 	
 		$(document).on('click', '.btn-menu', function(){
 			var name = $(this).data("name");
@@ -309,32 +313,7 @@
 			$('.box-'+name).css("display", "block");
 			
 			if(name == 'record'){
-				table.destroy();
-				table = $('#table').DataTable({
-					language: {
-						search: "",
-				        searchPlaceholder: "검색",
-				        zeroRecords: "",
-				        emptyTable: ""
-				    },
-					scrollY: 600,
-				    paging: false,
-				    info: false,
-				    order: [[ 0, "desc" ]],
-				    ajax:{
-			        	url:'<c:url value="/hq/stock/list"/>',
-			        	type:"post",
-			        	dataSrc :"data"
-			        },
-			        columns:[
-			        	{data:"be_num"},
-			        	{data:"be_recordStr"},
-			        	{data:"be_se_name"},
-			        	{data:"be_birthStr"},
-			        	{data:"be_amount"},
-			        	{data:"be_type"}
-			        ]
-				});
+				restartTable();
 				$('#search').val("");
 				search = "";
 				$(document).ready(function(){

@@ -15,41 +15,6 @@
 			review_post 
 		join 
 			payment on rp_pa_num = pa_num
-		<choose>
-			<when test="type == 'branch'">
-				where rp_br_name like concat('%', #{search},'%')
-			</when>
-			<when test="type == 'id'">
-				where pa_me_id = #{search}
-			</when>
-			<otherwise>
-				where rp_title like concat('%', #{search},'%')
-			</otherwise>
-		</choose>	 
-		order by 
-			rp_num desc
-		limit
-			#{pageStart}, #{perPageNum}
-	</select>
-	
-	<select id="selectReviewPostTotalCount" resultType="int">
-		select
-			count(*) 
-		from 
-			review_post 
-		join 
-			payment on rp_pa_num = pa_num
-		<choose>
-			<when test="type == 'branch'">
-				where rp_br_name like concat('%', #{search},'%')
-			</when>
-			<when test="type == 'id'">
-				where pa_me_id = #{search}
-			</when>
-			<otherwise>
-				where rp_title like concat('%', #{search},'%')
-			</otherwise>
-		</choose>
 	</select>
 	
 	<update id="updateReviewPostView">
@@ -170,59 +135,6 @@
 			<if test="view == 'past'">
 				and now() > bs_end
 			</if>
-			<choose>
-				<when test="cri.type == 'branch'">
-					and bp_br_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'program'">
-					and bp_sp_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'trainer'">
-					and em_name like concat('%', #{cri.search},'%')
-				</when>
-			</choose>	
-		<if test="view == 'present'">
-			order by
-				bs_start
-		</if>
-		<if test="view == 'past'">
-			order by
-				bs_end desc
-		</if>						
-		limit
-			#{cri.pageStart}, #{cri.perPageNum}			
-	</select>
-	
-	<select id="selectScheduleTotalCount" resultType="int">
-		select
-			count(*)
-		from 
-			branch_program_schedule
-		join
-			branch_program on bp_num = bs_bp_num
-		join
-			employee on bp_em_num = em_num
-		join
-			program_reservation on pr_bs_num = bs_num
-		where
-			pr_me_id = #{me_id}
-			<if test="view == 'present'">
-				and bs_start > now()
-			</if>
-			<if test="view == 'past'">
-				and now() > bs_end
-			</if>
-			<choose>
-				<when test="cri.type == 'branch'">
-					and bp_br_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'program'">
-					and bp_sp_name like concat('%', #{cri.search},'%')
-				</when>
-				<when test="cri.type == 'trainer'">
-					and em_name like concat('%', #{cri.search},'%')
-				</when>
-			</choose>	
 	</select>
 	
 	<select id="selectReservation" resultType="ProgramReservationVO">
@@ -245,21 +157,6 @@
 	<select id="selectPaymentList" resultType="PaymentVO">
 		select 
 			* 
-		from 
-			payment 
-		join 
-			payment_type on pt_num = pa_pt_num
-		where
-			pa_me_id = #{me_id}
-		order by
-			pa_date desc
-		limit
-			#{cri.pageStart}, #{cri.perPageNum}		
-	</select>
-	
-	<select id="selectPaymentTotalCount" resultType="int">
-		select 
-			count(*) 
 		from 
 			payment 
 		join 
@@ -330,14 +227,6 @@
 			member_inquiry 
 		where 
 			mi_email = #{me_email}
-		order by
-			mi_date desc
-		limit
-			#{cri.pageStart}, #{cri.perPageNum}
-	</select>
-	
-	<select id="selectInquiryTotalCount" resultType="int">
-		select count(*) from member_inquiry where mi_email = #{me_email}
 	</select>
 	
 	<select id="selectInquiry" resultType="MemberInquiryVO">
@@ -378,5 +267,51 @@
 		where
 			me_id = #{me_id}
 	</update>
+	
+	<select id="selectSocialId" resultType="String">
+		select 
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	me_kakaoUserId
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        me_naverUserId
+	    </if>
+		from member 
+		where me_id = #{me_id}
+	</select>
+	
+	<select id="selectMemberFromSocial" resultType="MemberVO">
+		select * from member 
+		where me_id = #{user.me_id} 
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	and me_kakaoUserId = #{user.me_kakaoUserId}
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        and me_naverUserId = #{user.me_naverUserId}
+	    </if>
+	</select>
+	
+	<update id="updateSocialIdSetNull">
+		update member
+		set
+		<if test="social_type == 'KAKAO' || social_type == 'kakao'">
+        	me_kakaoUserId = null
+	    </if>
+	    <if test="social_type == 'NAVER' || social_type == 'naver'">
+	        me_naverUserId = null
+	    </if>
+	    where me_id = #{user.me_id}
+	</update>
+	
+	<select id="selectMypageReviewPostList" resultType="ReviewPostVO">
+		select
+			* 
+		from 
+			review_post 
+		join 
+			payment on rp_pa_num = pa_num
+		where
+			pa_me_id = #{me_id}			
+	</select>
 	
 </mapper>

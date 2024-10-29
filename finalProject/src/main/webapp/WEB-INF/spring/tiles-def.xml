@@ -13,6 +13,12 @@
         <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
     </definition>
 
+	<!-- member/login.jsp를 제외하기 위한 정의 -->
+    <definition name="/member/login" template="/WEB-INF/views/layout/layoutLogin.jsp">
+        <put-attribute name="head" value="/WEB-INF/views/common/head.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/member/login.jsp" />
+    </definition>
+    
     <definition name="/*/*" template="/WEB-INF/views/layout/layout.jsp">
         <put-attribute name="head" value="/WEB-INF/views/common/head.jsp" />
         <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />

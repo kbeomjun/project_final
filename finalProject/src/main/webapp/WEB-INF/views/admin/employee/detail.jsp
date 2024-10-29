@@ -27,8 +27,9 @@
 	            <div class="pt-3 pb-2 mb-3">
 					<h2 class="mt-3 mb-3">${em.em_name} 직원 상세</h2>
 					<div class="container" style="margin-top:30px">
-						<form action="<c:url value="/admin/employee/update/${em.em_num}"/>" method="post" enctype="multipart/form-data" id="form">
+						<form action="<c:url value="/admin/employee/update"/>" method="post" enctype="multipart/form-data" id="form">
 							<input type="hidden" name="em_br_name" value="${em.em_br_name}">
+							<input type="hidden" name="em_num" value="${em.em_num}">
 							<div class="form-group">
 								<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
 								    <img class="card-img-top" src="<c:url value="/uploads${em.em_fi_name}"/>" alt="Card image" style="width:100%; height:100%;">
@@ -90,14 +91,18 @@
 								<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${em.em_extraAddress}">
 							</div>
 							<div class="error error-address"></div>			
-				
+							<div class="error error-branch"></div>
+							<div class="form-group">
+								<label for="em_detail">직원설명:</label>
+								<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
+							</div>
+							<div class="error"></div>
+											
 							<button type="submit" class="btn btn-outline-info col-12">직원정보 수정</button>
 						</form>
 						<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn-outline-danger col-12 mt-3 btn-delete">직원 삭제</a>
 						<hr/>
-						<div class="text-right mb-3">
-							<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger">취소</a>
-						</div>
+						<a href="<c:url value="/admin/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
 					</div>
 	                
 	            </div>
@@ -315,6 +320,13 @@
 	    }
     </script>		
 	
+    <script type="text/javascript">
+    	// 썸머노트
+    	$('#em_detail').summernote({
+			  tabsize: 2,
+			  height: 350
+		});
+    </script>
 
 </body>
 </html>

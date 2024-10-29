@@ -89,7 +89,7 @@
 	                    </div>
 						
 						<div>
-							<a href="<c:url value="/mypage/inquiry/list?page=${page}"/>" class="btn btn-outline-info">목록</a>
+							<a href="<c:url value="/mypage/inquiry/list"/>" class="btn btn-outline-info">목록</a>
 						</div>
 					</div>
 	            </div>

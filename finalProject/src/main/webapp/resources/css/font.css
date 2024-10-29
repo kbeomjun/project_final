@@ -1,23 +1,109 @@
 @charset "utf-8";
 
+
+/* Noto Sans KR :: https://fonts.google.com/noto/specimen/Noto+Sans+KR?query=Noto+Sans+KR+ */
 @font-face {
 	font-family: "notosans";
 	font-style: "normal";
 	font-weight: 300;
-	src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"),
+	src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular") format("truetype"),
 				url("../fonts/NotoSans-Regular.ttf") format("truetype");
 }
 @font-face {
 	font-family: "notosans";
 	font-style: "normal";
 	font-weight: 400;
-	src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"),
+	src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium") format("truetype"),
 				url("../fonts/NotoSans-Medium.ttf") format("truetype");
 }
 @font-face {
 	font-family: "notosans";
 	font-style: "normal";
 	font-weight: 600;
-	src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"),
+	src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold") format("truetype"),
 				url("../fonts/NotoSans-Bold.ttf") format("truetype");
+}
+
+
+
+/* Zen Kaku Gothic Antique :: https://fonts.google.com/specimen/Zen+Kaku+Gothic+Antique */
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Light"), local("ZenKakuGothicAntique-Light"),
+				url("../fonts/ZenKakuGothicAntique-Light.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 300;
+	src: local("ZenKakuGothicAntique-Medium"), local("ZenKakuGothicAntique-Medium"),
+				url("../fonts/ZenKakuGothicAntique-Medium.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 500;
+	src: local("ZenKakuGothicAntique-Regular"), local("ZenKakuGothicAntique-Regular"),
+				url("../fonts/ZenKakuGothicAntique-Regular.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 600;
+	src: local("ZenKakuGothicAntique-Bold"), local("ZenKakuGothicAntique-Bold"),
+				url("../fonts/ZenKakuGothicAntique-Bold.ttf") format("truetype");
+}
+@font-face {
+	font-family: "Zen Kaku Gothic Antique", sans-serif;
+	font-style: "normal";
+	font-weight: 700;
+	src: local("ZenKakuGothicAntique-Black"), local("ZenKakuGothicAntique-Black"),
+				url("../fonts/ZenKakuGothicAntique-Black.ttf") format("truetype");
+}
+
+
+
+/* NotoSansKR :: https://fonts.google.com/noto/specimen/Noto+Sans+KR?query=noto+sans+KR */
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 100;
+	src: url("../fonts/NotoSansKR-Thin.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 200;
+	src: url("../fonts/NotoSansKR-Light.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 400;
+	src: url("../fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 500;
+	src: url("../fonts/NotoSansKR-Medium.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 600;
+	src: url("../fonts/NotoSansKR-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'NotoSansKR';
+	font-style: normal;
+	font-weight: 900;
+	src: url("../fonts/NotoSansKR-Black.ttf") format("truetype");
 }

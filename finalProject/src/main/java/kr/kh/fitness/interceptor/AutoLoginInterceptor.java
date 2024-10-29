@@ -47,6 +47,11 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
+            
+            // DB에서도 삭제 - 값을 null로 update
+            if(user != null && user.getMe_limit() != null) {
+            	memberService.clearLoginCookie(user.getMe_id());
+            }
         }
         return true;
     }

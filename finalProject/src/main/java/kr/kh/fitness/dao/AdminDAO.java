@@ -18,8 +18,6 @@ import kr.kh.fitness.model.vo.MemberInquiryVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
-import kr.kh.fitness.pagination.BranchCriteria;
-import kr.kh.fitness.pagination.Criteria;
 
 public interface AdminDAO {
 
@@ -39,10 +37,14 @@ public interface AdminDAO {
 	
 	boolean updateBranchProgram(BranchProgramVO branchProgram);
 
+	int selectProgramReservationCount(int bp_num);
+	
 	boolean deleteBranchProgram(int bp_num);
 
-	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("cri")BranchCriteria cri);
+	List<BranchProgramScheduleVO> selectBranchScheduleList(@Param("view")String view, @Param("br_name")String br_name);
 
+	BranchProgramVO selectBranchProgramInSchedule(int bs_num);
+	
 	List<MemberVO> selectScheduleMemberList(int bs_num);
 	
 	BranchProgramScheduleVO selectSchedule(BranchProgramScheduleVO schedule);
@@ -53,11 +55,9 @@ public interface AdminDAO {
 	
 	void updateScheduleByPTReservation(int bs_num);
 	
+	List<MemberVO> selectMemberListInUser();
+
 	List<MemberVO> selectMemberList();
-
-	List<MemberVO> selectMemberListWithPagination(Criteria cri);
-
-	int selectMemberTotalCount(Criteria cri);
 	
 	BranchProgramScheduleVO selectScheduleByNum(int bs_num);
 
@@ -65,19 +65,15 @@ public interface AdminDAO {
 
 	void deleteSchedule(int bs_num);
 	
-	List<BranchOrderVO> selectBranchOrderList(BranchCriteria cri);
-
-	int selectOrderTotalCount(BranchCriteria cri);
+	List<BranchOrderVO> selectBranchOrderList(String br_name);
 	
 	List<BranchStockDTO> selectEquipmentListInHQ();
 
 	boolean insertOrder(BranchOrderVO order);
 
+	BranchOrderVO selectBranchOrder(int bo_num);
+	
 	boolean deleteOrder(int bo_num);
-
-	List<EmployeeVO> selectEmployeeListByBranchWithPagination(BranchCriteria cri);
-
-	int selectEmployeeByBranchTotalCount(BranchCriteria cri);
 	
 	List<EmployeeVO> selectEmployeeList();
 
@@ -111,15 +107,9 @@ public interface AdminDAO {
 
 	void insertBranchFile(BranchFileVO branchFile);
 	
-	List<BranchStockDTO> selectEquipmentListInBranch(@Param("view")String view, @Param("cri")BranchCriteria cri);
-	
-	int selectEquipmentListTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
+	List<BranchStockDTO> selectEquipmentListInBranch(String view);
 
-	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(BranchCriteria cri);
-	
-	int selectEquipmentChangeTotalCount(BranchCriteria cri);
-
-	int selectScheduleTotalCount(@Param("view")String view, @Param("cri")BranchCriteria cri);
+	List<BranchEquipmentStockVO> selectEquipmentChangeInBranch(String br_name);
 
 	BranchProgramScheduleVO selectBranchSchedule(@Param("bp_num")int bs_bp_num, @Param("start")Date startDate);
 
