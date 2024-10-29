@@ -7,49 +7,82 @@
 <html>
 <head>
 <title>마이페이지</title>
+	<style>
+	    .info-box {
+	        border: 1px solid #ccc;
+	        padding: 15px;
+	        margin: 10px;
+	        border-radius: 5px;
+	        width: 45%;
+	        display: flex;
+	        flex-direction: column;
+	    }
+	
+	    .info-box h5 {
+	        margin-bottom: 10px;
+	    }
+	
+	    .info-box .content {
+	        flex-grow: 1;
+	        display: flex;
+	        flex-direction: column;
+	        justify-content: center;
+	    }
+	
+	    .info-container {
+	        display: flex;
+	        justify-content: space-between;
+	        align-items: stretch;
+	        margin-bottom: 20px;
+	    }
+	   	#thead th{text-align: center;}
+	   	#tbody td{text-align: center;}
+	   	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+	   	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}    
+	</style>
 </head>
 <body>
-
-	<main class="sub_container" id="skipnav_target">
-		<section class="sub_banner sub_banner_04"></section>
-		<section class="sub_content">
-		
-			<!-- 왼쪽 사이드바 -->
-			<%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-		
+	<div class="container-fluid">
+	    <div class="row">
+	        <!-- 왼쪽 사이드바 -->
+	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
+	        </nav>
+	
 	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <section class="sub_content_group">
-	        
-                <div class="info-container">
-                    <!-- 현재 이용권 정보 박스 -->
-                    <div class="info-box">
-                        <h5>헬스장 이용권</h5>
-                        <div class="content">
-	                        <c:if test="${not empty currentMembership}">
-	                            <p>기간 : <fmt:formatDate value="${currentMembership.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentMembership.pa_end}" pattern="yyyy-MM-dd"/></p>
-	                        </c:if>
-	                        <c:if test="${empty currentMembership}">
-	                            <p>현재 이용 중인 회원권이 없습니다.</p>
-	                        </c:if>
-                        </div>
-                    </div>
+	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+	            <div class="pt-3 pb-2 mb-3">
+	                <h2>나의 결제내역</h2>
+	                
+	                <div class="info-container">
+	                    <!-- 현재 이용권 정보 박스 -->
+	                    <div class="info-box">
+	                        <h5>헬스장 이용권</h5>
+	                        <div class="content">
+		                        <c:if test="${not empty currentMembership}">
+		                            <p>기간 : <fmt:formatDate value="${currentMembership.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentMembership.pa_end}" pattern="yyyy-MM-dd"/></p>
+		                        </c:if>
+		                        <c:if test="${empty currentMembership}">
+		                            <p>현재 이용 중인 회원권이 없습니다.</p>
+		                        </c:if>
+	                        </div>
+	                    </div>
 
-                    <!-- 진행 중인 PT 정보 박스 -->
-                    <div class="info-box">
-                        <h5>진행 중인 PT</h5>
-                        <div class="content">
-	                        <c:if test="${not empty currentPT}">
-	                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
-	                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
-	                        </c:if>
-	                        <c:if test="${empty currentPT}">
-	                            <p>현재 진행 중인 PT가 없습니다.</p>
-	                        </c:if>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="table_wrap">
+	                    <!-- 진행 중인 PT 정보 박스 -->
+	                    <div class="info-box">
+	                        <h5>진행 중인 PT</h5>
+	                        <div class="content">
+		                        <c:if test="${not empty currentPT}">
+		                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
+		                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
+		                        </c:if>
+		                        <c:if test="${empty currentPT}">
+		                            <p>현재 진행 중인 PT가 없습니다.</p>
+		                        </c:if>
+	                        </div>
+	                    </div>
+	                </div>
+	                
 					<table class="table text-center" id="table">
 						<thead id="thead">
 							<tr>
@@ -100,15 +133,14 @@
 							</c:forEach>
 						</tbody>
 					</table>
-				</div>
 					
-				<div id="refundDetail" class="mt-3"></div>
-				
-	        </section>
-	        
-		</section>
-	</main>
-	
+					<div id="refundDetail" class="mt-3"></div>
+					
+	            </div>
+	        </main>
+	    </div>
+	</div>
+
 	<script type="text/javascript">
 		// 데이터테이블
 		$('#table').DataTable({
@@ -173,7 +205,7 @@
 
 	        html += '</tbody></table>';
 	        
-	        html += '<div class="btn_wrap"><div class="btn_right_wrap"><button type="button" onclick="closeRefundDetail()" class="btn btn_cancel">닫기</button></div>	</div>';
+	        html += '<button type="button" onclick="closeRefundDetail()">닫기</button>';
 
 	        // refundDetail div에 HTML 추가
 	        $('#refundDetail').html(html);
