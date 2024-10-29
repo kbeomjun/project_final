@@ -1,5 +1,21 @@
 @charset "UTF-8";
 
+/* 페이드 인 애니메이션 */
+body {
+	opacity: 0;
+	transition: opacity 0.5s ease-in; /* 전환 시간을 조절하세요 (0.5s) */
+}
+
+/* 페이지가 로드된 후 페이드 인 완료 상태 */
+body.fade-in {
+	opacity: 1;
+}
+
+.btn-wide button {
+	width: 250px;
+	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
+}
+
 .swiper-slide {
 	display: flex;
 	justify-content: center;
@@ -11,19 +27,19 @@
 
 .swiper-button-next, .swiper-button-prev {
 	position: absolute;
-    bottom: 60px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    z-index: 11;
-    background-color: #585858;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-    cursor: pointer;
+	bottom: 60px;
+	right: 10px;
+	width: 40px;
+	height: 40px;
+	z-index: 11;
+	background-color: #585858;
+	color: white;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 25px;
+	cursor: pointer;
 }
 
 .swiper-button-prev {
@@ -50,32 +66,6 @@
 	background-size: cover;
 	transform: translate(-50%, -50%);
 	background-size: cover;
-}
-
-/* Sidebar */
-.sidebar {
-	width: 200px;
-	padding: 20px;
-	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar button {
-	width: 100%;
-	padding: 15px;
-	margin-bottom: 10px;
-	border: none;
-	background: #fff;
-	text-align: left;
-	cursor: pointer;
-	font-size: 16px;
-	border: 1px solid #ccc;
-	transition: background 0.3s;
-	text-align: center;
-    letter-spacing: 10px;
-}
-
-.sidebar button:hover {
-	background: #ddd;
 }
 
 .main-container {
@@ -124,8 +114,8 @@
 	box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.5); /* 오른쪽과 아래쪽에 그림자 효과 */
 }
 
-.sidebar .selected {
-	width: 115%; 
+.lnb-sidebar .selected {
+	width: 115%;
 	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
 }
 
@@ -144,3 +134,4 @@
 	font-size: 18px;
 	max-height: 500px;
 }
+
