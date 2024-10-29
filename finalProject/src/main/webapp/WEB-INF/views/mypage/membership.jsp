@@ -17,9 +17,7 @@
 	        <!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">
 				<div class="sub_title_wrap">
-					<h2 class="sub_title">회원권 결제</h2>
-					<p class="sub_title__txt">※ PT 이용권은 지정된 기간 내에 사용하지 않으면 소멸됩니다.</p>
-					<p class="sub_title__txt">※ 회원권 결제는 로그인 후 이용 가능 합니다.</p>
+					<h2 class="sub_title">결제 내역</h2>
 				</div>
                 
                 <div class="info_container">
