@@ -12,9 +12,7 @@
 		<section class="sub_banner sub_banner_07"></section>
 		<section class="sub_content">
 	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
+            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">

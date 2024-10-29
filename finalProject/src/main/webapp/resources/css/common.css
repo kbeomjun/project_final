@@ -1402,3 +1402,6 @@ table.dataTable>thead>tr>th, table.dataTable>thead>tr>td,
 table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td{
   padding: 20px 10px;
 }
+div.dt-container.dt-empty-footer tbody>tr:last-child>*{
+  border-bottom: 1px solid #DDD;
+}
