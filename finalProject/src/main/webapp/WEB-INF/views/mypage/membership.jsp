@@ -12,16 +12,12 @@
 		<section class="sub_banner sub_banner_07"></section>
 		<section class="sub_content">
 	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
+            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">
 				<div class="sub_title_wrap">
-					<h2 class="sub_title">회원권 결제</h2>
-					<p class="sub_title__txt">※ PT 이용권은 지정된 기간 내에 사용하지 않으면 소멸됩니다.</p>
-					<p class="sub_title__txt">※ 회원권 결제는 로그인 후 이용 가능 합니다.</p>
+					<h2 class="sub_title">결제 내역</h2>
 				</div>
                 
                 <div class="info_container">
@@ -47,7 +43,7 @@
 							<div class="info_content__text">
 								<c:if test="${not empty currentPT}">
 		                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
-		                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
+		                            <p>PT 잔여 횟수 : ${currentPT.remain_count} / ${currentPT.total_count}</p>
 		                        </c:if>
 		                        <c:if test="${empty currentPT}">
 		                            <p>현재 진행 중인 PT가 없습니다.</p>
@@ -91,14 +87,14 @@
 									<c:choose>
 										<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
 										<c:otherwise>
-											<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
+											<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn_green">작성하기</a>
 										</c:otherwise>
 									</c:choose>
 								</td>
 								<td>${list.pa_state}</td>
 								<td>
 									<c:if test="${list.pa_state eq '환불완료'}">
-										<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn-outline-danger btn-sm">환불내역확인</a>
+										<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn_red">환불내역확인</a>
 									</c:if>
 									<c:if test="${list.pa_state ne '환불완료'}">
 										-
@@ -130,7 +126,7 @@
 		    order: [[ 1, "desc" ]],
 		    columnDefs: [
 		    	{ targets: [5, 6, 7], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7]}
 		    ]
 		});
 	</script>
