@@ -30,7 +30,7 @@
 			<!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">
 				<div class="sub_title_wrap">
-					<h2 class="sub_title">비밀번호 확인${social_type}</h2>
+					<h2 class="sub_title">비밀번호 확인</h2>
 				</div>
 				
 				<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
@@ -76,21 +76,40 @@
 		</section>
 	</main>
 
+	<!-- 카카오 로그인 -->
+	<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        Kakao.init('${kakaoApiKey}');
+	        Kakao.isInitialized();
+	    });
+	
+	    function loginWithKakao() {
+	        Kakao.Auth.authorize({ 
+	        redirectUri: '${kakaoRedirectUri}' 
+	        }); // 등록한 리다이렉트uri 입력
+	        
+	    }
+	</script>	
+
 	<script>
 		function redirectToSocial(type) {
 		    const socialType = '${social_type}';
 		    const naverId = '${user.me_naverUserId}';
 		    const kakaoId = '${user.me_kakaoUserId}';
+		    const naverUrl = '${naverApiUrl}';
 		    
 	        if (type === 'NAVER') {
 	            if (!naverId) { 
 	                if (confirm('naver 연동이 필요합니다. 로그인 페이지로 이동하시겠습니까?')) {
 	                    // 네이버 소셜로그인 페이지로 이동(현재 로그인한 아이디와 연동)
+	                	window.location.href = naverUrl;
 	                }
 	            } else if (socialType === 'NAVER') {
 	                window.location.href = '<c:url value="/mypage/socialcheck"/>';
 	            } else {
 	                // 네이버 소셜로그인 페이지로 이동
+	            	window.location.href = naverUrl;
 	            }
 	            return;
 	        }
@@ -99,17 +118,19 @@
 	            if (!kakaoId) {
 	                if (confirm('kakao 연동이 필요합니다. 로그인 페이지로 이동하시겠습니까?')) {
 	                    // 카카오 소셜로그인 페이지로 이동(현재 로그인한 아이디와 연동)
+	                	loginWithKakao();
 	                }
 	            } else if (socialType === 'KAKAO') {
 	                window.location.href = '<c:url value="/mypage/socialcheck"/>';
 	            } else {
 	                // 카카오 소셜로그인 페이지로 이동
+	            	loginWithKakao();
 	            }
 	            return;
 	        }
 		    
 		}
 	</script>
-
+	
 </body>
 </html>
