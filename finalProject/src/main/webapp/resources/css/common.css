@@ -203,7 +203,7 @@ label{
 /* 특수문자 */
 ._asterisk::after{
   content: "*";
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #f00
 }
@@ -311,34 +311,27 @@ label{
   border: none;
   background-color: transparent;
 }
-.btn_insert{
-  width: 155px;
-  padding: 14px;
+[class*="btn btn_"]{
+  width: 140px;
+  padding: 10px 14px;
   border: 1px solid #111;
   border-radius: 4px;
   background-color: #111;
   color: #fff;
 }
-.btn_insert:hover, .btn_insert:focus{
+[class*="btn btn_"]:hover, [class*="btn btn_"]:focus{
   background-color: #666;
   border-color: #fff;
   color: #fff;
-
 }
 .btn_cancel{
-  width: 155px;
-  padding: 14px;
-  border-radius: 4px;
-  border: 1px solid #111;
   background-color: #fff;
   color: #111;
 }
 .btn_cancel:hover, .btn_cancel:focus{
-  background-color: #666;
   border-color: #666;
-  color: #fff;
 }
-[class*="btn_"]+[class*="btn_"]{
+[class*="btn btn_"]+[class*="btn btn_"]{
   margin-left: 10px;
 }
 /* button end */
@@ -575,7 +568,7 @@ label{
   margin-bottom: 35px;
 }
 .gnb_side__info p{
-  margin: 15px 0px;
+  margin: 14px 0px;
 }
 .gnb_side__title{
   margin: 0 0 26px;
@@ -757,13 +750,13 @@ ion-icon{
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #DDD;
   padding: 20px 0px;
-  font-size: 16px;
+  font-size: 14px;
   transition: .1s;
 }
 .lnb_wrap .lnb .lnb__item:first-child .lnb__link{
-  border-top: 1px solid #EBEBEB;
+  border-top: 1px solid #DDD;
 }
 .lnb_wrap .lnb .lnb__link::after{
   content: "";
@@ -787,7 +780,7 @@ ion-icon{
 .nav_two{
   display: none;
   padding: 10px 0px;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #DDD;
 }
 .nav_two._active{
   display: block;
@@ -813,7 +806,7 @@ ion-icon{
   margin-bottom: 80px;
 }
 .sub_title{
-  margin-bottom: 15px;
+  margin-bottom: 14px;
   font-weight: 600;
   font-size: 28px;
   color: #111111;
@@ -821,7 +814,7 @@ ion-icon{
 .sub_title__txt{
   margin-bottom: 0;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   color: #666666;
 }
 
@@ -859,11 +852,12 @@ ion-icon{
   margin-bottom: 40px;
 }
 .search_bar_wrap select.form-control{
-  flex: 0 0 120px;
-  width: 120px;
+  flex: 0 0 140px;
+  min-width: 140px;
+  width: 140px;
   height: initial;
   min-height: 40px;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #DDD;
   border-radius: 5px;
   padding: 8px 10px;
   font-size: 14px;
@@ -881,13 +875,13 @@ ion-icon{
   height: initial;
   width: 100%;
   min-height: 40px;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  padding: 8px 10px;
+  padding: 8px 45px 8px 10px;
   font-size: 14px;
   color: #111;
 }
-.btn_search{
+.search_btn{
   position: absolute;
   top: 0px;
   right: 5px;
@@ -915,7 +909,7 @@ ion-icon{
 }
 .table thead th, .table tbody tr:first-child th{
   border-top: 2px solid #111111;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #DDD;
   text-align: center !important;
   font-weight: 600;
   color: #111111;
@@ -932,16 +926,16 @@ ion-icon{
   vertical-align: baseline;
 }
 .table td, .table th{
-  font-size: 16px;
+  font-size: 14px;
   padding: 20px;
   font-weight: 400;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #DDD;
   color: #111;
   text-align: left !important;
 }
 .table tbody tr:first-child td{
   border-top: 2px solid #111111;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #DDD;
 }
 .table:has(thead) tbody tr:first-child td{
   border-top: none;
@@ -983,11 +977,12 @@ ion-icon{
 }
 .form-control.custom-select{
   height: initial;
-  width: 200px;
-  border: 1px solid #EBEBEB;
+  min-width: 180px;
+  width: 180px;
+  border: 1px solid #DDD;
   border-radius: 5px;
-  padding: 13px 13px 13px 20px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 14px;
   color: #999;
   background-image: url("../image/icon/ic_select_down.svg");
   background-size: 24px 24px;
@@ -1001,10 +996,10 @@ ion-icon{
 .form-control{
   height: initial;
   width: 100%;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #DDD;
   border-radius: 5px;
-  padding: 13px 13px 13px 20px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 14px;
   color: #111;
 }
 .form-control::placeholder{
@@ -1023,7 +1018,7 @@ textarea.form-control{
   margin: 0px 10px;
 }
 .email_at+.form-control.custom-select{
-  margin-right: 15px;
+  margin-right: 14px;
 }
 /* bootstrap strain end */
 
@@ -1035,7 +1030,7 @@ textarea.form-control{
   background-color: #F5F5F5;
 }
 .privacy_consent_title{
-  font-size: 16px;
+  font-size: 14px;
   color: #111;
 }
 .privacy_consent_text{
@@ -1050,9 +1045,6 @@ textarea.form-control{
 
 
 /* btn_black, btn_white */
-[class*="btn_link_"]+[class*="btn_link_"]{
-  margin-left: 10px;
-}
 .btn_black_top_line, .btn_black_right_line,
 .btn_black_bottom_line, .btn_black_left_line{
   -webkit-transition: 0s .3s;
@@ -1099,10 +1091,13 @@ textarea.form-control{
   background-color: #111;
   z-index: 0;
 }
-.btn_black, .btn_white{
+.btn_link_black .btn_black, .btn_link_black .btn_white{
   position: relative;
-  width: 230px;
-  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
   border: 2px solid #111;
   border-radius: 0px;
   padding: 12px 20px;
@@ -1206,7 +1201,7 @@ textarea.form-control{
   height: 60px;
   border: 2px solid #fff;
   border-radius: 0px;
-  padding: 16px 20px;
+  padding: 14px 20px;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 100;
