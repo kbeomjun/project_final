@@ -130,7 +130,7 @@
 												</div>
 												<div class="col-md-3 mb-4" style="padding: 0;">
 													<div class="card" style="width: 100%; border: none;">
-														<div class="card-body">
+														<div class="card-body" style="padding: 0.5rem 1.25rem;">
 															<%-- <h4 class="card-title">${em.em_name} (${fn:substring(em.em_gender, 0, 1)})</h4>
 															 <p class="card-text">${em.em_position}</p><br>--%>
 															<p class="card-text">${em.em_detail }</p>
