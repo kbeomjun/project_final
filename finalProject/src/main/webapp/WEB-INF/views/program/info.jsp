@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/program/info.css"/>">
 <style type="text/css">
 
-}</style>
+
+
+</style>
 </head>
 <body>
 	<section class="sub_banner sub_banner_03"></section>
@@ -24,7 +26,7 @@
 			<c:forEach items="${list}" var="sp" varStatus="status">
 				<c:choose>
 					<c:when test="${status.index == 0}">
-						<c:set var="notSelected" value="" />
+						<c:set var="notSelected" value="btn-wide" />
 					</c:when>
 					<c:otherwise>
 						<c:set var="notSelected" value="bg_white" />
@@ -117,6 +119,20 @@
         if (firstButton) {
             showDetail(firstButton); // 첫 번째 버튼 클릭
         }
+        
+        // 페이지가 로드되면 저장된 스크롤 위치로 이동
+        const scrollPosition = localStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+            window.scrollTo(0, scrollPosition);
+        }
+        
+     	// 페이드 인 효과 활성화
+        document.body.classList.add("fade-in");
+    };
+    
+ 	// 스크롤할 때마다 현재 위치를 저장
+    window.onscroll = function() {
+        localStorage.setItem("scrollPosition", window.scrollY);
     };
 	
     function showDetail(selectedButton) {
@@ -128,7 +144,9 @@
 	        if (button === selectedButton) {
 	            // 다른 버튼들은 bg_white로 설정
 	        	button.parentElement.classList.remove("bg_white");
+	        	button.parentElement.classList.add("btn-wide");
 	        } else {
+	        	button.parentElement.classList.remove("btn-wide");
 	        	button.parentElement.classList.add("bg_white");
 	        }
         });
@@ -136,14 +154,13 @@
         
         // 프로그램 이름으로 저장된 이미지들을 가져와서 하나씩 출력        
         getProgramImageNameList(programName, function(imageNameList) {
-        	console.log(imageNameList);
             if (imageNameList) {
             	document.getElementById("swiper-wrapper").innerHTML = '';
                 // List<String>에서 값을 하나씩 꺼내서 사용
                 imageNameList.forEach(function(imageName) {
                     // 여기에서 각 이미지 이름에 대한 추가 작업을 할 수 있습니다.
                     var imgSrc = '<c:url value="/uploads' + imageName + '" />';
-                    console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
+                    // console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
                     document.getElementById("swiper-wrapper").innerHTML += 
                     	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:80%; height:80%"><br></div>';
                 });
