@@ -87,14 +87,14 @@
 									<c:choose>
 										<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
 										<c:otherwise>
-											<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
+											<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn_green">작성하기</a>
 										</c:otherwise>
 									</c:choose>
 								</td>
 								<td>${list.pa_state}</td>
 								<td>
 									<c:if test="${list.pa_state eq '환불완료'}">
-										<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn-outline-danger btn-sm">환불내역확인</a>
+										<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn_red">환불내역확인</a>
 									</c:if>
 									<c:if test="${list.pa_state ne '환불완료'}">
 										-
@@ -126,7 +126,7 @@
 		    order: [[ 1, "desc" ]],
 		    columnDefs: [
 		    	{ targets: [5, 6, 7], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7]}
 		    ]
 		});
 	</script>

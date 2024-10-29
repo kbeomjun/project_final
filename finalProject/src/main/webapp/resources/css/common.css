@@ -229,6 +229,11 @@ label{
 }
 
 
+/* display */
+.display_none{
+  display: none !important;
+}
+
 
 
 /* swiper */
@@ -318,9 +323,10 @@ label{
 }
 [class*="btn btn_"]{
   width: 140px;
+  height: 43px;
   border: 1px solid #111;
   border-radius: 4px;
-  padding: 10px 14px;
+  padding: 8px 14px;
   background-color: #111;
   color: #fff;
 }
@@ -1228,7 +1234,8 @@ ion-icon{
 }
 .table tbody td div,
 .table tbody td p,
-.table tbody td span{
+.table tbody td span,
+.table tbody td label{
   color: #111;
   font-weight: 300;
 }
@@ -1241,10 +1248,34 @@ ion-icon{
 .table [class*="btn btn_"]{
   width: 100px;
   height: 28px;
+  margin-left: 5px;
   border-radius: 4px;
   padding: 5px;
   font-size: 12px;
   line-height: 18px;
+}
+.table .btn.btn_address{
+  width: 140px;
+  height: 43px;
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: #111;
+  color: #fff;
+}
+.table .btn.btn_address:hover, .table .btn.btn_address:focus{
+  background-color: #fff;
+  border-color: #111;
+  color: #111;
+}
+.form-inline-50 > input{
+  flex: 0 0 50%;
+  margin-left: 10px;
+}
+.form-inline-50 > *:first-child{
+  flex: 0 0 50%;
+  margin-left: 10px;
 }
 /* table end */
 
@@ -1442,4 +1473,15 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   background-color: #fff;
   border: 1px solid #dee2e6;
   color: #111 !important;
+}
+/* data-table end */
+
+
+/* 직원 관리 :: profile */
+.profile_img_wrap{
+  width: 300px;
+  height: 300px;
+}
+.profile_img_wrap label{
+  cursor: pointer;
 }
