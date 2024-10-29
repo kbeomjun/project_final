@@ -6,12 +6,6 @@
 <html>
 <head>
 <title>마이페이지</title>
-	<style type="text/css">
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
 </head>
 <body>
 
@@ -20,23 +14,26 @@
 	        alert("${msg}");
 	    </script>
 	</c:if>
-
-	<div class="container-fluid">
-	    <div class="row">
+	<main class="sub_container" id="skipnav_target">
+		<section class="sub_banner sub_banner_04"></section>
+		<section class="sub_content">
+		
 	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
-	
+            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
+		
 	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	            <div class="pt-3 pb-2 mb-3">
-	                <h2 class="mb-3">내 예약내역</h2>
-			    	<div>
-				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-present active" data-name="present">현재예약현황</button>
-				    	<button type="button" class="btn btn-outline-info btn-sm btn-menu btn-past" data-name="past">이전예약내역</button>
-				    </div>	
-				    
+	        <section class="sub_content_group">
+	        
+				<div class="sub_title_wrap">
+					<h2 class="sub_title">내 예약내역</h2>
+				</div> 
+	        
+		    	<div class="btn_wrap">
+			    	<button type="button" class="btn btn_insert btn-menu btn-present _active" data-name="present">현재예약현황</button>
+			    	<button type="button" class="btn btn_cancel btn-menu btn-past" data-name="past">이전예약내역</button>
+			    </div>
+			    
+			    <div class="table_wrap">
 				    <div class="mt-3 box box-present">
 						<table class="table text-center table-present">
 							<thead id="thead">
@@ -77,7 +74,7 @@
 							</tbody>
 						</table>
 					</div>				    
-				     
+			    
 				    <div class="mt-3 box box-past" style="display: none;">
 						<table class="table text-center table-past">
 							<thead id="thead">
@@ -112,12 +109,15 @@
 							</tbody>
 						</table>
 					</div>				     
+			    
+			    </div>
+			    	
+	        </section>
+	        
+		</section>
+	</main>
 				                    
-	            </div>
-	        </main>
-	    </div>
-	</div>
-	
+	        
 	<script type="text/javascript">
 		var table = $('.table-present').DataTable({
 			language: {
@@ -141,8 +141,8 @@
 		$('.btn-menu').click(function(){
 			var name = $(this).data("name");
 			
-			$('.btn-menu').removeClass("active");
-			$('.btn-'+name).addClass("active");
+			$('.btn-menu').removeClass("_active");
+			$('.btn-'+name).addClass("_active");
 			
 			$('.box').css("display", "none");
 			$('.box-'+name).css("display", "block");
