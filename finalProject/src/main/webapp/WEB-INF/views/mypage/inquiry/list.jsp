@@ -23,7 +23,7 @@
 				</div>
 				
 				<div class="table_wrap">
-					<table class="table text-center" id="table">
+					<table class="table table_center" id="table">
 						<thead id="thead">
 							<tr>
 								<th>문의유형</th>

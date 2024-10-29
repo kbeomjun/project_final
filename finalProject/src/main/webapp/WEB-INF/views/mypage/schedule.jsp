@@ -35,7 +35,7 @@
 			    
 			    <div class="table_wrap">
 				    <div class="mt-3 box box-present">
-						<table class="table text-center table-present">
+						<table class="table table_center table-present">
 							<thead id="thead">
 								<tr>
 									<th>연도</th>

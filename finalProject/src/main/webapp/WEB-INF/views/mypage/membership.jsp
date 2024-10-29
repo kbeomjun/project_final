@@ -12,17 +12,10 @@
 		<section class="sub_banner sub_banner_07"></section>
 		<section class="sub_content">
 	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
+            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">
-				<div class="sub_title_wrap">
-					<h2 class="sub_title">회원권 결제</h2>
-					<p class="sub_title__txt">※ PT 이용권은 지정된 기간 내에 사용하지 않으면 소멸됩니다.</p>
-					<p class="sub_title__txt">※ 회원권 결제는 로그인 후 이용 가능 합니다.</p>
-				</div>
                 
                 <div class="info_container">
 					<!-- 현재 이용권 정보 박스 -->
@@ -105,52 +98,15 @@
 									</c:if>										
 								</td>
 							</tr>
-						</thead>
-						<tbody id="tbody">
-							<c:forEach items="${paymentList}" var="list">
-								<tr>
-									<td>${list.pt_name}</td>
-									<td>
-										<fmt:formatDate value="${list.pa_date}" pattern="yyyy-MM-dd"/>
-									</td>
-									<td>
-										<fmt:formatNumber value="${list.pa_price}" type="number" pattern="#,##0"/>
-									</td>
-									<td>
-										<fmt:formatDate value="${list.pa_start}" pattern="yyyy-MM-dd"/>
-									</td>
-									<td>
-										<fmt:formatDate value="${list.pa_end}" pattern="yyyy-MM-dd"/>
-									</td>
-									<td>
-										<c:choose>
-											<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
-											<c:otherwise>
-												<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
-											</c:otherwise>
-										</c:choose>
-									</td>
-									<td>${list.pa_state}</td>
-									<td>
-										<c:if test="${list.pa_state eq '환불완료'}">
-											<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn-outline-danger btn-sm">환불내역확인</a>
-										</c:if>
-										<c:if test="${list.pa_state ne '환불완료'}">
-											-
-										</c:if>										
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
+						</c:forEach>
+					</tbody>
+				</table>
 					
 				<div id="refundDetail" class="mt-3"></div>
 				
 	        </section>
 	        
 		</section>
-	</main>
 	
 	<script type="text/javascript">
 		// 데이터테이블

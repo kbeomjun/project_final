@@ -38,7 +38,7 @@
 								</th>
 								<td>
 									<div class="form-group">
-										<input type="password" class="form-control" id="current_pw" name="current_pw" placeholder="현재 비밀번호를 입력하세요">
+										<input type="password" class="form-control" id="current_pw" name="me_pw" placeholder="현재 비밀번호를 입력하세요">
 									</div>
 									<div class="error error-current"></div>
 								</td>
