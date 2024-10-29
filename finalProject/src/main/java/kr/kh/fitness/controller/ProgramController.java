@@ -26,6 +26,7 @@ import kr.kh.fitness.model.dto.CalendarDTO;
 import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.ProgramService;
@@ -250,4 +251,17 @@ public class ProgramController {
 	
 		return "/main/message";
 	}	
+	
+	@GetMapping("/getEmployeeInfo")
+	@ResponseBody
+	public EmployeeVO getEmployeeInfo(@RequestParam("bs_num") String bs_num) {
+		
+		if(bs_num == null) {
+			return null;
+		}
+		EmployeeVO employee = programService.getEmployeeInfo(bs_num);
+
+		return employee;
+	}
+	
 }

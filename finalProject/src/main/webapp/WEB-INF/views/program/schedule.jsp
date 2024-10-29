@@ -10,6 +10,13 @@
 	href="<c:url value="/resources/css/program/schedule.css"/>">
 
 <style type="text/css">
+.employee-modal .modal-content {
+	width: 800px; /* 고정 너비를 500px로 설정 */
+    margin: auto; /* 중앙 정렬 */
+    border-radius: 8px; /* 모서리 둥글게 하기 (선택 사항) */
+    padding: 20px; /* 여백 추가 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 (선택 사항) */
+}
 </style>
 </head>
 <body>
@@ -208,10 +215,8 @@
 								</c:forEach>
 							</tr>
 						</c:forEach>
-
 					</table>
 				</div>
-			</div>
 			</div>
 		</section>
 	</section>
@@ -249,7 +254,9 @@
 										<tr>
 											<td>${ps.bp_sp_name }</td>
 											<td>${fn:replace(ps.bp_br_name, '점', '')}</td>
-											<td>${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})</td>
+											<td><span>${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})</span>
+												<span><button class="btn btn-info btn-view-details" data-bs-num="${ps.bs_num}">상세 보기</button></span>
+											</td>
 											<td><fmt:formatDate value="${ps.bs_start}"
 													pattern="HH:mm" /> <br />~<fmt:formatDate
 													value="${ps.bs_end}" pattern="HH:mm" /></td>
@@ -281,6 +288,14 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="employeeModal" class="modal employee-modal" style="display: none;">
+	    <div class="modal-content">
+	    <div class="modal-header">
+	        <span class="close" style="cursor: pointer;">&times;</span> <!-- x 버튼 -->
+        </div>
+	        <div id="modalBody"></div> <!-- 여기에 동적 컨텐츠를 삽입 -->
+	   	</div>
 	</div>
 	<script>
 	$(document).ready(function() {
@@ -386,6 +401,75 @@ window.onload = function() {
 window.onscroll = function() {
     localStorage.setItem("scrollPosition", window.scrollY);
 };
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("employeeModal");
+    const modalBody = document.getElementById("modalBody");
+    const closeBtn = modal.querySelector(".close");
+
+    // 버튼 클릭 이벤트
+    document.querySelectorAll(".btn-view-details").forEach(button => {
+        button.addEventListener("click", function() {
+        	
+        	const bsNum = $(this).data('bs-num'); // data-bs-num 값 가져오기 (소문자 사용)
+        	const uploadUrl = '<c:url value="/uploads" />';
+        	
+            $.ajax({
+                async: false,
+                url: '<c:url value="/program/getEmployeeInfo"/>',
+                type: 'get',
+                data: { bs_num: bsNum }, 
+                dataType: 'json',
+                success: function(data) {
+                	 if (data) {
+                         // employee 정보 출력
+                         console.log('직원 정보:', data);
+                         // 여기에 모달에 데이터를 넣는 코드 추가
+                         $('#modalBody').html(`
+                        	<div class="row">
+                         	<div class="col-md-6 mb-4" style="padding: 0;">
+	                        <div class="card" style="width: 100%; border: none;">
+	                            <img class="card-img-top"
+	                                 src="\${data.em_fi_name ? uploadUrl+ data.em_fi_name : 'https://www.w3schools.com/bootstrap4/img_avatar1.png'}"
+	                                 alt="\${data.em_name}" 
+	                                 style="width: 100%; height: 350px; object-fit: cover;">
+	                        </div>
+	                        </div>
+	                        <div class="col-md-6 mb-4" style="padding: 0;">
+	                        <div class="card" style="width: 100%; border: none;">
+	                            <div class="card-body" style="padding: 0.5rem 1.25rem;">
+	                                <h4 class="card-title">\${data.em_name}</h4>
+	                                <p class="card-text">\${data.em_position}</p><br>
+	                                <p class="card-text">\${data.em_detail}</p>
+	                            </div>
+	                        </div>
+	                        </div>
+	                    `);
+	                    $('#employeeModal').show(); // 모달 표시
+                     } else {
+                         alert('직원 정보를 찾을 수 없습니다.');
+                     }
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                     console.error('오류 발생:', jqXHR);
+                     alert('직원 정보를 가져오는 데 실패했습니다.');
+                 }
+            });
+        });
+    });
+
+    // 모달 닫기 이벤트
+    closeBtn.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
 </script>
 </body>
 
