@@ -8,11 +8,7 @@
 <head>
 <title>마이페이지</title>
 <style type="text/css">
-	.error{color:red; margin-bottom: 10px;}
-	.form-group{margin: 0;}
-	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-	.address-input{margin-bottom: 10px;}
-	.sns-accounts {
+.sns-accounts {
     display: flex;
     gap: 15px; /* 요소 간의 간격 */
     align-items: center; /* 수직 정렬 */
@@ -57,110 +53,184 @@
 </style>
 </head>
 <body>
-	<div class="container-fluid">
-	    <div class="row">
-	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
-	
-	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	            <div class="pt-3 pb-2 mb-3">
-	                <h2>개인정보수정</h2>
-	                
-					<form action="<c:url value='/mypage/info/update'/>" method="post" id="form">
-				        <div class="form-group">
-				            <label for="me_id">아이디:</label>
-				            <input type="text" class="form-control" name="me_id" value="${member.me_id}" readonly>
-				        </div>		
-			        	<c:if test="${member.me_naverUserId ne null || member.me_kakaoUserId ne null}">
-					        <div class="form-group sns">
-							    <label for="me_social">연동된 SNS:</label>
-							    <div class="sns-accounts">
-							    	<c:if test="${member.me_naverUserId ne null}">
-								        <div class="sns-account">
-											<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" width="30"/>
-								            <a class="btn btn-sns-unlink ml-1" data-type="NAVER">
-								                <span>해제</span>
-								            </a>
-								        </div>
-							    	</c:if>
-							    	<c:if test="${member.me_kakaoUserId ne null}">
-								        <div class="sns-account">
-								            <img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" width="30"/>
-								            <a class="btn btn-sns-unlink ml-1" data-type="KAKAO">
-								                <span>해제</span>
-								            </a>
-								        </div>
-							        </c:if>
-							    </div>
-							</div>
-						</c:if>
-						<div class="form-group">
-							<label for="me_email">이메일:</label>
-							<input type="email" class="form-control" id="me_email" name="me_email" value="${member.me_email}">
-							<div id="emailCheckResult" class="error"></div>
-						</div>
-						<div class="error error-email"></div>
-						<div class="form-group">
-							<label for="me_name">이름:</label>
-							<input type="text" class="form-control" id="me_name" name="me_name" value="${member.me_name}">
-						</div>
-						<div class="error error-name"></div>
-						<div class="form-group">
-							<label for="me_phone">전화번호:</label>
-							<input type="text" class="form-control" id="me_phone" name="me_phone" value="${member.me_phone}">
-						</div>
-						<div class="error error-phone"></div>
-						<div class="form-group">
-							<label for="me_gender" style="margin-right: 10px;">성별:</label>
-							<div class="form-check-inline">
-				  				<label class="form-check-label" for="radio1">
-				    				<input type="radio" class="form-check-input" id="radio1" name="me_gender" value="남자" <c:if test='${member.me_gender == "남자"}'>checked</c:if>>남
-				  				</label>
-							</div>
-							<div class="form-check-inline">
-				  				<label class="form-check-label" for="radio2">
-				   			 		<input type="radio" class="form-check-input" id="radio2" name="me_gender" value="여자" <c:if test='${member.me_gender == "여자"}'>checked</c:if>>여
-				  				</label>
-							</div>	
-						</div>
-						<div class="error error-gender"></div>
-						<div class="form-group">
-							<label for="me_birth" style="margin-right: 10px;">생년월일:</label>
-							<input type="date" id="me_birth" name="birth" value="<fmt:formatDate value='${member.me_birth}' pattern='yyyy-MM-dd'/>">
-						</div>
-						<div class="form-group">
-							<label for="me_address">주소:</label> <br/>
-							<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:130px;" value="${member.me_postcode}">
-							<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-							<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" value="${member.me_address}"> <br/>
-							<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${member.me_detailAddress}">
-							<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${member.me_extraAddress}">
-						</div>
-						<div class="error error-address"></div>			
-						<div class="form-group">
-							<label for="me_noshow">노쇼경고횟수:</label>
-							<input type="text" class="form-control" id="me_noshow" value="${member.me_noshow}" readonly>
-						</div>
-						<c:if test="${member.me_noshow >= 5}">
-							<div class="form-group">
-								<label for="me_cancel">노쇼제한시간:</label>
-								<input type="text" class="form-control" id="me_cancel" value="<fmt:formatDate value='${member.me_cancel}' pattern='yyyy/MM/dd HH:mm:ss' />" readonly>
-							</div>
-						</c:if>
+
+	<main class="sub_container" id="skipnav_target">
+		<section class="sub_banner sub_banner_04"></section>
+		<section class="sub_content">
+		
+			<!-- 왼쪽 사이드바 -->
+			<%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
+		
+			<!-- 오른쪽 컨텐츠 영역 -->
+			<section class="sub_content_group">
 			
+				<div class="sub_title_wrap">
+					<h2 class="sub_title">개인정보수정</h2>
+				</div>
 			
-						<div class="text-right mb-3">
-							<button type="submit" class="btn btn-outline-warning mt-3">개인정보 수정</button>
-						</div>
-					</form>	                
-	                
-	            </div>
-	        </main>
-	    </div>
-	</div>
+				<div class="table_wrap">
+					<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
+					<form action="<c:url value="/mypage/info/update"/>" method="post" id="form">
+						<input type="hidden" name="me_id" value="${member.me_id}">
+						<table class="table">
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: 80%;">
+							</colgroup>
+							
+							<tbody>
+								<tr>
+									<th scope="row">
+										<label for="me_id" class="_asterisk">아이디</label>
+									</th>
+									<td>
+										<div class="form-group">${member.me_id}</div>
+									</td>
+								</tr>
+								<c:if test="${member.me_naverUserId ne null || member.me_kakaoUserId ne null}">
+									<tr>
+										<th scope="row">
+											<label for="me_social">연동된 SNS</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<div class="sns-accounts">
+													<c:if test="${member.me_naverUserId ne null}">
+														<div class="sns-account">
+															<img src="<c:url value='/resources/image/naver/logo_naver.png'/>" class="naver-icon" width="30"/>
+															<a class="btn btn-sns-unlink ml-1" data-type="NAVER">
+																<span>해제</span>
+															</a>
+														</div>
+													</c:if>
+													<c:if test="${member.me_kakaoUserId ne null}">
+														<div class="sns-account">
+															<img src="<c:url value='/resources/image/kakao/kakaotalk_sharing_btn_small.png'/>" class="kakao-icon" width="30"/>
+															<a class="btn btn-sns-unlink ml-1" data-type="KAKAO">
+																<span>해제</span>
+															</a>
+														</div>
+													</c:if>
+												</div>											
+											</div>
+										</td>
+									</tr>								
+								</c:if>
+								<tr>
+									<th scope="row">
+										<label for="me_email" class="_asterisk">이메일</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="email" class="form-control" id="me_email" name="me_email" value="${member.me_email}">
+										</div>
+										<div id="emailCheckResult" class="error"></div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="me_name" class="_asterisk">이름</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" id="me_name" name="me_name" value="${member.me_name}">
+										</div>
+										<div class="error error-name"></div>
+									</td>
+								</tr>																
+								<tr>
+									<th scope="row">
+										<label for="me_phone" class="_asterisk">전화번호</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" id="me_phone" name="me_phone" value="${member.me_phone}">
+										</div>
+										<div class="error error-phone"></div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="me_gender" class="_asterisk">성별</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<div class="form-check-inline">
+								  				<label class="form-check-label" for="radio1">
+								    				<input type="radio" class="form-check-input" id="radio1" name="me_gender" value="남자" <c:if test='${member.me_gender == "남자"}'>checked</c:if>>남
+								  				</label>
+											</div>
+											<div class="form-check-inline">
+								  				<label class="form-check-label" for="radio2">
+								   			 		<input type="radio" class="form-check-input" id="radio2" name="me_gender" value="여자" <c:if test='${member.me_gender == "여자"}'>checked</c:if>>여
+								  				</label>
+											</div>
+										</div>
+										<div class="error error-gender"></div>
+									</td>
+								</tr>								
+								<tr>
+									<th scope="row">
+										<label for="me_birth">생년월일</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="date" class="form-control" id="me_birth" name="me_birth" value="<fmt:formatDate value='${member.me_birth}' pattern='yyyy-MM-dd'/>">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="me_address" class="_asterisk">주소</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:130px;" value="${member.me_postcode}">
+											<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
+											<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" value="${member.me_address}"> <br/>
+											<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${member.me_detailAddress}">
+											<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${member.me_extraAddress}">
+										</div>
+										<div class="error error-address"></div>
+									</td>
+								</tr>								
+								<tr>
+									<th scope="row">
+										<label for="me_noshow">노쇼경고횟수</label>
+									</th>
+									<td>
+										<div class="form-group">${member.me_noshow}</div>
+									</td>
+								</tr>
+								<c:if test="${member.me_noshow >= 5}">
+									<tr>
+										<th scope="row">
+											<label for="me_cancel">노쇼제한시간</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<fmt:formatDate value='${member.me_cancel}' pattern='yyyy/MM/dd HH:mm:ss'/>
+											</div>
+										</td>
+									</tr>								
+								</c:if>						
+																							
+							</tbody>
+						</table>
+						
+						<div class="btn_wrap">
+							<div class="btn_right_wrap">
+								<button type="submit" class="btn btn_insert">수정</button>
+							</div>
+						</div>						
+						
+					</form>
+				</div>
+				
+			</section>
+			
+		</section>
+	</main>
 
 	<script type="text/javascript">
 		let emailCheckPassed = true;
@@ -361,37 +431,38 @@
 	        }).open();
 	    }
     </script>
+    
 	<script>
-    $(document).ready(function() {
-        $('.btn-sns-unlink').on('click', function(event) {
-            event.preventDefault();
-            
-            var socialType = $(this).data('type');
-            
-            $.ajax({
-                url: '<c:url value="/mypage/unlinkSNS"/>', // 서버의 URL을 여기에 지정
-                type: 'POST',
-                data: {
-                    socialType: socialType
-                },
-                success: function(response) {
-                    if (response) {
-                        alert(socialType+' 연동이 성공적으로 해제되었습니다.');
-                        $('.btn-sns-unlink[data-type="' + socialType + '"]').closest('.sns-account').remove();
-                     	// 연동된 계정이 없으면 전체 섹션 숨기기
-                        if ($('.sns-account').length === 0) {
-                            $('.form-group.sns').remove();
-                        }
-                    } else {
-                        alert(socialType+' 연동 해제에 실패했습니다.');
-                    }
-                },
-                error: function() {
-                    alert(socialType+' 연동 해제 중 오류가 발생했습니다.');
-                }
-            });
-        });
-    });
-</script>
+		$(document).ready(function() {
+			$('.btn-sns-unlink').on('click', function(event) {
+				event.preventDefault();
+	            
+				var socialType = $(this).data('type');
+	            
+				$.ajax({
+					url: '<c:url value="/mypage/unlinkSNS"/>', // 서버의 URL을 여기에 지정
+					type: 'POST',
+					data: {
+						socialType: socialType
+						},
+						success: function(response) {
+	                    if (response) {
+                       alert(socialType+' 연동이 성공적으로 해제되었습니다.');
+                       $('.btn-sns-unlink[data-type="' + socialType + '"]').closest('.sns-account').remove();
+                    	// 연동된 계정이 없으면 전체 섹션 숨기기
+                       if ($('.sns-account').length === 0) {
+                           $('.form-group.sns').remove();
+                       }
+	                    } else {
+	                        alert(socialType+' 연동 해제에 실패했습니다.');
+	                    }
+	                },
+	                error: function() {
+	                    alert(socialType+' 연동 해제 중 오류가 발생했습니다.');
+	                }
+	            });
+	        });
+	    });
+	</script>
 </body>
 </html>

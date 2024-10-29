@@ -288,7 +288,7 @@ public class MypageController {
 	    	model.addAttribute("social_type", social_type);
 	    	model.addAttribute("social_id", social_id);
 	    }
-		model.addAttribute("me_id", user.getMe_id());
+		model.addAttribute("user", user);
 		return "/mypage/pwCheck";
 	}
 	
@@ -306,10 +306,28 @@ public class MypageController {
 			return "/main/message";
 		}
 	}
+
+	// 소셜 정보로 비밀번호 확인 대체 get 
+	@GetMapping("/socialcheck")
+	public String mypageSocialCheck(Model model, HttpSession session) {
+		
+		String social_type = (String) session.getAttribute("socialType");
+		MemberVO member = (MemberVO) session.getAttribute("user");
+		
+		String msg = clientService.checkSocial(member, social_type);
+		if(msg == "") {
+			session.setAttribute("pwVerified", true);
+			return "redirect:/mypage/info";
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/mypage/pwcheck");
+			return "/main/message";
+		}
+	}
 	
 	// 소셜 정보로 비밀번호 확인 대체 post 
 	@PostMapping("/socialcheck")
-	public String mypageSocialCheck(Model model, HttpSession session) {
+	public String mypageSocialCheckPost(Model model, HttpSession session) {
 		
 		String social_type = (String) session.getAttribute("socialType");
 		MemberVO member = (MemberVO) session.getAttribute("user");
