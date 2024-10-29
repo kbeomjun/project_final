@@ -16,6 +16,9 @@
 	
 	        <!-- 오른쪽 컨텐츠 영역 -->
 			<section class="sub_content_group">
+				<div class="sub_title_wrap">
+					<h2 class="sub_title">결제 내역</h2>
+				</div>
                 
                 <div class="info_container">
 					<!-- 현재 이용권 정보 박스 -->
@@ -40,7 +43,7 @@
 							<div class="info_content__text">
 								<c:if test="${not empty currentPT}">
 		                        	<p>기간 : <fmt:formatDate value="${currentPT.pa_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${currentPT.pa_end}" pattern="yyyy-MM-dd"/></p>
-		                            <p>PT 잔여 횟수: [${currentPT.remain_count} / ${currentPT.total_count}]</p>
+		                            <p>PT 잔여 횟수 : ${currentPT.remain_count} / ${currentPT.total_count}</p>
 		                        </c:if>
 		                        <c:if test="${empty currentPT}">
 		                            <p>현재 진행 중인 PT가 없습니다.</p>
@@ -84,14 +87,14 @@
 									<c:choose>
 										<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
 										<c:otherwise>
-											<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn-outline-success btn-sm">작성하기</a>
+											<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn_green">작성하기</a>
 										</c:otherwise>
 									</c:choose>
 								</td>
 								<td>${list.pa_state}</td>
 								<td>
 									<c:if test="${list.pa_state eq '환불완료'}">
-										<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn-outline-danger btn-sm">환불내역확인</a>
+										<a href="javascript:void(0);" onclick="loadRefundDetail(${list.pa_num})" class="btn btn_red">환불내역확인</a>
 									</c:if>
 									<c:if test="${list.pa_state ne '환불완료'}">
 										-
@@ -126,7 +129,7 @@
 		    order: [[ 1, "desc" ]],
 		    columnDefs: [
 		    	{ targets: [5, 6, 7], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7], className: "align-content-center"}
+		        { targets: [0, 1, 2, 3, 4, 5, 6, 7]}
 		    ]
 		});
 	</script>

@@ -229,6 +229,11 @@ label{
 }
 
 
+/* display */
+.display_none{
+  display: none !important;
+}
+
 
 
 /* swiper */
@@ -318,9 +323,10 @@ label{
 }
 [class*="btn btn_"]{
   width: 140px;
+  height: 43px;
   border: 1px solid #111;
   border-radius: 4px;
-  padding: 10px 14px;
+  padding: 8px 14px;
   background-color: #111;
   color: #fff;
 }
@@ -733,8 +739,8 @@ label{
 }
 .gnb_side__logo{
   display: inline-block;
-  width: 150px;
-  height: 75px;
+  width: calc(189px / 2);
+  height: calc(105px / 2);
   background-image: url("../image/main/KF_logo_white.svg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -955,7 +961,7 @@ ion-icon{
 .sub_banner{
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 400px;
   background-image: url("../image/sub/sub_banner_02.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -976,7 +982,7 @@ ion-icon{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 64px;
+  font-size: 52px;
   color: #fff;
 }
 .sub_banner.sub_banner_01::before{content: "지점 소개";}
@@ -1228,7 +1234,8 @@ ion-icon{
 }
 .table tbody td div,
 .table tbody td p,
-.table tbody td span{
+.table tbody td span,
+.table tbody td label{
   color: #111;
   font-weight: 300;
 }
@@ -1241,10 +1248,34 @@ ion-icon{
 .table [class*="btn btn_"]{
   width: 100px;
   height: 28px;
+  margin-left: 5px;
   border-radius: 4px;
   padding: 5px;
   font-size: 12px;
   line-height: 18px;
+}
+.table .btn.btn_address{
+  width: 140px;
+  height: 43px;
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: #111;
+  color: #fff;
+}
+.table .btn.btn_address:hover, .table .btn.btn_address:focus{
+  background-color: #fff;
+  border-color: #111;
+  color: #111;
+}
+.form-inline-50 > input{
+  flex: 0 0 50%;
+  margin-left: 10px;
+}
+.form-inline-50 > *:first-child{
+  flex: 0 0 50%;
+  margin-left: 10px;
 }
 /* table end */
 
@@ -1401,4 +1432,56 @@ table.dataTable thead>tr>th.dt-orderable-asc:hover, table.dataTable thead>tr>th.
 table.dataTable>thead>tr>th, table.dataTable>thead>tr>td,
 table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td{
   padding: 20px 10px;
+}
+div.dt-container.dt-empty-footer tbody>tr:last-child>*{
+  border-bottom: 1px solid #DDD;
+}
+
+
+/* data-table :: pagination */
+div.dt-container div.dt-layout-row{
+  justify-content: center;
+  margin: 40px 0px 0px;
+}
+div.dt-container div.dt-layout-row div.dt-layout-cell.dt-layout-end{
+  justify-content: center;
+  margin-left: initial;
+}
+div.dt-container .dt-paging .dt-paging-button{
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #111;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  transition: .3s;
+}
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:hover{
+  color: #fff !important;
+  text-decoration: none;
+  background: #111;
+  border-color: #111;
+}
+div.dt-container .dt-paging .dt-paging-button:hover, div.dt-container .dt-paging .dt-paging-button:focus{
+  z-index: 2;
+  color: #111 !important;
+  text-decoration: none;
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-paging .dt-paging-button.disabled:hover, div.dt-container .dt-paging .dt-paging-button.disabled:active{
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  color: #111 !important;
+}
+/* data-table end */
+
+
+/* 직원 관리 :: profile */
+.profile_img_wrap{
+  width: 300px;
+  height: 300px;
+}
+.profile_img_wrap label{
+  cursor: pointer;
 }
