@@ -2,7 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-
+<style>
+	.img-card{
+		height: 300px;
+	}
+</style>
 			<section class="sub_banner sub_banner_05"></section>
 			<section class="sub_content">
 			
@@ -33,7 +37,7 @@
 										<td>
 											<div class="form-group profile_img_wrap img-box">
 												<label for="file">
-													<img class="" src="<c:url value='/resources/image/common/img_avatar1.jpg' />" alt="image">
+													<img class="img-card" src="<c:url value='/resources/image/common/img_avatar1.jpg' />" alt="image">
 												</label>
 											</div>
 											<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
@@ -60,7 +64,7 @@
 									</tr>
 									<tr>
 										<th scope="row">
-											<label for="mi_emailId" class="_asterisk">이메일</label>
+											<label for="em_email" class="_asterisk">이메일</label>
 										</th>
 										<td>
 											<input type="text" class="form-control" id="em_email" name="em_email" placeholder="이메일을 입력해주세요.">
@@ -168,7 +172,7 @@
 					    	let path = event.target.result;
 					        img = `
 					        	<label for="file">
-					        		<img class="" src="\${path}" alt="Card image">
+					        		<img class="img-card" src="\${path}" alt="Card image">
 				        		</label>
 					        `;
 					        $('.img-box').append(img);
@@ -176,7 +180,7 @@
 					}else{
 						let img = `
 							<label for="file">
-								<img class="" src="<c:url value='/resources/image/common/img_avatar1.jpg' />" alt="image">
+								<img class="img-card" src="<c:url value='/resources/image/common/img_avatar1.jpg' />" alt="image">
 			        		</label>
 						`;
 						$('.img-box').append(img);

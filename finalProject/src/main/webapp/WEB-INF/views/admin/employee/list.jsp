@@ -33,6 +33,7 @@
 								<th>입사일</th>
 								<th>직책</th>
 								<th>상세</th>
+								<th>삭제</th>
 							</tr>
 						</thead>
 						<tbody id="tbody">
@@ -48,7 +49,10 @@
 									<td>${em.em_position}</td>
 									<td>
 										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn_blue">조회</a>
-									</td>							
+									</td>
+									<td>
+										<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn_red btn-delete">삭제</a>
+									</td>						
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -93,5 +97,10 @@
 				});
 			</script>
 
-</body>
-</html>
+			<script type="text/javascript">
+				$('.btn-delete').click(function(e){
+					if(!confirm("정말 삭제하시겠습니까?\n삭제하시면 복구할 수 없습니다.")){
+						e.preventDefault();
+					}
+				});
+			</script>
