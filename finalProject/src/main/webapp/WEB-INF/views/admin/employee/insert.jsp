@@ -32,7 +32,7 @@
 								<tbody>
 									<tr>
 										<th scope="row">
-											<label for="mi_it_name" class="_asterisk">프로필 사진 등록</label>
+											<label for="em_fi_name" class="_asterisk">프로필 사진 등록</label>
 										</th>
 										<td>
 											<div class="form-group profile_img_wrap img-box">
