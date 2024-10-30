@@ -68,10 +68,10 @@
 		        emptyTable: ""
 		    },
 			scrollY: 500,
-		    paging: false,
-		    info: false,
 		    stateSave: true,
 		    stateDuration: 300,
+		    paging: false,
+		    info: false,
 		    columnDefs: [
 		        { targets: [4], orderable: false }
 		    ]
