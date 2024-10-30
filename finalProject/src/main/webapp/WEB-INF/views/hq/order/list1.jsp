@@ -3,7 +3,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-
+<html>
+<head>
+<title>본사관리페이지</title>
+	<style type="text/css">
+		#thead th{text-align: center;}
+    	#tbody td{text-align: center;}
+    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
+    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
+	</style>
+</head>
 <body>
 	<div style="margin-top:30px; padding:0 20px;">
 	  	<div class="row">
@@ -187,3 +196,4 @@
 		});
 	</script>
 </body>
+</html>
