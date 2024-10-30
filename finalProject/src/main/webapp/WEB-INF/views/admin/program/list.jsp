@@ -9,7 +9,7 @@
 			    </script>
 			</c:if>
 			
-			<section class="sub_banner sub_banner_07"></section>
+			<section class="sub_banner sub_banner_05"></section>
 			<section class="sub_content">
 			
 				<!-- 왼쪽 사이드바 -->
