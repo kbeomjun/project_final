@@ -33,7 +33,7 @@
           		<a class="lnb__link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
         	</li>
         	<li class="lnb-item">
-          		<a class="lnb__link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
+          		<a class="lnb__link" href="<c:url value="/hq/FAQ/list"/>">FAQ 관리</a>
         	</li>
         	<li class="lnb-item">
           		<a class="lnb__link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>

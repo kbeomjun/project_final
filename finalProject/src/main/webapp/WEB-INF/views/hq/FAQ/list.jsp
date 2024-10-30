@@ -3,166 +3,133 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>본사관리페이지</title>
-	<style type="text/css">
-    	.error{color:red; margin-bottom: 10px;}
-    	.form-group{margin: 0;}
-    	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
-</head>
+
 <body>
-	<div style="margin-top:30px; padding:0 20px;">
-	  	<div class="row">
-	    	<div class="col-sm-2">
-		    	<ul class="nav nav-pills flex-column">
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
-	       	 		</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
-		        	</li>
-		      	</ul>
-		      	<hr class="d-sm-none">
-	    	</div>
-		    <div class="col-sm-10">
-		    	<div>
-			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
-			    </div>
-			    <hr>
-		    	<div class="mt-3">
-		    		<table class="table table-hover" id="table">
-				    	<thead id="thead">
-				      		<tr>
-				        		<th>FAQ번호</th>
-				        		<th>제목</th>
-				        		<th>작성날짜</th>
-				        		<th></th>
+	<section class="sub_banner sub_banner_06"></section>
+	<section class="sub_content">
+        <!-- 왼쪽 사이드바 -->
+        <%@ include file="/WEB-INF/views/layout/hqSidebar.jsp" %>
+
+        <!-- 오른쪽 컨텐츠 영역 -->
+		<section class="sub_content_group">
+			<div class="sub_title_wrap">
+				<h2 class="sub_title">FAQ 관리</h2>
+			</div>
+		
+	    	<div class="table_wrap">
+		    	<table class="table table_center" id="table">
+			    	<thead id="thead">
+			      		<tr>
+			        		<th>FAQ번호</th>
+			        		<th>제목</th>
+			        		<th>작성날짜</th>
+			        		<th></th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="tbody">
+			    		<c:forEach items="${FAQList}" var="mi" varStatus="status">
+			    			<tr>
+				        		<td>${status.count}</td>
+				        		<td>${mi.mi_title}</td>
+				        		<td>
+				        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
+			        			</td>
+				        		<td>
+				        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+				        		</td>
 				      		</tr>
-				    	</thead>
-				    	<tbody id="tbody">
-				    		<c:forEach items="${FAQList}" var="mi" varStatus="status">
-				    			<tr>
-					        		<td>${status.count}</td>
-					        		<td>${mi.mi_title}</td>
-					        		<td>
-					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
-				        			</td>
-					        		<td>
-					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
-					        		</td>
-					      		</tr>
-				    		</c:forEach>
-				    	</tbody>
-					</table>
-				</div>
-				<div class="modal fade" id="myModal">
-			    	<div class="modal-dialog modal-dialog-centered">
-			    		<form action="<c:url value="/hq/FAQ/insert"/>" method="post" id="form" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">정보</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				          		<div class="form-group">
-									<label for="mi_title">제목:</label>
-									<input type="text" class="form-control" id="mi_title" name="mi_title">
-								</div>
-								<div class="error error-title"></div>
-								<div class="form-group">
-									<label for="mi_it_name">유형:</label>
-									<select name="mi_it_name" class="custom-select form-control">
-										<c:forEach items="${itList}" var="it">
-											<option value="${it.it_name}">${it.it_name}</option>
-										</c:forEach>
-								    </select>
-								</div>
-								<div class="error error-position"></div>
-								<div class="form-group">
-									<label for="mi_content">내용:</label>
-									<textarea class="form-control" id="mi_content" name="mi_content"></textarea>
-								</div>
-								<div class="error error-content"></div>
-								<button class="btn btn-outline-info col-12">FAQ 등록</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
-				        	</div>
-			      		</form>
-			    	</div>
-		    	</div>
-		    	<div class="modal fade" id="myModal2">
-			    	<div class="modal-dialog modal-dialog-centered">
-			    		<form action="<c:url value="/hq/FAQ/update"/>" method="post" id="form2" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">정보</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				          		<div class="form-group">
-									<label for="mi_title">제목:</label>
-									<input type="text" class="form-control" id="mi_title2" name="mi_title">
-								</div>
-								<div class="error error-title2"></div>
-								<div class="form-group">
-									<label for="mi_it_name">유형:</label>
-									<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
-										<c:forEach items="${itList}" var="it">
-											<option value="${it.it_name}">${it.it_name}</option>
-										</c:forEach>
-								    </select>
-								</div>
-								<div class="error error-position2"></div>
-								<div class="form-group">
-									<label for="mi_content">내용:</label>
-									<textarea class="form-control" id="mi_content2" name="mi_content"></textarea>
-								</div>
-								<div class="error error-content2"></div>
-								<input type="hidden" id="mi_num2" name="mi_num">
-								<button class="btn btn-outline-warning col-12">FAQ 수정</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
-				        	</div>
-			      		</form>
-			    	</div>
-		  		</div>
+			    		</c:forEach>
+			    	</tbody>
+				</table>
 	    	</div>
-	  	</div>
-	</div>
+	    	
+	    	<div class="btn_wrap">
+				<div class="btn_right_wrap">
+					<div class="btn_link_black">
+						<button type="button" class="btn btn_black js-btn-insert" data-toggle="modal" data-target="#myModal">
+							<span>등록<i class="ic_link_share"></i></span>
+						</button>
+						<div class="btn_black_top_line"></div>
+						<div class="btn_black_right_line"></div>
+						<div class="btn_black_bottom_line"></div>
+						<div class="btn_black_left_line"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="myModal">
+		    	<div class="modal-dialog modal-dialog-centered">
+		    		<form action="<c:url value="/hq/FAQ/insert"/>" method="post" id="form" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">정보</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+			          		<div class="form-group">
+								<label for="mi_title">제목:</label>
+								<input type="text" class="form-control" id="mi_title" name="mi_title">
+							</div>
+							<div class="error error-title"></div>
+							<div class="form-group">
+								<label for="mi_it_name">유형:</label>
+								<select name="mi_it_name" class="custom-select form-control">
+									<c:forEach items="${itList}" var="it">
+										<option value="${it.it_name}">${it.it_name}</option>
+									</c:forEach>
+							    </select>
+							</div>
+							<div class="error error-position"></div>
+							<div class="form-group">
+								<label for="mi_content">내용:</label>
+								<textarea class="form-control" id="mi_content" name="mi_content"></textarea>
+							</div>
+							<div class="error error-content"></div>
+							<button class="btn btn-outline-info col-12">FAQ 등록</button>
+			        	</div>
+			        	<div class="modal-footer">
+			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			        	</div>
+		      		</form>
+		    	</div>
+	    	</div>
+	    	<div class="modal fade" id="myModal2">
+		    	<div class="modal-dialog modal-dialog-centered">
+		    		<form action="<c:url value="/hq/FAQ/update"/>" method="post" id="form2" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">정보</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+			          		<div class="form-group">
+								<label for="mi_title">제목:</label>
+								<input type="text" class="form-control" id="mi_title2" name="mi_title">
+							</div>
+							<div class="error error-title2"></div>
+							<div class="form-group">
+								<label for="mi_it_name">유형:</label>
+								<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
+									<c:forEach items="${itList}" var="it">
+										<option value="${it.it_name}">${it.it_name}</option>
+									</c:forEach>
+							    </select>
+							</div>
+							<div class="error error-position2"></div>
+							<div class="form-group">
+								<label for="mi_content">내용:</label>
+								<textarea class="form-control" id="mi_content2" name="mi_content"></textarea>
+							</div>
+							<div class="error error-content2"></div>
+							<input type="hidden" id="mi_num2" name="mi_num">
+							<button class="btn btn-outline-warning col-12">FAQ 수정</button>
+			        	</div>
+			        	<div class="modal-footer">
+			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			        	</div>
+		      		</form>
+		    	</div>
+	  		</div>
+    	</section>
+	</section>
 	
 	<script type="text/javascript">
     	// 필수항목 체크
@@ -232,13 +199,14 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 600,
+		    scrollY: 500,
+		    stateSave: true,
+		    stateDuration: 300,
 		    paging: false,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [3], orderable: false },
-		        { targets: [0, 1, 2, 3], className: "align-content-center"}
+		        { targets: [3], orderable: false }
 		    ]
 		});
 	
@@ -309,4 +277,3 @@
 		});
 	</script>
 </body>
-</html>
