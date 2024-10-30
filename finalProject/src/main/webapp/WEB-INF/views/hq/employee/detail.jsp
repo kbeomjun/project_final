@@ -152,7 +152,7 @@
 							</tr>
 							<tr>
 								<th scope="row">
-									<label for="em_detail" class="_asterisk">설명</label>
+									<label for="em_detail" class="">설명</label>
 								</th>
 								<td>
 									<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
@@ -202,7 +202,7 @@
 			}else{
 				let img = `
 					<label for="file">
-						<img class="" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="image">
+						<img class="" src="<c:url value="/resources/image/common/img_avatar1.jpg"/>" alt="image">
 					</label>
 				`;
 				$('.img-box').append(img);

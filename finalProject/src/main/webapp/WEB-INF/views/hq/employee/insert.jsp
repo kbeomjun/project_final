@@ -40,7 +40,7 @@
 								<td>
 									<div class="form-group profile_img_wrap img-box">
 										<label for="file">
-											<img class="" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="image">
+											<img class="" src="<c:url value="/resources/image/common/img_avatar1.jpg"/>" alt="image">
 										</label>
 									</div>
 									<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
@@ -101,6 +101,7 @@
 								<td>
 									<div class="form-group">
 										<select name="em_position" class="custom-select form-control">
+											<option value="" selected>선택</option>
 											<c:forEach items="${programList}" var="program">
 												<c:choose>
 													<c:when test="${program.sp_type == '단일'}">
@@ -113,6 +114,7 @@
 											</c:forEach>
 										</select>
 									</div>
+									<div class="error error-position"></div>
 								</td>
 							</tr>
 							<tr>
@@ -143,16 +145,18 @@
 								<td>
 									<div class="form-group">
 										<select name="em_br_name" class="custom-select form-control">
+											<option value="" selected>선택</option>
 											<c:forEach items="${brList}" var="br">
 										      	<option value="${br.br_name}">${br.br_name}</option>
 									      	</c:forEach>
 										</select>
 									</div>
+									<div class="error error-branch"></div>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">
-									<label for="em_detail" class="_asterisk">설명</label>
+									<label for="em_detail" class="">설명</label>
 								</th>
 								<td>
 									<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
@@ -192,7 +196,7 @@
 			}else{
 				let img = `
 					<label for="file">
-						<img class="" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="image">
+						<img class="" src="<c:url value="/resources/image/common/img_avatar1.jpg"/>" alt="image">
 					</label>
 				`;
 				$('.img-box').append(img);
@@ -233,6 +237,8 @@
 		});
 		
 		$('#em_phone').keyup(function(){
+			
+			
 			$('.error-phone').children().remove();
 			
 			if($('#em_phone').val() == ''){
@@ -252,6 +258,15 @@
 			}
 		});
 		
+		$('select[name=em_position]').change(function(){
+			$('.error-position').children().remove();
+			if($("select[name=em_position]").val() == ''){
+				$('.error-position').append(msgRequired);
+			}else{
+				$('.error-position').children().remove();
+			}
+		});
+		
 		$('#em_detailAddress').keyup(function(){
 			$('.error-address').children().remove();
 			
@@ -259,6 +274,15 @@
 				$('.error-address').append(msgRequired);
 			}else{
 				$('.error-address').children().remove();	
+			}
+		});
+		
+		$('select[name=em_br_name]').change(function(){
+			$('.error-branch').children().remove();
+			if($("select[name=em_br_name]").val() == ''){
+				$('.error-branch').append(msgRequired);
+			}else{
+				$('.error-branch').children().remove();
 			}
 		});
 		
@@ -295,9 +319,19 @@
 				flag = false;
 			}
 			
+			if($("select[name=em_position]").val() == ''){
+				$('.error-position').append(msgRequired);
+				flag = false;
+			}
+
 			if($('#em_address').val() == '' || $('#em_detailAddress').val() == ''){
 				$('.error-address').append(msgRequired);
 				$('#em_detailAddress').focus();
+				flag = false;
+			}
+			
+			if($("select[name=em_br_name]").val() == ''){
+				$('.error-branch').append(msgRequired);
 				flag = false;
 			}
 
