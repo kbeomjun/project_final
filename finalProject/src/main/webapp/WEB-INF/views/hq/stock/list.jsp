@@ -256,7 +256,16 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 600,
+		    createdRow: function(row, data, dataIndex) {
+		        if (data.be_amount < 0) {
+		        	$('td', row).eq(4).css('color', 'red');
+		        } else if (data.be_amount > 0) {
+		        	$('td', row).eq(4).css('color', 'green');
+		        }
+		    },
+		    scrollY: 500,
+		    stateSave: true,
+		    stateDuration: 300,
 		    paging: false,
 		    info: false,
 		    order: [[ 0, "desc" ]],
@@ -284,7 +293,16 @@
 			        zeroRecords: "",
 			        emptyTable: ""
 			    },
-				scrollY: 600,
+			    createdRow: function(row, data, dataIndex) {
+			    	if (data.be_amount < 0) {
+			        	$('td', row).eq(4).css('color', 'red');
+			        } else if (data.be_amount > 0) {
+			        	$('td', row).eq(4).css('color', 'green');
+			        }
+			    },
+			    scrollY: 500,
+			    stateSave: true,
+			    stateDuration: 300,
 			    paging: false,
 			    info: false,
 			    order: [[ 0, "desc" ]],
