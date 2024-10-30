@@ -77,17 +77,15 @@
 			    	<tbody id="tbody">
 			    		<c:forEach items="${boDoneList}" var="bo">
 			    			<tr>
-				        		<td class="align-content-center">${bo.bo_num}</td>
-				        		<td class="align-content-center">${bo.bo_br_name}</td>
-				        		<td class="align-content-center">
+				        		<td>${bo.bo_num}</td>
+				        		<td>${bo.bo_br_name}</td>
+				        		<td>
 				        			<fmt:formatDate value="${bo.bo_date}" pattern="yyyy.MM.dd hh:mm:ss"/>
 			        			</td>
-				        		<td class="align-content-center">${bo.bo_se_name}</td>
-				        		<td class="align-content-center">${bo.bo_amount}</td>
-				        		<td class="align-content-center">${bo.bo_state}</td>
-				        		<td class="align-content-center">
-				        		
-				        		</td>
+				        		<td>${bo.bo_se_name}</td>
+				        		<td>${bo.bo_amount}</td>
+				        		<td>${bo.bo_state}</td>
+				        		<td></td>
 				      		</tr>
 			    		</c:forEach>
 			    	</tbody>
@@ -112,8 +110,7 @@
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [5, 6], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+		        { targets: [5, 6], orderable: false }
 		    ]
 		});
 		
@@ -142,8 +139,7 @@
 				    info: false,
 				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false },
-				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}else{
@@ -161,8 +157,7 @@
 				    info: false,
 				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false },
-				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}
