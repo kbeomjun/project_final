@@ -21,12 +21,6 @@
 				<h2 class="sub_title">${br_name} 프로그램 목록</h2>
 			</div>
 			
-	    	<div class="sub_hd_wrap">
-	    		<ul class="tab_list">
-			    	<li class="tab_item"><button type="button" class="tab_link _active" data-toggle="modal" data-target="#myModal">프로그램 추가</button></li>
-		    	</ul>
-		    </div>			
-			
 			<!-- 프로그램 목록 -->
 			<table class="table table_center" id="table">
 				<thead id="thead">
@@ -58,7 +52,22 @@
 						</tr>
 					</c:forEach>
 				</tbody>
-			</table>			
+			</table>
+			
+			<!-- 프로그램 등록 버튼 -->
+			<div class="btn_wrap">
+				<div class="btn_right_wrap">
+					<div class="btn_link_black">
+						<button type="button" class="btn btn_black js-btn-insert" data-toggle="modal" data-target="#myModal">
+							<span>프로그램 추가<i class="ic_link_share"></i></span>
+						</button>
+						<div class="btn_black_top_line"></div>
+						<div class="btn_black_right_line"></div>
+						<div class="btn_black_bottom_line"></div>
+						<div class="btn_black_left_line"></div>
+					</div>
+				</div>
+			</div>					
 			
 			<!-- 프로그램 등록 modal -->
 			<div class="modal fade" id="myModal">
@@ -70,30 +79,65 @@
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			        		<div class="form-group">
-								<label>프로그램:</label>
-								<select class="form-control" name="bp_sp_name" id="programSelect">
-									<c:forEach items="${programList }" var="program">
-										<option value="${program.sp_name}" data-sp-type="${program.sp_type}">${program.sp_name}</option>
-									</c:forEach>		
-								</select>
+			        		<table class="table">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: 80%;">
+								</colgroup>
+								
+								<tbody>
+									<tr>
+										<th scope="row">
+											<label for="bp_sp_name" class="_asterisk">프로그램</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<select name="bp_sp_name" id="programSelect" class="custom-select form-control">
+													<option value="">선택</option>
+													<c:forEach items="${programList }" var="program">
+														<option value="${program.sp_name}" data-sp-type="${program.sp_type}">${program.sp_name}</option>
+													</c:forEach>
+												</select>											
+											</div>
+										</td>
+									</tr>
+									<tr id="trainerRow" style="display:none;">
+										<th scope="row">
+											<label for="bp_em_num" class="_asterisk">트레이너</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<select name="bp_em_num" id="trainerSelect" class="custom-select form-control">
+													<c:forEach items="${employeeList}" var="employee">
+														<option value="${employee.em_num}" data-em-position="${employee.em_position}">${employee.em_name}</option>
+													</c:forEach>
+												</select>											
+											</div>
+										</td>
+									</tr>
+									<tr id="totalRow" style="display:none;">
+										<th scope="row">
+											<label for="bp_total" class="_asterisk">총 인원수</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<div id="selectPT" style="display:none;">1</div>
+												<input type="text" class="form-control" id="bp_total" name="bp_total" placeholder="숫자를 입력하세요.">
+											</div>
+											<div class="error error-total"></div>
+										</td>
+									</tr>																										
+								</tbody>
+			        		</table>
+			        		
+			        		<div class="btn_wrap">
+								<div class="btn_right_wrap">
+									<button type="submit" class="btn btn_green">프로그램 등록</button>
+								</div>
 							</div>
-			        		<div class="form-group">
-								<label>트레이너:</label>
-								<select class="form-control" name="bp_em_num" id="trainerSelect">
-									<c:forEach items="${employeeList }" var="employee">
-										<option value="${employee.em_num}" data-em-position="${employee.em_position}">${employee.em_name}</option>
-									</c:forEach>		
-								</select>
-							</div>
-							<div class="form-group">
-								<label>총 인원수:</label>
-								<input class="form-control" id="bp_total" name="bp_total" placeholder="숫자를 입력하세요."/>
-							</div>
-							<button type="submit" class="btn btn-outline-success col-12">프로그램 등록</button>
 			        	</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			          		<button type="button" class="btn btn_red" data-dismiss="modal">취소</button>
 			        	</div>
 		      		</form>
 		    	</div>
@@ -109,22 +153,53 @@
 			        	</div>
 			        	<div class="modal-body">
 							<input type="hidden" id="bp_num" name="bp_num">
-							<div class="form-group">
-								<label>프로그램:</label>
-								<input class="form-control" id="bp_sp_name" name="bp_sp_name" readonly/>
-							</div>
-							<div class="form-group">
-								<label>트레이너:</label>
-								<input class="form-control" id="em_name" name="em_name" readonly/>
-							</div>
-							<div class="form-group">
-								<label>총 인원수:</label>
-								<input class="form-control" id="bp_total2" name="bp_total" placeholder="숫자를 입력하세요."/>
-							</div>
-							<button type="submit" class="btn btn-outline-success col-12">프로그램 수정</button>
+				        	<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
+							<table class="table">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: 80%;">
+								</colgroup>
+								
+								<tbody>
+									<tr>
+										<th scope="row">
+											<label for="bp_sp_name" class="_asterisk">프로그램</label>
+										</th>
+										<td>
+											<div class="form-group" id="bp_sp_name"></div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="bp_em_num" class="_asterisk">트레이너</label>
+										</th>
+										<td>
+											<div class="form-group" id="em_name"></div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="bp_total" class="_asterisk">총 인원수</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<input type="text" class="form-control" id="bp_total2" name="bp_total" placeholder="숫자를 입력하세요.">
+											</div>
+											<div class="error error-total"></div>
+										</td>
+									</tr>																										
+								</tbody>
+			        		</table>
+			        		
+			        		<div class="btn_wrap">
+								<div class="btn_right_wrap">
+									<button type="submit" class="btn btn_yellow">프로그램 수정</button>
+								</div>
+							</div>							
+							
 			        	</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			          		<button type="button" class="btn btn_red" data-dismiss="modal">취소</button>
 			        	</div>
 		      		</form>
 		    	</div>
@@ -163,14 +238,24 @@
 			var spType = selectedOption.getAttribute('data-sp-type');
 			var totalInput = document.getElementById('bp_total');
 			var trainerSelect = document.getElementById('trainerSelect');
-	
+			
+			if($('#programSelect').val() == ''){
+				$('#trainerRow').hide();
+				$('#totalRow').hide();
+			} else{
+				$('#trainerRow').show();
+				$('#totalRow').show();
+			}
+			
 			// 총 인원수 필드 조정
 			if (spType === '단일') {
+				$('#selectPT').show();
+				$('#bp_total').hide();
 				totalInput.value = 1;  // 총 인원수를 1로 고정
-				totalInput.setAttribute('readonly', true);  // 입력을 막음
 			} else {
+				$('#selectPT').hide();
+				$('#bp_total').show();
 				totalInput.value = '';  // 다른 프로그램 선택 시 초기화
-				totalInput.removeAttribute('readonly');  // 입력 가능하게 함
 			}
 	
 			// 트레이너 목록 초기화
@@ -242,8 +327,8 @@
 				success : function (data){
 					let bp = data.branchProgram;
 					$('#bp_num').val(bp.bp_num);
-					$('#bp_sp_name').val(bp.bp_sp_name);
-					$('#em_name').val(bp.em_name);
+					$('#bp_sp_name').text(bp.bp_sp_name);
+					$('#em_name').text(bp.em_name);
 					$('#bp_total2').val(bp.bp_total);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
