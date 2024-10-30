@@ -148,12 +148,12 @@
 			  		<div class="modal fade" id="myModal2">
 				    	<div class="modal-dialog modal-dialog-centered">
 				      		<form action="<c:url value="/admin/program/update"/>" method="post" id="form2" class="modal-content">
+								<input type="hidden" id="bp_num" name="bp_num">
 					        	<div class="modal-header">
 					          		<h4 class="modal-title">수정</h4>
 					          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 					        	</div>
 					        	<div class="modal-body">
-									<input type="hidden" id="bp_num" name="bp_num">
 						        	<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
 									<table class="table">
 										<colgroup>
