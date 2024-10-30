@@ -34,4 +34,8 @@ public interface MemberService {
 
 	void setAutoLoginCookie(MemberVO user, HttpServletResponse response);
 
+	boolean updateSocialConnection(String me_id, String socialId, String socialType);
+
+	MemberVO getMember(String me_id);
+
 }

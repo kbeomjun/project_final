@@ -95,6 +95,6 @@ public interface AdminService {
 
 	MemberInquiryVO getMemberInquiry(MemberInquiryVO mi);
 
-	String updateMemberInquiry(MemberInquiryVO mi);
+	String updateMemberInquiry(MemberInquiryVO miVo);
 
 }

@@ -25,4 +25,8 @@ public interface MemberDAO {
 
 	MemberVO selectMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
 
+	boolean updateSocialToKaKao(@Param("me_id") String me_id, @Param("socialId") String socialId);
+
+	boolean updateSocialToNaver(@Param("me_id") String me_id, @Param("socialId") String socialId);
+
 }

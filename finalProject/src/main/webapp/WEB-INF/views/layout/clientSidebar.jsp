@@ -32,7 +32,7 @@
 				</script>
 				
 				<!-- sidebar.jsp -->
-				<section class="lnb_wrap">
+				<nav class="lnb_wrap">
 					<ul class="lnb">
 						<li class="lnb__item">
 							<a id="reviewMenu" class="lnb__link" href="<c:url value='/client/review/list'/>">리뷰게시판</a>
@@ -44,4 +44,4 @@
 							<a id="inquiryMenu" class="lnb__link" href="<c:url value='/client/inquiry/insert'/>">1:1 문의</a>
 						</li>
 					</ul>
-				</section>
+				</nav>

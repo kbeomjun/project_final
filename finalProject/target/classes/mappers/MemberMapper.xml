@@ -114,5 +114,12 @@
   <select id="selectMemberByNameAndEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member
     WHERE me_name = #{name} AND me_email = #{email}
-    </select>
+  </select>
+  
+  <update id="updateSocialToKaKao">
+  	update member set me_kakaoUserId = #{socialId} where me_id = #{me_id}
+  </update>
+  <update id="updateSocialToNaver">
+  	update member set me_naverUserId = #{socialId} where me_id = #{me_id}
+  </update>
 </mapper>
