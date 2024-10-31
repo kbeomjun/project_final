@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/reset.css">
+	<link rel="stylesheet" href="../../css/normlize.css">
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/font.css">
+	<link rel="stylesheet" href="../../css/sprite.css">
+	<link rel="stylesheet" href="../../css/calendar.css">
+	<link rel="stylesheet" href="../../css/branch.css">
+	<link rel="stylesheet" href="../../css/dataTables.min.css">
+	<link rel="stylesheet" href="../../css/fancybox.css">
+	<link rel="stylesheet" href="../../css/swiper-bundle.min.css">
+	<link rel="stylesheet" href="../../css/common.css">
+
+	<!-- 아이콘 -->
+	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-straight/css/uicons-bold-straight.css'>
+
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/popper.min.js"></script>
+	<script src="../../js/bootstrap.bundle.min.js"></script>
+	<script src="../../js/jquery.validate.min.js"></script>
+	<script src="../../js/additional-methods.min.js"></script>
+	<script src="../../js/dataTables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	
+	<!-- 주소 api -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<!-- 썸머노트 -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+	
+	<title>기구 관리</title>
+</head>
+<body>
+	<!-- main_layout 최상위 class -->
+	<div class="main_layout">
+
+		<!-- skip nav -->
+		<div class="skip_nav">
+			<a href="#skipnav_target">본문 영역 바로가기</a>
+		</div>
+		<!-- skip nav -->
+		
+		<!-- main header -->
+		<header class="main_header">
+			<div class="logo_wrap">
+				<h1><a href="#" class="logo" title="Fitness Logo"><span class="blind">Fitness Logo</span></a></h1>
+			</div>
+			<nav class="gnb_wrap">
+				<ul class="gnb">
+					<li class="gnb__item"><a href="#" class="gnb__link">지점 조회</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">회원권</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">프로그램</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">고객센터</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">지점관리</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">본사관리</a></li>
+					<li class="gnb__item"><a href="#" class="gnb__link">로그인</a></li>
+				</ul>
+				<div class="gnb_side">
+					<a href="#" class="gnb_side__link js-gnb_side__link">
+						<span>정보</span>
+						<i class="ic_gnb_side_menu">
+							<svg width="50" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect x="5" y="18" width="40" height="2" fill="white"/>
+								<rect x="5" y="30" width="40" height="2" fill="white"/>
+							</svg>
+						</i>
+					</a>
+					<!-- gnb side -->
+					<div class="gnb_side_wrap">
+						<a href="javascript:void(0)" class="btn_x js-btn_x">
+							<span>닫기</span>
+							<svg width="25" height="25" viewBox="0 0 23 23" style="enable-background:new 0 0 23 23;" xml:space="preserve">
+							<polygon points="22.5,21.7 12.7,11.9 12.2,11.4 12.2,11.4 12.2,11.4 12.7,10.9 22.5,1.2 21.8,0.5 11.5,10.8 1.2,0.5 
+								0.5,1.2 10.3,10.9 10.8,11.4 10.8,11.4 10.8,11.4 10.3,11.9 0.4,21.7 1.1,22.4 11.5,12.1 21.8,22.4 "></polygon>
+							</svg>
+						</a>
+						<div class="gnb_side__info_wrap">
+							<div class="gnb_side__info">
+								<div>
+									<a href="#">
+										<img width="134" height="101" src="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/07/logo-side-area.png" class="image wp-image-2173  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" loading="eager">
+									</a>
+								</div>
+								<div class="textbox">
+									<p>Lorem ipsum dolor sit amet, consectetur<br>
+									adipiscing elit. Pellentesque vitae nunc ut<br>
+									dolor sagittis euismod eget sit amet erat.<br>
+									Mauris porta. Lorem ipsum dolor.</p>
+								</div>
+								<div class="textbox">
+									<h3 class="gnb_side__title">Working hours</h3>
+									<p>Monday - Friday:<br>07:00 - 21:00</p>
+									<p>Saturday:<br>07:00 - 16:00</p>
+									<p>Sunday Closed</p>
+								</div>
+								<div class="textbox mt-auto">
+									<h3 class="gnb_side__title">Our socials</h3>
+									<div>
+										<a href="#" class="ft_sns sns_instagram" title="인스타그램"></a>
+										<a href="#" class="ft_sns sns_facebook" title="페이스북"></a>
+										<a href="#" class="ft_sns sns_twitter" title="트위터"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- gnb side -->
+				</div>
+			</nav>
+		</header>
+		<!-- main header -->
+
+
+		<!-- sub container -->
+		<main class="sub_container" id="skipnav_target">
+			<section class="sub_banner sub_banner_04"></section>
+			<section class="sub_content">
+				<!-- lnb -->
+				<nav class="lnb_wrap">
+					<ul class="lnb">
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">지점 관리</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">직원 관리</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link _active" href="#">운동기구 관리</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">재고 관리</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">발주 내역</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">회원권 관리</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">프로그램 관리</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">회원 조회</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">문의 내역</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">FAQ</a>
+						</li>
+						<li class="lnb__item">
+							<a class="lnb__link" href="#">환불 처리</a>
+						</li>
+					</ul>
+				</nav>
+
+				<!-- 오른쪽 컨텐츠 영역 -->
+				<section class="sub_content_group"> 
+					<div class="sub_title_wrap">
+						<h2 class="sub_title">기구 관리</h2>
+					</div>
+					<ul class="equipment_warp">
+						<li class="equipment_item">
+							<div class="equipment_img_wrap">
+								<img class="equipment_img" src="http://localhost:8080/fitness/uploads/%EA%B8%B0%EA%B5%AC/4088cea6-b68d-41a4-8376-d76e3f8f71b9_%EB%8B%A4%EA%B8%B0%EB%8A%A5%20%EC%9A%B4%EB%8F%99%EA%B8%B0%EA%B5%AC%20JX-185F.jpg">
+							</div>
+							<div class="equipment_info_wrap">
+								<button type="button" class="btn btn_update" data-toggle="modal" data-target="" data-name="">
+									<i class="fi fi-br-edit"></i>
+									<p class="">다기능 운동기구 JX-185F</p>
+								</button>
+							</div>
+						</li>
+						<li class="equipment_item">
+							<div class="equipment_img_wrap">
+								<img class="equipment_img" src="http://localhost:8080/fitness/uploads/%EA%B8%B0%EA%B5%AC/4088cea6-b68d-41a4-8376-d76e3f8f71b9_%EB%8B%A4%EA%B8%B0%EB%8A%A5%20%EC%9A%B4%EB%8F%99%EA%B8%B0%EA%B5%AC%20JX-185F.jpg">
+							</div>
+							<div class="equipment_info_wrap">
+								<button type="button" class="btn btn_update" data-toggle="modal" data-target="" data-name="">
+									<i class="fi fi-br-edit"></i>
+									<p class="">다기능 운동기구 JX-185F</p>
+								</button>
+							</div>
+						</li>
+						<li class="equipment_item">
+							<div class="equipment_img_wrap">
+								<img class="equipment_img" src="http://localhost:8080/fitness/uploads/%EA%B8%B0%EA%B5%AC/4088cea6-b68d-41a4-8376-d76e3f8f71b9_%EB%8B%A4%EA%B8%B0%EB%8A%A5%20%EC%9A%B4%EB%8F%99%EA%B8%B0%EA%B5%AC%20JX-185F.jpg">
+							</div>
+							<div class="equipment_info_wrap">
+								<button type="button" class="btn btn_update" data-toggle="modal" data-target="" data-name="">
+									<i class="fi fi-br-edit"></i>
+									<p class="">다기능 운동기구 JX-185F</p>
+								</button>
+							</div>
+						</li>
+						<li class="equipment_item">
+							<div class="equipment_img_wrap">
+								<img class="equipment_img" src="http://localhost:8080/fitness/uploads/%EA%B8%B0%EA%B5%AC/4088cea6-b68d-41a4-8376-d76e3f8f71b9_%EB%8B%A4%EA%B8%B0%EB%8A%A5%20%EC%9A%B4%EB%8F%99%EA%B8%B0%EA%B5%AC%20JX-185F.jpg">
+							</div>
+							<div class="equipment_info_wrap">
+								<button type="button" class="btn btn_update" data-toggle="modal" data-target="" data-name="">
+									<i class="fi fi-br-edit"></i>
+									<p class="">다기능 운동기구 JX-185F</p>
+								</button>
+							</div>
+						</li>
+					</ul>
+				</section>
+				<!-- 오른쪽 컨텐츠 영역 -->
+			</section>
+		</main>
+		<!-- main container -->
+
+
+		<!-- main footer -->
+		<footer class="main_footer">
+			<section class="ft_info_wrap">
+				<div class="ft_info">
+					<div class="ft_info__item">
+						<div class="ft_logo_wrap"><div class="ft_logo"></div></div>
+						<div class="ft_textbox">
+							<p>Powerlift is a champ in providing its users with absolutely everything a fitness or gym site needs.</p>
+						</div>
+						<div class="textbox">
+							<h3 class="ft_info__title">Our socials</h3>
+							<div class="ft_sns_wrap">
+								<a href="#" class="ft_sns sns_instagram" title="인스타그램"></a>
+								<a href="#" class="ft_sns sns_facebook" title="페이스북"></a>
+								<a href="#" class="ft_sns sns_twitter" title="트위터"></a>
+							</div>
+						</div>
+					</div>
+					<div class="ft_info__item">
+						<h3 class="ft_info__title">LOCATIONS</h3>
+						<img width="300" height="155" src="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/06/futer-map-img-300x155.png" class="image wp-image-598  attachment-medium size-medium" alt="a" style="max-width: 100%; height: auto;" srcset="https://powerlift.qodeinteractive.com/wp-content/uploads/2019/06/futer-map-img-300x155.png 300w, https://powerlift.qodeinteractive.com/wp-content/uploads/2019/06/futer-map-img.png 304w" sizes="(max-width: 300px) 100vw, 300px" loading="eager">
+						<p class="mt10 mb-0">
+							<a href="#" class="ft_info__link" target="_blank" rel="nofollow noopener">251 Purple Sunset Avenue<br>Brooklyn, BXY 92101</a>
+						</p>
+					</div>
+					<div class="ft_info__item">
+						<div class="textbox">
+							<h3 class="ft_info__title">Working hours</h3>
+							<p>Monday - Friday:<br>07:00 - 21:00</p>
+							<p>Saturday:<br>07:00 - 16:00</p>
+							<p>Sunday Closed</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="ft_copyright_wrap">
+				<div class="ft_copyright">© 2024 KH ACADEMY, All Rights Reserved</div>
+			</section>
+		</footer>
+	</div>
+
+	<script>
+		$(".js-gnb_side__link").on("click", function(){
+			$(".gnb_side_wrap").addClass("_active");
+		})
+		$(".js-btn_x").on("click", function(){
+			$(".gnb_side_wrap").removeClass("_active");
+		})
+
+		const progressLine = document.querySelector('.autoplay-progress svg')
+		const mainSwiper = new Swiper(".main-swiper", {
+			loop: true,
+			autoplay: {
+				delay: 5000, // 5초
+				disableOnInteraction: false,
+			},
+			// bullet
+			// pagination: {
+			// 	el: ".main-swiper .swiper-pagination",
+			// 	clickable: false,
+			// 	type: "custom",
+			// 	renderCustom: function (swiper, current, total) {
+			// 		return (
+			// 			'<span class="current">' + 0 + (current) + '</span>' + '<span class="total">' + 0 + (total) + '</span>'
+			// 		);
+			// 	}
+			// },
+			//arrow
+			navigation: {
+				nextEl: ".main-swiper .swiper-button-next",
+				prevEl: ".main-swiper .swiper-button-prev",
+			},
+			// svg
+			on: {
+				autoplayTimeLeft(s, time, progress) {
+					progressLine.style.setProperty("--progress", 1 - progress)
+				}
+			}
+		})
+	</script>
+</body>
+</html>

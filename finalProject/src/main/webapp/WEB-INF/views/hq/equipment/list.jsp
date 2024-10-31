@@ -47,7 +47,7 @@
 			        	<div class="modal-body">
 			        		<div class="form-group">
 								<label for="file" class="card card-insert mx-auto" style="width:250px; cursor:pointer">
-								    <img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+								    <img class="card-img-top" alt="Card image"
 								    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 								</label>
 								<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
