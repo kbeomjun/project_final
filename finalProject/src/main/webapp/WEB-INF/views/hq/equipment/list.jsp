@@ -300,7 +300,7 @@
 	    	if($('#file')[0].files.length > 0){
 		    	deleteFile($('#file')[0].files.length);
 	    		let img = `
-		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+		    		<img class="card-img-top" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
 		    	$('.card-insert').children().remove();
@@ -342,7 +342,6 @@
 					
 					var str = ``;
 					for(se of seList){
-						let url = "/uploads" + "\${se.se_fi_name}";
 						str += `
 							<li class="equipment_item">
 								<div class="equipment_img_wrap">
