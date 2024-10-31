@@ -166,13 +166,13 @@
 							<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
 							<table class="table">
 								<colgroup>
-									<col readonly>
-									<col readonly>
+									<col style="width: 15%;">
+									<col style="width: 85%;">
 								</colgroup>
 								<tbody>
 									<tr>
 										<th scope="row">
-											<label for="mi_it_name" class="">프로필 사진 등록</label>
+											<label class="_asterisk">프로필 사진</label>
 										</th>
 										<td>
 											<div class="form-group profile_img_wrap">
@@ -181,6 +181,7 @@
 												</label>
 												<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
 											</div>
+											<div class="error error-file"></div>
 										</td>
 									</tr>
 									<tr>
@@ -189,6 +190,7 @@
 										</th>
 										<td>
 											<input type="text" class="form-control" id="em_name" name="em_name" placeholder="이름을 입력해주세요.">
+											<div class="error error-name"></div>
 										</td>
 									</tr>
 									<tr>
@@ -197,6 +199,7 @@
 										</th>
 										<td>
 											<input type="text" class="form-control" id="em_phone" name="em_phone" placeholder="전화번호를 입력해주세요.">
+											<div class="error error-phone"></div>
 										</td>
 									</tr>
 									<tr>
@@ -212,7 +215,7 @@
 												</select>
 												<input type="text" class="form-control w_email2" id="mi_customEmailDomain" name="mi_customEmailDomain" placeholder="직접 입력">
 											</div>
-											<div class="error error-title"></div>
+											<div class="error error-email"></div>
 										</td>
 									</tr>
 									<tr>
@@ -232,6 +235,7 @@
 													</label>
 												</div>	
 											</div>
+											<div class="error error-gender"></div>
 										</td>
 									</tr>
 									<tr>
@@ -264,6 +268,28 @@
 													<input type="text" class="form-control" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" readonly>
 												</div>
 											</div>
+											<div class="error error-address"></div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="em_position" class="_asterisk">소속</label>
+										</th>
+										<td>
+											<div class="form-group">
+												<select name="em_position" class="custom-select form-control">
+													<option>선택</option>
+												</select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">
+											<label for="em_detail">설명</label>
+										</th>
+										<td>
+											<textarea class="form-control" id="em_detail" name="em_detail"></textarea>
+											<div class="error"></div>
 										</td>
 									</tr>
 								</tbody>
@@ -272,15 +298,6 @@
 								<div class="error error-emailId" style="flex: 24;"></div>
 								<div class="error error-emailDomain" style="flex: 5;"></div>
 								<div class="error error-customEmailDomain" style="flex: 11;"></div>
-							</div>
-							<div class="form-group">
-								<div class="privacy_consent_wrap">
-									<div>
-										<input type="checkbox" id="privacyConsent" name="privacyConsent">
-										<label for="privacyConsent" class="privacy_consent_title">개인정보 수집·이용 동의 (필수)</label>
-									</div>
-									<p class="privacy_consent_text">문의하신 내용에 대한 원인 파악 및 원활한 상담을 위하여 이메일을 수집합니다. 수집된 개인정보는 3년간 보관 후 파기됩니다.</p>
-								</div>
 							</div>
 							<div class="btn_wrap">
 								<div class="btn_right_wrap">

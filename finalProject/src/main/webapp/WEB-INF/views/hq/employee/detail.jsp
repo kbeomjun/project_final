@@ -3,13 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<head>
-	<style type="text/css">
-		img{width: 200px; height: 250px;}
-	</style>
-</head>
-
-<body>
 	<section class="sub_banner sub_banner_06"></section>
 	<section class="sub_content">
         <!-- 왼쪽 사이드바 -->
@@ -29,8 +22,8 @@
 					<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
 					<table class="table">
 						<colgroup>
-							<col readonly>
-							<col readonly>
+							<col style="width: 12%;">
+							<col style="width: 88%;">
 						</colgroup>
 						<tbody>
 							<tr>
@@ -385,4 +378,3 @@
 			  height: 350
 		});
     </script>
-</body>
