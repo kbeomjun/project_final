@@ -15,8 +15,9 @@
 				<h2 class="sub_title">기구 관리</h2>
 			</div>
 			
-			<div class="form-group">
+			<div class="search_bar ml-0">
 				<input type="text" class="form-control" id="search" name="search" placeholder="검색">
+				<div class="search_btn"></div>
 			</div>
 		
 			<ul class="img-container equipment_warp">
