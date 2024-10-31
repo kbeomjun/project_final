@@ -45,7 +45,7 @@
 			        	</div>
 			        	<div class="modal-body">
 			        		<div class="form-group my-3">
-								<label for="file" class="equipment_img_insert card-insert">
+								<label for="file" class="equipment_img_insert equipment-insert">
 								    <img class="equipment_img" alt="Card image"
 								    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 								</label>
@@ -89,7 +89,7 @@
 			        	</div>
 			        	<div class="modal-body">
 			        		<div class="form-group my-3">
-								<label for="file2" class="equipment_img_update card-update">
+								<label for="file2" class="equipment_img_update equipment-update">
 								    
 								</label>
 								<input type="file" class="form-control display_none" id="file2" name="file2" accept="image/*">
@@ -131,7 +131,7 @@
 		// 사진 파일
 		function displayFileList(file){
 			console.log(file);
-			$('.card-insert').children().remove();
+			$('.equipment-insert').children().remove();
 			if(file.length > 0){
 				let fReader = new FileReader();
 			    fReader.readAsDataURL(file[0]);
@@ -140,14 +140,14 @@
 			        let img = `
 			        	<img class="equipment_img" src="\${path}" alt="Card image">
 			        `;
-			        $('.card-insert').append(img);
+			        $('.equipment-insert').append(img);
 			    }
 			}else{
 			    let img = `
 		    		<img class="equipment_img" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
-		        $('.card-insert').append(img);
+		        $('.equipment-insert').append(img);
 			}
 		    
 		}
@@ -158,7 +158,7 @@
 		var del = 0;
 		function displayFileList2(file){
 			console.log(file);
-			$('.card-update').children().remove();
+			$('.equipment-update').children().remove();
 			if(del == 0){
 				var str = `
 					<input type="hidden" name="isDel" value="Y">
@@ -176,14 +176,14 @@
 			        let img = `
 			        	<img class="equipment_img" alt="Card image" src="\${path}">
 			        `;
-			        $('.card-update').append(img);
+			        $('.equipment-update').append(img);
 			    }
 			}else{
 				let img = `
 		    		<img class="equipment_img" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
-		        $('.card-update').append(img);
+		        $('.equipment-update').append(img);
 			}
 		}
 		$(document).on("change", "#file2", function(){
@@ -287,8 +287,8 @@
 					let img = `
 						<img class="equipment_img" alt="Card image" src="<c:url value="/uploads\${se.se_fi_name}"/>">
 			        `;
-			        $('.card-update').children().remove();
-			        $('.card-update').append(img);
+			        $('.equipment-update').children().remove();
+			        $('.equipment-update').append(img);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
@@ -303,8 +303,8 @@
 		    		<img class="card-img-top" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
-		    	$('.card-insert').children().remove();
-		        $('.card-insert').append(img);
+		    	$('.equipment-insert').children().remove();
+		        $('.equipment-insert').append(img);
 	    	}
 	    	
 	    	$('.error').children().remove();
