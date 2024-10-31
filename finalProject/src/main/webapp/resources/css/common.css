@@ -483,19 +483,19 @@ label{
 .btn_link_black{
   position: relative;
 }
-.btn_link_black:hover .btn_black_top_line{
+.btn_link_black:hover .btn_black_top_line, .btn_link_black:focus .btn_black_top_line{
   width: 100%;
   -webkit-transition: width .4s .3s;
   -o-transition: width .4s .3s;
   transition: width .4s .3s;
 }
-.btn_link_black:hover .btn_black_left_line{
+.btn_link_black:hover .btn_black_left_line, .btn_link_black:focus .btn_black_left_line{
   height: 100%;
   -webkit-transition: height .2s .1s;
   -o-transition: height .2s .1s;
   transition: height .2s .1s;
 }
-.btn_link_black:hover .btn_black{
+.btn_link_black:hover .btn_black, .btn_link_black:focus .btn_black{
   color: #fff;
   -webkit-transform: translate3d(5px, 5px, 0);
   transform: translate3d(5px, 5px, 0);
@@ -582,19 +582,19 @@ label{
 .btn_link_white{
   position: relative;
 }
-.btn_link_white:hover .btn_white_top_line{
+.btn_link_white:hover .btn_white_top_line, .btn_link_white:focus .btn_white_top_line{
   width: 100%;
   -webkit-transition: width .4s .3s;
   -o-transition: width .4s .3s;
   transition: width .4s .3s;
 }
-.btn_link_white:hover .btn_white_left_line{
+.btn_link_white:hover .btn_white_left_line, .btn_link_white:focus .btn_white_left_line{
   height: 100%;
   -webkit-transition: height .2s .1s;
   -o-transition: height .2s .1s;
   transition: height .2s .1s;
 }
-.btn_link_white:hover .btn_white{
+.btn_link_white:hover .btn_white, .btn_link_white:focus .btn_white{
   color: #fff;
   -webkit-transform: translate3d(5px, 5px, 0);
   transform: translate3d(5px, 5px, 0);
@@ -1191,6 +1191,37 @@ ion-icon{
   background-size: 25px;
   background-position: center;
 }
+
+/* data-table search */
+.table_wrap .dt-container .dt-layout-cell.dt-layout-end{
+  width: 100%;
+}
+.table_wrap .dt-container .dt-layout-cell.dt-layout-end .dt-search{
+  position: relative;
+  width: 100%;
+}
+.table_wrap .dt-container .dt-layout-cell.dt-layout-end .dt-input{
+  height: initial;
+  width: 100%;
+  min-height: 40px;
+  margin: 0px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 45px 8px 10px;
+  font-size: 14px;
+  color: #111;
+}
+.table_wrap .dt-container .dt-layout-cell.dt-layout-end .dt-search::after{
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  background: url("../image/icon/ic_search.svg") no-repeat;
+  background-size: 25px;
+  background-position: center;
+}
 /* 검색 end */
 
 
@@ -1532,6 +1563,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  margin-top: 40px;
 }
 .equipment_item{
   flex: 0 0 calc(33% - 20px);
@@ -1566,3 +1598,23 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   margin-top: 20px;
 }
 /* 운동 기구 관리 end */
+
+
+
+/* modal */
+.modal-dialog{
+  max-width: 800px;
+}
+.modal-header{
+  border-bottom: none;
+}
+.modal-body{
+  padding: 40px 20px;
+}
+.modal-body .table{
+  margin-bottom: 0px;
+}
+.modal-footer{
+  border-top: none;
+}
+/* modal end */
