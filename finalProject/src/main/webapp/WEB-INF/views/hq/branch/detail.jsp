@@ -2,7 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <style type="text/css">
+    	.file-input{border: 1px solid gray; border-radius: 5px;}
+    	.img-container{min-height: 400px;}
+    	.img-container2{min-height: 200px;}
+    	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 10px 6px;}
+    	.btn-delete-img, .btn-delete-img2{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
+    	.img-box, .img-box2{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
+    </style>
+</head>
 <body>
 	<section class="sub_banner sub_banner_06"></section>
 	<section class="sub_content">
@@ -92,14 +104,14 @@
 							</tr>
 							<tr>
 								<th scope="row">
-									<label class="_asterisk">등록된 사진</label>
+									<label>등록된 사진</label>
 								</th>
 								<td>
 									<div class="file-input">
 										<div class="img-container2 d-flex flex-wrap">
 											<c:forEach items="${bfList}" var="bf">
 												<div class="img-box2">
-										        	<img src="<c:url value="/uploads${bf.bf_name}"/>">
+										        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%;">
 											        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
 															<i class="fi fi-bs-cross"></i>
 														</button>
@@ -113,7 +125,7 @@
 							</tr>
 							<tr>
 								<th scope="row">
-									<label class="_asterisk">사진</label>
+									<label>사진</label>
 								</th>
 								<td>
 									<div class="file-input">
@@ -437,3 +449,4 @@
 		});
     </script>
 </body>
+</html>
