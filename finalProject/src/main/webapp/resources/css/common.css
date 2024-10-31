@@ -1597,6 +1597,14 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   width: 100%;
   margin-top: 20px;
 }
+.equipment_img_insert, .equipment_img_update{
+  width: 100%;
+  text-align: center;
+}
+.equipment_img_insert .equipment_img, .equipment_img_update .equipment_img{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 /* 운동 기구 관리 end */
 
 

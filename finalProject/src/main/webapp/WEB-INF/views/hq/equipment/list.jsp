@@ -45,8 +45,8 @@
 			        	</div>
 			        	<div class="modal-body">
 			        		<div class="form-group my-3">
-								<label for="file" class="card card-insert mx-auto" style="width:250px; cursor:pointer">
-								    <img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+								<label for="file" class="equipment_img_insert card-insert">
+								    <img class="equipment_img" alt="Card image"
 								    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 								</label>
 								<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
@@ -89,7 +89,7 @@
 			        	</div>
 			        	<div class="modal-body">
 			        		<div class="form-group my-3">
-								<label for="file2" class="card card-update mx-auto" style="width:250px; cursor:pointer">
+								<label for="file2" class="equipment_img_update card-update">
 								    
 								</label>
 								<input type="file" class="form-control display_none" id="file2" name="file2" accept="image/*">
