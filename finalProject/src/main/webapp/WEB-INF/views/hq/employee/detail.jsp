@@ -3,12 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<head>
-	<style type="text/css">
-		img{width: 200px; height: 250px;}
-	</style>
-</head>
-
 <body>
 	<section class="sub_banner sub_banner_06"></section>
 	<section class="sub_content">
