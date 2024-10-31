@@ -437,7 +437,7 @@ public class UserController {
 		model.addAttribute("url","/login");
 		return "/main/message";
 	}
-	
+
 	@GetMapping("/oauth/kakao")
 	public String kakaoLogin(Model model, HttpSession session, HttpServletResponse response, @RequestParam("code") String code) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -453,17 +453,37 @@ public class UserController {
 	}
 
 	@GetMapping("/oauth/naver")
-	public String naverCallback(Model model, HttpSession session, HttpServletResponse response, @RequestParam("code") String code, @RequestParam("state") String state) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user != null) {
-			if(user.getMe_naverUserId() == null) {
-				return userSocialConnection(model, session, "NAVER", code, user, state);
+	public String naverCallback(Model model, 
+		    HttpSession session, 
+		    HttpServletResponse response, 
+		    @RequestParam(value = "code", required = false) String code,
+		    @RequestParam(value = "error", required = false) String error,
+		    @RequestParam(value = "error_description", required = false) String errorDescription,
+		    @RequestParam(value = "state", required = false) String state
+		) {
+		
+	    if(code != null){
+		    	MemberVO user = (MemberVO)session.getAttribute("user");
+		    
+			if(user != null) {
+				if(user.getMe_naverUserId() == null) {
+					return userSocialConnection(model, session, "NAVER", code, user, state);
+				}
+				session.setAttribute("socialType", "NAVER");
+				model.addAttribute("member", user);
+				return "/mypage/info";
 			}
-			session.setAttribute("socialType", "NAVER");
-			model.addAttribute("member", user);
-			return "/mypage/info";
-		}
-	    return handleSocialLogin(model, session, response, "NAVER", code, state);
+		    return handleSocialLogin(model, session, response, "NAVER", code, state);
+	    }
+	    // 네이버 로그인 '동의하기'에서 '취소'를 눌렀을 경우 -> 로그인 페이지로 이동
+	    else if (errorDescription != null && errorDescription.equals("Canceled By User")) {
+	    	return "redirect:/login";
+	    }
+	    else {
+	    	model.addAttribute("msg", "네이버 연결에 실패했습니다. \\n(관리자에게 문의하세요)");
+	        model.addAttribute("url", "/login");
+	        return "/main/message";
+	    }
 	}
 	
 	private String userSocialConnection(Model model, HttpSession session, String socialType, String code, MemberVO user, String state) {
