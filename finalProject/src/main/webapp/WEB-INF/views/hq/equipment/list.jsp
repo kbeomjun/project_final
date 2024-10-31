@@ -36,6 +36,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="modal fade" id="myModal">
 		    	<div class="modal-dialog modal-dialog-centered">
 		      		<form action="<c:url value="/hq/equipment/insert"/>" method="post" enctype="multipart/form-data" id="form" class="modal-content">
@@ -80,6 +81,7 @@
 		      		</form>
 		    	</div>
 	  		</div>
+	  		
 	  		<div class="modal fade" id="myModal2">
 		    	<div class="modal-dialog modal-dialog-centered">
 		      		<form action="<c:url value="/hq/equipment/update"/>" method="post" enctype="multipart/form-data" id="form2" class="modal-content">
