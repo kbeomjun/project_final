@@ -111,25 +111,43 @@
 			<fmt:formatDate value="${nowDate}" pattern="yyyy" var="todayYear" />
 			<div class="account-book-container">
 				<div class="sub_navbar">
-					<a
-						class="btn btn-<c:if test="${pr_name ne 'null'}">outline-</c:if>secondary ml-2"
-						href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false"/>">
-						전체 </a>
+				<!-- 
+<ul class="tab_list">
+							<li class="tab_item"><button type="submit" name="category" value="all" class="tab_link _active">전체</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="PT문의" class="tab_link">PT문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="건의사항" class="tab_link">건의사항</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="기타" class="tab_link">기타</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="서비스 불만" class="tab_link">서비스 불만</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="시설문의" class="tab_link">시설문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="이용문의" class="tab_link">이용문의</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="청결관리" class="tab_link">청결관리</button></li>
+							<li class="tab_item"><button type="submit" name="category" value="환불문의" class="tab_link">환불문의</button></li>
+						</ul>
+						 -->
+					<ul class="tab_list">
+						<li class="tab_item">
+						<a
+							class="btn tab_link <c:if test="${pr_name eq 'null'}">_active</c:if> ml-2"
+							href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false"/>">
+							전체 </a></li>
+						
 					<c:forEach items="${program_list}" var="pr" varStatus="status">
 						<c:if test="${pr.sp_name ne 'PT'}">
 							<c:choose>
 								<c:when test="${pr.sp_name == pr_name}">
-									<c:set var="outline" value="" />
+									<c:set var="_btn_seleceted" value="_active" />
 								</c:when>
 								<c:otherwise>
-									<c:set var="outline" value="outline-" />
+									<c:set var="_btn_seleceted" value="" />
 								</c:otherwise>
 							</c:choose>
-							<a class="btn btn-${outline}secondary ml-2"
+							<li class="tab_item">
+							<a class="btn tab_link ${_btn_seleceted} ml-2"
 								href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/${pr.sp_name}/false"/>">
-								${pr.sp_name } </a>
+								${pr.sp_name } </a></li>
 						</c:if>
 					</c:forEach>
+					</ul>
 				</div>
 				<div class="calendar-wrapper ml-3">
 					<span class="fw-bold fs-5 ml-3" style="font-size: 1.5rem;">${cal.year}년
