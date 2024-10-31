@@ -61,71 +61,119 @@
 		    	<div class="modal-dialog modal-dialog-centered">
 		    		<form action="<c:url value="/hq/FAQ/insert"/>" method="post" id="form" class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">정보</h4>
+			          		<h4 class="modal-title">등록</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			          		<div class="form-group">
-								<label for="mi_title">제목:</label>
-								<input type="text" class="form-control" id="mi_title" name="mi_title">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="mi_title">제목</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_title" name="mi_title">
+												</div>
+												<div class="error error-title"></div>
+							                </td>
+							            </tr>
+										<tr>
+											<th scope="row">
+												<label for="mi_it_name">유형</label>
+											</th>
+											<td>
+												<div class="form-group">
+													<select name="mi_it_name" class="custom-select form-control">
+														<option value="" selected>선택</option>
+														<c:forEach items="${itList}" var="it">
+															<option value="${it.it_name}">${it.it_name}</option>
+														</c:forEach>
+													</select>
+												</div>
+												<div class="error error-type"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="col"><label for="mi_content">내용</label></th>
+							                <td>
+							                	<div>
+													<textarea class="form-control" id="mi_content" name="mi_content"></textarea>
+												</div>
+												<div class="error error-content"></div>
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error error-title"></div>
-							<div class="form-group">
-								<label for="mi_it_name">유형:</label>
-								<select name="mi_it_name" class="custom-select form-control">
-									<c:forEach items="${itList}" var="it">
-										<option value="${it.it_name}">${it.it_name}</option>
-									</c:forEach>
-							    </select>
-							</div>
-							<div class="error error-position"></div>
-							<div class="form-group">
-								<label for="mi_content">내용:</label>
-								<textarea class="form-control" id="mi_content" name="mi_content"></textarea>
-							</div>
-							<div class="error error-content"></div>
-							<button class="btn btn-outline-info col-12">FAQ 등록</button>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			        		<button class="btn btn_black">FAQ 등록</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
-		      		</form>
+		    		</form>
 		    	</div>
-	    	</div>
-	    	<div class="modal fade" id="myModal2">
+	  		</div>
+	  		
+	  		<div class="modal fade" id="myModal2">
 		    	<div class="modal-dialog modal-dialog-centered">
 		    		<form action="<c:url value="/hq/FAQ/update"/>" method="post" id="form2" class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">정보</h4>
+			          		<h4 class="modal-title">조회</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			          		<div class="form-group">
-								<label for="mi_title">제목:</label>
-								<input type="text" class="form-control" id="mi_title2" name="mi_title">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="mi_title2">제목</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_title2" name="mi_title2">
+												</div>
+												<div class="error error-title2"></div>
+							                </td>
+							            </tr>
+										<tr>
+											<th scope="row">
+												<label for="mi_it_name2">유형</label>
+											</th>
+											<td>
+												<div class="form-group">
+													<select id="mi_it_name2" name="mi_it_name2" class="custom-select form-control">
+														<c:forEach items="${itList}" var="it">
+															<option value="${it.it_name}">${it.it_name}</option>
+														</c:forEach>
+													</select>
+												</div>
+												<div class="error error-type2"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="col"><label for="mi_content2">내용</label></th>
+							                <td>
+							                	<div>
+													<textarea class="form-control" id="mi_content2" name="mi_content2"></textarea>
+												</div>
+												<div class="error error-content2"></div>
+												<input type="hidden" id="mi_num2" name="mi_num">
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error error-title2"></div>
-							<div class="form-group">
-								<label for="mi_it_name">유형:</label>
-								<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
-									<c:forEach items="${itList}" var="it">
-										<option value="${it.it_name}">${it.it_name}</option>
-									</c:forEach>
-							    </select>
-							</div>
-							<div class="error error-position2"></div>
-							<div class="form-group">
-								<label for="mi_content">내용:</label>
-								<textarea class="form-control" id="mi_content2" name="mi_content"></textarea>
-							</div>
-							<div class="error error-content2"></div>
-							<input type="hidden" id="mi_num2" name="mi_num">
-							<button class="btn btn-outline-warning col-12">FAQ 수정</button>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			        		<button class="btn btn_black">FAQ 수정</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
-		      		</form>
+		    		</form>
 		    	</div>
 	  		</div>
     	</section>
@@ -144,6 +192,14 @@
 				$('.error-title').children().remove();	
 			}
 		});
+		$('select[name=mi_it_name]').change(function(){
+			$('.error-type').children().remove();
+			if($("select[name=mi_it_name]").val() == ''){
+				$('.error-type').append(msgRequired);
+			}else{
+				$('.error-type').children().remove();
+			}
+		});
 		$('#form').submit(function(){
 			$('.error').children().remove();
 			let flag = true;
@@ -152,6 +208,10 @@
 			if($('#mi_title').val() == ''){
 				$('.error-title').append(msgRequired);
 				$('#mi_title').focus();
+				flag = false;
+			}
+			if($("select[name=mi_it_name]").val() == ''){
+				$('.error-type').append(msgRequired);
 				flag = false;
 			}
 			if(code == '<p><br></p>' || code == '<br>' || code == ''){
@@ -225,7 +285,7 @@
 					$('#mi_title2').val(mi.mi_title);
 					$('#mi_content2').summernote('code', mi.mi_content);
 					$('#mi_num2').val(mi.mi_num);
-					$("select[name=mi_it_name]").val(mi.mi_it_name).prop("selected", true);
+					$("select[name=mi_it_name2]").val(mi.mi_it_name).prop("selected", true);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
@@ -237,6 +297,7 @@
 			$('.error').children().remove();
 			$('#mi_title').val("");
 			$('#mi_content').summernote('reset');
+			$("select[name=mi_it_name]").val("").prop("selected", true);
 		});
 	</script>
 	
