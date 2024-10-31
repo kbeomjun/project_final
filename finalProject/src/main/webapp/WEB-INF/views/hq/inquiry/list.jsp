@@ -97,92 +97,159 @@
 		    	<div class="modal-dialog modal-dialog-centered">
 		    		<form action="<c:url value="/hq/inquiry/update"/>" method="post" id="form" class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">정보</h4>
+			          		<h4 class="modal-title">조회</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			          		<div class="form-group">
-								<label for="mi_title">제목:</label>
-								<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="mi_title">제목</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_email">이메일</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_date">날짜</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_it_name">유형</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_content">내용</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_content" name="mi_content" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_answer">답변</label></th>
+							                <td>
+							                	<div>
+													<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
+												</div>
+												<div class="error error-answer"></div>
+												<input type="hidden" id="mi_num" name="mi_num">
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_email">이메일:</label>
-								<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_date">날짜:</label>
-								<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_it_name">유형:</label>
-								<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_content">내용:</label>
-								<textarea class="form-control" id="mi_content" name="mi_content" readonly></textarea>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_answer">답변:</label>
-								<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
-							</div>
-							<div class="error error-answer"></div>
-							<input type="hidden" id="mi_num" name="mi_num">
-							<button class="btn btn-outline-info col-12">답변 등록</button>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			        		<button class="btn btn_black">답변 등록</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
-		      		</form>
+		    		</form>
 		    	</div>
 	  		</div>
-	  		<div class="modal fade" id="myModal2">
+	    	
+	    	<div class="modal fade" id="myModal2">
 		    	<div class="modal-dialog modal-dialog-centered">
 		    		<div class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">정보</h4>
-			          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+			          		<h4 class="modal-title">조회</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			          		<div class="form-group">
-								<label for="mi_title2">제목:</label>
-								<input type="text" class="form-control" id="mi_title2" name="mi_title2" readonly>
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="mi_title">제목</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_title2" name="mi_title" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_email">이메일</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_email2" name="mi_email" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_date">날짜</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_date2" name="mi_date" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_it_name">유형</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_content">내용</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_content2" name="mi_content" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_answer">답변</label></th>
+							                <td>
+							                	<div>
+													<textarea class="form-control" id="mi_answer2" name="mi_answer" readonly></textarea>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_email2">이메일:</label>
-								<input type="text" class="form-control" id="mi_email2" name="mi_email2" readonly>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_date2">날짜:</label>
-								<input type="text" class="form-control" id="mi_date2" name="mi_date2" readonly>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_it_name2">유형:</label>
-								<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name2" readonly>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_content2">내용:</label>
-								<textarea class="form-control" id="mi_content2" name="mi_content2" readonly></textarea>
-							</div>
-							<div class="error"></div>
-							<div class="form-group">
-								<label for="mi_answer2">답변:</label>
-								<textarea class="form-control" id="mi_answer2" name="mi_answer2" readonly></textarea>
-							</div>
-							<div class="error error-answer"></div>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
-		      		</div>
+		    		</div>
 		    	</div>
 	  		</div>
     	</section>

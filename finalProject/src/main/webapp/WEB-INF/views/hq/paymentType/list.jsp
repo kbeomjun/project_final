@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-	    	
+			
 			<div class="modal fade" id="myModal">
 		    	<div class="modal-dialog modal-dialog-centered">
 		      		<form action="<c:url value="/hq/paymentType/insert"/>" method="post" id="form" class="modal-content">
@@ -67,87 +67,148 @@
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			        		<div class="form-group">
-								<label for="pt_name">회원권명:</label>
-								<input type="text" class="form-control" id="pt_name" name="pt_name">
+							<div class="table_wrap">
+								<table class="table">
+									<caption class="blind">회원권의 이용권 종류와 기간, 횟수, 가격이 있는 테이블</caption>
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="pt_name">회원권명</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_name" name="pt_name">
+												</div>
+												<div class="error error-name"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_name">유형</label></th>
+							                <td>
+							                	<div class="form-group">
+													<select name="pt_type" class="custom-select form-control">
+														<option value="" selected>선택</option>
+														<option value="이용권">이용권</option>
+														<option value="PT">PT</option>
+													</select>
+												</div>
+												<div class="error error-type"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_date">기한(달)</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_date" name="pt_date">
+												</div>
+												<div class="error error-date"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_count">PT횟수(회)</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_count" name="pt_count">
+												</div>
+												<div class="error error-count"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_price">가격(원)</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_price" name="pt_price">
+												</div>
+												<div class="error error-price"></div>
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error error-name"></div>
-			        		<div class="form-group">
-								<label for="pt_type">회원권 유형:</label>
-								<select name="pt_type" class="custom-select form-control">
-									<option value="이용권">이용권</option>
-									<option value="PT">PT</option>
-							    </select>
-							</div>
-							<div class="error error-type"></div>
-							<div class="form-group">
-								<label for="pt_date">기한(달):</label>
-								<input type="text" class="form-control" id="pt_date" name="pt_date">
-							</div>
-							<div class="error error-date"></div>
-							<div class="form-group">
-								<label for="pt_count">PT횟수(회):</label>
-								<input type="text" class="form-control" id="pt_count" name="pt_count">
-							</div>
-							<div class="error error-count"></div>
-							<div class="form-group">
-								<label for="pt_price">가격(원):</label>
-								<input type="text" class="form-control" id="pt_price" name="pt_price">
-							</div>
-							<div class="error error-price"></div>
-							<button class="btn btn-outline-info col-12">회원권 등록</button>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
+							<button class="btn btn_black">회원권 등록</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		      		</form>
 		    	</div>
 	  		</div>
+			        		
 	  		<div class="modal fade" id="myModal2">
-		    	<div class="modal-dialog modal-dialog-centered">
+	  			<div class="modal-dialog modal-dialog-centered">
 		      		<form action="<c:url value="/hq/paymentType/update"/>" method="post" id="form2" class="modal-content">
 			        	<div class="modal-header">
 			          		<h4 class="modal-title">수정</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			        		<div class="form-group">
-								<label for="pt_name2">회원권명:</label>
-								<input type="text" class="form-control" id="pt_name2" name="pt_name">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="pt_name">회원권명</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_name2" name="pt_name">
+												</div>
+												<div class="error error-name2"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_type">유형</label></th>
+							                <td>
+							                	<div class="form-group">
+													<select id="pt_type2" name="pt_type" class="custom-select form-control">
+														<option value="이용권">이용권</option>
+														<option value="PT">PT</option>
+													</select>
+												</div>
+												<div class="error error-type2"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_date">기한(달)</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_date2" name="pt_date">
+												</div>
+												<div class="error error-date2"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_count">PT횟수(회)</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_count2" name="pt_count">
+												</div>
+												<div class="error error-count2"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="pt_price">가격(원)</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="pt_price2" name="pt_price">
+												</div>
+												<div class="error error-price2"></div>
+												<input type="hidden" id="pt_num2" name="pt_num">
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error error-name"></div>
-			        		<div class="form-group">
-								<label for="pt_type2">회원권 유형:</label>
-								<select id="pt_type2" name="pt_type" class="custom-select form-control">
-									<option value="이용권">이용권</option>
-									<option value="PT">PT</option>
-							    </select>
-							</div>
-							<div class="error error-type2"></div>
-							<div class="form-group">
-								<label for="pt_date">기한(달):</label>
-								<input type="text" class="form-control" id="pt_date2" name="pt_date">
-							</div>
-							<div class="error error-date2"></div>
-							<div class="form-group">
-								<label for="pt_count">PT횟수(회):</label>
-								<input type="text" class="form-control" id="pt_count2" name="pt_count">
-							</div>
-							<div class="error error-count2"></div>
-							<div class="form-group">
-								<label for="pt_price">가격(원):</label>
-								<input type="text" class="form-control" id="pt_price2" name="pt_price">
-							</div>
-							<div class="error error-price2"></div>
-							<input type="hidden" id="pt_num2" name="pt_num">
-							<button class="btn btn-outline-warning col-12">회원권 수정</button>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
+							<button class="btn btn_black">회원권 수정</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		      		</form>
 		    	</div>
-	  		</div>
+	    	</div>
     	</section>
    	</section>
 
@@ -164,6 +225,14 @@
 				$('.error-name').append(msgRequired);
 			}else{
 				$('.error-name').children().remove();	
+			}
+		});
+		$('select[name=pt_type]').change(function(){
+			$('.error-type').children().remove();
+			if($("select[name=pt_type]").val() == ''){
+				$('.error-type').append(msgRequired);
+			}else{
+				$('.error-type').children().remove();
 			}
 		});
 		$('#pt_date').keyup(function(){
@@ -211,7 +280,12 @@
 			let flag2 = check("date");
 			let flag3 = check("count");
 			let flag4 = check("price");
-			return flag1 && flag2 && flag3 && flag4;
+			let flag5 = true;
+			if($("select[name=pt_type]").val() == ''){
+				$('.error-type').append(msgRequired);
+				flag = false;
+			}
+			return flag1 && flag2 && flag3 && flag4 && flag5;
 		});
 		
 		$('#pt_name2').keyup(function(){
@@ -308,6 +382,7 @@
 			$('#pt_count').val("");
 			$('#pt_price').val("");
 			$('#pt_num').val("");
+			$("select[name=pt_type]").val("").prop("selected", true);
     	});
     
     	$('.btn-update').click(function(){
