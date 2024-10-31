@@ -214,7 +214,9 @@
 					        		<img class="equipment_img" src="<c:url value="/uploads\${st.be_se_fi_name}"/>" />
 					        	</div>
 						    	<div class="equipment_info_wrap">
-						    		<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
+									<button type="button" class="btn btn_update" disabled>
+										<p class="img-text mx-auto">\${st.be_se_name}(수량 : \${st.be_se_total})</p>
+									</button>
 								</div>
 					    	</li>
 						`;
