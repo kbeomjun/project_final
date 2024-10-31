@@ -39,34 +39,54 @@
 	    	
 	    	<div class="modal fade" id="myModal">
 		    	<div class="modal-dialog modal-dialog-centered">
-		      		<div class="modal-content">
+		    		<div class="modal-content">
 			        	<div class="modal-header">
 			          		<h4 class="modal-title">환불</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
-			          		<div class="form-group">
-								<label for="re_price">금액:</label>
-								<input type="text" class="form-control" id="re_price" name="re_price">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="re_price">금액</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="re_price" name="re_price">
+												</div>
+												<div class="error error-price"></div>
+							                </td>
+							            </tr>
+										<tr>
+											<th scope="row">
+												<label for="re_reason">사유</label>
+											</th>
+											<td>
+												<div class="form-group">
+													<select id="re_reason" name="re_reason" class="custom-select form-control">
+														<option value="" selected>선택</option>
+														<option value="중도 해지">중도 해지</option>
+														<option value="시작전 계약 취소">시작전 계약 취소</option>
+														<option value="PT트레이너 불만">PT트레이너 불만</option>
+														<option value="서비스 불만">서비스 불만</option>
+													</select>
+												</div>
+												<input type="hidden" id="re_pa_num" name="re_pa_num">
+												<div class="error error-reason"></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="error error-price"></div>
-							<div class="form-group">
-								<label for="re_reason">사유:</label>
-								<select id="re_reason" name="re_reason" class="custom-select form-control">
-									<option value="중도 해지">중도 해지</option>
-									<option value="시작전 계약 취소">시작전 계약 취소</option>
-									<option value="PT트레이너 불만">PT트레이너 불만</option>
-									<option value="서비스 불만">서비스 불만</option>
-							    </select>
-							</div>
-							<div class="error error-reason"></div>
-							<input type="hidden" id="re_pa_num" name="re_pa_num">
-							<button class="btn btn-outline-danger col-12 btn-refund">환불</button>
-			        	</div>
+						</div>
 			        	<div class="modal-footer">
-			          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
+			        		<button class="btn btn_black btn-refund">환불</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
-		      		</div>
+		    		</div>
 		    	</div>
 	  		</div>
     	</section>
@@ -93,6 +113,14 @@
 				$('.error-price').children().remove();	
 			}
 		});
+		$('select[name=re_reason]').change(function(){
+			$('.error-reason').children().remove();
+			if($("select[name=re_reason]").val() == ''){
+				$('.error-reason').append(msgRequired);
+			}else{
+				$('.error-reason').children().remove();
+			}
+		});
 		
 		$(document).on("click", ".btn-refund", function(){
 			let flag = true;
@@ -113,6 +141,10 @@
 			}else if($('#re_price').val() > price || $('#re_price').val().length > price.length){
 				$('.error-price').append(msgPrice);
 				$('#re_price').focus();
+				flag = false;
+			}
+			if($("select[name=re_reason]").val() == ''){
+				$('.error-reason').append(msgRequired);
 				flag = false;
 			}
 			
@@ -235,6 +267,7 @@
 			$('.error').children().remove();
 			$('#re_price').val("");
 			$('#re_pa_num').val("");
+			$("select[name=re_reason]").val("").prop("selected", true);
 		});
 	</script>
 </body>
