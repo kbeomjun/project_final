@@ -231,8 +231,6 @@
 		});
 		
 		$('#em_phone').keyup(function(){
-			
-			
 			$('.error-phone').children().remove();
 			
 			if($('#em_phone').val() == ''){
