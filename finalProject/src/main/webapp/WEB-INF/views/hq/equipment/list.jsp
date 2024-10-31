@@ -18,7 +18,7 @@
 			<div class="search_bar ml-0">
 	            <input type="text" class="form-control" id="search" name="search" placeholder="검색">
 	            <div class="search_btn"></div>
-	         </div>
+	        </div>
 		
 			<ul class="img-container equipment_warp">
 		    		
