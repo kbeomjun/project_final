@@ -12,10 +12,26 @@
 <style type="text/css">
 .employee-modal .modal-content {
 	width: 800px; /* 고정 너비를 500px로 설정 */
-    margin: auto; /* 중앙 정렬 */
-    border-radius: 8px; /* 모서리 둥글게 하기 (선택 사항) */
-    padding: 20px; /* 여백 추가 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 (선택 사항) */
+	margin: auto; /* 중앙 정렬 */
+	border-radius: 8px; /* 모서리 둥글게 하기 (선택 사항) */
+	padding: 20px; /* 여백 추가 */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 (선택 사항) */
+}
+
+.employee-modal .close {
+	cursor: pointer;
+	font-size: 3rem;
+	padding: 0;
+}
+.modal-dialog .close {
+	padding: 2rem 2rem 0 0;
+	margin: -2rem -1rem -1rem auto;
+	font-size: 3rem;
+}
+
+.employee-modal .modal-header,
+.modal-dialog .modal-header {
+    border-bottom: none;
 }
 </style>
 </head>
@@ -254,9 +270,9 @@
 										<tr>
 											<td>${ps.bp_sp_name }</td>
 											<td>${fn:replace(ps.bp_br_name, '점', '')}</td>
-											<td><span>${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})</span>
-												<span><button class="btn btn-info btn-view-details" data-bs-num="${ps.bs_num}">상세 보기</button></span>
-											</td>
+											<td><a class="btn btn-view-details"
+												data-bs-num="${ps.bs_num}"> <span style="color: #007bff">${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})</span>
+											</a></td>
 											<td><fmt:formatDate value="${ps.bs_start}"
 													pattern="HH:mm" /> <br />~<fmt:formatDate
 													value="${ps.bs_end}" pattern="HH:mm" /></td>
@@ -289,13 +305,16 @@
 			</div>
 		</div>
 	</div>
-	<div id="employeeModal" class="modal employee-modal" style="display: none;">
-	    <div class="modal-content">
-	    <div class="modal-header">
-	        <span class="close" style="cursor: pointer;">&times;</span> <!-- x 버튼 -->
-        </div>
-	        <div id="modalBody"></div> <!-- 여기에 동적 컨텐츠를 삽입 -->
-	   	</div>
+	<div id="employeeModal" class="modal employee-modal"
+		style="display: none;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">&times;</span>
+				<!-- x 버튼 -->
+			</div>
+			<div id="modalBody"></div>
+			<!-- 여기에 동적 컨텐츠를 삽입 -->
+		</div>
 	</div>
 	<script>
 	$(document).ready(function() {
@@ -402,7 +421,7 @@ window.onscroll = function() {
     localStorage.setItem("scrollPosition", window.scrollY);
 };
 </script>
-<script>
+	<script>
 document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById("employeeModal");
     const modalBody = document.getElementById("modalBody");

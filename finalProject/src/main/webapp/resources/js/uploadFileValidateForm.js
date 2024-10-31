@@ -1,3 +1,8 @@
+/*
+ * form에서 file 업로드 할 경우
+ * 개별 파일 10mb 이상, 전체 파일 10mb 이상 일 때 업로드 방지
+ */
+
 function validateForm() {
     const maxFileSize = 10 * 1024 * 1024; // 개별 파일 최대 크기 10MB
     const maxTotalSize = 10 * 1024 * 1024; // 총 파일 크기 제한 10MB

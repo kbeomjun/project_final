@@ -24,6 +24,12 @@
 <script src="<c:url value="/resources/js/fancybox.umd.js"/>"></script>
 
 <style type="text/css">
+.scrollable-text {
+	max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
 </style>
 </head>
 <body>
@@ -118,10 +124,6 @@
 														alt="${em.em_fi_name}"
 														onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
 														style="width: 100%; height: 350px; object-fit: cover;">
-													 <%-- <div class="card-body">
-													 	<h4 class="card-title">${em.em_name}</h4>
-														<p class="card-text">${em.em_position}</p> 
-													</div>  --%>
 												</div>
 											</div>
 											<div class="col-md-3 mb-4" style="padding: 0;">
@@ -129,7 +131,7 @@
 													<div class="card-body" style="padding: 0.5rem 1.25rem;">
 														<h4 class="card-title">${em.em_name} <%-- (${fn:substring(em.em_gender, 0, 1)}) --%></h4>
 														<p class="card-text">${em.em_position}</p><br>
-														<p class="card-text">${em.em_detail }</p>
+														<div class=" scrollable-text">${em.em_detail }</div>
 													</div>
 												</div>
 											</div>
