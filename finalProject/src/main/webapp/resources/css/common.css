@@ -1244,7 +1244,7 @@ ion-icon{
   background-position: center;
 }
 
-/* data-table search */
+/* data-table :: search */
 .table_wrap .dt-container .dt-layout-cell.dt-layout-end{
   width: 100%;
 }
@@ -1274,7 +1274,7 @@ ion-icon{
   background-size: 25px;
   background-position: center;
 }
-/* 검색 end */
+/* data-table :: search end */
 
 
 
@@ -1553,6 +1553,9 @@ table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td{
 div.dt-container.dt-empty-footer tbody>tr:last-child>*{
   border-bottom: 1px solid #DDD;
 }
+div.dt-container.dt-empty-footer .dt-scroll-body{
+  border-bottom: none;
+}
 
 
 /* data-table :: pagination */
@@ -1602,6 +1605,8 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 }
 .profile_img_wrap label{
   cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 /* 직원관리 end */
 
@@ -1686,6 +1691,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 .img-box img{
   width: 100%;
   height: 100%;
+  max-height: 300px;
 }
 .branch_img_container .img-box:nth-child(1), 
 .branch_img_container .img-box:nth-child(2),
