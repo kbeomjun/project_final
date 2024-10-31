@@ -1277,7 +1277,7 @@ ion-icon{
   justify-content: space-between;
 }
 .form-inline-50 > .form-control{
-  flex: 0 0 510px;
+  flex: 0 0 calc(50% - 5px);
 }
 .form-inline-50 > .form-control:first-child{
   margin-left: 0px ;
