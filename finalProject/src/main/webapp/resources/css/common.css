@@ -1101,6 +1101,7 @@ ion-icon{
   border-bottom: 1px solid #DDD;
   padding: 20px 0px;
   font-size: 14px;
+  cursor: pointer;
   transition: .1s;
 }
 .lnb_wrap .lnb .lnb__item:first-child .lnb__link{
@@ -1191,6 +1192,52 @@ ion-icon{
 .tab_link._active{
   background-color: #111;
   color: #fff;
+}
+
+.tabList_wrap{
+  width: 1440px;
+  margin: 0 auto;
+}
+.tabList{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 80px 0px;
+  border-bottom: 1px solid #ddd;
+}
+.tabList_item{
+  margin: 0px 20px;
+  padding: 4px 4px 8px 4px;
+}
+.tabList_item:first-child{
+  margin-left: 0px;
+}
+.tabList_item:last-child{
+  margin-right: 0px;
+}
+.tabList_link{
+  position: relative;
+  padding: 4px 4px 10px 4px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #999;
+  transition: .1s;
+}
+.tabList_link._active{
+  font-weight: bold;
+  color: #111;
+}
+.tabList_link:hover, .tabList_link:focus{
+  color: #111;
+}
+.tabList_link._active::after{
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background-color: #111;
 }
 /* tab end */
 
@@ -1718,16 +1765,17 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   border-bottom: none;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 .modal-header .close{
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 48px;
+  right: 58px;
 }
 .modal-body{
   max-height: 500px;
-  padding: 20px;
+  padding: 20px 40px;
   overflow-y: auto;
 }
 .modal-body .table{
@@ -1736,6 +1784,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 .modal-footer{
   justify-content: center;
   border-top: none;
-  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 /* modal end */
