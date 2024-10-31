@@ -612,6 +612,10 @@ label{
 .btn_link_white+.btn_link_white{
   margin-left: 10px;
 }
+/* 없앨까? */
+.btn_black:focus, .btn_white:focus{
+  box-shadow: none;
+}
 /* button end */
 
 
@@ -1269,13 +1273,23 @@ ion-icon{
   border-color: #111;
   color: #111;
 }
-.form-inline-50 > input{
-  flex: 0 0 50%;
-  margin-left: 10px;
+.form-inline-50{
+  justify-content: space-between;
 }
-.form-inline-50 > *:first-child{
-  flex: 0 0 50%;
-  margin-left: 10px;
+.form-inline-50 > .form-control{
+  flex: 0 0 510px;
+}
+.form-inline-50 > .form-control:first-child{
+  margin-left: 0px ;
+}
+.form-group .form-group{
+  margin: 20px 0px;
+}
+.form-control:disabled, .form-control[readonly]:focus:not(:focus-visible){
+  cursor: default;
+  outline: 0;
+  border-color: #ddd;
+  box-shadow: 0 0 0 .2rem transparent;
 }
 /* table end */
 

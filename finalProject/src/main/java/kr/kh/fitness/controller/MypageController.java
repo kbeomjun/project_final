@@ -1,5 +1,9 @@
 package kr.kh.fitness.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,6 +52,15 @@ public class MypageController {
 	
 	@Autowired 
 	private SingleSignOnService singleSignOnService;
+	
+	@Autowired
+	private String naverClientId;
+	@Autowired
+	private String naverCallbackUrl;
+	@Autowired
+	private String kakaoApiKey;
+	@Autowired
+	private String kakaoRedirectUri;
 	 
 	
 	//마이페이지 회원권 내역
@@ -288,7 +301,30 @@ public class MypageController {
 	    	model.addAttribute("social_type", social_type);
 	    	model.addAttribute("social_id", social_id);
 	    }
-		model.addAttribute("me_id", user.getMe_id());
+	    
+	    String redirectURI;
+		try {
+			redirectURI = URLEncoder.encode(naverCallbackUrl, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "로그인에 실패했습니다. \\n(네이버 접근이 일시적으로 제한됩니다.)");
+			model.addAttribute("url", "/login");	
+			return "/main/message";
+		}
+		
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString();
+	    
+	    String naverApiUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+	    naverApiUrl += "&client_id=" + naverClientId;
+	    naverApiUrl += "&redirect_uri=" + redirectURI;
+	    naverApiUrl += "&state=" + state;
+	    
+	    model.addAttribute("naverApiUrl", naverApiUrl);
+		model.addAttribute("kakaoApiKey", kakaoApiKey);
+		model.addAttribute("kakaoRedirectUri", kakaoRedirectUri);
+	    
+		model.addAttribute("user", user);
 		return "/mypage/pwCheck";
 	}
 	
@@ -306,10 +342,28 @@ public class MypageController {
 			return "/main/message";
 		}
 	}
+
+	// 소셜 정보로 비밀번호 확인 대체 get 
+	@GetMapping("/socialcheck")
+	public String mypageSocialCheck(Model model, HttpSession session) {
+		
+		String social_type = (String) session.getAttribute("socialType");
+		MemberVO member = (MemberVO) session.getAttribute("user");
+		
+		String msg = clientService.checkSocial(member, social_type);
+		if(msg == "") {
+			session.setAttribute("pwVerified", true);
+			return "redirect:/mypage/info";
+		} else {
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/mypage/pwcheck");
+			return "/main/message";
+		}
+	}
 	
 	// 소셜 정보로 비밀번호 확인 대체 post 
 	@PostMapping("/socialcheck")
-	public String mypageSocialCheck(Model model, HttpSession session) {
+	public String mypageSocialCheckPost(Model model, HttpSession session) {
 		
 		String social_type = (String) session.getAttribute("socialType");
 		MemberVO member = (MemberVO) session.getAttribute("user");

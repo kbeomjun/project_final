@@ -3,186 +3,154 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>본사관리페이지</title>
-	<style type="text/css">
-    	.error{color:red; margin-bottom: 10px;}
-    	.form-group{margin: 0;}
-    	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
-</head>
+
 <body>
-	<div style="margin-top:30px; padding:0 20px;">
-	  	<div class="row">
-	    	<div class="col-sm-2">
-		    	<ul class="nav nav-pills flex-column">
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
-	       	 		</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
-		        	</li>
-		      	</ul>
-		      	<hr class="d-sm-none">
-	    	</div>
-		    <div class="col-sm-10">
-		    	<div>
-			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
-			    </div>
-			    <hr>
-		    	<div class="mt-3">
-		    		<table class="table table-hover" id="table">
-				    	<thead id="thead">
-				      		<tr>
-				      			<th>회원권</th>
-				        		<th>유형</th>
-				        		<th>기한(달)</th>
-				        		<th>PT횟수(회)</th>
-				        		<th>가격(원)</th>
-				        		<th></th>
+	<section class="sub_banner sub_banner_06"></section>
+	<section class="sub_content">
+        <!-- 왼쪽 사이드바 -->
+        <%@ include file="/WEB-INF/views/layout/hqSidebar.jsp" %>
+
+        <!-- 오른쪽 컨텐츠 영역 -->
+		<section class="sub_content_group">
+			<div class="sub_title_wrap">
+				<h2 class="sub_title">회원권 관리</h2>
+			</div>
+			
+			<div class="table_wrap">
+		    	<table class="table table_center" id="table">
+			    	<thead id="thead">
+			      		<tr>
+			      			<th>회원권</th>
+			        		<th>유형</th>
+			        		<th>기한(달)</th>
+			        		<th>PT횟수(회)</th>
+			        		<th>가격(원)</th>
+			        		<th></th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="tbody">
+			    		<c:forEach items="${ptList}" var="pt">
+			    			<tr>
+			    				<td>${pt.pt_name}</td>
+				        		<td>${pt.pt_type}</td>
+				        		<td>${pt.pt_date}</td>
+				        		<td>${pt.pt_count}</td>
+				        		<td>${pt.formattedPrice}</td>
+				        		<td>
+				        			<button type="button" class="btn btn_green btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
+				        		</td>
 				      		</tr>
-				    	</thead>
-				    	<tbody id="tbody">
-				    		<c:forEach items="${ptList}" var="pt">
-				    			<tr>
-				    				<td>${pt.pt_name}</td>
-					        		<td>${pt.pt_type}</td>
-					        		<td>${pt.pt_date}</td>
-					        		<td>${pt.pt_count}</td>
-					        		<td>${pt.formattedPrice}</td>
-					        		<td>
-					        			<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
-					        		</td>
-					      		</tr>
-				    		</c:forEach>
-				    	</tbody>
-					</table>
-				</div>
-				<div class="modal fade" id="myModal">
-			    	<div class="modal-dialog modal-dialog-centered">
-			      		<form action="<c:url value="/hq/paymentType/insert"/>" method="post" id="form" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">등록</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				        		<div class="form-group">
-									<label for="pt_name">회원권명:</label>
-									<input type="text" class="form-control" id="pt_name" name="pt_name">
-								</div>
-								<div class="error error-name"></div>
-				        		<div class="form-group">
-									<label for="pt_type">회원권 유형:</label>
-									<select name="pt_type" class="custom-select form-control">
-										<option value="이용권">이용권</option>
-										<option value="PT">PT</option>
-								    </select>
-								</div>
-								<div class="error error-type"></div>
-								<div class="form-group">
-									<label for="pt_date">기한(달):</label>
-									<input type="text" class="form-control" id="pt_date" name="pt_date">
-								</div>
-								<div class="error error-date"></div>
-								<div class="form-group">
-									<label for="pt_count">PT횟수(회):</label>
-									<input type="text" class="form-control" id="pt_count" name="pt_count">
-								</div>
-								<div class="error error-count"></div>
-								<div class="form-group">
-									<label for="pt_price">가격(원):</label>
-									<input type="text" class="form-control" id="pt_price" name="pt_price">
-								</div>
-								<div class="error error-price"></div>
-								<button class="btn btn-outline-info col-12">회원권 등록</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
-				        	</div>
-			      		</form>
-			    	</div>
-		  		</div>
-		  		<div class="modal fade" id="myModal2">
-			    	<div class="modal-dialog modal-dialog-centered">
-			      		<form action="<c:url value="/hq/paymentType/update"/>" method="post" id="form2" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">수정</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				        		<div class="form-group">
-									<label for="pt_name2">회원권명:</label>
-									<input type="text" class="form-control" id="pt_name2" name="pt_name">
-								</div>
-								<div class="error error-name"></div>
-				        		<div class="form-group">
-									<label for="pt_type2">회원권 유형:</label>
-									<select id="pt_type2" name="pt_type" class="custom-select form-control">
-										<option value="이용권">이용권</option>
-										<option value="PT">PT</option>
-								    </select>
-								</div>
-								<div class="error error-type2"></div>
-								<div class="form-group">
-									<label for="pt_date">기한(달):</label>
-									<input type="text" class="form-control" id="pt_date2" name="pt_date">
-								</div>
-								<div class="error error-date2"></div>
-								<div class="form-group">
-									<label for="pt_count">PT횟수(회):</label>
-									<input type="text" class="form-control" id="pt_count2" name="pt_count">
-								</div>
-								<div class="error error-count2"></div>
-								<div class="form-group">
-									<label for="pt_price">가격(원):</label>
-									<input type="text" class="form-control" id="pt_price2" name="pt_price">
-								</div>
-								<div class="error error-price2"></div>
-								<input type="hidden" id="pt_num2" name="pt_num">
-								<button class="btn btn-outline-warning col-12">회원권 수정</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
-				        	</div>
-			      		</form>
-			    	</div>
-		  		</div>
+			    		</c:forEach>
+			    	</tbody>
+				</table>
 	    	</div>
-	  	</div>
-	</div>
-	
+	    	
+	    	<div class="btn_wrap">
+				<div class="btn_right_wrap">
+					<div class="btn_link_black">
+						<button type="button" class="btn btn_black js-btn-insert" data-toggle="modal" data-target="#myModal">
+							<span>등록<i class="ic_link_share"></i></span>
+						</button>
+						<div class="btn_black_top_line"></div>
+						<div class="btn_black_right_line"></div>
+						<div class="btn_black_bottom_line"></div>
+						<div class="btn_black_left_line"></div>
+					</div>
+				</div>
+			</div>
+	    	
+			<div class="modal fade" id="myModal">
+		    	<div class="modal-dialog modal-dialog-centered">
+		      		<form action="<c:url value="/hq/paymentType/insert"/>" method="post" id="form" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">등록</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+			        		<div class="form-group">
+								<label for="pt_name">회원권명:</label>
+								<input type="text" class="form-control" id="pt_name" name="pt_name">
+							</div>
+							<div class="error error-name"></div>
+			        		<div class="form-group">
+								<label for="pt_type">회원권 유형:</label>
+								<select name="pt_type" class="custom-select form-control">
+									<option value="이용권">이용권</option>
+									<option value="PT">PT</option>
+							    </select>
+							</div>
+							<div class="error error-type"></div>
+							<div class="form-group">
+								<label for="pt_date">기한(달):</label>
+								<input type="text" class="form-control" id="pt_date" name="pt_date">
+							</div>
+							<div class="error error-date"></div>
+							<div class="form-group">
+								<label for="pt_count">PT횟수(회):</label>
+								<input type="text" class="form-control" id="pt_count" name="pt_count">
+							</div>
+							<div class="error error-count"></div>
+							<div class="form-group">
+								<label for="pt_price">가격(원):</label>
+								<input type="text" class="form-control" id="pt_price" name="pt_price">
+							</div>
+							<div class="error error-price"></div>
+							<button class="btn btn-outline-info col-12">회원권 등록</button>
+			        	</div>
+			        	<div class="modal-footer">
+			          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		      		</form>
+		    	</div>
+	  		</div>
+	  		<div class="modal fade" id="myModal2">
+		    	<div class="modal-dialog modal-dialog-centered">
+		      		<form action="<c:url value="/hq/paymentType/update"/>" method="post" id="form2" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">수정</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+			        		<div class="form-group">
+								<label for="pt_name2">회원권명:</label>
+								<input type="text" class="form-control" id="pt_name2" name="pt_name">
+							</div>
+							<div class="error error-name"></div>
+			        		<div class="form-group">
+								<label for="pt_type2">회원권 유형:</label>
+								<select id="pt_type2" name="pt_type" class="custom-select form-control">
+									<option value="이용권">이용권</option>
+									<option value="PT">PT</option>
+							    </select>
+							</div>
+							<div class="error error-type2"></div>
+							<div class="form-group">
+								<label for="pt_date">기한(달):</label>
+								<input type="text" class="form-control" id="pt_date2" name="pt_date">
+							</div>
+							<div class="error error-date2"></div>
+							<div class="form-group">
+								<label for="pt_count">PT횟수(회):</label>
+								<input type="text" class="form-control" id="pt_count2" name="pt_count">
+							</div>
+							<div class="error error-count2"></div>
+							<div class="form-group">
+								<label for="pt_price">가격(원):</label>
+								<input type="text" class="form-control" id="pt_price2" name="pt_price">
+							</div>
+							<div class="error error-price2"></div>
+							<input type="hidden" id="pt_num2" name="pt_num">
+							<button class="btn btn-outline-warning col-12">회원권 수정</button>
+			        	</div>
+			        	<div class="modal-footer">
+			          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		      		</form>
+		    	</div>
+	  		</div>
+    	</section>
+   	</section>
+
 	<script type="text/javascript">
 		// 필수항목 체크
 		let msgRequired = `<span>필수항목입니다.</span>`;
@@ -376,15 +344,15 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 600,
+		    scrollY: 500,
+		    stateSave: true,
+		    stateDuration: 300,
 		    paging: false,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [5], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5], className: "align-content-center"}
+		        { targets: [5], orderable: false }
 		    ]
 		});
 	</script>
 </body>
-</html>

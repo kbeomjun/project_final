@@ -562,8 +562,8 @@ public class AdminController {
 	
 	//지점 문의내역 답변(수정)
 	@PostMapping("/inquiry/update")
-	public String inquiryUpdatePost(Model model, MemberInquiryVO mi) {
-	    String msg = adminService.updateMemberInquiry(mi);
+	public String inquiryUpdatePost(Model model, MemberInquiryVO miVo) {
+	    String msg = adminService.updateMemberInquiry(miVo);
 	    model.addAttribute("url", "/admin/inquiry/list");
 	    model.addAttribute("msg", msg);
 		return "/main/message";
