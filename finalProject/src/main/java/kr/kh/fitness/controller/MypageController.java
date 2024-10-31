@@ -1,5 +1,6 @@
 package kr.kh.fitness.controller;
 
+import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
@@ -293,7 +294,7 @@ public class MypageController {
 	
 	//마이페이지 개인정보수정 시 비밀번호 확인 get
 	@GetMapping("/pwcheck")
-	public String mypagePwCheck(Model model, HttpSession session) {
+	public String mypagePwCheck(Model model, HttpSession session, HttpServletRequest request) {
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    String social_type = (String) session.getAttribute("socialType");
 	    if(social_type != null) {
@@ -311,6 +312,8 @@ public class MypageController {
 			model.addAttribute("url", "/login");	
 			return "/main/message";
 		}
+		
+		request.getSession().setAttribute("pw_check", true);
 		
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();
@@ -407,14 +410,17 @@ public class MypageController {
 	
 	//마이페이지 개인정보수정 post
 	@PostMapping("/info/update")
-	public String mypageInfoUpdate(Model model, MemberVO member, HttpSession session, String birth) {
+	public String mypageInfoUpdate(Model model, MemberVO member, HttpSession session) {
 	    
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date me_birth;
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		Date me_birth;
 		
 		try {
-			me_birth = formatter.parse(birth);
-			member.setMe_birth(me_birth);
+//			System.out.println(member);
+//			if(birth != null) {
+//				me_birth = formatter.parse(birth);
+//				member.setMe_birth(me_birth);
+//			}
 			String msg = clientService.updateMemberInfo(member);
 			
 			MemberVO updatedUser = clientService.getMember(member.getMe_id());
