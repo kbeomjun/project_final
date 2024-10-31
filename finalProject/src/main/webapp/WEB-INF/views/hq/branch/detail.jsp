@@ -192,10 +192,6 @@
 			}
 		}
 		
-		$(document).on("change", "#fileList", function(){
-			displayFileList($("#fileList")[0].files);
-		});
-		
 		const deleteFile = (fileNum) => {
 		    const dataTransfer = new DataTransfer();
 		    let files = $('#fileList')[0].files;
