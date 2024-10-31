@@ -132,21 +132,21 @@
 									</colgroup>
 									<tbody>
 							            <tr>
-											<th scope="col"><label for="mi_title2">제목</label></th>
+											<th scope="col"><label for="mi_title">제목</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_title2" name="mi_title2">
+													<input type="text" class="form-control" id="mi_title2" name="mi_title">
 												</div>
 												<div class="error error-title2"></div>
 							                </td>
 							            </tr>
 										<tr>
 											<th scope="row">
-												<label for="mi_it_name2">유형</label>
+												<label for="mi_it_name">유형</label>
 											</th>
 											<td>
 												<div class="form-group">
-													<select id="mi_it_name2" name="mi_it_name2" class="custom-select form-control">
+													<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
 														<c:forEach items="${itList}" var="it">
 															<option value="${it.it_name}">${it.it_name}</option>
 														</c:forEach>
@@ -156,10 +156,10 @@
 											</td>
 										</tr>
 										<tr>
-											<th scope="col"><label for="mi_content2">내용</label></th>
+											<th scope="col"><label for="mi_content">내용</label></th>
 							                <td>
 							                	<div>
-													<textarea class="form-control" id="mi_content2" name="mi_content2"></textarea>
+													<textarea class="form-control" id="mi_content2" name="mi_content"></textarea>
 												</div>
 												<div class="error error-content2"></div>
 												<input type="hidden" id="mi_num2" name="mi_num">
@@ -285,7 +285,7 @@
 					$('#mi_title2').val(mi.mi_title);
 					$('#mi_content2').summernote('code', mi.mi_content);
 					$('#mi_num2').val(mi.mi_num);
-					$("select[name=mi_it_name2]").val(mi.mi_it_name).prop("selected", true);
+					$("select[name=mi_it_name]").val(mi.mi_it_name).prop("selected", true);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);

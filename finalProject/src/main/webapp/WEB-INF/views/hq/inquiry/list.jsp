@@ -189,55 +189,55 @@
 									</colgroup>
 									<tbody>
 							            <tr>
-											<th scope="col"><label for="mi_title2">제목</label></th>
+											<th scope="col"><label for="mi_title">제목</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_title2" name="mi_title2" readonly>
+													<input type="text" class="form-control" id="mi_title2" name="mi_title" readonly>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_email2">이메일</label></th>
+											<th scope="col"><label for="mi_email">이메일</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_email2" name="mi_email2" readonly>
+													<input type="text" class="form-control" id="mi_email2" name="mi_email" readonly>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_date2">날짜</label></th>
+											<th scope="col"><label for="mi_date">날짜</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_date2" name="mi_date2" readonly>
+													<input type="text" class="form-control" id="mi_date2" name="mi_date" readonly>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_it_name2">유형</label></th>
+											<th scope="col"><label for="mi_it_name">유형</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name2" readonly>
+													<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name" readonly>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_content2">내용</label></th>
+											<th scope="col"><label for="mi_content">내용</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_content2" name="mi_content2" readonly>
+													<input type="text" class="form-control" id="mi_content2" name="mi_content" readonly>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_answer2">답변</label></th>
+											<th scope="col"><label for="mi_answer">답변</label></th>
 							                <td>
 							                	<div>
-													<textarea class="form-control" id="mi_answer2" name="mi_answer2" readonly></textarea>
+													<textarea class="form-control" id="mi_answer2" name="mi_answer" readonly></textarea>
 												</div>
 												<div class="error"></div>
 							                </td>
