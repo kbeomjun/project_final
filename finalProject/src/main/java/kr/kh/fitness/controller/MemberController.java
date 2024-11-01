@@ -1,8 +1,5 @@
 package kr.kh.fitness.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
@@ -11,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -100,57 +96,57 @@ public class MemberController {
 
 	@PostMapping("/login")
 	public String login(MemberVO member, @RequestParam(value = "autologin", required = false) String autologin,
-			Model model, HttpSession session, HttpServletResponse response) {
-		 log.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
-		 //네이버 하고 정보변경 페이지에 연동
-	        try {
-	            // 로그인 서비스 호출
-	            MemberVO user = memberService.login(member);
-	            if (user == null) {
-	                // 로그인 실패 원인에 대한 상세 로그 추가
-	                MemberVO dbUser = memberService.getMemberID(member.getMe_id());
-	                if (dbUser == null) {
-	                    log.warn("로그인 실패: 존재하지 않는 사용자 ID - " + member.getMe_id());
-	                } else {
-	                    log.warn("로그인 실패: 비밀번호 불일치 - 사용자 ID: " + member.getMe_id());
-	                }
+	                    Model model, HttpSession session, HttpServletResponse response) {
+	    log.info("로그인 시도: " + member.getMe_id()); // 로그인 시도 로그
 
-	                model.addAttribute("msg", "없는 아이디거나 잘못 입력하셨습니다");
-	                model.addAttribute("url", "/login");
-	                return "/main/message";
-	            }
-	            
-	            if(user.getMe_authority().equals("REMOVED")) {
-					model.addAttribute("msg", "탈퇴한 회원입니다.");
-					model.addAttribute("url", "/login");
-					
-					return "/main/message";
-				} 
-
-	            log.info("로그인 성공: 사용자 ID - " + user.getMe_id());
-
-	            // 자동 로그인 플래그 설정
-	            boolean isAutoLogin = "true".equals(autologin);
-	            user.setAutoLogin(isAutoLogin);
-
-	            // 세션에 사용자 정보 저장
-	            session.setAttribute("user", user);
-	            log.info("세션에 사용자 정보 저장: " + user);
-
-	            // 자동 로그인 선택 시 쿠키 설정
-	            if (isAutoLogin) {
-	            	memberService.setAutoLoginCookie(user, response);
-	            }
-
-	            model.addAttribute("msg", "로그인을 성공했습니다");
-	            model.addAttribute("url", "/");
-	            log.info("로그인 성공: " + user.getMe_id() + " (자동 로그인: " + isAutoLogin + ")");
-	        } catch (Exception e) {
-	            log.error("로그인 처리 중 오류 발생", e);
-	            model.addAttribute("msg", "로그인 처리 중 오류가 발생했습니다");
+	    try {
+	        // 아이디 존재 여부 확인
+	        if (!memberService.isMemberExist(member.getMe_id())) {
+	            log.warn("로그인 실패: 존재하지 않는 사용자 ID - " + member.getMe_id());
+	            model.addAttribute("msg", "존재하지 않는 아이디거나 잘못된 입력입니다.");
 	            model.addAttribute("url", "/login");
+	            return "/main/message";
 	        }
-	        return "/main/message";
+
+	        // 로그인 서비스 호출
+	        MemberVO user = memberService.login(member);
+	        if (user == null) {
+	            log.warn("로그인 실패: 비밀번호 불일치 - 사용자 ID: " + member.getMe_id());
+	            model.addAttribute("msg", "잘못된 비밀번호입니다.");
+	            model.addAttribute("url", "/login");
+	            return "/main/message";
+	        }
+
+	        if (user.getMe_authority().equals("REMOVED")) {
+	            model.addAttribute("msg", "탈퇴한 회원입니다.");
+	            model.addAttribute("url", "/login");
+	            return "/main/message";
+	        }
+
+	        log.info("로그인 성공: 사용자 ID - " + user.getMe_id());
+
+	        // 자동 로그인 플래그 설정
+	        boolean isAutoLogin = "true".equals(autologin);
+	        user.setAutoLogin(isAutoLogin);
+
+	        // 세션에 사용자 정보 저장
+	        session.setAttribute("user", user);
+	        log.info("세션에 사용자 정보 저장: " + user);
+
+	        // 자동 로그인 선택 시 쿠키 설정
+	        if (isAutoLogin) {
+	            memberService.setAutoLoginCookie(user, response);
+	        }
+
+	        model.addAttribute("msg", "환영합니다, " + user.getMe_id() + "님!");
+	        model.addAttribute("url", "/");
+	        log.info("로그인 성공: " + user.getMe_id() + " (자동 로그인: " + isAutoLogin + ")");
+	    } catch (Exception e) {
+	        log.error("로그인 처리 중 오류 발생", e);
+	        model.addAttribute("msg", "로그인 처리 중 오류가 발생했습니다.");
+	        model.addAttribute("url", "/login");
+	    }
+	    return "/main/message";
 	}
 
 	@GetMapping("/logout")
@@ -219,7 +215,7 @@ public class MemberController {
 			//boolean res = memberDao.insertMember(member);
 			boolean res = memberService.signup(member);
 			if (res) {
-				model.addAttribute("msg", "회원 가입을 했습니다.");
+				model.addAttribute("msg", "회원 가입에 성공했습니다, 해당 정보로 로그인을 시도해주십시오");
 				model.addAttribute("url", "/");
 			} else {
 				model.addAttribute("msg", "회원 가입을 하지 못했습니다.");
@@ -246,6 +242,16 @@ public class MemberController {
         log.info("아이디 중복 체크 시도: " + id);
         boolean res = memberService.checkId(id);
         log.info("아이디 중복 체크 결과: " + id + " - " + (res ? "사용 가능" : "사용 불가"));
+        return res;
+    }
+    
+    //이메일 중복 체크
+    @ResponseBody
+    @GetMapping("/check/email")
+    public boolean checkEmail(@RequestParam("email") String email) {
+        log.info("이메일 중복 체크 시도: " + email);
+        boolean res = memberService.checkEmail(email);
+        log.info("이메일 중복 체크 결과: " + email + " - " + (res ? "사용 가능" : "사용 불가"));
         return res;
     }
     
@@ -287,7 +293,7 @@ public class MemberController {
     @ResponseBody
     @PostMapping("/find/pw")
     public ResponseEntity<String> findPwPost(@RequestParam String id, @RequestParam String email, @RequestParam String phone) {
-        logger.info("비밀번호 찾기 시도: 사용자 ID - " + id + ", 이메일 - " + email + ", 전화번호 - " + phone);
+        
 
         try {
             // 서비스 호출하여 사용자가 입력한 ID, 이메일, 전화번호가 모두 일치하는지 확인
@@ -301,7 +307,6 @@ public class MemberController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("등록된 사용자가 없습니다.");
             }
         } catch (Exception e) {
-            logger.error("비밀번호 찾기 처리 중 오류 발생: " + e.getMessage(), e);
             // 오류 발생 시
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류가 발생했습니다. 다시 시도해 주세요.");
         }

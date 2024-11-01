@@ -48,6 +48,10 @@ public class MemberServiceImp implements MemberService {
         }
         return null; // 비밀번호가 일치하지 않는 경우 로그인 실패
     }
+    @Override
+    public boolean isMemberExist(String id) {
+        return memberDao.selectMember(id) != null; // 아이디가 존재하면 true 반환
+    }
 
     // 회원가입 처리
     @Override
@@ -91,7 +95,13 @@ public class MemberServiceImp implements MemberService {
 	public boolean checkId(String id) {
 		return memberDao.selectMember(id) == null; // 아이디가 존재하지 않으면 true 반환
 	}
-
+	
+	// 이메일 중복 체크
+	@Override
+	public boolean checkEmail(String email) {
+	    return memberDao.selectMemberByEmail(email) == null; // 이메일이 존재하지 않으면 true 반환
+	}
+	
     // 자동 로그인 쿠키 업데이트
 	@Override
 	public void updateMemberCookie(MemberVO user) {
@@ -355,5 +365,4 @@ public class MemberServiceImp implements MemberService {
         response.addCookie(cookie);
         log.info("자동 로그인 쿠키 설정 완료: 쿠키 이름 - me_cookie, 쿠키 값 - " + autoLoginToken);
 	}
-
 }

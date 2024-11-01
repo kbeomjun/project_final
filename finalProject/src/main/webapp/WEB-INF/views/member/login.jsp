@@ -48,10 +48,15 @@
 	                            <label for="id" class="form-label">아이디</label>
 	                            <input type="text" class="form-control" id="id" name="me_id" required />
 	                        </div>
-	                        <div class="mb-3">
-	                            <label for="pw" class="form-label">비밀번호</label>
-	                            <input type="password" class="form-control" id="pw" name="me_pw" required />
-	                        </div>
+	                        <div class="mb-3 position-relative">
+							    <label for="pw" class="form-label">비밀번호</label>
+							    <div class="input-group">
+							        <input type="password" class="form-control" id="pw" name="me_pw" required />
+							        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+							            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon" />
+							        </button>
+							    </div>
+							</div>
 	                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
 	                            <div class="form-check mb-2">
 	                                <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true" />
@@ -106,6 +111,21 @@
         }); // 등록한 리다이렉트uri 입력
         
     }
+</script>
+<script type="text/javascript">
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordField = document.getElementById('pw');
+        var eyeIcon = document.getElementById('eyeIcon');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.src = "<c:url value='/resources/image/icons/eye-slash.svg'/>"; // 닫힌 눈 아이콘
+            eyeIcon.alt = "Hide Password";
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.src = "<c:url value='/resources/image/icons/eye.svg'/>"; // 열린 눈 아이콘
+            eyeIcon.alt = "Show Password";
+        }
+    });
 </script>
 </body>
 </html>

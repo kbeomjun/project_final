@@ -7,6 +7,8 @@ import kr.kh.fitness.model.vo.MemberVO;
 public interface MemberDAO {
 
 	MemberVO selectMember(@Param("me_id") String me_id);
+	
+	MemberVO selectMemberByEmail(@Param("me_email") String me_email);
 
 	boolean insertMember(@Param("m") MemberVO member);
 
@@ -27,4 +29,5 @@ public interface MemberDAO {
 	MemberVO selectMemberByNameAndEmail(@Param("me_name") String name, @Param("me_email") String email);
 
 	MemberVO findMemberByIdEmailPhone(@Param("me_id")String id, @Param("me_email") String email, @Param("me_phone") String phone);
+
 }

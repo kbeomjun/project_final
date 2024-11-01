@@ -34,4 +34,8 @@ public interface MemberService {
 
 	void setAutoLoginCookie(MemberVO user, HttpServletResponse response);
 
+	boolean checkEmail(String email);
+
+	boolean isMemberExist(String me_id);
+
 }

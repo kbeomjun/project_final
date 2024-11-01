@@ -10,6 +10,8 @@
     
     <style>
         .error {
+            margin-top: 10px;
+            font-size: 0.9em;
             color: red;
         }
         .form-control {
@@ -17,7 +19,7 @@
         }
         body {
             background-color: #f0f0f0;
-            padding: 100px 20px; /* 상하 100px, 좌우 20px 간격 */
+            padding: 100px 20px;
         }
         h1 {
             margin-top: 60px;
@@ -35,36 +37,45 @@
         .form-group {
             margin-bottom: 20px;
         }
+        .address-group input {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>회원가입</h1>
     <div class="card">
-        <form action="<c:url value='/signup'/>" method="post" id="form" onsubmit="return validateForm()">
-        	<div class="form-group">
+        <form action="<c:url value='/signup'/>" method="post" id="form" onsubmit="return onSubmitForm()">
+            <div class="form-group">
                 <label for="name">이름:</label>
                 <input type="text" class="form-control" id="name" name="me_name" required>
-                <div id="nameError" class="error" style="display: none;">필수 입력 사항입니다</div>
             </div>
             <div class="form-group">
                 <label for="id">아이디:</label>
                 <input type="text" class="form-control" id="id" name="me_id" required>
-                <div id="idError" class="error" style="display: none;">필수 입력 사항입니다</div>
             </div>
             <div class="form-group">
-                <label for="pw">비밀번호:</label>
-                <input type="password" class="form-control" id="pw" name="me_pw" required>
-                <div id="pwError" class="error" style="display: none;">필수 입력 사항입니다</div>
-            </div>
+			    <label for="pw">비밀번호:</label>
+			    <div class="input-group">
+			        <input type="password" class="form-control" id="pw" name="me_pw" required>
+			        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw', 'eyeIcon1')">
+			            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon1" />
+			        </button>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label for="pw2">비밀번호 확인:</label>
+			    <div class="input-group">
+			        <input type="password" class="form-control" id="pw2" name="me_pw2" required>
+			        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw2', 'eyeIcon2')">
+			            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon2" />
+			        </button>
+			    </div>
+			</div>
             <div class="form-group">
-                <label for="pw2">비밀번호 확인:</label>
-                <input type="password" class="form-control" id="pw2" name="me_pw2" required>
-                <div id="pw2Error" class="error" style="display: none;">필수 입력 사항입니다</div>
-            </div>
-           <div class="form-group">
                 <label for="email">이메일:</label>
                 <div style="display: flex; align-items: center;">
-                    <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" required style="flex: 6; margin-right: 10px;">
+                    <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" style="flex: 6; margin-right: 10px;" required>
                     <span style="margin-right: 10px;">@</span>
                     <select class="form-control" id="me_emailDomain" name="me_emailDomain" style="flex: 4; margin-right: 10px;">
                         <option value="">선택</option>
@@ -76,231 +87,314 @@
                     </select>
                     <input type="text" class="form-control" id="me_customEmailDomain" name="me_customEmailDomain" placeholder="도메인 직접 입력" style="display: none; flex: 4;">
                 </div>
-                <p id="check-email" class="error"></p>
+                <p id="check-email" class="error" style="margin-bottom: 10px;"></p>
             </div>
             <div class="form-group">
-                <label for="gender">성별:</label>
-                <select class="form-control" id="gender" name="me_gender">
-                    <option value="">선택없음</option>
-                    <option value="남자">남성</option>
-                    <option value="여자">여성</option>
-                </select>
+                <label for="gender" style="display: block; margin-bottom: 8px;">성별:</label>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div>
+                        <input type="radio" id="male" name="me_gender" value="남자" required>
+                        <label for="male">남성</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="female" name="me_gender" value="여자">
+                        <label for="female">여성</label>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-			    <label for="br_address">주소:</label>
-			    <div style="display: flex; align-items: center;">
-			        <input type="text" class="form-control" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width: 150px; margin-right: 10px;" required/>
-			        <input class="btn btn-outline-dark" type="button" onclick="addressPostcode()" value="우편번호 찾기"/>
-			    </div>
-			    <br/>
-			    <input type="text" class="form-control" id="me_address" name="me_address" placeholder="주소" required/>
-			    <br/>
-			    <input type="text" class="form-control" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" required/>
-			    <br/>
-			    <input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목"/>
-			</div>
-		    <div class="form-group" id="phoneGroup">
-		        <label for="phone">전화번호:</label>
-		        <div style="display: flex; align-items: center;">
-		            <input type="tel" class="form-control" id="phone1" maxlength="3" placeholder="000"/>
-		            <span>-</span>
-		            <input type="tel" class="form-control" id="phone2" maxlength="4" placeholder="0000"/>
-		            <span>-</span>
-		            <input type="tel" class="form-control" id="phone3" maxlength="4" placeholder="0000"/>
-		        </div>
-		        <input type="hidden" id="me_phone" name="me_phone">
-		        <div id="phoneError" class="error" style="display: none;">전화번호를 모두 입력해주세요.</div>
-		    </div>
-	        <div class="form-group birth-group">
-			    <label for="birth">생년월일:</label>
-			    <input type="date" class="form-control" id="birth" name="me_birth" required
-			    	max="<%= java.time.LocalDate.now().minusYears(12) %>" min="<%= java.time.LocalDate.now().minusYears(100) %>">
-			</div>
+            <div class="form-group address-group">
+                <label for="br_address">주소:</label>
+                <div style="display: flex; align-items: center;">
+                    <input type="text" class="form-control" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width: 150px; margin-right: 10px;" readonly/>
+                    <input class="btn btn-outline-dark" type="button" onclick="addressPostcode()" value="우편번호 찾기"/>
+                </div>
+                <input type="text" class="form-control" id="me_address" name="me_address" placeholder="주소" readonly/>
+                <input type="text" class="form-control" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소"/>
+                <input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" readonly/>
+            </div>
+            <div class="form-group" id="phoneGroup">
+                <label for="phone">전화번호:</label>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <select class="form-control phone-select" id="phone1" name="phone1">
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                    </select>
+                    <span>-</span>
+                    <input type="tel" class="form-control phone-input" id="phone2" name="phone2" maxlength="4" placeholder="0000">
+                    <span>-</span>
+                    <input type="tel" class="form-control phone-input" id="phone3" name="phone3" maxlength="4" placeholder="0000">
+                </div>
+                <input type="hidden" id="me_phone" name="me_phone">
+            </div>
+            <div class="form-group birth-group">
+                <label for="birth">생년월일:</label>
+                <input type="date" class="form-control" id="birth" name="me_birth"
+                    max="<%= java.time.LocalDate.now().minusYears(12) %>" min="<%= java.time.LocalDate.now().minusYears(100) %>">
+            </div>
             <button type="submit" class="btn btn-outline-success col-12">회원가입</button>
         </form>
-        <!-- 에러 메시지 표시 부분 -->
         <c:if test="${not empty errorMessage}">
-            <div class="error">${errorMessage}</div>
+            <div class="error" style="margin-bottom: 10px;">${errorMessage}</div>
         </c:if>
     </div>
 </body>
-	<script type="text/javascript">
-		var flag = false;
-		
-		$('#form').validate({
-			rules : {
-				me_id : {
-					required : true,
-					regex : /^\w{4,10}$/
-				},
-				me_pw : {
-					required : true,
-					regex : /^[a-zA-Z0-9!@#$]{4,15}$/
-				},
-				me_pw2 : {
-					equalTo : pw
-				},
-				me_email : {
-					required : true,
-					regex : /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/
-				}
-			},
-			messages : {
-				me_name : {
-					required : '필수 항목입니다.'
-				},
-				me_id : {
-					required : '필수 항목입니다.',
-					regex : '아이디는 영어, 숫자만 가능하며, 4~10자이어야 합니다.'
-				},
-				me_pw : {
-					required : '필수 항목입니다.',
-					regex : '아이디는 영어, 숫자, 특수문자(!@#$)만 가능하며, 4~15자이어야 합니다.'
-				},
-				me_pw2 : {
-					equalTo : '비번과 일치하지 않습니다.'
-				},
-				me_email : {
-					required : '필수 항목입니다.',
-					email : '이메일 형식이 아닙니다'
-				}
-			},
-			submitHandler : function(){
-				var id = $("#id").val();
-				var res = checkId(id);
-				if(res == 0){
-					displayCheckId(res);
-					alert('이미 사용 중인 아이디입니다.');
-					return false;
-				}
-				//
-				if(!setPhoneNumber()){
-					alert('폰번호가 맞...')
-					return false;
-				}
-				
-				return true;
-			}
-		});
-		$.validator.addMethod('regex', function(value, element, regex){
-			var re = new RegExp(regex);
-			return this.optional(element) || re.test(value);
-		}, "정규표현식을 확인하세요.");
-	</script>
-	<script type="text/javascript">
-	    // 아이디 중복 확인
-	    $("#id").keyup(function() {
-	        // 입력된 아이디 값을 가져옴
-	        var id = $(this).val();
-	        // 아이디를 서버에 전달해서 사용 가능한지 확인
-	        var result = checkId(id);
-	        displayCheckId(result);
-	    });
-	
-	    /**
-	    @return 1이면 사용 가능, 0이면 사용 불가능, -1이면 전송하지 않음
-	    */
-	    function checkId(id) {
-	        // 정규표현식 확인
-	        var regex = /^\w{4,10}$/;
-	        if (!regex.test(id)) {
-	            return -1;
-	        }
-	        var res = 0;
-	        // 맞으면 서버에 확인 요청
-	        $.ajax({
-	            async: false,
-	            url: '<c:url value="/check/id"/>',
-	            type: 'get',
-	            data: {
-	                id: id
-	            },
-	            success: function(data) {
-	                res = data ? 1 : 0;
-	            },
-	            error: function(jqXHR, textStatus, errorThrown) {
-	                // 에러 처리
-	            }
-	        });
-	        return res;
-	    }
-	
-	    function displayCheckId(result) {
-	        $('#check-id').remove();
-	
-	        if (result == 1) {
-	            var str = `<label id="check-id" class="id-ok error" style="color: green;">사용 가능한 아이디입니다.</label>`;
-	            $('#id').after(str);
-	        } else if (result == 0) {
-	            var str = `<label id="check-id" class="error" style="color: red;">이미 사용중인 아이디입니다.</label>`;
-	            $('#id').after(str);
-	        }
-	    }
-	</script>
-	
-	<script type="text/javascript">
-	    // 전화번호를 하나의 필드로 결합하여 전송
-	    function setPhoneNumber(){
-	    	var phone1 = document.getElementById('phone1').value;
-	        var phone2 = document.getElementById('phone2').value;
-	        var phone3 = document.getElementById('phone3').value;
-	        
-	        // 전화번호 조합
-	        var fullPhoneNumber = phone1 + phone2 + phone3;
-	        document.getElementById('me_phone').value = fullPhoneNumber; // 결합된 전화번호를 hidden input에 설정
-	
-	        // 추가 유효성 검사 (필요할 경우)
-	        if (!phone1 || !phone2 || !phone3) {
-	            document.getElementById('phoneError').style.display = 'block';
-	            return false; // 폼 제출 방지
-	        } else {
-	            document.getElementById('phoneError').style.display = 'none';
-	        }
-	
-	        return true; // 유효성 검사가 통과하면 제출
-	    }
-	</script>
-	
-	<script type="text/javascript">
-        // 이메일 도메인 선택 변경 시 처리
-       document.getElementById('me_emailDomain').addEventListener('change', function() {
-           var customDomainInput = document.getElementById('me_customEmailDomain');
-           if (this.value === 'custom') {
-               customDomainInput.style.display = 'block';
-               customDomainInput.required = true;
-           } else {
-               customDomainInput.style.display = 'none';
-               customDomainInput.value = '';
-               customDomainInput.required = false;
-           }
-       });
+<script type="text/javascript">
+    function togglePassword(inputId, iconId) {
+        var passwordField = document.getElementById(inputId);
+        var eyeIcon = document.getElementById(iconId);
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.src = "<c:url value='/resources/image/icons/eye-slash.svg'/>"; // 닫힌 눈 아이콘
+            eyeIcon.alt = "Hide Password";
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.src = "<c:url value='/resources/image/icons/eye.svg'/>"; // 열린 눈 아이콘
+            eyeIcon.alt = "Show Password";
+        }
+    }
+</script>
+<script type="text/javascript">
+    var flag = false;
+    
+    $('#form').validate({
+    	groups: {
+            phoneGroup: "phone2 phone3"
+        },
+        rules: {
+            me_id: {
+                required: true,
+                regex: /^\w{4,10}$/
+            },
+            me_pw: {
+                required: true,
+                regex: /^[a-zA-Z0-9!@#$]{4,15}$/
+            },
+            me_pw2: {
+                equalTo: "#pw"
+            },
+            me_emailId: {
+                required: true
+            },
+            me_gender: {
+                required: true
+            },
+            me_detailAddress: {
+                required: true
+            },
+            phone2: {
+                required: true,
+                minlength: 4,
+                maxlength: 4
+            },
+            phone3: {
+                required: true,
+                minlength: 4,
+                maxlength: 4
+            },
+            me_birth: {
+                required: true
+            }
+        },
+        messages: {
+            me_name: {
+                required: '필수 항목입니다.'
+            },
+            me_id: {
+                required: '필수 항목입니다.',
+                regex: '아이디는 영어, 숫자만 가능하며, 4~10자이어야 합니다.'
+            },
+            me_pw: {
+                required: '필수 항목입니다.',
+                regex: '비밀번호는 영어, 숫자, 특수문자(!@#$)만 가능하며, 4~15자이어야 합니다.'
+            },
+            me_pw2: {
+                required: '필수 항목입니다.',
+                equalTo: '비밀번호와 일치하지 않습니다.'
+            },
+            me_emailId: {
+                required: '이메일을 입력해주세요.',
+                email: '이메일 형식이 아닙니다.'
+            },
+            me_gender: {
+                required: '성별을 선택해주세요.'
+            },
+            me_detailAddress: {
+                required: '상세주소를 입력해주세요.'
+            },
+            phone2: {
+                required: '전화번호를 입력해주세요.',
+                minlength: '정확한 전화번호를 입력하여야 합니다.',
+                maxlength: '정확한 전화번호를 입력하여야 합니다.'
+            },
+            phone3: {
+                required: '전화번호를 입력해주세요.',
+                minlength: '정확한 전화번호를 입력하여야 합니다.',
+                maxlength: '정확한 전화번호를 입력하여야 합니다.'
+            },
+            me_birth: {
+                required: '생년월일을 선택해주세요.'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr("name") === "phone2" || element.attr("name") === "phone3") {
+                error.appendTo("#phoneGroup"); // phoneGroup 영역에 한 번만 에러 메시지 출력
+            } else {
+                error.appendTo(element.closest('.form-group'));
+            }
+        }
+    });
+    $.validator.addMethod('regex', function(value, element, regex) {
+        var re = new RegExp(regex);
+        return this.optional(element) || re.test(value);
+    }, "정규표현식을 확인하세요.");
+</script>
 
-       // 폼 제출 시 이메일을 하나의 필드로 결합하여 숨겨진 필드에 저장
-       function combineEmail() {
-           const emailId = document.getElementById("me_emailId").value;
-           const emailDomain = document.getElementById("me_emailDomain").value === 'custom' ? 
-                               document.getElementById("me_customEmailDomain").value : 
-                               document.getElementById("me_emailDomain").value;
-           console.log(document.getElementById("me_emailDomain").value === 'custom')                    
-           const emailField = document.createElement("input");
-           emailField.setAttribute("type", "hidden");
-           emailField.setAttribute("name", "me_email");
-           emailField.setAttribute("value", emailId + "@" + emailDomain);
-           document.getElementById("form").appendChild(emailField);
-       }
+<script type="text/javascript">
+    // 아이디 중복 확인
+    $("#id").keyup(function() {
+        var id = $(this).val();
+        var result = checkId(id);
+        displayCheckId(result);
+    });
 
-       document.getElementById("form").onsubmit = combineEmail;
-    </script>
-	
-	<script>
+    function checkId(id) {
+        var regex = /^\w{4,10}$/;
+        if (!regex.test(id)) {
+            return -1;
+        }
+        var res = 0;
+        $.ajax({
+            async: false,
+            url: '<c:url value="/check/id"/>',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                res = data ? 1 : 0;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return res;
+    }
+
+    function displayCheckId(result) {
+        $('.form-group .error').not('#genderError').remove();
+
+        if (result == 1) {
+            var str = `<label id="check-id" class="id-ok error" style="color: green;">사용 가능한 아이디입니다.</label>`;
+            $('#id').after(str);
+        } else if (result == 0) {
+            var str = `<label id="check-id" class="error" style="margin-bottom: 10px; color: red;">이미 사용중인 아이디입니다.</label>`;
+            $('#id').after(str);
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var debounceTimer; // 디바운스 타이머 변수
+
+    // 이메일 입력란에서 입력할 때마다 중복 확인
+    $("#me_emailId, #me_emailDomain, #me_customEmailDomain").on("input", function() {
+        clearTimeout(debounceTimer); // 이전 타이머 제거
+
+        debounceTimer = setTimeout(function() {
+            var emailId = $("#me_emailId").val();
+            var emailDomain = $("#me_emailDomain").val() === "custom" ? $("#me_customEmailDomain").val() : $("#me_emailDomain").val();
+            
+            // 이메일 입력란이 비어있으면 중복 체크하지 않고 종료
+            if (!emailId || !emailDomain) {
+                $('#check-email').remove(); // 기존의 중복 체크 메시지 제거
+                return;
+            }
+
+            // 이메일 중복 체크
+            var email = emailId + "@" + emailDomain;
+            var result = checkEmail(email);
+            displayCheckEmail(result);
+        }, 500); // 500ms 후에 중복 체크 실행
+    });
+
+    function checkEmail(email) {
+        var res = 0;
+        $.ajax({
+            async: false,
+            url: '<c:url value="/check/email"/>',
+            type: 'get',
+            data: {
+                email: email
+            },
+            success: function(data) {
+                res = data ? 1 : 0;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return res;
+    }
+
+    function displayCheckEmail(result) {
+        // 기존 에러 메시지 제거
+        $('#check-email').remove();
+
+        // 에러 메시지 생성
+        var message;
+        if (result == 1) {
+            message = `<label id="check-email" class="email-ok error" style="color: green;">사용 가능한 이메일입니다.</label>`;
+        } else if (result == 0) {
+            message = `<label id="check-email" class="error" style="margin-bottom: 10px; color: red;">이미 사용중인 이메일입니다.</label>`;
+        }
+        
+        // 이메일 입력란 아래에 에러 메시지 추가
+        $('#me_emailId').closest('.form-group').append(message);
+    }
+</script>
+
+<script type="text/javascript">
+    function setPhoneNumber() {
+        var phone1 = document.getElementById('phone1').value;
+        var phone2 = document.getElementById('phone2').value;
+        var phone3 = document.getElementById('phone3').value;
+
+        // 전화번호 필드의 값 설정
+        var fullPhoneNumber = phone1 + phone2 + phone3;
+        document.getElementById('me_phone').value = fullPhoneNumber;
+    }
+
+    function combineEmail() {
+        const emailId = document.getElementById("me_emailId").value;
+        const emailDomain = document.getElementById("me_emailDomain").value === 'custom' ? 
+                            document.getElementById("me_customEmailDomain").value : 
+                            document.getElementById("me_emailDomain").value;
+        
+        // 이메일 필드 설정
+        const emailField = document.createElement("input");
+        emailField.setAttribute("type", "hidden");
+        emailField.setAttribute("name", "me_email");
+        emailField.setAttribute("value", emailId + "@" + emailDomain);
+        document.getElementById("form").appendChild(emailField);
+    }
+
+    function onSubmitForm() {
+        setPhoneNumber();  // 전화번호 설정
+        combineEmail();    // 이메일 설정
+        return true;       // 폼 제출 허용
+    }
+</script>
+
+<script>
     function addressPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 우편번호와 주소 데이터를 가져옵니다.
-                var postcode = data.zonecode; // 우편번호
-                var address = data.roadAddress || data.jibunAddress; // 도로명 주소나 지번 주소
+                var postcode = data.zonecode;
+                var address = data.roadAddress || data.jibunAddress;
 
-                // 참고항목 (extraAddress) 처리
                 var extraAddress = ''; 
                 if (data.bname !== '' && data.buildingName !== '') {
                     extraAddress = data.bname + ', ' + data.buildingName;
@@ -310,15 +404,13 @@
                     extraAddress = data.buildingName;
                 }
 
-                // 우편번호와 주소를 각각의 input 필드에 자동으로 채웁니다.
                 document.getElementById('me_postcode').value = postcode;
                 document.getElementById('me_address').value = address;
                 document.getElementById('me_extraAddress').value = extraAddress;
 
-                // 상세주소 입력란으로 포커스 이동
                 document.getElementById('me_detailAddress').focus();
             }
         }).open();
     }
-	</script>
+</script>
 </html>

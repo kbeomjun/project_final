@@ -33,7 +33,6 @@ import kr.kh.fitness.model.vo.RefundVO;
 import kr.kh.fitness.model.vo.ReviewPostVO;
 import kr.kh.fitness.service.ClientService;
 import kr.kh.fitness.service.MemberService;
-import kr.kh.fitness.service.MemberServiceImp;
 import kr.kh.fitness.service.SingleSignOnService;
 
 @Controller

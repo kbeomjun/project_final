@@ -57,6 +57,9 @@
   <select id="searchUser" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>
+  <select id="selectMemberByEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
+    SELECT * FROM member WHERE me_email = #{me_email}
+  </select>
   <select id="selectMemberByCookie" resultType="kr.kh.fitness.model.vo.MemberVO">
   	SELECT * from member WHERE me_cookie = #{me_cookie} AND me_limit > now()
   </select>
