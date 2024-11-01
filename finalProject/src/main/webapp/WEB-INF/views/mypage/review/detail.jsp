@@ -77,7 +77,7 @@
 						</table>
 						
 						<div class="d-flex justify-content-between">
-							<a href="<c:url value="/mypage/review/list"/>" class="btn btn-outline-info">목록</a>
+							<a href="<c:url value="/mypage/review/list"/>" class="btn btn_skyblue">목록</a>
 							
 							<div>
 								<c:if test="${review.pa_me_id eq me_id }">

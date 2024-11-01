@@ -49,7 +49,7 @@
 				</div>
 				<div class="login_right_wrap" id="skipnav_target">
 					<div class="login_prev_wrap">
-						<a href="" class="login_prev">Return Home</a>
+						<a href="" class="login_prev"><span>Return Home</span></a>
 					</div>
 					<div class="login_group">
 						<div class="login">
@@ -61,7 +61,10 @@
 								</div>
 								<div class="login_form_group">
 									<label for="pw" class="login_label">Password</label>
-									<input type="password" class="login_input" id="pw" name="me_pw" placeholder="Please write your Password." required/>
+									<div class="password_wrap">
+										<input type="password" class="login_input" id="pw" name="me_pw" placeholder="Please write your Password." required/>
+										<button type="button" id="togglePassword" class="btn btn_password_visibility"><i class="ic_eyes"></i></button>
+									</div>
 								</div>
 								<!-- sns login button -->
 								<div class="sns_login_wrap">

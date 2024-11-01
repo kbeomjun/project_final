@@ -148,7 +148,8 @@
 			    }
 			    
 			    function renderRefundDetail(refund) {
-			        let html = '<table class="table text-center">';
+			        let html = '<table class="table table_center">';
+			        html += '<colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>';
 			        html += '<thead><tr><th>환불날짜</th><th>환불비율</th><th>환불금액</th><th>환불사유</th></tr></thead><tbody>';
 			        
 			        if (refund) {

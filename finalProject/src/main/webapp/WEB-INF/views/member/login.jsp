@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
- 
         <div class="login_wrap">
             <div class="login_content">
                 <div class="login_left_wrap">
@@ -73,13 +72,13 @@
         Kakao.isInitialized();
         
         $('#autologin').change(function() {
-        	var isChecked = $(this).is(':checked') ? 1 : 0; 
+            var isChecked = $(this).is(':checked') ? 1 : 0; 
             
             $.ajax({
                 url: '<c:url value="/oauth/autoLogin"/>',
                 type: 'POST',
                 data: {
-                	autoLogin: isChecked
+                    autoLogin: isChecked
                 }
             });
         });
@@ -91,10 +90,8 @@
         }); // 등록한 리다이렉트uri 입력
         
     }
-</script>
 
-<!-- 비밀번호 보이기/숨기기 -->
-<script type="text/javascript">
+    // 비밀번호 보이기/숨기기
     document.getElementById('togglePassword').addEventListener('click', function() {
         var passwordField = document.getElementById('pw');
         var eyeIcon = document.getElementById('eyeIcon');
