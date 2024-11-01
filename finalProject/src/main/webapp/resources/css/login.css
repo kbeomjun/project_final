@@ -123,10 +123,38 @@
 	color: #333;
 }
 .login_input{
+	width: 100%;
 	border: none;
 	border-bottom: 1px solid #BDBDBD;
 	padding: 5px 2px;
 	color: #111;
+}
+.password_wrap{
+	position: relative;
+}
+.btn_password_visibility{
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: initial;
+    height: initial;
+    border: none;
+    padding: 5px;
+    background: transparent;
+    transform: translateY(-50%);
+}
+.ic_eyes{
+	display: inline-block;
+	width: 16px;
+	height: 17px;
+	background-image: url("../image/icon/ic_eyes.svg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	transition: .3s;
 }
 
 /* sns */
