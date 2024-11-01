@@ -53,7 +53,6 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter {
             	memberService.clearLoginCookie(user.getMe_id());
             }
         }
-
         return true;
     }
 }

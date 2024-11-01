@@ -65,65 +65,66 @@
         </div>
     </div>
     <script type="text/javascript">
-        $(document).ready(function () {
-            // 아이디 찾기 버튼 클릭 이벤트
-            $('.btn-find-id').click(function () {
-                var name = $('#name').val();
-                var email = $('#email').val();
+    $(document).ready(function () {
+        // 아이디 찾기 버튼 클릭 이벤트
+        $('.btn-find-id').click(function () {
+            var name = $('#name').val();
+            var email = $('#email').val();
 
-                // 이름과 이메일 입력값이 비어있는지 확인
-                if (name === '' || email === '') {
-                    alert('이름과 이메일을 모두 입력하세요.');
-                    return;
-                }
+            // 이름과 이메일 입력값이 비어있는지 확인
+            if (name === '' || email === '') {
+                alert('이름과 이메일을 모두 입력하세요.');
+                return;
+            }
 
-                // 로딩 모달 표시
-                var str = `
-                    <div class="modal-container">
-                        <div class="modal-email">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <p class="mt-3">이메일 전송 중입니다. 잠시만 기다려주세요.</p>
+            // 로딩 모달 표시
+            var str = `
+                <div class="modal-container">
+                    <div class="modal-email">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
+                        <p class="mt-3">이메일 전송 중입니다. 잠시만 기다려주세요.</p>
                     </div>
-                `;
-                $('body').append(str);
+                </div>
+            `;
+            $('body').append(str);
 
-                // 서버로 아이디 찾기 요청
-                $.ajax({
-                    async: true, // 비동기 방식으로 요청 (기본값)
-                    url: '<c:url value="/find/id"/>', // 아이디 찾기 URL로 POST 요청 전송
-                    type: 'post',
-                    data: { name: name, email: email }, // 서버로 전송할 데이터 (이름과 이메일)
-                    dataType: 'json', // 서버로부터의 응답 형식 지정 (JSON)
-                    success: function (data) {
-                        console.log("서버 응답 데이터: ", data); // 서버 응답 데이터 콘솔에 출력
-                        $('.modal-container').remove(); // 로딩 모달 제거
-                        
-                        if (data && data.success) {
-                            // 서버가 응답한 결과가 성공일 경우
-                            console.log("아이디 찾기 성공"); // 성공 로그 출력
-                            alert("아이디가 전송됐습니다."); // 성공 알림창
-                        } else {
-                            // 서버가 응답한 결과가 실패일 경우
-                            console.log("아이디 찾기 실패: 잘못된 이름 또는 이메일"); // 실패 로그 출력
-                            alert("잘못된 이름 또는 이메일입니다.");
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("AJAX 요청 실패: ", textStatus, errorThrown); // 에러 메시지 콘솔에 출력
-                        $('.modal-container').remove(); // 로딩 모달 제거
-                        alert("아이디 찾기에 실패했습니다."); // 사용자에게 실패 메시지 표시
+            // 서버로 아이디 찾기 요청
+            $.ajax({
+                async: true, // 비동기 방식으로 요청 (기본값)
+                url: '<c:url value="/find/id"/>', // 아이디 찾기 URL로 POST 요청 전송
+                type: 'post',
+                data: { me_name: name, me_email: email }, // 서버로 전송할 데이터 (이름과 이메일)
+                dataType: 'json', // 서버로부터의 응답 형식 지정 (JSON)
+                success: function (data) {
+                    console.log("서버 응답 데이터: ", data); // 서버 응답 데이터 콘솔에 출력
+                    $('.modal-container').remove(); // 로딩 모달 제거
+                    
+                    if (data && data.success) {
+                        // 서버가 응답한 결과가 성공일 경우
+                        console.log("아이디 찾기 성공"); // 성공 로그 출력
+                        alert("아이디가 전송됐습니다."); // 성공 알림창
+                    } else {
+                        // 서버가 응답한 결과가 실패일 경우
+                        console.log("아이디 찾기 실패: 잘못된 이름 또는 이메일"); // 실패 로그 출력
+                        alert("잘못된 이름 또는 이메일입니다.");
                     }
-                });
-            });
-
-            // 로그인 페이지로 이동 버튼 클릭 이벤트
-            $('.btn-go-login').click(function () {
-                window.location.href = '<c:url value="/login"/>'; // 로그인 페이지로 이동
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX 요청 실패: ", textStatus, errorThrown); // 에러 메시지 콘솔에 출력
+                    $('.modal-container').remove(); // 로딩 모달 제거
+                    alert("아이디 찾기에 실패했습니다."); // 사용자에게 실패 메시지 표시
+                }
             });
         });
-    </script>
+
+        // 로그인 페이지로 이동 버튼 클릭 이벤트
+        $('.btn-go-login').click(function () {
+            window.location.href = '<c:url value="/login"/>'; // 로그인 페이지로 이동
+        });
+    });
+</script>
+
 </body>
 </html>

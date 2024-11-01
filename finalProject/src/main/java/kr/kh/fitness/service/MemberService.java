@@ -26,7 +26,7 @@ public interface MemberService {
 
 	MemberVO loginSns(String sns, String id);
 
-	boolean findPw(String id);
+	boolean findPwByDetails(String id, String email, String phone);
 
 	String findId(String name, String email);
 
@@ -34,6 +34,10 @@ public interface MemberService {
 
 	void setAutoLoginCookie(MemberVO user, HttpServletResponse response);
 
+	boolean checkEmail(String email);
+
+	boolean isMemberExist(String me_id);
+	
 	boolean updateSocialConnection(String me_id, String socialId, String socialType);
 
 	MemberVO getMember(String me_id);

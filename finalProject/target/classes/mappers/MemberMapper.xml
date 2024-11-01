@@ -57,6 +57,9 @@
   <select id="searchUser" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member WHERE me_id = #{me_id}
   </select>
+  <select id="selectMemberByEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
+    SELECT * FROM member WHERE me_email = #{me_email}
+  </select>
   <select id="selectMemberByCookie" resultType="kr.kh.fitness.model.vo.MemberVO">
   	SELECT * from member WHERE me_cookie = #{me_cookie} AND me_limit > now()
   </select>
@@ -113,9 +116,14 @@
   </update>
   <select id="selectMemberByNameAndEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member
-    WHERE me_name = #{name} AND me_email = #{email}
+    WHERE me_name = #{me_name} AND me_email = #{me_email}
   </select>
-  
+  <select id="findMemberByIdEmailPhone" resultType="kr.kh.fitness.model.vo.MemberVO">
+    SELECT * FROM member
+    WHERE me_id = #{me_id}
+    AND me_email = #{me_email}
+    AND me_phone = #{me_phone}
+  </select>
   <update id="updateSocialToKaKao">
   	update member set me_kakaoUserId = #{socialId} where me_id = #{me_id}
   </update>

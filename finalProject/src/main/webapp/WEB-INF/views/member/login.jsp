@@ -60,31 +60,46 @@
 							        <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
 							        <label class="form-check-label" for="autologin">자동 로그인</label>
 							    </div>
-							    <div>
-							        <a href="<c:url value='/find/id' />" class="text-decoration-none me-3">아이디 찾기</a>
-							        <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
-							    </div>
-							    <button type="submit" class="btn btn-success w-100">로그인</button>
 							</div>
-						</form>
-					</div>
-					<div class="card-footer text-center">
-						<a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
-					</div>
-
-					<!-- kakao button -->
-					<div class="col-lg-12 text-center mt-3">
-						<a href=#> <img alt="카카오로그인"
-							src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>"
-							onclick="loginWithKakao()">
-						</a>
-						<a href="${naverApiUrl }"><img alt="네이버로그인" width ="180" height="45" src="<c:url value='/resources/image/naver/small_g_in.png'/>"/></a>
-					</div>
-
-				</div>
-			</div>
-		</div>
+	                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+	                            <div class="form-check mb-2">
+	                                <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true" />
+	                                <label class="form-check-label" for="autologin">자동 로그인</label>
+	                            </div>
+	                            <div class="d-flex gap-2 mb-2">
+	                                <a href="<c:url value='/find/id' />" class="text-decoration-none">아이디 찾기</a>
+	                                <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
+	                            </div>
+	                        </div>
+	
+	                        <!-- 로그인 버튼 -->
+	                        <button type="submit" class="btn btn-success w-100 mb-3">로그인</button>
+	
+	                        <!-- 소셜 로그인 버튼들 -->
+	                        <div class="d-flex justify-content-between gap-2">
+	                            <a href="#" class="d-flex align-items-center justify-content-center border rounded"
+	                               style="width: 48%; height: 45px;" onclick="loginWithKakao()">
+	                                <img alt="카카오로그인"
+	                                     src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>" 
+	                                     style="max-height: 100%;" />
+	                            </a>
+	                            <a href="${naverApiUrl}" class="d-flex align-items-center justify-content-center border rounded"
+	                               style="width: 48%; height: 45px;">
+	                                <img alt="네이버로그인" 
+	                                     src="<c:url value='/resources/image/naver/small_g_in.png'/>" 
+	                                     style="max-height: 100%;" />
+	                            </a>
+	                        </div>
+	                    </form>
+	                </div>
+	                <div class="card-footer text-center">
+	                    <a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</div>
+
 <!-- 카카오 로그인 -->
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
 
@@ -112,4 +127,23 @@
         }); // 등록한 리다이렉트uri 입력
         
     }
-    </script>
+</script>
+
+<!-- 비밀번호 보이기/숨기기 -->
+<script type="text/javascript">
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordField = document.getElementById('pw');
+        var eyeIcon = document.getElementById('eyeIcon');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.src = "<c:url value='/resources/image/icons/eye-slash.svg'/>"; // 닫힌 눈 아이콘
+            eyeIcon.alt = "Hide Password";
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.src = "<c:url value='/resources/image/icons/eye.svg'/>"; // 열린 눈 아이콘
+            eyeIcon.alt = "Show Password";
+        }
+    });
+</script>
+</body>
+</html>
