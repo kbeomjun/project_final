@@ -93,7 +93,7 @@
             // 서버로 아이디 찾기 요청
             $.ajax({
                 async: true, // 비동기 방식으로 요청 (기본값)
-                url: '/find/id', // 아이디 찾기 URL로 POST 요청 전송
+                url: '<c:url value="/find/id"/>', // 아이디 찾기 URL로 POST 요청 전송
                 type: 'post',
                 data: { me_name: name, me_email: email }, // 서버로 전송할 데이터 (이름과 이메일)
                 dataType: 'json', // 서버로부터의 응답 형식 지정 (JSON)

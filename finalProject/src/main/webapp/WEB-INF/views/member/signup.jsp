@@ -142,7 +142,6 @@
         </c:if>
     </div>
 </body>
-
 <script type="text/javascript">
     function togglePassword(inputId, iconId) {
         var passwordField = document.getElementById(inputId);
@@ -202,6 +201,11 @@
             me_emailId: {
                 required: true
             },
+            me_customEmailDomain: {
+                required: function () {
+                    return $('#me_emailDomain').val() === "custom";
+                }
+            },
             me_gender: {
                 required: true
             },
@@ -242,6 +246,9 @@
                 required: '이메일을 입력해주세요.',
                 email: '이메일 형식이 아닙니다.'
             },
+            me_customEmailDomain: {
+                required: '도메인을 직접 입력하세요.'
+            },
             me_gender: {
                 required: '성별을 선택해주세요.'
             },
@@ -262,18 +269,133 @@
                 required: '생년월일을 선택해주세요.'
             }
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             if (element.attr("name") === "phone2" || element.attr("name") === "phone3") {
                 error.appendTo("#phoneGroup"); // phoneGroup 영역에 한 번만 에러 메시지 출력
+            } else if (element.attr("name") === "me_emailId" || element.attr("name") === "me_emailDomain" || element.attr("name") === "me_customEmailDomain") {
+                error.appendTo("#check-email"); // emailGroup 영역에 한 번만 에러 메시지 출력
             } else {
                 error.appendTo(element.closest('.form-group'));
             }
         }
     });
-    $.validator.addMethod('regex', function(value, element, regex) {
+
+    // "직접 입력" 선택 시 직접 입력란 표시/숨김
+    $('#me_emailDomain').change(function () {
+        if ($(this).val() === "custom") {
+            $('#me_customEmailDomain').show().attr("required", true);
+        } else {
+            $('#me_customEmailDomain').hide().val("").removeAttr("required");
+            $('#form').validate().element('#me_customEmailDomain'); // 기존의 에러 메시지 제거
+        }
+    });
+
+    $.validator.addMethod('regex', function (value, element, regex) {
         var re = new RegExp(regex);
         return this.optional(element) || re.test(value);
-    }, "정규표현식을 확인하세요.");
+    	}, "정규표현식을 확인하세요.");
+</script>
+
+<script type="text/javascript">
+    // 아이디 중복 확인
+    $("#id").keyup(function() {
+        var id = $(this).val();
+        var result = checkId(id);
+        displayCheckId(result);
+    });
+
+    function checkId(id) {
+        var regex = /^\w{4,10}$/;
+        if (!regex.test(id)) {
+            return -1;
+        }
+        var res = 0;
+        $.ajax({
+            async: false,
+            url: '<c:url value="/check/id"/>',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function(data) {
+                res = data ? 1 : 0;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return res;
+    }
+
+    function displayCheckId(result) {
+        $('.form-group .error').not('#genderError').remove();
+
+        if (result == 1) {
+            var str = `<label id="check-id" class="id-ok error" style="color: green;">사용 가능한 아이디입니다.</label>`;
+            $('#id').after(str);
+        } else if (result == 0) {
+            var str = `<label id="check-id" class="error" style="margin-bottom: 10px; color: red;">이미 사용중인 아이디입니다.</label>`;
+            $('#id').after(str);
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var debounceTimer; // 디바운스 타이머 변수
+
+    // 이메일 입력란에서 입력할 때마다 중복 확인
+    $("#me_emailId, #me_emailDomain, #me_customEmailDomain").on("input", function() {
+        clearTimeout(debounceTimer); // 이전 타이머 제거
+
+        debounceTimer = setTimeout(function() {
+            var emailId = $("#me_emailId").val();
+            var emailDomain = $("#me_emailDomain").val() === "custom" ? $("#me_customEmailDomain").val() : $("#me_emailDomain").val();
+            
+            // 이메일 입력란이 비어있으면 중복 체크하지 않고 종료
+            if (!emailId || !emailDomain) {
+                $('#check-email').remove(); // 기존의 중복 체크 메시지 제거
+                return;
+            }
+
+            // 이메일 중복 체크
+            var email = emailId + "@" + emailDomain;
+            var result = checkEmail(email);
+            displayCheckEmail(result);
+        }, 500); // 500ms 후에 중복 체크 실행
+    });
+
+    function checkEmail(email) {
+        var res = 0;
+        $.ajax({
+            async: false,
+            url: '<c:url value="/check/email"/>',
+            type: 'get',
+            data: {
+                email: email
+            },
+            success: function(data) {
+                res = data ? 1 : 0;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return res;
+    }
+
+    function displayCheckEmail(result) {
+        // 기존 에러 메시지 제거
+        $('#check-email').remove();
+
+        // 에러 메시지 생성
+        var message;
+        if (result == 1) {
+            message = `<label id="check-email" class="email-ok error" style="color: green;">사용 가능한 이메일입니다.</label>`;
+        } else if (result == 0) {
+            message = `<label id="check-email" class="error" style="margin-bottom: 10px; color: red;">이미 사용중인 이메일입니다.</label>`;
+        }
+        
+        // 이메일 입력란 아래에 에러 메시지 추가
+        $('#me_emailId').closest('.form-group').append(message);
+    }
 </script>
 
 <script type="text/javascript">
