@@ -3,39 +3,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>직원 목록</title>
-	<style type="text/css">
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
-</head>
-<body>
+
+			<c:if test="${not empty msg}">
+			    <script type="text/javascript">
+			        alert("${msg}");
+			    </script>
+			</c:if>	
 	
-	<c:if test="${not empty msg}">
-	    <script type="text/javascript">
-	        alert("${msg}");
-	    </script>
-	</c:if>	
-	
-	<div class="container-fluid">
-	    <div class="row">
-	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-				<%@ include file="/WEB-INF/views/layout/brAdminSidebar.jsp" %>	
-	        </nav>
-	
-	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	            <div class="pt-3 pb-2 mb-3">
-					<h2 class="mt-3 mb-3">${br_name} 직원 목록</h2>
-					<div>
-						<a href="<c:url value="/admin/employee/insert"/>" class="btn btn-outline-success btn-sm">직원등록</a>
-					</div>					
-					<table class="table text-center" id="table">
+			<section class="sub_banner sub_banner_05"></section>
+			<section class="sub_content">
+			
+				<!-- 왼쪽 사이드바 -->
+				<%@ include file="/WEB-INF/views/layout/brAdminSidebar.jsp" %>
+				
+				<!-- 오른쪽 컨텐츠 영역 -->
+				<section class="sub_content_group">
+					<div class="sub_title_wrap">
+						<h2 class="sub_title">${br_name} 직원 목록</h2>
+					</div>
+					
+					<!-- 직원 목록 -->
+					<table class="table table_center" id="table">
 						<thead id="thead">
 							<tr>
 								<th>직원번호</th>
@@ -45,6 +33,7 @@
 								<th>입사일</th>
 								<th>직책</th>
 								<th>상세</th>
+								<th>삭제</th>
 							</tr>
 						</thead>
 						<tbody id="tbody">
@@ -59,40 +48,59 @@
 									</td>
 									<td>${em.em_position}</td>
 									<td>
-										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn-outline-info btn-sm">조회</a>
-									</td>							
+										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn_blue">조회</a>
+									</td>
+									<td>
+										<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn_red btn-delete">삭제</a>
+									</td>						
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+							
+					<!-- 직원 등록 버튼 -->
+					<div class="btn_wrap">
+						<div class="btn_right_wrap">
+							<div class="btn_link_black">
+								<a href="<c:url value="/admin/employee/insert"/>" class="btn btn_black js-btn-insert">
+									<span>직원등록<i class="ic_link_share"></i></span>
+								</a>
+								<div class="btn_black_top_line"></div>
+								<div class="btn_black_right_line"></div>
+								<div class="btn_black_bottom_line"></div>
+								<div class="btn_black_left_line"></div>
+							</div>
+						</div>
+					</div>
 					
-	            </div>
-	        </main>
-	    </div>
-	</div>	
+				</section>
+			</section>	
 
-	<script type="text/javascript">
-		// 데이터테이블
-		$('#table').DataTable({
-			language: {
-		        search: "",
-		        searchPlaceholder: "검색",
-		        zeroRecords: "",
-		        emptyTable: "",
-		        lengthMenu: ""
-		    },
-			scrollY: 500,
-		    pageLength: 10,
-		    info: false,
-		    stateSave: true,
-		    stateDuration: 300,
-		    order: [[ 0, "asc" ]],
-		    columnDefs: [
-		    	{ targets: [6], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
-		    ]
-		});
-	</script>
+			<script type="text/javascript">
+				// 데이터테이블
+				$('#table').DataTable({
+					language: {
+				        search: "",
+				        searchPlaceholder: "검색",
+				        zeroRecords: "",
+				        emptyTable: "",
+				        lengthMenu: ""
+				    },
+				    pageLength: 10,
+				    info: false,
+				    stateSave: true,
+				    stateDuration: 300,
+				    order: [[ 0, "asc" ]],
+				    columnDefs: [
+				    	{ targets: [6], orderable: false }
+				    ]
+				});
+			</script>
 
-</body>
-</html>
+			<script type="text/javascript">
+				$('.btn-delete').click(function(e){
+					if(!confirm("정말 삭제하시겠습니까?\n삭제하시면 복구할 수 없습니다.")){
+						e.preventDefault();
+					}
+				});
+			</script>

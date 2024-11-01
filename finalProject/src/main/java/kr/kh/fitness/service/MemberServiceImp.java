@@ -365,4 +365,25 @@ public class MemberServiceImp implements MemberService {
         response.addCookie(cookie);
         log.info("자동 로그인 쿠키 설정 완료: 쿠키 이름 - me_cookie, 쿠키 값 - " + autoLoginToken);
 	}
+
+	@Override
+	public boolean updateSocialConnection(String me_id, String socialId, String socialType) {
+		
+		if(socialType.equals("KAKAO")) {
+			return memberDao.updateSocialToKaKao(me_id, socialId);
+		} else if(socialType.equals("NAVER")) {
+			return memberDao.updateSocialToNaver(me_id, socialId);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public MemberVO getMember(String me_id) {
+		if(me_id == null) {
+			return null;
+		}
+		return memberDao.selectMember(me_id);
+	}
+
 }

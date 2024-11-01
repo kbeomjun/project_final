@@ -3,116 +3,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>본사관리페이지</title>
-	<style type="text/css">
-    	.error{color:red; margin-bottom: 10px;}
-    	.form-group{margin: 0;}
-    	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
-</head>
+
 <body>
-	<div style="margin-top:30px; padding:0 20px;">
-	  	<div class="row">
-	    	<div class="col-sm-2">
-		    	<ul class="nav nav-pills flex-column">
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
-	       	 		</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
-		        	</li>
-		      	</ul>
-		      	<hr class="d-sm-none">
+	<section class="sub_banner sub_banner_06"></section>
+	<section class="sub_content">
+        <!-- 왼쪽 사이드바 -->
+        <%@ include file="/WEB-INF/views/layout/hqSidebar.jsp" %>
+
+        <!-- 오른쪽 컨텐츠 영역 -->
+		<section class="sub_content_group">
+			<div class="sub_title_wrap">
+				<h2 class="sub_title">환불 처리</h2>
+			</div>
+		
+	    	<div class="table_wrap">
+		    	<table class="table table_center" id="table">
+			    	<thead id="thead">
+			      		<tr>
+			      			<th>결제번호</th>
+			        		<th>회원계정</th>
+			        		<th>이메일</th>
+			        		<th>결제날짜</th>
+			        		<th>금액(원)</th>
+			        		<th>회원권유형</th>
+			        		<th>시작일</th>
+			        		<th>마감일</th>
+			        		<th></th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="tbody">
+			    		
+			    	</tbody>
+				</table>
 	    	</div>
-		    <div class="col-sm-10">
-		    	<div class="mt-3">
-		    		<table class="table table-hover" id="table">
-				    	<thead id="thead">
-				      		<tr>
-				      			<th>결제번호</th>
-				        		<th>회원계정</th>
-				        		<th>이메일</th>
-				        		<th>결제날짜</th>
-				        		<th>금액(원)</th>
-				        		<th>회원권유형</th>
-				        		<th>시작일</th>
-				        		<th>마감일</th>
-				        		<th></th>
-				      		</tr>
-				    	</thead>
-				    	<tbody id="tbody">
-				    		
-				    	</tbody>
-					</table>
-				</div>
-				<div class="modal fade" id="myModal">
-			    	<div class="modal-dialog modal-dialog-centered">
-			      		<div class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">환불</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				          		<div class="form-group">
-									<label for="re_price">금액:</label>
-									<input type="text" class="form-control" id="re_price" name="re_price">
-								</div>
-								<div class="error error-price"></div>
-								<div class="form-group">
-									<label for="re_reason">사유:</label>
-									<select id="re_reason" name="re_reason" class="custom-select form-control">
-										<option value="중도 해지">중도 해지</option>
-										<option value="시작전 계약 취소">시작전 계약 취소</option>
-										<option value="PT트레이너 불만">PT트레이너 불만</option>
-										<option value="서비스 불만">서비스 불만</option>
-								    </select>
-								</div>
-								<div class="error error-reason"></div>
-								<input type="hidden" id="re_pa_num" name="re_pa_num">
-								<button class="btn btn-outline-danger col-12 btn-refund">환불</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
-				        	</div>
-			      		</div>
-			    	</div>
-		  		</div>
-	    	</div>
-	  	</div>
-	</div>
+	    	
+	    	<div class="modal fade" id="myModal">
+		    	<div class="modal-dialog modal-dialog-centered">
+		    		<div class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">환불</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="re_price">금액</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="re_price" name="re_price">
+												</div>
+												<div class="error error-price"></div>
+							                </td>
+							            </tr>
+										<tr>
+											<th scope="row">
+												<label for="re_reason">사유</label>
+											</th>
+											<td>
+												<div class="form-group">
+													<select id="re_reason" name="re_reason" class="custom-select form-control">
+														<option value="" selected>선택</option>
+														<option value="중도 해지">중도 해지</option>
+														<option value="시작전 계약 취소">시작전 계약 취소</option>
+														<option value="PT트레이너 불만">PT트레이너 불만</option>
+														<option value="서비스 불만">서비스 불만</option>
+													</select>
+												</div>
+												<input type="hidden" id="re_pa_num" name="re_pa_num">
+												<div class="error error-reason"></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+			        	<div class="modal-footer">
+			        		<button class="btn btn_black btn-refund">환불</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		    		</div>
+		    	</div>
+	  		</div>
+    	</section>
+	</section>
 	
 	<script type="text/javascript">
 		// 필수항목 체크
@@ -133,6 +111,14 @@
 				$('.error-price').append(msgPrice);
 			}else{
 				$('.error-price').children().remove();	
+			}
+		});
+		$('select[name=re_reason]').change(function(){
+			$('.error-reason').children().remove();
+			if($("select[name=re_reason]").val() == ''){
+				$('.error-reason').append(msgRequired);
+			}else{
+				$('.error-reason').children().remove();
 			}
 		});
 		
@@ -157,6 +143,10 @@
 				$('#re_price').focus();
 				flag = false;
 			}
+			if($("select[name=re_reason]").val() == ''){
+				$('.error-reason').append(msgRequired);
+				flag = false;
+			}
 			
 			if(flag){
 				if(confirm("정말 환불처리 하시겠습니까?\n환불처리 후 복구할 수 없습니다.")){
@@ -176,6 +166,7 @@
 							}
 							$('#myModal').modal("hide");
 							$('#re_price').val("");
+							$("select[name=re_reason]").val("").prop("selected", true);
 							
 							table.destroy();
 							table = $('#table').DataTable({
@@ -185,7 +176,9 @@
 							        zeroRecords: "",
 							        emptyTable: ""
 							    },
-								scrollY: 600,
+							    scrollY: 500,
+							    stateSave: true,
+							    stateDuration: 300,
 							    paging: false,
 							    info: false,
 							    order: [[ 0, "desc" ]],
@@ -205,13 +198,12 @@
 						        	{data:"pa_endStr"},
 						        	{data : "",
 							    		render: function(data,type,row){
-							    			return '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal" data-price="'+row.pa_price+'" data-num="'+row.pa_num+'">환불</button>';
+							    			return '<button type="button" class="btn btn_red btn-refund-modal" data-toggle="modal" data-target="#myModal" data-price="'+row.pa_price+'" data-num="'+row.pa_num+'">환불</button>';
 							    		}
 							    	}
 						        ],
 						        columnDefs: [
-							        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
-							        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
+							        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false }
 							    ]
 							});
 						},
@@ -235,7 +227,9 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 600,
+		    scrollY: 500,
+		    stateSave: true,
+		    stateDuration: 300,
 		    paging: false,
 		    info: false,
 		    order: [[ 0, "desc" ]],
@@ -255,13 +249,12 @@
 	        	{data:"pa_endStr"},
 	        	{data : "",
 		    		render: function(data,type,row){
-		    			return '<button type="button" class="btn btn-outline-danger btn-refund-modal" data-toggle="modal" data-target="#myModal" data-price="'+row.pa_price+'" data-num="'+row.pa_num+'">환불</button>';
+		    			return '<button type="button" class="btn btn_red btn-refund-modal" data-toggle="modal" data-target="#myModal" data-price="'+row.pa_price+'" data-num="'+row.pa_num+'">환불</button>';
 		    		}
 		    	}
 	        ],
 	        columnDefs: [
-		        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], className: "align-content-center"}
+		        { targets: [0, 1, 2, 4, 5, 6, 8], orderable: false }
 		    ]
 		});
 
@@ -275,7 +268,7 @@
 			$('.error').children().remove();
 			$('#re_price').val("");
 			$('#re_pa_num').val("");
+			$("select[name=re_reason]").val("").prop("selected", true);
 		});
 	</script>
 </body>
-</html>

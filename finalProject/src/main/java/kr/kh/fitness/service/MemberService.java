@@ -37,5 +37,9 @@ public interface MemberService {
 	boolean checkEmail(String email);
 
 	boolean isMemberExist(String me_id);
+	
+	boolean updateSocialConnection(String me_id, String socialId, String socialType);
+
+	MemberVO getMember(String me_id);
 
 }

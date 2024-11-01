@@ -3,122 +3,197 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-    <style type="text/css">
-    	.error{color:red; margin-bottom: 10px;}
-    	.form-group{margin: 0;}
-    	.form-control, .address-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	.address-input{margin-bottom: 10px;}
-    	#file{display: none;}
-    </style>
-</head>
 <body>
-	<div class="container" style="margin-top:30px">
-		<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
-			<div class="form-group">
-				<label for="file" class="card mx-auto" style="width:250px; cursor:pointer">
-				    <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
-				</label>
-				<input type="file" class="form-control" id="file" name="file" accept="image/*">
+	<section class="sub_banner sub_banner_06"></section>
+	<section class="sub_content">
+        <!-- 왼쪽 사이드바 -->
+        <%@ include file="/WEB-INF/views/layout/hqSidebar.jsp" %>
+
+        <!-- 오른쪽 컨텐츠 영역 -->
+		<section class="sub_content_group">
+			<div class="sub_title_wrap">
+				<h2 class="sub_title">직원 등록</h2>
+				<p class="sub_title__txt">
+					<span>사진 규격은 300x300입니다.</span>
+				</p>
 			</div>
-			<div class="error error-file d-flex justify-content-center"></div>
-			<div class="form-group">
-				<label for="em_name">이름:</label>
-				<input type="text" class="form-control" id="em_name" name="em_name">
-			</div>
-			<div class="error error-name"></div>
-			<div class="form-group">
-				<label for="em_phone">전화번호:</label>
-				<input type="text" class="form-control" id="em_phone" name="em_phone">
-			</div>
-			<div class="error error-phone"></div>
-			<div class="form-group">
-				<label for="em_email">이메일:</label>
-				<input type="text" class="form-control" id="em_email" name="em_email">
-			</div>
-			<div class="error error-email"></div>
-			<div class="form-group">
-				<label for="em_gender" style="margin-right: 10px;">성별:</label>
-				<div class="form-check-inline">
-	  				<label class="form-check-label" for="radio1">
-	    				<input type="radio" class="form-check-input" id="radio1" name="em_gender" value="남자">남
-	  				</label>
-				</div>
-				<div class="form-check-inline">
-	  				<label class="form-check-label" for="radio2">
-	   			 		<input type="radio" class="form-check-input" id="radio2" name="em_gender" value="여자">여
-	  				</label>
-				</div>	
-			</div>
-			<div class="error error-gender"></div>
-			<div class="form-group">
-				<label for="em_position">직책:</label>
-				<select name="em_position" class="custom-select form-control">
-					<c:forEach items="${programList}" var="program">
-						<c:choose>
-							<c:when test="${program.sp_type == '단일'}">
-								<option value="${program.sp_name}트레이너">${program.sp_name}트레이너</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${program.sp_name}강사">${program.sp_name}강사</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-			    </select>
-			</div>
-			<div class="error error-position"></div>
-			<div class="form-group">
-				<label for="em_address">주소:</label> <br/>
-				<input type="text" class="address-input" id="em_postcode" name="em_postcode" placeholder="우편번호" style="width:130px;" readonly>
-				<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-				<input type="text" class="address-input" id="em_address" name="em_address" placeholder="주소" style="width:100%;" readonly> <br/>
-				<input type="text" class="address-input" id="em_detailAddress" name="em_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;">
-				<input type="text" class="address-input" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" readonly>
-			</div>
-			<div class="error error-address"></div>
-			<div class="form-group">
-				<label for="em_br_name">소속:</label>
-				<select name="em_br_name" class="custom-select form-control">
-			      	<c:forEach items="${brList}" var="br">
-				      	<option value="${br.br_name}">${br.br_name}</option>
-			      	</c:forEach>
-			    </select>
-			</div>
-			<div class="error error-branch"></div>
-			<div class="form-group">
-				<label for="em_detail">직원설명:</label>
-				<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
-			</div>
-			<div class="error"></div>
-			<button class="btn btn-outline-info col-12">직원 등록</button>
-		</form>
-		<hr/>
-		<a href="<c:url value="/hq/employee/list"/>" class="btn btn-outline-danger col-12">취소</a>
-	</div>
-	
+		
+	    	<div class="table_wrap">
+		    	<form action="<c:url value="/hq/employee/insert"/>" method="post" enctype="multipart/form-data" id="form">
+					<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
+					<table class="table">
+						<colgroup>
+							<col readonly>
+							<col readonly>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">
+									<label class="_asterisk">프로필 사진</label>
+								</th>
+								<td>
+									<div class="form-group profile_img_wrap img-box">
+										<label for="file">
+											<img class="" src="<c:url value="/resources/image/common/img_avatar1.jpg"/>" alt="image">
+										</label>
+									</div>
+									<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
+									<div class="error error-file"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_name" class="_asterisk">이름</label>
+								</th>
+								<td>
+									<input type="text" class="form-control" id="em_name" name="em_name" placeholder="이름을 입력해주세요.">
+									<div class="error error-name"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_phone" class="_asterisk">전화번호</label>
+								</th>
+								<td>
+									<input type="text" class="form-control" id="em_phone" name="em_phone" placeholder="전화번호를 입력해주세요.">
+									<div class="error error-phone"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_email" class="_asterisk">이메일</label>
+								</th>
+								<td>
+									<input type="text" class="form-control" id="em_email" name="em_email" placeholder="이메일을 입력해주세요.">
+									<div class="error error-email"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_gender" class="_asterisk">성별</label>
+								</th>
+								<td>
+									<div class="form-group">
+										<div class="form-check-inline">
+											<label class="form-check-label" for="radio1">
+												<input type="radio" class="form-check-input" id="radio1" name="em_gender" value="남자">남
+											</label>
+										</div>
+										<div class="form-check-inline">
+											<label class="form-check-label" for="radio2">
+												<input type="radio" class="form-check-input" id="radio2" name="em_gender" value="여자">여
+											</label>
+										</div>	
+									</div>
+									<div class="error error-gender"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_position" class="_asterisk">직책</label>
+								</th>
+								<td>
+									<div class="form-group">
+										<select name="em_position" class="custom-select form-control">
+											<option value="" selected>선택</option>
+											<c:forEach items="${programList}" var="program">
+												<c:choose>
+													<c:when test="${program.sp_type == '단일'}">
+														<option value="${program.sp_name}트레이너">${program.sp_name}트레이너</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${program.sp_name}강사">${program.sp_name}강사</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="error error-position"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_address" class="_asterisk">주소</label>
+								</th>
+								<td>
+									<div class="form-group">
+										<div class="form-inline">
+											<input type="text" class="form-control" id="em_postcode" name="em_postcode" placeholder="우편번호" readonly>
+											<input class="btn btn_address" onclick="addressPostcode()" value="우편번호 찾기">
+										</div>
+										<div class="form-group">
+											<input type="text" class="form-control" id="em_address" name="em_address" placeholder="주소" readonly>
+										</div>
+										<div class="form-inline form-inline-50">
+											<input type="text" class="form-control" id="em_detailAddress" name="em_detailAddress" placeholder="상세주소">
+											<input type="text" class="form-control" id="em_extraAddress" name="em_extraAddress" placeholder="참고항목" readonly>
+										</div>
+									</div>
+									<div class="error error-address"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_br_name" class="_asterisk">소속</label>
+								</th>
+								<td>
+									<div class="form-group">
+										<select name="em_br_name" class="custom-select form-control">
+											<option value="" selected>선택</option>
+											<c:forEach items="${brList}" var="br">
+										      	<option value="${br.br_name}">${br.br_name}</option>
+									      	</c:forEach>
+										</select>
+									</div>
+									<div class="error error-branch"></div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">
+									<label for="em_detail" class="">설명</label>
+								</th>
+								<td>
+									<textarea class="form-control" id="em_detail" name="em_detail">${em.em_detail}</textarea>
+									<div class="error"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="btn_wrap">
+						<div class="btn_right_wrap">
+							<button type="submit" class="btn btn_insert">등록</button>
+							<a href="<c:url value="/hq/employee/list"/>" class="btn btn_cancel">취소</a>
+						</div>
+					</div>
+				</form>
+	    	</div>
+    	</section>
+	</section>
+
 	<script>
 		// 사진 파일
 		function displayFileList(file){
 			console.log(file);
-			$('.card').children().remove();
+			$('.img-box').children().remove();
 			if(file.length > 0){
 				let fReader = new FileReader();
 			    fReader.readAsDataURL(file[0]);
 			    fReader.onloadend = function(event){
 			    	let path = event.target.result;
 			        img = `
-			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%; height:100%;">
+			        	<label for="file">
+			        		<img class="" src="\${path}" alt="image">
+						</label>
 			        `;
-			        $('.card').append(img);
+			        $('.img-box').append(img);
 			    }
 			}else{
 				let img = `
-					<img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%; height:100%;">
+					<label for="file">
+						<img class="" src="<c:url value="/resources/image/common/img_avatar1.jpg"/>" alt="image">
+					</label>
 				`;
-				$('.card').append(img);
+				$('.img-box').append(img);
 			}
 		}
 		
@@ -130,7 +205,6 @@
     <script type="text/javascript">
     	// 필수항목 체크
 		let msgPw2 = `<span>비밀번호와 일치하지 않습니다.</span>`;
-		let regexEmail = /^\w{2,16}@\w{4,8}.[a-z]{2,3}$/;
 		let msgEmail = `<span>email 형식이 아닙니다.</span>`;
 		let msgRequired = `<span>필수항목입니다.</span>`;
 		let imgRequired = `<span>필수항목입니다.</span>`;
@@ -172,11 +246,16 @@
 			if($('#em_email').val() == ''){
 				$('.error-email').append(msgRequired);
 			}else{
-				if(!regexEmail.test($('#em_email').val())){
-					$('.error-email').append(msgEmail);
-				}else{
-					$('.error-email').children().remove();
-				}
+				$('.error-email').children().remove();
+			}
+		});
+		
+		$('select[name=em_position]').change(function(){
+			$('.error-position').children().remove();
+			if($("select[name=em_position]").val() == ''){
+				$('.error-position').append(msgRequired);
+			}else{
+				$('.error-position').children().remove();
 			}
 		});
 		
@@ -187,6 +266,15 @@
 				$('.error-address').append(msgRequired);
 			}else{
 				$('.error-address').children().remove();	
+			}
+		});
+		
+		$('select[name=em_br_name]').change(function(){
+			$('.error-branch').children().remove();
+			if($("select[name=em_br_name]").val() == ''){
+				$('.error-branch').append(msgRequired);
+			}else{
+				$('.error-branch').children().remove();
 			}
 		});
 		
@@ -215,12 +303,6 @@
 				$('.error-email').append(msgRequired);
 				$('#em_email').focus();
 				flag = false;
-			}else{
-				if(!regexEmail.test($('#em_email').val())){
-					$('.error-email').append(msgEmail);
-					$('#em_email').focus();
-					flag = false;
-				}
 			}
 			
 			if($('input[name=em_gender]:checked').val() == null){
@@ -229,9 +311,19 @@
 				flag = false;
 			}
 			
+			if($("select[name=em_position]").val() == ''){
+				$('.error-position').append(msgRequired);
+				flag = false;
+			}
+
 			if($('#em_address').val() == '' || $('#em_detailAddress').val() == ''){
 				$('.error-address').append(msgRequired);
 				$('#em_detailAddress').focus();
+				flag = false;
+			}
+			
+			if($("select[name=em_br_name]").val() == ''){
+				$('.error-branch').append(msgRequired);
 				flag = false;
 			}
 
@@ -298,4 +390,3 @@
 		});
     </script>
 </body>
-</html>

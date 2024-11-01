@@ -467,12 +467,62 @@ public class MemberController {
 	
 	@GetMapping("/oauth/kakao")
 	public String kakaoLogin(Model model, HttpSession session, HttpServletResponse response, @RequestParam("code") String code) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			if(user.getMe_kakaoUserId() == null) {
+				return userSocialConnection(model, session, "KAKAO", code, user, null);
+			}
+			session.setAttribute("socialType", "KAKAO");
+			model.addAttribute("member", user);
+			return "/mypage/info";
+		}
 	    return handleSocialLogin(model, session, response, "KAKAO", code, null);
 	}
 
 	@GetMapping("/oauth/naver")
 	public String naverCallback(Model model, HttpSession session, HttpServletResponse response, @RequestParam("code") String code, @RequestParam("state") String state) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			if(user.getMe_naverUserId() == null) {
+				return userSocialConnection(model, session, "NAVER", code, user, state);
+			}
+			session.setAttribute("socialType", "NAVER");
+			model.addAttribute("member", user);
+			return "/mypage/info";
+		}
 	    return handleSocialLogin(model, session, response, "NAVER", code, state);
+	}
+	
+	private String userSocialConnection(Model model, HttpSession session, String socialType, String code, MemberVO user, String state) {
+	    String token;
+	    MemberVO loginUser;
+	    String socialId;
+		
+		if ("KAKAO".equals(socialType)) {
+	        token = singleSignOnService.getReturnAccessTokenKakao(code);
+	        loginUser = singleSignOnService.getUserInfoFromKakaoToken(token);
+	        socialId = getUserIdBySocialType(loginUser, socialType);
+	    } else {
+	        token = singleSignOnService.getAccessTokenFromNaver(code, state, naverClientId, naverClientSecret);
+	        loginUser = singleSignOnService.getUserInfoFromNaverToken(token);
+	        socialId = getUserIdBySocialType(loginUser, socialType);
+	    }
+		
+	    if (token == null || loginUser == null) {
+	        model.addAttribute("msg", "연결에 실패했습니다. \\n(" + socialType + " 계정 정보를 가져올 수 없습니다.)");
+	        model.addAttribute("url", "/mypage/pwCheck");
+	        return "/main/message";
+	    }
+	    
+	    
+    	if(memberService.updateSocialConnection(user.getMe_id(), socialId, socialType)) {
+    		MemberVO updateUser = memberService.getMember(user.getMe_id());
+    		session.setAttribute("user", updateUser);
+    		session.setAttribute("socialType", socialType);
+    		return "redirect:/mypage/info";
+    	} else {
+    		return "/mypage/pwCheck";
+    	}
 	}
 
 	private String handleSocialLogin(Model model, HttpSession session, HttpServletResponse response, String socialType, String code, String state) {

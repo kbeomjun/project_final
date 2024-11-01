@@ -104,6 +104,7 @@
 		    });
 		});
 
+		/*
 		$(function(){
 			var url = window.location.pathname;
 			
@@ -116,7 +117,7 @@
 			})
 			
 		});
-
+		*/
 	</script>
 </body>
 </html>

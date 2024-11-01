@@ -572,15 +572,16 @@ public class AdminServiceImp implements AdminService{
 	}
 
 	@Override
-	public String updateMemberInquiry(MemberInquiryVO mi) {
+	public String updateMemberInquiry(MemberInquiryVO miVo) {
 		String msg = "";
-		if(mi == null) {msg = "문의 정보가 없습니다.";}
+		if(miVo == null) {msg = "문의 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
-		mi.setMi_state("답변완료");
-		if(!adminDao.updateMemberInquiry(mi)) {msg = "문의 답변을 등록하지 못했습니다.";}
+		miVo.setMi_state("답변완료");
+		if(!adminDao.updateMemberInquiry(miVo)) {msg = "문의 답변을 등록하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
+		MemberInquiryVO mi = adminDao.selectMemberInquiry(miVo);
 		MemberVO me = adminDao.selectMemberByEmail(mi.getMi_email());
 		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
 		String date = dtFormat.format(mi.getMi_date());

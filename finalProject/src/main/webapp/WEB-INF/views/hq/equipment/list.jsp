@@ -3,156 +3,152 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>본사관리페이지</title>
-	<style type="text/css">
-		.img-container{max-height: 800px; overflow-y: auto; padding-bottom: 20px;}
-    	.img-box{width:20%; height:220px; box-sizing: border-box; position: relative; margin: 20px 0; cursor:pointer;}
-    	.img-name{border: 1px solid gray;}
-    	.img-text{margin-bottom: 0; padding: 5px;}
-    	.btn-update{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
-    	.error{color:red; margin-bottom: 10px;}
-    	.form-group{margin: 0;}
-    	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	#file, #file2{display: none;}
-	</style>
-</head>
-<body>
-	<div style="margin-top:30px; padding:0 20px;">
-	  	<div class="row">
-	    	<div class="col-sm-2">
-		    	<ul class="nav nav-pills flex-column">
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
-	       	 		</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
-		        	</li>
-		      	</ul>
-		      	<hr class="d-sm-none">
-	    	</div>
-		    <div class="col-sm-10">
-			    <div>
-			    	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">등록</button>
-			    </div>
-			    <hr>
-			    <div class="form-group">
-					<input type="text" class="form-control" id="search" name="search" placeholder="검색">
-				</div>
-		    	<div class="img-container d-flex flex-wrap mt-3">
+
+	<section class="sub_banner sub_banner_06"></section>
+	<section class="sub_content">
+        <!-- 왼쪽 사이드바 -->
+        <%@ include file="/WEB-INF/views/layout/hqSidebar.jsp" %>
+
+        <!-- 오른쪽 컨텐츠 영역 -->
+		<section class="sub_content_group">
+			<div class="sub_title_wrap">
+				<h2 class="sub_title">기구 관리</h2>
+			</div>
+			
+			<div class="search_bar ml-0">
+	            <input type="text" class="form-control" id="search" name="search" placeholder="검색">
+	            <div class="search_btn"></div>
+	        </div>
+		
+			<ul class="img-container equipment_warp">
 		    		
+			</ul>
+	    	
+	    	<div class="btn_wrap">
+				<div class="btn_right_wrap">
+					<div class="btn_link_black">
+						<button class="btn btn_black js-btn-insert" data-toggle="modal" data-target="#myModal">
+							<span>등록<i class="ic_link_share"></i></span>
+						</button>
+						<div class="btn_black_top_line"></div>
+						<div class="btn_black_right_line"></div>
+						<div class="btn_black_bottom_line"></div>
+						<div class="btn_black_left_line"></div>
+					</div>
 				</div>
-				<div class="modal fade" id="myModal">
-			    	<div class="modal-dialog modal-dialog-centered">
-			      		<form action="<c:url value="/hq/equipment/insert"/>" method="post" enctype="multipart/form-data" id="form" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">등록</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				        		<div class="form-group">
-									<label for="file" class="card card-insert mx-auto" style="width:250px; cursor:pointer">
-									    <img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
-									    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
-									</label>
-									<input type="file" class="form-control" id="file" name="file" accept="image/*">
-								</div>
-								<div class="error error-file d-flex justify-content-center"></div>
-								<div class="form-group">
-									<label for="se_name">기구명:</label>
-									<input type="text" class="form-control" id="se_name" name="se_name">
-								</div>
-								<div class="error error-name"></div>
-								<button class="btn btn-outline-info col-12">기구 등록</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
-				        	</div>
-			      		</form>
-			    	</div>
-		  		</div>
-		  		<div class="modal fade" id="myModal2">
-			    	<div class="modal-dialog modal-dialog-centered">
-			      		<form action="<c:url value="/hq/equipment/update"/>" method="post" enctype="multipart/form-data" id="form2" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">등록</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				        		<div class="form-group">
-									<label for="file2" class="card card-update mx-auto" style="width:250px; cursor:pointer">
-									    
-									</label>
-									<input type="file" class="form-control" id="file2" name="file2" accept="image/*">
-								</div>
-								<div class="error error-file2 d-flex justify-content-center"></div>
-								<div class="form-group">
-									<label for="se_name">기구명:</label>
-									<input type="text" class="form-control" id="se_name2" name="se_name">
-								</div>
-								<div class="error error-name2"></div>
-								<input type="hidden" id="se_ori_name" name="se_ori_name">
-								<button class="btn btn-outline-warning col-12">기구 수정</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<a href="#" class="btn btn-danger btn-close" data-dismiss="modal">취소</a>
-				        	</div>
-			      		</form>
-			    	</div>
-		  		</div>
-	    	</div>
-	  	</div>
-	</div>
+			</div>
+			
+			<div class="modal fade" id="myModal">
+		    	<div class="modal-dialog modal-dialog-centered">
+		      		<form action="<c:url value="/hq/equipment/insert"/>" method="post" enctype="multipart/form-data" id="form" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">등록</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+			        		<div class="form-group my-3">
+								<label for="file" class="equipment_img_insert equipment-insert">
+								    <img class="equipment_img" alt="Card image"
+								    	src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
+								</label>
+								<input type="file" class="form-control display_none" id="file" name="file" accept="image/*">
+							</div>
+							<div class="error error-file d-flex justify-content-center"></div>
+							
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="se_name">기구명</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="se_name" name="se_name">
+												</div>
+												<div class="error error-name"></div>
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+			        	<div class="modal-footer">
+							<button class="btn btn_black">기구 등록</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		      		</form>
+		    	</div>
+	  		</div>
+	  		
+	  		<div class="modal fade" id="myModal2">
+		    	<div class="modal-dialog modal-dialog-centered">
+		      		<form action="<c:url value="/hq/equipment/update"/>" method="post" enctype="multipart/form-data" id="form2" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">등록</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+			        		<div class="form-group my-3">
+								<label for="file2" class="equipment_img_update equipment-update">
+								    
+								</label>
+								<input type="file" class="form-control display_none" id="file2" name="file2" accept="image/*">
+							</div>
+							<div class="error error-file2 d-flex justify-content-center"></div>
+							
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="se_name">기구명</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="se_name2" name="se_name">
+												</div>
+												<div class="error error-name2"></div>
+												<input type="hidden" id="se_ori_name" name="se_ori_name">
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
+							</div>
+			        	</div>
+			        	<div class="modal-footer">
+							<button class="btn btn_black">기구 수정</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		      		</form>
+		    	</div>
+	  		</div>
+    	</section>
+	</section>
 	
 	<script>
 		// 사진 파일
 		function displayFileList(file){
 			console.log(file);
-			$('.card-insert').children().remove();
+			$('.equipment-insert').children().remove();
 			if(file.length > 0){
 				let fReader = new FileReader();
 			    fReader.readAsDataURL(file[0]);
 			    fReader.onloadend = function(event){
 			    	let path = event.target.result;
 			        let img = `
-			        	<img class="card-img-top" src="\${path}" alt="Card image" style="width:100%">
+			        	<img class="equipment_img" src="\${path}" alt="Card image">
 			        `;
-			        $('.card-insert').append(img);
+			        $('.equipment-insert').append(img);
 			    }
 			}else{
 			    let img = `
-		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+		    		<img class="equipment_img" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
-		        $('.card-insert').append(img);
+		        $('.equipment-insert').append(img);
 			}
 		    
 		}
@@ -163,7 +159,7 @@
 		var del = 0;
 		function displayFileList2(file){
 			console.log(file);
-			$('.card-update').children().remove();
+			$('.equipment-update').children().remove();
 			if(del == 0){
 				var str = `
 					<input type="hidden" name="isDel" value="Y">
@@ -179,16 +175,16 @@
 			    	let path = event.target.result;
 			    	console.log(path);
 			        let img = `
-			        	<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%;" src="\${path}">
+			        	<img class="equipment_img" alt="Card image" src="\${path}">
 			        `;
-			        $('.card-update').append(img);
+			        $('.equipment-update').append(img);
 			    }
 			}else{
 				let img = `
-		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+		    		<img class="equipment_img" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
-		        $('.card-update').append(img);
+		        $('.equipment-update').append(img);
 			}
 		}
 		$(document).on("change", "#file2", function(){
@@ -275,7 +271,7 @@
     </script>
     
     <script>
-	    $(document).on('click', '.btn-update', function(){
+	    $(document).on('click', '.btn_update', function(){
 			var se_name = $(this).data("name");
 			
 			$.ajax({
@@ -290,10 +286,10 @@
 					$('#se_ori_name').val(se.se_name);
 					
 					let img = `
-						<img class="card-img-top card-img" alt="Card image" style="width:100%; height:100%;" src="<c:url value="/uploads\${se.se_fi_name}"/>">
+						<img class="equipment_img" alt="Card image" src="<c:url value="/uploads\${se.se_fi_name}"/>">
 			        `;
-			        $('.card-update').children().remove();
-			        $('.card-update').append(img);
+			        $('.equipment-update').children().remove();
+			        $('.equipment-update').append(img);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
@@ -305,11 +301,11 @@
 	    	if($('#file')[0].files.length > 0){
 		    	deleteFile($('#file')[0].files.length);
 	    		let img = `
-		    		<img class="card-img-top" alt="Card image" style="width:100%; height:100%;"
+		    		<img class="equipment_img" alt="Card image"
 			    		src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg?size=626&ext=jpg">
 		    	`;
-		    	$('.card-insert').children().remove();
-		        $('.card-insert').append(img);
+		    	$('.equipment-insert').children().remove();
+		        $('.equipment-insert').append(img);
 	    	}
 	    	
 	    	$('.error').children().remove();
@@ -347,18 +343,18 @@
 					
 					var str = ``;
 					for(se of seList){
-						let url = "/uploads" + "\${se.se_fi_name}";
 						str += `
-							<div class="card img-box">
-					        	<img class="card-img-top" src="<c:url value="/uploads\${se.se_fi_name}"/>" style="width:100%; height:100%;">
-						        	<button type="button" class="btn btn-outline-warning btn-update" data-toggle="modal" data-target="#myModal2" data-name="\${se.se_name}">
+							<li class="equipment_item">
+								<div class="equipment_img_wrap">
+					        		<img class="equipment_img" src="<c:url value="/uploads\${se.se_fi_name}"/>" />
+					        	</div>
+						    	<div class="equipment_info_wrap">
+									<button type="button" class="btn btn_update" data-toggle="modal" data-target="#myModal2" data-name="\${se.se_name}">
 										<i class="fi fi-br-edit"></i>
+										<p class="">\${se.se_name}</p>
 									</button>
-								</img>
-						    	<div class="img-name d-flex align-content-center">
-						      		<p class="img-text mx-auto">\${se.se_name}</p>
-						    	</div>
-							</div>
+								</div>
+					    	</li>
 						`;
 					}
 					
@@ -370,5 +366,3 @@
 			});
 	    }
     </script>
-</body>
-</html>

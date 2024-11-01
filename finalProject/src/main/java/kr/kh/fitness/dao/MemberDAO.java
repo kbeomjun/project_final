@@ -30,4 +30,8 @@ public interface MemberDAO {
 
 	MemberVO findMemberByIdEmailPhone(@Param("me_id")String id, @Param("me_email") String email, @Param("me_phone") String phone);
 
+	boolean updateSocialToKaKao(@Param("me_id") String me_id, @Param("socialId") String socialId);
+
+	boolean updateSocialToNaver(@Param("me_id") String me_id, @Param("socialId") String socialId);
+
 }

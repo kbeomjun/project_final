@@ -124,4 +124,10 @@
     AND me_email = #{me_email}
     AND me_phone = #{me_phone}
   </select>
+  <update id="updateSocialToKaKao">
+  	update member set me_kakaoUserId = #{socialId} where me_id = #{me_id}
+  </update>
+  <update id="updateSocialToNaver">
+  	update member set me_naverUserId = #{socialId} where me_id = #{me_id}
+  </update>
 </mapper>

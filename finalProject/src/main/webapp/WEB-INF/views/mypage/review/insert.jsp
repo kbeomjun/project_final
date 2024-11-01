@@ -3,110 +3,136 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>마이페이지</title>
-</head>
-<body>
-	<div class="container-fluid">
-	    <div class="row">
-	        <!-- 왼쪽 사이드바 -->
-	        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-	            <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
-	        </nav>
-	
-	        <!-- 오른쪽 컨텐츠 영역 -->
-	        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	            <div class="pt-3 pb-2 mb-3">
-	                <h2>나의 작성글</h2>
+
+			<section class="sub_banner sub_banner_07"></section>
+			<section class="sub_content">
+			
+		        <!-- 왼쪽 사이드바 -->
+		        <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+			
+		        <!-- 오른쪽 컨텐츠 영역 -->
+		        <section class="sub_content_group">
+		        	<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
 					<form action="<c:url value="/mypage/review/insert"/>" method="post" id="form">
 						<input type="hidden" value="${pa_num}" name="rp_pa_num">
 						<input type="hidden" value="${me_id}" name="me_id">
-						<div class="form-group">
-							<label for="rp_br_name">지점명:</label>
-							<select name="rp_br_name" class="custom-select mb-3 form-control">
-								<c:forEach items="${branchList}" var="br">
-								<option value="${br.br_name}">${br.br_name}</option>
-								</c:forEach>
-							</select>
-						</div>
 						
-						<div class="form-group">
-							<label for="rp_title">제목:</label>
-							<input type="text" class="form-control" id="rp_title" name="rp_title" placeholder="제목을 입력하세요.">
-						</div>
-						<div class="error error-title"></div>
-						<div class="form-group">
-							<label for="rp_content">내용:</label>
-							<textarea class="form-control" id="rp_content" name="rp_content" style="min-height: 400px; height:auto" placeholder="내용을 입력하세요."></textarea>
-						</div>
-						<div class="error error-content"></div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-outline-info col-12">글 등록</button>
-						</div>
-					</form>
-					<hr>
-					<div>
-						<a href="<c:url value="/mypage/membership"/>" class="btn btn-outline-danger col-12">취소</a>
-					</div>
-					
-	            </div>
-	        </main>
-	    </div>
-	</div>
+						<table class="table">
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: 80%;">
+							</colgroup>
+							
+							<tbody>
+								<tr>
+									<th scope="row">
+										<label for="rp_br_name" class="_asterisk">지점명</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<select name="rp_br_name" id="rp_br_name" class="custom-select form-control">
+												<option value="">선택</option>
+												<c:forEach items="${branchList}" var="br">
+													<option value="${br.br_name}">${br.br_name}</option>
+												</c:forEach>												
+											</select>
+										</div>
+										<div class="error error-brName"></div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="rp_title" class="_asterisk">제목</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" id="rp_title" name="rp_title" placeholder="제목을 입력하세요.">
+										</div>
+										<div class="error error-title"></div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="rp_content" class="_asterisk">내용</label>
+									</th>
+									<td>
+										<div class="form-group">
+											<textarea class="form-control" id="rp_content" name="rp_content" placeholder="내용을 입력하세요. (5000자 이내)" maxlength="5000"></textarea>
+										</div>
+										<div class="error error-content"></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<div class="btn_wrap">
+							<div class="btn_right_wrap">
+								<button type="submit" class="btn btn_insert">등록</button>
+								<a href="<c:url value="/mypage/membership"/>" class="btn btn_cancel">취소</a>
+							</div>
+						</div>					
+						
+					</form>    	
+			
+		        </section>
+		        
+			</section>
 	
-    <script type="text/javascript">
-    	// 필수항목 체크
-		let msgRequired = `<span>필수항목입니다.</span>`;
-		
-		
-		$('#rp_title').keyup(function(){
-			$('.error-title').children().remove();
-			
-			if($('#rp_title').val() == ''){
-				$('.error-title').append(msgRequired);
-			}else{
-				$('.error-title').children().remove();	
-			}
-		});
-		
-	    $('#rp_content').on('summernote.change', function() {
-	        $('.error-content').children().remove();
-	        
-	        if ($('#rp_content').summernote('isEmpty')) {
-	            $('.error-content').append(msgRequired);
-	        } else {
-	            $('.error-content').children().remove();
-	        }
-	    });
-		
-		
-		$('#form').submit(function(){
-			$('.error').children().remove();
-			let flag = true;
-			
-			if($('#rp_title').val() == ''){
-				$('.error-title').append(msgRequired);
-				$('#rp_title').focus();
-				flag = false;
-			}
-			
-	        if ($('#rp_content').summernote('isEmpty')) {
-	            $('.error-content').append(msgRequired);
-	            $('#rp_content').focus();
-	            flag = false;
-	        }
-			
-			return flag;
-		});
-    </script>
-    
-	<script>
-		$('#rp_content').summernote({
-			placeholder: '내용을 작성하세요.',
-			tabsize: 2,
-			height: 350
-		});
-    </script>
-</body>
-</html>
+		    <script type="text/javascript">
+		    	// 필수항목 체크
+				let msgRequired = `<span>필수항목입니다.</span>`;
+				
+				
+				$('#rp_title').keyup(function(){
+					$('.error-title').children().remove();
+					
+					if($('#rp_title').val() == ''){
+						$('.error-title').append(msgRequired);
+					}else{
+						$('.error-title').children().remove();	
+					}
+				});
+				
+			    $('#rp_content').on('summernote.change', function() {
+			        $('.error-content').children().remove();
+			        
+			        if ($('#rp_content').summernote('isEmpty')) {
+			            $('.error-content').append(msgRequired);
+			        } else {
+			            $('.error-content').children().remove();
+			        }
+			    });
+				
+				
+				$('#form').submit(function(){
+					$('.error').children().remove();
+					let flag = true;
+					
+					if($('#rp_br_name').val() == ''){
+						$('.error-brName').append(msgRequired);
+						flag = false;
+					}
+					
+					if($('#rp_title').val() == ''){
+						$('.error-title').append(msgRequired);
+						$('#rp_title').focus();
+						flag = false;
+					}
+					
+			        if ($('#rp_content').summernote('isEmpty')) {
+			            $('.error-content').append(msgRequired);
+			            $('#rp_content').focus();
+			            flag = false;
+			        }
+					
+					return flag;
+				});
+		    </script>
+		    
+			<script>
+				$('#rp_content').summernote({
+					placeholder: '내용을 작성하세요.',
+					tabsize: 2,
+					height: 350
+				});
+		    </script>

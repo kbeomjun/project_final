@@ -3,226 +3,258 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<html>
-<head>
-<title>본사관리페이지</title>
-	<style type="text/css">
-    	.error{color:red; margin-bottom: 10px;}
-    	.form-group{margin: 0;}
-    	.form-control{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px;}
-    	#mi_content, #mi_answer, #mi_content2, #mi_answer2{min-height: 200px; resize: none; overflow-y: auto;}
-    	#thead th{text-align: center;}
-    	#tbody td{text-align: center;}
-    	.dt-layout-end, .dt-search{margin: 0; width: 100%;}
-    	.dt-input{border: 1px solid gray; border-radius: 5px; height: 38px; padding: 6px 12px; width: 100%;}
-    </style>
-</head>
+
 <body>
-	<div style="margin-top:30px; padding:0 20px;">
-	  	<div class="row">
-	    	<div class="col-sm-2">
-		    	<ul class="nav nav-pills flex-column">
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/branch/list"/>">지점 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/employee/list"/>">직원 관리</a>
-	       	 		</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/equipment/list"/>">운동기구 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/stock/list"/>">재고 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/order/list"/>">발주 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/paymentType/list"/>">회원권 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/program/list"/>">프로그램 관리</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/member/list"/>">회원 조회</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link active" href="<c:url value="/hq/inquiry/list"/>">문의 내역</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/FAQ/list"/>">FAQ</a>
-		        	</li>
-		        	<li class="nav-item">
-		          		<a class="nav-link" href="<c:url value="/hq/refund/list"/>">환불 처리</a>
-		        	</li>
-		      	</ul>
-		      	<hr class="d-sm-none">
-	    	</div>
-		    <div class="col-sm-10">
-		    	<div>
-			    	<button type="button" class="btn btn-outline-info btn-menu btn-wait active" data-name="wait">대기</button>
-			    	<button type="button" class="btn btn-outline-info btn-menu btn-done" data-name="done">완료</button>
-			    </div>
-			    <hr>
-		    	<div class="mt-3 box box-wait">
-		    		<table class="table table-hover table-wait">
-				    	<thead id="thead">
-				      		<tr>
-				        		<th>문의번호</th>
-				        		<th>제목</th>
-				        		<th>작성자이메일</th>
-				        		<th>작성날짜</th>
-				        		<th>유형</th>
-				        		<th>상태</th>
-				        		<th></th>
+	<section class="sub_banner sub_banner_06"></section>
+	<section class="sub_content">
+        <!-- 왼쪽 사이드바 -->
+        <%@ include file="/WEB-INF/views/layout/hqSidebar.jsp" %>
+
+        <!-- 오른쪽 컨텐츠 영역 -->
+		<section class="sub_content_group">
+			<div class="sub_title_wrap">
+				<h2 class="sub_title">문의 내역</h2>
+			</div>
+			
+			<div class="sub_hd_wrap">
+	    		<ul class="tab_list">
+			    	<li class="tab_item">
+			    		<button type="button" class="tab_link btn-menu btn-menu btn-wait _active" data-name="wait">대기</button>
+		    		</li>
+			    	<li class="tab_item">
+			    		<button type="button" class="tab_link btn-menu btn-menu btn-done" data-name="done">완료</button>
+		    		</li>
+		    	</ul>
+		    </div>
+			
+	    	<div class="table_wrap box box-wait">
+		    	<table class="table table_center table-wait">
+			    	<thead id="thead">
+			      		<tr>
+			        		<th>문의번호</th>
+			        		<th>제목</th>
+			        		<th>작성자이메일</th>
+			        		<th>작성날짜</th>
+			        		<th>유형</th>
+			        		<th>상태</th>
+			        		<th></th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="tbody">
+			    		<c:forEach items="${miWaitList}" var="mi">
+			    			<tr>
+				        		<td>${mi.mi_num}</td>
+				        		<td>${mi.mi_title}</td>
+				        		<td>${mi.mi_email}</td>
+				        		<td>
+				        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
+			        			</td>
+				        		<td>${mi.mi_it_name}</td>
+				        		<td>${mi.mi_state}</td>
+				        		<td>
+				        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
+				        		</td>
 				      		</tr>
-				    	</thead>
-				    	<tbody id="tbody">
-				    		<c:forEach items="${miWaitList}" var="mi">
-				    			<tr>
-					        		<td class="align-content-center">${mi.mi_num}</td>
-					        		<td class="align-content-center">${mi.mi_title}</td>
-					        		<td class="align-content-center">${mi.mi_email}</td>
-					        		<td class="align-content-center">
-					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
-				        			</td>
-					        		<td class="align-content-center">${mi.mi_it_name}</td>
-					        		<td class="align-content-center">${mi.mi_state}</td>
-					        		<td class="align-content-center">
-					        			<button type="button" class="btn btn-outline-info btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
-					        		</td>
-					      		</tr>
-				    		</c:forEach>
-				    	</tbody>
-					</table>
-				</div>
-				<div class="mt-3 box box-done" style="display: none;">
-					<table class="table table-hover table-done">
-				    	<thead id="thead">
-				      		<tr>
-				        		<th>문의번호</th>
-				        		<th>제목</th>
-				        		<th>작성자</th>
-				        		<th>날짜</th>
-				        		<th>유형</th>
-				        		<th>상태</th>
-				        		<th></th>
-				      		</tr>
-				    	</thead>
-				    	<tbody id="tbody">
-				    		<c:forEach items="${miDoneList}" var="mi">
-				    			<tr>
-					        		<td>${mi.mi_num}</td>
-					        		<td>${mi.mi_title}</td>
-					        		<td>${mi.mi_email}</td>
-					        		<td>
-					        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
-				        			</td>
-					        		<td>${mi.mi_it_name}</td>
-					        		<td>${mi.mi_state}</td>
-					        		<td>
-					        			<button type="button" class="btn btn-outline-info btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
-					        		</td>
-					      		</tr>
-				    		</c:forEach>
-				    	</tbody>
-					</table>
-				</div>
-				<div class="modal fade" id="myModal">
-			    	<div class="modal-dialog modal-dialog-centered">
-			    		<form action="<c:url value="/hq/inquiry/update"/>" method="post" id="form" class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">정보</h4>
-				          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				          		<div class="form-group">
-									<label for="mi_title">제목:</label>
-									<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_email">이메일:</label>
-									<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_date">날짜:</label>
-									<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_it_name">유형:</label>
-									<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_content">내용:</label>
-									<textarea class="form-control" id="mi_content" name="mi_content" readonly></textarea>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_answer">답변:</label>
-									<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
-								</div>
-								<div class="error error-answer"></div>
-								<input type="hidden" id="mi_num" name="mi_num">
-								<button class="btn btn-outline-info col-12">답변 등록</button>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<button type="button" class="btn btn-danger btn-close" data-dismiss="modal">취소</button>
-				        	</div>
-			      		</form>
-			    	</div>
-		  		</div>
-		  		<div class="modal fade" id="myModal2">
-			    	<div class="modal-dialog modal-dialog-centered">
-			    		<div class="modal-content">
-				        	<div class="modal-header">
-				          		<h4 class="modal-title">정보</h4>
-				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
-				        	</div>
-				        	<div class="modal-body">
-				          		<div class="form-group">
-									<label for="mi_title2">제목:</label>
-									<input type="text" class="form-control" id="mi_title2" name="mi_title2" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_email2">이메일:</label>
-									<input type="text" class="form-control" id="mi_email2" name="mi_email2" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_date2">날짜:</label>
-									<input type="text" class="form-control" id="mi_date2" name="mi_date2" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_it_name2">유형:</label>
-									<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name2" readonly>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_content2">내용:</label>
-									<textarea class="form-control" id="mi_content2" name="mi_content2" readonly></textarea>
-								</div>
-								<div class="error"></div>
-								<div class="form-group">
-									<label for="mi_answer2">답변:</label>
-									<textarea class="form-control" id="mi_answer2" name="mi_answer2" readonly></textarea>
-								</div>
-								<div class="error error-answer"></div>
-				        	</div>
-				        	<div class="modal-footer">
-				          		<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-				        	</div>
-			      		</div>
-			    	</div>
-		  		</div>
+			    		</c:forEach>
+			    	</tbody>
+				</table>
 	    	</div>
-	  	</div>
-	</div>
+	    	
+	    	<div class="table_wrap box box-done" style="display: none;">
+		    	<table class="table table_center table-done">
+			    	<thead id="thead">
+			      		<tr>
+			        		<th>문의번호</th>
+			        		<th>제목</th>
+			        		<th>작성자</th>
+			        		<th>날짜</th>
+			        		<th>유형</th>
+			        		<th>상태</th>
+			        		<th></th>
+			      		</tr>
+			    	</thead>
+			    	<tbody id="tbody">
+			    		<c:forEach items="${miDoneList}" var="mi">
+			    			<tr>
+				        		<td>${mi.mi_num}</td>
+				        		<td>${mi.mi_title}</td>
+				        		<td>${mi.mi_email}</td>
+				        		<td>
+				        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
+			        			</td>
+				        		<td>${mi.mi_it_name}</td>
+				        		<td>${mi.mi_state}</td>
+				        		<td>
+				        			<button type="button" class="btn btn_green btn-detail2" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+				        		</td>
+				      		</tr>
+			    		</c:forEach>
+			    	</tbody>
+				</table>
+	    	</div>
+	    	
+	    	<div class="modal fade" id="myModal">
+		    	<div class="modal-dialog modal-dialog-centered">
+		    		<form action="<c:url value="/hq/inquiry/update"/>" method="post" id="form" class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">조회</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="mi_title">제목</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_email">이메일</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_date">날짜</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_it_name">유형</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_content">내용</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_content" name="mi_content" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_answer">답변</label></th>
+							                <td>
+							                	<div>
+													<textarea class="form-control" id="mi_answer" name="mi_answer"></textarea>
+												</div>
+												<div class="error error-answer"></div>
+												<input type="hidden" id="mi_num" name="mi_num">
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+			        	<div class="modal-footer">
+			        		<button class="btn btn_black">답변 등록</button>
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		    		</form>
+		    	</div>
+	  		</div>
+	    	
+	    	<div class="modal fade" id="myModal2">
+		    	<div class="modal-dialog modal-dialog-centered">
+		    		<div class="modal-content">
+			        	<div class="modal-header">
+			          		<h4 class="modal-title">조회</h4>
+			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
+			        	</div>
+			        	<div class="modal-body">
+							<div class="table_wrap">
+								<table class="table">
+									<colgroup>
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+							            <tr>
+											<th scope="col"><label for="mi_title">제목</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_title2" name="mi_title" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_email">이메일</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_email2" name="mi_email" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_date">날짜</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_date2" name="mi_date" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_it_name">유형</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_content">내용</label></th>
+							                <td>
+							                	<div>
+													<input type="text" class="form-control" id="mi_content2" name="mi_content" readonly>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+							            <tr>
+											<th scope="col"><label for="mi_answer">답변</label></th>
+							                <td>
+							                	<div>
+													<textarea class="form-control" id="mi_answer2" name="mi_answer" readonly></textarea>
+												</div>
+												<div class="error"></div>
+							                </td>
+							            </tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+			        	<div class="modal-footer">
+			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
+			        	</div>
+		    		</div>
+		    	</div>
+	  		</div>
+    	</section>
+	</section>
+		    	
 	
 	<script type="text/javascript">
     	// 필수항목 체크
@@ -261,21 +293,22 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 600,
+		    scrollY: 500,
+		    stateSave: true,
+		    stateDuration: 300,
 		    paging: false,
 		    info: false,
 		    order: [[ 0, "asc" ]],
 		    columnDefs: [
-		        { targets: [5, 6], orderable: false },
-		        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+		        { targets: [5, 6], orderable: false }
 		    ]
 		});
 	
 		$('.btn-menu').click(function(){
 			var name = $(this).data("name");
 			
-			$('.btn-menu').removeClass("active");
-			$('.btn-'+name).addClass("active");
+			$('.btn-menu').removeClass("_active");
+			$('.btn-'+name).addClass("_active");
 			
 			$('.box').css("display", "none");
 			$('.box-'+name).css("display", "block");
@@ -289,13 +322,14 @@
 				        zeroRecords: "",
 				        emptyTable: ""
 				    },
-					scrollY: 600,
+				    scrollY: 500,
+				    stateSave: true,
+				    stateDuration: 300,
 				    paging: false,
 				    info: false,
 				    order: [[ 0, "asc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false },
-				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}else{
@@ -306,13 +340,14 @@
 				        zeroRecords: "",
 				        emptyTable: ""
 				    },
-					scrollY: 600,
+				    scrollY: 500,
+				    stateSave: true,
+				    stateDuration: 300,
 				    paging: false,
 				    info: false,
 				    order: [[ 0, "desc" ]],
 				    columnDefs: [
-				        { targets: [5, 6], orderable: false },
-				        { targets: [0, 1, 2, 3, 4, 5, 6], className: "align-content-center"}
+				        { targets: [5, 6], orderable: false }
 				    ]
 				});
 			}
@@ -387,4 +422,3 @@
 		});
 	</script>
 </body>
-</html>
