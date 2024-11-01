@@ -17,6 +17,9 @@
         .form-control {
             color: black;
         }
+        .form-control.error-border {
+            border-color: red;
+        }
         body {
             background-color: #f0f0f0;
             padding: 100px 20px;
@@ -55,23 +58,23 @@
                 <input type="text" class="form-control" id="id" name="me_id">
             </div>
             <div class="form-group">
-			    <label for="pw">비밀번호:</label>
-			    <div class="input-group">
-			        <input type="password" class="form-control" id="pw" name="me_pw">
-			        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw', 'eyeIcon1')">
-			            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon1" />
-			        </button>
-			    </div>
-			</div>
-			<div class="form-group">
-			    <label for="pw2">비밀번호 확인:</label>
-			    <div class="input-group">
-			        <input type="password" class="form-control" id="pw2" name="me_pw2">
-			        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw2', 'eyeIcon2')">
-			            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon2" />
-			        </button>
-			    </div>
-			</div>
+                <label for="pw">비밀번호:</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="pw" name="me_pw">
+                    <span class="input-group-text" id="togglePassword1" style="cursor: pointer;">
+                        <img id="eyeIcon1" src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" style="width: 20px; height: 20px;" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pw2">비밀번호 확인:</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="pw2" name="me_pw2">
+                    <span class="input-group-text" id="togglePassword2" style="cursor: pointer;">
+                        <img id="eyeIcon2" src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" style="width: 20px; height: 20px;" />
+                    </span>
+                </div>
+            </div>
             <div class="form-group">
                 <label for="email">이메일:</label>
                 <div style="display: flex; align-items: center;">
@@ -142,6 +145,7 @@
         </c:if>
     </div>
 </body>
+
 <script type="text/javascript">
     function togglePassword(inputId, iconId) {
         var passwordField = document.getElementById(inputId);
@@ -157,6 +161,15 @@
             eyeIcon.alt = "Show Password";
         }
     }
+
+    // 비밀번호 토글 버튼 이벤트 리스너 추가
+    document.getElementById('togglePassword1').addEventListener('click', function() {
+        togglePassword('pw', 'eyeIcon1');
+    });
+
+    document.getElementById('togglePassword2').addEventListener('click', function() {
+        togglePassword('pw2', 'eyeIcon2');
+    });
 </script>
 
 <script type="text/javascript">
