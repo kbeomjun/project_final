@@ -55,12 +55,6 @@
 									type="password" class="form-control" id="pw" name="me_pw"
 									required />
 							</div>
-							<div class="d-flex justify-content-between align-items-center mb-3">
-							    <div class="form-check">
-							        <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
-							        <label class="form-check-label" for="autologin">자동 로그인</label>
-							    </div>
-							</div>
 	                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
 	                            <div class="form-check mb-2">
 	                                <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true" />
