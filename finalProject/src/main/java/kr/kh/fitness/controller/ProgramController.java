@@ -171,8 +171,7 @@ public class ProgramController {
 		model.addAttribute("ps_list", ps_list);
 		
 		model.addAttribute("nowDate", nowDate);
-		
-		model.addAttribute("showModal", showModal);
+		model.addAttribute("showModal", (ps_list.size() != 0)?showModal:false);
 		return "/program/schedule";
 	}
 	

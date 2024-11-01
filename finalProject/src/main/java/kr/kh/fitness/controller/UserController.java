@@ -505,7 +505,7 @@ public class UserController {
 	    // 네이버 로그인 '동의하기'에서 '취소'를 눌렀을 경우 -> 로그인 페이지로 이동
 	    else if (errorDescription != null && errorDescription.equals("Canceled By User")) {
 	    	
-	    	if((boolean)session.getAttribute("pw_check")) {
+	    	if(session.getAttribute("pw_check") != null && (boolean)session.getAttribute("pw_check")) {
 	    		session.removeAttribute("pw_check");
 	    		model.addAttribute("url", "/mypage/pwcheck");
 	    	}

@@ -13,11 +13,17 @@
 </head>
 <body>
 	<section class="sub_banner sub_banner_03"></section>
-	<!-- <h1>프로그램 안내</h1> -->
-	<div class="navbar">
-		<a class="btn selected br-3" href="<c:url value="/program/info"/>">프로그램 안내</a> 
-		<a class="btn " href="<c:url value="/program/schedule"/>">프로그램 일정</a>
-	</div>
+
+	<nav class="tabList_wrap">
+		<ul class="tabList">
+		<li class="tabList_item">
+			<a class="tabList_link _active" href="<c:url value="/program/info"/>">프로그램 안내</a>
+		</li>
+		<li class="tabList_item">
+			<a class="tabList_link" href="<c:url value="/program/schedule"/>">프로그램 일정</a>
+		</li>
+		</ul>
+	</nav>
 	
 	<section class="sub_content">
 		<!-- lnb -->
@@ -59,11 +65,13 @@
 						<div class="swiper-slide"></div>
 						<div class="swiper-slide"></div>
 					</div>
-					<div class="swiper-button-next">&gt;</div>
-					<div class="swiper-button-prev">&lt;</div>
+					<div class="swiper-button-next">
+					</div>
+					<div class="swiper-button-prev">
+					</div>
 					<div class="swiper-pagination"></div>
 					<div class="content-text">
-						<h2 id="program-name"></h2>
+						<h2 id="program-name" style="margin-bottom: 20px"></h2>
 						<div id="program-detail"></div>
 					</div>
 				</div>
@@ -162,7 +170,7 @@
                     var imgSrc = '<c:url value="/uploads' + imageName + '" />';
                     // console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
                     document.getElementById("swiper-wrapper").innerHTML += 
-                    	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:80%; height:80%"><br></div>';
+                    	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:800px; height:600px"><br></div>';
                 });
             } else {
                 console.log("Error fetching image names");

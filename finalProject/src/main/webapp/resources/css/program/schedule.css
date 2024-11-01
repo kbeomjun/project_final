@@ -1,7 +1,11 @@
 @charset "UTF-8";
 
-.calendar-wrapper table td {width: 100px; height: 100px;}
-.calendar-wrapper table td .selected {font-weight: 900; text-decoration: underline;}
+/* .calendar-wrapper table td {width: 100px; height: 100px;} */
+.calendar-wrapper table td .selected {
+	font-weight: 900;
+	color: green;
+	border-top-color: green;
+}
 .calendar-wrapper table td a {color: inherit;}
 
 .calendar-wrapper table .btn-amount {
@@ -44,7 +48,10 @@
 }
 
 .btn-program-reservation2 {
-    cursor: unset !important;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #111;
+    color: #111;
 }
 
 a .disabled {
