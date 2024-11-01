@@ -1834,3 +1834,30 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 .account_wrap{
   display: flex;
 }
+
+
+
+
+/* 이용약관 */
+.terms_content{
+  display: flex;
+  flex-direction: column;
+  width: 1440px;
+  margin: 0px auto;
+  padding: 200px 0px 80px;
+}
+.terms_content h3{
+  font-size: 22px;
+}
+.terms_content .term-box{
+  height: 300px;
+  margin: 20px 0px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fff;
+  overflow-y: auto;
+}
+.terms_content .form-check{
+  margin-bottom: 80px;
+}
