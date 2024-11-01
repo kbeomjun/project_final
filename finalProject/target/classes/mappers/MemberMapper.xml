@@ -116,7 +116,7 @@
   </update>
   <select id="selectMemberByNameAndEmail" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member
-    WHERE me_name = #{name} AND me_email = #{email}
+    WHERE me_name = #{me_name} AND me_email = #{me_email}
   </select>
   <select id="findMemberByIdEmailPhone" resultType="kr.kh.fitness.model.vo.MemberVO">
     SELECT * FROM member

@@ -48,16 +48,16 @@
         <form action="<c:url value='/signup'/>" method="post" id="form" onsubmit="return onSubmitForm()">
             <div class="form-group">
                 <label for="name">이름:</label>
-                <input type="text" class="form-control" id="name" name="me_name" required>
+                <input type="text" class="form-control" id="name" name="me_name">
             </div>
             <div class="form-group">
                 <label for="id">아이디:</label>
-                <input type="text" class="form-control" id="id" name="me_id" required>
+                <input type="text" class="form-control" id="id" name="me_id">
             </div>
             <div class="form-group">
 			    <label for="pw">비밀번호:</label>
 			    <div class="input-group">
-			        <input type="password" class="form-control" id="pw" name="me_pw" required>
+			        <input type="password" class="form-control" id="pw" name="me_pw">
 			        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw', 'eyeIcon1')">
 			            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon1" />
 			        </button>
@@ -66,7 +66,7 @@
 			<div class="form-group">
 			    <label for="pw2">비밀번호 확인:</label>
 			    <div class="input-group">
-			        <input type="password" class="form-control" id="pw2" name="me_pw2" required>
+			        <input type="password" class="form-control" id="pw2" name="me_pw2">
 			        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw2', 'eyeIcon2')">
 			            <img src="<c:url value='/resources/image/icons/eye.svg'/>" alt="Show Password" id="eyeIcon2" />
 			        </button>
@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label for="email">이메일:</label>
                 <div style="display: flex; align-items: center;">
-                    <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" style="flex: 6; margin-right: 10px;" required>
+                    <input type="text" class="form-control" id="me_emailId" name="me_emailId" placeholder="이메일 아이디" style="flex: 6; margin-right: 10px;">
                     <span style="margin-right: 10px;">@</span>
                     <select class="form-control" id="me_emailDomain" name="me_emailDomain" style="flex: 4; margin-right: 10px;">
                         <option value="">선택</option>
@@ -93,7 +93,7 @@
                 <label for="gender" style="display: block; margin-bottom: 8px;">성별:</label>
                 <div style="display: flex; align-items: center; gap: 20px;">
                     <div>
-                        <input type="radio" id="male" name="me_gender" value="남자" required>
+                        <input type="radio" id="male" name="me_gender" value="남자">
                         <label for="male">남성</label>
                     </div>
                     <div>
@@ -142,6 +142,7 @@
         </c:if>
     </div>
 </body>
+
 <script type="text/javascript">
     function togglePassword(inputId, iconId) {
         var passwordField = document.getElementById(inputId);
@@ -158,6 +159,23 @@
         }
     }
 </script>
+
+<script type="text/javascript">
+    document.getElementById("me_emailDomain").addEventListener("change", function() {
+        var emailDomain = this.value;
+        var customEmailField = document.getElementById("me_customEmailDomain");
+
+        // "직접 입력" 선택 시 표시, 그 외에는 숨기기
+        if (emailDomain === "custom") {
+            customEmailField.style.display = "block";
+            customEmailField.setAttribute("required", "true");
+        } else {
+            customEmailField.style.display = "none";
+            customEmailField.removeAttribute("required");
+        }
+    });
+</script>
+
 <script type="text/javascript">
     var flag = false;
     
@@ -166,6 +184,9 @@
             phoneGroup: "phone2 phone3"
         },
         rules: {
+        	me_name :{
+        		required : true
+        	},        	
             me_id: {
                 required: true,
                 regex: /^\w{4,10}$/
@@ -175,6 +196,7 @@
                 regex: /^[a-zA-Z0-9!@#$]{4,15}$/
             },
             me_pw2: {
+            	required: true,
                 equalTo: "#pw"
             },
             me_emailId: {
@@ -252,108 +274,6 @@
         var re = new RegExp(regex);
         return this.optional(element) || re.test(value);
     }, "정규표현식을 확인하세요.");
-</script>
-
-<script type="text/javascript">
-    // 아이디 중복 확인
-    $("#id").keyup(function() {
-        var id = $(this).val();
-        var result = checkId(id);
-        displayCheckId(result);
-    });
-
-    function checkId(id) {
-        var regex = /^\w{4,10}$/;
-        if (!regex.test(id)) {
-            return -1;
-        }
-        var res = 0;
-        $.ajax({
-            async: false,
-            url: '<c:url value="/check/id"/>',
-            type: 'get',
-            data: {
-                id: id
-            },
-            success: function(data) {
-                res = data ? 1 : 0;
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-            }
-        });
-        return res;
-    }
-
-    function displayCheckId(result) {
-        $('.form-group .error').not('#genderError').remove();
-
-        if (result == 1) {
-            var str = `<label id="check-id" class="id-ok error" style="color: green;">사용 가능한 아이디입니다.</label>`;
-            $('#id').after(str);
-        } else if (result == 0) {
-            var str = `<label id="check-id" class="error" style="margin-bottom: 10px; color: red;">이미 사용중인 아이디입니다.</label>`;
-            $('#id').after(str);
-        }
-    }
-</script>
-
-<script type="text/javascript">
-    var debounceTimer; // 디바운스 타이머 변수
-
-    // 이메일 입력란에서 입력할 때마다 중복 확인
-    $("#me_emailId, #me_emailDomain, #me_customEmailDomain").on("input", function() {
-        clearTimeout(debounceTimer); // 이전 타이머 제거
-
-        debounceTimer = setTimeout(function() {
-            var emailId = $("#me_emailId").val();
-            var emailDomain = $("#me_emailDomain").val() === "custom" ? $("#me_customEmailDomain").val() : $("#me_emailDomain").val();
-            
-            // 이메일 입력란이 비어있으면 중복 체크하지 않고 종료
-            if (!emailId || !emailDomain) {
-                $('#check-email').remove(); // 기존의 중복 체크 메시지 제거
-                return;
-            }
-
-            // 이메일 중복 체크
-            var email = emailId + "@" + emailDomain;
-            var result = checkEmail(email);
-            displayCheckEmail(result);
-        }, 500); // 500ms 후에 중복 체크 실행
-    });
-
-    function checkEmail(email) {
-        var res = 0;
-        $.ajax({
-            async: false,
-            url: '<c:url value="/check/email"/>',
-            type: 'get',
-            data: {
-                email: email
-            },
-            success: function(data) {
-                res = data ? 1 : 0;
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-            }
-        });
-        return res;
-    }
-
-    function displayCheckEmail(result) {
-        // 기존 에러 메시지 제거
-        $('#check-email').remove();
-
-        // 에러 메시지 생성
-        var message;
-        if (result == 1) {
-            message = `<label id="check-email" class="email-ok error" style="color: green;">사용 가능한 이메일입니다.</label>`;
-        } else if (result == 0) {
-            message = `<label id="check-email" class="error" style="margin-bottom: 10px; color: red;">이미 사용중인 이메일입니다.</label>`;
-        }
-        
-        // 이메일 입력란 아래에 에러 메시지 추가
-        $('#me_emailId').closest('.form-group').append(message);
-    }
 </script>
 
 <script type="text/javascript">

@@ -265,8 +265,8 @@ public class MemberController {
     // 아이디 찾기 처리
     @ResponseBody
     @PostMapping("/find/id")
-    public Map<String, Object> findIdPost(@RequestParam String name, @RequestParam String email) {
-        log.info("아이디 찾기 시도: 이름 - " + name + ", 이메일 - " + email);
+    public Map<String, Object> findIdPost(@RequestParam("me_name") String name, @RequestParam("me_email") String email) {
+        log.info("Received me_name: " + name + ", me_email: " + email);
         
         Map<String, Object> response = new HashMap<>();
         String userId = memberService.findId(name, email);
