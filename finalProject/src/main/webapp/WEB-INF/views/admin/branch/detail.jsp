@@ -55,7 +55,7 @@
 									</tr>
 									<tr>
 										<th scope="row">
-											<label for="me_id">${br.br_name} 관리자 아이디</label>
+											<label for="me_id">관리자 아이디</label>
 										</th>
 										<td>
 											<div class="form-group">${me.me_id}</div>
@@ -85,7 +85,7 @@
 									</tr>
 									<tr>
 										<th scope="row">
-											<label for="me_email">${br.br_name} 관리자 이메일</label>
+											<label for="me_email">관리자 이메일</label>
 										</th>
 										<td>
 											<div class="form-group">${me.me_email}</div>
