@@ -17,7 +17,7 @@
 	
 </head>
 <body>
-	<main class="error_container" id="skipnav_target"> 
+	<main class="login_container clearfix" id="skipnav_target"> 
 		<tiles:insertAttribute name="body" />                                                 
     </main>
 </body>
