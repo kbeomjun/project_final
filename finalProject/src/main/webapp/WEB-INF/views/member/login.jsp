@@ -13,7 +13,7 @@
                 <!-- 오른쪽 로그인 폼 세션 -->
                 <div class="login_right_wrap" id="skipnav_target">
                 	<div class="login_prev_wrap">
-						<a href="" class="login_prev">Return Home</a>
+						<a href="<c:url value='/'/>" class="login_prev">Return Home</a>
 					</div>
                     <div class="login_group">
                         <div class="login">
