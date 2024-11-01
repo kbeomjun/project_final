@@ -1,105 +1,69 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>로그인</title>
-<!-- Bootstrap CSS 추가 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <style>
-        .body {
-            padding-top: 150px; /* 헤더와의 간격 */
-            padding-bottom: 150px; /* 푸터와의 간격 */
-        }
-        .card {
-            margin-top: 100px; /* 카드의 위쪽 여백 */
-        }
-        .kakao-login-btn, .kakao-register-btn {
-		    display: inline-block; /* 인라인 블록으로 설정 */
-		    width: 48%; /* 버튼 너비 조절 */
-		    text-align: center; /* 텍스트 중앙 정렬 */
-		    margin-top: 10px; /* 버튼 간격 띄우기 */
-		    background-color: #f7e600; /* 배경색 설정 */
-		    color: black; /* 글자색 설정 */
-		    border-radius: 5px; /* 테두리 둥글게 */
-		    text-decoration: none; /* 링크 밑줄 제거 */
-		    padding: 10px 0; /* 일반 로그인 버튼과 크기 맞춤 */
-		    transition: background-color 0.3s ease; /* 커서 hover 효과에 부드러운 전환 추가 */
-		}
-		.kakao-login-btn:hover, .kakao-register-btn:hover {
-		    background-color: #f1da00; /* 커서가 있을 때 배경색 변경 */
-		    cursor: pointer;
-		}
-    </style>
-</head>
-<body class="bg-light">
-	<div class="container mt-5">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
-				<!-- Card를 사용하여 로그인 폼을 감쌈 -->
-				<div class="card shadow-lg">
-					<div class="card-header bg-success text-white text-center">
-						<h2>로그인</h2>
-					</div>
-					<div class="card-body">
-						<form action="<c:url value='/login'/>" method="post"
-							id="loginfrom">
-							<div class="mb-3">
-								<label for="id" class="form-label">아이디</label> <input
-									type="text" class="form-control" id="id" name="me_id" required />
-							</div>
-							<div class="mb-3">
-								<label for="pw" class="form-label">비밀번호</label> <input
-									type="password" class="form-control" id="pw" name="me_pw"
-									required />
-							</div>
-							<div class="d-flex justify-content-between align-items-center mb-3">
-							    <div class="form-check">
-							        <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true"/>
-							        <label class="form-check-label" for="autologin">자동 로그인</label>
-							    </div>
-							</div>
-	                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-	                            <div class="form-check mb-2">
-	                                <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true" />
-	                                <label class="form-check-label" for="autologin">자동 로그인</label>
-	                            </div>
-	                            <div class="d-flex gap-2 mb-2">
-	                                <a href="<c:url value='/find/id' />" class="text-decoration-none">아이디 찾기</a>
-	                                <a href="<c:url value='/find/pw' />" class="text-decoration-none">비밀번호 찾기</a>
-	                            </div>
-	                        </div>
-	
-	                        <!-- 로그인 버튼 -->
-	                        <button type="submit" class="btn btn-success w-100 mb-3">로그인</button>
-	
-	                        <!-- 소셜 로그인 버튼들 -->
-	                        <div class="d-flex justify-content-between gap-2">
-	                            <a href="#" class="d-flex align-items-center justify-content-center border rounded"
-	                               style="width: 48%; height: 45px;" onclick="loginWithKakao()">
-	                                <img alt="카카오로그인"
-	                                     src="<c:url value='/resources/image/kakao/kakao_login_medium_narrow.png'/>" 
-	                                     style="max-height: 100%;" />
-	                            </a>
-	                            <a href="${naverApiUrl}" class="d-flex align-items-center justify-content-center border rounded"
-	                               style="width: 48%; height: 45px;">
-	                                <img alt="네이버로그인" 
-	                                     src="<c:url value='/resources/image/naver/small_g_in.png'/>" 
-	                                     style="max-height: 100%;" />
-	                            </a>
-	                        </div>
-	                    </form>
-	                </div>
-	                <div class="card-footer text-center">
-	                    <a href="<c:url value='/terms'/>" class="text-decoration-none">회원가입</a>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
 
+ 
+        <div class="login_wrap">
+            <div class="login_content">
+                <div class="login_left_wrap">
+                    <div class="login_banner">
+                        <h2 class="login_logo"><span class="blind">KF</span></h2>
+                        <p class="login_logo_text">KH Fitness For<br>Front-Back-end Developers</p>
+                    </div>
+                </div>
+                <!-- 오른쪽 로그인 폼 세션 -->
+                <div class="login_right_wrap" id="skipnav_target">
+                	<div class="login_prev_wrap">
+						<a href="" class="login_prev">Return Home</a>
+					</div>
+                    <div class="login_group">
+                        <div class="login">
+                            <form action="<c:url value='/login'/>" method="post" id="loginfrom">
+                                <h1 class="login_title">Welcome back to the<br>KH Fitness</h1>
+                                <div class="login_form_group">
+                                    <label for="id" class="login_label">아이디</label>
+                                    <input type="text" class="login_input" id="id" name="me_id" placeholder="아이디를 입력하세요" required/>
+                                </div>
+                                <div class="login_form_group">
+                                    <label for="pw" class="login_label">비밀번호</label>
+                                    <input type="password" class="login_input" id="pw" name="me_pw" placeholder="비밀번호를 입력하세요" required/>
+                                </div>
+                                <!-- SNS 로그인 버튼 -->
+                                <div class="sns_login_wrap">
+                                    <a href="#" class="sns_login naver__login">
+                                        <span>Log in with Naver</span>
+                                    </a>
+                                    <a href="#" class="sns_login kakao__login">
+                                        <span onclick="loginWithKakao()">Log in with Kakao</span>
+                                    </a>
+                                </div>
+                                <!-- 자동 로그인 체크박스 및 아이디/비밀번호 찾기 -->
+                                <div class="login_auto_find_wrap">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="autologin" name="autologin" value="true">
+                                        <label class="form-check-label" for="autologin">자동 로그인</label>
+                                    </div>
+                                    <div class="login_find_wrap">
+                                        <p>아이디 또는 비밀번호를 잃어버리셨나요?</p>
+                                        <div>
+                                            <a href="<c:url value='/find/id' />" class="find_link find_id">아이디 찾기</a>
+                                            <span>or</span>
+                                            <a href="<c:url value='/find/pw' />" class="find_link find_pw">비밀번호 찾기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 로그인 버튼 -->
+                                <button type="submit" class="btn btn_login">로그인</button>
+                            </form>
+                        </div>
+                        <!-- 회원가입 링크 -->
+                        <div class="singup_wrap">
+                            <span>No Account yet?</span>
+                            <a href="<c:url value='/terms'/>" class="singup_link">SIGN UP</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <!-- 카카오 로그인 -->
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
 
@@ -145,5 +109,4 @@
         }
     });
 </script>
-</body>
-</html>
+
