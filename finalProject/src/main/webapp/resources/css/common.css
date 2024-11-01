@@ -682,6 +682,37 @@ label{
 .btn_black:focus, .btn_white:focus{
   box-shadow: none;
 }
+.btn_naver, .btn_kakao{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: initial;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 7px 20px;
+	font-size: 16px;
+  background-color: #fff;
+  color: #666;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  line-height: 22px;
+}
+.btn_naver::before, .btn_kakao::before{
+  content: "";
+	display: inline-block;
+	width: 23px;
+	height: 22px;
+	margin-right: 10px;
+	background: url("../image/icon/ic_naver.svg") no-repeat center;
+}
+.btn_kakao::before{
+	background: url("../image/icon/ic_kakao.svg") no-repeat center;
+}
+.btn_naver:hover, .btn_naver:focus,
+.btn_kakao:hover, .btn_kakao:focus{
+  background-color: #EEEEEE;
+  border-color: #DDD;
+}
 /* button end */
 
 
@@ -1451,7 +1482,7 @@ ion-icon{
   margin-bottom: 0px;
   height: initial;
 }
-.form-control.custom-select{
+.form-control.custom-calender, .form-control.custom-select{
   height: initial;
   min-width: 180px;
   width: 180px;
@@ -1459,9 +1490,16 @@ ion-icon{
   border-radius: 4px;
   padding: 10px;
   font-size: 14px;
-  color: #999;
+  color: #111;
+}
+.form-control.custom-select{
   background-image: url("../image/icon/ic_select_down.svg");
   background-size: 24px 24px;
+}
+.form-control.custom-calender:disabled, .form-control.custom-select:disabled,
+.form-control.custom-calender[readonly], .form-control.custom-select[readonly]{
+  color: #999;
+  cursor: not-allowed;
 }
 .form-control.custom-select option{
   color: #111;
@@ -1648,7 +1686,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 /* 직원 관리 */
 /* 직원 관리 :: profile */
 .profile_img_wrap{
-  width: 300px;
+  width: 240px;
   height: 300px;
 }
 .profile_img_wrap label{

@@ -53,8 +53,16 @@
                             <label for="id" class="form-label">아이디</label>
                             <input type="text" class="form-control" id="id" name="me_id" placeholder="아이디를 입력하세요">
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">이메일</label>
+                            <input type="email" class="form-control" id="email" name="me_email" placeholder="이메일을 입력하세요">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone" class="form-label">전화번호</label>
+                            <input type="text" class="form-control" id="phone" name="me_phone" placeholder="전화번호를 입력하세요">
+                        </div>
                         <button type="button" class="btn btn-outline-success w-100 btn-find-pw mb-3">비밀번호 찾기</button>
-                        <button type="button" class="btn btn-outline-success w-100 btn-go-login" >로그인 페이지로</button>
+                        <button type="button" class="btn btn-outline-success w-100 btn-go-login">로그인 페이지로</button>
                     </div>
                 </div>
             </div>
@@ -65,8 +73,11 @@
         $(document).ready(function () {
             $('.btn-find-pw').click(function () {
                 var id = $('#id').val();
-                if (id === '') {
-                    alert('아이디를 입력하세요.');
+                var email = $('#email').val();
+                var phone = $('#phone').val();
+
+                if (id === '' || email === '' || phone === '') {
+                    alert('아이디, 이메일, 전화번호를 모두 입력하세요.');
                     return;
                 }
 
@@ -83,27 +94,31 @@
                 `;
                 $('body').append(str);
 
-                var res = false;
                 setTimeout(() => {
                     $.ajax({
-                        async: false,
                         url: '<c:url value="/find/pw"/>',
                         type: 'post',
-                        data: { id: id },
+                        data: { id: id, email: email, phone: phone },
                         success: function (data) {
-                            res = data;
+                            $('.modal-container').remove();
+                            if (data === 'not_found') {
+                                alert("등록된 사용자가 아닙니다.");
+                            } else if (data === 'error') {
+                                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                            } else {
+                                alert("비밀번호가 전송됐습니다.");
+                            }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                            $('.modal-container').remove();
+                            if (jqXHR.status === 404) {
+                                alert("등록된 사용자가 없습니다.");
+                            } else {
+                                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                            }
                             console.error(jqXHR, textStatus, errorThrown);
                         }
                     });
-
-                    $('.modal-container').remove();
-                    if (res) {
-                        alert("비밀번호가 전송됐습니다.");
-                    } else {
-                        alert("비밀번호 찾기에 실패했습니다.");
-                    }
                 }, 100);
             });
 

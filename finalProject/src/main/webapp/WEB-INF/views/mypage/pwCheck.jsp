@@ -62,8 +62,16 @@
 					
 					<div class="btn_wrap">
 						<div class="btn_left_wrap">
-							<a href="javascript:void(0);" class="btn mt-3 btn-naver" onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</a>
-							<a href="javascript:void(0);" class="btn mt-3 btn-kakao ml-3" onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</a>
+							<div class="account_wrap">
+								<a href="javascript:void(0)" class="btn btn_naver">
+									<span onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</span>
+								</a>
+								<a href="javascript:void(0)" class="btn btn_kakao">
+									<span onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</span>
+								</a>
+							</div>
+							<!-- <a href="javascript:void(0);" class="btn mt-3 btn-naver" onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</a>
+							<a href="javascript:void(0);" class="btn mt-3 btn-kakao ml-3" onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</a> -->
 						</div>
 					</div>
 					

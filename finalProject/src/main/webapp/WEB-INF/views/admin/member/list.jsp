@@ -23,69 +23,71 @@
 					</div>
 				
 					<!-- 회원 목록 -->
-					<table class="table table_center" id="table">
-						<thead id="thead">
-							<tr>
-				        		<th>이름</th>
-				        		<th>생년월일</th>
-				        		<th>성별</th>
-				        		<th>전화번호</th>
-				        		<th>계정</th>
-				        		<th>이메일</th>
-				        		<th>SNS</th>
-				        		<th>상태</th>							
-								<th>상세</th>
-							</tr>
-						</thead>
-						<tbody id="tbody">
-							<c:forEach items="${memberList}" var="me">
+					<div class="table_wrap">
+						<table class="table table_center" id="table">
+							<thead id="thead">
 								<tr>
-									<td>${me.me_name}</td>
-									<td>
-										<c:if test="${me.me_birth != null}">
-											<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
-										</c:if>
-										<c:if test="${me.me_birth == null}">
-											-
-										</c:if>
-									</td>
-									<td>
-										<c:if test="${me.me_gender != null}">
-											${me.me_gender}
-										</c:if>
-										<c:if test="${me.me_gender == null}">
-											-
-										</c:if>									
-									</td>
-									<td>
-										<c:if test="${me.me_phone != null}">
-											${me.me_phone}
-										</c:if>
-										<c:if test="${me.me_phone == null}">
-											-
-										</c:if>									
-									</td>									
-									<td>${me.me_id}</td>
-									<td>${me.me_email}</td>
-					        		<td>
-					        			<c:choose>
-					        			<c:when test="${me.me_kakaoUserId == null && me.me_naverUserId == null}">-</c:when>
-					        			<c:when test="${me.me_kakaoUserId != null && me.me_naverUserId == null}">카카오</c:when>
-					        			<c:when test="${me.me_kakaoUserId == null && me.me_naverUserId != null}">네이버</c:when>
-					        			<c:otherwise>네이버, 카카오</c:otherwise>
-					        			</c:choose>
-					        		</td>
-					        		<td>
-					        			<c:if test="${me.me_authority == 'USER'}">사용중</c:if>
-					        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
-					        		</td>									
-									<td>
-										<a href="<c:url value="/admin/member/detail/${me.me_id}"/>" class="btn btn_blue">조회</a>
-									</td>
+					        		<th>이름</th>
+					        		<th>생년월일</th>
+					        		<th>성별</th>
+					        		<th>전화번호</th>
+					        		<th>계정</th>
+					        		<th>이메일</th>
+					        		<th>SNS</th>
+					        		<th>상태</th>							
+									<th>상세</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="tbody">
+								<c:forEach items="${memberList}" var="me">
+									<tr>
+										<td>${me.me_name}</td>
+										<td>
+											<c:if test="${me.me_birth != null}">
+												<fmt:formatDate value="${me.me_birth}" pattern="yyyy.MM.dd"/>
+											</c:if>
+											<c:if test="${me.me_birth == null}">
+												-
+											</c:if>
+										</td>
+										<td>
+											<c:if test="${me.me_gender != null}">
+												${me.me_gender}
+											</c:if>
+											<c:if test="${me.me_gender == null}">
+												-
+											</c:if>									
+										</td>
+										<td>
+											<c:if test="${me.me_phone != null}">
+												${me.me_phone}
+											</c:if>
+											<c:if test="${me.me_phone == null}">
+												-
+											</c:if>									
+										</td>									
+										<td>${me.me_id}</td>
+										<td>${me.me_email}</td>
+						        		<td>
+						        			<c:choose>
+						        			<c:when test="${me.me_kakaoUserId == null && me.me_naverUserId == null}">-</c:when>
+						        			<c:when test="${me.me_kakaoUserId != null && me.me_naverUserId == null}">카카오</c:when>
+						        			<c:when test="${me.me_kakaoUserId == null && me.me_naverUserId != null}">네이버</c:when>
+						        			<c:otherwise>네이버, 카카오</c:otherwise>
+						        			</c:choose>
+						        		</td>
+						        		<td>
+						        			<c:if test="${me.me_authority == 'USER'}">사용중</c:if>
+						        			<c:if test="${me.me_authority == 'REMOVED'}">탈퇴</c:if>
+						        		</td>									
+										<td>
+											<a href="<c:url value="/admin/member/detail/${me.me_id}"/>" class="btn btn_blue">조회</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 					
 					<!-- 회원 등록 버튼 -->
 					<div class="btn_wrap">

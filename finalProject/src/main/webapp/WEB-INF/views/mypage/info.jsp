@@ -181,11 +181,17 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="text" class="address-input" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width:130px;" value="${member.me_postcode}">
-												<input class="btn btn-outline-dark" onclick="addressPostcode()" value="우편번호 찾기" style="width:130px; margin-bottom:5px;"> <br/>
-												<input type="text" class="address-input" id="me_address" name="me_address" placeholder="주소" style="width:100%;" value="${member.me_address}"> <br/>
-												<input type="text" class="address-input" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width:60%; margin-bottom: 0;" value="${member.me_detailAddress}">
-												<input type="text" class="address-input" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width:39.36%; margin-bottom: 0;" value="${member.me_extraAddress}">
+												<div class="form-inline">
+													<input type="text" class="form-control" id="me_postcode" name="me_postcode" placeholder="우편번호" value="${member.me_postcode}" readonly>
+													<input class="btn btn_address" onclick="addressPostcode()" value="우편번호 찾기">
+												</div>
+												<div class="form-group">
+													<input type="text" class="form-control" id="me_address" name="me_address" placeholder="주소" value="${member.me_address}" readonly>
+												</div>
+												<div class="form-inline form-inline-50">
+													<input type="text" class="form-control" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" value="${member.me_detailAddress}">
+													<input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" value="${member.me_extraAddress}" readonly>
+												</div>
 											</div>
 											<div class="error error-address"></div>
 										</td>

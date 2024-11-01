@@ -23,39 +23,41 @@
 					</div>
 					
 					<!-- 발주신청 목록 -->
-					<table class="table table_center" id="table">
-						<thead id="thead">
-							<tr>
-								<th>운동기구명</th>
-								<th>발주수량</th>
-								<th>발주날짜</th>
-								<th>발주상태</th>
-								<th>신청취소</th>
-							</tr>
-						</thead>
-						<tbody id="tbody">
-							<c:forEach items="${orderList}" var="list">
+					<div class="table_wrap">
+						<table class="table table_center" id="table">
+							<thead id="thead">
 								<tr>
-									<td>${list.bo_se_name}</td>
-									<td>${list.bo_amount}</td>
-									<td>
-										<fmt:formatDate value="${list.bo_date}" pattern="yyyy-MM-dd"/>
-									</td>
-									<td>${list.bo_state}</td>
-									<td>
-										<c:choose>
-											<c:when test="${list.bo_state == '승인대기'}">
-												<a href="<c:url value="/admin/order/delete/${list.bo_num}"/>" class="btn btn_red" onclick="return confirm('취소하시겠습니까?');">신청취소</a>
-											</c:when>
-											<c:otherwise>
-												-
-											</c:otherwise>
-										</c:choose>
-									</td>							
+									<th>운동기구명</th>
+									<th>발주수량</th>
+									<th>발주날짜</th>
+									<th>발주상태</th>
+									<th>신청취소</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="tbody">
+								<c:forEach items="${orderList}" var="list">
+									<tr>
+										<td>${list.bo_se_name}</td>
+										<td>${list.bo_amount}</td>
+										<td>
+											<fmt:formatDate value="${list.bo_date}" pattern="yyyy-MM-dd"/>
+										</td>
+										<td>${list.bo_state}</td>
+										<td>
+											<c:choose>
+												<c:when test="${list.bo_state == '승인대기'}">
+													<a href="<c:url value="/admin/order/delete/${list.bo_num}"/>" class="btn btn_red" onclick="return confirm('취소하시겠습니까?');">신청취소</a>
+												</c:when>
+												<c:otherwise>
+													-
+												</c:otherwise>
+											</c:choose>
+										</td>							
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 
 					<!-- 발주신청 버튼 -->
 					<div class="btn_wrap">

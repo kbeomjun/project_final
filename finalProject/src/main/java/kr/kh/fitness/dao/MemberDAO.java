@@ -7,6 +7,8 @@ import kr.kh.fitness.model.vo.MemberVO;
 public interface MemberDAO {
 
 	MemberVO selectMember(@Param("me_id") String me_id);
+	
+	MemberVO selectMemberByEmail(@Param("me_email") String me_email);
 
 	boolean insertMember(@Param("m") MemberVO member);
 
@@ -19,11 +21,14 @@ public interface MemberDAO {
 	int updateSocialUser(@Param("social")String social_type, @Param("user")MemberVO socialUser);
 
 	void deleteUser(@Param("user")MemberVO socialUser);
+	
 	boolean updateMember(@Param("user") MemberVO user);
 
 	void updateMemberCookieDelete(@Param("me_id") String me_id);
 
-	MemberVO selectMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
+	MemberVO selectMemberByNameAndEmail(@Param("me_name") String name, @Param("me_email") String email);
+
+	MemberVO findMemberByIdEmailPhone(@Param("me_id")String id, @Param("me_email") String email, @Param("me_phone") String phone);
 
 	boolean updateSocialToKaKao(@Param("me_id") String me_id, @Param("socialId") String socialId);
 

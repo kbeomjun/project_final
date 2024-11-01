@@ -22,37 +22,39 @@
 					</div>
 					
 					<!-- 프로그램 목록 -->
-					<table class="table table_center" id="table">
-						<thead id="thead">
-							<tr>
-								<th>프로그램명</th>
-								<th>트레이너명</th>
-								<th>총 인원수</th>
-								<th>인원수 수정</th>
-								<th>프로그램삭제</th>
-							</tr>
-						</thead>
-						<tbody id="tbody">
-							<c:forEach items="${branchProgramList}" var="list">
+					<div class="table_wrap">
+						<table class="table table_center" id="table">
+							<thead id="thead">
 								<tr>
-									<td>${list.bp_sp_name}</td>
-									<td>${list.em_name}</td>
-									<td>${list.bp_total}</td>
-									<td>
-										<c:if test="${list.sp_type == '그룹'}">
-											<button type="button" class="btn btn_yellow btn-update" data-toggle="modal" data-target="#myModal2" data-num="${list.bp_num}">수정</button>
-										</c:if>
-										<c:if test="${list.sp_type == '단일'}">
-											-
-										</c:if>
-									</td>
-									<td>
-										<a href="<c:url value="/admin/program/delete/${list.bp_num}"/>" class="btn btn_red" onclick="return confirm('삭제하시겠습니까?');">삭제</a>
-									</td>
+									<th>프로그램명</th>
+									<th>트레이너명</th>
+									<th>총 인원수</th>
+									<th>인원수 수정</th>
+									<th>프로그램삭제</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="tbody">
+								<c:forEach items="${branchProgramList}" var="list">
+									<tr>
+										<td>${list.bp_sp_name}</td>
+										<td>${list.em_name}</td>
+										<td>${list.bp_total}</td>
+										<td>
+											<c:if test="${list.sp_type == '그룹'}">
+												<button type="button" class="btn btn_yellow btn-update" data-toggle="modal" data-target="#myModal2" data-num="${list.bp_num}">수정</button>
+											</c:if>
+											<c:if test="${list.sp_type == '단일'}">
+												-
+											</c:if>
+										</td>
+										<td>
+											<a href="<c:url value="/admin/program/delete/${list.bp_num}"/>" class="btn btn_red" onclick="return confirm('삭제하시겠습니까?');">삭제</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 					
 					<!-- 프로그램 등록 버튼 -->
 					<div class="btn_wrap">

@@ -48,6 +48,10 @@ public class MemberServiceImp implements MemberService {
         }
         return null; // 비밀번호가 일치하지 않는 경우 로그인 실패
     }
+    @Override
+    public boolean isMemberExist(String id) {
+        return memberDao.selectMember(id) != null; // 아이디가 존재하면 true 반환
+    }
 
     // 회원가입 처리
     @Override
@@ -91,7 +95,13 @@ public class MemberServiceImp implements MemberService {
 	public boolean checkId(String id) {
 		return memberDao.selectMember(id) == null; // 아이디가 존재하지 않으면 true 반환
 	}
-
+	
+	// 이메일 중복 체크
+	@Override
+	public boolean checkEmail(String email) {
+	    return memberDao.selectMemberByEmail(email) == null; // 이메일이 존재하지 않으면 true 반환
+	}
+	
     // 자동 로그인 쿠키 업데이트
 	@Override
 	public void updateMemberCookie(MemberVO user) {
@@ -216,24 +226,31 @@ public class MemberServiceImp implements MemberService {
 
 	// 비밀번호 찾기 (임시 비밀번호 발급 및 메일 전송)
 	@Override
-	public boolean findPw(String id) {
-		String newPW = randomPassword(6); // 임시 비밀번호 생성 (6자리)
-		
-		MemberVO user = memberDao.selectMember(id);
-		if(user == null) {
-			return false; // 사용자가 존재하지 않으면 실패 반환
-		}
-		
-		pwMailsend(
-				user.getMe_email(),
-				"임시 비밀번호를 발급했습니다",
-				"임시 비밀번호는 <b>" +  newPW + " 입니다"); // 임시 비밀번호 이메일 발송
-		
-		String encPw = passwordEncoder.encode(newPW); // 임시 비밀번호 암호화
-		user.setMe_pw(encPw);
-		return memberDao.updateMember(user); // 사용자 정보 업데이트 (암호 변경)
-	}
+	public boolean findPwByDetails(String id, String email, String phone) {
+	    // 사용자 정보 조회 (ID, 이메일, 전화번호가 모두 일치하는 경우에만 진행)
+	    MemberVO user = memberDao.findMemberByIdEmailPhone(id, email, phone);
+	    if (user == null) {
+	        return false; // 사용자가 존재하지 않으면 실패 반환
+	    }
 
+	    // 임시 비밀번호 생성
+	    String newPW = randomPassword(6);
+
+	    // 이메일로 임시 비밀번호 발송
+	    pwMailsend(
+	        user.getMe_email(),
+	        "임시 비밀번호를 발급했습니다",
+	        "임시 비밀번호는 <b>" + newPW + "</b> 입니다."
+	    );
+
+	    // 임시 비밀번호 암호화
+	    String encPw = passwordEncoder.encode(newPW);
+	    user.setMe_pw(encPw);
+
+	    // 사용자 정보 업데이트 (암호 변경)
+	    return memberDao.updateMember(user);
+	}
+	
 	// 이메일 전송 메서드
 	public boolean pwMailsend(String to, String title, String content) {
 		String setfrom = "sujifi@naver.com";
