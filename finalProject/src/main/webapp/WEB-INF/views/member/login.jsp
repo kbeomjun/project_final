@@ -112,6 +112,8 @@
         
     }
 </script>
+
+<!-- 비밀번호 보이기/숨기기 -->
 <script type="text/javascript">
     document.getElementById('togglePassword').addEventListener('click', function() {
         var passwordField = document.getElementById('pw');
