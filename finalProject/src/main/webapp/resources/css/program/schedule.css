@@ -16,7 +16,7 @@
 .account-book-container {
 	display: flex;
 	flex-direction: column;
-	gap: 3em;
+	/* gap: 3em; */
 	flex-wrap: nowrap; 
 	width: 1000px;
 }

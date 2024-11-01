@@ -1,13 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="<c:url value="/resources/css/program/schedule.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/program/schedule.css"/>">
 
 <style type="text/css">
 .employee-modal .modal-content {
@@ -33,12 +31,34 @@
 .modal-dialog .modal-header {
     border-bottom: none;
 }
+
+.calendar,
+.calendar td {
+border : none;
+}
+.calendar {
+    border-collapse: separate;
+    border-spacing: 15px;
+    table-layout: fixed; /* 고정 레이아웃 설정 */
+}
+
+.calendar th {
+border : none !important;
+}
+
+.calendar td {
+border-top : solid 1px;
+}
+
+.calendar span {
+	font-weight: 500 !important;
+}
 </style>
 </head>
 <body>
 	<section class="sub_banner sub_banner_03"></section>
 	<!-- <h1>프로그램 일정</h1> -->
-	<div class="navbar mb-3">
+	<div class="navbar">
 		<a class="btn br-3" href="<c:url value="/program/info"/>">프로그램 안내</a>
 		<a class="btn btn-selected" href="<c:url value="/program/schedule"/>">프로그램
 			일정</a>
@@ -103,36 +123,22 @@
 
 		<!-- 오른쪽 컨텐츠 영역 -->
 		<section class="sub_content_group">
-
-
 			<fmt:formatDate value="${nowDate}" pattern="yyyy-MM-dd" var="today" />
 			<fmt:formatDate value="${nowDate}" pattern="dd" var="todayDate" />
 			<fmt:formatDate value="${nowDate}" pattern="MM" var="todayMonth" />
 			<fmt:formatDate value="${nowDate}" pattern="yyyy" var="todayYear" />
 			<div class="account-book-container">
 				<div class="sub_navbar">
-				<!-- 
-<ul class="tab_list">
-							<li class="tab_item"><button type="submit" name="category" value="all" class="tab_link _active">전체</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="PT문의" class="tab_link">PT문의</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="건의사항" class="tab_link">건의사항</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="기타" class="tab_link">기타</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="서비스 불만" class="tab_link">서비스 불만</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="시설문의" class="tab_link">시설문의</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="이용문의" class="tab_link">이용문의</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="청결관리" class="tab_link">청결관리</button></li>
-							<li class="tab_item"><button type="submit" name="category" value="환불문의" class="tab_link">환불문의</button></li>
-						</ul>
-						 -->
 					<ul class="tab_list">
 						<li class="tab_item">
 						<a
-							class="btn tab_link <c:if test="${pr_name eq 'null'}">_active</c:if> ml-2"
+							class="btn tab_link <c:if test="${pr_name eq 'null'}">_active</c:if>"
 							href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false"/>">
 							전체 </a></li>
 						
 					<c:forEach items="${program_list}" var="pr" varStatus="status">
 						<c:if test="${pr.sp_name ne 'PT'}">
+							<!-- 여기에 각 색상을 순서대로 클래스로 set하고 a 태그 클래스에 추가 -->
 							<c:choose>
 								<c:when test="${pr.sp_name == pr_name}">
 									<c:set var="_btn_seleceted" value="_active" />
@@ -142,42 +148,53 @@
 								</c:otherwise>
 							</c:choose>
 							<li class="tab_item">
-							<a class="btn tab_link ${_btn_seleceted} ml-2"
+							<a class="btn tab_link ${_btn_seleceted}"
 								href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/${pr.sp_name}/false"/>">
 								${pr.sp_name } </a></li>
 						</c:if>
 					</c:forEach>
 					</ul>
 				</div>
-				<div class="calendar-wrapper ml-3">
-					<span class="fw-bold fs-5 ml-3" style="font-size: 1.5rem;">${cal.year}년
+				<div class="calendar-wrapper">
+					<span class="fs-5 ml-3" style="font-size: 1.5rem; font-weight: 600;">${cal.year}년
 						${cal.month+1}월</span>
-					<div class="mt-3 mb-3 p-3 d-flex justify-content-between">
+					<div class="p-3 d-flex justify-content-between">
 						<span> <c:if
 								test="${ cal.year ne todayYear || ((cal.month+1) ne todayMonth)}">
-								<a class="btn btn-outline-dark"
+								<a class="btn tab_link" style="border-radius: 10px;"
 									href="<c:url value="/program/schedule/${cal.year}/${cal.month-1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">이전달</a>
 							</c:if>
-						</span> <span> <a class="btn btn-outline-dark"
+						</span> <span> <a class="btn tab_link" style="border-radius: 10px;"
 							href="<c:url value="/program/schedule/${cal.year}/${cal.month+1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">다음달</a>
 						</span>
 					</div>
 
 					<table class="table text-center table-bordered calendar">
 						<tr class="table-light text-center fs-5 tr-h">
-							<th class="text-danger">일</th>
-							<th>월</th>
-							<th>화</th>
-							<th>수</th>
-							<th>목</th>
-							<th>금</th>
-							<th class="text-primary">토</th>
+							<th class="text-danger">일요일</th>
+							<th>월요일</th>
+							<th>화요일</th>
+							<th>수요일</th>
+							<th>목요일</th>
+							<th>금요일</th>
+							<th class="text-primary">토요일</th>
 						</tr>
 
 						<c:forEach begin="1" end="${cal.tdCnt}" step="7" var="i">
 							<tr>
 								<c:forEach begin="${i }" end="${i + 6}" step="1" var="j">
-									<td><c:if test="${selected ne null }">
+									<c:choose>
+										<c:when test="${j % 7 == 0 }">
+										<td class="text-primary">
+										</c:when>
+										<c:when test="${j % 7 == 1 }">
+										<td class="text-danger">
+										</c:when>
+										<c:otherwise>
+										<td>
+										</c:otherwise>
+									</c:choose>
+									<c:if test="${selected ne null }">
 											<c:choose>
 												<c:when
 													test="${selected.dayOfMonth == (j - cal.startBlankCnt)}">
@@ -187,8 +204,8 @@
 													<c:set var="cls" value="" />
 												</c:otherwise>
 											</c:choose>
-										</c:if> <c:if
-											test="${(j > cal.startBlankCnt) && (j <= cal.startBlankCnt + cal.lastDate)}">
+										</c:if> 
+										<c:if test="${(j > cal.startBlankCnt) && (j <= cal.startBlankCnt + cal.lastDate)}">
 											<c:set var="url"
 												value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true" />
 
@@ -210,41 +227,61 @@
 											<c:choose>
 												<c:when test="${j % 7 == 0 }">
 													<a href="<c:url value="${url}"/>" class="btn ${disabled}">
-														<span class="text-primary mb-3 ${cls}">${j - cal.startBlankCnt }</span>
+														<span class="text-primary mb-3 ${cls}"><fmt:formatNumber value="${j - cal.startBlankCnt}" pattern="00" /></span>
 													</a>
 													<br>
 												</c:when>
 												<c:when test="${j % 7 == 1 }">
 													<a href="<c:url value="${url}"/>" class="btn ${disabled}">
-														<span class="text-danger mb-3 ${cls}">${j - cal.startBlankCnt }
-													</span>
+														<span class="text-danger mb-3 ${cls}"><fmt:formatNumber value="${j - cal.startBlankCnt}" pattern="00" /></span>
 													</a>
 													<br>
 												</c:when>
 												<c:otherwise>
 													<a href="<c:url value="${url}"/>" class="btn ${disabled}">
-														<span class="mb-3 ${cls}"> ${j - cal.startBlankCnt }
-													</span>
+														<span class="mb-3 ${cls}"><fmt:formatNumber value="${j - cal.startBlankCnt}" pattern="00" /></span>
 													</a>
 													<br>
 												</c:otherwise>
 											</c:choose>
 											<c:set var="sp_name_distinct" value="PT" />
+											<div style="text-align: center;">
 											<c:forEach items="${ps_list}" var="ps" varStatus="status">
-												<fmt:formatDate value='${ps.bs_start}' pattern='dd'
-													var="ps_day" />
-												<c:if test="${(j - cal.startBlankCnt) eq ps_day}">
-													<c:if
-														test="${fn:contains(sp_name_distinct, ps.bp_sp_name) == false}">
-														<a class="btn btn-success program-button ${disabled}"
-															href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${ps.bp_sp_name}/true"/>">
-															<span>${ps.bp_sp_name}</span>
-														</a>
-														<c:set var="sp_name_distinct"
-															value="${sp_name_distinct},${ps.bp_sp_name}" />
-													</c:if>
-												</c:if>
+											    <fmt:formatDate value='${ps.bs_start}' pattern='dd' var="ps_day" />
+											    
+											    <c:if test="${(j - cal.startBlankCnt) eq ps_day}">
+											    	
+											    	<c:set var="colorClass" value="" />
+
+											        <c:choose>
+											            <c:when test="${ps.bp_sp_name eq '필라테스'}">
+											                <c:set var="colorClass" value="btn_group_color_1" />
+											            </c:when>
+											            <c:when test="${ps.bp_sp_name eq '요가'}">
+											                <c:set var="colorClass" value="btn_group_color_2" />
+											            </c:when>
+											            <c:when test="${ps.bp_sp_name eq '스피닝'}">
+											                <c:set var="colorClass" value="btn_group_color_3" />
+											            </c:when>
+											            <c:when test="${ps.bp_sp_name eq '크로스핏'}">
+											                <c:set var="colorClass" value="btn_group_color_4" />
+											            </c:when>
+											            <c:otherwise>
+											                <c:set var="colorClass" value="btn_group_color_10" /> 
+											            </c:otherwise>
+											        </c:choose>
+											
+											        <c:if test="${fn:contains(sp_name_distinct, ps.bp_sp_name) == false}">
+											        
+											            <a class="btn ${colorClass} program-button ${disabled}"
+											                href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${ps.bp_sp_name}/true"/>">
+											                <span>${ps.bp_sp_name}</span>
+											            </a>
+											            <c:set var="sp_name_distinct" value="${sp_name_distinct},${ps.bp_sp_name}" />
+											        </c:if>
+											    </c:if>
 											</c:forEach>
+											</div>
 										</c:if></td>
 								</c:forEach>
 							</tr>
@@ -304,7 +341,7 @@
 															method="post">
 															<input type="hidden" name="bs_num" value="${ps.bs_num}">
 															<button
-																class="btn btn-outline-primary btn-program-reservation1"
+																class="btn btn_green btn-program-reservation1"
 																data-program="${ps.bp_sp_name}/${ps.bp_br_name}/${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})/<fmt:formatDate value="${ps.bs_start}" pattern="HH:mm"/>~<fmt:formatDate value="${ps.bs_end}" pattern="HH:mm" />"
 																data-num="${ps.bs_num}" type="button">예약</button>
 														</form>
@@ -420,7 +457,7 @@
         });
     });
 </script>
-	<script type="text/javascript">
+<script type="text/javascript">
 // 페이지가 로드될 때 첫 번째 버튼의 세부 정보를 표시
 window.onload = function() {
     
@@ -432,6 +469,21 @@ window.onload = function() {
     
     // 페이드 인 효과 활성화
     document.body.classList.add("fade-in");
+    
+    // 모든 td 요소의 최대 높이를 구해 같은 높이로 설정
+   	const tds = document.querySelectorAll(".calendar td");
+    let maxHeight = 0;
+
+    // 각 td의 높이 중 가장 큰 값 찾기
+    tds.forEach(td => {
+        maxHeight = Math.max(maxHeight, td.offsetHeight);
+    });
+
+    // 모든 td에 최대 높이 적용
+    tds.forEach(td => {
+        td.style.height = maxHeight + "px";
+    });
+    
 };
 
 	// 스크롤할 때마다 현재 위치를 저장
@@ -508,6 +560,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
 </body>
 
 </html>
