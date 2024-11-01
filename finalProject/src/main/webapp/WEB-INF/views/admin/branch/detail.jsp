@@ -3,15 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-   <style type="text/css">
-   	.file-input{border: 1px solid gray; border-radius: 5px;}
-   	.img-container{min-height: 400px;}
-   	.btn-insert-img{line-height: 21px; width: 42px; height: 38px; border-radius: 50%; padding: 8px;}
-   	.btn-delete-img, .btn-delete-img2{position:absolute; top:5px; right:5px; line-height: 16px; width: 42px; height: 38px; border-radius: 50%;}
-   	.img-box, .img-box2{border: 0; width:33.33%; height:200px; box-sizing: border-box; position: relative;}
-   	#fileList, #fileList2{display: none;}
-   </style>
-
 			<section class="sub_banner sub_banner_05"></section>
 			<section class="sub_content">
 			
@@ -32,8 +23,8 @@
 							<input type="hidden" name="br_name" value="${br.br_name}">
 							<table class="table">
 								<colgroup>
-									<col style="width: 20%;">
-									<col style="width: 80%;">
+									<col style="width: 12%;">
+									<col style="width: 88%;">
 								</colgroup>
 								
 								<tbody>
@@ -114,43 +105,40 @@
 											<label for="bf_name" class="_asterisk">등록된 사진</label>
 										</th>
 										<td>
-											<div class="form-group file-input">
-												<div class="img-container2 d-flex flex-wrap">
-													<c:forEach items="${bfList}" var="bf">
-														<div class="img-box2">
-												        	<img src="<c:url value="/uploads${bf.bf_name}"/>" style="width:100%; height:100%">
-													        	<button type="button" class="btn btn-outline-danger btn-delete-img2" data-num="${bf.bf_num}">
-																	<i class="fi fi-bs-cross"></i>
+											<div class="form-group">
+												<div class="file-input">
+													<div class="branch_img_container img-container">
+														<c:forEach items="${bfList}" var="bf">
+															<div class="img-box">
+																<button type="button" class="btn btn_delete btn-delete-img2" data-num="${bf.bf_num}">
+																	<img src="<c:url value="/uploads${bf.bf_name}"/>">
 																</button>
-															</img>
-														</div>
-													</c:forEach>
+															</div>
+														</c:forEach>
+													</div>
 												</div>
+												<div class="error"></div>
 											</div>
 										</td>
 									</tr>
 									<tr>
 										<th scope="row">
-											<label for="bf_name2">추가할 사진</label>
+											<label for="bf_name2">사진</label>
 										</th>
 										<td>
-											<div class="form-group file-input">
-												<div class="img-container d-flex flex-wrap align-items-center">
-													<div class="mx-auto">
-														<label for="fileList" class="btn btn-outline-success btn-insert-img">
-															<i class="fi fi-br-plus align-items-center"></i>
-														</label>
+											<div class="form-group">
+												<label for="fileList2" class="btn btn_img_insert">
+													<span>사진 추가 (</span><span class="img-count">${bfList.size()}</span><span>개)</span>
+												</label>
+												<div class="file-input">
+													<div class="branch_img_container img-container img-container1">
+														<div class="img_zero">사진 추가를 눌러 이미지를 추가해주세요.</div>
 													</div>
 												</div>
+												<input type="file" class="form-control display_none" id="fileList" name="fileList" multiple="multiple" accept="image/*">
+												<input type="file" class="form-control display_none" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
 											</div>
-											<label for="fileList2" class="btn btn-outline-success col-12 mt-3">
-												<span>사진 추가(</span>
-												<span class="img-count">0</span>
-												<span>개)</span>
-											</label>
-											<input type="file" class="form-control" id="fileList" name="fileList" multiple="multiple" accept="image/*">
-											<input type="file" class="form-control" id="fileList2" name="fileList2" multiple="multiple" accept="image/*">
-											<div class="error error-file"></div>											
+											<div class="error error-file"></div>										
 										</td>
 									</tr>
 								</tbody>
@@ -171,7 +159,6 @@
 			<script>
 				// 사진 파일
 				var del = 0;
-				displayFileList($("#fileList")[0].files);
 				$('.btn-delete-img2').click(function(){
 					del++;
 					var bf_num = $(this).data("num");
@@ -187,10 +174,9 @@
 					console.log(fileList);
 					var count = fileList.length;
 					$('.img-count').text(count + ${bfList.size()} - del);
+					$('.img-container1').children().remove();
 					if(count > 0){
 						for(var i = 0; i < count; i++){
-							$('.img-container').children().remove();
-							$('.img-container').removeClass('align-items-center')
 							let fReader = new FileReader();
 						    fReader.readAsDataURL(fileList[i]);
 						    fReader.num = i;
@@ -199,34 +185,24 @@
 						    	let path = event.target.result;
 						        img = `
 						        	<div class="img-box">
-							        	<img src="\${path}" style="width:100%; height:100%">
-								        	<button type="button" class="btn btn-outline-danger btn-delete-img" data-num="\${num}">
-												<i class="fi fi-bs-cross"></i>
-											</button>
-										</img>
+										<button type="button" class="btn btn_delete btn-delete-img" data-num="\${num}">
+											<img src="\${path}">
+										</button>
 									</div>
 						        `;
-						        $('.img-container').append(img);
+						        $('.img-container1').append(img);
 						    }
 						}
+						$('.error-file').children().remove();
 					}
 					else if(count == 0){
-						$('.img-container').children().remove();
-						$('.img-container').addClass('align-items-center')
 				        btn = `
-				        	<div class="mx-auto">
-								<label for="fileList" class="btn btn-outline-success btn-insert-img">
-									<i class="fi fi-br-plus align-items-center"></i>
-								</label>
-							</div>
+				        	<div class="img_zero">사진 추가를 눌러 이미지를 추가해주세요.</div>
 				        `;
-				        $('.img-container').append(btn);
+				        $('.img-container1').append(btn);
+				        $('.error-file').append(imgRequired);
 					}
 				}
-				
-				$(document).on("change", "#fileList", function(){
-					displayFileList($("#fileList")[0].files);
-				});
 				
 				const deleteFile = (fileNum) => {
 				    const dataTransfer = new DataTransfer();

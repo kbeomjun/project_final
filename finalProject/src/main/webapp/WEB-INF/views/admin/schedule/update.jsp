@@ -14,6 +14,7 @@
 				<section class="sub_content_group">
 					<div class="sub_title_wrap">
 						<h2 class="sub_title">스케줄 수정</h2>
+						<p class="sub_title__txt">* 이전에 등록한 프로그램과 일정이 겹치면 등록이 불가능합니다.</p>
 					</div>	
 					
 					<div class="table_wrap">

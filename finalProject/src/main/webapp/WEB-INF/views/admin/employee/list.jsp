@@ -23,40 +23,42 @@
 					</div>
 					
 					<!-- 직원 목록 -->
-					<table class="table table_center" id="table">
-						<thead id="thead">
-							<tr>
-								<th>직원번호</th>
-								<th>이름</th>
-								<th>전화번호</th>
-								<th>이메일</th>
-								<th>입사일</th>
-								<th>직책</th>
-								<th>상세</th>
-								<th>삭제</th>
-							</tr>
-						</thead>
-						<tbody id="tbody">
-							<c:forEach items="${employeeList}" var="em">
+					<div class="table_wrap">
+						<table class="table table_center" id="table">
+							<thead id="thead">
 								<tr>
-									<td>${em.em_num}</td>
-									<td>${em.em_name}</td>
-									<td>${em.em_phone}</td>
-									<td>${em.em_email}</td>
-									<td>
-										<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
-									</td>
-									<td>${em.em_position}</td>
-									<td>
-										<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn_blue">조회</a>
-									</td>
-									<td>
-										<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn_red btn-delete">삭제</a>
-									</td>						
+									<th>직원번호</th>
+									<th>이름</th>
+									<th>전화번호</th>
+									<th>이메일</th>
+									<th>입사일</th>
+									<th>직책</th>
+									<th>상세</th>
+									<th>삭제</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="tbody">
+								<c:forEach items="${employeeList}" var="em">
+									<tr>
+										<td>${em.em_num}</td>
+										<td>${em.em_name}</td>
+										<td>${em.em_phone}</td>
+										<td>${em.em_email}</td>
+										<td>
+											<fmt:formatDate value="${em.em_join}" pattern="yyyy.MM.dd"/>
+										</td>
+										<td>${em.em_position}</td>
+										<td>
+											<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn_blue">조회</a>
+										</td>
+										<td>
+											<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn_red btn-delete">삭제</a>
+										</td>						
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 							
 					<!-- 직원 등록 버튼 -->
 					<div class="btn_wrap">
