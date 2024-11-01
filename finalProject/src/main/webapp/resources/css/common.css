@@ -1450,7 +1450,7 @@ ion-icon{
   margin-bottom: 0px;
   height: initial;
 }
-.form-control.custom-select{
+.form-control.custom-calender, .form-control.custom-select{
   height: initial;
   min-width: 180px;
   width: 180px;
@@ -1458,9 +1458,16 @@ ion-icon{
   border-radius: 4px;
   padding: 10px;
   font-size: 14px;
-  color: #999;
+  color: #111;
+}
+.form-control.custom-select{
   background-image: url("../image/icon/ic_select_down.svg");
   background-size: 24px 24px;
+}
+.form-control.custom-calender:disabled, .form-control.custom-select:disabled,
+.form-control.custom-calender[readonly], .form-control.custom-select[readonly]{
+  color: #999;
+  cursor: not-allowed;
 }
 .form-control.custom-select option{
   color: #111;

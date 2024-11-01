@@ -112,7 +112,7 @@
 			                </tr>
 			                <tr>
 			                	<th>
-									<label for="pt_count">횟수:</label>
+									<label for="pt_count">횟수</label>
 			                	</th>
 			                	<td>
 				                	<div id="subMenu" class="">

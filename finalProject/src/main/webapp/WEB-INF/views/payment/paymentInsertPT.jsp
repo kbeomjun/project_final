@@ -12,33 +12,24 @@
 </head>
 <body>
 	<section class="sub_banner sub_banner_02"></section>
+
     <!-- 기존 회원권 정보 표시 -->
     <c:set var="isRePayment" value="${not empty firstStartDate}" />
     <c:set var="isRePaymentForPT" value="${not empty ptFirstStartDate}" />
-
-
-    <c:if test="${firstStartDate != null && firstStartDate != ''}">
-        <div class="membership-info my-10">
-            <p class="mb-0">회원님의 회원권 시작일: <strong class="text-success">${firstStartDate}</strong></p>
-            <p>회원님의 회원권 만료일: <strong class="text-primary">${lastEndDate}</strong></p>
-        </div>
-    </c:if>
     
-    <!-- PT 결제 여부 표시 -->
-	<c:if test="${!isRePaymentForPT}">
-	    <div class="alert alert-info">PT 결제는 첫 결제입니다.</div>
-	</c:if>
-	<c:if test="${isRePaymentForPT}">
-	    <div class="alert alert-warning">PT 결제는 재결제입니다.</div>
-	    <p class="mb-0">회원님의 PT 시작일: <strong class="text-success">${ptFirstStartDate}</strong></p>
-            <p>회원님의 PT 만료일: <strong class="text-primary">${ptLastEndDate}</strong></p>
-	</c:if>
 	<section class="sub_content">
 		<section class="sub_content_group">
 			<div class="sub_title_wrap">
 				<h2 class="sub_title">PT 결제</h2>
 				<p class="sub_title__txt">※ PT 이용권은 지정된 기간 내에 사용하지 않으면 소멸됩니다.</p>
 				<p class="sub_title__txt">※ 회원권 결제는 로그인 후 이용 가능 합니다.</p>
+			    <!-- PT 결제 여부 표시 -->
+				<c:if test="${!isRePaymentForPT}">
+				    <div class="alert alert-info mt20 mb20">PT 결제는 첫 결제입니다.</div>
+				</c:if>
+				<c:if test="${isRePaymentForPT}">
+				    <div class="alert alert-warning mt20 mb20">PT 결제는 재결제입니다.</div>
+				</c:if>
 			</div>
 			<div class="table_wrap">
 				<form id="paymentForm" action="<c:url value='/payment/paymentInsertPT'/>" method="post">
@@ -51,12 +42,58 @@
 							<col style="width: 80%;">
 						</colgroup>
 						<tbody>
+    						<c:if test="${firstStartDate != null && firstStartDate != ''}">
+    							<tr>
+    								<th>회원권 시작일</th>
+    								<td>
+    									<strong class="text-success">${firstStartDate}</strong>
+    								</td>
+    							</tr>
+    							<tr>
+    								<th>회원권 만료일</th>
+    								<td>
+    									<strong class="text-primary">${lastEndDate}</strong>
+    								</td>
+    							</tr>
+    						</c:if>
+							<c:if test="${isRePaymentForPT}">
+								<tr>
+									<th>
+										<!-- PT 결제 시작일 표시 -->
+										<p>PT 재시작일</p>
+									</th>
+									<td>
+										<strong class="text-success">${newStartDate}</strong>
+									    <input type="hidden" name="pa_start" value="${newStartDate}" />
+								    </td>
+								</tr>
+								<tr>
+									<th>
+										<!-- PT 만료일 표시 -->
+										<p>PT 만료일</p>
+									</th>
+									<td>
+										<strong class="text-primary">${ptLastEndDate}</strong>
+								    </td>
+								</tr>
+							</c:if>
+							<c:if test="${!isRePaymentForPT}">
+								<tr>
+									<th>
+									    <!-- 첫 결제인 경우 시작일 입력 필드 표시 -->
+									    <label for="pa_start">PT 시작 날짜</label>
+									</th>
+									<td>
+										<input type="date" id="pa_start" name="pa_start" class="form-control custom-calender" min="${firstStartDate}" max="${lastEndDate}" required>
+								    </td>
+								</tr>
+							</c:if>
 							<tr>
 								<th scope="row">
 									 <label for="pt_num" class="_asterisk">이용권 종류</label>
 								</th>
 				                <td>
-					                <select name="pt_num" id="pt_num" class="form-control">
+					                <select name="pt_num" id="pt_num" class="form-control custom-select">
 					                	<c:forEach items="${paymentPTList}" var="pt">
 										    <option value="${pt.pt_num}" data-name="${pt.pt_name}" data-type="${pt.pt_type}" data-date="${pt.pt_date}" data-count="${pt.pt_count}" data-price="${pt.pt_price}" <c:if test="${pt.pt_num == 1}">selected</c:if>>${pt.pt_name}</option>
 										</c:forEach>
@@ -107,36 +144,19 @@
 			                </tr>
 						</tbody>
 					</table>
-			        <div>
-			            <div id="subMenu" class="">
-			                <div class="form-inline">
-			                    
-							    <%-- value는 하단의 script로 값을 가져오고 있음. --%>
-								<!-- PT 결제 시작일 표시 -->
-								<c:if test="${isRePaymentForPT}">
-								    <!-- 재결제인 경우 시작일 필드 숨김 -->
-								    <p>회원님의 PT 재시작일: <strong class="text-success">${newStartDate}</strong></p>
-								    <input type="hidden" name="pa_start" value="${newStartDate}" />
-								</c:if>
-								
-								<c:if test="${!isRePaymentForPT}">
-								    <!-- 첫 결제인 경우 시작일 입력 필드 표시 -->
-								    <label for="pa_start">PT 시작 날짜:</label>
-								    <input type="date" id="pa_start" name="pa_start" class="form-control" min="${firstStartDate}" max="${lastEndDate}" required>
-								</c:if>
-			                </div>
-							<div class="my-3">
-								<p>오늘 날짜 : ${currentDate}</p>
-								<p>회원권 시작일 : ${firstStartDate} / 회원권 만료일 : ${lastEndDate}</p>
-								<p>PT 시작일 : ${ptFirstStartDate} / PT 만료일 : ${ptLastEndDate}</p>
+					<div class="btn_wrap">
+						<div class="btn_right_wrap">
+							<div class="btn_link_black">
+								<a href="<c:url value="/payment/paymentInsert" />" class="btn btn_black js-btn-insert">
+									<span>회원권 결제<i class="ic_link_share"></i></span>
+								</a>
+								<div class="btn_black_top_line"></div>
+								<div class="btn_black_right_line"></div>
+								<div class="btn_black_bottom_line"></div>
+								<div class="btn_black_left_line"></div>
 							</div>
-			            </div>
+						</div>
 			        </div>
-			        
-			        <div class="text-right">
-			            <button type="button" class="btn btn-danger js-btn-insert">결제</button>
-			        </div>
-			
 			    </form>
 		    </div>
 	    </section>
