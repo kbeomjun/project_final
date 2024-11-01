@@ -80,7 +80,17 @@
 	padding: 42px 50px;
 }
 .login_prev{
-	
+	display: flex;
+}
+.login_prev::before{
+	content: "";
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+    margin-right: 5px;
+	background: url("../image/icon/ic_prev.svg") no-repeat center;
 }
 .login_group{
     display: flex;
