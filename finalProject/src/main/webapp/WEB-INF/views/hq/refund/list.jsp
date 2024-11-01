@@ -166,6 +166,7 @@
 							}
 							$('#myModal').modal("hide");
 							$('#re_price').val("");
+							$("select[name=re_reason]").val("").prop("selected", true);
 							
 							table.destroy();
 							table = $('#table').DataTable({
