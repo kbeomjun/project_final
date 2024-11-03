@@ -37,7 +37,7 @@
 @font-face {
 	font-family: "Zen Kaku Gothic Antique", sans-serif;
 	font-style: "normal";
-	font-weight: 300;
+	font-weight: 400;
 	src: local("ZenKakuGothicAntique-Medium"), local("ZenKakuGothicAntique-Medium"),
 				url("../fonts/ZenKakuGothicAntique-Medium.ttf") format("truetype");
 }

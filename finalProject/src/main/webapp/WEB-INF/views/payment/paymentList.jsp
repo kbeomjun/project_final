@@ -60,7 +60,7 @@
 								</div>
 								<c:if test="${hasMembership}">
 									<div class="btn_link_black bg_white">
-										<a href="#" class="btn btn_black js-btn-insert">
+										<a href="<c:url value="/payment/paymentInsertPT" />" class="btn btn_black js-btn-insert">
 											<span>PT 결제<i class="ic_link_share"></i></span>
 										</a>
 										<div class="btn_black_top_line"></div>

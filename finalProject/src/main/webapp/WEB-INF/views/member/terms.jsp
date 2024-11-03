@@ -34,14 +34,14 @@
 <body>
     <div class="container">
         <h1 class="text-center">이용 약관</h1>
-        
+
         <!-- 소제목과 내용 -->
         <h3>이용 약관 1</h3>
         <div class="term-box p-3 mb-4">
             <p>여기에 이용 약관 1의 내용을 넣습니다...</p>
         </div>
         <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="agreeTerms1" required>
+            <input class="form-check-input" type="checkbox" id="agreeTerms1" onclick="checkAllSelected()">
             <label class="form-check-label" for="agreeTerms1">이용 약관 1에 동의합니다.</label>
         </div>
 
@@ -51,22 +51,30 @@
             <p>여기에 이용 약관 2의 내용을 넣습니다...</p>
         </div>
         <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="agreeTerms2" required>
+            <input class="form-check-input" type="checkbox" id="agreeTerms2" onclick="checkAllSelected()">
             <label class="form-check-label" for="agreeTerms2">이용 약관 2에 동의합니다.</label>
         </div>
-        
+
         <!-- 소제목과 내용 -->
         <h3>이용 약관 3</h3>
         <div class="term-box p-3 mb-4">
             <p>여기에 이용 약관 3의 내용을 넣습니다...</p>
         </div>
         <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="agreeTerms3" required>
+            <input class="form-check-input" type="checkbox" id="agreeTerms3" onclick="checkAllSelected()">
             <label class="form-check-label" for="agreeTerms3">이용 약관 3에 동의합니다.</label>
         </div>
 
-        <!-- 다음 버튼을 오른쪽 끝에 배치 -->
+        <!-- 모두 동의 체크박스를 다음 버튼 위에 배치 -->
         <form action="<c:url value='/signup'/>" method="get" onsubmit="return validateForm();">
+            <div class="d-flex justify-content-end mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agreeAll" onclick="toggleAllCheckboxes(this)">
+                    <label class="form-check-label" for="agreeAll">모두 동의합니다.</label>
+                </div>
+            </div>
+            
+            <!-- 다음 버튼을 오른쪽 끝에 배치 -->
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-success mt-3">다음</button>
             </div>
@@ -74,11 +82,28 @@
     </div>
 
     <script>
+        // 모두 동의 체크박스를 클릭했을 때
+        function toggleAllCheckboxes(checkbox) {
+            const checked = checkbox.checked;
+            document.getElementById('agreeTerms1').checked = checked;
+            document.getElementById('agreeTerms2').checked = checked;
+            document.getElementById('agreeTerms3').checked = checked;
+        }
+
+        // 개별 체크박스를 클릭했을 때 모두 동의 체크 여부 확인
+        function checkAllSelected() {
+            const allChecked = document.getElementById('agreeTerms1').checked &&
+                               document.getElementById('agreeTerms2').checked &&
+                               document.getElementById('agreeTerms3').checked;
+            document.getElementById('agreeAll').checked = allChecked;
+        }
+
+        // 모든 약관 동의 검증
         function validateForm() {
             const agreeTerms1 = document.getElementById('agreeTerms1').checked;
             const agreeTerms2 = document.getElementById('agreeTerms2').checked;
             const agreeTerms3 = document.getElementById('agreeTerms3').checked;
-            
+
             if (!agreeTerms1 || !agreeTerms2 || !agreeTerms3) {
                 let message = '모든 약관에 동의해야 회원가입을 진행할 수 있습니다.';
                 

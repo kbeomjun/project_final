@@ -682,6 +682,37 @@ label{
 .btn_black:focus, .btn_white:focus{
   box-shadow: none;
 }
+.btn_naver, .btn_kakao{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: initial;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 7px 20px;
+	font-size: 16px;
+  background-color: #fff;
+  color: #666;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  line-height: 22px;
+}
+.btn_naver::before, .btn_kakao::before{
+  content: "";
+	display: inline-block;
+	width: 23px;
+	height: 22px;
+	margin-right: 10px;
+	background: url("../image/icon/ic_naver.svg") no-repeat center;
+}
+.btn_kakao::before{
+	background: url("../image/icon/ic_kakao.svg") no-repeat center;
+}
+.btn_naver:hover, .btn_naver:focus,
+.btn_kakao:hover, .btn_kakao:focus{
+  background-color: #EEEEEE;
+  border-color: #DDD;
+}
 /* button end */
 
 
@@ -1101,6 +1132,7 @@ ion-icon{
   border-bottom: 1px solid #DDD;
   padding: 20px 0px;
   font-size: 14px;
+  cursor: pointer;
   transition: .1s;
 }
 .lnb_wrap .lnb .lnb__item:first-child .lnb__link{
@@ -1192,6 +1224,52 @@ ion-icon{
   background-color: #111;
   color: #fff;
 }
+
+.tabList_wrap{
+  width: 1440px;
+  margin: 0 auto;
+}
+.tabList{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 80px 0px;
+  border-bottom: 1px solid #ddd;
+}
+.tabList_item{
+  margin: 0px 20px;
+  padding: 4px 4px 8px 4px;
+}
+.tabList_item:first-child{
+  margin-left: 0px;
+}
+.tabList_item:last-child{
+  margin-right: 0px;
+}
+.tabList_link{
+  position: relative;
+  padding: 4px 4px 10px 4px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #999;
+  transition: .1s;
+}
+.tabList_link._active{
+  font-weight: bold;
+  color: #111;
+}
+.tabList_link:hover, .tabList_link:focus{
+  color: #111;
+}
+.tabList_link._active::after{
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background-color: #111;
+}
 /* tab end */
 
 /* 검색 */
@@ -1244,7 +1322,7 @@ ion-icon{
   background-position: center;
 }
 
-/* data-table search */
+/* data-table :: search */
 .table_wrap .dt-container .dt-layout-cell.dt-layout-end{
   width: 100%;
 }
@@ -1274,7 +1352,7 @@ ion-icon{
   background-size: 25px;
   background-position: center;
 }
-/* 검색 end */
+/* data-table :: search end */
 
 
 
@@ -1403,7 +1481,7 @@ ion-icon{
   margin-bottom: 0px;
   height: initial;
 }
-.form-control.custom-select{
+.form-control.custom-calender, .form-control.custom-select{
   height: initial;
   min-width: 180px;
   width: 180px;
@@ -1411,9 +1489,16 @@ ion-icon{
   border-radius: 4px;
   padding: 10px;
   font-size: 14px;
-  color: #999;
+  color: #111;
+}
+.form-control.custom-select{
   background-image: url("../image/icon/ic_select_down.svg");
   background-size: 24px 24px;
+}
+.form-control.custom-calender:disabled, .form-control.custom-select:disabled,
+.form-control.custom-calender[readonly], .form-control.custom-select[readonly]{
+  color: #999;
+  cursor: not-allowed;
 }
 .form-control.custom-select option{
   color: #111;
@@ -1553,6 +1638,9 @@ table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td{
 div.dt-container.dt-empty-footer tbody>tr:last-child>*{
   border-bottom: 1px solid #DDD;
 }
+div.dt-container.dt-empty-footer .dt-scroll-body{
+  border-bottom: none;
+}
 
 
 /* data-table :: pagination */
@@ -1597,11 +1685,13 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 /* 직원 관리 */
 /* 직원 관리 :: profile */
 .profile_img_wrap{
-  width: 300px;
+  width: 240px;
   height: 300px;
 }
 .profile_img_wrap label{
   cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 /* 직원관리 end */
 
@@ -1686,6 +1776,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 .img-box img{
   width: 100%;
   height: 100%;
+  max-height: 300px;
 }
 .branch_img_container .img-box:nth-child(1), 
 .branch_img_container .img-box:nth-child(2),
@@ -1712,16 +1803,17 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   border-bottom: none;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 .modal-header .close{
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 48px;
+  right: 58px;
 }
 .modal-body{
   max-height: 500px;
-  padding: 20px;
+  padding: 20px 40px;
   overflow-y: auto;
 }
 .modal-body .table{
@@ -1730,6 +1822,15 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 .modal-footer{
   justify-content: center;
   border-top: none;
-  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 /* modal end */
+
+
+
+
+/* sns로 계속하기 */
+.account_wrap{
+  display: flex;
+}

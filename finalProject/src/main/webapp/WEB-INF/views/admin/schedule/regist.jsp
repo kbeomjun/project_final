@@ -101,7 +101,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="selectDate" name="selectDate">
+												<input type="date" class="form-control custom-calender" id="selectDate" name="selectDate">
 											</div>
 										</td>
 									</tr>
@@ -111,7 +111,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="startDate" name="startDate">
+												<input type="date" class="form-control custom-calender" id="startDate" name="startDate">
 											</div>
 										</td>
 									</tr>
@@ -121,7 +121,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="endDate" name="endDate">
+												<input type="date" class="form-control custom-calender" id="endDate" name="endDate">
 											</div>
 										</td>
 									</tr>	
@@ -335,7 +335,7 @@
 				        }
 				    } else {
 				        toggleVisibility(['start-date-form', 'end-date-form', 'weeks-program-table', 'program-time-table'], true);
-				        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], false);
+				        toggleVisibility(['select-date-form', 'pt-time-table', 'member-table-label', 'memberListTable'], false);
 				        if (document.getElementById('endDate').value === currentDate) {
 				            toggleHourCheckboxes('checkbox', currentHour);
 				        }

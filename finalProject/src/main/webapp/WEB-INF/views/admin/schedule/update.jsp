@@ -14,6 +14,7 @@
 				<section class="sub_content_group">
 					<div class="sub_title_wrap">
 						<h2 class="sub_title">스케줄 수정</h2>
+						<p class="sub_title__txt">* 이전에 등록한 프로그램과 일정이 겹치면 등록이 불가능합니다.</p>
 					</div>	
 					
 					<div class="table_wrap">
@@ -53,7 +54,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
+												<input type="date" class="form-control custom-calender" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
 											</div>
 										</td>
 									</tr>
@@ -63,7 +64,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="time" class="form-control" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
+												<input type="time" class="form-control custom-calender" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
 											</div>
 										</td>
 									</tr>
@@ -73,7 +74,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="time" class="form-control" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
+												<input type="time" class="form-control custom-calender" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
 											</div>
 										</td>
 									</tr>																											
