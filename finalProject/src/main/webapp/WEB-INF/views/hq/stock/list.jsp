@@ -90,7 +90,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select name="be_se_name" class="custom-select form-control">
+													<select name="be_se_name" class="custom-select form-control" style="width: 100%;">
 
 													</select>
 												</div>

@@ -86,7 +86,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select name="mi_it_name" class="custom-select form-control">
+													<select name="mi_it_name" class="custom-select form-control" style="width: 100%;">
 														<option value="" selected>선택</option>
 														<c:forEach items="${itList}" var="it">
 															<option value="${it.it_name}">${it.it_name}</option>
@@ -146,7 +146,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
+													<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control" style="width: 100%;">
 														<c:forEach items="${itList}" var="it">
 															<option value="${it.it_name}">${it.it_name}</option>
 														</c:forEach>
