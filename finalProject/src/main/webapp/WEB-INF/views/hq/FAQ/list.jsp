@@ -35,7 +35,7 @@
 				        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 			        			</td>
 				        		<td>
-				        			<button type="button" class="btn btn_blue btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+				        			<button type="button" class="btn btn_yellow btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">수정</button>
 				        		</td>
 				      		</tr>
 			    		</c:forEach>
@@ -110,7 +110,7 @@
 							</div>
 						</div>
 			        	<div class="modal-footer">
-			        		<button class="btn btn_black">FAQ 등록</button>
+			        		<button class="btn btn_black">등록</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		    		</form>
@@ -170,7 +170,7 @@
 							</div>
 						</div>
 			        	<div class="modal-footer">
-			        		<button class="btn btn_black">FAQ 수정</button>
+			        		<button class="btn btn_black">수정</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		    		</form>

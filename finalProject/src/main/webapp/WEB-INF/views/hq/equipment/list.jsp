@@ -75,7 +75,7 @@
 							</div>
 						</div>
 			        	<div class="modal-footer">
-							<button class="btn btn_black">기구 등록</button>
+							<button class="btn btn_black">등록</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		      		</form>
@@ -119,7 +119,7 @@
 							</div>
 			        	</div>
 			        	<div class="modal-footer">
-							<button class="btn btn_black">기구 수정</button>
+							<button class="btn btn_black">수정</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		      		</form>
