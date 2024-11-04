@@ -171,7 +171,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="me_birth" name="me_birth" value="<fmt:formatDate value='${member.me_birth}' pattern='yyyy-MM-dd'/>">
+												<input type="date" class="form-control custom-calender" id="me_birth" name="me_birth" value="<fmt:formatDate value='${member.me_birth}' pattern='yyyy-MM-dd'/>">
 											</div>
 										</td>
 									</tr>

@@ -1685,7 +1685,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 /* 직원 관리 */
 /* 직원 관리 :: profile */
 .profile_img_wrap{
-  width: 300px;
+  width: 240px;
   height: 300px;
 }
 .profile_img_wrap label{
