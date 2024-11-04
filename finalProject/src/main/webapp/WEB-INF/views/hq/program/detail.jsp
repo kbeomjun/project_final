@@ -12,7 +12,7 @@
         <!-- 오른쪽 컨텐츠 영역 -->
 		<section class="sub_content_group">
 			<div class="sub_title_wrap">
-				<h2 class="sub_title">프로그램 조회</h2>
+				<h2 class="sub_title">프로그램 수정</h2>
 			</div>
 		
 	    	<div class="table_wrap">
