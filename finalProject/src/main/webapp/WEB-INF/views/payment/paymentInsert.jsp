@@ -42,7 +42,7 @@
 				                	</th>
 				                	<td>
 					                	<div id="subMenu" class="">
-											<input type="date" id="pa_start" name="pa_start" class="form-control" min="${currentDate}" required>
+											<input type="date" id="pa_start" name="pa_start" class="form-control custom-calender" min="${currentDate}" required>
 					                    </div>
 				                	</td>
 				                </tr>
