@@ -14,7 +14,7 @@
 			<div class="sub_title_wrap">
 				<h2 class="sub_title">직원 등록</h2>
 				<p class="sub_title__txt">
-					<span>사진 규격은 300x300입니다.</span>
+					<span>사진 규격은 240x300입니다.</span>
 				</p>
 			</div>
 		
