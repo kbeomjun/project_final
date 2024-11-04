@@ -43,7 +43,7 @@
 						        <td>${em.em_br_name}</td>
 						        <td>${em.em_position}</td>
 					        	<td>
-					        		<a class="btn btn_green" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
+					        		<a class="btn btn_blue" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
 					        		<a class="btn btn_red btn-delete" href="<c:url value="/hq/employee/delete/${em.em_num}"/>">삭제</a>
 					        	</td>
 					      	</tr>

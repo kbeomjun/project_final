@@ -35,7 +35,7 @@
 				        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 			        			</td>
 				        		<td>
-				        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+				        			<button type="button" class="btn btn_blue btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
 				        		</td>
 				      		</tr>
 			    		</c:forEach>
