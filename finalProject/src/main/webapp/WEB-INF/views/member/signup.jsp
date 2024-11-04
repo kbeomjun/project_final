@@ -468,4 +468,25 @@
         }).open();
     }
 </script>
+
+<script type="text/javascript">
+    var isFormSubmitted = false;
+
+    document.getElementById("form").addEventListener("submit", function() {
+        isFormSubmitted = true;
+    });
+
+    // 페이지 이탈 시 경고창 표시
+    window.addEventListener("beforeunload", function (event) {
+        if (isFormSubmitted) return;        
+        event.preventDefault();
+        event.returnValue = ''; // 기본 경고 메시지 표시
+    });
+
+    // 마이페이지 클릭 시 경고창 해제
+    document.querySelector(".gnb__link[href*='/mypage']").addEventListener("click", function() {
+        window.removeEventListener("beforeunload", showBeforeUnloadWarning);
+    });
+</script>
+
 </html>

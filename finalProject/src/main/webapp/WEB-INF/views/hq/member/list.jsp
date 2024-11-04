@@ -82,7 +82,7 @@
 				        		</td>
 				        		<td>
 				        			<c:if test="${!me.me_canDelete}">
-					        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
+					        			<button type="button" class="btn btn_blue btn-detail" data-toggle="modal" data-target="#myModal" data-id="${me.me_id}">조회</button>
 				        			</c:if>
 				        			<c:if test="${me.me_canDelete}">
 					        			<a href="<c:url value="/hq/member/delete/${me.me_id}"/>" class="btn btn_red btn-delete">삭제</a>
@@ -268,7 +268,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-		    scrollY: 500,
+		    scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,

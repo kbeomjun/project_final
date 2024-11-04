@@ -34,7 +34,7 @@
 						        <td>${br.br_address}(${br.br_detailAddress})</td>
 					        	<td>${br.br_admin}</td>
 					        	<td>
-					        		<a class="btn btn_green" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
+					        		<a class="btn btn_blue" href="<c:url value="/hq/branch/detail/${br.br_name}"/>">조회</a>
 					        	</td>
 					      	</tr>
 			    		</c:forEach>
@@ -67,7 +67,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 500,
+			scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,
