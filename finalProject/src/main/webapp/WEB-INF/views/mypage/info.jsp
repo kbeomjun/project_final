@@ -205,11 +205,10 @@
 			        
 			        // 이메일 형식 체크
 			        if (!regexEmail.test(email)) {
-			            $('#emailCheckResult').html('<span style="color: red;">이메일 형식이 올바르지 않습니다.</span>');
+			            $('#emailCheckResult').html('<span>이메일 형식이 올바르지 않습니다.</span>');
 			            emailCheckPassed = false;
 			            return;
 			        } else {
-			            $('#emailCheckResult').html('<span style="color: green;">올바른 이메일 형식입니다. 중복 확인 중...</span>');
 					
 				        $.ajax({
 				        	async : true,
@@ -222,10 +221,10 @@
 				        	dataType : "json",
 				        	success : function (data){
 				                if (data) {
-				                    $('#emailCheckResult').html('<span style="color: red;">이미 사용 중인 이메일입니다.</span>');
+				                    $('#emailCheckResult').html('<span>이미 사용 중인 이메일입니다.</span>');
 				                    emailCheckPassed = false;
 				                } else {
-				                    $('#emailCheckResult').html('<span style="color: green;">사용 가능한 이메일입니다.</span>');
+				                	$('#emailCheckResult').html('');
 				                    emailCheckPassed = true;
 				                }
 				        	}, 

@@ -68,7 +68,8 @@
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
@@ -128,7 +129,8 @@
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
