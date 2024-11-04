@@ -163,15 +163,10 @@
 											</tr>
 										</tbody>
 									</table>
-
-					        		<div class="btn_wrap">
-										<div class="btn_right_wrap">
-											<button type="submit" class="btn btn_green">등록</button>
-										</div>
-									</div>	
 									
 					        	</div>
 					        	<div class="modal-footer">
+									<button type="submit" class="btn btn_insert">등록</button>
 					          		<button type="button" class="btn btn_red" data-dismiss="modal">취소</button>
 					        	</div>
 				      		</form>
