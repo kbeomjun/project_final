@@ -8,7 +8,7 @@
 			<section class="sub_content">
 			
 		        <!-- 왼쪽 사이드바 -->
-		        <%@ include file="/WEB-INF/views/layout/clientSidebar.jsp" %>
+		        <%@ include file="/WEB-INF/views/layout/mypageSidebar.jsp" %>
 			
 		        <!-- 오른쪽 컨텐츠 영역 -->
 		        <section class="sub_content_group">
