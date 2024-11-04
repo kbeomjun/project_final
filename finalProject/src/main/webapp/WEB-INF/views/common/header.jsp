@@ -35,7 +35,6 @@
           <li class="gnb__item"><a href="<c:url value='/logout'/>" class="gnb__link">로그아웃</a></li>
         </c:when>
         <c:otherwise>
-          <li class="gnb__item"><a href="<c:url value='/mypage/membership'/>" class="gnb__link" onclick="alert('로그인한 유저만 이용 가능합니다.'); location.href='<c:url value='/login'/>'; return false;">마이페이지</a></li>
           <li class="gnb__item"><a href="<c:url value='/login'/>" class="gnb__link">로그인</a></li>
         </c:otherwise>
       </c:choose>

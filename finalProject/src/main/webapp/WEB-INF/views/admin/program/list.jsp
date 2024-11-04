@@ -133,13 +133,9 @@
 										</tbody>
 					        		</table>
 					        		
-					        		<div class="btn_wrap">
-										<div class="btn_right_wrap">
-											<button type="submit" class="btn btn_green">프로그램 등록</button>
-										</div>
-									</div>
 					        	</div>
 					        	<div class="modal-footer">
+									<button type="submit" class="btn btn_insert">등록</button>
 					          		<button type="button" class="btn btn_red" data-dismiss="modal">취소</button>
 					        	</div>
 				      		</form>
@@ -194,14 +190,9 @@
 										</tbody>
 					        		</table>
 					        		
-					        		<div class="btn_wrap">
-										<div class="btn_right_wrap">
-											<button type="submit" class="btn btn_yellow">프로그램 수정</button>
-										</div>
-									</div>							
-									
 					        	</div>
 					        	<div class="modal-footer">
+									<button type="submit" class="btn btn_insert">수정</button>
 					          		<button type="button" class="btn btn_red" data-dismiss="modal">취소</button>
 					        	</div>
 				      		</form>

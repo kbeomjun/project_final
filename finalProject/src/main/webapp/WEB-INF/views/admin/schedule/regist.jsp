@@ -174,11 +174,6 @@
 											</div>
 										</td>
 									</tr>
-									<tr id="member-table-label" style="display: none;">
-										<th scope="row">
-											<label for="member-table" class="_asterisk">회원 선택</label>
-										</th>
-									</tr>
 								</tbody>
 							</table>
 							
@@ -187,7 +182,7 @@
 								<table class="table table_center" id="table">
 									<thead id="thead">
 										<tr>
-											<th></th>
+											<th>회원 선택</th>
 											<th>회원 이름</th>
 											<th>번호</th>
 											<th>이메일</th>
@@ -311,7 +306,7 @@
 					
 					// 선택한 프로그램에 따른 UI 변경
 				    if (spType === '단일') {
-				        toggleVisibility(['select-date-form', 'pt-time-table', 'member-table-label', 'memberListTable'], true);
+				        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], true);
 				        toggleVisibility(['start-date-form', 'end-date-form', 'program-time-table', 'weeks-program-table'], false);
 						
 				        table = $('#table').DataTable({
@@ -335,7 +330,7 @@
 				        }
 				    } else {
 				        toggleVisibility(['start-date-form', 'end-date-form', 'weeks-program-table', 'program-time-table'], true);
-				        toggleVisibility(['select-date-form', 'pt-time-table', 'member-table-label', 'memberListTable'], false);
+				        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], false);
 				        if (document.getElementById('endDate').value === currentDate) {
 				            toggleHourCheckboxes('checkbox', currentHour);
 				        }
