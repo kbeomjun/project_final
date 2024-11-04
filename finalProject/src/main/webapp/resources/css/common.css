@@ -244,81 +244,6 @@ label{
 
 
 
-/* swiper */
-.main_banner_wrap .autoplay-progress {
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 5px;
-	background-color: rgba(255, 255, 255, 0.3);
-	z-index: 10;
-}
-.main_banner_wrap .autoplay-progress svg {
-	--progress: 0;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	stroke-width: 4px;
-	stroke: #fff;
-	fill: none;
-	stroke-dashoffset: calc(100 * (1 - var(--progress)));
-	stroke-dasharray: 100;
-	z-index: 10;
-}
-.main_banner_wrap .swiper-button-next,
-.main_banner_wrap .swiper-button-prev{
-  position: absolute;
-  top: 50%;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-image: url("../image/icon/ic_bn_right.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  transition: .5s;
-}
-.main_banner_wrap .swiper-button-next{
-  right: 0px;
-  transform: translate(-20px, -50%);
-}
-.main_banner_wrap .swiper-button-prev{
-  left: 0px;
-  transform: translate(20px, -50%);
-  background-image: url("../image/icon/ic_bn_left.svg");
-}
-.main_banner_wrap .swiper-button-next:hover{
-  transform: translate(-5px, -50%);
-}
-.main_banner_wrap .swiper-button-prev:hover{
-  transform: translate(5px, -50%);
-}
-.main_banner_wrap .swiper-button-next:after, .swiper-button-prev:after{
-  display: none;
-}
-
-.main_banner_wrap .swiper-slide{
-  position: relative;
-}
-.main_banner_wrap .swiper-slide::before{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 699px;
-  height: 363px;
-  /* background-image: url("../image/main/main_text.png"); */
-  background-repeat: no-repeat;
-  background-size: cover;
-  transform: translate(-50%, -50%);
-}
-.main_banner_wrap .swiper-slide img{
-  max-width: 100%;   /* 가로 최대 크기 설정 */
-}
-/* swiper */
-
 
 
 
@@ -349,19 +274,6 @@ label{
   color: #111;
 }
 .btn_cancel:hover, .btn_cancel:focus{
-  background-color: #111;
-  color: #fff;
-}
-.btn.btn_white{
-  width: 140px;
-  height: 43px;
-  border: 1px solid #111;
-  border-radius: 4px;
-  padding: 8px 14px;
-  background-color: #fff;
-  color: #111;
-}
-.btn.btn_white:hover, .btn.btn_white:focus{
   background-color: #111;
   color: #fff;
 }
@@ -677,17 +589,19 @@ label{
 }
 .btn_link_white:hover .btn_white, .btn_link_white:focus .btn_white{
   color: #fff;
+  background-color: transparent;
+  border-color: #fff;
   -webkit-transform: translate3d(5px, 5px, 0);
   transform: translate3d(5px, 5px, 0);
 }
-.btn_link_white .btn_white_bg_white{
+.btn_link_white.btn_white_bg_white{
   border: 2px solid #fff;
-  background-color: #111;
+  background-color: transparent;
   color: #fff;
 }
 .btn_link_white.bg_black .btn_white{
   border: 2px solid #fff;
-  background-color: #111;
+  background-color: transparent;
   color: #fff;
 }
 .btn_link_white.bg_white .btn_white{
@@ -1010,31 +924,6 @@ label{
 }
 /* gnb_side end */
 /* main_header end */
-
-
-
-
-
-/* main_container */
-.main_container, .sub_container{
-  min-height: calc(100vh - 425px);
-}
-.main_banner_wrap{
-
-}
-.main_banner{
-
-}
-.main_banner_wrap .main_banner__img{
-  width: 100%;
-  height: 100vh;
-  min-height: 919px; /* 북마크바를 포함한 기본 크롬 height값 */
-}
-.sub_container{
-}
-/* main_container end */
-
-
 
 /* main_footer */
 .main_footer{}
