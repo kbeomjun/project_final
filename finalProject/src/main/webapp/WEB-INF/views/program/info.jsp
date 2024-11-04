@@ -162,7 +162,7 @@
                     var imgSrc = '<c:url value="/uploads' + imageName + '" />';
                     // console.log('imgSrc2 : '+imgSrc); // 각 이미지 이름을 출력               			
                     document.getElementById("swiper-wrapper").innerHTML += 
-                    	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:80%; height:80%"><br></div>';
+                    	'<div class="swiper-slide"><img src="' + imgSrc + '" style="width:800px; height:600px"><br></div>';
                 });
             } else {
                 console.log("Error fetching image names");

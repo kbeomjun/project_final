@@ -4,18 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<head>
-<style type="text/css">
-.btn-naver {
-    background-color: #1EC800; 
-    color: white;
-}
-.btn-kakao {
-    background-color: #FEE500; 
-    color: black; 
-}
-</style>
-</head>
 
 			<section class="sub_banner sub_banner_07"></section>
 			<section class="sub_content">
@@ -54,26 +42,23 @@
 						</table>
 						
 						<div class="btn_wrap">
+							<div class="btn_left_wrap">
+								<div class="account_wrap">
+									<a href="javascript:void(0)" class="btn btn_naver">
+										<span onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</span>
+									</a>
+									<a href="javascript:void(0)" class="btn btn_kakao">
+										<span onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</span>
+									</a>
+								</div>
+								<!-- <a href="javascript:void(0);" class="btn mt-3 btn-naver" onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</a>
+								<a href="javascript:void(0);" class="btn mt-3 btn-kakao ml-3" onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</a> -->
+							</div>						
 							<div class="btn_right_wrap">
 								<button type="submit" class="btn btn_insert">확인</button>
 							</div>
 						</div>
 					</form>
-					
-					<div class="btn_wrap">
-						<div class="btn_left_wrap">
-							<div class="account_wrap">
-								<a href="javascript:void(0)" class="btn btn_naver">
-									<span onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</span>
-								</a>
-								<a href="javascript:void(0)" class="btn btn_kakao">
-									<span onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</span>
-								</a>
-							</div>
-							<!-- <a href="javascript:void(0);" class="btn mt-3 btn-naver" onclick="redirectToSocial('NAVER')">naver 계정으로 계속하기</a>
-							<a href="javascript:void(0);" class="btn mt-3 btn-kakao ml-3" onclick="redirectToSocial('KAKAO')">kakao 계정으로 계속하기</a> -->
-						</div>
-					</div>
 					
 				</section>
 			
