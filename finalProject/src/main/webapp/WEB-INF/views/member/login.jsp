@@ -24,7 +24,10 @@
                                 </div>
                                 <div class="login_form_group">
                                     <label for="pw" class="login_label">비밀번호</label>
-                                    <input type="password" class="login_input" id="pw" name="me_pw" placeholder="비밀번호를 입력하세요" required/>
+                                    <div class="password_wrap">
+                                    	<input type="password" class="login_input" id="pw" name="me_pw" placeholder="비밀번호를 입력하세요" required/>
+                                    	<button type="button" id="togglePassword" class="btn btn_password_visibility"><i class="ic_eyes"></i></button>
+                                    </div>
                                 </div>
                                 <!-- SNS 로그인 버튼 -->
                                 <div class="sns_login_wrap">
@@ -93,17 +96,20 @@
 
     // 비밀번호 보이기/숨기기
     document.getElementById('togglePassword').addEventListener('click', function() {
-        var passwordField = document.getElementById('pw');
-        var eyeIcon = document.getElementById('eyeIcon');
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            eyeIcon.src = "<c:url value='/resources/image/icons/eye-slash.svg'/>"; // 닫힌 눈 아이콘
-            eyeIcon.alt = "Hide Password";
-        } else {
-            passwordField.type = 'password';
-            eyeIcon.src = "<c:url value='/resources/image/icons/eye.svg'/>"; // 열린 눈 아이콘
-            eyeIcon.alt = "Show Password";
-        }
-    });
+    var passwordField = document.getElementById('pw');
+    var eyeIcon = this.querySelector('.ic_eyes');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        /* eyeIcon.classList.remove('ic_eyes'); // 기존 열린 눈 아이콘 클래스 제거
+        eyeIcon.classList.add('ic_eyes'); // 닫힌 눈 아이콘 클래스 추가 (추가로 CSS 스타일을 만들어야 함) */
+        eyeIcon.alt = "Hide Password";
+    } else {
+        passwordField.type = 'password';
+        /* eyeIcon.classList.remove('ic_eyes_slash'); // 기존 닫힌 눈 아이콘 클래스 제거
+        eyeIcon.classList.add('ic_eyes'); // 열린 눈 아이콘 클래스 추가 */
+        eyeIcon.alt = "Show Password";
+    }
+});
 </script>
 
