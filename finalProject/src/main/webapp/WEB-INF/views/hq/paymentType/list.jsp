@@ -34,7 +34,14 @@
 			    				<td>${pt.pt_name}</td>
 				        		<td>${pt.pt_type}</td>
 				        		<td>${pt.pt_date}</td>
-				        		<td>${pt.pt_count}</td>
+				        		<td>
+				        			<c:if test="${pt.pt_type == '이용권'}">
+				        				-
+			        				</c:if>
+			        				<c:if test="${pt.pt_type == 'PT'}">
+				        				${pt.pt_count}
+			        				</c:if>
+			        			</td>
 				        		<td>${pt.formattedPrice}</td>
 				        		<td>
 				        			<button type="button" class="btn btn_yellow btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
