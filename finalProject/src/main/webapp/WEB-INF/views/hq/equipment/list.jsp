@@ -75,7 +75,7 @@
 							</div>
 						</div>
 			        	<div class="modal-footer">
-							<button class="btn btn_black">기구 등록</button>
+							<button class="btn btn_black">등록</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		      		</form>
@@ -86,7 +86,7 @@
 		    	<div class="modal-dialog modal-dialog-centered">
 		      		<form action="<c:url value="/hq/equipment/update"/>" method="post" enctype="multipart/form-data" id="form2" class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">등록</h4>
+			          		<h4 class="modal-title">수정</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
@@ -119,7 +119,7 @@
 							</div>
 			        	</div>
 			        	<div class="modal-footer">
-							<button class="btn btn_black">기구 수정</button>
+							<button class="btn btn_black">수정</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		      		</form>

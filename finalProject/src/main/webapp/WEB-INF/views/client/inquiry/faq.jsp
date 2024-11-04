@@ -53,12 +53,12 @@
 						</form>
 					</div>
 		                
-					<div class="faqList_wrap">
+					<div class="faqList">
 				        <c:forEach items="${faqList}" var="faq">
 				            <div class="faq-item">
 				                <div class="faq-question">
-				                    <em>[${faq.mi_it_name}]</em>
-				                    <span>${faq.mi_title}</span>
+				                    <span class="faq-title-label">[${faq.mi_it_name}]</span>
+				                    <h3 class="faq-title">${faq.mi_title}</h3>
 				                    <span class="faq-icon"></span>
 				                </div>
 				                <div class="faq-answer">

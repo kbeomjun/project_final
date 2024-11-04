@@ -87,7 +87,7 @@
 				                    <a id="employeeSubMenu" class="nav_two__link" href="<c:url value='/admin/employee/list'/>">직원관리</a>
 				                </li>
 				                <li class="nav_two__item">
-				                    <a id="detailSubMenu" class="nav_two__link" href="<c:url value='/admin/branch/detail'/>">지점상세</a>
+				                    <a id="detailSubMenu" class="nav_two__link" href="<c:url value='/admin/branch/detail'/>">정보수정</a>
 				                </li>
 				            </ul>
 				        </li>
