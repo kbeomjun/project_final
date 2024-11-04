@@ -12,7 +12,7 @@
 				<!-- 오른쪽 컨텐츠 영역 -->
 				<section class="sub_content_group">
 					<div class="sub_title_wrap">
-						<h2 class="sub_title">${br.br_name} 상세보기</h2>
+						<h2 class="sub_title">${br.br_name} 정보수정</h2>
 						<p class="sub_title__txt">※ <b>지점명, 지점 주소</b>는 본사 관리자만 수정할 수 있습니다.</p>
 					</div>
 				

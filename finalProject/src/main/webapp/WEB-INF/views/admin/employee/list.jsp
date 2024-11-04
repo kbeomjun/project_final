@@ -33,7 +33,7 @@
 									<th>이메일</th>
 									<th>입사일</th>
 									<th>직책</th>
-									<th>상세</th>
+									<th>수정</th>
 									<th>삭제</th>
 								</tr>
 							</thead>
@@ -49,7 +49,7 @@
 										</td>
 										<td>${em.em_position}</td>
 										<td>
-											<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn_blue">조회</a>
+											<a href="<c:url value="/admin/employee/detail/${em.em_num}"/>" class="btn btn_yellow">수정</a>
 										</td>
 										<td>
 											<a href="<c:url value="/admin/employee/delete/${em.em_num}"/>" class="btn btn_red btn-delete">삭제</a>
