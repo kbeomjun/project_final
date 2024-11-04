@@ -66,7 +66,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select id="re_reason" name="re_reason" class="custom-select form-control">
+													<select id="re_reason" name="re_reason" class="custom-select form-control" style="width: 100%;">
 														<option value="" selected>선택</option>
 														<option value="중도 해지">중도 해지</option>
 														<option value="시작전 계약 취소">시작전 계약 취소</option>
@@ -176,7 +176,7 @@
 							        zeroRecords: "",
 							        emptyTable: ""
 							    },
-							    scrollY: 500,
+							    scrollY: 400,
 							    stateSave: true,
 							    stateDuration: 300,
 							    paging: false,
@@ -227,7 +227,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-		    scrollY: 500,
+		    scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,

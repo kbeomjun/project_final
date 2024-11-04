@@ -37,7 +37,7 @@
 				        		<td>${pt.pt_count}</td>
 				        		<td>${pt.formattedPrice}</td>
 				        		<td>
-				        			<button type="button" class="btn btn_green btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
+				        			<button type="button" class="btn btn_yellow btn-update" data-toggle="modal" data-target="#myModal2" data-num="${pt.pt_num}">수정</button>
 				        		</td>
 				      		</tr>
 			    		</c:forEach>
@@ -419,7 +419,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-		    scrollY: 500,
+		    scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,

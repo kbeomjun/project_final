@@ -103,7 +103,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-		    scrollY: 500,
+		    scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,
@@ -132,7 +132,7 @@
 				        zeroRecords: "",
 				        emptyTable: ""
 				    },
-				    scrollY: 500,
+				    scrollY: 400,
 				    stateSave: true,
 				    stateDuration: 300,
 				    paging: false,
@@ -150,7 +150,7 @@
 				        zeroRecords: "",
 				        emptyTable: ""
 				    },
-				    scrollY: 500,
+				    scrollY: 400,
 				    stateSave: true,
 				    stateDuration: 300,
 				    paging: false,

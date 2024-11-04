@@ -90,7 +90,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select name="be_se_name" class="custom-select form-control">
+													<select name="be_se_name" class="custom-select form-control" style="width: 100%;">
 
 													</select>
 												</div>
@@ -260,7 +260,7 @@
 		        	$('td', row).eq(4).css('color', 'green');
 		        }
 		    },
-		    scrollY: 500,
+		    scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,
@@ -297,7 +297,7 @@
 			        	$('td', row).eq(4).css('color', 'green');
 			        }
 			    },
-			    scrollY: 500,
+			    scrollY: 400,
 			    stateSave: true,
 			    stateDuration: 300,
 			    paging: false,
