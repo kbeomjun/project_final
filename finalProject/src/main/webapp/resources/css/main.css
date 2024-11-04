@@ -112,6 +112,67 @@ min-height: 919px; /* 북마크바를 포함한 기본 크롬 height값 */
 
 
 /* main :: program */
+.fitness_banner_wrap{
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 500px;
+}
+.fitness_vertical_wrap{
+}
+.fitness_vertical{
+	position: relative;
+}
+.fitness_vertical_title{
+}
+.fitness_banner_title_wrap{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.fitness_banner_title_wrap::before{
+	content: "fitness";
+	font-family: 'montserrat', sans-serif;
+	position: absolute;
+	top: 50%;
+	left: -170px;
+	-webkit-text-stroke: 1px #eee;
+	font-size: 100px;
+	color: #fff;
+	font-weight: 900;
+	transform: rotate(-90deg) translate(17%);
+	text-transform: uppercase;
+
+}
+.fitness_banner_title_group{
+	position: relative;
+	width: 1400px;
+	padding: 0px 15%;
+	z-index: 1;
+}
+.fitness_banner_title{
+	font-family: 'montserrat', sans-serif;
+	font-size: 55px;
+	line-height: .9em;
+	letter-spacing: .02em;
+	text-transform: uppercase;
+	font-weight: 900;
+	color: #000000;
+	text-align: center;
+}
+.fitness_banner_text{
+	margin-top: 30px;
+	font-family: 'montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 400;
+	color: #7b7b7b;
+	text-align: center;
+}
+
+
+
 .program_wrap{
 
 }

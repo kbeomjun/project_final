@@ -8,7 +8,7 @@
 				<div class="ft_info">
 					<div class="ft_info__item">
 						<div class="ft_logo_wrap"><div class="ft_logo"></div></div>
-						<div class="ft_textbox">
+						<div class="ft_textbox mb-5">
 							<p>Powerlift is a champ in providing its users with absolutely everything a fitness or gym site needs.</p>
 						</div>
 						<div class="textbox">
