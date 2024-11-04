@@ -1834,3 +1834,51 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   transform: translateY(1px);
 }
 /* 개인정보 :: sns 연동 end */
+
+
+
+/* 스케쥴 등록 */
+/* 체크박스 숨기기 */
+.checkbox-button,
+.radio-button {
+    display: none; /* 기본 체크박스 숨기기 */
+}
+
+/* 체크박스가 체크되었을 때를 위한 스타일 */
+.checkbox-label,
+.radio-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white; /* 기본 버튼 색상 */
+    color: black; /* 글자 색상 */
+    border : 1px solid black;
+    border-radius: 5px;
+    cursor: pointer; /* 포인터 커서 */
+    transition: background-color 0.3s ease;
+}
+
+.checkbox-button:checked + .checkbox-label,
+.radio-button:checked + .radio-label {
+    background-color: #007bff; /* 체크박스 체크 시 버튼 색상 */
+}
+
+.checkbox-label:hover,
+.radio-label:hover {
+    background-color: #007bff; /* 마우스 오버 시 색상 변화 */
+}
+
+.radio-button:disabled,
+.checkbox-button:disabled {
+    cursor: not-allowed; /* 비활성화된 경우 커서 스타일 */
+    opacity: 0.5; /* 비활성화된 체크박스 투명도 */
+    color: #b0b0b0; /* 회색으로 비활성화 색상 */
+}
+
+/* 레이블 스타일 추가 */
+.radio-button:disabled + .radio-label,
+.checkbox-button:disabled + .checkbox-label {
+    color: #b0b0b0; /* 비활성화 상태에서 레이블 색상 */
+    text-decoration: line-through; /* 레이블에 취소선 추가 */
+    pointer-events: none; /* 레이블 클릭 방지 */
+}
+/* 스케쥴 등록 end */
