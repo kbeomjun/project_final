@@ -38,6 +38,26 @@
 	</div>
 	<!-- main container -->
 	
+	<!-- program banner title -->
+	<section class="fitness_banner_wrap">
+		<!-- <div class="fitness_vertical_wrap">
+			<div class="fitness_vertical">
+				<h2 class="fitness_vertical_title">Fitness</h2>
+			</div>
+		</div> -->
+		<div class="fitness_banner_title_wrap">
+			<div class="fitness_banner_title_group">
+				<h1 class="fitness_banner_title">
+					What is functional<br>fitness all about
+				</h1>
+				<p class="fitness_banner_text">
+					Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
+				</p>
+			</div>
+		</div>
+	</section>
+	<!-- program banner title -->
+	
 	<!-- program -->
 	<section class="program_wrap">
 		<ul class="program_group">

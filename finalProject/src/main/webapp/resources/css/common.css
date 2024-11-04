@@ -45,6 +45,11 @@ a:hover{
   line-height: 1.4em;
 }
 
+::selection {
+  color: #fff;
+  background: #111;
+}
+
 html, body{
 	font-family: 'notosans', "NotoSansKR", sans-serif;
 }
