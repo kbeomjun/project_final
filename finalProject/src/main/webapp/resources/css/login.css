@@ -146,6 +146,9 @@
     background: transparent;
     transform: translateY(-50%);
 }
+.btn_password_visibility:hover, .btn_password_visibility:focus{
+	background-color: transparent !important;
+}
 .ic_eyes{
 	display: inline-block;
 	width: 16px;

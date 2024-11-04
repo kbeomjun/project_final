@@ -203,6 +203,10 @@ label{
 .text_small{
   font-size: 11px;
 }
+.text_middle{
+  font-size: 12px;
+  font-weight: 400 !important;
+}
 
 /* 특수문자 */
 ._asterisk::after{
@@ -333,6 +337,7 @@ label{
   padding: 8px 14px;
   background-color: #111;
   color: #fff;
+  transition: .3s;
 }
 [class*="btn btn_"]:hover, [class*="btn btn_"]:focus{
   background-color: #fff;
@@ -344,7 +349,21 @@ label{
   color: #111;
 }
 .btn_cancel:hover, .btn_cancel:focus{
-  border-color: #666;
+  background-color: #111;
+  color: #fff;
+}
+.btn.btn_white{
+  width: 140px;
+  height: 43px;
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 8px 14px;
+  background-color: #fff;
+  color: #111;
+}
+.btn.btn_white:hover, .btn.btn_white:focus{
+  background-color: #111;
+  color: #fff;
 }
 [class*="btn btn_"]+[class*="btn btn_"]{
   margin-left: 10px;
@@ -388,6 +407,16 @@ label{
   color: #ffc107;
   background-color: #fff;
   border-color: #ffc107;
+}
+.btn_skyblue{
+  color: #fff;
+  background-color: #1ecae5;
+  border-color: #1ecae5;
+}
+.btn_skyblue:hover, .btn_skyblue:focus{
+  color: #1ecae5;
+  background-color: #fff;
+  border-color: #1ecae5;
 }
 .btn_update{
   display: flex;
@@ -1380,7 +1409,7 @@ ion-icon{
   color: #111;
 }
 .table tbody th, .table tbody td{
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 .table td, .table th{
   font-size: 14px;
@@ -1742,7 +1771,10 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   margin-top: 20px;
 }
 .equipment_img_insert, .equipment_img_update{
-  width: 100%;
+  display: block;
+  width: 250px;
+  height: 250px;
+  margin: 0px auto;
   text-align: center;
 }
 .equipment_img_insert .equipment_img, .equipment_img_update .equipment_img{
@@ -1860,4 +1892,13 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 }
 .terms_content .form-check{
   margin-bottom: 80px;
+}
+
+
+/* 결제 */
+.payment_modal_text_wrap > p{
+  margin-top: 10px;
+}
+.payment_modal_text_wrap > p:first-child{
+  margin-top: 0px;
 }
