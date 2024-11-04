@@ -1,8 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <section class="sub_content">
     <section class="sub_content_group">
@@ -254,7 +251,7 @@
             me_emailId: { required: '이메일을 입력해주세요.' },
             me_customEmailDomain: { required: '도메인을 직접 입력하세요.' },
             me_gender: { required: '성별을 선택해주세요.' },
-            me_detailAddress: { required: '상세주소를 입력해주세요.' },
+            me_detailAddress: { required: '주소를 입력해주세요.' },
             phone2: { required: '전화번호를 입력해주세요.', minlength: '정확한 전화번호를 입력하여야 합니다.', maxlength: '정확한 전화번호를 입력하여야 합니다.' },
             phone3: { required: '전화번호를 입력해주세요.', minlength: '정확한 전화번호를 입력하여야 합니다.', maxlength: '정확한 전화번호를 입력하여야 합니다.' },
             me_birth: { required: '생년월일을 선택해주세요.' }
@@ -367,9 +364,8 @@
 
         let str;
         if (result === 1) { // 사용 가능한 아이디인 경우
-            str = `<label id="check-id" class="success-message">사용 가능한 아이디입니다.</label>`;
         } else if (result === 0) { // 이미 사용 중인 아이디인 경우
-            str = `<label id="check-id" class="error-message">이미 사용중인 아이디입니다.</label>`;
+            str = `<label id="check-id" class="error">이미 사용중인 아이디입니다.</label>`;
         }
         if (str) $('#id').after(str); // 아이디 필드 바로 아래에 표시
     }
@@ -380,9 +376,8 @@
 
         let str;
         if (result === 1) { // 사용 가능한 이메일인 경우
-            str = `<label id="check-email" class="success-message">사용 가능한 이메일입니다.</label>`;
         } else if (result === 0) { // 이미 사용 중인 이메일인 경우
-            str = `<label id="check-email" class="error-message">이미 사용중인 이메일입니다.</label>`;
+            str = `<label id="check-email" class="error">이미 사용중인 이메일입니다.</label>`;
         }
         if (str) $('#email-error-container').append(str); // 이메일 오류 메시지를 #email-error-container에 표시
     }
