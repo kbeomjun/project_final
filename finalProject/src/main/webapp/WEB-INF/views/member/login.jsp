@@ -31,7 +31,7 @@
                                 </div>
                                 <!-- SNS 로그인 버튼 -->
                                 <div class="sns_login_wrap">
-                                    <a href="#" class="sns_login naver__login">
+                                    <a href="${naverApiUrl}" class="sns_login naver__login">
                                         <span>Log in with Naver</span>
                                     </a>
                                     <a href="#" class="sns_login kakao__login">

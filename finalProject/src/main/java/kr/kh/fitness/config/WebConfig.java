@@ -25,10 +25,6 @@ public class WebConfig implements WebMvcConfigurer {
         // "/uploads/**" 경로를 로컬 디렉토리로 매핑
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:///" + uploadPath + "/");
-
-        // 정적 리소스 매핑 추가
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("classpath:/static/css/");
     }
     
     // Spring Framework 환경에서 UTF-8 인코딩을 모든 요청에 적용
