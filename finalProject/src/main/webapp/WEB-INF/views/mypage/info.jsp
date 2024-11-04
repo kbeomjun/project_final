@@ -4,52 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<head>
-<style type="text/css">
-.sns-accounts {
-    display: flex;
-    gap: 15px; /* 요소 간의 간격 */
-    align-items: center; /* 수직 정렬 */
-}
-
-.sns-account {
-    display: flex;
-    align-items: center; /* 각 아이콘과 버튼의 수직 정렬 */
-}
-.btn-sns-unlink {
-    width: 40px;
-    height: 30px;
-    border: 1px solid #bcbfc6;
-    color: gray;
-    background-color: #fafbf6;
-    background-image: linear-gradient(to bottom, #fff, #f1f1f1);
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0;
-    line-height: 29px; /* 텍스트가 중앙에 오도록 설정 */
-    font-size: 12px; /* 텍스트 크기 조정 */
-}
-
-.btn-sns-unlink:hover {
-    background-color: #f5f6f2;
-    background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
-    border-color: #a8b1b8;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    color: #555;
-}
-
-.btn-sns-unlink:active {
-    background-color: #e8e9e5;
-    background-image: linear-gradient(to bottom, #f0f0f0, #e2e3de);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    border-color: #9ca3ab;
-    transform: translateY(1px);
-}
-</style>
-</head>
 
 			<section class="sub_banner sub_banner_07"></section>
 			<section class="sub_content">
