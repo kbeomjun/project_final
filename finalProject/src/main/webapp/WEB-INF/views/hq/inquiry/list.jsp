@@ -52,7 +52,7 @@
 				        		<td>${mi.mi_it_name}</td>
 				        		<td>${mi.mi_state}</td>
 				        		<td>
-				        			<button type="button" class="btn btn_blue btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
+				        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">등록</button>
 				        		</td>
 				      		</tr>
 			    		</c:forEach>
@@ -97,7 +97,7 @@
 		    	<div class="modal-dialog modal-dialog-centered">
 		    		<form action="<c:url value="/hq/inquiry/update"/>" method="post" id="form" class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">조회</h4>
+			          		<h4 class="modal-title">등록</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">

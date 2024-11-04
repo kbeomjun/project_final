@@ -31,7 +31,7 @@
 				        		<td>${sp.sp_name}</td>
 				        		<td>${sp.sp_type}</td>
 				        		<td>
-				        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn_blue">조회</a>
+				        			<a href="<c:url value="/hq/program/detail/${sp.sp_name}"/>" class="btn btn_yellow">수정</a>
 				        		</td>
 				      		</tr>
 			    		</c:forEach>
