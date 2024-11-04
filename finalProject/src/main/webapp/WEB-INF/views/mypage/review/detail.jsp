@@ -77,12 +77,12 @@
 						</table>
 						
 						<div class="d-flex justify-content-between">
-							<a href="<c:url value="/mypage/review/list"/>" class="btn btn_skyblue">목록</a>
+							<a href="<c:url value="/mypage/review/list"/>" class="btn btn_cancel">목록</a>
 							
 							<div>
 								<c:if test="${review.pa_me_id eq me_id }">
 									<a href="<c:url value="/mypage/review/update/${review.rp_num}"/>" class="btn btn_insert ml-2">수정</a>
-									<a href="<c:url value="/mypage/review/delete/${review.rp_num}"/>" class="btn btn_cancel ml-2" 
+									<a href="<c:url value="/mypage/review/delete/${review.rp_num}"/>" class="btn btn_red ml-2" 
 												onclick="return confirm('삭제하면 해당 결제내역의 리뷰 게시글은 다시 작성할 수 없습니다. 삭제하시겠습니까?');">삭제</a>
 								</c:if>
 							</div>
