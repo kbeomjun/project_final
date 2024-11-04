@@ -49,10 +49,6 @@
 		const scrollPosition = $(window).scrollTop();
 		const windowHeight = $(window).height();
 		const documentHeight = $(document).height();
-
-		console.log("scrollPosition", scrollPosition);
-		console.log("windowHeight", windowHeight);
-		console.log("documentHeight", documentHeight);
 		
 		const footerHeight = 425;  // footer 높이
 
