@@ -54,7 +54,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
+												<input type="date" class="form-control custom-calender" id="currentDate" name="date" value="<fmt:formatDate value='${schedule.bs_start}' pattern='yyyy-MM-dd'/>" />
 											</div>
 										</td>
 									</tr>
@@ -64,7 +64,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="time" class="form-control" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
+												<input type="time" class="form-control custom-calender" id="startTime" name="startTime" step="3600" value="<fmt:formatDate value='${schedule.bs_start}' pattern='HH:mm'/>" />
 											</div>
 										</td>
 									</tr>
@@ -74,7 +74,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="time" class="form-control" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
+												<input type="time" class="form-control custom-calender" id="endTime" name="endTime" step="3600" value="<fmt:formatDate value='${schedule.bs_end}' pattern='HH:mm'/>" />
 											</div>
 										</td>
 									</tr>																											

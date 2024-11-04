@@ -13,7 +13,7 @@
 				<section class="sub_content_group">
 					<div class="sub_title_wrap">
 						<h2 class="sub_title">${em_br_name} 직원 등록</h2>
-						<p class="sub_title__txt">※ 사진 규격은 300x300입니다.</p>
+						<p class="sub_title__txt">※ 사진 규격은 240x300입니다.</p>
 					</div>
 				
 					<div class="table_wrap">

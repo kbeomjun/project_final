@@ -551,9 +551,17 @@ values
 delete from `program_file`;
 insert into `program_file` (pf_name, pf_sp_name)
 	values
-		('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_요가.jpg', '요가'),
-        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_필라테스.png', '필라테스'),
-        ('/프로그램/d3636f07-acb6-4f45-9839-4552e09d356d_스피닝.jpg', '스피닝'),
-        ('/프로그램/5ceb0beb-25ed-4dc5-b87e-e6b362d98fe3_크로스핏.jpg', '크로스핏'),
+		('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa9c949fc_PT.jpg', 'PT'),
+        ('/프로그램/1cc7c3f6-8f60-4a2d-8dcb-42d4cde08ee1_PT.jpg', 'PT'),
         ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_PT.jpg', 'PT'),
-        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa9c949fc_PT.jpg', 'PT');
+		('/프로그램/0f5318b7-2a8a-422a-99d6-76996e42d6ca_요가.jpg', '요가'),
+        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_요가.jpg', '요가'),
+        ('/프로그램/d3636f07-acb6-4f45-9839-4552e09d356d_스피닝.jpg', '스피닝'),
+        ('/프로그램/8e2798f5-f767-4ae8-bc0d-8fc754be5ca4_스피닝.jpg', '스피닝'),
+        ('/프로그램/2c6d8a5a-5c14-4892-98f7-e73e619b1c97_스피닝.jpg', '스피닝'),
+        ('/프로그램/5264c1d2-80d9-4eeb-af0e-096aa949fc9c_필라테스.png', '필라테스'),
+        ('/프로그램/7457d97a-424a-4d1a-9c0a-2ce6f4f2726c_필라테스.jpg', '필라테스'),        
+        ('/프로그램/5ceb0beb-25ed-4dc5-b87e-e6b362d98fe3_크로스핏.jpg', '크로스핏'),
+        ('/프로그램/85d39cd7-80c3-4d14-b599-05a30b8d79f3_크로스핏.jpg', '크로스핏'),
+        ('/프로그램/b435eb13-f113-4690-9077-eeaa39b3715f_크로스핏.jpg', '크로스핏'),
+        ('/프로그램/982802d2-ee42-411c-bf02-097cd30ce5c4_크로스핏.jpg', '크로스핏');
