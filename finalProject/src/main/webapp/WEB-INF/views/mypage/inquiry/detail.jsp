@@ -64,6 +64,16 @@
 										<div class="form-group">${inquiry.mi_content}</div>
 									</td>
 								</tr>
+							</tbody>
+						</table>
+						
+						<table class="table">
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: 80%;">
+							</colgroup>
+							
+							<tbody>
 								<tr>
 									<th scope="row">
 										<label for="mi_answer">답변</label>
@@ -71,9 +81,7 @@
 									<td>
 									    <c:choose>
 									        <c:when test="${inquiry.mi_answer != null}">
-									            <div class="form-group">
-									                <div class="form-control">${inquiry.mi_answer}</div>
-									            </div>
+									            <div class="form-group">${inquiry.mi_answer}</div>
 									        </c:when>
 									        <c:otherwise>
 									            <div class="form-group">
@@ -83,11 +91,11 @@
 									    </c:choose>
 									</td>
 								</tr>
-							</tbody>
-						</table>
+							</tbody>							
+						</table>						
 		                   
 						<div class="btn_wrap">
-							<div class="btn_right_wrap">
+							<div class="btn_left_wrap">
 								<a href="<c:url value="/mypage/inquiry/list"/>" class="btn btn_cancel">목록</a>
 							</div>
 						</div>

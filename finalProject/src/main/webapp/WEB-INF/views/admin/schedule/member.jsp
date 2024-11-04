@@ -45,8 +45,8 @@
 					</div>					
 
 					<div class="btn_wrap">
-						<div class="btn_right_wrap">
-							<a href="<c:url value="/admin/schedule/list"/>" class="btn btn_cancel">뒤로</a>
+						<div class="btn_left_wrap">
+							<a href="<c:url value="/admin/schedule/list"/>" class="btn btn_cancel">목록</a>
 						</div>
 					</div>
 					
