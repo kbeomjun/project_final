@@ -107,3 +107,51 @@
 	font-weight: 900;
 	src: url("../fonts/NotoSansKR-Black.ttf") format("truetype");
 }
+
+
+
+
+
+
+/* NotoSansKR :: https://fonts.google.com/specimen/Montserrat */
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-weight: 100;
+	src: url("../fonts/Montserrat-Thin.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-weight: 200;
+	src: url("../fonts/Montserrat-Light.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-weight: 400;
+	src: url("../fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-weight: 500;
+	src: url("../fonts/Montserrat-Medium.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-weight: 600;
+	src: url("../fonts/Montserrat-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-weight: 900;
+	src: url("../fonts/Montserrat-Black.ttf") format("truetype");
+}

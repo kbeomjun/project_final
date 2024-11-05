@@ -20,7 +20,7 @@
 						<p class="sub_title__txt">※ 회원권 결제는 로그인 후 이용 가능 합니다.</p>
 					</div>
 					<div class="table_wrap">
-						<table class="table">
+						<table class="table table_center">
 							<caption class="blind">회원권의 이용권 종류와 기간, 횟수, 가격이 있는 테이블</caption>
 							<colgroup>
 								<col style="width: 25%;">
@@ -41,7 +41,14 @@
 						            <tr>
 						                <td>${ptList.pt_name}</td>
 						                <td>${ptList.pt_date}</td>
-						                <td>${ptList.pt_count}</td>
+						                <td>
+							                <c:if test="${ptList.pt_type == '이용권'}">
+						        				-
+					        				</c:if>
+					        				<c:if test="${ptList.pt_type == 'PT'}">
+						        				${ptList.pt_count}
+					        				</c:if>
+				        				</td>
 						                <td>${ptList.formattedPrice}원</td> <!-- 포맷된 가격 사용 -->
 						            </tr>
 						        </c:forEach>

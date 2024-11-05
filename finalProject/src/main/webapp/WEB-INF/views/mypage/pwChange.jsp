@@ -78,7 +78,7 @@
 		    	let regexPw = /^[a-zA-Z0-9!@#$]{4,15}$/;  // 정규식 정의 수정
 		    	let msgPw = `<span>비밀번호는 4자에서 15자의 영문자, 숫자, 특수문자(!@#$)만 사용할 수 있습니다.</span>`;
 		    	let msgPw2 = `<span>새 비밀번호는 현재 비밀번호와 같을 수 없습니다.</span>`;
-		    	let msgPw3 = `<span>비밀번호와 일치하지 않습니다.</span>`;
+		    	let msgPw3 = `<span>새 비밀번호와 일치하지 않습니다.</span>`;
 				let msgRequired = `<span>필수항목입니다.</span>`;
 				
 				// 현재 비밀번호 유효성 체크
@@ -105,6 +105,8 @@
 					}else{
 						if(!regexPw.test($('#new_pw').val())){
 							$('.error-new').append(msgPw);
+						}else if($('#current_pw').val() == $('#new_pw').val()){
+							$('.error-new').append(msgPw2);
 						}else{
 							$('.error-new').children().remove();	
 						}

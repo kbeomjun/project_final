@@ -20,7 +20,7 @@
 		        <section class="sub_content_group">
 		        
 					<div class="sub_title_wrap">
-						<h2 class="sub_title">내 예약내역</h2>
+						<h2 class="sub_title">프로그램 일정</h2>
 					</div> 
 		        
 			    	<div class="sub_hd_wrap">

@@ -45,6 +45,11 @@ a:hover{
   line-height: 1.4em;
 }
 
+::selection {
+  color: #fff;
+  background: #111;
+}
+
 html, body{
 	font-family: 'notosans', "NotoSansKR", sans-serif;
 }
@@ -244,81 +249,6 @@ label{
 
 
 
-/* swiper */
-.main_banner_wrap .autoplay-progress {
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 5px;
-	background-color: rgba(255, 255, 255, 0.3);
-	z-index: 10;
-}
-.main_banner_wrap .autoplay-progress svg {
-	--progress: 0;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	stroke-width: 4px;
-	stroke: #fff;
-	fill: none;
-	stroke-dashoffset: calc(100 * (1 - var(--progress)));
-	stroke-dasharray: 100;
-	z-index: 10;
-}
-.main_banner_wrap .swiper-button-next,
-.main_banner_wrap .swiper-button-prev{
-  position: absolute;
-  top: 50%;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-image: url("../image/icon/ic_bn_right.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  transition: .5s;
-}
-.main_banner_wrap .swiper-button-next{
-  right: 0px;
-  transform: translate(-20px, -50%);
-}
-.main_banner_wrap .swiper-button-prev{
-  left: 0px;
-  transform: translate(20px, -50%);
-  background-image: url("../image/icon/ic_bn_left.svg");
-}
-.main_banner_wrap .swiper-button-next:hover{
-  transform: translate(-5px, -50%);
-}
-.main_banner_wrap .swiper-button-prev:hover{
-  transform: translate(5px, -50%);
-}
-.main_banner_wrap .swiper-button-next:after, .swiper-button-prev:after{
-  display: none;
-}
-
-.main_banner_wrap .swiper-slide{
-  position: relative;
-}
-.main_banner_wrap .swiper-slide::before{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 699px;
-  height: 363px;
-  /* background-image: url("../image/main/main_text.png"); */
-  background-repeat: no-repeat;
-  background-size: cover;
-  transform: translate(-50%, -50%);
-}
-.main_banner_wrap .swiper-slide img{
-  max-width: 100%;   /* 가로 최대 크기 설정 */
-}
-/* swiper */
-
 
 
 
@@ -349,19 +279,6 @@ label{
   color: #111;
 }
 .btn_cancel:hover, .btn_cancel:focus{
-  background-color: #111;
-  color: #fff;
-}
-.btn.btn_white{
-  width: 140px;
-  height: 43px;
-  border: 1px solid #111;
-  border-radius: 4px;
-  padding: 8px 14px;
-  background-color: #fff;
-  color: #111;
-}
-.btn.btn_white:hover, .btn.btn_white:focus{
   background-color: #111;
   color: #fff;
 }
@@ -677,17 +594,19 @@ label{
 }
 .btn_link_white:hover .btn_white, .btn_link_white:focus .btn_white{
   color: #fff;
+  background-color: transparent;
+  border-color: #fff;
   -webkit-transform: translate3d(5px, 5px, 0);
   transform: translate3d(5px, 5px, 0);
 }
-.btn_link_white .btn_white_bg_white{
+.btn_link_white.btn_white_bg_white{
   border: 2px solid #fff;
-  background-color: #111;
+  background-color: transparent;
   color: #fff;
 }
 .btn_link_white.bg_black .btn_white{
   border: 2px solid #fff;
-  background-color: #111;
+  background-color: transparent;
   color: #fff;
 }
 .btn_link_white.bg_white .btn_white{
@@ -1011,33 +930,33 @@ label{
 /* gnb_side end */
 /* main_header end */
 
-
-
-
-
-/* main_container */
-.main_container, .sub_container{
-  min-height: calc(100vh - 425px);
-}
-.main_banner_wrap{
-
-}
-.main_banner{
-
-}
-.main_banner_wrap .main_banner__img{
-  width: 100%;
-  height: 100vh;
-  min-height: 919px; /* 북마크바를 포함한 기본 크롬 height값 */
-}
-.sub_container{
-}
-/* main_container end */
-
-
-
 /* main_footer */
 .main_footer{}
+/* to top */
+.to_top{
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #111;
+  border-radius: 50%;
+  background: url("../image/icon/ic_to_top.svg") no-repeat center;
+  background-color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+  z-index: 100;
+}
+.to_top.to_top_on{
+  opacity: 1;
+  visibility: visible;
+}
+.to_top:hover, .to_top:focus{
+  background-color: #111;
+  background-image: url("../image/icon/ic_to_top_white.svg");
+}
 .ft_info_wrap{
   position: relative;
   width: 100%;
@@ -1902,3 +1821,96 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 .payment_modal_text_wrap > p:first-child{
   margin-top: 0px;
 }
+
+
+/* 개인정보 :: sns 연동 */
+.sns-accounts {
+  display: flex;
+  gap: 15px; /* 요소 간의 간격 */
+  align-items: center; /* 수직 정렬 */
+}
+.sns-account {
+  display: flex;
+  align-items: center; /* 각 아이콘과 버튼의 수직 정렬 */
+}
+.btn-sns-unlink {
+  width: 40px;
+  height: 30px;
+  border: 1px solid #bcbfc6;
+  color: gray;
+  background-color: #fafbf6;
+  background-image: linear-gradient(to bottom, #fff, #f1f1f1);
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  line-height: 29px; /* 텍스트가 중앙에 오도록 설정 */
+  font-size: 12px; /* 텍스트 크기 조정 */
+}
+.btn-sns-unlink:hover {
+  background-color: #f5f6f2;
+  background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
+  border-color: #a8b1b8;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  color: #555;
+}
+.btn-sns-unlink:active {
+  background-color: #e8e9e5;
+  background-image: linear-gradient(to bottom, #f0f0f0, #e2e3de);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-color: #9ca3ab;
+  transform: translateY(1px);
+}
+/* 개인정보 :: sns 연동 end */
+
+
+
+/* 스케쥴 등록 */
+/* 체크박스 숨기기 */
+.checkbox-button,
+.radio-button {
+    display: none; /* 기본 체크박스 숨기기 */
+}
+
+/* 체크박스가 체크되었을 때를 위한 스타일 */
+.checkbox-label,
+.radio-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white; /* 기본 버튼 색상 */
+    color: black; /* 글자 색상 */
+    border : 1px solid black;
+    border-radius: 5px;
+    cursor: pointer; /* 포인터 커서 */
+    transition: background-color 0.3s ease;
+}
+
+.checkbox-button:checked + .checkbox-label,
+.radio-button:checked + .radio-label {
+    background-color: #007bff; /* 체크박스 체크 시 버튼 색상 */
+}
+
+.checkbox-label:hover,
+.radio-label:hover {
+    background-color: #007bff; /* 마우스 오버 시 색상 변화 */
+}
+
+.radio-button:disabled,
+.checkbox-button:disabled {
+    cursor: not-allowed; /* 비활성화된 경우 커서 스타일 */
+    opacity: 0.5; /* 비활성화된 체크박스 투명도 */
+    color: #b0b0b0; /* 회색으로 비활성화 색상 */
+}
+
+/* 레이블 스타일 추가 */
+.radio-button:disabled + .radio-label,
+.checkbox-button:disabled + .checkbox-label {
+    color: #b0b0b0; /* 비활성화 상태에서 레이블 색상 */
+    text-decoration: line-through; /* 레이블에 취소선 추가 */
+    pointer-events: none; /* 레이블 클릭 방지 */
+}
+/* 스케쥴 등록 end */
+
+
