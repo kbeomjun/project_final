@@ -146,7 +146,6 @@ public class MemberController {
 	            memberService.setAutoLoginCookie(user, response);
 	        }
 
-	        model.addAttribute("msg", "환영합니다, " + user.getMe_id() + "님!");
 	        model.addAttribute("url", "/");
 	        log.info("로그인 성공: " + user.getMe_id() + " (자동 로그인: " + isAutoLogin + ")");
 	    } catch (Exception e) {
@@ -183,8 +182,6 @@ public class MemberController {
         cookie.setPath("/");
         response.addCookie(cookie);
         log.info("자동 로그인 쿠키 삭제 완료");
-
-        model.addAttribute("msg", "로그아웃 했습니다");
         
         String prevUrl = request.getHeader("Referer");
 		if (prevUrl != null) {
