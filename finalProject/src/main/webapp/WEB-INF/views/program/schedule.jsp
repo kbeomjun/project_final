@@ -8,104 +8,6 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/program/schedule.css"/>">
 
 <style type="text/css">
-.scrollable-text {
-	max-height: 350px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 10px;
-}
-.lnb_wrap {
-    flex: 0 0 204px; /* 고정 너비 설정 */
-    display: flex; /* 자식 요소를 flexbox로 배치 */
-    flex-direction: column; /* 세로 방향으로 요소 배치 */
-    position: relative; /* 자식 요소에 대해 위치를 설정 */
-}
-
-.lnb-container {
-    flex: 1; /* 가변 크기로 설정 */
-    /* 추가 스타일이 필요할 수 있음 */
-}
-
-.sub_content_group {
-    flex: 1; /* 남은 공간을 차지하도록 설정 */
-    margin-left: 20px; /* 사이드바와의 간격 조정 */
-    padding: 20px; /* 필요시 내부 여백 추가 */
-}
-
-.employee-modal .modal-content {
-    width: 760px;
-	bottom: -20px;
-    left: -2px;
-    margin: auto;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.employee-modal .close {
-	top: auto;
-	cursor: pointer;
-	font-size: 3rem;
-	padding: 0;
-}
-.modal-dialog .close {
-	padding: 2rem 2rem 0 0;
-	margin: -2rem -1rem -1rem auto;
-	font-size: 3rem;
-}
-
-.employee-modal .modal-header,
-.modal-dialog .modal-header {
-    border-bottom: none;
-}
-
-.calendar,
-.calendar td {
-	border : none;
-}
-.calendar {
-    border-collapse: separate;
-    border-spacing: 15px 0px;
-    table-layout: fixed; /* 고정 레이아웃 설정 */
-}
-
-.calendar th {
-border : none !important;
-}
-
-.calendar td {
-	border-top : solid 1px;
-	position: relative;
-    padding: 10px 0px;
-    background-color: transparent;
-}
-
-.calendar .program-button span {
-	font-weight: 500 !important;
-}
-
-
-.calendar td::before {
-    content: '';
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: -1;
-    background-color: transparent;
-}
-
-.calendar td.bg-highlight::before {
-	background-color: #F7F7F7;
-    border-top: 2px solid green;
-}
-
-.day-item {
-	font-size: 16px;
-	font-weight: 900 !important;
-	margin : 0px 0px 10px -5px;
-}
 
 </style>
 </head>
@@ -310,26 +212,14 @@ border : none !important;
 											    <fmt:formatDate value='${ps.bs_start}' pattern='dd' var="ps_day" />
 											    
 											    <c:if test="${(j - cal.startBlankCnt) eq ps_day}">
-											    	
-											    	<c:set var="colorClass" value="" />
-
-											        <c:choose>
-											            <c:when test="${ps.bp_sp_name eq '필라테스'}">
-											                <c:set var="colorClass" value="btn_group_color_1" />
-											            </c:when>
-											            <c:when test="${ps.bp_sp_name eq '요가'}">
-											                <c:set var="colorClass" value="btn_group_color_2" />
-											            </c:when>
-											            <c:when test="${ps.bp_sp_name eq '스피닝'}">
-											                <c:set var="colorClass" value="btn_group_color_3" />
-											            </c:when>
-											            <c:when test="${ps.bp_sp_name eq '크로스핏'}">
-											                <c:set var="colorClass" value="btn_group_color_4" />
-											            </c:when>
-											            <c:otherwise>
-											                <c:set var="colorClass" value="btn_group_color_10" /> 
-											            </c:otherwise>
-											        </c:choose>
+											    	<c:choose>
+													    <c:when test="${not empty programColorMap[ps.bp_sp_name]}">
+													        <c:set var="colorClass" value="${programColorMap[ps.bp_sp_name]}" />
+													    </c:when>
+													    <c:otherwise>
+													        <c:set var="colorClass" value="btn_group_color_20" /> <!-- 기본 색상 -->
+													    </c:otherwise>
+													</c:choose>
 											
 											        <c:if test="${fn:contains(sp_name_distinct, ps.bp_sp_name) == false}">
 											        

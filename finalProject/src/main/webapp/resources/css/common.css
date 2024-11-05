@@ -1780,16 +1780,17 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 /* modal end */
 
 /* btn group color */ 
-.btn_group_color_1 {
-    background-color: #BAE1FF; /* Pastel Sky Blue */
-}
-
-.btn_group_color_2 {
+.btn_group_color_1
+ {
     background-color: #D7BAFF; /* Pastel Lavender */
 }
 
+.btn_group_color_2 {
+    background-color: #BAE1FF; /* Pastel Sky Blue */
+}
+
 .btn_group_color_3 {
-    background-color: #FFFFBA; /* Pastel Yellow */
+    background-color: #FFB3BA; /* Pastel Pink */
 }
 
 .btn_group_color_4 {
@@ -1797,11 +1798,11 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
 }
 
 .btn_group_color_5 {
-    background-color: #FFB3BA; /* Pastel Pink */
+    background-color: #FFDFBA; /* Pastel Peach */
 }
 
 .btn_group_color_6 {
-    background-color: #FFDFBA; /* Pastel Peach */
+    background-color: #FFFFBA; /* Pastel Yellow */
 }
 
 .btn_group_color_7 {

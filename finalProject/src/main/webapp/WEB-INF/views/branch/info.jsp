@@ -144,10 +144,9 @@
 				</c:when>
 				<c:otherwise>
 					<div class="table_wrap">
-						<div class="sub_title_wrap">
+						<div class="sub_title_wrap" style="margin-bottom: 40px;">
 							<h2 class="sub_title">전지점보기</h2>
 						</div>
-						<hr>
 						<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto; position: relative;">
 						    <button class="btn-sg btn-dark btn-map" id="original-location-btn" >원래 위치로</button>
 						</div>
