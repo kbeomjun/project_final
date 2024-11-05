@@ -28,7 +28,7 @@
 							<thead id="thead">
 								<tr>
 									<th>운동기구명</th>
-									<th>발주수량</th>
+									<th>신청수량</th>
 									<th>발주날짜</th>
 									<th>발주상태</th>
 									<th>신청취소</th>
