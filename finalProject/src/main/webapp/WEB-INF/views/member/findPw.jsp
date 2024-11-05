@@ -90,7 +90,7 @@
                     success: function (data) {
                         $('.modal-container').remove();
                         if (data === 'not_found') {
-                            alert("등록된 사용자가 아닙니다.");
+                            alert("등록된 사용자가 아닙니다, 아이디 또는 이메일을 확인해주세요");
                         } else if (data === 'error') {
                             alert("오류가 발생했습니다. 다시 시도해 주세요.");
                         } else {
