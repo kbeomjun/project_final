@@ -43,7 +43,7 @@
 				</c:choose>
 				">
 							<a class="btn btn_black js-btn-insert"
-								href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false"/>">
+								href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/null/${pr_name != null ? pr_name : 'null'}/false/null"/>">
 								<span>전체<i class="ic_link_share"></i></span>
 							</a>
 							<div class="btn_black_top_line"></div>
@@ -65,7 +65,7 @@
 							<div class="btn_wrap">
 								<div class="btn_link_black ${unSelected}">
 									<a class="btn btn_black js-btn-insert"
-										href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br.br_name}/${pr_name != null ? pr_name : 'null'}/false"/>">
+										href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br.br_name}/${pr_name != null ? pr_name : 'null'}/false/null"/>">
 										<span>${br.br_name }<i class="ic_link_share"></i></span>
 									</a>
 									<div class="btn_black_top_line"></div>
@@ -93,7 +93,7 @@
 						<li class="tab_item">
 						<a
 							class="btn tab_link <c:if test="${pr_name eq 'null'}">_active</c:if>"
-							href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false"/>">
+							href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/null/false/null"/>">
 							전체 </a></li>
 						
 					<c:forEach items="${program_list}" var="pr" varStatus="status">
@@ -109,7 +109,7 @@
 							</c:choose>
 							<li class="tab_item">
 							<a class="btn tab_link ${_btn_seleceted}"
-								href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/${pr.sp_name}/false"/>">
+								href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${cal.day}/${br_name != null ? br_name : 'null'}/${pr.sp_name}/false/null"/>">
 								${pr.sp_name } </a></li>
 						</c:if>
 					</c:forEach>
@@ -120,14 +120,14 @@
 						<span> 
 							<c:if test="${ cal.year ne todayYear || ((cal.month+1) ne todayMonth)}">
 								<a class="btn tab_link" style="border-radius: 10px;"
-									href="<c:url value="/program/schedule/${cal.year}/${cal.month-1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">이전달</a>
+									href="<c:url value="/program/schedule/${cal.year}/${cal.month-1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false/null"/>">이전달</a>
 							</c:if>
 						</span> 
 						<span class="fs-5" style="font-size: 1.5rem; font-weight: 600;">${cal.year}년
 							${cal.month+1}월
 						</span>
 						<span> <a class="btn tab_link" style="border-radius: 10px;"
-							href="<c:url value="/program/schedule/${cal.year}/${cal.month+1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false"/>">다음달</a>
+							href="<c:url value="/program/schedule/${cal.year}/${cal.month+1}/${todayDate }/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/false/null"/>">다음달</a>
 						</span>
 					</div>
 
@@ -169,7 +169,7 @@
 										</c:if> 
 										<c:if test="${(j > cal.startBlankCnt) && (j <= cal.startBlankCnt + cal.lastDate)}">
 											<c:set var="url"
-												value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true" />
+												value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true/null" />
 
 											<c:choose>
 												<c:when test="${cal.year > todayYear}">
@@ -224,7 +224,7 @@
 											        <c:if test="${fn:contains(sp_name_distinct, ps.bp_sp_name) == false}">
 											        
 											            <a class="btn ${colorClass} program-button ${disabled}"
-											                href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true"/>">
+											                href="<c:url value="/program/schedule/${cal.year}/${cal.month}/${j - cal.startBlankCnt}/${br_name != null ? br_name : 'null'}/${pr_name != null ? pr_name : 'null'}/true/${ps.bp_sp_name}"/>">
 											                <span>${ps.bp_sp_name}</span>
 											            </a>
 											            <c:set var="sp_name_distinct" value="${sp_name_distinct},${ps.bp_sp_name}" />
@@ -273,35 +273,49 @@
 									var="ps_day" />
 								<c:if test="${ps.bp_sp_name ne 'PT' && cal.day eq ps_day}">
 								<c:set var="hasData" value="true" />
-									<tr>
-										<td>${ps.bp_sp_name }</td>
-										<td>${fn:replace(ps.bp_br_name, '점', '')}</td>
-										<td><a class="btn btn-view-details"
-											data-bs-num="${ps.bs_num}"> <span style="color: #007bff">${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})</span>
-										</a></td>
-										<td><fmt:formatDate value="${ps.bs_start}"
-												pattern="HH:mm" /> <br />~<fmt:formatDate
-												value="${ps.bs_end}" pattern="HH:mm" /></td>
-										<td>${ps.bs_current}/${ps.bp_total }</td>
-										<td><c:set var="currentTime"
-												value="<%=new java.util.Date()%>" /> <c:choose>
-												<c:when
-													test="${ps.bs_current ne ps.bp_total && currentTime.before(ps.bs_start)}">
-													<!-- 정원 초과가 아니고 현재 시간보다 이전 프로그램이 아니라면 예약 가능 -->
-													<form action="<c:url value="/program/reservation" />"
-														method="post">
-														<input type="hidden" name="bs_num" value="${ps.bs_num}">
-														<button
-															class="btn btn_green btn-program-reservation1"
-															data-program="${ps.bp_sp_name}/${ps.bp_br_name}/${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})/<fmt:formatDate value="${ps.bs_start}" pattern="HH:mm"/>~<fmt:formatDate value="${ps.bs_end}" pattern="HH:mm" />"
-															data-num="${ps.bs_num}" type="button">예약</button>
-													</form>
-												</c:when>
-												<c:otherwise>
-													<span class="btn btn_ btn-program-reservation2 disabled">마감</span>
-												</c:otherwise>
-											</c:choose></td>
-									</tr>
+								<c:choose>
+								    <c:when test="${selectedProgram eq 'null'}">
+								        <!-- selectedProgram이 null일 때 모든 프로그램 표시 -->
+								        <c:set var="showRow" value="true" />
+								    </c:when>
+								    <c:otherwise>
+								        <!-- selectedProgram이 null이 아닐 때, 일치하는 프로그램만 표시 -->
+								        <c:set var="showRow" value="${selectedProgram eq ps.bp_sp_name}" />
+								    </c:otherwise>
+								</c:choose>
+								
+								<c:if test="${showRow}">
+								    <tr>
+								        <td>${ps.bp_sp_name}</td>
+								        <td>${fn:replace(ps.bp_br_name, '점', '')}</td>
+								        <td>
+								            <a class="btn btn-view-details" data-bs-num="${ps.bs_num}">
+								                <span style="color: #007bff">${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})</span>
+								            </a>
+								        </td>
+								        <td>
+								            <fmt:formatDate value="${ps.bs_start}" pattern="HH:mm" />
+								            <br />~<fmt:formatDate value="${ps.bs_end}" pattern="HH:mm" />
+								        </td>
+								        <td>${ps.bs_current}/${ps.bp_total}</td>
+								        <td>
+								            <c:set var="currentTime" value="<%=new java.util.Date()%>" />
+								            <c:choose>
+								                <c:when test="${ps.bs_current ne ps.bp_total && currentTime.before(ps.bs_start)}">
+								                    <form action="<c:url value='/program/reservation' />" method="post">
+								                        <input type="hidden" name="bs_num" value="${ps.bs_num}">
+								                        <button class="btn btn_green btn-program-reservation1"
+								                                data-program="${ps.bp_sp_name}/${ps.bp_br_name}/${ps.em_name}(${fn:substring(ps.em_gender, 0, 1)})/<fmt:formatDate value='${ps.bs_start}' pattern='HH:mm'/>~<fmt:formatDate value='${ps.bs_end}' pattern='HH:mm' />"
+								                                data-num="${ps.bs_num}" type="button">예약</button>
+								                    </form>
+								                </c:when>
+								                <c:otherwise>
+								                    <span class="btn btn_ btn-program-reservation2 disabled">마감</span>
+								                </c:otherwise>
+								            </c:choose>
+								        </td>
+								    </tr>
+								</c:if>
 								</c:if>
 							</c:forEach>
 						</tbody>
@@ -456,7 +470,12 @@ window.onload = function() {
     document.body.classList.add("fade-in");
     
     // 모든 td 요소의 최대 높이를 구해 같은 높이로 설정
-   	const tds = document.querySelectorAll(".calendar td");
+    const tds = document.querySelectorAll(".calendar td");
+    if (tds.length === 0) {
+        console.error("No td elements found in .calendar table.");
+        return; // td 요소가 없으면 함수 종료
+    }
+    
     let maxHeight = 0;
 
     // 각 td의 높이 중 가장 큰 값 찾기
@@ -466,9 +485,8 @@ window.onload = function() {
 
     // 모든 td에 최대 높이 적용
     tds.forEach(td => {
-        td.style.height = (maxHeight > 140)?maxHeight:140 + "px";
+        td.style.height = (maxHeight > 140) ? maxHeight + "px" : "140px";
     });
-    
     
 };
 

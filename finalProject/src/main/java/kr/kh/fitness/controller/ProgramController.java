@@ -67,15 +67,15 @@ public class ProgramController {
 		int month = today.getMonthValue() - 1;
 		int day = today.getDayOfMonth();
 
-		return programSchedule(model, year, month, day, "null", "null", false);
+		return programSchedule(model, year, month, day, "null", "null", false, null);
 	}
 
-	@GetMapping("/schedule/{year}/{month}/{day}/{br_name}/{pr_name}/{is_resrvation}")
+	@GetMapping("/schedule/{year}/{month}/{day}/{br_name}/{pr_name}/{is_resrvation}/{selectedProgram}")
 	public String programSchedule(Model model,
 			@PathVariable("year") Integer inputYear,
 			@PathVariable("month") Integer inputMonth, @PathVariable("day") Integer inputDay,
-			@PathVariable("br_name") String br_name, @PathVariable("pr_name") String pr_name
-			,@PathVariable("is_resrvation") boolean showModal ) {
+			@PathVariable("br_name") String br_name, @PathVariable("pr_name") String pr_name,
+			@PathVariable("is_resrvation") boolean showModal, @PathVariable("selectedProgram") String selectedProgram) {
 		
 		log.info("/program/schedule : Arg");
 		
@@ -169,6 +169,8 @@ public class ProgramController {
 		model.addAttribute("program_list", program_list);
 		model.addAttribute("br_name", br_name);
 		model.addAttribute("pr_name", pr_name);
+		System.out.println(selectedProgram);
+		model.addAttribute("selectedProgram", selectedProgram);
 
 		model.addAttribute("ps_list", ps_list);
 		
