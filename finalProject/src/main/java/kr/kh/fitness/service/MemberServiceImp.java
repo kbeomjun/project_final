@@ -226,9 +226,9 @@ public class MemberServiceImp implements MemberService {
 
 	// 비밀번호 찾기 (임시 비밀번호 발급 및 메일 전송)
 	@Override
-	public boolean findPwByDetails(String id, String email, String phone) {
+	public boolean findPwByDetails(String id, String email) {
 	    // 사용자 정보 조회 (ID, 이메일, 전화번호가 모두 일치하는 경우에만 진행)
-	    MemberVO user = memberDao.findMemberByIdEmailPhone(id, email, phone);
+	    MemberVO user = memberDao.findMemberByIdEmailPhone(id, email);
 	    if (user == null) {
 	        return false; // 사용자가 존재하지 않으면 실패 반환
 	    }

@@ -28,7 +28,7 @@ public interface MemberDAO {
 
 	MemberVO selectMemberByNameAndEmail(@Param("me_name") String name, @Param("me_email") String email);
 
-	MemberVO findMemberByIdEmailPhone(@Param("me_id")String id, @Param("me_email") String email, @Param("me_phone") String phone);
+	MemberVO findMemberByIdEmailPhone(@Param("me_id")String id, @Param("me_email") String email);
 
 	boolean updateSocialToKaKao(@Param("me_id") String me_id, @Param("socialId") String socialId);
 

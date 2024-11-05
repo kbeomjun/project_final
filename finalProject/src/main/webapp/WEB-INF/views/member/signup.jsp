@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<title>회원가입</title>
+
+<div class="login_prev_wrap">
+	<a href="<c:url value='/'/>" class="login_prev">Return Home</a>
+</div>
 
 <section class="sub_content">
     <section class="sub_content_group">

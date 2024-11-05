@@ -26,7 +26,7 @@ public interface MemberService {
 
 	MemberVO loginSns(String sns, String id);
 
-	boolean findPwByDetails(String id, String email, String phone);
+	boolean findPwByDetails(String id, String email);
 
 	String findId(String name, String email);
 
