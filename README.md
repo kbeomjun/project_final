@@ -1,10 +1,7 @@
-
-
-
----
+___
 
 ### :date: 프로젝트 진행 기간
-- 2021.9.14 ~ 2021.9.29
+- 2024.9.20 ~ 2024.11.12
 MAIN
 ![main](https://github.com/user-attachments/assets/2babbaa9-5f1e-47e1-bf73-67fefc05c85f)
 
