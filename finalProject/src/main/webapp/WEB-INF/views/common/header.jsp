@@ -71,9 +71,9 @@
             </div>
             <div class="textbox">
               <h3 class="gnb_side__title">Working hours</h3>
-              <p>Monday - Friday:<br>07:00 - 21:00</p>
-              <p>Saturday:<br>07:00 - 16:00</p>
-              <p>Sunday Closed</p>
+              <p>Monday - Friday<br>Open 24/7</p>
+              <p>Saturday<br>06:00 - 18:00</p>
+              <p>Sunday<br>10:00 - 18:00</p>
             </div>
             <div class="textbox mt-auto">
               <h3 class="gnb_side__title">Our socials</h3>

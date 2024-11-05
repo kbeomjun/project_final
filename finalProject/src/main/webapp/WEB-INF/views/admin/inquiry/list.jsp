@@ -51,7 +51,7 @@
 							        		<td class="align-content-center">${mi.mi_it_name}</td>
 							        		<td class="align-content-center">${mi.mi_state}</td>
 							        		<td class="align-content-center">
-							        			<button type="button" class="btn btn_blue btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">조회</button>
+							        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal" data-num="${mi.mi_num}">등록</button>
 							        		</td>
 							      		</tr>
 						    		</c:forEach>
@@ -230,6 +230,16 @@
 													<div class="form-group" id="mi_content2"></div>
 												</td>
 											</tr>
+										</tbody>
+									</table>
+									
+					        		<table class="table">
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 80%;">
+										</colgroup>
+										
+										<tbody>
 											<tr>
 												<th scope="row">
 													<label for="mi_answer2">답변</label>

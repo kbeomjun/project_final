@@ -55,6 +55,7 @@
 		// header 높이를 넘어섰을 때 to_top_on 클래스를 추가해 버튼 표시
 		if (scrollPosition > 50) {
 			$('.to_top').addClass('to_top_on');
+			$(".main_header").addClass("_active");
 		} else {
 			$('.to_top').removeClass('to_top_on');
 		}
@@ -62,6 +63,9 @@
 		// footer가 화면에 도달하면 to_top_on 클래스를 제거해 버튼 숨기기
 		if (scrollPosition + windowHeight >= documentHeight - footerHeight || scrollPosition === 0) {
 			$('.to_top').removeClass('to_top_on');
+		}
+		if (scrollPosition === 0) {
+			$(".main_header").removeClass("_active");
 		}
 	});
 

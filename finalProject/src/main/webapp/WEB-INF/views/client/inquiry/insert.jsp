@@ -285,7 +285,6 @@
 					var customDomainInput = document.getElementById('mi_customEmailDomain');
 					if (this.value === 'custom') {
 						customDomainInput.style.display = 'block';
-						customDomainInput.required = true;
 		          
 						$('#mi_customEmailDomain').off('keyup').on('keyup', function(){
 							$('.error-customEmailDomain').children().remove();
