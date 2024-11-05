@@ -1,5 +1,5 @@
 ___
-# KH Fitness(헬스장관리시스템)
+# KH Fitness
 ![main](https://github.com/user-attachments/assets/2babbaa9-5f1e-47e1-bf73-67fefc05c85f)
 
 
