@@ -104,50 +104,51 @@
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
-											<th scope="col"><label for="mi_title">제목</label></th>
+											<th scope="col"><label>제목</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_title" name="mi_title" readonly>
+													<div class="form-group" id="mi_title"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_email">이메일</label></th>
+											<th scope="col"><label>이메일</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_email" name="mi_email" readonly>
+													<div class="form-group" id="mi_email"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_date">날짜</label></th>
+											<th scope="col"><label>날짜</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_date" name="mi_date" readonly>
+													<div class="form-group" id="mi_date"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_it_name">유형</label></th>
+											<th scope="col"><label>유형</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_it_name" name="mi_it_name" readonly>
+													<div class="form-group" id="mi_it_name"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_content">내용</label></th>
+											<th scope="col"><label>내용</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_content" name="mi_content" readonly>
+													<div class="form-group" id="mi_content"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
@@ -185,59 +186,60 @@
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
-											<th scope="col"><label for="mi_title">제목</label></th>
+											<th scope="col"><label>제목</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_title2" name="mi_title" readonly>
+													<div class="form-group" id="mi_title2"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_email">이메일</label></th>
+											<th scope="col"><label>이메일</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_email2" name="mi_email" readonly>
+													<div class="form-group" id="mi_email2"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_date">날짜</label></th>
+											<th scope="col"><label>날짜</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_date2" name="mi_date" readonly>
+													<div class="form-group" id="mi_date2"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_it_name">유형</label></th>
+											<th scope="col"><label>유형</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_it_name2" name="mi_it_name" readonly>
+													<div class="form-group" id="mi_it_name2"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_content">내용</label></th>
+											<th scope="col"><label>내용</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="mi_content2" name="mi_content" readonly>
+													<div class="form-group" id="mi_content2"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="mi_answer">답변</label></th>
+											<th scope="col"><label>답변</label></th>
 							                <td>
 							                	<div>
-													<textarea class="form-control" id="mi_answer2" name="mi_answer" readonly></textarea>
+													<div class="form-group" id="mi_answer2"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
@@ -372,11 +374,11 @@
 						.replace(/\./g, '')
 						.replace(/\s/g, '.')
 					
-					$('#mi_title').val(mi.mi_title);
-					$('#mi_email').val(mi.mi_email);
-					$('#mi_date').val(mi_date);
-					$('#mi_it_name').val(mi.mi_it_name);
-					$('#mi_content').val(mi.mi_content);
+					$('#mi_title').text(mi.mi_title);
+					$('#mi_email').text(mi.mi_email);
+					$('#mi_date').text(mi_date);
+					$('#mi_it_name').text(mi.mi_it_name);
+					$('#mi_content').text(mi.mi_content);
 					$('#mi_num').val(mi.mi_num);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
@@ -408,12 +410,12 @@
 						.replace(/\./g, '')
 						.replace(/\s/g, '.')
 					
-					$('#mi_title2').val(mi.mi_title);
-					$('#mi_email2').val(mi.mi_email);
-					$('#mi_date2').val(mi_date);
-					$('#mi_it_name2').val(mi.mi_it_name);
-					$('#mi_content2').val(mi.mi_content);
-					$('#mi_answer2').val(mi.mi_answer);
+					$('#mi_title2').text(mi.mi_title);
+					$('#mi_email2').text(mi.mi_email);
+					$('#mi_date2').text(mi_date);
+					$('#mi_it_name2').text(mi.mi_it_name);
+					$('#mi_content2').text(mi.mi_content);
+					$('#mi_answer2').text(mi.mi_answer);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
