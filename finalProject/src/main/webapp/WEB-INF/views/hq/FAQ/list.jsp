@@ -35,7 +35,7 @@
 				        			<fmt:formatDate value="${mi.mi_date}" pattern="yyyy.MM.dd"/>
 			        			</td>
 				        		<td>
-				        			<button type="button" class="btn btn_green btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">조회</button>
+				        			<button type="button" class="btn btn_yellow btn-detail" data-toggle="modal" data-target="#myModal2" data-num="${mi.mi_num}">수정</button>
 				        		</td>
 				      		</tr>
 			    		</c:forEach>
@@ -68,7 +68,8 @@
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
@@ -86,7 +87,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select name="mi_it_name" class="custom-select form-control">
+													<select name="mi_it_name" class="custom-select form-control" style="width: 100%;">
 														<option value="" selected>선택</option>
 														<c:forEach items="${itList}" var="it">
 															<option value="${it.it_name}">${it.it_name}</option>
@@ -110,7 +111,7 @@
 							</div>
 						</div>
 			        	<div class="modal-footer">
-			        		<button class="btn btn_black">FAQ 등록</button>
+			        		<button class="btn btn_black">등록</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		    		</form>
@@ -121,14 +122,15 @@
 		    	<div class="modal-dialog modal-dialog-centered">
 		    		<form action="<c:url value="/hq/FAQ/update"/>" method="post" id="form2" class="modal-content">
 			        	<div class="modal-header">
-			          		<h4 class="modal-title">조회</h4>
+			          		<h4 class="modal-title">수정</h4>
 			          		<button type="button" class="close btn-close" data-dismiss="modal">&times;</button>
 			        	</div>
 			        	<div class="modal-body">
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
@@ -146,7 +148,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control">
+													<select id="mi_it_name2" name="mi_it_name" class="custom-select form-control" style="width: 100%;">
 														<c:forEach items="${itList}" var="it">
 															<option value="${it.it_name}">${it.it_name}</option>
 														</c:forEach>
@@ -170,7 +172,7 @@
 							</div>
 						</div>
 			        	<div class="modal-footer">
-			        		<button class="btn btn_black">FAQ 수정</button>
+			        		<button class="btn btn_black">수정</button>
 			          		<a href="#" class="btn btn_red btn-close" data-dismiss="modal">취소</a>
 			        	</div>
 		    		</form>
@@ -259,7 +261,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-		    scrollY: 500,
+		    scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,

@@ -12,7 +12,7 @@
 				<!-- 오른쪽 컨텐츠 영역 -->
 				<section class="sub_content_group">
 					<div class="sub_title_wrap">
-						<h2 class="sub_title">${em.em_name} 직원 상세</h2>
+						<h2 class="sub_title">${em.em_name} 직원 수정</h2>
 						<p class="sub_title__txt">※ 사진 규격은 240x300입니다.</p>
 					</div>
 					

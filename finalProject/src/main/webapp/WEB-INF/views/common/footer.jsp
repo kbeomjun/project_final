@@ -4,11 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 		<!-- main footer -->
 		<footer class="main_footer">
+			<button type="button" class="btn to_top">
+				<span class="blind">To Top</span>
+			</button>
 			<section class="ft_info_wrap">
 				<div class="ft_info">
 					<div class="ft_info__item">
 						<div class="ft_logo_wrap"><div class="ft_logo"></div></div>
-						<div class="ft_textbox">
+						<div class="ft_textbox mb-5">
 							<p>Powerlift is a champ in providing its users with absolutely everything a fitness or gym site needs.</p>
 						</div>
 						<div class="textbox">
@@ -41,4 +44,28 @@
 				<div class="ft_copyright">© 2024 KH ACADEMY, All Rights Reserved</div>
 			</section>
 		</footer>
-	</div>
+	<script>
+	$(window).scroll(function() {
+		const scrollPosition = $(window).scrollTop();
+		const windowHeight = $(window).height();
+		const documentHeight = $(document).height();
+		
+		const footerHeight = 425;  // footer 높이
+
+		// header 높이를 넘어섰을 때 to_top_on 클래스를 추가해 버튼 표시
+		if (scrollPosition > 50) {
+			$('.to_top').addClass('to_top_on');
+		} else {
+			$('.to_top').removeClass('to_top_on');
+		}
+
+		// footer가 화면에 도달하면 to_top_on 클래스를 제거해 버튼 숨기기
+		if (scrollPosition + windowHeight >= documentHeight - footerHeight || scrollPosition === 0) {
+			$('.to_top').removeClass('to_top_on');
+		}
+	});
+
+	$('.to_top').click(function() {
+		$('html, body').animate({ scrollTop: 0 }, 'smooth');
+	});
+	</script>

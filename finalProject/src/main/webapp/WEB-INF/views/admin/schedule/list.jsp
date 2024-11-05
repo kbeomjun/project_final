@@ -112,7 +112,7 @@
 						<div class="btn_right_wrap">
 							<div class="btn_link_black">
 								<a href="<c:url value="/admin/schedule/regist"/>" class="btn btn_black js-btn-insert">
-									<span>프로그램 추가<i class="ic_link_share"></i></span>
+									<span>일정 추가<i class="ic_link_share"></i></span>
 								</a>
 								<div class="btn_black_top_line"></div>
 								<div class="btn_black_right_line"></div>

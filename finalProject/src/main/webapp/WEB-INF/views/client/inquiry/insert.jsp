@@ -99,9 +99,9 @@
 												</c:choose>
 											</div>
 											<div style="display: flex;">
-												<div class="error error-emailId" style="flex: 16;"></div>
-												<div class="error error-emailDomain" style="flex: 9;"></div>
-												<div class="error error-customEmailDomain" style="flex: 14;"></div>
+												<div class="error error-emailId" style="flex: 367;"></div>
+												<div class="error error-emailDomain" style="flex: 194;"></div>
+												<div class="error error-customEmailDomain" style="flex: 378;"></div>
 											</div>
 										</td>
 									</tr>

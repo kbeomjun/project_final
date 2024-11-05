@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- skip nav -->
 <div class="skip_nav">
-  <a href="#skipnav_target">본문 영역 바로가기</a>
+	<a href="#skipnav_target">본문 영역 바로가기</a>
 </div>
 <!-- skip nav -->
 
@@ -15,7 +15,7 @@
   </div>
   <nav class="gnb_wrap">
     <ul class="gnb">
-      <li class="gnb__item"><a href="<c:url value="/branch/info" />" class="gnb__link">지점 조회</a></li>
+      <li class="gnb__item"><a href="<c:url value="/branch/info" />" class="gnb__link">지점 소개</a></li>
       <li class="gnb__item"><a href="<c:url value="/payment/paymentList" />" class="gnb__link">회원권</a></li>
       <li class="gnb__item"><a href="<c:url value="/program/info" />" class="gnb__link">프로그램</a></li>
       <li class="gnb__item"><a href="<c:url value="/client/review/list" />" class="gnb__link">고객센터</a></li>
@@ -35,7 +35,6 @@
           <li class="gnb__item"><a href="<c:url value='/logout'/>" class="gnb__link">로그아웃</a></li>
         </c:when>
         <c:otherwise>
-          <li class="gnb__item"><a href="<c:url value='/mypage/membership'/>" class="gnb__link" onclick="alert('로그인한 유저만 이용 가능합니다.'); location.href='<c:url value='/login'/>'; return false;">마이페이지</a></li>
           <li class="gnb__item"><a href="<c:url value='/login'/>" class="gnb__link">로그인</a></li>
         </c:otherwise>
       </c:choose>

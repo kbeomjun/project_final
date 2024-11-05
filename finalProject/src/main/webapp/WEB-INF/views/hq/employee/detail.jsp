@@ -12,9 +12,9 @@
         <!-- 오른쪽 컨텐츠 영역 -->
 		<section class="sub_content_group">
 			<div class="sub_title_wrap">
-				<h2 class="sub_title">직원 조회</h2>
+				<h2 class="sub_title">직원 수정</h2>
 				<p class="sub_title__txt">
-					<span>사진 규격은 300x300입니다.</span>
+					<span>사진 규격은 240x300입니다.</span>
 				</p>
 			</div>
 		

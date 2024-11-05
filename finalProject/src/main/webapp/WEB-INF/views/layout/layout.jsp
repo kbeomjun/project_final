@@ -103,7 +103,16 @@
 		        }
 		    });
 		});
+		$(document).ready(function() {
+			// 현재 경로에서 '/fitness/admin/'이 포함된 경우에만 이동
+		    const currentPath = window.location.pathname;
 
+		    if (/\/fitness\/(admin|hq)\//.test(currentPath)) {
+		      $('html, body').animate({
+		        scrollTop: $('.sub_content').offset().top
+		      }, 200); // 부드럽게 이동
+		    }
+		});
 		/*
 		$(function(){
 			var url = window.location.pathname;

@@ -67,26 +67,35 @@
 							</tbody>
 						</table>
 						
-						
-						<!-- 문의 답변 섹션 -->
-						<div class="response-section">
-						    <div class="section-title">답변</div>
-						    <c:choose>
-						        <c:when test="${inquiry.mi_answer != null}">
-						            <div class="form-group">
-						                <div class="form-control">${inquiry.mi_answer}</div>
-						            </div>
-						        </c:when>
-						        <c:otherwise>
-						            <div class="form-group">
-						                <p class="text-muted">아직 답변이 등록되지 않았습니다.</p>
-						            </div>
-						        </c:otherwise>
-						    </c:choose>
-						</div>
+						<table class="table">
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: 80%;">
+							</colgroup>
+							
+							<tbody>
+								<tr>
+									<th scope="row">
+										<label for="mi_answer">답변</label>
+									</th>
+									<td>
+									    <c:choose>
+									        <c:when test="${inquiry.mi_answer != null}">
+									            <div class="form-group">${inquiry.mi_answer}</div>
+									        </c:when>
+									        <c:otherwise>
+									            <div class="form-group">
+									                <p class="text-muted">아직 답변이 등록되지 않았습니다.</p>
+									            </div>
+									        </c:otherwise>
+									    </c:choose>
+									</td>
+								</tr>
+							</tbody>							
+						</table>						
 		                   
 						<div class="btn_wrap">
-							<div class="btn_right_wrap">
+							<div class="btn_left_wrap">
 								<a href="<c:url value="/mypage/inquiry/list"/>" class="btn btn_cancel">목록</a>
 							</div>
 						</div>

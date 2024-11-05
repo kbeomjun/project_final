@@ -3,54 +3,6 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 
-<head>
-<style>
-/* 체크박스 숨기기 */
-.checkbox-button,
-.radio-button {
-    display: none; /* 기본 체크박스 숨기기 */
-}
-
-/* 체크박스가 체크되었을 때를 위한 스타일 */
-.checkbox-label,
-.radio-label {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: white; /* 기본 버튼 색상 */
-    color: black; /* 글자 색상 */
-    border : 1px solid black;
-    border-radius: 5px;
-    cursor: pointer; /* 포인터 커서 */
-    transition: background-color 0.3s ease;
-}
-
-.checkbox-button:checked + .checkbox-label,
-.radio-button:checked + .radio-label {
-    background-color: #007bff; /* 체크박스 체크 시 버튼 색상 */
-}
-
-.checkbox-label:hover,
-.radio-label:hover {
-    background-color: #007bff; /* 마우스 오버 시 색상 변화 */
-}
-
-.radio-button:disabled,
-.checkbox-button:disabled {
-    cursor: not-allowed; /* 비활성화된 경우 커서 스타일 */
-    opacity: 0.5; /* 비활성화된 체크박스 투명도 */
-    color: #b0b0b0; /* 회색으로 비활성화 색상 */
-}
-
-/* 레이블 스타일 추가 */
-.radio-button:disabled + .radio-label,
-.checkbox-button:disabled + .checkbox-label {
-    color: #b0b0b0; /* 비활성화 상태에서 레이블 색상 */
-    text-decoration: line-through; /* 레이블에 취소선 추가 */
-    pointer-events: none; /* 레이블 클릭 방지 */
-}
-</style>
-</head>
-
 			<section class="sub_banner sub_banner_05"></section>
 			<section class="sub_content">
 			
@@ -101,7 +53,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="selectDate" name="selectDate">
+												<input type="date" class="form-control custom-calender" id="selectDate" name="selectDate">
 											</div>
 										</td>
 									</tr>
@@ -111,7 +63,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="startDate" name="startDate">
+												<input type="date" class="form-control custom-calender" id="startDate" name="startDate">
 											</div>
 										</td>
 									</tr>
@@ -121,7 +73,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="endDate" name="endDate">
+												<input type="date" class="form-control custom-calender" id="endDate" name="endDate">
 											</div>
 										</td>
 									</tr>	
@@ -174,11 +126,6 @@
 											</div>
 										</td>
 									</tr>
-									<tr id="member-table-label" style="display: none;">
-										<th scope="row">
-											<label for="member-table" class="_asterisk">회원 선택</label>
-										</th>
-									</tr>
 								</tbody>
 							</table>
 							
@@ -187,7 +134,7 @@
 								<table class="table table_center" id="table">
 									<thead id="thead">
 										<tr>
-											<th></th>
+											<th>회원 선택</th>
 											<th>회원 이름</th>
 											<th>번호</th>
 											<th>이메일</th>
@@ -311,7 +258,7 @@
 					
 					// 선택한 프로그램에 따른 UI 변경
 				    if (spType === '단일') {
-				        toggleVisibility(['select-date-form', 'pt-time-table', 'member-table-label', 'memberListTable'], true);
+				        toggleVisibility(['select-date-form', 'pt-time-table', 'memberListTable'], true);
 				        toggleVisibility(['start-date-form', 'end-date-form', 'program-time-table', 'weeks-program-table'], false);
 						
 				        table = $('#table').DataTable({

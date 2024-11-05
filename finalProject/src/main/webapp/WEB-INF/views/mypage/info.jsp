@@ -4,52 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<head>
-<style type="text/css">
-.sns-accounts {
-    display: flex;
-    gap: 15px; /* 요소 간의 간격 */
-    align-items: center; /* 수직 정렬 */
-}
-
-.sns-account {
-    display: flex;
-    align-items: center; /* 각 아이콘과 버튼의 수직 정렬 */
-}
-.btn-sns-unlink {
-    width: 40px;
-    height: 30px;
-    border: 1px solid #bcbfc6;
-    color: gray;
-    background-color: #fafbf6;
-    background-image: linear-gradient(to bottom, #fff, #f1f1f1);
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0;
-    line-height: 29px; /* 텍스트가 중앙에 오도록 설정 */
-    font-size: 12px; /* 텍스트 크기 조정 */
-}
-
-.btn-sns-unlink:hover {
-    background-color: #f5f6f2;
-    background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
-    border-color: #a8b1b8;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    color: #555;
-}
-
-.btn-sns-unlink:active {
-    background-color: #e8e9e5;
-    background-image: linear-gradient(to bottom, #f0f0f0, #e2e3de);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    border-color: #9ca3ab;
-    transform: translateY(1px);
-}
-</style>
-</head>
 
 			<section class="sub_banner sub_banner_07"></section>
 			<section class="sub_content">
@@ -171,7 +125,7 @@
 										</th>
 										<td>
 											<div class="form-group">
-												<input type="date" class="form-control" id="me_birth" name="me_birth" value="<fmt:formatDate value='${member.me_birth}' pattern='yyyy-MM-dd'/>">
+												<input type="date" class="form-control custom-calender" id="me_birth" name="me_birth" value="<fmt:formatDate value='${member.me_birth}' pattern='yyyy-MM-dd'/>">
 											</div>
 										</td>
 									</tr>
@@ -251,11 +205,10 @@
 			        
 			        // 이메일 형식 체크
 			        if (!regexEmail.test(email)) {
-			            $('#emailCheckResult').html('<span style="color: red;">이메일 형식이 올바르지 않습니다.</span>');
+			            $('#emailCheckResult').html('<span>이메일 형식이 올바르지 않습니다.</span>');
 			            emailCheckPassed = false;
 			            return;
 			        } else {
-			            $('#emailCheckResult').html('<span style="color: green;">올바른 이메일 형식입니다. 중복 확인 중...</span>');
 					
 				        $.ajax({
 				        	async : true,
@@ -268,10 +221,10 @@
 				        	dataType : "json",
 				        	success : function (data){
 				                if (data) {
-				                    $('#emailCheckResult').html('<span style="color: red;">이미 사용 중인 이메일입니다.</span>');
+				                    $('#emailCheckResult').html('<span>이미 사용 중인 이메일입니다.</span>');
 				                    emailCheckPassed = false;
 				                } else {
-				                    $('#emailCheckResult').html('<span style="color: green;">사용 가능한 이메일입니다.</span>');
+				                	$('#emailCheckResult').html('');
 				                    emailCheckPassed = true;
 				                }
 				        	}, 

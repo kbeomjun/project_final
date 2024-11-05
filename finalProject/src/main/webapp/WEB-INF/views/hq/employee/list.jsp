@@ -43,7 +43,7 @@
 						        <td>${em.em_br_name}</td>
 						        <td>${em.em_position}</td>
 					        	<td>
-					        		<a class="btn btn_green" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">조회</a>
+					        		<a class="btn btn_yellow" href="<c:url value="/hq/employee/detail/${em.em_num}"/>">수정</a>
 					        		<a class="btn btn_red btn-delete" href="<c:url value="/hq/employee/delete/${em.em_num}"/>">삭제</a>
 					        	</td>
 					      	</tr>
@@ -85,7 +85,7 @@
 		        zeroRecords: "",
 		        emptyTable: ""
 		    },
-			scrollY: 500,
+			scrollY: 400,
 		    stateSave: true,
 		    stateDuration: 300,
 		    paging: false,

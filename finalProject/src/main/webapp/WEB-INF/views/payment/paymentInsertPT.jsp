@@ -63,8 +63,11 @@
 										<p>PT 재시작일</p>
 									</th>
 									<td>
-										<strong class="text-success">${newStartDate}</strong>
-									    <input type="hidden" name="pa_start" value="${newStartDate}" />
+					                	<div id="subMenu" class="">
+											<strong class="text-success">${newStartDate}</strong>
+										    <input type="hidden" name="pa_start" value="${newStartDate}" />
+									    </div>
+										<p class="text_middle">이용권 재결제 시작일은 회원님의 만료일 +1일로 자동으로 계산됩니다.</p>
 								    </td>
 								</tr>
 								<tr>
@@ -106,11 +109,9 @@
 			                	</th>
 			                	<td>
 				                	<div id="subMenu" class="">
-						                <div class="form-inline">
-						                    <select name="pt_date" id="pt_date" class="form-control custom-select" disabled>
-						                        <option value="1">1개월</option>
-						                    </select>
-					                    </div>
+					                    <select name="pt_date" id="pt_date" class="form-control custom-select" disabled>
+					                        <option value="1">1개월</option>
+					                    </select>
 				                    </div>
 			                	</td>
 			                </tr>
@@ -120,11 +121,9 @@
 			                	</th>
 			                	<td>
 				                	<div id="subMenu" class="">
-						                <div class="form-inline">
-											<select name="pt_count" id="pt_count" class="form-control custom-select" disabled>
-												<option value="1">1회</option>
-											</select>
-					                    </div>
+										<select name="pt_count" id="pt_count" class="form-control custom-select" disabled>
+											<option value="1">1회</option>
+										</select>
 				                    </div>
 			                	</td>
 			                </tr>
@@ -134,11 +133,9 @@
 			                	</th>
 			                	<td>
 				                	<div id="subMenu" class="">
-						                <div class="form-inline">
-											<select name="pt_price" id="pt_price" class="form-control custom-select" disabled>
-												<option value="300000">300,000원</option>
-											</select>
-					                    </div>
+										<select name="pt_price" id="pt_price" class="form-control custom-select" disabled>
+											<option value="300000">300,000원</option>
+										</select>
 				                    </div>
 			                	</td>
 			                </tr>
@@ -147,9 +144,9 @@
 					<div class="btn_wrap">
 						<div class="btn_right_wrap">
 							<div class="btn_link_black">
-								<a href="<c:url value="/payment/paymentInsert" />" class="btn btn_black js-btn-insert">
+								<button type="button" class="btn btn_black js-btn-insert">
 									<span>회원권 결제<i class="ic_link_share"></i></span>
-								</a>
+								</button>
 								<div class="btn_black_top_line"></div>
 								<div class="btn_black_right_line"></div>
 								<div class="btn_black_bottom_line"></div>
@@ -174,8 +171,8 @@
                 </div>
                 <div class="modal-body" id="modalBody"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					<button type="button" id="confirmPayment" class="btn btn-danger">결제하기</button>
+                    <button type="button" class="btn btn_black" data-dismiss="modal">취소</button>
+					<button type="button" id="confirmPayment" class="btn btn_red">결제하기</button>
                 </div>
             </div>
         </div>
@@ -370,13 +367,42 @@
 		        
 		        // 팝업 내용 설정
 		        const modalContent = `
-		            <p>결제하시겠습니까?</p>
-		            <p>이용권: \${name}</p>
-		            <p>이용권 종류: \${type}</p>
-		            <p>기간(일): \${date}</p>
-		            <p>PT 시작일: \${start}</p>
-		            <p>횟수: \${count}</p>
-		            <p>가격: \${formattedPrice}원</p>
+		        	<div class="table_wrap">
+						<table class="table">
+							<caption class="blind">결제에 관한 테이블</caption>
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: 80%;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">이용권</th>
+									<td>\${name}</td>
+								</tr>
+								<tr>
+									<th scope="row">이용권 종류</th>
+									<td>\${type}</td>
+								</tr>
+								<tr>
+									<th scope="row">기간(개월)</th>
+									<td>\${date}</td>
+								</tr>
+								<tr>
+									<th scope="row">PT 시작일</th>
+									<td>\${start}</td>
+								</tr>
+								<tr>
+									<th scope="row">횟수</th>
+									<td>\${count}</td>
+								</tr>
+								<tr>
+									<th scope="row">가격</th>
+									<td>\${formattedPrice}원</td>
+								</tr>
+							</tbody>
+						</table>
+		            	<h3 class="text-center mt40">결제하시겠습니까?</h3>
+					</div>
 		        `;
 		        
 		        // 팝업 내용 업데이트
