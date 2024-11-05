@@ -7,14 +7,20 @@ ___
 - 2024.9.20 ~ 2024.11.12
 
 ### :smile: 팀원
+
   
 ### :computer: 기술스택
+![기술스택](https://github.com/user-attachments/assets/258c76b1-5365-4b05-80ae-6689f8a3296f)
 
 ### :mag: 시스템 개요도
 
+
 ### :mag: Usecase Diagram
+![유스케이스 다이어그램](https://github.com/user-attachments/assets/6362da76-5c3b-4d9b-9c0c-3626d368b6bb)
 
 ### :mag: ERD
+![erd cloud](https://github.com/user-attachments/assets/871fbc8e-3725-4b26-9be3-847a5510da23)
+
 
 <br>
 
