@@ -545,12 +545,14 @@ public class HQServiceImp implements HQService {
 	public MemberInquiryVO getMemberInquiry(MemberInquiryVO mi) {return hqDao.selectMemberInquiry(mi);}
 
 	@Override
-	public String updateMemberInquiry(MemberInquiryVO mi) {
+	public String updateMemberInquiry(MemberInquiryVO miVo) {
 		String msg = "";
+		MemberInquiryVO mi = hqDao.selectMemberInquiry(miVo);
 		if(mi == null) {msg = "문의 정보가 없습니다.";}
 		if(!msg.equals("")) {return msg;}
 		
 		mi.setMi_state("답변완료");
+		mi.setMi_answer(miVo.getMi_answer());
 		if(!hqDao.updateMemberInquiry(mi)) {msg = "문의 답변을 등록하지 못했습니다.";}
 		if(!msg.equals("")) {return msg;}
 		

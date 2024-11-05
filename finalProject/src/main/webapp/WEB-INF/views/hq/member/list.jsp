@@ -105,88 +105,78 @@
 							<div class="table_wrap">
 								<table class="table">
 									<colgroup>
-										<col style="width: auto;">
+										<col style="width: 20%;">
+										<col style="width: 80%;">
 									</colgroup>
 									<tbody>
 							            <tr>
-											<th scope="col"><label for="me_name">이름</label></th>
+											<th scope="col"><label>이름</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_name" name="me_name" readonly>
+													<div class="form-group" id="me_name"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="me_birth">생년월일</label></th>
+											<th scope="col"><label>생년월일</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_birth" name="me_birth" readonly>
+													<div class="form-group" id="me_birth"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="me_phone">전화번호</label></th>
+											<th scope="col"><label>전화번호</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_phone" name="me_phone" readonly>
+													<div class="form-group" id="me_phone"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="row">
-												<label for="me_address">주소</label>
-											</th>
+											<th scope="col"><label>주소</label></th>
 											<td>
-												<div class="form-group">
-													<div class="form-inline">
-														<input type="text" class="form-control" id="me_postcode" name="me_postcode" placeholder="우편번호" readonly>
-													</div>
-													<div class="form-group">
-														<input type="text" class="form-control" id="me_address" name="me_address" placeholder="주소" readonly>
-													</div>
-													<div class="form-inline form-inline-50">
-														<input type="text" class="form-control" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" readonly>
-														<input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" readonly>
-													</div>
+												<div>
+													<div class="form-group" id="me_address"></div>
 												</div>
 												<div class="error"></div>
 											</td>
 										</tr>
 										<tr>
-											<th scope="col"><label for="me_id">아이디</label></th>
+											<th scope="col"><label>아이디</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_id" name="me_id" readonly>
+													<div class="form-group" id="me_id"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="me_email">이메일</label></th>
+											<th scope="col"><label>이메일</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_email" name="me_email" readonly>
+													<div class="form-group" id="me_email"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="me_noshow">경고횟수</label></th>
+											<th scope="col"><label>경고횟수</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_noshow" name="me_noshow" readonly>
+													<div class="form-group" id="me_noshow"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
 							            </tr>
 							            <tr>
-											<th scope="col"><label for="me_cancel">정지기한</label></th>
+											<th scope="col"><label>정지기한</label></th>
 							                <td>
 							                	<div>
-													<input type="text" class="form-control" id="me_cancel" name="me_cancel" readonly>
+													<div class="form-group" id="me_cancel"></div>
 												</div>
 												<div class="error"></div>
 							                </td>
@@ -233,18 +223,17 @@
 							.replace(/\./g, '')
 							.replace(/\s/g, '.')	
 					}
+					var fullAddress = "(" + me.me_postcode + ") " + me.me_address + me.me_extraAddress + " " + me.me_detailAddress;
+					console.log(fullAddress);
 					
-					$('#me_name').val(me.me_name);
-					$('#me_birth').val(me_birth);
-					$('#me_phone').val(me.me_phone);
-					$('#me_postcode').val(me.me_postcode);
-					$('#me_address').val(me.me_address);
-					$('#me_detailAddress').val(me.me_detailAddress);
-					$('#me_extraAddress').val(me.me_extraAddress);
-					$('#me_id').val(me.me_id);
-					$('#me_email').val(me.me_email);
-					$('#me_noshow').val(me.me_noshow);
-					$('#me_cancel').val(me_cancel);
+					$('#me_name').text(me.me_name);
+					$('#me_birth').text(me_birth);
+					$('#me_phone').text(me.me_phone);
+					$('#me_address').text(fullAddress);
+					$('#me_id').text(me.me_id);
+					$('#me_email').text(me.me_email);
+					$('#me_noshow').text(me.me_noshow);
+					$('#me_cancel').text(me_cancel);
 				},
 				error : function(jqXHR, textStatus, errorThrown){
 					console.log(jqXHR);
