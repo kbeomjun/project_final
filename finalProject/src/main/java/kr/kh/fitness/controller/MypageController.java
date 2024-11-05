@@ -1,12 +1,9 @@
 package kr.kh.fitness.controller;
 
-import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,9 +86,9 @@ public class MypageController {
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    PaymentVO payment = clientService.getpayment(pa_num);
 
-	    if (user == null || !user.getMe_id().equals(payment.getPa_me_id())) {
+	    if (user == null || !user.getMe_id().equals(payment.getPa_me_id()) || payment.getPa_state().equals("환불완료")) {
 	        redirectAttributes.addFlashAttribute("msg", "잘못된 접근입니다.");
-	        return "redirect:/mypage/membership/" + user.getMe_id();
+	        return "redirect:/mypage/membership";
 	    }
 		
 		List<BranchVO> branchList = clientService.getBranchList();
