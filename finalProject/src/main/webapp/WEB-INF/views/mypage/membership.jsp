@@ -5,6 +5,12 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 
+			<c:if test="${not empty msg}">
+			    <script type="text/javascript">
+			        alert("${msg}");
+			    </script>
+			</c:if>
+
 			<section class="sub_banner sub_banner_07"></section>
 			<section class="sub_content">
 		        <!-- 왼쪽 사이드바 -->
@@ -82,6 +88,7 @@
 									<td>
 										<c:choose>
 											<c:when test="${fn:trim(list.pa_review) eq 'Y'}">작성완료</c:when>
+											<c:when test="${fn:trim(list.pa_review) eq 'N' && list.pa_state eq '환불완료'}">작성불가</c:when>
 											<c:otherwise>
 												<a href="<c:url value="/mypage/review/insert/${list.pa_num}"/>" class="btn btn_green">작성하기</a>
 											</c:otherwise>
