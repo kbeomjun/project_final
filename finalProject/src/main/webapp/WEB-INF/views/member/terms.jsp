@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<body>
-    <div class="terms_content">
 
+	<div class="login_prev_wrap">
+		<a href="<c:url value='/'/>" class="login_prev">Return Home</a>
+	</div>
+	<br/>
+	<div class="title_wrap">
+		<h2 class="title">이용 약관</h2>
+		<br/>
+		<p class="title__txt">약관에 동의 해주시기 바라며 약관에 동의를 하지 않으실 경우 서비스 이용이 불가할 수 있습니다</p>
+	</div>
+    <div class="terms_content">
         <!-- 소제목과 내용 -->
         <h3>[필수]개인정보 수집·이용 동의</h3>
         <div class="term-box">

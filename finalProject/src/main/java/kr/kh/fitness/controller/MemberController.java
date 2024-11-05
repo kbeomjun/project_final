@@ -308,12 +308,12 @@ public class MemberController {
     
     @ResponseBody
     @PostMapping("/find/pw")
-    public ResponseEntity<String> findPwPost(@RequestParam String id, @RequestParam String email, @RequestParam String phone) {
+    public ResponseEntity<String> findPwPost(@RequestParam String id, @RequestParam String email) {
         
 
         try {
-            // 서비스 호출하여 사용자가 입력한 ID, 이메일, 전화번호가 모두 일치하는지 확인
-            boolean res = memberService.findPwByDetails(id, email, phone);
+            // 서비스 호출하여 사용자가 입력한 ID, 이메일이 모두 일치하는지 확인
+            boolean res = memberService.findPwByDetails(id, email);
 
             if (res) {
                 // 비밀번호 찾기 성공 시
