@@ -14,3 +14,10 @@
   email.username=gmail계정
   # gmail 앱 비번
   email.password=apppassword
+
+
+
+---
+
+MAIN
+![main](https://github.com/user-attachments/assets/2babbaa9-5f1e-47e1-bf73-67fefc05c85f)
