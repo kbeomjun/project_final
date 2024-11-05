@@ -1,95 +1,118 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<style>
-.validation-message {
-            font-size: 0.9em;
-            color: red;
-        }
-</style>
-</head>
-<body>
-   
-	<div class="container mt-5">
-    <h2 class="text-center">${socialType} 계정으로 가입/연동</h2>
-    <div class="text-center mt-4">
-        <button type="button" class="btn btn-secondary" onclick="showForm('linkForm')">기존 계정 연동</button>
-        <button type="button" class="btn btn-secondary" onclick="showForm('signupForm')">간편 가입</button>
-    </div>
-
-    <!-- 간편 가입 폼 -->
-    <form id="signupForm" action='<c:url value="/sso/join" />' method="post" onsubmit="return validateForm()" class="mt-4" style="display: none;">
-        <input type="hidden" name="social_type" value="${socialType}"> 
-        <c:choose>
-            <c:when test="${ socialType eq 'KAKAO'}">
-                <input type="hidden" name="me_kakaoUserId" value="${socialUser.me_kakaoUserId}" />
-            </c:when>
-            <c:when test="${ socialType eq 'NAVER'}">
-                <input type="hidden" name="me_naverUserId" value="${socialUser.me_naverUserId}" />
-            </c:when>
-        </c:choose>
-        <input type="hidden" name="me_gender" value="${socialUser.me_gender}" /> 
-        <input type="hidden" name="me_phone" value="${socialUser.me_phone}" /> 
-        <input type="hidden" name="me_name" value="${socialUser.me_name}" />
-        <input type="hidden" name="me_email" value="${socialUser.me_email}" />
-
-        <div class="form-group">
-            <label for="me_id">아이디:</label>
-            <input type="text" id="join_me_id" name="me_id" class="form-control" required>
-            <div id="idValidationMessage" class="validation-message"></div>
+        <div class="login_wrap">
+            <div class="login_content">
+                <div class="login_left_wrap">
+                    <div class="login_banner">
+                        <h2 class="login_logo"><span class="blind">KF</span></h2>
+                        <p class="login_logo_text">KH Fitness For<br>Front-Back-end Developers</p>
+                    </div>
+                </div>
+                <!-- 오른쪽 로그인 폼 세션 -->
+                <div class="login_right_wrap" id="skipnav_target">
+                	<div class="login_prev_wrap">
+						<a href="<c:url value='/'/>" class="login_prev">Return Home</a>
+					</div>
+                    <div class="login_group">
+                        <div class="login">
+                        <c:choose>
+                        <c:when test="${socialType eq 'KAKAO'}">
+                        	<c:set var="sns" value="kakao__login" />
+                        </c:when>
+                        <c:otherwise>
+                        	<c:set var="sns" value="naver__login" />
+                        </c:otherwise>
+                        </c:choose>
+                        <div class="sns_login_wrap">
+                           <button type="button" class="sns_login ${sns}" onclick="showForm('signupForm')">
+                               <span onclick="showForm('signupForm')">간편 가입</span>
+                           </button>
+                           <button type="button" class="sns_login ${sns}" onclick="showForm('linkForm')">
+                               <span onclick="showForm('linkForm')">계정 연동</span>
+                           </button>
+                        </div>
+                        <!-- 간편 가입 폼 -->
+    					<form id="signupForm" action='<c:url value="/sso/join" />' method="post" onsubmit="return validateForm()" style="display: none;" id="joinfrom">
+	    					<input type="hidden" name="social_type" value="${socialType}"> 
+					        <c:choose>
+					            <c:when test="${ socialType eq 'KAKAO'}">
+					                <input type="hidden" name="me_kakaoUserId" value="${socialUser.me_kakaoUserId}" />
+					            </c:when>
+					            <c:when test="${ socialType eq 'NAVER'}">
+					                <input type="hidden" name="me_naverUserId" value="${socialUser.me_naverUserId}" />
+					            </c:when>
+					        </c:choose>
+					        <input type="hidden" name="me_gender" value="${socialUser.me_gender}" /> 
+					        <input type="hidden" name="me_phone" value="${socialUser.me_phone}" /> 
+					        <input type="hidden" name="me_name" value="${socialUser.me_name}" />
+					        <input type="hidden" name="me_email" value="${socialUser.me_email}" />
+                            <h1 class="login_title">${socialType}<br>간편가입</h1>
+                            
+                                <div class="login_form_group">
+                                	<label for="me_id" class="login_label">아이디</label>
+						            <input type="text" id="join_me_id" name="me_id" class="login_input" placeholder="아이디를 입력하세요" required>
+						            <div id="idValidationMessage" class="validation-message"></div>
+                                </div>
+                                
+                                <div class="login_form_group">
+                                    <div class="password_wrap">
+		                                <label for="me_pw" class="login_label">비밀번호</label>
+							            <input type="password" id="join_me_pw" name="me_pw" class="login_input" placeholder="비밀번호를 입력하세요" required>
+							            <div id="pwValidationMessage" class="validation-message"></div>
+						            
+                                    </div>
+                                </div>
+                                <div class="login_form_group">
+                                	<div class="password_wrap">
+                               		<label for="pw_check" class="login_label">비밀번호 확인</label>
+					            	<input type="password" id="pw_check" name="pw_check" class="login_input" placeholder="비밀번호를 입력하세요" required>
+					            	<div id="pwCheckValidationMessage" class="validation-message"></div>
+					            </div>
+                                </div>
+                                
+                                <!-- 간편 가입 버튼 -->
+                                <button type="submit" class="btn btn_login mt-3">간편 가입</button>
+                            </form>
+                            
+                            <!-- 기존 계정 연동 폼 -->
+						    <form id="linkForm" action='<c:url value="/sso/match/login" />' method="post" class="mt-4" style="display: none;">
+						        <input type="hidden" name="social_type" value="${socialType}"> 
+						        <c:choose>
+						            <c:when test="${ socialType eq 'KAKAO'}">
+						                <input type="hidden" name="me_kakaoUserId" value="${socialUser.me_kakaoUserId}" />
+						            </c:when>
+						            <c:when test="${ socialType eq 'NAVER'}">
+						                <input type="hidden" name="me_naverUserId" value="${socialUser.me_naverUserId}" />
+						            </c:when>
+						        </c:choose>
+						        <input type="hidden" name="me_gender" value="${socialUser.me_gender}" /> 
+						        <input type="hidden" name="me_phone" value="${socialUser.me_phone}" /> 
+						        <input type="hidden" name="me_name" value="${socialUser.me_name}" />
+						        <input type="hidden" name="me_email" value="${socialUser.me_email}" />
+								<h1 class="login_title">${socialType}<br>연동하기</h1>
+						        <div class="login_form_group">
+						            <label for="me_id" class="login_label">아이디:</label>
+						            <input type="text" id="login_me_id" name="me_id" class="login_input" placeholder="아이디를 입력하세요" required>
+						            <div id="idValidationMessage" class="validation-message"></div>
+						        </div>
+						
+						        <div class="login_form_group">
+						            <label for="me_pw" class="login_label">비밀번호:</label>
+						            <input type="password" id="login_me_pw" name="me_pw"  class="login_input" placeholder="비밀번호를 입력하세요" required>
+						            <div id="pwValidationMessage" class="validation-message"></div>
+						        </div>
+						
+						        <button type="submit" class="btn btn_login mt-3">간편연동</button>
+						    </form>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="me_pw">비밀번호:</label>
-            <input type="password" id="join_me_pw" name="me_pw" class="form-control" required>
-            <div id="pwValidationMessage" class="validation-message"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="pw_check">비밀번호 확인:</label>
-            <input type="password" id="pw_check" name="pw_check" class="form-control" required>
-            <div id="pwCheckValidationMessage" class="validation-message"></div>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">가입하기</button>
-    </form>
-
-    <!-- 기존 계정 연동 폼 -->
-    <form id="linkForm" action='<c:url value="/sso/match/login" />' method="post" class="mt-4" style="display: none;">
-        <input type="hidden" name="social_type" value="${socialType}"> 
-        <c:choose>
-            <c:when test="${ socialType eq 'KAKAO'}">
-                <input type="hidden" name="me_kakaoUserId" value="${socialUser.me_kakaoUserId}" />
-            </c:when>
-            <c:when test="${ socialType eq 'NAVER'}">
-                <input type="hidden" name="me_naverUserId" value="${socialUser.me_naverUserId}" />
-            </c:when>
-        </c:choose>
-        <input type="hidden" name="me_gender" value="${socialUser.me_gender}" /> 
-        <input type="hidden" name="me_phone" value="${socialUser.me_phone}" /> 
-        <input type="hidden" name="me_name" value="${socialUser.me_name}" />
-        <input type="hidden" name="me_email" value="${socialUser.me_email}" />
-
-        <div class="form-group">
-            <label for="me_id">아이디:</label>
-            <input type="text" id="login_me_id" name="me_id" class="form-control" required>
-            <div id="idValidationMessage" class="validation-message"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="me_pw">비밀번호:</label>
-            <input type="password" id="login_me_pw" name="me_pw" class="form-control" required>
-            <div id="pwValidationMessage" class="validation-message"></div>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">로그인하기</button>
-    </form>
-</div>
-
+        
 <script>
 	function showForm(formId) {
 	    // 모든 폼 숨기기 및 초기화
@@ -215,5 +238,4 @@ document.getElementById("join_me_id").addEventListener("input", validateId);
 document.getElementById("join_me_pw").addEventListener("input", validatePassword);
 document.getElementById("pw_check").addEventListener("input", validatePasswordCheck);
 </script>
-</body>
-</html>
+
