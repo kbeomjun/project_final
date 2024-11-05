@@ -59,64 +59,88 @@
     </section>          
 </body>
 <script type="text/javascript">
-	$(document).ready(function () {
-	    // 아이디 찾기 버튼 클릭 이벤트
-	    $('.btn-find-id').click(function () {
-	        var name = $('#name').val();
-	        var email = $('#email').val();
-	
-	        // 이름과 이메일 입력값이 비어있는지 확인
-	        if (name === '' || email === '') {
-	            alert('이름과 이메일을 모두 입력하세요.');
-	            return;
-	        }
-	
-	        // 로딩 모달 표시
-	        var str = `
-	            <div class="modal-container">
-	                <div class="modal-email">
-	                    <div class="spinner-border text-primary" role="status">
-	                        <span class="visually-hidden">Loading...</span>
-	                    </div>
-	                    <p class="mt-3">이메일 전송 중입니다. 잠시만 기다려주세요.</p>
-	                </div>
-	            </div>
-	        `;
-	        $('body').append(str);
-	
-	        // 서버로 아이디 찾기 요청
-	        $.ajax({
-	            async: true, // 비동기 방식으로 요청 (기본값)
-	            url: '<c:url value="/find/id"/>', // 아이디 찾기 URL로 POST 요청 전송
-	            type: 'post',
-	            data: { me_name: name, me_email: email }, // 서버로 전송할 데이터 (이름과 이메일)
-	            dataType: 'json', // 서버로부터의 응답 형식 지정 (JSON)
-	            success: function (data) {
-	                console.log("서버 응답 데이터: ", data); // 서버 응답 데이터 콘솔에 출력
-	                $('.modal-container').remove(); // 로딩 모달 제거
-	                
-	                if (data && data.success) {
-	                    // 서버가 응답한 결과가 성공일 경우
-	                    console.log("아이디 찾기 성공"); // 성공 로그 출력
-	                    alert("아이디가 전송됐습니다."); // 성공 알림창
-	                } else {
-	                    // 서버가 응답한 결과가 실패일 경우
-	                    console.log("아이디 찾기 실패: 잘못된 이름 또는 이메일"); // 실패 로그 출력
-	                    alert("잘못된 이름 또는 이메일입니다.");
-	                }
-	            },
-	            error: function (jqXHR, textStatus, errorThrown) {
-	                console.error("AJAX 요청 실패: ", textStatus, errorThrown); // 에러 메시지 콘솔에 출력
-	                $('.modal-container').remove(); // 로딩 모달 제거
-	                alert("아이디 찾기에 실패했습니다."); // 사용자에게 실패 메시지 표시
-	            }
-	        });
-	    });
-	
-	    // 로그인 페이지로 이동 버튼 클릭 이벤트
-	    $('.btn-go-login').click(function () {
-	        window.location.href = '<c:url value="/login"/>'; // 로그인 페이지로 이동
-	    });
-	});
+    $(document).ready(function () {
+        // 아이디 찾기 버튼 클릭 이벤트
+        $('.btn-find-id').click(function () {
+            var name = $('#name').val();
+            var email = $('#email').val();
+    
+            // 이름과 이메일 입력값이 비어있는지 확인
+            if (name === '' || email === '') {
+                alert('이름과 이메일을 모두 입력하세요.');
+                return;
+            }
+    
+            // 로딩 모달 표시
+            var loadingModal = `
+                <div class="modal-container">
+                    <div class="modal-email">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">아이디를 찾는 중입니다. 잠시만 기다려주세요.</p>
+                    </div>
+                </div>
+            `;
+            $('body').append(loadingModal);
+    
+            // 서버로 아이디 찾기 요청
+            $.ajax({
+                async: true,
+                url: '<c:url value="/find/id"/>',
+                type: 'post',
+                data: { me_name: name, me_email: email },
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: 'json',
+                success: function (data) {
+                    $('.modal-container').remove(); // 로딩 모달 제거
+                    
+                    if (data && data.success && data.username) {
+                        // 아이디 찾기 성공 시 팝업 창 표시
+                        var userId = data.username;
+                        console.log("받은 아이디: ", userId); // 받은 아이디를 확인하기 위한 로그
+                        
+                        // 팝업 생성
+                        var popupContainer = document.createElement("div");
+                        popupContainer.className = "popup-container";
+
+                        var popupContent = document.createElement("div");
+                        popupContent.className = "popup-content";
+
+                        var popupText = document.createElement("p");
+                        popupText.style.fontSize = "18px";
+                        popupText.innerHTML = "회원님 아이디는 <strong>" + userId + "</strong>입니다.";
+
+                        var closeButton = document.createElement("button");
+                        closeButton.className = "popup-close-btn";
+                        closeButton.innerText = "닫기";
+                        closeButton.onclick = function () {
+                            document.body.removeChild(popupContainer);
+                        };
+
+                        popupContent.appendChild(popupText);
+                        popupContent.appendChild(closeButton);
+                        popupContainer.appendChild(popupContent);
+                        document.body.appendChild(popupContainer);
+                        
+                    } else {
+                        console.log("아이디 찾기 실패: 잘못된 이름 또는 이메일");
+                        alert("잘못된 이름 또는 이메일입니다.");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('.modal-container').remove(); // 로딩 모달 제거
+                    console.error("AJAX 요청 실패: ", textStatus, errorThrown);
+                    alert("아이디 찾기에 실패했습니다.");
+                }
+            });
+        });
+    
+        // 로그인 페이지로 이동 버튼 클릭 이벤트
+        $('.btn-go-login').click(function () {
+            window.location.href = '<c:url value="/login"/>';
+        });
+    });
 </script>
+
 </html>
