@@ -8,9 +8,9 @@ ___
 
 ### :smile: 팀원
 
-  
+
 ### :computer: 기술스택
-![기술스택](https://github.com/user-attachments/assets/258c76b1-5365-4b05-80ae-6689f8a3296f)
+![기술스택](https://github.com/user-attachments/assets/c8c100bb-97f2-4947-9eb3-09f8b4b0b3fd)
 
 ### :mag: 시스템 개요도
 
