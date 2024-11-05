@@ -10,7 +10,6 @@
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/swiper-bundle.min_branch.css"/>">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<!-- JS -->
 
 <!-- branch 관련 css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/branch.css"/>">
@@ -25,6 +24,12 @@
 <script src="<c:url value="/resources/js/fancybox.umd.js"/>"></script>
 
 <style type="text/css">
+.scrollable-text {
+	max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
 </style>
 </head>
 <body>
@@ -59,85 +64,79 @@
 			<c:choose>
 				<c:when test="${select ne null}">
 					<div class="table_wrap">
-						<div class="branch-detail-container">
+						<div class="sub_title_wrap">
+							<h2 class="sub_title">지점위치</h2>
+						</div>
+						<div class="branch-info-wrap">
+							<div class="branch-map-container" id="mapinfo">
+								<div id="map" data-address="${branch.br_address}"
+									data-name="${branch.br_name }"
+									style="float: left; background-color: lightgray; margin: 0 auto;position: relative;">
+					    			<button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
+								</div>
+							</div>
+							<div class="branch-content-container">
+								<strong class="title"
+									style="font-size: 28px; background-size: 50px;">KH
+									피트니스 ${branch.br_name }</strong>
+								<p class="address">${branch.br_address},
+									${branch.br_detailAddress} ${branch.br_extraAddress}</p>
+								<hr style="border: 0; height: 1px; background: #000;">
+								<div>${branch.br_detail}</div>
+								<br> <span class="phone" style="font-size: 16px;">
+									<c:choose>
+										<c:when test="${fn:length(branch.br_phone) == 10}">
+								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
+							</c:when>
+										<c:when test="${fn:length(branch.br_phone) == 9}">
+								☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
+							</c:when>
+									</c:choose>
+								</span>
+							</div>
+						</div>
+						<div class="branch-content mt-5" id="branch">
 							<div class="sub_title_wrap">
-								<h2 class="sub_title">지점위치</h2>
+								<h2 class="sub_title">지점정보</h2>
 							</div>
-							<div class="branch-info-wrap">
-								<div class="branch-map-container" id="mapinfo">
-									<div id="map" data-address="${branch.br_address}"
-										data-name="${branch.br_name }"
-										style="float: left; background-color: lightgray; margin: 0 auto;position: relative;">
-						    			<button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
-									</div>
-								</div>
-								<div class="branch-content-container">
-									<strong class="title"
-										style="font-size: 28px; background-size: 50px;">KH
-										피트니스 ${branch.br_name }</strong>
-									<p class="address">${branch.br_address},
-										${branch.br_detailAddress} ${branch.br_extraAddress}</p>
-									<hr style="border: 0; height: 1px; background: #000;">
-									<div>${branch.br_detail}</div>
-									<br> <span class="phone" style="font-size: 16px;">
-										<c:choose>
-											<c:when test="${fn:length(branch.br_phone) == 10}">
-									☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 6)}-${fn:substring(branch.br_phone, 6, 10)}
-								</c:when>
-											<c:when test="${fn:length(branch.br_phone) == 9}">
-									☎ ${fn:substring(branch.br_phone, 0, 2)}-${fn:substring(branch.br_phone, 2, 5)}-${fn:substring(branch.br_phone, 5, 9)}
-								</c:when>
-										</c:choose>
-									</span>
-								</div>
+							<div class="branch-image-container mb-5 mt-5">
+								<c:forEach items="${branch_image_list}" var="image">
+									<a href="<c:url value="/uploads${image.bf_name}" />"
+										data-fancybox="gallery"> <img
+										src="<c:url value="/uploads${image.bf_name}" />"><br>
+										<!-- style="width: 600px; height: 400px;" -->
+									</a>
+								</c:forEach>
 							</div>
-							<div class="branch-content mt-5" id="branch">
-								<div class="sub_title_wrap">
-									<h2 class="sub_title">지점정보</h2>
-								</div>
-								<div class="branch-image-container mb-5 mt-5">
-									<c:forEach items="${branch_image_list}" var="image">
-										<a href="<c:url value="/uploads${image.bf_name}" />"
-											data-fancybox="gallery"> <img
-											src="<c:url value="/uploads${image.bf_name}" />"><br>
-											<!-- style="width: 600px; height: 400px;" -->
-										</a>
-									</c:forEach>
-								</div>
+						</div>
+						<div class="em-container mb-5 mt-5" id="employee">
+							<div class="sub_title_wrap">
+								<h2 class="sub_title">직원소개</h2>
 							</div>
-							<div class="em-container mb-5 mt-5" id="employee">
-								<div class="sub_title_wrap">
-									<h2 class="sub_title">직원소개</h2>
-								</div>
-								<div class="container">
-									<div class="row">
-										<c:if test="${em_list.size() ne 0 }">
-											<c:forEach items="${em_list}" var="em">
-												<div class="col-md-3 mb-4" style="padding: 0;">
-													<div class="card" style="width: 100%; border: none;">
-														<img class="card-img-top"
-															src="<c:url value='/uploads${em.em_fi_name}' />"
-															alt="${em.em_fi_name}"
-															onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
-															style="width: 100%; height: 350px; object-fit: cover;">
-														 <%-- <div class="card-body">
-														 	<h4 class="card-title">${em.em_name}</h4>
-															<p class="card-text">${em.em_position}</p> 
-														</div>  --%>
+							<div class="container">
+								<div class="row">
+									<c:if test="${em_list.size() ne 0 }">
+										<c:forEach items="${em_list}" var="em">
+											<div class="col-md-3 mb-4" style="padding: 0;">
+												<div class="card" style="width: 100%; border: none;">
+													<img class="card-img-top"
+														src="<c:url value='/uploads${em.em_fi_name}' />"
+														alt="${em.em_fi_name}"
+														onerror="this.onerror=null; this.src='https://www.w3schools.com/bootstrap4/img_avatar1.png';"
+														style="width: 100%; height: 350px; object-fit: cover;">
+												</div>
+											</div>
+											<div class="col-md-3 mb-4" style="padding: 0;">
+												<div class="card" style="width: 100%; border: none;">
+													<div class="card-body" style="padding: 0.5rem 1.25rem;">
+														<h4 class="card-title">${em.em_name} <%-- (${fn:substring(em.em_gender, 0, 1)}) --%></h4>
+														<p class="card-text">${em.em_position}</p><br>
+														<div class=" scrollable-text">${em.em_detail }</div>
 													</div>
 												</div>
-												<div class="col-md-3 mb-4" style="padding: 0;">
-													<div class="card" style="width: 100%; border: none;">
-														<div class="card-body" style="padding: 0.5rem 1.25rem;">
-															<h4 class="card-title">${em.em_name} <%-- (${fn:substring(em.em_gender, 0, 1)}) --%></h4>
-															<p class="card-text">${em.em_position}</p><br>
-															<p class="card-text">${em.em_detail }</p>
-														</div>
-													</div>
-												</div>
-											</c:forEach>
-										</c:if>
-									</div>
+											</div>
+										</c:forEach>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -150,7 +149,7 @@
 						</div>
 						<hr>
 						<div class="mt-5" id="map-total" style="width: 800px; background-color: lightgray; height: 600px; margin: 0 auto; position: relative;">
-						    <button class="btn-sg btn-dark btn-map" id="original-location-btn" >처음 위치</button>
+						    <button class="btn-sg btn-dark btn-map" id="original-location-btn" >원래 위치로</button>
 						</div>
 					</div>
 				</c:otherwise>
@@ -249,13 +248,13 @@ function MarkerTracker(map, target) {
     // viewport 영역을 구하기 위한 buffer값
     // target의 크기가 60x60 이므로 
     // 여기서는 지도 bounds에서 상하좌우 30px의 여분을 가진 bounds를 구하기 위해 사용합니다.
-    var BOUNDS_BUFFER = 30;
+    var BOUNDS_BUFFER = 20;
     
     // 클리핑 알고리즘으로 tracker의 좌표를 구하기 위한 buffer값
     // 지도 bounds를 기준으로 상하좌우 buffer값 만큼 축소한 내부 사각형을 구하게 됩니다.
     // 그리고 그 사각형으로 target위치와 지도 중심 사이의 선을 클리핑 합니다.
     // 여기서는 tracker의 크기를 고려하여 40px로 잡습니다.
-    var CLIP_BUFFER = 40;
+    var CLIP_BUFFER = 36;
 
     // trakcer 엘리먼트
     var tracker = document.createElement('div');
@@ -560,7 +559,7 @@ function MarkerTracker(map, target) {
 		        if (status === kakao.maps.services.Status.OK) {
 		        	
 		            var coords = new kakao.maps.LatLng(result[0].y, result[0].x); // 좌표
-		            var imageSize = new kakao.maps.Size(48, 48); // 마커이미지의 크기
+		            var imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기
 		            var imageOption = {offset: new kakao.maps.Point(22, 60)}; // 마커 이미지 옵션
 		            var imageSrc = '<c:url value="/resources/image/icon/sample_fitness_icon.svg"/>'; // 마커이미지 주소
 	
@@ -671,7 +670,7 @@ function MarkerTracker(map, target) {
 				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
 				var imageSrc = '<c:url value="/resources/image/icon/sample_fitness_icon.svg"/>', // 마커이미지의 주소입니다    
-				imageSize = new kakao.maps.Size(48, 48), // 마커이미지의 크기입니다
+				imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
 				imageOption = {
 					offset : new kakao.maps.Point(22, 60)
 				}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.

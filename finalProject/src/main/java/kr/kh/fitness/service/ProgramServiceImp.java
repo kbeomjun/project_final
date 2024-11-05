@@ -11,6 +11,7 @@ import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchProgramScheduleVO;
 import kr.kh.fitness.model.vo.BranchProgramVO;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.ProgramReservationVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
@@ -155,6 +156,12 @@ public class ProgramServiceImp implements ProgramService {
 	public List<String> getImageName(String pr_name) {
 
 		return programDao.selectProgramFileList(pr_name);
+	}
+
+	@Override
+	public EmployeeVO getEmployeeInfo(String bs_num) {
+		
+		return programDao.selectEmployee(bs_num);
 	}
 
 }

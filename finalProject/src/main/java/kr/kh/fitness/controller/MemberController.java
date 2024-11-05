@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -63,7 +64,14 @@ public class MemberController {
 	private MemberService memberService;
 
 	@GetMapping("/login")
-	public String loginPage(Model model) {
+	public String loginPage(Model model, HttpSession session, HttpServletRequest request) {
+		
+		session.removeAttribute("pw_check");
+		
+		String prevUrl = request.getHeader("Referer");
+		if (prevUrl != null && !prevUrl.contains("/login")) {
+			request.getSession().setAttribute("prevUrl", prevUrl);
+		}
 		
 	    String redirectURI;
 		try {
@@ -150,7 +158,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/logout")
-	public String logout(Model model, HttpSession session, HttpServletResponse response) {
+	public String logout(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		// 세션에서 사용자 정보 가져오기 (로그인된 사용자가 있는지 확인)
         MemberVO user = (MemberVO) session.getAttribute("user");
 
@@ -177,7 +185,15 @@ public class MemberController {
         log.info("자동 로그인 쿠키 삭제 완료");
 
         model.addAttribute("msg", "로그아웃 했습니다");
-        model.addAttribute("url", "/");
+        
+        String prevUrl = request.getHeader("Referer");
+		if (prevUrl != null) {
+			model.addAttribute("url", prevUrl);
+			session.removeAttribute("prevUrl");
+		}
+		else {
+			model.addAttribute("url", "/");
+		}
         return "/main/message";
 	}
 
@@ -369,7 +385,7 @@ public class MemberController {
 		else {
 			model.addAttribute("msg","간편 가입이 실패하였습니다.");
 		}
-		model.addAttribute("url","/");
+		model.addAttribute("url","/login");
 	    return "/main/message";
 	}
 	
@@ -464,7 +480,7 @@ public class MemberController {
 		model.addAttribute("url","/login");
 		return "/main/message";
 	}
-	
+
 	@GetMapping("/oauth/kakao")
 	public String kakaoLogin(Model model, HttpSession session, HttpServletResponse response, @RequestParam("code") String code) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -480,17 +496,45 @@ public class MemberController {
 	}
 
 	@GetMapping("/oauth/naver")
-	public String naverCallback(Model model, HttpSession session, HttpServletResponse response, @RequestParam("code") String code, @RequestParam("state") String state) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(user != null) {
-			if(user.getMe_naverUserId() == null) {
-				return userSocialConnection(model, session, "NAVER", code, user, state);
+	public String naverCallback(Model model, 
+		    HttpSession session, 
+		    HttpServletResponse response, 
+		    HttpServletRequest request,
+		    @RequestParam(value = "code", required = false) String code,
+		    @RequestParam(value = "error", required = false) String error,
+		    @RequestParam(value = "error_description", required = false) String errorDescription,
+		    @RequestParam(value = "state", required = false) String state
+		) {
+		
+	    if(code != null){
+		    	MemberVO user = (MemberVO)session.getAttribute("user");
+		    
+			if(user != null) {
+				if(user.getMe_naverUserId() == null) {
+					return userSocialConnection(model, session, "NAVER", code, user, state);
+				}
+				session.setAttribute("socialType", "NAVER");
+				model.addAttribute("member", user);
+				return "/mypage/info";
 			}
-			session.setAttribute("socialType", "NAVER");
-			model.addAttribute("member", user);
-			return "/mypage/info";
-		}
-	    return handleSocialLogin(model, session, response, "NAVER", code, state);
+		    return handleSocialLogin(model, session, response, "NAVER", code, state);
+	    }
+	    // 네이버 로그인 '동의하기'에서 '취소'를 눌렀을 경우 -> 로그인 페이지로 이동
+	    else if (errorDescription != null && errorDescription.equals("Canceled By User")) {
+	    	
+	    	if(session.getAttribute("pw_check") != null && (boolean)session.getAttribute("pw_check")) {
+	    		session.removeAttribute("pw_check");
+	    		model.addAttribute("url", "/mypage/pwcheck");
+	    	}
+	    	else{
+	    		model.addAttribute("url", "/login");
+	    	}
+	    }
+	    else {
+	    	model.addAttribute("msg", "네이버 연결에 실패했습니다. \\n(관리자에게 문의하세요)");
+	    	model.addAttribute("url", "/login");
+	    }
+	    return "/main/message";
 	}
 	
 	private String userSocialConnection(Model model, HttpSession session, String socialType, String code, MemberVO user, String state) {
@@ -570,7 +614,15 @@ public class MemberController {
 	            session.setAttribute("user", user);
 	            session.setAttribute("socialType", socialType);
 	            model.addAttribute("msg", user.getMe_id() + "님 환영합니다 \\n(" + socialType + " 계정으로 로그인 했습니다.)");
-	            model.addAttribute("url", "/");
+	            
+	            String prevUrl = (String)session.getAttribute("prevUrl");
+	    		if (prevUrl != null) {
+	    			model.addAttribute("url", prevUrl);
+	    			session.removeAttribute("prevUrl");
+	    		}
+	    		else {
+	    			model.addAttribute("url", "/");
+	    		}
 	        } else if (userId != null && !userId.trim().isEmpty() && !loginUserId.equals(userId)) {
 	            model.addAttribute("msg", "등록된 " + socialType + " 계정과 일치하지 않습니다 \\n(기존 계정으로 로그인 해주세요.)");
 	            model.addAttribute("url", "/login");

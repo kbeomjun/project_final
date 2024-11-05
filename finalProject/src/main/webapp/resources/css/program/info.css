@@ -12,7 +12,7 @@ body.fade-in {
 }
 
 .btn-wide button {
-	width: 250px;
+	width: 220px !important; 
 	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
 }
 
@@ -27,24 +27,39 @@ body.fade-in {
 
 .swiper-button-next, .swiper-button-prev {
 	position: absolute;
-	bottom: 60px;
-	right: 10px;
-	width: 40px;
-	height: 40px;
-	z-index: 11;
-	background-color: #585858;
-	color: white;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 25px;
-	cursor: pointer;
+    bottom: -50px;
+    right: -15px;
+    width: 40px;
+    height: 40px;
+    z-index: 11;
+    background-color: white;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    cursor: pointer;
+    background-image: url(../../image/icon/next_button.svg);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .swiper-button-prev {
-	left: 910px;
+	left: 920px;
+	background-image: url("../../image/icon/prev_button.svg");
 }
+
+.swiper-button-next:hover {
+	background-image: url("../../image/icon/next_button_hover.svg");
+	background-color: #111111;
+}
+
+.swiper-button-prev:hover {
+	background-image: url("../../image/icon/prev_button_hover.svg");
+	background-color: #111111;
+}
+
 
 .swiper-button-next:after, .swiper-button-prev:after {
 	display: none;
@@ -82,15 +97,15 @@ body.fade-in {
 
 /* content-text 스타일 설정 */
 .content-text {
-	background: rgba(0, 0, 0, 0.7);
-	color: #fff;
-	padding: 20px;
-	position: absolute;
-	bottom: 120px;
-	right: 10px;
-	max-width: 350px;
-	z-index: 10;
-	line-height: 1.7;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    bottom: 100px;
+    right: -20px;
+    max-width: 300px;
+    z-index: 10;
+    line-height: 2;
 }
 
 .navbar {

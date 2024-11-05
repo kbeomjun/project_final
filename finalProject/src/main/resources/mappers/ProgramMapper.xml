@@ -60,4 +60,17 @@
   	<select id="selectProgramFileList" resultType="String">
   		select pf_name from program_file where pf_sp_name = #{pr_name}
   	</select>
+  	
+  	<select id="selectEmployee" resultType="EmployeeVO">
+	  	SELECT 
+	    	e.*
+		FROM 
+	    	branch_program_schedule bs
+		JOIN 
+		    branch_program bp ON bs.bs_bp_num = bp.bp_num
+		JOIN 
+		    employee e ON bp.bp_em_num = e.em_num
+		WHERE 
+		    bs.bs_num = #{bs_num}
+    </select>
 </mapper>

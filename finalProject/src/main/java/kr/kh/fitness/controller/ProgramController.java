@@ -1,6 +1,7 @@
 package kr.kh.fitness.controller;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.fitness.model.dto.CalendarDTO;
-import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.dto.ProgramScheduleDTO;
+import kr.kh.fitness.model.dto.ResultMessage;
 import kr.kh.fitness.model.vo.BranchVO;
+import kr.kh.fitness.model.vo.EmployeeVO;
 import kr.kh.fitness.model.vo.MemberVO;
 import kr.kh.fitness.model.vo.SportsProgramVO;
 import kr.kh.fitness.service.ProgramService;
@@ -41,18 +43,6 @@ public class ProgramController {
 	
 	@Resource
 	String uploadPath;
-
-//	@GetMapping("/main")
-//	public String programMain(Model model) throws Exception {
-//		log.info("/program/main");
-//
-//		LocalDate today = LocalDate.now();
-//		model.addAttribute("year", today.getYear());
-//		model.addAttribute("month", today.getMonthValue());
-//		model.addAttribute("day", today.getDayOfMonth());
-//
-//		return "/program/main";
-//	}
 
 	@GetMapping("/info")
 	public String programInfo(Model model) throws Exception {
@@ -81,7 +71,8 @@ public class ProgramController {
 	}
 
 	@GetMapping("/schedule/{year}/{month}/{day}/{br_name}/{pr_name}/{is_resrvation}")
-	public String programSchedule(Model model, @PathVariable("year") Integer inputYear,
+	public String programSchedule(Model model,
+			@PathVariable("year") Integer inputYear,
 			@PathVariable("month") Integer inputMonth, @PathVariable("day") Integer inputDay,
 			@PathVariable("br_name") String br_name, @PathVariable("pr_name") String pr_name
 			,@PathVariable("is_resrvation") boolean showModal ) {
@@ -101,6 +92,15 @@ public class ProgramController {
 			month = 0;
 			year++;
 		}
+		
+		// 해당 연도와 월의 마지막 날짜 가져오기
+        YearMonth yearMonth = YearMonth.of(year, month+1);
+        int lastDayOfMonth = yearMonth.lengthOfMonth();
+
+        // day가 해당 월의 마지막 날보다 크면, 마지막 날로 설정
+        if (day > lastDayOfMonth) {
+            day = lastDayOfMonth;
+        }
 
 		// 출력하고자 달의 1일 객체 + 1일 요일 + 마지막 날짜
 		Calendar firstDate = Calendar.getInstance();
@@ -171,8 +171,7 @@ public class ProgramController {
 		model.addAttribute("ps_list", ps_list);
 		
 		model.addAttribute("nowDate", nowDate);
-		
-		model.addAttribute("showModal", showModal);
+		model.addAttribute("showModal", (ps_list.size() != 0)?showModal:false);
 		return "/program/schedule";
 	}
 	
@@ -250,4 +249,17 @@ public class ProgramController {
 	
 		return "/main/message";
 	}	
+	
+	@GetMapping("/getEmployeeInfo")
+	@ResponseBody
+	public EmployeeVO getEmployeeInfo(@RequestParam("bs_num") String bs_num) {
+		
+		if(bs_num == null) {
+			return null;
+		}
+		EmployeeVO employee = programService.getEmployeeInfo(bs_num);
+
+		return employee;
+	}
+	
 }

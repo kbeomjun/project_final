@@ -1,7 +1,11 @@
 @charset "UTF-8";
 
-.calendar-wrapper table td {width: 100px; height: 100px;}
-.calendar-wrapper table td .selected {font-weight: 900; text-decoration: underline;}
+/* .calendar-wrapper table td {width: 100px; height: 100px;} */
+.calendar-wrapper table td .selected {
+	font-weight: 900;
+	color: green;
+	border-top-color: green;
+}
 .calendar-wrapper table td a {color: inherit;}
 
 .calendar-wrapper table .btn-amount {
@@ -16,7 +20,7 @@
 .account-book-container {
 	display: flex;
 	flex-direction: column;
-	gap: 3em;
+	/* gap: 3em; */
 	flex-wrap: nowrap; 
 	width: 1000px;
 }
@@ -44,7 +48,10 @@
 }
 
 .btn-program-reservation2 {
-    cursor: unset !important;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #111;
+    color: #111;
 }
 
 a .disabled {
@@ -102,7 +109,7 @@ body.fade-in {
 }
 
 .btn-wide a {
-	width: 250px;
+	width: 220px !important;
 	transition: width 0.5s ease; /* 너비 변화 애니메이션 */
 }
 
@@ -129,4 +136,8 @@ body.fade-in {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+}
+
+.table-striped tbody td{
+	text-align: center !important;	
 }

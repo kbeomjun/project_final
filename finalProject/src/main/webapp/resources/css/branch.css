@@ -31,8 +31,8 @@
 .customoverlay .title {
     display: block;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 500;
     background-color: #ffffff;
 }
 
@@ -218,10 +218,10 @@
     position: absolute;
     left: 6px;
     top: 10px;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     background-image: url('../image/icon/sample_fitness_icon.svg');
-    background-size: 48px 48px; /* 이미지 크기를 48px × 48px로 조정 */
+    background-size: 40px 40px; /* 이미지 크기를 48px × 48px로 조정 */
     background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
 }
 
@@ -229,18 +229,20 @@
     position: absolute;
     width: 60px;
     height: 60px;
-    background-image: url('../image/icon/balloon.png');
+    background-image: url(../image/icon/balloon.png);
     -ms-transform-origin: 50% 34px;
     -webkit-transform-origin: 50% 34px;
-    transform-origin: 50% 34px;
+    transform-origin: 43% 29px;
+    background-size: 52px 52px;
+    background-repeat: no-repeat;
 }
 
 .btn-map {
-	position: absolute;
-	top: 93%;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 10;
+	position: relative;
+    top: 92%;
+    left: 93%;
+    transform: translateX(-50%);
+    z-index: 10;
 }
 /* .map-total {
 	width: 800px;
