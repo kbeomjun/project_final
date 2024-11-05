@@ -708,6 +708,15 @@ label{
   width: 100%;
   padding: 5px;
   z-index: 200;
+  background-color: rgba(0, 0, 0, 0); /* 투명한 배경 */
+  transition: background-color 0.3s ease, padding 0.5s ease, top 0.3s ease;
+}
+.main_header._active{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 8px;
+  background-color: #000;
 }
 .logo_wrap{
   display: flex;
@@ -735,7 +744,7 @@ label{
   display: flex;
   align-items: center;
   padding: 10px 20px;
-  background-color: #111;
+  background-color: #000;
   color: #fff;
 }
 .gnb{
@@ -843,10 +852,10 @@ label{
   height: 100%;
   min-height: 899px;
   padding: 40px;
-  background: #111;
+  background: #000;
   opacity: 0;
   visibility: hidden;
-  transition: .3s;
+  transition: right 0.3s ease, opacity 0.3s ease;
   z-index: 100;
 }
 .gnb_side_wrap._active{

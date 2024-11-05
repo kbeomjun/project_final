@@ -104,7 +104,7 @@
 		    });
 		});
 		$(document).ready(function() {
-			// 현재 경로에서 '/fitness/admin/'이 포함된 경우에만 이동
+			// 현재 경로에서 '/fitness/admin/', '/fitness/hq/' 포함된 경우에만 컨텐츠 태그로 이동.
 		    const currentPath = window.location.pathname;
 
 		    if (/\/fitness\/(admin|hq)\//.test(currentPath)) {
@@ -113,20 +113,6 @@
 		      }, 200); // 부드럽게 이동
 		    }
 		});
-		/*
-		$(function(){
-			var url = window.location.pathname;
-			
-			// 메인이 아니면 로고 검은색으로 변경
-			$(".logo").each(function(){
-				if($(this).attr("href") != url){
-					$(this).addClass("logo-dark");
-				}
-				// console.log($(this).attr("href") == url);
-			})
-			
-		});
-		*/
 	</script>
 </body>
 </html>
