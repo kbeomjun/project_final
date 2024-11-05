@@ -2,10 +2,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<style type="text/css">
-.sub_banner.sub_banner_01::before{content: none;}
-</style>
-<section class="sub_banner sub_banner_01"></section>
-<section class="sub_content ml-5">
-    <h1>죄송합니다. 문제가 발생했습니다. 관리자에게 문의하세요.</h1>
-</section>
+<div class="errorPage_wrap">
+	<div class="errorPage_text_wrap">
+		<div class="errorPage_group">
+			<small class="errorPage_small">Oops</small>
+			<h1 class="errorPage_title">404</h1>
+			<p class="errorPage_text">Page not found</p>
+			<p class="errorPage_text2">Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
+    		<p class="errorPage_text3">죄송합니다. 문제가 발생했습니다. 관리자에게 문의하세요.</p>
+		</div>
+		<div class="btn_link_white">
+			<a class="btn btn_white font-montserrat" href="<c:url value='/'/>" class="login_prev">
+				<span>Back to home<i class="ic_link_share"></i></span>
+			</a>
+			<div class="btn_white_top_line"></div>
+			<div class="btn_white_right_line"></div>
+			<div class="btn_white_bottom_line"></div>
+			<div class="btn_white_left_line"></div>
+		</div>
+	</div>
+</div>
