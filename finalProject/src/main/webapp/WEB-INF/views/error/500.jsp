@@ -6,7 +6,7 @@
 	<div class="errorPage_text_wrap">
 		<div class="errorPage_group">
 			<small class="errorPage_small">Oops</small>
-			<h1 class="errorPage_title">404</h1>
+			<h1 class="errorPage_title">500</h1>
 			<p class="errorPage_text">Page not found</p>
 			<p class="errorPage_text2">Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
     		<p class="errorPage_text3">죄송합니다. 문제가 발생했습니다. 관리자에게 문의하세요.</p>
