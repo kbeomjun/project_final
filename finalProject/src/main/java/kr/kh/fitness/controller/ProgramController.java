@@ -158,6 +158,8 @@ public class ProgramController {
 		
 		// 현재 날짜
         Date nowDate = new Date();
+        
+        Map<String, String> programColorMap = initializeProgramColorMap(); // 색상 맵 초기화
 		
 		model.addAttribute("cal", cal);
 		model.addAttribute("selected", today);
@@ -172,9 +174,26 @@ public class ProgramController {
 		
 		model.addAttribute("nowDate", nowDate);
 		model.addAttribute("showModal", (ps_list.size() != 0)?showModal:false);
+		
+		model.addAttribute("programColorMap", programColorMap);
 		return "/program/schedule";
 	}
 	
+	private Map<String, String> initializeProgramColorMap() {
+		
+		/* 
+		 * 20개의 색상을 css에 등록하고 
+		 * 프로그램별로 순환하여 사용
+		 * */
+		
+		Map<String, String> programColorMap = new HashMap<>();
+		List<SportsProgramVO> programList = programService.getProgramList();
+		for(int i=0; i<programList.size(); i++) {
+			programColorMap.put(programList.get(i).getSp_name(), "btn_group_color_"+((i % 20) + 1));
+		}
+        return programColorMap;
+	}
+
 	@PostMapping("/reservation")
 	public String programReservationPost(Model model, HttpSession session, HttpServletRequest request, Integer bs_num) {
 		
