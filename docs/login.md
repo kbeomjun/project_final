@@ -43,7 +43,7 @@
 ![localhost_8080_fitness_find_pw](https://github.com/user-attachments/assets/eceacb07-05eb-4518-a9ad-906c0b879014)
 ![비밀번호 찾기(2) 로딩 모달](https://github.com/user-attachments/assets/ac24c74e-6ef0-45d8-9201-3a1110f4775e)
 ![비밀번호 찾기(3) 성공 페이지](https://github.com/user-attachments/assets/c245adf5-69dd-49a1-8174-a32ce6e0dee0)
-![비밀번호 찾기(4) 임시 비밀번호 전송](https://github.com/user-attachments/assets/8759c151-5423-4337-9859-47bb21c6cdb6)
+
 <br>
 <br>
 <br>
@@ -54,4 +54,9 @@
 <br>
 <br>
 
-###
+### ⚡ 회원가입
+![localhost_8080_fitness_signup](https://github.com/user-attachments/assets/52932fe2-2197-4274-84f2-ea82a3b747ed)
+
+<br>
+<br>
+<br>
