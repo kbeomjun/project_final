@@ -15,9 +15,9 @@
 ![본사관리-지점-직원관리-등록](https://github.com/user-attachments/assets/02b935e6-779f-4519-9172-36607a7d5238)
 ## ⚡ 직원관리 수정
 ![본사관리-지점-직원관리-수정](https://github.com/user-attachments/assets/533f4765-bb9b-4742-824c-c3f0e7294fba)
-<br>
-<br>
-<br>
+
+
+
 ## ⚡ 운동기구관리 목록
 ![본사관리-헬스장-운동기구관리-목록](https://github.com/user-attachments/assets/d7b0f2e9-7997-4ee6-b223-08a95ac639eb)
 ## ⚡ 운동기구관리 등록
