@@ -12,7 +12,7 @@
 			</div>
 		
 			<div class="table-warp">
-    		<div class="text_small text-right mb10"><span class="color_red"></span>아래 항목들은필수 기재 항목 입니다.</div>
+    		<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
     		<form action="<c:url value='/signup'/>" method="post" id="form" onsubmit="return onSubmitForm()">
 				<table class="table">
 					<colgroup>
@@ -23,7 +23,7 @@
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="id" class="form-label">아이디</label>
+								<label for="id" class="form-label" class="_asterisk">아이디</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
 							<th scope="row">
-								<label for="email" class="form-label">이메일</label>
+								<label for="email" class="form-label" class="_asterisk">이메일</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -73,9 +73,8 @@
             var str = `
                 <div class="modal-container">
                     <div class="modal-email">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mt-2">Loading...</p> <!-- 로딩 아이콘 아래에 텍스트 추가 -->
                         <p class="mt-3">이메일 전송 중입니다. 잠시만 기다려주세요.</p>
                     </div>
                 </div>
@@ -94,7 +93,7 @@
                         } else if (data === 'error') {
                             alert("오류가 발생했습니다. 다시 시도해 주세요.");
                         } else {
-                            alert("비밀번호가 전송됐습니다.");
+                            alert("임시 비밀번호가 전송됐습니다.");
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

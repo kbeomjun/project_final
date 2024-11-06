@@ -304,12 +304,6 @@ public class MemberServiceImp implements MemberService {
 	    MemberVO user = memberDao.selectMemberByNameAndEmail(name, email);
 	    
 	    if (user != null) {
-	        // 사용자 정보가 있으면 이메일로 아이디 전송
-	        idMailsend(
-	            user.getMe_email(),
-	            "아이디 찾기 결과입니다",
-	            "회원님의 아이디는 <b>" + user.getMe_id() + "</b> 입니다."
-	        );
 	        return user.getMe_id(); // 아이디 반환
 	    } else {
 	        return null; // 사용자 정보가 없으면 null 반환
