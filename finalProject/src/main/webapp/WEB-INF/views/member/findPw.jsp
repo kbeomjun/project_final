@@ -23,7 +23,7 @@
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="id" class="form-label" class="_asterisk">아이디</label>
+								<label for="id" class="_asterisk">아이디</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
 							<th scope="row">
-								<label for="email" class="form-label" class="_asterisk">이메일</label>
+								<label for="email" class="_asterisk">이메일</label>
 							</th>
 							<td>
 								<div class="form-group">
