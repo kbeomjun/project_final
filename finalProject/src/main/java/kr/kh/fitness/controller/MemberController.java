@@ -207,45 +207,55 @@ public class MemberController {
 	}
 
 	@PostMapping("/signup")
-	public String signupPost(Model model, MemberVO member, @RequestParam("me_emailId") String emailId,
-			@RequestParam("me_emailDomain") String emailDomain) {
-		if (member == null) {
-			log.error("회원 정보가 null입니다.");
-			model.addAttribute("msg", "회원 정보가 null입니다.");
-			model.addAttribute("url", "/signup");
-			return "/main/message";
-		}
+	public String signupPost(Model model, MemberVO member, 
+	                         @RequestParam("me_emailId") String emailId,
+	                         @RequestParam("me_emailDomain") String emailDomain,
+	                         @RequestParam(value = "me_customEmailDomain", required = false) String customEmailDomain) {
+	    if (member == null) {
+	        log.error("회원 정보가 null입니다.");
+	        model.addAttribute("msg", "회원 정보가 null입니다.");
+	        model.addAttribute("url", "/signup");
+	        return "/main/message";
+	    }
 
-		try {
-			// 이메일을 합쳐서 member 객체에 설정
-			String fullEmail = emailId + "@" + emailDomain;
-			member.setMe_email(fullEmail);
+	    try {
+	        // 이메일 도메인을 결합
+	        if ("custom".equals(emailDomain)) {
+	            if (customEmailDomain == null || customEmailDomain.isEmpty()) {
+	                model.addAttribute("msg", "도메인을 직접 입력하세요.");
+	                model.addAttribute("url", "/signup");
+	                return "/main/message";
+	            }
+	            emailDomain = customEmailDomain; // 사용자 정의 도메인 사용
+	        }
+	        String fullEmail = emailId + "@" + emailDomain;
+	        member.setMe_email(fullEmail);
 
-			// 전화번호 로그
-			log.info("전화번호 (me_phone): " + member.getMe_phone()); // 추가된 로그
-			
-			// 회원가입 시도
-			//boolean res = memberDao.insertMember(member);
-			boolean res = memberService.signup(member);
-			if (res) {
-				model.addAttribute("msg", "회원 가입에 성공했습니다, 해당 정보로 로그인을 시도해주십시오");
-				model.addAttribute("url", "/");
-			} else {
-				model.addAttribute("msg", "회원 가입을 하지 못했습니다.");
-				model.addAttribute("url", "/signup");
-			}
-		} catch (DataIntegrityViolationException e) {
-			model.addAttribute("msg", "회원 가입에 실패했습니다. (중복된 아이디 또는 이메일일 수 있습니다.)");
-			model.addAttribute("url", "/signup");
-		} catch (Exception e) {
-			model.addAttribute("msg", "회원 가입 중 문제가 발생했습니다.");
-			model.addAttribute("url", "/signup");
-		}
+	        // 전화번호 로그
+	        log.info("전화번호 (me_phone): " + member.getMe_phone());
+	        
+	        // 회원가입 시도
+	        boolean res = memberService.signup(member);
+	        if (res) {
+	            model.addAttribute("msg", "회원 가입에 성공했습니다, 해당 정보로 로그인을 시도해주십시오");
+	            model.addAttribute("url", "/");
+	        } else {
+	            model.addAttribute("msg", "회원 가입을 하지 못했습니다.");
+	            model.addAttribute("url", "/signup");
+	        }
+	    } catch (DataIntegrityViolationException e) {
+	        model.addAttribute("msg", "회원 가입에 실패했습니다. (중복된 아이디 또는 이메일일 수 있습니다.)");
+	        model.addAttribute("url", "/signup");
+	    } catch (Exception e) {
+	        log.error("회원 가입 중 오류 발생: " + e.getMessage());
+	        model.addAttribute("msg", "회원 가입 중 문제가 발생했습니다.");
+	        model.addAttribute("url", "/signup");
+	    }
 
-		// 전체 회원 정보 로그
-		log.info("회원 가입 정보: " + member); // 추가된 로그
+	    // 전체 회원 정보 로그
+	    log.info("회원 가입 정보: " + member);
 
-		return "/main/message";
+	    return "/main/message";
 	}
 
     // 아이디 중복 체크

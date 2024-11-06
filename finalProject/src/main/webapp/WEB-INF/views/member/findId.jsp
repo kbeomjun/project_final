@@ -12,7 +12,7 @@
 			</div>
 		
 			<div class="table-warp">
-    		<div class="text_small text-right mb10"><span class="color_red"></span>아래 항목들은필수 기재 항목 입니다.</div>
+    		<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
     		<form action="<c:url value='/signup'/>" method="post" id="form" onsubmit="return onSubmitForm()">
 				<table class="table">
 					<colgroup>
@@ -23,7 +23,7 @@
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="name" class="form-label">이름</label>
+								<label for="name" class="_asterisk">이름</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
 							<th scope="row">
-								<label for="email" class="form-label">이메일</label>
+								<label for="email" class="_asterisk">이메일</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -70,20 +70,7 @@
                 alert('이름과 이메일을 모두 입력하세요.');
                 return;
             }
-    
-            // 로딩 모달 표시
-            var loadingModal = `
-                <div class="modal-container">
-                    <div class="modal-email">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="mt-3">아이디를 찾는 중입니다. 잠시만 기다려주세요.</p>
-                    </div>
-                </div>
-            `;
-            $('body').append(loadingModal);
-    
+
             // 서버로 아이디 찾기 요청
             $.ajax({
                 async: true,

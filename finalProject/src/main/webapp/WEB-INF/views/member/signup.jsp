@@ -15,7 +15,7 @@
 		</div>
     	
     	<div class="table-warp">
-    		<div class="text_small text-right mb10"><span class="color_red"></span>아래 항목들은필수 기재 항목 입니다.</div>
+    		<div class="text_small text-right mb10"><span class="color_red">*</span>는 필수 기재 항목 입니다.</div>
     		<form action="<c:url value='/signup'/>" method="post" id="form" onsubmit="return onSubmitForm()">
 				<table class="table">
 					<colgroup>
@@ -26,7 +26,7 @@
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="name">이름:</label>
+								<label for="name" class="_asterisk">이름</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -36,7 +36,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="id">아이디:</label>
+								<label for="id" class="_asterisk">아이디</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -46,7 +46,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="pw">비밀번호:</label>
+								<label for="pw" class="_asterisk">비밀번호</label>
 							</th>
 							<td>
 								 <div class="form-group">
@@ -56,7 +56,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="pw2">비밀번호 확인:</label>
+								<label for="pw2" class="_asterisk">비밀번호 확인</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -66,7 +66,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="email">이메일:</label>
+								<label for="email" class="_asterisk">이메일</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -89,7 +89,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								 <label for="gender" style="display: block; margin-bottom: 8px;">성별:</label>
+								 <label for="gender" style="display: block; margin-bottom: 8px;" class="_asterisk">성별</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -109,7 +109,7 @@
 						</tr>
 						<tr>
 						    <th scope="row">
-						        <label for="br_address">주소:</label>
+						        <label for="br_address" class="_asterisk">주소</label>
 						    </th>
 						    <td>
 						        <div class="form-group">
@@ -125,7 +125,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="phone">전화번호:</label>
+								<label for="phone" class="_asterisk">전화번호</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -149,7 +149,7 @@
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="birth">생년월일:</label>
+								<label for="birth" class="_asterisk">생년월일</label>
 							</th>
 							<td>
 								<div class="form-group">
@@ -199,8 +199,6 @@
 </script>
 
 <script type="text/javascript">
-    var flag = false;
-
     $('#form').validate({
         groups: {
             phoneGroup: "phone2 phone3"
@@ -224,9 +222,14 @@
             me_emailId: {
                 required: true
             },
+            me_emailDomain: {
+                required: function() {
+                    return $('#me_emailId').val() !== "";  // 이메일 아이디가 있을 때 도메인 필수
+                }
+            },
             me_customEmailDomain: {
                 required: function () {
-                    return $('#me_emailDomain').val() === "custom";
+                    return $('#me_emailDomain').val() === "custom" && $('#me_emailId').val() !== ""; // custom 선택 시에만 필수
                 }
             },
             me_gender: {
@@ -255,6 +258,7 @@
             me_pw: { required: '필수 항목입니다.', regex: '비밀번호는 영어, 숫자, 특수문자(!@#$)만 가능하며, 4~15자이어야 합니다.' },
             me_pw2: { required: '필수 항목입니다.', equalTo: '비밀번호와 일치하지 않습니다.' },
             me_emailId: { required: '이메일을 입력해주세요.' },
+            me_emailDomain: { required: '이메일 도메인을 선택해주세요.' },
             me_customEmailDomain: { required: '도메인을 직접 입력하세요.' },
             me_gender: { required: '성별을 선택해주세요.' },
             me_detailAddress: { required: '주소를 입력해주세요.' },
@@ -265,7 +269,8 @@
         errorPlacement: function (error, element) {
             // 이메일 필드 전체 아래에 에러 메시지 표시
             if (element.attr("name") == "me_emailId" || element.attr("name") == "me_emailDomain" || element.attr("name") == "me_customEmailDomain") {
-                error.appendTo("#email-error-container").css("display", "block");
+                // 기존 에러 메시지 제거 후 추가
+                $("#email-error-container").empty().append(error).css("display", "block");
             }
             // 성별 선택 아래에 에러 메시지 표시
             else if (element.attr("name") == "me_gender") {
@@ -273,11 +278,11 @@
             }
             // 상세주소 필드가 포함된 주소 블록의 마지막 필드 아래에 에러 메시지 표시
             else if (element.attr("name") == "me_detailAddress") {
-                error.insertAfter("#me_extraAddress"); // 주소 입력란 전체의 마지막 필드 아래에 표시
+                error.insertAfter("#me_extraAddress");
             }
             // 전화번호 필드 아래에 에러 메시지 표시
             else if (element.attr("name") == "phone2" || element.attr("name") == "phone3") {
-                error.insertAfter("#phone3"); // 마지막 전화번호 필드 아래에 표시
+                error.insertAfter("#phone3");
             }
             // 그 외 필드는 기본적으로 입력란 바로 아래에 에러 메시지 표시
             else {
@@ -300,10 +305,10 @@
     });
 </script>
 
+
 <script type="text/javascript">
     function onSubmitForm() {
-        setPhoneNumber();
-        combineEmail();
+        setPhoneNumber();  // 전화번호만 결합
         return true;
     }
 
@@ -312,19 +317,6 @@
         var phone2 = document.getElementById('phone2').value;
         var phone3 = document.getElementById('phone3').value;
         document.getElementById('me_phone').value = phone1 + phone2 + phone3;
-    }
-
-    function combineEmail() {
-        const emailId = document.getElementById("me_emailId").value;
-        const emailDomain = document.getElementById("me_emailDomain").value === 'custom' ? 
-                            document.getElementById("me_customEmailDomain").value : 
-                            document.getElementById("me_emailDomain").value;
-        
-        const emailField = document.createElement("input");
-        emailField.setAttribute("type", "hidden");
-        emailField.setAttribute("name", "me_email");
-        emailField.setAttribute("value", emailId + "@" + emailDomain);
-        document.getElementById("form").appendChild(emailField);
     }
 </script>
 
@@ -359,7 +351,7 @@
     });
 
     document.querySelector(".gnb__link[href*='/mypage']").addEventListener("click", function() {
-        window.removeEventListener("beforeunload", showBeforeUnloadWarning);
+        window.removeEventListener("beforeunload", handleBeforeUnload);
     });
 </script>
 
