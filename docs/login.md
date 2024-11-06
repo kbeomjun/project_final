@@ -48,3 +48,10 @@
 <br>
 <br>
 
+### ⚡ 이용약관
+![localhost_8080_fitness_terms](https://github.com/user-attachments/assets/9a5ba5fb-bbca-4194-bbed-92ad4cecfba5)
+<br>
+<br>
+<br>
+
+###
