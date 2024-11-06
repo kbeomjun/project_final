@@ -112,16 +112,20 @@
 						        <label for="br_address" class="_asterisk">주소</label>
 						    </th>
 						    <td>
-						        <div class="form-group">
-						            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-						                <input type="text" class="form-control" id="me_postcode" name="me_postcode" placeholder="우편번호" style="width: 150px; margin-right: 10px;" readonly/>
-						                <input class="btn btn-outline-dark" type="button" onclick="addressPostcode()" value="우편번호 찾기"/>
-						            </div>
-						            <input type="text" class="form-control" id="me_address" name="me_address" placeholder="주소" style="width: 450px; margin-right: 10px; margin-bottom: 10px;" readonly/>
-						            <input type="text" class="form-control" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소" style="width: 450px; margin-right: 10px; margin-bottom: 10px;"/>
-						            <input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" style="width: 450px; margin-right: 10px; margin-bottom: 10px;" readonly/>
-						        </div>
-						    </td>
+								<div class="form-group">
+									<div class="form-inline">
+										<input type="text" class="form-control" id="me_postcode" name="me_postcode" placeholder="우편번호" readonly>
+										<input class="btn btn_address" onclick="addressPostcode()" value="우편번호 찾기">
+									</div>
+									<div class="form-group" style= "width: 50%;">
+										<input type="text" class="form-control" id="me_address" name="me_address" placeholder="주소" readonly>
+									</div>
+									<div class="form-inline form-inline-50" style= "width: 50%;">
+										<input type="text" class="form-control" id="me_detailAddress" name="me_detailAddress" placeholder="상세주소">
+										<input type="text" class="form-control" id="me_extraAddress" name="me_extraAddress" placeholder="참고항목" readonly>
+									</div>
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<th scope="row">
@@ -144,6 +148,7 @@
 									    <input type="tel" class="form-control phone-input" id="phone3" name="phone3" maxlength="4" placeholder="0000" style="width: 80px;">
 									</div>
 					                <input type="hidden" id="me_phone" name="me_phone">
+					                <div id="phone-error-container" style="margin-top: 5px; color: red;"></div> <!-- 전화번호 에러 메시지 표시 -->
 								</div>
 							</td>
 						</tr>
@@ -199,97 +204,96 @@
 </script>
 
 <script type="text/javascript">
-    $('#form').validate({
-        groups: {
-            phoneGroup: "phone2 phone3"
-        },
-        rules: {
-            me_name: {
-                required: true
-            },
-            me_id: {
-                required: true,
-                regex: /^\w{4,10}$/
-            },
-            me_pw: {
-                required: true,
-                regex: /^[a-zA-Z0-9!@#$]{4,15}$/
-            },
-            me_pw2: {
-                required: true,
-                equalTo: "#pw"
-            },
-            me_emailId: {
-                required: true
-            },
-            me_emailDomain: {
-                required: function() {
-                    return $('#me_emailId').val() !== "";  // 이메일 아이디가 있을 때 도메인 필수
-                }
-            },
-            me_customEmailDomain: {
-                required: function () {
-                    return $('#me_emailDomain').val() === "custom" && $('#me_emailId').val() !== ""; // custom 선택 시에만 필수
-                }
-            },
-            me_gender: {
-                required: true
-            },
-            me_detailAddress: {
-                required: true
-            },
-            phone2: {
-                required: true,
-                minlength: 4,
-                maxlength: 4
-            },
-            phone3: {
-                required: true,
-                minlength: 4,
-                maxlength: 4
-            },
-            me_birth: {
-                required: true
-            }
-        },
-        messages: {
-            me_name: { required: '필수 항목입니다.' },
-            me_id: { required: '아이디를 입력해주세요.', regex: '아이디는 영어, 숫자만 가능하며, 4~10자이어야 합니다.' },
-            me_pw: { required: '필수 항목입니다.', regex: '비밀번호는 영어, 숫자, 특수문자(!@#$)만 가능하며, 4~15자이어야 합니다.' },
-            me_pw2: { required: '필수 항목입니다.', equalTo: '비밀번호와 일치하지 않습니다.' },
-            me_emailId: { required: '이메일을 입력해주세요.' },
-            me_emailDomain: { required: '이메일 도메인을 선택해주세요.' },
-            me_customEmailDomain: { required: '도메인을 직접 입력하세요.' },
-            me_gender: { required: '성별을 선택해주세요.' },
-            me_detailAddress: { required: '주소를 입력해주세요.' },
-            phone2: { required: '전화번호를 입력해주세요.', minlength: '정확한 전화번호를 입력하여야 합니다.', maxlength: '정확한 전화번호를 입력하여야 합니다.' },
-            phone3: { required: '전화번호를 입력해주세요.', minlength: '정확한 전화번호를 입력하여야 합니다.', maxlength: '정확한 전화번호를 입력하여야 합니다.' },
-            me_birth: { required: '생년월일을 선택해주세요.' }
-        },
-        errorPlacement: function (error, element) {
-            // 이메일 필드 전체 아래에 에러 메시지 표시
-            if (element.attr("name") == "me_emailId" || element.attr("name") == "me_emailDomain" || element.attr("name") == "me_customEmailDomain") {
-                // 기존 에러 메시지 제거 후 추가
-                $("#email-error-container").empty().append(error).css("display", "block");
-            }
-            // 성별 선택 아래에 에러 메시지 표시
-            else if (element.attr("name") == "me_gender") {
-                error.appendTo("#gender-error-container").css("display", "block");
-            }
-            // 상세주소 필드가 포함된 주소 블록의 마지막 필드 아래에 에러 메시지 표시
-            else if (element.attr("name") == "me_detailAddress") {
-                error.insertAfter("#me_extraAddress");
-            }
-            // 전화번호 필드 아래에 에러 메시지 표시
-            else if (element.attr("name") == "phone2" || element.attr("name") == "phone3") {
-                error.insertAfter("#phone3");
-            }
-            // 그 외 필드는 기본적으로 입력란 바로 아래에 에러 메시지 표시
-            else {
-                error.insertAfter(element);
-            }
-        }
-    });
+	$('#form').validate({
+	    groups: {
+	        phoneGroup: "phone2 phone3"
+	    },
+	    rules: {
+	        me_name: {
+	            required: true
+	        },
+	        me_id: {
+	            required: true,
+	            regex: /^\w{4,10}$/
+	        },
+	        me_pw: {
+	            required: true,
+	            regex: /^[a-zA-Z0-9!@#$]{4,15}$/
+	        },
+	        me_pw2: {
+	            required: true,
+	            equalTo: "#pw"
+	        },
+	        me_emailId: {
+	            required: true
+	        },
+	        me_emailDomain: {
+	            required: function() {
+	                return $('#me_emailId').val() !== "";
+	            }
+	        },
+	        me_customEmailDomain: {
+	            required: function () {
+	                return $('#me_emailDomain').val() === "custom" && $('#me_emailId').val() !== "";
+	            }
+	        },
+	        me_gender: {
+	            required: true
+	        },
+	        me_detailAddress: {
+	            required: true
+	        },
+	        phone2: {
+	            required: true,
+	            minlength: 4,
+	            maxlength: 4
+	        },
+	        phone3: {
+	            required: true,
+	            minlength: 4,
+	            maxlength: 4
+	        },
+	        me_birth: {
+	            required: true
+	        }
+	    },
+	    messages: {
+	        me_name: { required: '필수 항목입니다.' },
+	        me_id: { required: '아이디를 입력해주세요.', regex: '아이디는 영어, 숫자만 가능하며, 4~10자이어야 합니다.' },
+	        me_pw: { required: '필수 항목입니다.', regex: '비밀번호는 영어, 숫자, 특수문자(!@#$)만 가능하며, 4~15자이어야 합니다.' },
+	        me_pw2: { required: '필수 항목입니다.', equalTo: '비밀번호와 일치하지 않습니다.' },
+	        me_emailId: { required: '이메일을 입력해주세요.' },
+	        me_emailDomain: { required: '이메일 도메인을 선택해주세요.' },
+	        me_customEmailDomain: { required: '도메인을 직접 입력하세요.' },
+	        me_gender: { required: '성별을 선택해주세요.' },
+	        me_detailAddress: { required: '주소를 입력해주세요.' },
+	        phone2: { required: '전화번호를 입력해주세요.', minlength: '정확한 전화번호를 입력하여야 합니다.', maxlength: '정확한 전화번호를 입력하여야 합니다.' },
+	        phone3: { required: '전화번호를 입력해주세요.', minlength: '정확한 전화번호를 입력하여야 합니다.', maxlength: '정확한 전화번호를 입력하여야 합니다.' },
+	        me_birth: { required: '생년월일을 선택해주세요.' }
+	    },
+	    errorPlacement: function (error, element) {
+	        // 이메일 필드 전체 아래에 에러 메시지 표시
+	        if (element.attr("name") == "me_emailId" || element.attr("name") == "me_emailDomain" || element.attr("name") == "me_customEmailDomain") {
+	            $("#email-error-container").empty().append(error).css("display", "block");
+	        }
+	        // 성별 선택 아래에 에러 메시지 표시
+	        else if (element.attr("name") == "me_gender") {
+	            error.appendTo("#gender-error-container").css("display", "block");
+	        }
+	        // 상세주소 필드가 포함된 주소 블록의 마지막 필드 아래에 에러 메시지 표시
+	        else if (element.attr("name") == "me_detailAddress") {
+	            error.insertAfter("#me_extraAddress");
+	        }
+	        // 전화번호 필드 전체 아래에 에러 메시지 표시
+	        else if (element.attr("name") == "phone2" || element.attr("name") == "phone3") {
+	            $("#phone-error-container").empty().append(error); // 전화번호 에러 컨테이너에 에러 메시지 추가
+	        }
+	        // 그 외 필드는 기본적으로 입력란 바로 아래에 에러 메시지 표시
+	        else {
+	            error.insertAfter(element);
+	        }
+	    }
+	});
 
     $.validator.addMethod('regex', function(value, element, regex){
         var re = new RegExp(regex);
