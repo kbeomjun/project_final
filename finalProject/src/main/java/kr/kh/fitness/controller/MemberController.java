@@ -158,7 +158,7 @@ public class MemberController {
 
 	@GetMapping("/logout")
 	public String logout(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-		// 세션에서 사용자 정보 가져오기 (로그인된 사용자가 있는지 확인)
+		// 세션에서 사용자 정보 가져오기 (로그인된 사용자가  있는지 확인)
         MemberVO user = (MemberVO) session.getAttribute("user");
 
         if (user != null) {

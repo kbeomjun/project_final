@@ -1902,7 +1902,8 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   font-size: 22px;
 }
 .terms_content .term-box{
-  height: 300px;
+  /* height: 300px; */
+  height: 150px;
   margin: 20px 0px;
   border: 1px solid #ddd;
   border-radius: 4px;
