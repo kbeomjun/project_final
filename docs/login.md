@@ -56,6 +56,10 @@
 
 ### ⚡ 회원가입
 ![localhost_8080_fitness_signup](https://github.com/user-attachments/assets/52932fe2-2197-4274-84f2-ea82a3b747ed)
+![회원가입(3) 정규표현식 검사](https://github.com/user-attachments/assets/b31053dc-29b0-4c7d-be7a-c2611e62be36)
+![회원가입(4) 아이디 이메일 중복 검사](https://github.com/user-attachments/assets/5dd2379d-037f-4ba7-9c28-df4af3784145)
+![회원가입(5) 회원가입 시 잘못 기입된 부분 표시 및 경고 세분화](https://github.com/user-attachments/assets/dd8b4ce2-eb2e-498f-8216-84826f4c4f4a)
+
 
 <br>
 <br>
