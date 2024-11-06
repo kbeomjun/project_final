@@ -355,7 +355,6 @@ public class MemberController {
 	        Model model) {
 		
 		log.info("/sso/joinRedirect - post");
-		
 	    // 받은 파라미터를 모델에 추가하여 뷰에서 사용할 수 있도록 설정
 	    model.addAttribute("socialType", socialType);
 	    model.addAttribute("socialUser", socialUser);

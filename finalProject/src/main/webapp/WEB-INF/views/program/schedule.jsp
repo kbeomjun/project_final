@@ -207,7 +207,7 @@
 												</c:otherwise>
 											</c:choose>
 											<c:set var="sp_name_distinct" value="PT" />
-											<div style="text-align: center;">
+											<div style="text-align: center; margin-top: 5px;">
 											<c:forEach items="${ps_list}" var="ps" varStatus="status">
 											    <fmt:formatDate value='${ps.bs_start}' pattern='dd' var="ps_day" />
 											    
