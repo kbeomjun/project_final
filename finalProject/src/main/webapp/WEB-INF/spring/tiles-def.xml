@@ -13,18 +13,25 @@
         <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
     </definition>
 
-	<!-- member/login.jsp를 제외하기 위한 정의 -->
-    <definition name="/member/login" template="/WEB-INF/views/layout/layoutLogin.jsp">
-        <put-attribute name="head" value="/WEB-INF/views/common/head.jsp" />
-        <put-attribute name="body" value="/WEB-INF/views/member/login.jsp" />
-    </definition>
-    
-    <!-- member/login.jsp를 제외하기 위한 정의 -->
-    <definition name="/sso/join" template="/WEB-INF/views/layout/layoutLogin.jsp">
-        <put-attribute name="head" value="/WEB-INF/views/common/head.jsp" />
-        <put-attribute name="body" value="/WEB-INF/views/sso/join.jsp" />
-    </definition>
-
+	<!-- login 페이지 공통 레이아웃 정의 -->
+	<definition name="layoutLogin" template="/WEB-INF/views/layout/layoutLogin.jsp">
+	    <put-attribute name="head" value="/WEB-INF/views/common/head.jsp" />
+	</definition>
+	
+	<!-- login -->
+	<definition name="/member/login" extends="layoutLogin">
+	    <put-attribute name="body" value="/WEB-INF/views/member/login.jsp" />
+	</definition>
+	
+	<definition name="/sso/join" extends="layoutLogin">
+	    <put-attribute name="body" value="/WEB-INF/views/sso/join.jsp" />
+	</definition>
+	
+ 	<definition name="/sso/match" extends="layoutLogin">
+	    <put-attribute name="body" value="/WEB-INF/views/sso/match.jsp" />
+	</definition>
+	<!-- login 끝 -->
+	
 	<!-- error.jsp를 제외하기 위한 정의 -->
     <definition name="/error/*" template="/WEB-INF/views/layout/layoutError.jsp">
         <put-attribute name="head" value="/WEB-INF/views/common/head.jsp" />
