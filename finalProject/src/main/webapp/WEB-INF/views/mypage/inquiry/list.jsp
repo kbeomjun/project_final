@@ -59,6 +59,14 @@
 				        emptyTable: "",
 				        lengthMenu: ""
 				    },
+				    createdRow: function(row, data, dataIndex) {
+				        if (data[4] == "답변완료") {
+				        	$('td', row).eq(4).css('color', 'red');
+				        }
+				        if (data[4] == "답변대기") {
+				        	$('td', row).eq(4).css('color', 'blue');
+				        }
+				    },
 				    pageLength: 10,
 				    info: false,
 				    stateSave: true,

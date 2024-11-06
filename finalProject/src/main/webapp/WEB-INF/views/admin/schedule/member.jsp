@@ -63,6 +63,11 @@
 				        zeroRecords: "",
 				        emptyTable: ""
 				    },
+				    createdRow: function(row, data, dataIndex) {
+				        if (data[4] == 5) {
+				        	$('td', row).css('color', 'red');
+				        }
+				    },
 				    paging: false,
 				    info: false,
 				    stateSave: true,

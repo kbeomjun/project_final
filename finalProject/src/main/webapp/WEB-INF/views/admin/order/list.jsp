@@ -152,6 +152,17 @@
 				        emptyTable: "",
 				        lengthMenu: ""
 				    },
+				    createdRow: function(row, data, dataIndex) {
+				        if (data[3] == "승인거절") {
+				        	$('td', row).eq(3).css('color', 'red');
+				        }
+				        if (data[3] == "입고완료") {
+				        	$('td', row).eq(3).css('color', 'green');
+				        }
+				        if (data[3] == "승인대기") {
+				        	$('td', row).eq(3).css('color', 'blue');
+				        }
+				    },
 				    pageLength: 10,
 				    info: false,
 				    stateSave: true,
