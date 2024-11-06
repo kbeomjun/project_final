@@ -40,6 +40,10 @@
 <br>
 
 ### ⚡ 비밀번호 찾기
+![localhost_8080_fitness_find_pw](https://github.com/user-attachments/assets/eceacb07-05eb-4518-a9ad-906c0b879014)
+![비밀번호 찾기(2) 로딩 모달](https://github.com/user-attachments/assets/ac24c74e-6ef0-45d8-9201-3a1110f4775e)
+![비밀번호 찾기(3) 성공 페이지](https://github.com/user-attachments/assets/c245adf5-69dd-49a1-8174-a32ce6e0dee0)
+![비밀번호 찾기(4) 임시 비밀번호 전송](https://github.com/user-attachments/assets/cf72e72b-85e3-4617-aed1-86641aeb437f)
 
 <br>
 <br>
