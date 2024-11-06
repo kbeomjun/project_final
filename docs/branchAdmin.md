@@ -29,8 +29,8 @@
 <br>
 
 ### ⚡ 보유목록
-![지점관리-운동기구보유목록-보유현황목록](https://github.com/user-attachments/assets/b0b81296-a08c-4f50-853d-57198e75d8c1)
 ![지점관리-운동기구보유목록-변동내역목록](https://github.com/user-attachments/assets/8c671cb9-38c2-42c1-ba1b-2dd102f06f52)
+![지점관리-운동기구보유목록-보유현황목록](https://github.com/user-attachments/assets/b0b81296-a08c-4f50-853d-57198e75d8c1)
 <br>
 <br>
 <br>
