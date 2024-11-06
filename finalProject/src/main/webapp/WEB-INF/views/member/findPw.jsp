@@ -99,7 +99,7 @@
                     error: function (jqXHR, textStatus, errorThrown) {
                         $('.modal-container').remove();
                         if (jqXHR.status === 404) {
-                            alert("등록된 사용자가 없습니다.");
+                            alert("등록된 사용자가 없습니다, 아이디 또는 이메일을 확인해주세요");
                         } else {
                             alert("오류가 발생했습니다. 다시 시도해 주세요.");
                         }
