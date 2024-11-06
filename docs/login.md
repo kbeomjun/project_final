@@ -35,7 +35,12 @@
 ### ⚡ 아이디 찾기
 ![아이디 찾기(1) 페이지](https://github.com/user-attachments/assets/f2c81b2c-a337-45a4-8980-5127bc87230f)
 ![아이디 찾기(2) 시스템 동작](https://github.com/user-attachments/assets/5b9c8c6d-670d-4609-8666-5adc2cab26ff)
-![아이디 찾기(3) 잘못된 정보 기입](https://github.com/user-attachments/assets/d9ffff8a-d8c1-4fd3-8936-604feb8bddfa)
+<br>
+<br>
+<br>
+
+### ⚡ 비밀번호 찾기
+
 <br>
 <br>
 <br>
