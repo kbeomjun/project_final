@@ -206,6 +206,9 @@
 .sns_login.naver__login::before{
 	background: url("../image/icon/ic_naver.svg") no-repeat center;
 }
+.naver__login2, .kakao__login2 {
+	width: 180px;
+}
 
 
 .login_auto_find_wrap{
