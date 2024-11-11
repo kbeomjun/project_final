@@ -109,7 +109,7 @@
 
 		    if (/\/fitness\/(admin|hq)\//.test(currentPath)) {
 		      $('html, body').animate({
-		        scrollTop: $('.sub_content').offset().top
+		        scrollTop: $('.sub_content').offset().top - 116
 		      }, 200); // 부드럽게 이동
 		    }
 		});
