@@ -4,7 +4,7 @@ ___
 
 
 ### :date: 프로젝트 진행 기간
-- 2024.9.20 ~ 2024.11.12
+- 2024.09.20 ~ 2024.11.12
 
 ### :mag: wbs
 <a href="https://docs.google.com/spreadsheets/d/1hEOZNj3iT292qlsMbtV5yQITDUmlztZgpTiQJuxSkyk/edit?usp=sharing" target="_blink">2024년 KH Fitness 홈페이지 WBS</a> 
