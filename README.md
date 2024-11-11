@@ -6,6 +6,9 @@ ___
 ### :date: 프로젝트 진행 기간
 - 2024.9.20 ~ 2024.11.12
 
+## : wbs
+<a href="https://docs.google.com/spreadsheets/d/1hEOZNj3iT292qlsMbtV5yQITDUmlztZgpTiQJuxSkyk/edit?usp=sharing">2024년 피트니스 홈페이지 WBS</a>
+
 ### :smile: 팀원
 
 
