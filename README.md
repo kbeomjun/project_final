@@ -24,7 +24,7 @@ ___
 ### :mag: ERD
 ![erd cloud](https://github.com/user-attachments/assets/871fbc8e-3725-4b26-9be3-847a5510da23)
 
-### : 디자인 : figma
+### :figma 디자인 : figma
 <a href="https://www.figma.com/design/2JWQn7uq9oiVQs5O62xQYT/KH-Fitness-Project?node-id=297-53&t=1DiRxVHkd8OLlZK6-1" target="_blink">KH Fitness 피그마 디자인</a>
 
 
