@@ -359,14 +359,14 @@
                 // 스크롤이 사이드바의 상단을 넘어가고 절반 지점보다 아래일 때
                 $lnb.css({
                     position: 'fixed',
-                    top: '10px' // 페이지 상단에서의 위치
+                    top: '130px' // 페이지 상단에서의 위치
                 });
                 $('.sub_content_group').css('margin-left', '308px'); // 사이드바 너비 + 여백
             } else if (scrollTop >= triggerPoint) {
                 // 스크롤이 사이드바의 절반 지점을 넘어갔을 때
                 $lnb.css({
                     position: 'relative',
-                    top: '300px' // 절반 지점에서 더 내려가지 않도록 조정
+                    top: '430px' // 절반 지점에서 더 내려가지 않도록 조정
                 });
                 $('.sub_content_group').css('margin-left', '20px'); // 사이드바 너비 + 여백
             } else {
