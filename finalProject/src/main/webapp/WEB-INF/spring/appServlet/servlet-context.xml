@@ -69,7 +69,7 @@
 			<mapping path="/admin/schedule/insert/*" />
 			
 			<!-- 로그인해야만 접근할 수 있는 경로에만 인터셉터 적용 -->
-			<mapping path="/payment/paymentInsert" />
+			<!-- <mapping path="/payment/paymentInsert" /> -->
 			
 			<!-- /login 경로와 /resources/** 경로에서 인터셉터 제외 -->
 <!-- 			
@@ -93,6 +93,7 @@
 		</interceptor>
 		<interceptor>
 			<mapping path="/mypage/**"/>
+			<mapping path="/payment/paymentInsert*"/>
 			<beans:ref bean="clientInterceptor"/>
 		</interceptor>
 		<interceptor>

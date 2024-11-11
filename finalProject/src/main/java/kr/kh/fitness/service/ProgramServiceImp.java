@@ -57,7 +57,7 @@ public class ProgramServiceImp implements ProgramService {
 		}
 
 		// noshow 횟수가 초과되지 않았는지 확인
-		if (user.getMe_noshow() >= 5) {
+		if (programDao.selectMemberNoShow(user.getMe_id()) >= 5) {
 			rm.setResult(false);
 			rm.setMessage("노쇼 누적 5회로 예약이 불가능 합니다.");
 			return rm;

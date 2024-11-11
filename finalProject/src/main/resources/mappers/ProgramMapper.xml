@@ -73,4 +73,8 @@
 		WHERE 
 		    bs.bs_num = #{bs_num}
     </select>
+    
+    <select id="selectMemberNoShow" resultType="int">
+    	select me_noshow from member where me_id = #{id}
+    </select>
 </mapper>
