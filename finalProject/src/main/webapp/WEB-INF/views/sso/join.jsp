@@ -22,10 +22,10 @@
 				<div class="login">
 					<c:choose>
 						<c:when test="${socialType eq 'KAKAO'}">
-							<c:set var="sns" value="kakao__login" />
+							<c:set var="sns" value="kakao__login kakao__login2" />
 						</c:when>
 						<c:otherwise>
-							<c:set var="sns" value="naver__login" />
+							<c:set var="sns" value="naver__login naver__login2" />
 						</c:otherwise>
 					</c:choose>
 					<div class="sns_login_wrap">
@@ -41,7 +41,7 @@
 					<!-- 간편 가입 폼 -->
 					<form id="signupForm" action='<c:url value="/sso/join" />'
 						method="post" onsubmit="return validateForm()"
-						style="display: none;" id="joinfrom">
+						style="display: none;" id="joinfrom" class="mt-4">
 						<input type="hidden" name="social_type" value="${socialType}">
 						<c:choose>
 							<c:when test="${ socialType eq 'KAKAO'}">
