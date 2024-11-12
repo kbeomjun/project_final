@@ -5,24 +5,32 @@ ___
 
 ### :date: 프로젝트 진행 기간
 - 2024.09.20 ~ 2024.11.12
+![일정](https://github.com/user-attachments/assets/6251e1a8-f683-4721-905a-b9dee8dbd012)
+
 
 ### :mag: wbs
 <a href="https://docs.google.com/spreadsheets/d/1hEOZNj3iT292qlsMbtV5yQITDUmlztZgpTiQJuxSkyk/edit?usp=sharing">2024년 KH Fitness 홈페이지 WBS</a> 
 
+
 ### :smile: 팀원
+![팀원](https://github.com/user-attachments/assets/02a364bc-5721-48fe-8891-c564d9a03545)
 
 
 ### :computer: 기술스택
 ![기술스택](https://github.com/user-attachments/assets/c8c100bb-97f2-4947-9eb3-09f8b4b0b3fd)
 
+
 ### :mag: 시스템 개요도
+![시스템 개요도](https://github.com/user-attachments/assets/6609b686-4417-4fae-9244-5d255452d97c)
 
 
 ### :mag: Usecase Diagram
 ![유스케이스 다이어그램](https://github.com/user-attachments/assets/6362da76-5c3b-4d9b-9c0c-3626d368b6bb)
 
+
 ### :mag: ERD
 ![erd cloud](https://github.com/user-attachments/assets/871fbc8e-3725-4b26-9be3-847a5510da23)
+
 
 ### 🎨 디자인 : figma
 <a href="https://www.figma.com/design/2JWQn7uq9oiVQs5O62xQYT/KH-Fitness-Project?node-id=297-53&t=1DiRxVHkd8OLlZK6-1">KH Fitness 피그마 디자인</a>
