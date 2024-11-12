@@ -5,7 +5,7 @@ ___
 
 ### :date: 프로젝트 진행 기간
 - 2024.09.20 ~ 2024.11.12
-![일정](https://github.com/user-attachments/assets/6251e1a8-f683-4721-905a-b9dee8dbd012)
+![일정](https://github.com/user-attachments/assets/351a49e6-9113-417a-be56-1041755fdddc)
 
 
 ### :mag: wbs
@@ -13,7 +13,7 @@ ___
 
 
 ### :smile: 팀원
-![팀원](https://github.com/user-attachments/assets/02a364bc-5721-48fe-8891-c564d9a03545)
+![팀원](https://github.com/user-attachments/assets/50f21e0c-ce70-43c3-bc7d-34d01a3b7d77)
 
 
 ### :computer: 기술스택
@@ -21,7 +21,7 @@ ___
 
 
 ### :mag: 시스템 개요도
-![시스템 개요도](https://github.com/user-attachments/assets/6609b686-4417-4fae-9244-5d255452d97c)
+![시스템 개요도](https://github.com/user-attachments/assets/608151b2-3de8-4292-b7ca-ca28d753b9ad)
 
 
 ### :mag: Usecase Diagram
